@@ -1,0 +1,94 @@
+Optional(Attributes: Application, 0x114a29540, pid: 26416, label: 'Leu'
+Element subtree:
+ →Application, 0x114a29540, pid: 26416, label: 'Leu'
+    Window (Main), 0x114a2af80, {{0.0, 0.0}, {420.0, 912.0}}
+      Other, 0x114a29900, {{0.0, 0.0}, {420.0, 912.0}}
+        Other, 0x114a28a00, {{0.0, 0.0}, {420.0, 912.0}}
+          Other, 0x114a28c80, {{0.0, 0.0}, {420.0, 912.0}}
+            Other, 0x114a2b700, {{0.0, 0.0}, {420.0, 912.0}}
+              Other, 0x114a29e00, {{0.0, 68.0}, {420.0, 719.0}}, identifier: 'root-content-viewport', label: 'root-content-viewport'
+              Other, 0x114a28b40, {{0.0, 68.0}, {420.0, 719.0}}, identifier: 'learn-screen', label: 'learn-screen-frame'
+              ScrollView, 0x114a2a080, {{0.0, -0.0}, {420.0, 787.0}}, identifier: 'learn-screen'
+                Other, 0x114a29b80, {{0.0, -109.7}, {420.0, 1865.3}}
+                  StaticText, 0x114a2a940, {{22.0, -85.7}, {118.0, 51.3}}, label: 'Study'
+                  Other, 0x114a2aa80, {{22.0, -12.3}, {376.0, 293.3}}
+                    Button, 0x114a2ad00, {{22.0, -12.3}, {376.0, 67.3}}, identifier: 'learning-mode-active-recall', label: 'Active Recall'
+                      Image, 0x114a2ae40, {{27.7, 6.0}, {36.7, 31.0}}, identifier: 'brain', label: 'brain'
+                      StaticText, 0x114a28280, {{68.0, -8.3}, {145.7, 30.0}}, label: 'Active Recall'
+                      StaticText, 0x114a2bc00, {{68.0, 24.7}, {77.7, 26.3}}, label: 'Retrieve'
+                    Button, 0x114a28000, {{22.0, 63.0}, {376.0, 67.3}}, identifier: 'learning-mode-interview', label: 'Interview Mode'
+                      Image, 0x114a28140, {{30.7, 82.3}, {30.7, 29.0}}, identifier: 'quote.bubble', label: 'Bubble'
+                      StaticText, 0x114a2b840, {{68.0, 67.0}, {174.7, 30.0}}, label: 'Interview Mode'
+                      StaticText, 0x114a2abc0, {{68.0, 100.0}, {96.7, 26.3}}, label: 'Questions'
+                    Button, 0x114a28500, {{22.0, 138.3}, {376.0, 67.3}}, identifier: 'learning-progress', label: 'Progress'
+                      Image, 0x114a288c0, {{29.0, 158.0}, {31.3, 28.3}}, identifier: 'clock.arrow.circlepath', label: 'clock.arrow.circlepath'
+                      StaticText, 0x114a2bac0, {{68.0, 142.3}, {100.7, 30.0}}, label: 'Progress'
+                      StaticText, 0x114a2b980, {{68.0, 175.3}, {133.3, 26.3}}, label: 'Now & history'
+                    Button, 0x114a28f00, {{22.0, 213.7}, {376.0, 67.3}}, identifier: 'learning-more', label: 'More learning options', value: Collapsed
+                      Image, 0x114a29a40, {{33.0, 244.7}, {26.0, 5.7}}, identifier: 'ellipsis', label: 'More'
+                      StaticText, 0x114a2a6c0, {{68.0, 217.7}, {58.3, 30.0}}, label: 'More'
+                      StaticText, 0x114a29cc0, {{68.0, 250.7}, {107.0, 26.3}}, label: 'Study tools'
+                  Other, 0x114a28640, {{22.0, 303.7}, {376.0, 376.7}}, identifier: 'study-continue-field'
+                    Button, 0x114a283c0, {{44.0, 325.7}, {332.0, 247.7}}, identifier: 'study-continue-empty', label: 'CONTINUE LEARNING, No session yet, Start with Active Recall or open a source you've been reading., Start recall'
+                      StaticText, 0x102a27700, {{44.0, 325.7}, {250.7, 26.3}}, label: 'CONTINUE LEARNING'
+                      StaticText, 0x102a27200, {{44.0, 366.0}, {256.3, 45.7}}, identifier: 'study-continue-title', label: 'No session yet'
+                      StaticText, 0x102a27ac0, {{44.0, 425.7}, {292.3, 92.0}}, label: 'Start with Active Recall or open a source you've been reading.'
+                      StaticText, 0x102a27c00, {{44.0, 539.7}, {138.0, 33.7}}, label: 'Start recall'
+                      Image, 0x102a27980, {{347.0, 546.0}, {25.7, 21.0}}, identifier: 'arrow.right', label: 'Right'
+                    Button, 0x102a27840, {{44.0, 614.3}, {332.0, 44.0}}, identifier: 'study-session-options', label: 'Build a study session', value: Collapsed
+                      Image, 0x102a27d40, {{47.0, 624.7}, {25.7, 22.3}}, identifier: 'slider.horizontal.3', label: 'Edit'
+                      StaticText, 0x102a275c0, {{47.0, 621.3}, {274.0, 30.0}}, label: 'Build a study session'
+                      Image, 0x102a27e80, {{351.0, 630.0}, {22.0, 13.0}}, identifier: 'chevron.down', label: 'Go Down'
+                  StaticText, 0x102a27480, {{22.0, 696.3}, {376.0, 173.7}}, identifier: 'study-fading-field', label: 'FADING, Nothing due'
+                    StaticText, 0x1130b4000, {{40.0, 714.3}, {88.0, 26.3}}, label: 'FADING'
+                    StaticText, 0x1130b4140, {{40.0, 756.7}, {193.3, 40.7}}, label: 'Nothing due'
+                    Image, 0x1130b4280, {{43.0, 815.7}, {34.0, 34.0}}, identifier: 'clock', label: 'Clock'
+                  StaticText, 0x1130b43c0, {{22.0, 882.0}, {376.0, 168.3}}, identifier: 'study-blind-spots-field', label: 'BLIND SPOTS, No confident misses'
+                    StaticText, 0x1130b4500, {{40.0, 900.0}, {154.0, 26.3}}, label: 'BLIND SPOTS'
+                    StaticText, 0x1130b4640, {{40.0, 942.3}, {322.0, 40.7}}, label: 'No confident misses'
+                    Image, 0x1130b4780, {{44.3, 1001.3}, {28.7, 28.7}}, identifier: 'checkmark', label: 'Selected', Selected
+                  Other, 0x1130b48c0, {{22.0, 1072.3}, {376.0, 641.3}}, identifier: 'study-labs-field'
+                    StaticText, 0x1130b4a00, {{44.0, 1094.3}, {288.7, 26.3}}, label: 'RECONSTRUCTION LABS'
+                    StaticText, 0x1130b4b40, {{44.0, 1136.7}, {275.7, 81.7}}, label: 'Rebuild a system from memory.'
+                    Button, 0x1130b4c80, {{44.0, 1234.3}, {332.0, 97.7}}, identifier: 'study-lab-BC91DA05-5BD7-58C7-9D4C-023FCCF19686', label: '01, JavaScript Event Loop'
+                      StaticText, 0x1130b4dc0, {{44.0, 1251.3}, {33.7, 31.3}}, label: '01'
+                      StaticText, 0x1130b4f00, {{89.7, 1249.3}, {138.7, 67.7}}, label: 'JavaScript Event Loop'
+                      Image, 0x1130b5040, {{349.0, 1257.0}, {23.7, 19.3}}, identifier: 'arrow.right', label: 'Right'
+                    Button, 0x1130b5180, {{44.0, 1332.7}, {332.0, 97.7}}, identifier: 'study-lab-003A3CA3-387E-5F84-B3B2-6779363A9FF1', label: '02, React Identity / Keys'
+                      StaticText, 0x1130b52c0, {{44.0, 1349.8}, {33.7, 31.3}}, label: '02'
+                      StaticText, 0x1130b5400, {{89.7, 1347.8}, {192.7, 67.7}}, label: 'React Identity / Keys'
+                      Image, 0x1130b5540, {{349.0, 1355.3}, {23.7, 19.3}}, identifier: 'arrow.right', label: 'Right'
+                    Button, 0x1130b5680, {{44.0, 1431.3}, {332.0, 63.7}}, identifier: 'study-lab-26C892C1-A0ED-5B58-B9E9-AF9DD50A912D', label: '03, HTTP Caching'
+                      StaticText, 0x1130b57c0, {{44.0, 1448.2}, {33.7, 31.3}}, label: '03'
+                      StaticText, 0x1130b5900, {{89.7, 1446.2}, {181.0, 33.7}}, label: 'HTTP Caching'
+                      Image, 0x1130b5a40, {{349.0, 1454.0}, {23.7, 19.3}}, identifier: 'arrow.right', label: 'Right'
+                    Button, 0x1130b5b80, {{44.0, 1495.7}, {332.0, 97.7}}, identifier: 'study-lab-9DEF25F0-568D-5CA3-9EF7-EAF80C13D670', label: '04, TypeScript Structural Typing'
+                      StaticText, 0x1130b5cc0, {{44.0, 1512.6}, {33.7, 31.3}}, label: '04'
+                      StaticText, 0x1130b5e00, {{89.7, 1510.6}, {212.0, 67.7}}, label: 'TypeScript Structural Typing'
+                      Image, 0x1130b5f40, {{349.0, 1518.3}, {23.7, 19.3}}, identifier: 'arrow.right', label: 'Right'
+                    Button, 0x1130b6080, {{44.0, 1594.0}, {332.0, 97.7}}, identifier: 'study-lab-E72FDF61-78B9-52FA-85AA-88E8C46A79CB', label: '05, Database Transaction'
+                      StaticText, 0x1130b61c0, {{44.0, 1611.0}, {33.7, 31.3}}, label: '05'
+                      StaticText, 0x1130b6300, {{89.7, 1609.0}, {145.0, 67.7}}, label: 'Database Transaction'
+                      Image, 0x1130b6440, {{349.0, 1616.7}, {23.7, 19.3}}, identifier: 'arrow.right', label: 'Right'
+                Other, 0x1130b6580, {{387.0, 62.0}, {30.0, 725.0}}, label: 'Vertical scroll bar, 3 pages', value: 15 %
+                  Other, 0x1130b66c0, {{414.0, 131.0}, {3.0, 292.7}}
+                Other, 0x1130b6800, {{387.0, 62.0}, {30.0, 725.0}}, label: 'Vertical scroll bar, 3 pages', value: 15 %
+                  Other, 0x1130b6940, {{414.0, 131.0}, {3.0, 292.7}}
+              Other, 0x1130b6a80, {{0.0, 787.0}, {420.0, 91.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+              Button, 0x1130b6bc0, {{26.0, 799.3}, {120.0, 64.7}}, identifier: 'primary-shelf', label: 'Library'
+                Image, 0x1130b6d00, {{70.7, 801.0}, {30.7, 27.3}}, identifier: 'books.vertical', label: 'books.vertical'
+                StaticText, 0x1130b6e40, {{47.2, 833.8}, {77.7, 30.0}}, label: 'Library'
+              Button, 0x1130b6f80, {{150.0, 797.0}, {120.0, 69.0}}, identifier: 'primary-learn', label: 'Study', Selected
+                Image, 0x1130b70c0, {{193.0, 799.3}, {34.3, 30.3}}, identifier: 'graduationcap', label: 'Itunes U'
+                StaticText, 0x1130b7200, {{176.5, 836.0}, {67.0, 30.0}}, label: 'Study'
+              Button, 0x1130b7340, {{274.0, 802.3}, {120.0, 58.7}}, identifier: 'primary-trails', label: 'Trails'
+                Image, 0x1130b7480, {{321.0, 804.0}, {26.3, 21.3}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+                StaticText, 0x1130b75c0, {{304.8, 830.8}, {58.3, 30.0}}, label: 'Trails'
+Path to element:
+ →Application, 0x114a29540, pid: 26416, label: 'Leu'
+Query chain:
+ →Find: Target Application 'dev.shelf.personal'
+  Output: {
+    Application, 0x1130b7700, pid: 26416, label: 'Leu'
+  }
+)

@@ -1,0 +1,87 @@
+[
+  {
+    "check": "validate.py",
+    "exitCode": 0,
+    "seconds": 1.156
+  },
+  {
+    "check": "check-shelfcore-imports.py",
+    "exitCode": 0,
+    "seconds": 1.51
+  },
+  {
+    "check": "check-learning-offline.py",
+    "exitCode": 0,
+    "seconds": 0.997
+  },
+  {
+    "check": "check-learning-architecture.py",
+    "exitCode": 0,
+    "seconds": 0.895
+  },
+  {
+    "check": "check-connected-architecture.py",
+    "exitCode": 0,
+    "seconds": 0.89
+  },
+  {
+    "check": "check-voice-architecture.py",
+    "exitCode": 0,
+    "seconds": 0.876
+  },
+  {
+    "check": "check-worldclass-offline.py",
+    "exitCode": 0,
+    "seconds": 0.98
+  },
+  {
+    "check": "check-v24-contract.py",
+    "exitCode": 0,
+    "seconds": 0.882
+  },
+  {
+    "check": "check-ui-test-contract.py",
+    "exitCode": 0,
+    "seconds": 0.89
+  },
+  {
+    "check": "check-study-interactions.py",
+    "exitCode": 0,
+    "seconds": 0.862
+  },
+  {
+    "check": "check-swiftui-compile-contract.py",
+    "exitCode": 0,
+    "seconds": 1.482
+  },
+  {
+    "check": "check-gallery-minimalism.py",
+    "exitCode": 1,
+    "seconds": 0.961
+  },
+  {
+    "check": "check-v242-interactions.py",
+    "exitCode": 0,
+    "seconds": 0.877
+  },
+  {
+    "check": "check-v243-root-compile.py",
+    "exitCode": 0,
+    "seconds": 0.896
+  },
+  {
+    "check": "check-v244-lens-compile.py",
+    "exitCode": 0,
+    "seconds": 0.922
+  },
+  {
+    "check": "check-v245-release.py",
+    "exitCode": 0,
+    "seconds": 0.892
+  },
+  {
+    "check": "test-study-repair-tools.py",
+    "exitCode": 0,
+    "seconds": 14.421
+  }
+]

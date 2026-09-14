@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "E8DF8111-086E-4A8D-8A7F-CB171A755060.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-v2-metrics_0_5EE2F486-D956-4A7D-95E0-428DEF0EB0A0.json",
+        "timestamp" : 1789298950.53
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "CFBDDF18-34E7-4C36-8CBE-F752DFF35081.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-react-page-3_0_E635BCF1-0178-462A-98C2-676A96F059F4.json",
+        "timestamp" : 1789298950.53
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "F0BC11BF-99E2-440A-B755-B0095A1F4C51.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-source-packet-page-3_0_C3ECD938-55FF-465C-BEBC-42B9377083D9.json",
+        "timestamp" : 1789298950.53
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "627A4E37-55B3-4816-8CEC-F3D91F8F9545.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-preflight-page-3_0_1489B96D-AC2E-4984-91F9-D6C3125AD9AE.json",
+        "timestamp" : 1789298950.529
+      }
+    ],
+    "testIdentifier" : "LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning()",
+    "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfTests/LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning"
+  }
+]

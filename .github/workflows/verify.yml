@@ -1,0 +1,36 @@
+name: Shelf verification
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  portable-core:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: swift --version
+      - name: Core tests
+        run: ./scripts/test-core.sh
+      - name: Structural checks
+        run: python3 scripts/validate.py
+  apple-platform:
+    runs-on: macos-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Xcode and installed simulators
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices available
+      - name: Build and run PDFKit and UI tests
+        run: ./scripts/test-ios.sh
+      - name: Save actual Xcode test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Shelf-xcresults
+          path: .build/results/*.xcresult
+          if-no-files-found: warn

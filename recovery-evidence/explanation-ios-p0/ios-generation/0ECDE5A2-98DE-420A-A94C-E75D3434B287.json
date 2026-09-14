@@ -1,0 +1,116 @@
+{
+  "artifactPath" : "\/Users\/malmeida\/Documents\/ChatGPT\/Leu\/LeuNightFieldContrast\/recovery-evidence\/explanation-ios-p0\/ios-generation\/0ECDE5A2-98DE-420A-A94C-E75D3434B287.json",
+  "attempts" : [
+    {
+      "attempt" : 1,
+      "blockCount" : 2,
+      "blockKinds" : [
+        "plainMeaning",
+        "example"
+      ],
+      "blockTextLengths" : [
+        162,
+        278
+      ],
+      "citedSpanIDs" : [
+        [
+          "s1",
+          "h1"
+        ],
+        [
+          "s1"
+        ]
+      ],
+      "decoded" : true,
+      "emptyBlockIndices" : [
+
+      ],
+      "generateExplanationJSONCalled" : true,
+      "hasNeedsContextReason" : false,
+      "latencyMilliseconds" : 4070.2650000002905,
+      "needsContext" : false,
+      "preservedTerm" : null,
+      "rawModelStructuredResponse" : {
+        "explanation" : {
+          "kind" : "plainMeaning",
+          "sourceSpanIDs" : [
+            "s1",
+            "h1"
+          ],
+          "text" : "A stable key helps React match an item to its previous instance within a list of siblings. Reordering should not make one item inherit the local state of another."
+        },
+        "illustration" : {
+          "kind" : "example",
+          "sourceSpanIDs" : [
+            "s1"
+          ],
+          "text" : "Imagine you have a list of friends. Each friend has a unique name. If you reorder the list, the order of names doesn't change who is friends with whom. A stable key is like a unique identifier for each friend, so React knows which friend to match with when you reorder the list."
+        }
+      },
+      "rawStructuredCandidate" : {
+        "blocks" : [
+          {
+            "kind" : "plainMeaning",
+            "sourceSpanIDs" : [
+              "s1",
+              "h1"
+            ],
+            "text" : "A stable key helps React match an item to its previous instance within a list of siblings. Reordering should not make one item inherit the local state of another."
+          },
+          {
+            "kind" : "example",
+            "sourceSpanIDs" : [
+              "s1"
+            ],
+            "text" : "Imagine you have a list of friends. Each friend has a unique name. If you reorder the list, the order of names doesn't change who is friends with whom. A stable key is like a unique identifier for each friend, so React knows which friend to match with when you reorder the list."
+          }
+        ],
+        "needsContext" : false
+      },
+      "responseReceived" : true,
+      "startedUptime" : 8318.5626628749997,
+      "structuredStatus" : "returned",
+      "validationAccepted" : true,
+      "validationFailures" : [
+
+      ],
+      "validationWarnings" : [
+        "tooShort"
+      ],
+      "wordCount" : 82
+    }
+  ],
+  "availability" : "available",
+  "backend" : "apple-on-device",
+  "bundleID" : "dev.shelf.personal",
+  "cacheStoreCompleted" : true,
+  "documentID" : "54D34876-C7A0-469B-819D-0E26F7C8A25C",
+  "error" : null,
+  "extractionVersion" : 5,
+  "finalAccepted" : true,
+  "finalState" : "ready",
+  "finalStatePreparedAt" : "2026-09-14T09:29:19Z",
+  "fingerprint" : "7d42381fcbb2e1c6252457bced1a3970015142adbac4a556fb35d7ab4e318640",
+  "fromCache" : false,
+  "lastEvent" : "VISIBLE_UI",
+  "mode" : "withExample",
+  "osVersion" : "Version 26.5 (Build 23F77)",
+  "page" : 3,
+  "persistenceError" : null,
+  "platform" : "iOS-simulator",
+  "promptVersion" : 3,
+  "recordInstalled" : true,
+  "repairAttempted" : false,
+  "requestID" : "0ECDE5A2-98DE-420A-A94C-E75D3434B287",
+  "simulatorID" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+  "spanIDs" : [
+    "s1",
+    "h1"
+  ],
+  "startedAt" : "2026-09-14T09:29:15Z",
+  "startedUptime" : 8318.5345587083339,
+  "totalLatencyMilliseconds" : 4173.5785833334376,
+  "traceFormatVersion" : 3,
+  "validatorVersion" : 2,
+  "visibleUIObserved" : true
+}

@@ -1,0 +1,863 @@
+--- a/Shelf/DesignSystem/LeuDesign.swift
++++ b/Shelf/DesignSystem/LeuDesign.swift
+@@ -95,6 +95,20 @@
+     static let readingForeground = Color(hex: 0x1F1E1B)
+     static let readingSecondary = Color(hex: 0x56534B)
+ 
++    // Study fields: color describes the existing learning state.
++    static let studyContinueSurface = Color(hex: 0x183EAA)
++    static let studyContinueForeground = Color(hex: 0xF6F5EF)
++    static let studyContinueSecondary = Color(hex: 0xD7E0FF)
++    static let studyFadingSurface = fading
++    static let studyFadingForeground = onSignal
++    static let studyFadingSecondary = Color(hex: 0x352019)
++    static let studyBlindSpotSurface = Color(hex: 0x49386F)
++    static let studyBlindSpotForeground = Color(hex: 0xF4F0F8)
++    static let studyBlindSpotSecondary = Color(hex: 0xDAD1E7)
++    static let studyLabsSurface = Color(hex: 0x242B25)
++    static let studyLabsForeground = textPrimary
++    static let studyLabsSecondary = Color(hex: 0xC4C9BC)
++
+     // MARK: - Type
+     //
+     // Three voices only: a strong sans for display and UI, an editorial serif for reading,
+--- a/Shelf/Learning/Components/LearnSecondaryModes.swift
++++ b/Shelf/Learning/Components/LearnSecondaryModes.swift
+@@ -7,6 +7,7 @@
+     let onProgress: () -> Void
+     @State private var presentedDestination: Destination?
+     @Environment(\.accessibilityReduceMotion) private var reduceMotion
++    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+ 
+     private enum Destination: String, Identifiable {
+         case connections, documentTopics, interview, activeRecall, searchIdeas
+@@ -18,47 +19,27 @@
+ 
+     var body: some View {
+         VStack(alignment: .leading, spacing: 0) {
+-            Text("MORE WAYS TO STUDY")
+-                .font(ShelfTheme.eyebrow(10)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
+-                .padding(.bottom, 8)
+-            row("Active Recall", detail: "Retrieve without answer choices", symbol: "brain", identifier: "learning-mode-active-recall") {
+-                presentedDestination = .activeRecall
++            LazyVGrid(columns: dynamicTypeSize.isAccessibilitySize ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
++                row("Active Recall", detail: "Retrieve", symbol: "brain", identifier: "learning-mode-active-recall") {
++                    presentedDestination = .activeRecall
++                }
++                row("Interview Mode", detail: "Questions", symbol: "quote.bubble", identifier: "learning-mode-interview") {
++                    presentedDestination = .interview
++                }
++                row("Progress", detail: "Now & history", symbol: "clock.arrow.circlepath", identifier: "learning-progress", action: onProgress)
++                Button {
++                    StudyInteractionTrace.record("activate.learning-more")
++                    model.moreLearningExpanded.toggle()
++                    StudyInteractionTrace.record(model.moreLearningExpanded ? "disclosure.more.expanded" : "disclosure.more.collapsed")
++                    ShelfHaptics.shared.play(.selectionChanged)
++                } label: {
++                    modeLabel("More", detail: model.moreLearningExpanded ? "Close tools" : "Study tools", symbol: "ellipsis")
++                }
++                .buttonStyle(.plain)
++                .accessibilityLabel("More learning options")
++                .accessibilityValue(model.moreLearningExpanded ? "Expanded" : "Collapsed")
++                .accessibilityIdentifier("learning-more")
+             }
+-            Divider().overlay(ShelfTheme.line)
+-            row("Interview Mode", detail: "Practice with deliberate pressure", symbol: "quote.bubble", identifier: "learning-mode-interview") {
+-                presentedDestination = .interview
+-            }
+-            Divider().overlay(ShelfTheme.line)
+-            row("Progress", detail: "Now and history of your understanding", symbol: "clock.arrow.circlepath", identifier: "learning-progress", action: onProgress)
+-            Divider().overlay(ShelfTheme.line)
+-            Button {
+-                StudyInteractionTrace.record("activate.learning-more")
+-                // Remove collapsed controls in the same update as the disclosure state.
+-                // Animate the chevron only; do not keep outgoing controls alive for a fade.
+-                model.moreLearningExpanded.toggle()
+-                StudyInteractionTrace.record(model.moreLearningExpanded ? "disclosure.more.expanded" : "disclosure.more.collapsed")
+-                ShelfHaptics.shared.play(.selectionChanged)
+-            } label: {
+-                HStack {
+-                    Image(systemName: "ellipsis").frame(width: 30).foregroundStyle(ShelfTheme.accent)
+-                    VStack(alignment: .leading, spacing: 2) {
+-                        Text("More").font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.text)
+-                        Text("Connections, topics and idea search").font(.caption).foregroundStyle(ShelfTheme.secondary)
+-                    }
+-                    Spacer()
+-                    Image(systemName: "chevron.right")
+-                        .font(.caption.weight(.semibold))
+-                        .foregroundStyle(ShelfTheme.secondary)
+-                        .rotationEffect(.degrees(model.moreLearningExpanded ? 90 : 0))
+-                        .animation(reduceMotion ? nil : ShelfMotion.gentle, value: model.moreLearningExpanded)
+-                }
+-                .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+-                .contentShape(Rectangle())
+-            }
+-            .buttonStyle(.plain)
+-            .accessibilityLabel("More learning options")
+-            .accessibilityValue(model.moreLearningExpanded ? "Expanded" : "Collapsed")
+-            .accessibilityIdentifier("learning-more")
+ 
+             // These rows have no local state. The sheet presenter stays on the stable parent.
+             // Hidden controls must not survive behind the following Study sections.
+@@ -81,7 +62,7 @@
+                     }
+                     #endif
+                 }
+-                .padding(.leading, 30)
++                .padding(.top, 12)
+                 .transition(.identity)
+             }
+         }
+@@ -110,20 +91,31 @@
+             StudyInteractionTrace.record("activate.\(identifier)")
+             action()
+         } label: {
+-            HStack(spacing: 12) {
+-                Image(systemName: symbol).frame(width: 30).foregroundStyle(ShelfTheme.accent)
+-                VStack(alignment: .leading, spacing: 2) {
+-                    Text(title).font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.text)
+-                    Text(detail).font(.caption).foregroundStyle(ShelfTheme.secondary)
+-                }
+-                Spacer(); Image(systemName: "chevron.right").font(.caption).foregroundStyle(ShelfTheme.secondary)
+-            }
+-            .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading).contentShape(Rectangle())
++            modeLabel(title, detail: detail, symbol: symbol)
+         }
+         .buttonStyle(.plain)
+         .accessibilityLabel(title)
+         .accessibilityHint(detail)
+         .accessibilityIdentifier(identifier)
++    }
++
++    private func modeLabel(_ title: String, detail: String, symbol: String) -> some View {
++        HStack(alignment: .center, spacing: 10) {
++            Image(systemName: symbol).font(.body.weight(.medium))
++                .frame(width: 24).foregroundStyle(LeuDesign.signal)
++            VStack(alignment: .leading, spacing: 3) {
++                Text(title).font(.subheadline.weight(.semibold))
++                    .foregroundStyle(LeuDesign.textPrimary)
++                Text(detail).font(.caption).foregroundStyle(LeuDesign.textSecondary)
++            }
++            .fixedSize(horizontal: false, vertical: true)
++            Spacer(minLength: 0)
++        }
++        .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
++        .padding(.horizontal, 12).padding(.vertical, 4)
++        .background(LeuDesign.surfaceSecondary, in: RoundedRectangle(cornerRadius: 7))
++        .overlay { RoundedRectangle(cornerRadius: 7).stroke(LeuDesign.separator, lineWidth: 1) }
++        .contentShape(Rectangle())
+     }
+ 
+     private func detailRow(_ title: String, detail: String, symbol: String, identifier: String, action: @escaping () -> Void) -> some View {
+@@ -140,7 +132,7 @@
+                     .foregroundStyle(ShelfTheme.olive)
+                 VStack(alignment: .leading, spacing: 3) {
+                     Text(title)
+-                        .font(.system(.callout, design: .serif).weight(.medium))
++                        .font(.callout.weight(.medium))
+                         .foregroundStyle(ShelfTheme.text)
+                     Text(detail)
+                         .font(.caption)
+--- a/Shelf/Learning/LearnTodayScreen+MemorySections.swift
++++ b/Shelf/Learning/LearnTodayScreen+MemorySections.swift
+@@ -3,72 +3,145 @@
+ 
+ @MainActor
+ extension LearnTodayScreen {
+-    var fadingSection: some View {
+-        learningList(title: "Fading", items: Array(model.dueObjects.prefix(5)), empty: "Nothing is due right now.") { object in
+-            fadingSubtitle(object)
+-        }
+-    }
+-
+-    var blindSpotsSection: some View {
+-        learningList(title: "Blind spots", items: Array(model.blindSpotObjects.prefix(4)), empty: "No high-confidence misses yet.") { object in
+-            blindSpotSubtitle(object)
+-        }
+-    }
+-
+     var continueSection: some View {
+-        let recent = model.snapshot.timeline.sorted { $0.occurredAt > $1.occurredAt }.prefix(4)
+-        return VStack(alignment: .leading, spacing: 10) {
+-            Text("Continue learning").font(LearningTokens.Typography.section)
+-            if recent.isEmpty { Text("Your study history will appear here.").foregroundStyle(ShelfTheme.secondary) }
+-            else {
+-                ForEach(Array(recent)) { event in
+-                    if let source = event.source {
+-                        Button { model.openSource(source) } label: {
+-                            HStack { Text(event.title).foregroundStyle(ShelfTheme.text); Spacer(); Image(systemName: "chevron.right").foregroundStyle(ShelfTheme.secondary) }
+-                                .frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 7)
+-                        }.buttonStyle(.plain)
+-                    } else {
+-                        Text(event.title).frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 7)
++        let recent = Array(model.snapshot.timeline.sorted { $0.occurredAt > $1.occurredAt }.prefix(4))
++        return VStack(alignment: .leading, spacing: 16) {
++            if let event = recent.first {
++                Button {
++                    if let source = event.source { model.openSource(source) }
++                    else { onOpenProgress() }
++                } label: {
++                    continueLabel(title: event.title,
++                        detail: "Last activity · " + event.occurredAt.formatted(date: .abbreviated, time: .shortened),
++                        action: event.source == nil ? "View progress" : "Continue at source")
++                }
++                .buttonStyle(.plain)
++                .accessibilityIdentifier("study-continue-populated")
++            } else {
++                Button { showingRecallSetup = true } label: {
++                    continueLabel(title: model.snapshot.sessions.isEmpty ? "No session yet" : "Choose your next source",
++                        detail: "Start with Active Recall or open a source you've been reading.",
++                        action: "Start recall")
++                }
++                .buttonStyle(.plain)
++                .accessibilityIdentifier("study-continue-empty")
++            }
++            if recent.count > 1 {
++                DisclosureGroup {
++                    ForEach(Array(recent.dropFirst())) { event in
++                        if let source = event.source {
++                            Button { model.openSource(source) } label: {
++                                HStack {
++                                    Text(event.title).fixedSize(horizontal: false, vertical: true)
++                                    Spacer(minLength: 8)
++                                    Image(systemName: "arrow.up.right")
++                                }
++                                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
++                                .contentShape(Rectangle())
++                            }.buttonStyle(.plain)
++                        } else {
++                            Text(event.title).fixedSize(horizontal: false, vertical: true)
++                        }
+                     }
+-                    Divider().overlay(ShelfTheme.line)
+-                }
++                } label: { Text("Recent activity").font(.subheadline.weight(.semibold)) }
++                .foregroundStyle(LeuDesign.studyContinueForeground)
++                .tint(LeuDesign.studyContinueForeground)
+             }
+         }
+     }
+ 
+-    func learningList(title: String, items: [LearningObject], empty: String,
+-                              subtitle: @escaping (LearningObject) -> String) -> some View {
+-        VStack(alignment: .leading, spacing: 8) {
+-            Text(title).font(LearningTokens.Typography.section)
+-            if items.isEmpty { Text(empty).foregroundStyle(ShelfTheme.secondary).font(.callout) }
+-            ForEach(items) { object in
+-                Button { model.startReview(objectID: object.id) } label: {
+-                    HStack {
+-                        VStack(alignment: .leading, spacing: 3) {
+-                            Text(object.title).foregroundStyle(ShelfTheme.text).lineLimit(2)
+-                            Text(subtitle(object)).font(.caption).foregroundStyle(ShelfTheme.secondary)
+-                        }
+-                        Spacer(); Image(systemName: "chevron.right").foregroundStyle(ShelfTheme.secondary)
+-                    }.padding(.vertical, 9)
+-                }.buttonStyle(.plain)
+-                Divider().overlay(ShelfTheme.line)
++    private func continueLabel(title: String, detail: String, action: String) -> some View {
++        VStack(alignment: .leading, spacing: 14) {
++            Text("CONTINUE LEARNING").font(.caption.weight(.bold)).tracking(1.4)
++                .foregroundStyle(LeuDesign.studyContinueSecondary)
++            Text(title).leuScaledFont(28, weight: .bold, relativeTo: .title)
++                .fixedSize(horizontal: false, vertical: true)
++            Text(detail).font(.subheadline)
++                .foregroundStyle(LeuDesign.studyContinueSecondary)
++                .fixedSize(horizontal: false, vertical: true)
++            HStack {
++                Text(action).font(.body.weight(.semibold))
++                Spacer()
++                Image(systemName: "arrow.right")
++            }.padding(.top, 8)
++        }
++        .foregroundStyle(LeuDesign.studyContinueForeground)
++        .frame(maxWidth: .infinity, minHeight: 170, alignment: .leading)
++        .contentShape(Rectangle())
++        .multilineTextAlignment(.leading)
++    }
++
++    var fadingSection: some View {
++        reviewField(title: "FADING", items: model.dueObjects, empty: "Nothing due",
++                    summary: "ideas need another pass", action: "Review due",
++                    surface: LeuDesign.studyFadingSurface, foreground: LeuDesign.studyFadingForeground,
++                    secondary: LeuDesign.studyFadingSecondary, minimumHeight: 240, radius: 8,
++                    identifier: "study-fading-field")
++    }
++
++    var blindSpotsSection: some View {
++        reviewField(title: "BLIND SPOTS", items: model.blindSpotObjects, empty: "No confident misses",
++                    summary: "ideas with confident misses", action: "Review misses",
++                    surface: LeuDesign.studyBlindSpotSurface, foreground: LeuDesign.studyBlindSpotForeground,
++                    secondary: LeuDesign.studyBlindSpotSecondary, minimumHeight: 208, radius: 16,
++                    identifier: "study-blind-spots-field")
++    }
++
++    private func reviewField(title: String, items: [LearningObject], empty: String,
++                             summary: String, action: String, surface: Color, foreground: Color,
++                             secondary: Color, minimumHeight: CGFloat, radius: CGFloat,
++                             identifier: String) -> some View {
++        let label = reviewLabel(title: title, items: items, empty: empty, summary: summary,
++                                action: action, foreground: foreground, secondary: secondary)
++            .frame(maxWidth: .infinity, minHeight: minimumHeight, alignment: .topLeading)
++            .padding(18)
++            .background(surface, in: RoundedRectangle(cornerRadius: radius))
++            .contentShape(RoundedRectangle(cornerRadius: radius))
++        return Group {
++            if items.isEmpty {
++                label.accessibilityElement(children: .combine)
++            } else {
++                Button { model.startReview(objectIDs: items.map(\.id)) } label: {
++                    label
++                }
++                .buttonStyle(.plain)
+             }
+         }
++        .accessibilityIdentifier(identifier)
+     }
+ 
+-    func fadingSubtitle(_ object: LearningObject) -> String {
+-        guard let due = model.snapshot.reviewStates[object.id]?.nextReviewAt else { return "Ready for another recall" }
+-        let calendar = Calendar.current
+-        if calendar.isDateInToday(due) { return "Due today" }
+-        if calendar.isDateInTomorrow(due) { return "Due tomorrow" }
+-        return due <= Date() ? "Ready for another recall" : "Due " + due.formatted(date: .abbreviated, time: .omitted)
++    private func reviewLabel(title: String, items: [LearningObject], empty: String,
++                             summary: String, action: String, foreground: Color, secondary: Color) -> some View {
++        VStack(alignment: .leading, spacing: 16) {
++            Text(title).font(.caption.weight(.bold)).tracking(1.2)
++                .foregroundStyle(secondary)
++            if items.isEmpty {
++                Text(empty).font(.title2.weight(.bold))
++                    .fixedSize(horizontal: false, vertical: true)
++                Image(systemName: title == "FADING" ? "clock" : "checkmark")
++                    .font(.title2).foregroundStyle(secondary).accessibilityHidden(true)
++            } else {
++                VStack(alignment: .leading, spacing: 4) {
++                    Text("\(items.count)").leuScaledFont(42, weight: .bold, relativeTo: .largeTitle)
++                    Text(items.count == 1 ? summary.replacingOccurrences(of: "ideas", with: "idea").replacingOccurrences(of: "need ", with: "needs ") : summary)
++                        .font(.subheadline.weight(.semibold))
++                        .fixedSize(horizontal: false, vertical: true)
++                }
++                ForEach(Array(items.prefix(3))) { object in
++                    Text(object.title).font(.subheadline)
++                        .foregroundStyle(secondary)
++                        .fixedSize(horizontal: false, vertical: true)
++                }
++                HStack {
++                    Text(action).font(.subheadline.weight(.bold))
++                    Spacer(minLength: 4)
++                    Image(systemName: "arrow.right")
++                }.padding(.top, 6)
++            }
++        }
++        .foregroundStyle(foreground)
++        .frame(maxWidth: .infinity, alignment: .topLeading)
++        .contentShape(Rectangle())
++        .multilineTextAlignment(.leading)
+     }
+-
+-    func blindSpotSubtitle(_ object: LearningObject) -> String {
+-        let attempts = model.snapshot.attempts.filter { $0.learningObjectID == object.id && $0.confidence == .certain }
+-        let misses = attempts.filter { $0.wasCorrect == false }.count
+-        return "High confidence · missed \(misses) of \(attempts.count)"
+-    }
+-
+-
+ }
+--- a/Shelf/Learning/LearnTodayScreen.swift
++++ b/Shelf/Learning/LearnTodayScreen.swift
+@@ -7,6 +7,9 @@
+     @Bindable var knowledge: KnowledgeModel
+     @State private var selectedTopicID: UUID?
+     @State private var selectedMinutes = 10
++    @State private var composerExpanded = false
++    @State var showingRecallSetup = false
++    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+     let onOpenProgress: () -> Void
+ 
+     var body: some View {
+@@ -16,6 +19,7 @@
+             else { landing }
+         }
+         .task { await model.bootstrap() }
++        .sheet(isPresented: $showingRecallSetup) { ActiveRecallSetupSheet(model: model) }
+         .leuDialog("Leu needs your attention", isPresented: Binding(
+             get: { model.errorMessage != nil }, set: { if !$0 { model.errorMessage = nil } })) {
+                 Button("OK") { model.errorMessage = nil }
+@@ -24,22 +28,29 @@
+ 
+     private var landing: some View {
+         ScrollView {
+-            VStack(alignment: .leading, spacing: 30) {
++            VStack(alignment: .leading, spacing: 22) {
+                 header
+-                sessionComposer
++                LearnSecondaryModes(model: model, knowledge: knowledge) {
++                    onOpenProgress()
++                    ShelfHaptics.shared.play(.selectionChanged)
++                }
++                VStack(alignment: .leading, spacing: 16) {
++                    continueField
++                    if dynamicTypeSize.isAccessibilitySize {
++                        VStack(spacing: 12) { fadingSection; blindSpotsSection }
++                    } else {
++                        HStack(alignment: .top, spacing: 12) {
++                            fadingSection
++                            blindSpotsSection.padding(.top, 28)
++                        }
++                    }
++                }
++                labsSection
+                 if model.isIndexing { indexingStatus }
+                 if let notice = model.notice {
+                     Text(notice).font(.callout).foregroundStyle(ShelfTheme.secondary)
+                         .accessibilityIdentifier("learning-index-notice")
+                 }
+-                LearnSecondaryModes(model: model, knowledge: knowledge) {
+-                    onOpenProgress()
+-                    ShelfHaptics.shared.play(.selectionChanged)
+-                }
+-                continueSection
+-                fadingSection
+-                blindSpotsSection
+-                labsSection
+             }
+             .padding(.horizontal, ShelfTheme.gutter)
+             .padding(.top, 24).padding(.bottom, 42)
+@@ -52,20 +63,37 @@
+     }
+ 
+     private var header: some View {
+-        VStack(alignment: .leading, spacing: 8) {
+-            Text("STUDY")
+-                .font(ShelfTheme.eyebrow())
+-                .tracking(2.8)
+-                .foregroundStyle(ShelfTheme.olive)
+-            Text("What should come back next?")
+-                .leuScaledFont(36, weight: .regular, design: .serif)
+-                .fixedSize(horizontal: false, vertical: true)
+-            Text("Questions are built locally from your books and stay linked to the exact source.")
+-                .font(.system(.callout, design: .serif))
+-                .foregroundStyle(ShelfTheme.secondary)
+-                .frame(maxWidth: 560, alignment: .leading)
+-            Rectangle().fill(ShelfTheme.line).frame(height: 0.5).padding(.top, 6)
+-        }
++        Text("Study")
++            .leuScaledFont(34, weight: .bold, relativeTo: .largeTitle)
++            .foregroundStyle(LeuDesign.textPrimary)
++            .accessibilityAddTraits(.isHeader)
++    }
++
++    private var continueField: some View {
++        VStack(alignment: .leading, spacing: 20) {
++            continueSection
++            Rectangle().fill(LeuDesign.studyContinueSecondary).frame(height: 1)
++            Button { composerExpanded.toggle() } label: {
++                HStack {
++                    Label("Build a study session", systemImage: "slider.horizontal.3")
++                    Spacer(minLength: 8)
++                    Image(systemName: composerExpanded ? "chevron.up" : "chevron.down")
++                }
++                .font(.subheadline.weight(.semibold))
++                .foregroundStyle(LeuDesign.studyContinueForeground)
++                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
++                .contentShape(Rectangle())
++            }
++            .buttonStyle(.plain)
++            .accessibilityIdentifier("study-session-options")
++            .accessibilityValue(composerExpanded ? "Expanded" : "Collapsed")
++            if composerExpanded { sessionComposer }
++        }
++        .padding(22)
++        .frame(maxWidth: .infinity, alignment: .leading)
++        .background(LeuDesign.studyContinueSurface, in: RoundedRectangle(cornerRadius: 12))
++        .accessibilityElement(children: .contain)
++        .accessibilityIdentifier("study-continue-field")
+     }
+ 
+     private var sessionComposer: some View {
+@@ -79,8 +107,8 @@
+     private var topicPicker: some View {
+         VStack(alignment: .leading, spacing: 12) {
+             Text("SUBJECT")
+-                .font(ShelfTheme.eyebrow(10)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
+-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
++                .font(.caption.weight(.semibold)).tracking(1.8).foregroundStyle(LeuDesign.studyContinueSecondary)
++            LazyVGrid(columns: dynamicTypeSize.isAccessibilitySize ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
+                 ForEach(model.visibleTopics) { topic in topicButton(topic) }
+                 Button {
+                     selectedTopicID = nil
+@@ -109,7 +137,7 @@
+     private func topicLabel(_ title: String, subtitle: String?, selected: Bool) -> some View {
+         HStack {
+             VStack(alignment: .leading, spacing: 3) {
+-                Text(title).font(.system(.body, design: .serif).weight(.medium))
++                Text(title).font(.subheadline.weight(.medium))
+                 if let subtitle {
+                     Text(subtitle.uppercased()).font(.caption2.weight(.semibold)).tracking(1.1)
+                         
+@@ -120,7 +148,7 @@
+         }
+         .padding(.horizontal, 14)
+         .frame(minHeight: 55)
+-        .foregroundStyle(selected ? LeuDesign.onSignal : ShelfTheme.text)
++        .foregroundStyle(selected ? LeuDesign.onSignal : LeuDesign.textPrimary)
+         .background(selected ? ShelfTheme.olive : ShelfTheme.surface, in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius))
+         .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(selected ? ShelfTheme.olive : LeuDesign.separator, lineWidth: 0.7) }
+     }
+@@ -139,7 +167,7 @@
+     private var timePicker: some View {
+         VStack(alignment: .leading, spacing: 12) {
+             Text("TIME")
+-                .font(ShelfTheme.eyebrow(10)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
++                .font(.caption.weight(.semibold)).tracking(1.8).foregroundStyle(LeuDesign.studyContinueSecondary)
+             HStack(spacing: 8) {
+                 ForEach([5, 10, 20, 30], id: \.self) { minutes in
+                     let selected = selectedMinutes == minutes
+@@ -152,7 +180,7 @@
+                             Text("MIN").font(.caption2.weight(.semibold)).tracking(1.2)
+                         }
+                         .frame(maxWidth: .infinity, minHeight: 52)
+-                        .foregroundStyle(selected ? LeuDesign.onSignal : ShelfTheme.text)
++                        .foregroundStyle(selected ? LeuDesign.onSignal : LeuDesign.textPrimary)
+                         .background(selected ? ShelfTheme.action : ShelfTheme.surface,
+                                     in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius))
+                         .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(selected ? ShelfTheme.action : LeuDesign.separator, lineWidth: 0.7) }
+@@ -183,7 +211,7 @@
+ 
+             if !hasStudyMaterial {
+                 Text(model.isIndexing ? "Preparing source-bound study material…" : "No reliable study material matches this subject yet.")
+-                    .font(.footnote).foregroundStyle(ShelfTheme.secondary)
++                    .font(.footnote).foregroundStyle(LeuDesign.studyContinueSecondary)
+             }
+         }
+     }
+@@ -207,23 +235,45 @@
+     }
+ 
+     private var labsSection: some View {
+-        VStack(alignment: .leading, spacing: 10) {
++        VStack(alignment: .leading, spacing: 16) {
+             Text("RECONSTRUCTION LABS")
+-                .font(ShelfTheme.eyebrow(10)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
+-            Text("Rebuild a pre-authored system from memory.")
+-                .font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.secondary)
+-            ForEach(LabCatalog.all()) { lab in
+-                Button { model.activeLab = lab } label: {
+-                    HStack {
+-                        Text(lab.title).font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.text)
+-                        Spacer(); Image(systemName: "arrow.up.right").font(.caption).foregroundStyle(ShelfTheme.secondary)
+-                    }
+-                    .padding(.vertical, 9)
+-                }
+-                .buttonStyle(.plain)
+-                Divider().overlay(ShelfTheme.line)
+-            }
+-        }
++                .font(.caption.weight(.bold)).tracking(1.4)
++                .foregroundStyle(LeuDesign.studyLabsSecondary)
++            Text("Rebuild a system from memory.")
++                .font(.title2.weight(.bold))
++                .foregroundStyle(LeuDesign.studyLabsForeground)
++                .fixedSize(horizontal: false, vertical: true)
++            VStack(spacing: 0) {
++                ForEach(Array(LabCatalog.all().enumerated()), id: \.element.id) { index, lab in
++                    Button { model.activeLab = lab } label: {
++                        HStack(alignment: .firstTextBaseline, spacing: 12) {
++                            Text(String(format: "%02d", index + 1))
++                                .font(.callout.monospacedDigit().weight(.semibold))
++                                .foregroundStyle(LeuDesign.signal)
++                            Text(lab.title).font(.body.weight(.medium))
++                                .foregroundStyle(LeuDesign.studyLabsForeground)
++                                .fixedSize(horizontal: false, vertical: true)
++                            Spacer(minLength: 0)
++                            Image(systemName: "arrow.right").font(.callout)
++                                .foregroundStyle(LeuDesign.studyLabsSecondary)
++                        }
++                        .padding(.vertical, 15)
++                        .frame(maxWidth: .infinity, minHeight: 52, alignment: .leading)
++                        .contentShape(Rectangle())
++                    }
++                    .buttonStyle(.plain)
++                    .accessibilityIdentifier("study-lab-" + lab.id.uuidString)
++                    if index < LabCatalog.all().count - 1 {
++                        Rectangle().fill(LeuDesign.separator).frame(height: 0.75)
++                    }
++                }
++            }
++        }
++        .padding(22)
++        .frame(maxWidth: .infinity, alignment: .leading)
++        .background(LeuDesign.studyLabsSurface, in: RoundedRectangle(cornerRadius: 8))
++        .accessibilityElement(children: .contain)
++        .accessibilityIdentifier("study-labs-field")
+         .sheet(item: $model.activeLab) { lab in LabScreen(lab: lab) }
+     }
+ }
+--- a/ShelfUITests/ReleaseInteractionSupport.swift
++++ b/ShelfUITests/ReleaseInteractionSupport.swift
+@@ -39,9 +39,10 @@
+         app.launch()
+         XCTAssertTrue(app.buttons["book-React Notes"].waitForExistence(timeout: 25))
+         app.buttons["primary-learn"].tap()
++        revealStudySessionOptions()
+         XCTAssertTrue(app.buttons["learn-topic-react"].waitForExistence(timeout: 25))
+         tapStudyButton("learn-topic-react")
+-        app.buttons["5 minutes"].tap()
++        tapStudyButton("5 minutes")
+         let start = app.buttons["start-learning-session"]
+         let ready = XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: start)
+         XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 35), .completed)
+--- a/ShelfUITests/ShelfLearningOSUITests.swift
++++ b/ShelfUITests/ShelfLearningOSUITests.swift
+@@ -6,12 +6,13 @@
+ final class ShelfLearningOSUITests: ShelfUITestCase {
+     func test32LearnTodayCreatesLocalStudySession() throws {
+         openLearn()
++        revealStudySessionOptions()
+         let react = app.buttons["learn-topic-react"]
+-        if react.waitForExistence(timeout: 20) { react.tap() }
+-        app.buttons["10 minutes"].tap()
++        if react.waitForExistence(timeout: 20) { tapStudyButton("learn-topic-react") }
++        tapStudyButton("10 minutes")
+         let start = app.buttons["start-learning-session"]
+         XCTAssertTrue(waitForEnabled(start, timeout: 30), "Study material should become available after local indexing.")
+-        start.tap()
++        tapStudyButton("start-learning-session")
+         XCTAssertTrue(element("study-session-screen").waitForExistence(timeout: 12))
+         capture("32-learn-session")
+     }
+@@ -174,11 +175,12 @@
+ 
+     private func openLearnAndStart() {
+         openLearn()
+-        if app.buttons["learn-topic-react"].waitForExistence(timeout: 20) { app.buttons["learn-topic-react"].tap() }
+-        app.buttons["10 minutes"].tap()
++        revealStudySessionOptions()
++        if app.buttons["learn-topic-react"].waitForExistence(timeout: 20) { tapStudyButton("learn-topic-react") }
++        tapStudyButton("10 minutes")
+         let start = app.buttons["start-learning-session"]
+         XCTAssertTrue(waitForEnabled(start, timeout: 30), "Study material should become available after local indexing.")
+-        start.tap()
++        tapStudyButton("start-learning-session")
+         XCTAssertTrue(element("study-session-screen").waitForExistence(timeout: 12))
+     }
+ 
+--- /dev/null
++++ b/ShelfUITests/ShelfStudyHomeUITests.swift
+@@ -0,0 +1,96 @@
++import XCTest
++
++/// Real sample PDFs and ordinary reader actions; no injected learning state.
++/// Run this class at default size and AX1. Attachments are evidence to inspect, not certification.
++final class ShelfStudyHomeUITests: ShelfUITestCase {
++    func testEmptyStudyFieldsAndExistingDestinations() {
++        openStudyHome()
++        XCTAssertTrue(app.buttons["study-continue-empty"].waitForExistence(timeout: 8))
++        XCTAssertTrue(app.staticTexts["No session yet"].exists)
++        capture("study-01-empty-overview")
++        captureField("study-continue-field", name: "study-01-empty-continue")
++        tapStudyButton("study-continue-empty")
++        XCTAssertTrue(app.navigationBars["Active Recall"].waitForExistence(timeout: 6))
++        XCTAssertTrue(app.buttons["Begin recall"].exists)
++        app.navigationBars["Active Recall"].buttons["Done"].tap()
++        XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 6))
++
++        captureField("study-fading-field", name: "study-03-fading")
++        captureField("study-blind-spots-field", name: "study-04-blind-spots")
++        captureField("study-labs-field", name: "study-05-labs")
++        let lab = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "study-lab-")).firstMatch
++        XCTAssertTrue(lab.exists)
++        let title = lab.label
++        tapStudyButton(lab.identifier)
++        XCTAssertTrue(app.buttons["Run"].waitForExistence(timeout: 6))
++        XCTAssertTrue(app.buttons["Reset"].exists)
++        XCTAssertFalse(title.isEmpty)
++        capture("study-lab-destination")
++        app.buttons["Close"].tap()
++        XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 6))
++
++        revealStudySessionOptions()
++        XCTAssertTrue(app.buttons["10 minutes"].exists)
++        tapStudyButton("study-session-options")
++        XCTAssertEqual(app.buttons["study-session-options"].value as? String, "Collapsed")
++        XCTAssertFalse(app.buttons["start-learning-session"].exists)
++    }
++
++    func testContinueUsesRealRememberedSourceAndReturnsToReader() {
++        openReactNotes()
++        let originalPage = pageControl().label
++        readerTool(identifier: "reader-tool-learn", label: "Study").tap()
++        XCTAssertTrue(element("learning-object-actions").waitForExistence(timeout: 5))
++        let remember = identifiedControl("learning-action-remember", label: "Remember")
++        XCTAssertTrue(remember.waitForExistence(timeout: 5)); remember.tap()
++        let back = app.buttons["Back to library"]
++        XCTAssertTrue(back.waitForExistence(timeout: 8)); back.tap()
++        openStudyHome()
++        XCTAssertTrue(app.buttons["study-continue-populated"].waitForExistence(timeout: 8),
++                      "Remember must supply the real source-bound timeline event.")
++        XCTAssertFalse(app.buttons["study-continue-empty"].exists)
++        captureField("study-continue-field", name: "study-02-populated")
++        XCTAssertTrue(app.staticTexts["Continue at source"].exists)
++        tapStudyButton("study-continue-populated")
++        XCTAssertTrue(element("reader-screen").waitForExistence(timeout: 8))
++        expectPage(originalPage, on: pageControl())
++        capture("study-continue-exact-source")
++    }
++
++    private func openStudyHome() {
++        XCTAssertTrue(app.buttons["primary-learn"].waitForExistence(timeout: 8))
++        app.buttons["primary-learn"].tap()
++        XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 8))
++    }
++
++    private func captureField(_ identifier: String, name: String) {
++        let field = app.descendants(matching: .any).matching(identifier: identifier).firstMatch
++        XCTAssertTrue(field.waitForExistence(timeout: 8))
++        let viewportElement = element("learn-screen-frame")
++        for _ in 0..<14 {
++            let viewport = studyViewport(viewportElement)
++            let frame = field.frame
++            // Tall AX fields need multiple real viewport captures, never a scaled composite.
++            if frame.minY >= viewport.minY && frame.minY < viewport.minY + viewport.height * 0.55 {
++                capture(name)
++                if frame.maxY > viewport.maxY {
++                    var lastBottom = frame.minY
++                    for index in 1...8 {
++                        dragStudyViewport(studyViewport(viewportElement), upward: true)
++                        capture(name + "-continued-\(index)")
++                        let current = field.frame
++                        if current.maxY <= studyViewport(viewportElement).maxY { break }
++                        if current.minY == lastBottom { break }
++                        lastBottom = current.minY
++                    }
++                    XCTAssertLessThanOrEqual(field.frame.maxY, studyViewport(viewportElement).maxY,
++                                             "All of the tall field must be reachable by scrolling.")
++                }
++                attachAccessibilityTree(name: name)
++                return
++            }
++            dragStudyViewport(viewport, upward: frame.minY >= viewport.minY)
++        }
++        XCTFail("Could not place \(identifier) inside the actual Study viewport for capture.")
++    }
++}
+--- a/ShelfUITests/ShelfUITestCase.swift
++++ b/ShelfUITests/ShelfUITestCase.swift
+@@ -185,10 +185,11 @@
+         let study = app.buttons["primary-learn"]
+         XCTAssertTrue(study.waitForExistence(timeout: 8)); study.tap()
+         XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 10))
+-        if app.buttons["learn-topic-react"].waitForExistence(timeout: 20) { app.buttons["learn-topic-react"].tap() }
+-        XCTAssertTrue(app.buttons[minutes].waitForExistence(timeout: 5)); app.buttons[minutes].tap()
++        revealStudySessionOptions()
++        if app.buttons["learn-topic-react"].waitForExistence(timeout: 20) { tapStudyButton("learn-topic-react") }
++        XCTAssertTrue(app.buttons[minutes].waitForExistence(timeout: 5)); tapStudyButton(minutes)
+         let start = app.buttons["start-learning-session"]
+-        XCTAssertTrue(waitUntilEnabled(start, timeout: 35)); start.tap()
++        XCTAssertTrue(waitUntilEnabled(start, timeout: 35)); tapStudyButton("start-learning-session")
+         XCTAssertTrue(element("study-session-screen").waitForExistence(timeout: 12))
+     }
+ 
+--- a/ShelfUITests/StudyInteractionSupport.swift
++++ b/ShelfUITests/StudyInteractionSupport.swift
+@@ -53,6 +53,15 @@
+         XCTFail("Expected exactly one native Button fully inside the Study viewport: \(identifier); found \(query.count).",
+                 file: file, line: line)
+         return button
++    }
++
++    func revealStudySessionOptions(file: StaticString = #filePath, line: UInt = #line) {
++        let options = revealStudyButton("study-session-options", file: file, line: line)
++        if options.value as? String != "Expanded" {
++            tapStudyButton("study-session-options", file: file, line: line)
++        }
++        XCTAssertEqual(options.value as? String, "Expanded", file: file, line: line)
++        XCTAssertTrue(app.buttons["start-learning-session"].exists, file: file, line: line)
+     }
+ 
+     func revealStudyTools(file: StaticString = #filePath, line: UInt = #line) {
+--- a/scripts/sync-xcode-sources.py
++++ b/scripts/sync-xcode-sources.py
+@@ -105,7 +105,7 @@
+     voice_paths = sorted(str(p.relative_to(ROOT / 'Shelf/Voice')) for p in (ROOT / 'Shelf/Voice').rglob('*.swift'))
+     unit_paths = ['LearningIndexIntegrationTests.swift', 'KnowledgeIntegrationTests.swift', 'VoiceCatalogTests.swift', 'PDFReconstructionV25Tests.swift', 'LearningRealModelP0Tests.swift', 'PDFReadFurnitureTests.swift']
+     unit_paths += sorted(p.name for p in (ROOT / 'ShelfTests').glob('Expl*.swift'))
+-    ui_paths = ['ShelfLearningOSUITests.swift', 'ShelfWorldClassUITests.swift',
++    ui_paths = ["ShelfStudyHomeUITests.swift", 'ShelfLearningOSUITests.swift', 'ShelfWorldClassUITests.swift',
+                 'StudyInteractionSupport.swift', 'ShelfStudyInteractionUITests.swift', 'V24InteractionSupport.swift', 'ReleaseInteractionSupport.swift', 'ShelfEmotionalFlowUITests.swift', 'ShelfRecoveryV25UITests.swift', 'ShelfSourceRecoveryP0UITests.swift']
+     ui_paths += sorted(p.name for p in (ROOT / 'ShelfUITests').glob('ShelfExpl*.swift'))
+ 
+--- a/scripts/test-night-field-contrast.py
++++ b/scripts/test-night-field-contrast.py
+@@ -58,6 +58,17 @@
+     ('danger', 'menuSurface', 4.5), ('untested', 'surfaceRaised', 3),
+ ]
+ 
++PAIRS += [
++    (foreground, surface, 4.5)
++    for surface, foregrounds in (
++        ('studyContinueSurface', ('studyContinueForeground', 'studyContinueSecondary')),
++        ('studyFadingSurface', ('studyFadingForeground', 'studyFadingSecondary')),
++        ('studyBlindSpotSurface', ('studyBlindSpotForeground', 'studyBlindSpotSecondary')),
++        ('studyLabsSurface', ('studyLabsForeground', 'studyLabsSecondary', 'signal')),
++    )
++    for foreground in foregrounds
++] + [('separator', 'studyLabsSurface', 3)]
++
+ 
+ class ContrastMathTests(unittest.TestCase):
+     def test_black_white(self):
+--- /dev/null
++++ b/scripts/verify-study-home.sh
+@@ -0,0 +1,51 @@
++#!/bin/bash
++# Run in local Terminal. Uses only the existing isolated Shelf-UITests library.
++set -euo pipefail
++cd "$(dirname "$0")/.."
++device=A248FB9E-B969-4CF6-A0ED-B2013A3C60A6
++run="$PWD/docs/design/study-home-evidence/native-$(date +%Y%m%d-%H%M%S)"
++mkdir -p "$run"
++echo "Study Home evidence: $run"
++python3 scripts/test-night-field-contrast.py > "$run/contrast.log" 2>&1
++python3 scripts/check-night-field.py > "$run/night-field.log"
++python3 scripts/check-study-interactions.py > "$run/interactions.log"
++python3 scripts/validate.py > "$run/validate.log"
++common=(-project Shelf.xcodeproj -scheme Shelf -configuration Debug
++  -destination "platform=iOS Simulator,id=$device"
++  -derivedDataPath .build/study-home CODE_SIGNING_ALLOWED=NO)
++xcodebuild "${common[@]}" build > "$run/build.log" 2>&1
++xcrun simctl bootstatus "$device" -b > "$run/simulator.log" 2>&1
++original_size=$(xcrun simctl ui "$device" content_size)
++printf '%s\n' "$original_size" > "$run/original-content-size.txt"
++trap 'xcrun simctl ui "$device" content_size "$original_size" >/dev/null 2>&1 || true' EXIT
++
++export_results() {
++  local variant=$1
++  if [ -d "$run/$variant.xcresult" ]; then
++    xcrun xcresulttool get test-results summary --path "$run/$variant.xcresult" > "$run/$variant-summary.json"
++    xcrun xcresulttool export attachments --path "$run/$variant.xcresult" --output-path "$run/$variant-attachments"
++  fi
++}
++
++result=0
++for variant in default AX1; do
++  size=large
++  if [ "$variant" = AX1 ]; then size=accessibility-medium; fi
++  xcrun simctl ui "$device" content_size "$size"
++  xcrun simctl ui "$device" content_size > "$run/$variant-content-size.txt"
++  extra=()
++  if [ "$variant" = default ]; then
++    extra=('-only-testing:ShelfUITests/ShelfStudyInteractionUITests'
++      '-only-testing:ShelfUITests/ShelfLearningOSUITests/test32LearnTodayCreatesLocalStudySession')
++  fi
++  set +e
++  xcodebuild "${common[@]}" -parallel-testing-enabled NO -resultBundlePath "$run/$variant.xcresult" test \
++    '-only-testing:ShelfUITests/ShelfStudyHomeUITests' "${extra[@]}" > "$run/$variant-ui.log" 2>&1
++  status=$?
++  set -e
++  if [ "$status" -ne 0 ]; then result=$status; fi
++  export_results "$variant"
++done
++echo "Study Home native test exit: $result"
++echo "Inspect real default/AX1 attachments before certifying the redesign."
++exit "$result"

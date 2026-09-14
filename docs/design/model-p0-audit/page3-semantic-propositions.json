@@ -1,0 +1,52 @@
+[
+  {
+    "confidenceClass" : "verified",
+    "evidence" : {
+      "charLength" : 53,
+      "charStart" : 0,
+      "documentID" : "CE34CADA-2833-4534-B044-FC583C3FDB76",
+      "pageIndex" : 2,
+      "sourceHash" : "32f2a35f77fee2c5",
+      "sourceText" : "items.map(item => ( <Row key={item.id} item={item} \/>"
+    },
+    "extractionRuleID" : "code.arrayMap.call.v1",
+    "id" : "c1b80bd122f3539f",
+    "objectText" : "one transformed output per input element",
+    "relation" : "returns",
+    "subjectID" : "js.array.map",
+    "truthClass" : "structural"
+  },
+  {
+    "claim" : {
+      "evidence" : {
+        "charLength" : 22,
+        "charStart" : 0,
+        "documentID" : "CE34CADA-2833-4534-B044-FC583C3FDB76",
+        "pageIndex" : 2,
+        "sourceHash" : "a6f8cfebba1ce062",
+        "sourceText" : "Keys describe identity"
+      },
+      "intent" : "mechanism",
+      "object" : "identity",
+      "predicate" : "describe",
+      "relation" : "purpose",
+      "subject" : "Keys",
+      "subjectPhrase" : "Keys"
+    },
+    "confidenceClass" : "verified",
+    "evidence" : {
+      "charLength" : 22,
+      "charStart" : 0,
+      "documentID" : "CE34CADA-2833-4534-B044-FC583C3FDB76",
+      "pageIndex" : 2,
+      "sourceHash" : "a6f8cfebba1ce062",
+      "sourceText" : "Keys describe identity"
+    },
+    "extractionRuleID" : "general.mechanism.v4",
+    "id" : "e07a18d886bff6e9",
+    "objectText" : "identity",
+    "relation" : "purpose",
+    "subjectID" : "doc.914da5eb40b5836b",
+    "truthClass" : "verifiedSource"
+  }
+]

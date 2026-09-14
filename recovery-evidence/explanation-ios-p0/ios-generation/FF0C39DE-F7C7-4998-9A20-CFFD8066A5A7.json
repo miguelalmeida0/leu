@@ -1,0 +1,56 @@
+{
+  "artifactPath" : "\/Users\/malmeida\/Documents\/ChatGPT\/Leu\/LeuNightFieldContrast\/recovery-evidence\/explanation-ios-p0\/ios-generation\/FF0C39DE-F7C7-4998-9A20-CFFD8066A5A7.json",
+  "attempts" : [
+    {
+      "attempt" : 1,
+      "blockCount" : null,
+      "citedSpanIDs" : [
+
+      ],
+      "generateExplanationJSONCalled" : true,
+      "preservedTerm" : null,
+      "responseReceived" : false,
+      "startedUptime" : 8275.3768002916677,
+      "validationAccepted" : null,
+      "validationFailures" : [
+
+      ],
+      "validationWarnings" : [
+
+      ],
+      "wordCount" : null
+    }
+  ],
+  "availability" : "available",
+  "backend" : "apple-on-device",
+  "bundleID" : "dev.shelf.personal",
+  "documentID" : "54D34876-C7A0-469B-819D-0E26F7C8A25C",
+  "droppedReason" : "staleRequest",
+  "error" : null,
+  "extractionVersion" : 5,
+  "finalAccepted" : false,
+  "finalState" : "dropped",
+  "finalStatePreparedAt" : "2026-09-14T09:28:36Z",
+  "fingerprint" : "7d42381fcbb2e1c6252457bced1a3970015142adbac4a556fb35d7ab4e318640",
+  "fromCache" : false,
+  "lastEvent" : "REQUEST_DROPPED",
+  "mode" : "standard",
+  "osVersion" : "Version 26.5 (Build 23F77)",
+  "page" : 3,
+  "platform" : "iOS-simulator",
+  "promptVersion" : 3,
+  "recordInstalled" : false,
+  "repairAttempted" : false,
+  "requestID" : "FF0C39DE-F7C7-4998-9A20-CFFD8066A5A7",
+  "simulatorID" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+  "spanIDs" : [
+    "s1",
+    "h1"
+  ],
+  "startedAt" : "2026-09-14T09:28:32Z",
+  "startedUptime" : 8275.2130348333339,
+  "totalLatencyMilliseconds" : 3847.2358333328884,
+  "traceFormatVersion" : 3,
+  "validatorVersion" : 2,
+  "visibleUIObserved" : false
+}

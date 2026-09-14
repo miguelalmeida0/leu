@@ -1,0 +1,17 @@
+{
+  "oldVersion": "V23.10",
+  "oldImplementationRejected": true,
+  "oldViolations": [
+    "Collapsed Study tools must be structurally removed: Connections must exist only inside the expanded branch.",
+    "Collapsed Study tools must be structurally removed: Document topics must exist only inside the expanded branch.",
+    "Collapsed Study tools must be structurally removed: Search ideas must exist only inside the expanded branch.",
+    "Study disclosure must not preserve hidden controls using .frame(maxHeight:",
+    "Study disclosure must not preserve hidden controls using .opacity(model.moreLearningExpanded",
+    "Study disclosure must not preserve hidden controls using .accessibilityElement(children: .contain)",
+    "Secondary Study actions must reject stale collapsed activation.",
+    "Study tools must not remain alive in an outgoing animation."
+  ],
+  "newVersion": "V23.11",
+  "newViolations": [],
+  "nativeRuntimeExecutedHere": false
+}

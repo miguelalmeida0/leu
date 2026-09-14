@@ -1,0 +1,53 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "modelName" : "iPhone Air",
+        "osBuildNumber" : "23F77",
+        "osVersion" : "26.5",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 86,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Shelf · Built with macOS 26.6",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1789294420.836,
+  "passedTests" : 86,
+  "result" : "Failed",
+  "skippedTests" : 0,
+  "startTime" : 1789294372.758,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertGreaterThan failed: (\"0\") is not greater than (\"0\") - Real responses alone do not satisfy the accepted learning question gate.",
+      "targetName" : "ShelfTests",
+      "testIdentifier" : 49,
+      "testIdentifierString" : "LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning()",
+      "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfTests/LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning",
+      "testName" : "testRealReactInferenceValidationPersistenceAndPlanning()"
+    }
+  ],
+  "title" : "Test - Shelf",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "76% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 2.95s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 87
+}

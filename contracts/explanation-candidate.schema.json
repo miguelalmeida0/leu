@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExplanationCandidate",
+  "description": "Response shape for the shared on-device explanation capability. Span references establish traceability; human review establishes semantic quality.",
+  "x-schema-version": 2,
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "blocks",
+    "needsContext"
+  ],
+  "properties": {
+    "blocks": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "text",
+          "sourceSpanIDs"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "plainMeaning",
+              "mechanism",
+              "example",
+              "caveat"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1400
+          },
+          "sourceSpanIDs": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 4,
+            "items": {
+              "type": "string"
+            },
+            "description": "IDs of supplied spans this block draws on. Traceability only; not proof of entailment."
+          }
+        }
+      }
+    },
+    "preservedTerm": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 80
+    },
+    "preservedTermMeaning": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 300
+    },
+    "needsContext": {
+      "type": "boolean",
+      "description": "True when the passage cannot be explained from the supplied spans alone."
+    },
+    "needsContextReason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 300
+    }
+  },
+  "x-application-attached": [
+    "requestID",
+    "documentID",
+    "pageLabel",
+    "generatedAt",
+    "backend",
+    "providerRevision",
+    "schemaVersion",
+    "validatorVersion",
+    "servedFromCache"
+  ],
+  "x-not-model-supplied": "The model must never be asked to produce the fields in x-application-attached."
+}

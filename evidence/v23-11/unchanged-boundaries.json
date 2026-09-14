@@ -1,0 +1,67 @@
+[
+  {
+    "scope": "Packages/ShelfCore/Sources",
+    "filesCompared": 86,
+    "changed": []
+  },
+  {
+    "scope": "Packages/ShelfCore/Tests",
+    "filesCompared": 29,
+    "changed": []
+  },
+  {
+    "scope": "Shelf/DesignSystem",
+    "filesCompared": 6,
+    "changed": []
+  },
+  {
+    "scope": "Shelf/Resources",
+    "filesCompared": 32,
+    "changed": []
+  },
+  {
+    "scope": "Shelf/Features/Reader",
+    "filesCompared": 32,
+    "changed": []
+  },
+  {
+    "scope": "Shelf/App/RootView.swift",
+    "filesCompared": 1,
+    "changed": []
+  },
+  {
+    "scope": "Shelf/Learning/LearningStateSheet.swift",
+    "filesCompared": 1,
+    "changed": []
+  },
+  {
+    "scope": "Shelf/Learning/LearningModel.swift",
+    "filesCompared": 1,
+    "changed": []
+  },
+  {
+    "scope": "Shelf/Learning/LearnTodayScreen.swift",
+    "filesCompared": 1,
+    "changed": []
+  },
+  {
+    "scope": "ShelfUITests/ShelfLearningOSUITests.swift",
+    "filesCompared": 1,
+    "changed": []
+  },
+  {
+    "scope": "ShelfUITests/StudyInteractionSupport.swift",
+    "filesCompared": 1,
+    "changed": []
+  },
+  {
+    "scope": "scripts/verify-qa-results.py",
+    "filesCompared": 1,
+    "changed": []
+  },
+  {
+    "scope": "scripts/test-ios.sh",
+    "filesCompared": 1,
+    "changed": []
+  }
+]

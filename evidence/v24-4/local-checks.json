@@ -1,0 +1,90 @@
+{
+  "checks": [
+    {
+      "script": "check-connected-architecture.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-gallery-minimalism.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-learning-architecture.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-learning-offline.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-shelfcore-imports.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-study-interactions.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-swiftui-compile-contract.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-ui-test-contract.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-v24-contract.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-v242-interactions.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-v243-root-compile.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-v244-lens-compile.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-voice-architecture.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "check-worldclass-offline.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "test-settings-compile-repair.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "test-study-repair-tools.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "test-tools.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "test-v242-interactions.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "test-v243-root-compile.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "test-v244-lens-compile.py",
+      "completed_output_passed": true
+    },
+    {
+      "script": "validate.py",
+      "completed_output_passed": true
+    }
+  ],
+  "aggregate_interruption": "First aggregate verification call was interrupted at the enclosing tool time limit during test-tools.py. The standalone test-tools.py invocation subsequently completed 15 checks, exit 0; no failed test assertion was suppressed.",
+  "native_apple_tests": "not executed"
+}

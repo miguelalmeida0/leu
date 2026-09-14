@@ -1,0 +1,49 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "modelName" : "iPhone Air",
+        "osBuildNumber" : "23F77",
+        "osVersion" : "26.5",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 4,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Shelf · Built with macOS 26.6",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1789289089.579,
+  "passedTests" : 4,
+  "result" : "Failed",
+  "skippedTests" : 0,
+  "startTime" : 1789288795.308,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "ShelfUITests",
+      "testIdentifier" : 5,
+      "testIdentifierString" : "ShelfStudyInteractionUITests/test49StudySecondaryButtonsOpenRealDestinationsAndCollapse()",
+      "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfUITests/ShelfStudyInteractionUITests/test49StudySecondaryButtonsOpenRealDestinationsAndCollapse",
+      "testName" : "test49StudySecondaryButtonsOpenRealDestinationsAndCollapse()"
+    }
+  ],
+  "title" : "Test - Shelf",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 5
+}

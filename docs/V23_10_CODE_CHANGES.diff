@@ -1,0 +1,1264 @@
+--- a/Shelf/App/RootView.swift
++++ b/Shelf/App/RootView.swift
+@@ -30,6 +30,7 @@
+                 if let notice = container.learning.notice { NoticeBar(text: notice) { container.learning.notice = nil } }
+                 PrimaryTabBar(selection: $primaryArea)
+             }
++            .background { UITestFrameProbe(identifier: "root-bottom-chrome-frame") }
+         }
+         .task {
+             await model.bootstrap()
+@@ -48,6 +49,12 @@
+             if area == .learn || area == .trails {
+                 Task { await container.learning.syncLibrary(); await container.knowledge.syncLibrary() }
+             }
++        }
++        // A recall launched from Progress must reveal the session, not remain behind Progress.
++        .onChange(of: container.learning.activeSession?.id) { _, sessionID in
++            guard sessionID != nil, primaryArea == .learn else { return }
++            StudyInteractionTrace.record("route.session.requested")
++            studySurface = .landing
+         }
+         .onChange(of: container.knowledge.pendingDestination) { _, destination in
+             guard destination != nil, model.readerRoute == nil else { return }
+@@ -98,10 +105,12 @@
+             switch studySurface {
+             case .landing:
+                 LearnTodayScreen(model: container.learning, knowledge: container.knowledge) {
++                    StudyInteractionTrace.record("route.progress.requested")
+                     studySurface = .progress
+                 }
+             case .progress:
+                 LearningStateSheet(model: container.learning) {
++                    StudyInteractionTrace.record("route.progress.done")
+                     studySurface = .landing
+                 }
+             }
+--- a/Shelf/Learning/Components/LearnSecondaryModes.swift
++++ b/Shelf/Learning/Components/LearnSecondaryModes.swift
+@@ -28,6 +28,7 @@
+             row("Progress", detail: "Now and history of your understanding", symbol: "clock.arrow.circlepath", identifier: "learning-progress", action: onProgress)
+             Divider().overlay(ShelfTheme.line)
+             Button {
++                StudyInteractionTrace.record("activate.learning-more")
+                 withAnimation(ShelfMotion.gentle) { model.moreLearningExpanded.toggle() }
+                 ShelfHaptics.shared.play(.selectionChanged)
+             } label: {
+@@ -43,11 +44,10 @@
+                         .foregroundStyle(ShelfTheme.secondary)
+                         .rotationEffect(.degrees(model.moreLearningExpanded ? 90 : 0))
+                 }
+-                .frame(minHeight: 56)
++                .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+                 .contentShape(Rectangle())
+             }
+             .buttonStyle(.plain)
+-            .accessibilityElement(children: .ignore)
+             .accessibilityLabel("More learning options")
+             .accessibilityValue(model.moreLearningExpanded ? "Expanded" : "Collapsed")
+             .accessibilityIdentifier("learning-more")
+@@ -90,7 +90,10 @@
+     }
+ 
+     private func row(_ title: String, detail: String, symbol: String, identifier: String, action: @escaping () -> Void) -> some View {
+-        Button(action: action) {
++        Button {
++            StudyInteractionTrace.record("activate.\(identifier)")
++            action()
++        } label: {
+             HStack(spacing: 12) {
+                 Image(systemName: symbol).frame(width: 30).foregroundStyle(ShelfTheme.accent)
+                 VStack(alignment: .leading, spacing: 2) {
+@@ -99,17 +102,19 @@
+                 }
+                 Spacer(); Image(systemName: "chevron.right").font(.caption).foregroundStyle(ShelfTheme.secondary)
+             }
+-            .frame(minHeight: 56).contentShape(Rectangle())
++            .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading).contentShape(Rectangle())
+         }
+         .buttonStyle(.plain)
+-        .accessibilityElement(children: .ignore)
+         .accessibilityLabel(title)
+         .accessibilityHint(detail)
+         .accessibilityIdentifier(identifier)
+     }
+ 
+     private func detailRow(_ title: String, detail: String, symbol: String, identifier: String, action: @escaping () -> Void) -> some View {
+-        Button(action: action) {
++        Button {
++            StudyInteractionTrace.record("activate.\(identifier)")
++            action()
++        } label: {
+             HStack(spacing: 12) {
+                 Image(systemName: symbol)
+                     .font(.system(size: 14, weight: .medium))
+@@ -128,11 +133,10 @@
+                     .font(.system(size: 10, weight: .semibold))
+                     .foregroundStyle(ShelfTheme.secondary)
+             }
+-            .frame(minHeight: 58)
++            .frame(maxWidth: .infinity, minHeight: 58, alignment: .leading)
+             .contentShape(Rectangle())
+         }
+         .buttonStyle(.plain)
+-        .accessibilityElement(children: .ignore)
+         .accessibilityLabel(title)
+         .accessibilityHint(detail)
+         .accessibilityIdentifier(identifier)
+--- a/Shelf/Learning/LearnTodayScreen.swift
++++ b/Shelf/Learning/LearnTodayScreen.swift
+@@ -46,7 +46,9 @@
+             .frame(maxWidth: 760).frame(maxWidth: .infinity)
+         }
+         .background(ShelfTheme.background)
++        .background { UITestFrameProbe(identifier: "learn-screen-frame") }
+         .accessibilityIdentifier("learn-screen")
++        .onAppear { StudyInteractionTrace.record("surface.study-landing.appeared") }
+     }
+ 
+     private var header: some View {
+--- a/Shelf/Learning/LearningModel.swift
++++ b/Shelf/Learning/LearningModel.swift
+@@ -108,7 +108,7 @@
+             guard let self else { return }
+             let books = library.snapshot.activeBooks
+             let pending = books.filter { book in
+-                guard let analysis = snapshot.analyses[book.id] else { return true }
++                guard let analysis = self.snapshot.analyses[book.id] else { return true }
+                 return analysis.fingerprint != book.fingerprint ||
+                     analysis.algorithmVersion != DocumentAnalyzer.algorithmVersion
+             }
+--- a/Shelf/Learning/LearningStateSheet.swift
++++ b/Shelf/Learning/LearningStateSheet.swift
+@@ -43,6 +43,7 @@
+             else { historyContent }
+         }
+         .background(ShelfTheme.background.ignoresSafeArea())
++        .onAppear { StudyInteractionTrace.record("surface.progress.appeared") }
+     }
+     private var progressTabs: some View {
+         HStack(spacing: 8) {
+@@ -53,6 +54,7 @@
+     private func progressTab(_ tab: ProgressView, identifier: String) -> some View {
+         let selected = view == tab
+         return Button {
++            StudyInteractionTrace.record("activate.progress-tab-\(tab.rawValue.lowercased())")
+             withAnimation(ShelfMotion.gentle) { view = tab }
+             ShelfHaptics.shared.play(.selectionChanged)
+         } label: {
+@@ -98,6 +100,7 @@
+             .frame(maxWidth: 720)
+             .frame(maxWidth: .infinity)
+         }
++        .accessibilityIdentifier("progress-now-scroll").background { UITestFrameProbe(identifier: "progress-now-scroll-frame") }
+     }
+     private var historyContent: some View {
+         ScrollView {
+@@ -142,6 +145,7 @@
+                                 .contentShape(Rectangle())
+                             }
+                             .buttonStyle(.plain)
++                            .accessibilityIdentifier("progress-event-\(event.kind.rawValue)-\(event.id.uuidString)")
+                             Divider().overlay(ShelfTheme.line)
+                         }
+                     }
+@@ -150,10 +154,14 @@
+             .padding(.horizontal, ShelfTheme.gutter)
+             .padding(.bottom, 30)
+         }
++        .accessibilityIdentifier("progress-history-scroll")
+     }
+     private func topicRow(_ topic: LearningTopic) -> some View {
+         let state = model.mastery(topic: topic)
+-        return Button { model.startActiveRecall(topicID: topic.id) } label: {
++        return Button {
++            StudyInteractionTrace.record("activate.progress-recall")
++            model.startActiveRecall(topicID: topic.id)
++        } label: {
+             VStack(alignment: .leading, spacing: 9) {
+                 HStack(alignment: .firstTextBaseline) {
+                     Text(topic.name).font(LearningTokens.Typography.compactTitle).foregroundStyle(ShelfTheme.text)
+@@ -177,6 +185,8 @@
+             .contentShape(Rectangle())
+         }
+         .buttonStyle(.plain)
++        .accessibilityIdentifier("progress-topic-\(topic.id.uuidString)")
++        .disabled(!model.snapshot.learningObjects.contains { $0.topicIDs.contains(topic.id) })
+         .accessibilityLabel("\(topic.name), \(stateLabel(state.state)), \(state.attempts) attempts")
+         .accessibilityHint("Starts active recall for this topic")
+     }
+--- /dev/null
++++ b/Shelf/Learning/StudyInteractionTrace.swift
+@@ -0,0 +1,34 @@
++import Foundation
++
++/// Local, opt-in DEBUG instrumentation. Records event names, never reading content.
++/// The same real actions run whether diagnostics are enabled or disabled.
++@MainActor
++enum StudyInteractionTrace {
++    static func record(_ event: String) {
++        #if DEBUG
++        guard ProcessInfo.processInfo.environment["LEU_UI_DIAGNOSTICS"] == "1" else { return }
++        do {
++            let directory = FileManager.default.temporaryDirectory.appendingPathComponent("LeuUIDiagnostics", isDirectory: true)
++            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
++            let url = directory.appendingPathComponent("study-\(ProcessInfo.processInfo.processIdentifier).jsonl")
++            if let size = try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? NSNumber,
++               size.intValue > 1_048_576 { return }
++            let record: [String: Any] = ["event": event,
++                "timestamp": Date().timeIntervalSince1970, "pid": ProcessInfo.processInfo.processIdentifier]
++            var data = try JSONSerialization.data(withJSONObject: record, options: [.sortedKeys])
++            data.append(0x0A)
++            if !FileManager.default.fileExists(atPath: url.path) {
++                try data.write(to: url, options: [.atomic])
++            } else {
++                let handle = try FileHandle(forWritingTo: url)
++                defer { try? handle.close() }
++                try handle.seekToEnd()
++                try handle.write(contentsOf: data)
++            }
++        } catch {
++            // Diagnostics must never change the outcome of a user action.
++            print("LEU_TRACE_UNAVAILABLE: \(error.localizedDescription)")
++        }
++        #endif
++    }
++}
+--- a/Shelf/Learning/StudySessionScreen.swift
++++ b/Shelf/Learning/StudySessionScreen.swift
+@@ -18,6 +18,7 @@
+             }
+         }
+         .accessibilityIdentifier("study-session-screen")
++        .onAppear { StudyInteractionTrace.record("surface.study-session.appeared") }
+     }
+ 
+     private var sessionHeader: some View {
+--- a/ShelfUITests/ShelfLearningOSUITests.swift
++++ b/ShelfUITests/ShelfLearningOSUITests.swift
+@@ -19,7 +19,8 @@
+     func test33QuestionCommitAndSourceRoundTrip() throws {
+         openLearnAndStart()
+         guard element("question-card").waitForExistence(timeout: 12) else {
+-            throw XCTSkip("The deterministic planner selected a non-question activity for this seed.")
++            XCTFail("The seeded study plan must include the question required by this round-trip test.")
++            return
+         }
+         var option = identifiedControl("question-option-0")
+         if !option.waitForExistence(timeout: 3) {
+@@ -43,7 +44,7 @@
+ 
+     func test34ActiveRecallEntryPoint() {
+         openLearn()
+-        tapLearningRow(identifier: "learning-mode-active-recall", label: "Active Recall")
++        tapStudyButton("learning-mode-active-recall")
+         XCTAssertTrue(app.navigationBars["Active Recall"].waitForExistence(timeout: 5) || app.staticTexts["Active Recall"].exists)
+         XCTAssertTrue(app.buttons["Begin recall"].exists)
+         capture("34-active-recall-setup")
+@@ -51,7 +52,7 @@
+ 
+     func test35InterviewModeEntryPoint() {
+         openLearn()
+-        tapLearningRow(identifier: "learning-mode-interview", label: "Interview Mode")
++        tapStudyButton("learning-mode-interview")
+         XCTAssertTrue(app.navigationBars["Interview Mode"].waitForExistence(timeout: 5) || app.staticTexts["Interview Mode"].exists)
+         XCTAssertTrue(app.buttons["Start interview"].exists)
+         capture("35-interview-setup")
+@@ -59,16 +60,17 @@
+ 
+     func test36LearningTimelineAndConnectionsOpen() {
+         openLearn()
+-        tapLearningRow(identifier: "learning-progress", label: "Progress")
+-        let history = identifiedControl("progress-tab-history", label: "History")
++        tapStudyButton("learning-progress")
++        let history = app.buttons["progress-tab-history"]
+         XCTAssertTrue(app.staticTexts["Your understanding"].waitForExistence(timeout: 6), "Progress must visibly replace the Study root.")
+         XCTAssertTrue(history.waitForExistence(timeout: 6), "Progress must expose a History tab."); history.tap()
+         XCTAssertTrue(app.staticTexts["UNDERSTANDING TIME MACHINE"].waitForExistence(timeout: 5), "History must render the visible Understanding Time Machine content.")
+-        app.buttons["Done"].tapIfExists()
++        closeProgress()
+         openLearn()
+-        openLearningMore()
+-        tapLearningMenuItem(identifier: "learning-connections", label: "Connections")
+-        XCTAssertTrue(app.staticTexts["Connections"].waitForExistence(timeout: 5))
++        revealStudyTools()
++        tapStudyButton("learning-connections")
++        XCTAssertTrue(app.navigationBars["Connections"].waitForExistence(timeout: 5))
++        XCTAssertTrue(app.staticTexts["YOUR LIBRARY, BETWEEN THE BOOKS"].exists)
+         capture("36-connections")
+     }
+ 
+@@ -107,12 +109,15 @@
+         app.buttons["Back to library"].tap()
+ 
+         openLearn()
+-        tapLearningRow(identifier: "learning-progress", label: "Progress")
+-        let historyBeforeRelaunch = identifiedControl("progress-tab-history", label: "History")
++        tapStudyButton("learning-progress")
++        let historyBeforeRelaunch = app.buttons["progress-tab-history"]
+         XCTAssertTrue(app.staticTexts["Your understanding"].waitForExistence(timeout: 6), "Progress must be visibly open before relaunch.")
+         XCTAssertTrue(historyBeforeRelaunch.waitForExistence(timeout: 6), "Progress must expose History before relaunch."); historyBeforeRelaunch.tap()
+         XCTAssertTrue(app.staticTexts["Today"].waitForExistence(timeout: 6))
+-        app.buttons["Done"].tapIfExists()
++        let savedEvent = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "progress-event-encountered-")).firstMatch
++        XCTAssertTrue(savedEvent.waitForExistence(timeout: 5), "Remember must create a source-bound history event.")
++        let savedEventID = savedEvent.identifier
++        closeProgress()
+ 
+         // Relaunch without --reset-library so this test actually verifies persisted Learning OS state.
+         app.terminate()
+@@ -121,23 +126,31 @@
+         XCTAssertTrue(app.buttons["book-React Notes"].waitForExistence(timeout: 20))
+         app.buttons["primary-learn"].tap()
+         XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 8))
+-        tapLearningRow(identifier: "learning-progress", label: "Progress")
+-        let historyAfterRelaunch = identifiedControl("progress-tab-history", label: "History")
++        tapStudyButton("learning-progress")
++        let historyAfterRelaunch = app.buttons["progress-tab-history"]
+         XCTAssertTrue(app.staticTexts["Your understanding"].waitForExistence(timeout: 6), "Progress must be visibly open after relaunch.")
+         XCTAssertTrue(historyAfterRelaunch.waitForExistence(timeout: 6), "Progress must expose History after relaunch."); historyAfterRelaunch.tap()
+         XCTAssertTrue(app.staticTexts["Today"].waitForExistence(timeout: 6))
++        XCTAssertTrue(app.buttons[savedEventID].waitForExistence(timeout: 6), "The exact captured event must survive relaunch, not just the Today heading.")
+         capture("39-learning-persists")
+     }
+ 
+ 
+     func test40LearningStateIsARealRecallEntryPoint() {
+         openLearn()
+-        tapLearningRow(identifier: "learning-progress", label: "Progress")
+-        let nowTab = identifiedControl("progress-tab-now", label: "Now")
++        tapStudyButton("learning-progress")
++        let nowTab = app.buttons["progress-tab-now"]
+         XCTAssertTrue(app.staticTexts["Your understanding"].waitForExistence(timeout: 6), "Progress must visibly replace the Study root immediately.")
+         XCTAssertTrue(nowTab.waitForExistence(timeout: 6), "Progress must open directly to its Now view.")
+         XCTAssertTrue(app.staticTexts["What you are strengthening"].waitForExistence(timeout: 5), "Progress must open directly to the visible Now content.")
+-        capture("40-learning-state")
++        let react = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@ AND label BEGINSWITH %@", "progress-topic-", "React,")).firstMatch
++        XCTAssertTrue(waitForEnabled(react, timeout: 30), "React recall must have real indexed learning objects.")
++        tapStudyButton(react.identifier, scrollID: "progress-now-scroll")
++        XCTAssertTrue(element("study-session-screen").waitForExistence(timeout: 8), "Starting recall from Progress must reveal the actual study session.")
++        XCTAssertTrue(element("question-card").waitForExistence(timeout: 5) || element("recall-card").exists,
++                      "A recall entry point must expose an actual activity, not an empty session.")
++        XCTAssertTrue(app.buttons["End study session"].exists)
++        capture("40-progress-starts-real-recall")
+     }
+ 
+     func test41ReaderTestActionOpensSourceBoundPromptEditor() {
+@@ -169,45 +182,6 @@
+         XCTAssertTrue(element("study-session-screen").waitForExistence(timeout: 12))
+     }
+ 
+-    private func tapLearningRow(identifier: String, label: String) {
+-        var control = identifiedControl(identifier, label: label)
+-        var attempts = 0
+-        while (!control.exists || !control.isHittable) && attempts < 6 {
+-            app.swipeUp()
+-            attempts += 1
+-            control = identifiedControl(identifier, label: label)
+-        }
+-        XCTAssertTrue(control.waitForExistence(timeout: 4), "Missing learning row: \(label)")
+-        XCTAssertTrue(control.isHittable, "Learning row is present but not reachable: \(label)")
+-        control.tap()
+-    }
+-
+-    private func openLearningMore() {
+-        var more = identifiedControl("learning-more", label: "More learning options")
+-        var attempts = 0
+-        while (!more.exists || !more.isHittable) && attempts < 6 {
+-            app.swipeUp()
+-            attempts += 1
+-            more = identifiedControl("learning-more", label: "More learning options")
+-        }
+-        XCTAssertTrue(more.waitForExistence(timeout: 4), "Study must expose More learning options.")
+-        XCTAssertTrue(more.isHittable, "More learning options must be reachable in the Study scroll view.")
+-        more.tap()
+-    }
+-
+-    private func tapLearningMenuItem(identifier: String, label: String) {
+-        var item = identifiedControl(identifier, label: label)
+-        var attempts = 0
+-        while (!item.exists || !item.isHittable) && attempts < 5 {
+-            app.swipeUp()
+-            attempts += 1
+-            item = identifiedControl(identifier, label: label)
+-        }
+-        XCTAssertTrue(item.waitForExistence(timeout: 5), "Missing expanded learning option: \(label)")
+-        XCTAssertTrue(item.isHittable, "Expanded learning option is present but not reachable: \(label)")
+-        item.tap()
+-    }
+-
+     private func waitForEnabled(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
+         guard element.waitForExistence(timeout: timeout) else { return false }
+         let predicate = NSPredicate(format: "enabled == true")
+@@ -215,7 +189,3 @@
+         return XCTWaiter.wait(for: [expectation], timeout: timeout) == .completed
+     }
+ }
+-
+-private extension XCUIElement {
+-    func tapIfExists() { if exists && isHittable { tap() } }
+-}
+--- /dev/null
++++ b/ShelfUITests/ShelfStudyInteractionUITests.swift
+@@ -0,0 +1,61 @@
++import XCTest
++
++/// Regression coverage for control semantics, scroll boundaries, and every secondary Study route.
++final class ShelfStudyInteractionUITests: ShelfUITestCase {
++    func test48ProgressReopensAfterScrollingAndBothTabsWork() {
++        app.buttons["primary-learn"].tap()
++        XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 8))
++        for _ in 0..<2 {
++            // Start from farther down the real scroll view; the helper must scroll back up when needed.
++            dragStudyViewport(studyViewport(element("learn-screen-frame")), upward: true)
++            tapStudyButton("learning-progress")
++            expectProgressOpen()
++            XCTAssertEqual(app.buttons["progress-tab-now"].value as? String, "Selected")
++            app.buttons["progress-tab-history"].tap()
++            XCTAssertTrue(app.staticTexts["UNDERSTANDING TIME MACHINE"].waitForExistence(timeout: 5))
++            XCTAssertEqual(app.buttons["progress-tab-history"].value as? String, "Selected")
++            app.buttons["progress-tab-now"].tap()
++            XCTAssertTrue(app.staticTexts["What you are strengthening"].waitForExistence(timeout: 5))
++            closeProgress()
++        }
++    }
++
++    func test49StudySecondaryButtonsOpenRealDestinationsAndCollapse() {
++        app.buttons["primary-learn"].tap()
++        XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 8))
++        for (identifier, title, contentID) in [
++            ("learning-mode-active-recall", "Active Recall", "Begin recall"),
++            ("learning-mode-interview", "Interview Mode", "Start interview")
++        ] {
++            tapStudyButton(identifier)
++            XCTAssertTrue(app.navigationBars[title].waitForExistence(timeout: 6))
++            XCTAssertTrue(app.buttons[contentID].exists)
++            closeStudySheet(title)
++        }
++        revealStudyTools()
++        for (identifier, title) in [
++            ("learning-connections", "Connections"),
++            ("learning-document-topics", "Document Topics"),
++            ("learning-search-ideas", "Search ideas")
++        ] {
++            tapStudyButton(identifier)
++            XCTAssertTrue(app.navigationBars[title].waitForExistence(timeout: 6))
++            if identifier == "learning-search-ideas" {
++                XCTAssertTrue(app.textFields["knowledge-search-field"].exists)
++            }
++            closeStudySheet(title)
++        }
++        tapStudyButton("learning-more")
++        XCTAssertEqual(app.buttons["learning-more"].value as? String, "Collapsed")
++        XCTAssertFalse(app.buttons["learning-connections"].isHittable,
++                       "Collapsed tools must not remain interactive behind other content.")
++    }
++
++    private func closeStudySheet(_ title: String) {
++        let done = app.navigationBars[title].buttons["Done"]
++        XCTAssertTrue(done.waitForExistence(timeout: 5))
++        XCTAssertTrue(done.isHittable)
++        done.tap()
++        XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 6))
++    }
++}
+--- a/ShelfUITests/ShelfUITestCase.swift
++++ b/ShelfUITests/ShelfUITestCase.swift
+@@ -7,6 +7,7 @@
+         continueAfterFailure = false
+         app = XCUIApplication()
+         app.launchArguments = ["--uitesting", "--reset-library"]
++        app.launchEnvironment["LEU_UI_DIAGNOSTICS"] = "1"
+         app.launch()
+         XCTAssertTrue(app.buttons["book-React Notes"].waitForExistence(timeout: 25))
+     }
+@@ -156,7 +157,11 @@
+     }
+ 
+     func attachAccessibilityTree(name: String) {
+-        let attachment = XCTAttachment(string: app.debugDescription)
++        let tree = app.debugDescription
++        print("LEU_UI_TREE_BEGIN: \(name)")
++        print(tree)
++        print("LEU_UI_TREE_END: \(name)")
++        let attachment = XCTAttachment(string: tree)
+         attachment.name = "\(name)-accessibility-tree"
+         attachment.lifetime = .keepAlways
+         add(attachment)
+--- /dev/null
++++ b/ShelfUITests/StudyInteractionSupport.swift
+@@ -0,0 +1,124 @@
++import XCTest
++
++/// Study actions must be native Buttons, fully inside the unobscured scroll viewport.
++/// A generic accessibility element with the right string is not an actionable control contract.
++extension ShelfUITestCase {
++    func tapStudyButton(_ identifier: String, scrollID: String = "learn-screen",
++                        file: StaticString = #filePath, line: UInt = #line) {
++        let button = revealStudyButton(identifier, scrollID: scrollID, file: file, line: line)
++        guard button.exists else { return }
++        studyCheckpoint("before-\(identifier)", identifier: identifier, scrollID: scrollID)
++        button.tap() // Exactly one real tap; no synthetic action, alternate route, or success retry.
++        studyCheckpoint("after-\(identifier)", identifier: identifier, scrollID: scrollID)
++    }
++
++    @discardableResult
++    func revealStudyButton(_ identifier: String, scrollID: String = "learn-screen",
++                           file: StaticString = #filePath, line: UInt = #line) -> XCUIElement {
++        let query = app.buttons.matching(identifier: identifier)
++        let button = query.firstMatch
++        let scroll = element(scrollID + "-frame")
++        guard scroll.waitForExistence(timeout: 5) else {
++            attachAccessibilityTree(name: "missing-\(scrollID)")
++            XCTFail("Missing measured Study viewport: \(scrollID)", file: file, line: line)
++            return button
++        }
++        guard element("root-bottom-chrome-frame").waitForExistence(timeout: 5) else {
++            XCTFail("Missing geometry for bottom navigation and notices.", file: file, line: line)
++            return button
++        }
++        for _ in 0..<8 {
++            let viewport = studyViewport(scroll)
++            if query.count == 1, fullyVisible(button, in: viewport) {
++                // Indexing may change the layout. Require two consecutive equal frames.
++                var previous: CGRect?
++                let stable = NSPredicate { _, _ in
++                    guard self.fullyVisible(button, in: self.studyViewport(scroll)) else { return false }
++                    let current = button.frame
++                    defer { previous = current }
++                    return previous == current
++                }
++                if XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: stable, object: nil)], timeout: 3) == .completed {
++                    XCTAssertTrue(button.isEnabled, "Study button is disabled: \(identifier)", file: file, line: line)
++                    return button
++                }
++            }
++            // Never treat an offscreen/overlapping 'Other' node as an actionable button.
++            // Gesture coordinates are derived from the current scroll viewport, not the phone model.
++            let upward = !button.exists || button.frame.midY >= viewport.midY
++            dragStudyViewport(viewport, upward: upward)
++        }
++        studyCheckpoint("unreachable-\(identifier)", identifier: identifier, scrollID: scrollID)
++        attachAccessibilityTree(name: "unreachable-\(identifier)")
++        XCTFail("Expected exactly one native Button fully inside the Study viewport: \(identifier); found \(query.count).",
++                file: file, line: line)
++        return button
++    }
++
++    func revealStudyTools(file: StaticString = #filePath, line: UInt = #line) {
++        let more = revealStudyButton("learning-more", file: file, line: line)
++        if more.value as? String != "Expanded" { tapStudyButton("learning-more", file: file, line: line) }
++        let expanded = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "Expanded"), object: more)
++        XCTAssertEqual(XCTWaiter.wait(for: [expanded], timeout: 4), .completed,
++                       "More must expose Expanded state after activation.", file: file, line: line)
++    }
++
++    func expectProgressOpen(file: StaticString = #filePath, line: UInt = #line) {
++        guard app.staticTexts["Your understanding"].waitForExistence(timeout: 6) else {
++            attachAccessibilityTree(name: "progress-did-not-open")
++            XCTFail("Progress did not appear after a verified native-button tap.", file: file, line: line)
++            return
++        }
++        XCTAssertEqual(app.buttons.matching(identifier: "progress-tab-now").count, 1, file: file, line: line)
++        XCTAssertEqual(app.buttons.matching(identifier: "progress-tab-history").count, 1, file: file, line: line)
++        XCTAssertTrue(app.buttons["progress-done"].isHittable, file: file, line: line)
++    }
++
++    func closeProgress(file: StaticString = #filePath, line: UInt = #line) {
++        let done = app.buttons["progress-done"]
++        XCTAssertTrue(done.waitForExistence(timeout: 4), file: file, line: line)
++        XCTAssertTrue(done.isHittable, file: file, line: line)
++        done.tap()
++        XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 6), file: file, line: line)
++    }
++
++    func studyViewport(_ scroll: XCUIElement) -> CGRect {
++        guard scroll.exists else { return .zero }
++        let intersection = scroll.frame.intersection(app.frame)
++        let navigation = app.buttons["primary-learn"]
++        let chrome = element("root-bottom-chrome-frame")
++        let chromeTop = chrome.exists ? chrome.frame.minY : (navigation.exists ? navigation.frame.minY : intersection.maxY)
++        let bottom = min(intersection.maxY, chromeTop)
++        return CGRect(x: intersection.minX, y: intersection.minY, width: intersection.width,
++                      height: max(0, bottom - intersection.minY)).insetBy(dx: 2, dy: 8)
++    }
++
++    func dragStudyViewport(_ viewport: CGRect, upward: Bool) {
++        guard viewport.width > 0, viewport.height > 20 else { return }
++        let origin = app.coordinate(withNormalizedOffset: .zero)
++        let start = origin.withOffset(CGVector(dx: viewport.midX - app.frame.minX,
++            dy: viewport.minY - app.frame.minY + viewport.height * (upward ? 0.8 : 0.25)))
++        let end = origin.withOffset(CGVector(dx: viewport.midX - app.frame.minX,
++            dy: viewport.minY - app.frame.minY + viewport.height * (upward ? 0.25 : 0.8)))
++        start.press(forDuration: 0.05, thenDragTo: end)
++    }
++
++    private func fullyVisible(_ button: XCUIElement, in viewport: CGRect) -> Bool {
++        guard button.exists, button.isHittable else { return false }
++        let frame = button.frame
++        return frame.width > 0 && frame.height > 0 && viewport.contains(frame)
++    }
++
++    private func studyCheckpoint(_ name: String, identifier: String, scrollID: String) {
++        let buttons = app.buttons.matching(identifier: identifier)
++        let nodes = app.descendants(matching: .any).matching(identifier: identifier) // Diagnostics only.
++        let descriptions = nodes.allElementsBoundByIndex.prefix(4).map {
++            "type=\($0.elementType.rawValue) frame=\($0.frame) enabled=\($0.isEnabled) hittable=\($0.isHittable)"
++        }.joined(separator: "; ")
++        let message = "LEU_UI_CHECKPOINT: \(name) nativeButtons=\(buttons.count) viewport=\(studyViewport(element(scrollID + "-frame"))) \(descriptions)"
++        print(message)
++        let attachment = XCTAttachment(string: message)
++        attachment.name = name + "-geometry"; attachment.lifetime = .keepAlways; add(attachment)
++        capture(name)
++    }
++}
+--- a/scripts/check-gallery-minimalism.py
++++ b/scripts/check-gallery-minimalism.py
+@@ -39,7 +39,7 @@
+ plist=plistlib.loads((ROOT/'Shelf/Resources/Info.plist').read_bytes())
+ require(plist.get('CFBundleDisplayName')=='Leu', 'installed app name must be Leu')
+ project=(ROOT/'Shelf.xcodeproj/project.pbxproj').read_text()
+-require('"MARKETING_VERSION" = "2.3.9";' in project, 'V23.9 marketing version missing')
++require('"MARKETING_VERSION" = "2.3.10";' in project, 'V23.10 marketing version missing')
+ 
+ if problems:
+     print('FAIL: Leu Gallery Minimalism release contract')
+--- /dev/null
++++ b/scripts/check-study-interactions.py
+@@ -0,0 +1,56 @@
++#!/usr/bin/env python3
++"""Source-policy checks for the repaired input boundary; not native behavioral certification."""
++from pathlib import Path
++import sys
++
++
++def check(root: Path) -> list[str]:
++    errors: list[str] = []
++    required = {
++        'Shelf/Learning/Components/LearnSecondaryModes.swift': [
++            'Button {', 'action()', 'identifier: "learning-progress", action: onProgress',
++            '.frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)'],
++        'ShelfUITests/StudyInteractionSupport.swift': [
++            'app.buttons.matching(identifier: identifier)', 'viewport.contains(frame)',
++            'navigation.frame.minY', 'query.count == 1', 'button.tap()', 'studyCheckpoint("before-',
++            'studyCheckpoint("after-'],
++        'Shelf/App/RootView.swift': ['.onChange(of: container.learning.activeSession?.id)',
++                                   'StudyInteractionTrace.record("route.session.requested")'],
++        'ShelfUITests/ShelfLearningOSUITests.swift': ['let savedEventID = savedEvent.identifier',
++            'app.buttons[savedEventID]', 'tapStudyButton(react.identifier, scrollID: "progress-now-scroll")'],
++        'ShelfUITests/ShelfUITestCase.swift': ['LEU_UI_TREE_BEGIN:', 'LEU_UI_DIAGNOSTICS'],
++        'scripts/test-ios.sh': ['STATUS=$?', 'exit "$STATUS"', 'native-results.txt'],
++        'scripts/qa-and-copy.sh': ['collect-qa-diagnostics.py', 'verify-qa-results.py', 'pbcopy < "$SUMMARY"'],
++    }
++    for name, tokens in required.items():
++        path = root / name
++        if not path.is_file():
++            errors.append(f'Missing {name}')
++            continue
++        text = path.read_text()
++        errors += [f'{name}: missing {token}' for token in tokens if token not in text]
++    secondary = root / 'Shelf/Learning/Components/LearnSecondaryModes.swift'
++    if secondary.is_file() and '.accessibilityElement(children: .ignore)' in secondary.read_text():
++        errors.append('Study Buttons must retain native accessibility semantics; do not replace them with empty ignore elements.')
++    helper = root / 'ShelfUITests/StudyInteractionSupport.swift'
++    if helper.is_file() and 'identifiedControl(' in helper.read_text():
++        errors.append('Study action targeting must not fall back to a generic accessibility node.')
++    for path in (root / 'ShelfUITests').glob('*.swift'):
++        if 'XCTSkip(' in path.read_text():
++            errors.append(f'{path.name}: release UI journeys must not silently skip.')
++    return errors
++
++
++def main() -> int:
++    root = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path(__file__).resolve().parents[1]
++    errors = check(root)
++    if errors:
++        print('FAIL: Study input contract')
++        print('\n'.join(' - ' + error for error in errors))
++        return 1
++    print('PASS: Study native-button, visible-viewport, session handoff and diagnostic source contracts (runtime still requires Xcode).')
++    return 0
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+--- /dev/null
++++ b/scripts/collect-qa-diagnostics.py
+@@ -0,0 +1,122 @@
++#!/usr/bin/env python3
++"""Export this QA run's native attachments and opt-in action traces; never rerun tests."""
++from __future__ import annotations
++import argparse
++import hashlib
++import json
++import os
++from pathlib import Path
++import shutil
++import subprocess
++import sys
++import zipfile
++
++
++def command(args: list[str], timeout: int = 60) -> tuple[int, str]:
++    try:
++        completed = subprocess.run(args, capture_output=True, text=True, timeout=timeout)
++        return completed.returncode, completed.stdout + completed.stderr
++    except (OSError, subprocess.TimeoutExpired) as error:
++        return 1, str(error)
++
++
++def unique_lines(path: Path) -> list[str]:
++    return list(dict.fromkeys(path.read_text().splitlines())) if path.is_file() else []
++
++
++def collect(root: Path, run: Path, log: Path, qa_status: int) -> Path:
++    output = run / 'artifacts'
++    output.mkdir(parents=True, exist_ok=True)
++    notes: list[str] = []
++    epoch = run / 'start-epoch.txt'
++    started = float(epoch.read_text().strip()) if epoch.exists() else run.stat().st_ctime
++    if log.is_file():
++        shutil.copy2(log, output / 'qa-full.log')
++    manifest = root / 'SOURCE_SHA256SUMS.txt'
++    metadata = {
++        'version': '23.10', 'qaExitCode': qa_status, 'workspace': str(root),
++        'sourceManifestSHA256': hashlib.sha256(manifest.read_bytes()).hexdigest() if manifest.exists() else None,
++        'nativeResults': unique_lines(run / 'native-results.txt'),
++        'devices': unique_lines(run / 'native-devices.txt'),
++        'disclaimer': 'Local QA data only. No test was rerun by this collector.'
++    }
++    for name in ['native-results.txt', 'native-devices.txt', 'native-commands.txt']:
++        source = run / name
++        if source.is_file():
++            shutil.copy2(source, output / name)
++    if sys.platform == 'darwin':
++        code, text = command(['xcodebuild', '-version'])
++        (output / 'xcode-version.txt').write_text(text)
++        for index, name in enumerate(metadata['nativeResults']):
++            result = Path(name)
++            if not result.is_dir():
++                notes.append(f'Native result missing: {result}')
++                continue
++            folder = output / f'native-{index + 1}'
++            folder.mkdir(exist_ok=True)
++            code, text = command(['xcrun', 'xcresulttool', 'get', 'test-results', 'summary', '--path', str(result)])
++            try:
++                json.loads(text)
++                summary_name = 'summary.json' if code == 0 else 'summary-export-error.txt'
++            except ValueError:
++                summary_name = 'summary-export-output.txt'
++            (folder / summary_name).write_text(text)
++            # Both successful checkpoints and failure screenshots are useful for the tap boundary.
++            code, text = command(['xcrun', 'xcresulttool', 'export', 'attachments',
++                                  '--path', str(result), '--output-path', str(folder / 'attachments')], timeout=120)
++            if code:
++                notes.append(f'Attachment export failed for {result.name}; original .xcresult remains available.')
++                (folder / 'attachment-export-error.txt').write_text(text)
++        for index, device in enumerate(metadata['devices']):
++            code, text = command(['xcrun', 'simctl', 'get_app_container', device, 'dev.shelf.personal', 'data'])
++            data = Path(text.strip())
++            traces = data / 'tmp' / 'LeuUIDiagnostics'
++            if code == 0 and traces.is_dir():
++                destination = output / f'device-{index + 1}-action-traces'
++                destination.mkdir(exist_ok=True)
++                count = 0
++                for path in traces.glob('study-*.jsonl'):
++                    if path.stat().st_mtime < started:
++                        continue
++                    current = []
++                    for line in path.read_text(errors='replace').splitlines():
++                        try:
++                            if float(json.loads(line).get('timestamp', 0)) >= started:
++                                current.append(line)
++                        except (ValueError, TypeError):
++                            notes.append(f'Unreadable trace record in {path.name}.')
++                    if current:
++                        (destination / path.name).write_text('\n'.join(current) + '\n')
++                        count += len(current)
++                if not count:
++                    notes.append(f'No action trace records for this run on {device}; activation remains unverified.')
++            else:
++                notes.append(f'No action traces exported for {device}; this does not establish whether activation occurred.')
++    else:
++        notes.append('Apple native exports unavailable on this operating system.')
++    metadata['exportNotes'] = notes
++    (output / 'manifest.json').write_text(json.dumps(metadata, indent=2) + '\n')
++    bundle = root / f'Leu-QA-Diagnostics-{run.name}.zip'
++    with zipfile.ZipFile(bundle, 'w', zipfile.ZIP_DEFLATED) as archive:
++        for path in sorted(output.rglob('*')):
++            if path.is_file() and not path.is_symlink():
++                archive.write(path, str(path.relative_to(output)))
++    print(f'Diagnostics bundle: {bundle}')
++    for note in notes:
++        print(f'Diagnostics note: {note}')
++    return bundle
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--root', type=Path, required=True)
++    parser.add_argument('--run-dir', type=Path, required=True)
++    parser.add_argument('--log', type=Path, required=True)
++    parser.add_argument('--qa-status', type=int, required=True)
++    args = parser.parse_args()
++    collect(args.root.resolve(), args.run_dir.resolve(), args.log.resolve(), args.qa_status)
++    return 0
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+--- a/scripts/qa-and-copy.sh
++++ b/scripts/qa-and-copy.sh
+@@ -1,22 +1,39 @@
+ #!/bin/bash
+-# Keep the real test exit status even when tee succeeds. Leave full log AND compact summary.
+-set -u
++# Preserve test status. Export diagnostics on failure too, then copy the useful result.
++set -uo pipefail
+ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+-cd "$ROOT"
+-LOG="${SHELF_QA_LOG:-qa-v23-9.log}"
++cd "$ROOT" || exit 1
++LOG="${SHELF_QA_LOG:-qa-v23-10.log}"
+ SUMMARY="${LOG%.log}-summary.txt"
+-set +e
++export SHELF_QA_RUN_DIR="$ROOT/.build/qa-runs/v23-10-$(date '+%Y%m%d-%H%M%S')-$$"
++mkdir -p "$SHELF_QA_RUN_DIR" || exit 1
++date +%s > "$SHELF_QA_RUN_DIR/start-epoch.txt"
++printf 'QA workspace: %s\nQA run: %s\n' "$ROOT" "$SHELF_QA_RUN_DIR"
+ ./scripts/qa-native.sh 2>&1 | tee "$LOG"
+-STATUS=${PIPESTATUS[0]}
+-set -e
+-python3 scripts/summarize-qa.py "$LOG" > "$SUMMARY"
++PIPE_CODES=("${PIPESTATUS[@]}")
++STATUS=${PIPE_CODES[0]}
++if [[ "$STATUS" -eq 0 && "${PIPE_CODES[1]}" -ne 0 ]]; then STATUS=74; fi
++if [[ "$STATUS" -eq 0 ]]; then
++    python3 scripts/verify-qa-results.py "$LOG" > "$SHELF_QA_RUN_DIR/coverage-check.txt" 2>&1
++    STATUS=$?
++    cat "$SHELF_QA_RUN_DIR/coverage-check.txt" | tee -a "$LOG"
++fi
++python3 scripts/collect-qa-diagnostics.py --root "$ROOT" --run-dir "$SHELF_QA_RUN_DIR" \
++    --log "$LOG" --qa-status "$STATUS" > "$SHELF_QA_RUN_DIR/export.txt" 2>&1
++EXPORT_STATUS=$?
++if ! python3 scripts/summarize-qa.py "$LOG" > "$SUMMARY"; then
++    printf 'QA summary failed; full log is %s\n' "$LOG" > "$SUMMARY"
++fi
++cat "$SHELF_QA_RUN_DIR/export.txt" >> "$SUMMARY"
++if [[ "$EXPORT_STATUS" -ne 0 ]]; then
++    printf '\nDiagnostics export failed; originals remain in .build/results.\n' >> "$SUMMARY"
++fi
+ printf '\nQA process exit code: %s\n' "$STATUS" >> "$SUMMARY"
+-printf '\n=== Leu V23.9 QA result ===\n'
++printf '\n=== Leu V23.10 QA result ===\n'
+ cat "$SUMMARY"
+-if command -v pbcopy >/dev/null 2>&1; then
+-    pbcopy < "$SUMMARY"
+-    printf '\nSummary displayed and copied. Full log: %s\n' "$LOG"
++if command -v pbcopy >/dev/null 2>&1 && pbcopy < "$SUMMARY"; then
++    printf '\nSummary copied. Full log: %s\n' "$LOG"
+ else
+-    printf '\nClipboard unavailable here. Summary saved to %s\n' "$SUMMARY"
++    printf '\nClipboard unavailable. Summary saved to %s\n' "$SUMMARY"
+ fi
+ exit "$STATUS"
+--- a/scripts/qa-native.sh
++++ b/scripts/qa-native.sh
+@@ -4,7 +4,7 @@
+ cd "$ROOT"
+ 
+ printf '
+-=== Leu V23.9 structural validation ===
++=== Leu V23.10 structural validation ===
+ '
+ python3 scripts/validate.py
+ 
+@@ -42,6 +42,8 @@
+ === Leu native UI test contract audit ===
+ '
+ python3 scripts/check-ui-test-contract.py
++python3 scripts/check-study-interactions.py
++python3 scripts/test-study-repair-tools.py
+ 
+ printf '
+ === Leu SwiftUI compile-contract audit ===
+@@ -69,12 +71,13 @@
+ ./scripts/test-ios.sh -only-testing:ShelfTests
+ 
+ printf '
+-=== Leu Progress convergence gate (36 / 39 / 40) ===
++=== Leu Study interaction gate (36 / 39 / 40 / 48 / 49) ===
+ '
+ ./scripts/test-ios.sh \
+   -only-testing:ShelfUITests/ShelfLearningOSUITests/test36LearningTimelineAndConnectionsOpen \
+   -only-testing:ShelfUITests/ShelfLearningOSUITests/test39LearningObjectSurvivesRelaunch \
+-  -only-testing:ShelfUITests/ShelfLearningOSUITests/test40LearningStateIsARealRecallEntryPoint
++  -only-testing:ShelfUITests/ShelfLearningOSUITests/test40LearningStateIsARealRecallEntryPoint \
++  -only-testing:ShelfUITests/ShelfStudyInteractionUITests
+ 
+ printf '
+ === Leu screen-by-screen XCUITest audit ===
+--- a/scripts/summarize-qa.py
++++ b/scripts/summarize-qa.py
+@@ -13,12 +13,25 @@
+     r"Executed \d+ tests, with \d+ failures",
+     r"(?:^|\s)(?:error:|fatal error:)", r"^Testing (?:failed|cancelled)",
+     r"^xcodebuild: error:", r"^Test result:", r"^Test session results,", r"^QA complete",
+-    r"^Shelf:", r"Structural validation failed:",
++    r"^LEU_UI_CHECKPOINT:", r"^Shelf:", r"Structural validation failed:",
+ ]
+ match = re.compile("|".join(patterns))
+ previous = None
++in_tree = False
++tree_lines = 0
+ for line in Path(sys.argv[1]).read_text(errors="replace").splitlines():
+     line = line.strip()
++    if line.startswith("LEU_UI_TREE_BEGIN:"):
++        in_tree = True; tree_lines = 0
++    if in_tree:
++        if tree_lines < 220:
++            print(line)
++        elif tree_lines == 220:
++            print("[Tree shortened in clipboard; complete tree is in the diagnostics bundle.]")
++        tree_lines += 1
++        if line.startswith("LEU_UI_TREE_END:"):
++            in_tree = False
++        continue
+     if match.search(line) and line != previous:
+         print(line)
+         previous = line
+--- a/scripts/sync-xcode-sources.py
++++ b/scripts/sync-xcode-sources.py
+@@ -94,7 +94,8 @@
+     knowledge_paths = sorted(str(p.relative_to(ROOT / 'Shelf/Knowledge')) for p in (ROOT / 'Shelf/Knowledge').rglob('*.swift'))
+     voice_paths = sorted(str(p.relative_to(ROOT / 'Shelf/Voice')) for p in (ROOT / 'Shelf/Voice').rglob('*.swift'))
+     unit_paths = ['LearningIndexIntegrationTests.swift', 'KnowledgeIntegrationTests.swift', 'VoiceCatalogTests.swift']
+-    ui_paths = ['ShelfLearningOSUITests.swift', 'ShelfWorldClassUITests.swift']
++    ui_paths = ['ShelfLearningOSUITests.swift', 'ShelfWorldClassUITests.swift',
++                'StudyInteractionSupport.swift', 'ShelfStudyInteractionUITests.swift']
+ 
+     new_objects = []
+     learning_refs = []
+--- a/scripts/test-ios.sh
++++ b/scripts/test-ios.sh
+@@ -8,8 +8,18 @@
+ boot_simulator
+ mkdir -p "$ROOT/.build/results"
+ RESULT="$ROOT/.build/results/Shelf-$(date '+%Y%m%d-%H%M%S')-$$.xcresult"
++if [[ -n "${SHELF_QA_RUN_DIR:-}" ]]; then
++  mkdir -p "$SHELF_QA_RUN_DIR"
++  printf '%s\n' "$RESULT" >> "$SHELF_QA_RUN_DIR/native-results.txt"
++  printf '%s\n' "$SHELF_DEVICE" >> "$SHELF_QA_RUN_DIR/native-devices.txt"
++  printf 'test-ios %s\n' "$*" >> "$SHELF_QA_RUN_DIR/native-commands.txt"
++fi
++set +e
+ xcodebuild -project "$ROOT/Shelf.xcodeproj" -scheme Shelf -configuration Debug \
+   -destination "platform=iOS Simulator,id=$SHELF_DEVICE" -destination-timeout 120 \
+   -derivedDataPath "$ROOT/.build/ios-tests" -resultBundlePath "$RESULT" \
+   -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO test "$@"
++STATUS=$?
++set -e
+ printf '\nTest result: %s\nOpen with: open "%s"\n' "$RESULT" "$RESULT"
++exit "$STATUS"
+--- /dev/null
++++ b/scripts/test-study-repair-tools.py
+@@ -0,0 +1,144 @@
++#!/usr/bin/env python3
++"""Portable regression tests for the repair's source policies, coverage parser and QA wrapper."""
++from __future__ import annotations
++import contextlib
++import importlib.util
++import io
++import json
++import os
++from pathlib import Path
++import shutil
++import subprocess
++import sys
++import tempfile
++import unittest
++import zipfile
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++def load(name: str, filename: str):
++    spec = importlib.util.spec_from_file_location(name, ROOT / 'scripts' / filename)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++
++coverage = load('qa_coverage', 'verify-qa-results.py')
++policy = load('study_policy', 'check-study-interactions.py')
++collector = load('qa_collector', 'collect-qa-diagnostics.py')
++
++
++class CoverageTests(unittest.TestCase):
++    expected = {('Suite', 'testOne'), ('Suite', 'testTwo')}
++    marker = '=== Native stage ==='
++
++    def log(self, outcomes: list[tuple[str, str]]) -> str:
++        return self.marker + '\n' + '\n'.join(
++            f"Test Case '-[App.Suite {method}]' {status} (1.0 seconds)." for method, status in outcomes
++        ) + '\n** TEST SUCCEEDED **\n'
++
++    def testCompleteRun(self):
++        self.assertEqual(coverage.verify(self.log([('testOne', 'passed'), ('testTwo', 'passed')]), self.expected, self.marker), [])
++
++    def testMissingTestRejected(self):
++        self.assertTrue(coverage.verify(self.log([('testOne', 'passed')]), self.expected, self.marker))
++
++    def testSkipRejected(self):
++        self.assertTrue(coverage.verify(self.log([('testOne', 'passed'), ('testTwo', 'skipped')]), self.expected, self.marker))
++
++    def testFailureThenRetryPassRejected(self):
++        log = self.log([('testOne', 'failed'), ('testOne', 'passed'), ('testTwo', 'passed')])
++        self.assertTrue(coverage.verify(log, self.expected, self.marker))
++
++    def testDuplicatePassNotExtraCoverage(self):
++        self.assertTrue(coverage.verify(self.log([('testOne', 'passed'), ('testOne', 'passed')]), self.expected, self.marker))
++
++    def testPriorStageCannotSatisfyMissingCurrentStage(self):
++        self.assertTrue(coverage.verify(self.log([('testOne', 'passed'), ('testTwo', 'passed')]), self.expected, '=== Missing stage ==='))
++
++    def testMissingNativeSuccessRejected(self):
++        log = self.log([('testOne', 'passed'), ('testTwo', 'passed')]).replace('** TEST SUCCEEDED **', '')
++        self.assertTrue(coverage.verify(log, self.expected, self.marker))
++
++    def testSourceInventory(self):
++        self.assertEqual(len(coverage.expected_tests(ROOT / 'ShelfTests')), 20)
++        self.assertEqual(len(coverage.expected_tests(ROOT / 'ShelfUITests')), 50)
++
++
++class PolicyTests(unittest.TestCase):
++    def testCurrentTree(self):
++        self.assertEqual(policy.check(ROOT), [])
++
++    def testRejectsButtonSemanticsRegression(self):
++        with tempfile.TemporaryDirectory() as temp:
++            destination = Path(temp)
++            path = destination / 'Shelf/Learning/Components/LearnSecondaryModes.swift'
++            path.parent.mkdir(parents=True)
++            path.write_text((ROOT / path.relative_to(destination)).read_text() + '\n.accessibilityElement(children: .ignore)\n')
++            self.assertTrue(any('retain native accessibility' in e for e in policy.check(destination)))
++
++    def testRejectsGenericNodeTargeting(self):
++        with tempfile.TemporaryDirectory() as temp:
++            destination = Path(temp)
++            path = destination / 'ShelfUITests/StudyInteractionSupport.swift'
++            path.parent.mkdir(parents=True)
++            path.write_text('identifiedControl(identifier)')
++            self.assertTrue(any('generic accessibility node' in e for e in policy.check(destination)))
++
++    def testRejectsMissingViewportContainment(self):
++        with tempfile.TemporaryDirectory() as temp:
++            destination = Path(temp)
++            path = destination / 'ShelfUITests/StudyInteractionSupport.swift'
++            path.parent.mkdir(parents=True)
++            path.write_text((ROOT / path.relative_to(destination)).read_text().replace('viewport.contains(frame)', 'true'))
++            self.assertTrue(any('viewport.contains(frame)' in e for e in policy.check(destination)))
++
++
++class WrapperTests(unittest.TestCase):
++    def execute_wrapper(self, qa_exit: int, export_exit: int, coverage_exit: int = 0):
++        with tempfile.TemporaryDirectory() as temp:
++            root = Path(temp); scripts = root / 'scripts'; scripts.mkdir()
++            (root / 'bin').mkdir()
++            shutil.copy2(ROOT / 'scripts/qa-and-copy.sh', scripts / 'qa-and-copy.sh')
++            (scripts / 'qa-native.sh').write_text(f'#!/bin/bash\necho "=== fixture ==="\nexit {qa_exit}\n')
++            (scripts / 'qa-native.sh').chmod(0o755)
++            (scripts / 'summarize-qa.py').write_text('print("fixture summary")\n')
++            (scripts / 'collect-qa-diagnostics.py').write_text(f'print("fixture diagnostics"); raise SystemExit({export_exit})\n')
++            (scripts / 'verify-qa-results.py').write_text(f'print("fixture coverage"); raise SystemExit({coverage_exit})\n')
++            copy = root / 'bin/pbcopy'; copy.write_text('#!/bin/bash\ncat > "$COPY_TARGET"\n'); copy.chmod(0o755)
++            env = {**os.environ, 'PATH': str(root / 'bin') + ':' + os.environ['PATH'], 'COPY_TARGET': str(root / 'clipboard.txt')}
++            process = subprocess.run(['bash', str(scripts / 'qa-and-copy.sh')], env=env, capture_output=True, text=True)
++            return process.returncode, (root / 'clipboard.txt').read_text()
++
++    def testFailingQAStillCopiesAndExports(self):
++        code, copied = self.execute_wrapper(65, 0)
++        self.assertEqual(code, 65); self.assertIn('fixture diagnostics', copied); self.assertIn('exit code: 65', copied)
++
++    def testExporterCannotMaskTestFailure(self):
++        code, copied = self.execute_wrapper(65, 7)
++        self.assertEqual(code, 65); self.assertIn('Diagnostics export failed', copied)
++
++    def testSuccessfulQAIsPreserved(self):
++        code, copied = self.execute_wrapper(0, 0)
++        self.assertEqual(code, 0); self.assertIn('exit code: 0', copied)
++
++    def testMissingCoveragePreventsGreen(self):
++        code, copied = self.execute_wrapper(0, 0, 1)
++        self.assertEqual(code, 1); self.assertIn('exit code: 1', copied)
++
++
++class DiagnosticsTests(unittest.TestCase):
++    def testPortableExportKeepsOriginalFailureAndFullLog(self):
++        with tempfile.TemporaryDirectory() as temp:
++            root = Path(temp); run = root / 'run'; run.mkdir()
++            log = root / 'qa.log'; log.write_text('original failure\n')
++            with contextlib.redirect_stdout(io.StringIO()):
++                archive = collector.collect(root, run, log, 65)
++            with zipfile.ZipFile(archive) as bundle:
++                self.assertEqual(bundle.read('qa-full.log'), b'original failure\n')
++                self.assertEqual(json.loads(bundle.read('manifest.json'))['qaExitCode'], 65)
++
++
++if __name__ == '__main__':
++    unittest.main(verbosity=2)
+--- /dev/null
++++ b/scripts/verify-qa-results.py
+@@ -0,0 +1,61 @@
++#!/usr/bin/env python3
++"""Reject a purported green run if native test coverage was missing, skipped or failed."""
++from pathlib import Path
++import re
++import sys
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++def expected_tests(folder: Path) -> set[tuple[str, str]]:
++    expected: set[tuple[str, str]] = set()
++    for source in folder.glob('*.swift'):
++        text = source.read_text()
++        classes = re.findall(r'\b(?:final\s+)?class\s+(\w+)\s*:\s*\w+', text)
++        methods = re.findall(r'\bfunc\s+(test\w+)\s*\(', text)
++        if methods:
++            if len(classes) != 1:
++                raise ValueError(f'Cannot unambiguously inventory test class: {source.name}')
++            expected.update((classes[0], method) for method in methods)
++    return expected
++
++
++def verify(text: str, expected: set[tuple[str, str]], marker: str) -> list[str]:
++    if marker not in text:
++        return [f'Missing completed stage: {marker}']
++    stage = text.split(marker, 1)[1].split('\n=== ', 1)[0]
++    outcomes = re.findall(r"Test Case '-\[(?:\w+\.)?(\w+)\s+(test\w+)\]' (passed|failed|skipped)", stage)
++    passed = {(suite, method) for suite, method, result in outcomes if result == 'passed'}
++    issues = [f'{suite}.{method}: {result}' for suite, method, result in outcomes if result != 'passed']
++    issues += [f'Not recorded as passed: {suite}.{method}' for suite, method in sorted(expected - passed)]
++    if '** TEST SUCCEEDED **' not in stage:
++        issues.append('Native stage did not report TEST SUCCEEDED.')
++    return issues
++
++
++def main() -> int:
++    if len(sys.argv) != 2:
++        print('Usage: verify-qa-results.py <complete-native-qa-log>', file=sys.stderr)
++        return 2
++    text = Path(sys.argv[1]).read_text(errors='replace')
++    issues = verify(text, expected_tests(ROOT / 'ShelfTests'),
++                    '=== Leu Apple PDF integration and viewport geometry tests ===')
++    issues += verify(text, expected_tests(ROOT / 'ShelfUITests'),
++                     '=== Leu screen-by-screen XCUITest audit ===')
++    progress = {( 'ShelfLearningOSUITests', method) for method in [
++        'test36LearningTimelineAndConnectionsOpen', 'test39LearningObjectSurvivesRelaunch',
++        'test40LearningStateIsARealRecallEntryPoint']}
++    progress |= expected_tests(ROOT / 'ShelfUITests') & {
++        ('ShelfStudyInteractionUITests', 'test48ProgressReopensAfterScrollingAndBothTabsWork'),
++        ('ShelfStudyInteractionUITests', 'test49StudySecondaryButtonsOpenRealDestinationsAndCollapse')}
++    issues += verify(text, progress, '=== Leu Study interaction gate (36 / 39 / 40 / 48 / 49) ===')
++    if issues:
++        print('FAIL: complete native coverage was not established.')
++        print('\n'.join(' - ' + issue for issue in issues))
++        return 1
++    print('PASS: 20 Apple tests, 5 Study gate tests, and all 50 UI tests explicitly passed; no skips or failure-retries accepted.')
++    return 0
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+--- a/Shelf.xcodeproj/project.pbxproj
++++ b/Shelf.xcodeproj/project.pbxproj
+@@ -5,6 +5,36 @@
+     };
+     "objectVersion" = "56";
+     "objects" = {
++        "BC362872806FC2CF7641CBFD" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "StudyInteractionTrace.swift";
++            "sourceTree" = "<group>";
++        };
++        "377956517ADE8474E424F3C3" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "BC362872806FC2CF7641CBFD";
++        };
++        "6C41DAE2DD1EEA89F3D830C0" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "StudyInteractionSupport.swift";
++            "sourceTree" = "<group>";
++        };
++        "5446771B4EB0B46F6747F6FE" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "6C41DAE2DD1EEA89F3D830C0";
++        };
++        "834E9DB078954EA102700669" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "ShelfStudyInteractionUITests.swift";
++            "sourceTree" = "<group>";
++        };
++        "8B08457D057140DF346EA029" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "834E9DB078954EA102700669";
++        };
+         "B4170A0C85D147FC0940C9C8" = {
+             "isa" = "PBXFileReference";
+             "lastKnownFileType" = "sourcecode.swift";
+@@ -730,6 +760,7 @@
+                 "F66CAA3E3D5783A121570563",
+                 "AD161F57B86CE38EE5F2AAC9",
+                 "B4170A0C85D147FC0940C9C8",
++                "BC362872806FC2CF7641CBFD",
+             );
+             "path" = "Learning";
+             "sourceTree" = "<group>";
+@@ -1632,6 +1663,8 @@
+                 "AADDBB1D4C3436E0D57B46F1",
+                 "685650797F59F6F8F6A2E605",
+                 "68134D5C4065D4EA5B1E17E8",
++                "6C41DAE2DD1EEA89F3D830C0",
++                "834E9DB078954EA102700669",
+             );
+             "path" = "ShelfUITests";
+             "sourceTree" = "<group>";
+@@ -2456,6 +2489,7 @@
+                 "99084A44F84130F0189DFE2E",
+                 "9B7AD90A6AC59EEB2712B70C",
+                 "497B7385AC8AB50524B4F913",
++                "377956517ADE8474E424F3C3",
+             );
+             "runOnlyForDeploymentPostprocessing" = "0";
+         };
+@@ -2575,6 +2609,8 @@
+                 "39A5194C6A099564EFAB0C61",
+                 "E4657B227C8AFA86A32BBE72",
+                 "36411FAF005515911643A0E5",
++                "5446771B4EB0B46F6747F6FE",
++                "8B08457D057140DF346EA029",
+             );
+             "runOnlyForDeploymentPostprocessing" = "0";
+         };
+@@ -2696,7 +2732,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "2.3.9";
++                "MARKETING_VERSION" = "2.3.10";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+@@ -2719,7 +2755,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "2.3.9";
++                "MARKETING_VERSION" = "2.3.10";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";

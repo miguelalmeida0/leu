@@ -1,0 +1,158 @@
+{
+  "meaningfulClaims" : [
+    {
+      "cognitiveOperation" : "constraint",
+      "concept" : "Reordering",
+      "documentID" : "CE34CADA-2833-4534-B044-FC583C3FDB76",
+      "evidence" : {
+        "range" : {
+          "length" : 71,
+          "location" : 133
+        },
+        "text" : "Reordering should\nnot make one item inherit the local state of another."
+      },
+      "id" : "001D3082-8383-54A8-BB3D-4A4081023867",
+      "negated" : true,
+      "object" : "make one item inherit the local state of another",
+      "pageIndex" : 2,
+      "predicate" : "should not",
+      "prompt" : "Which restriction applies to Reordering?",
+      "relation" : "constraint"
+    },
+    {
+      "cognitiveOperation" : "constraint",
+      "concept" : "array index",
+      "documentID" : "CE34CADA-2833-4534-B044-FC583C3FDB76",
+      "evidence" : {
+        "range" : {
+          "length" : 74,
+          "location" : 263
+        },
+        "text" : "An array index can be a poor key when items move,\nare inserted or removed."
+      },
+      "id" : "7CF073DA-B6D2-5EB5-A2A8-59FACAF93600",
+      "negated" : false,
+      "object" : "a poor key",
+      "pageIndex" : 2,
+      "predicate" : "can be",
+      "prompt" : "Under what condition can an array index be a poor key?",
+      "qualifier" : "items move, are inserted or removed",
+      "relation" : "constraint"
+    },
+    {
+      "cognitiveOperation" : "consequence",
+      "concept" : "freshly generated random key",
+      "documentID" : "CE34CADA-2833-4534-B044-FC583C3FDB76",
+      "evidence" : {
+        "range" : {
+          "length" : 72,
+          "location" : 338
+        },
+        "text" : "A freshly generated random\nkey also destroys continuity between renders."
+      },
+      "id" : "BA407C99-7C5A-5D3F-99A7-61120025B2AC",
+      "negated" : false,
+      "object" : "continuity between renders",
+      "pageIndex" : 2,
+      "predicate" : "also destroys",
+      "prompt" : "Which consequence follows from a freshly generated random key?",
+      "relation" : "consequence"
+    },
+    {
+      "cognitiveOperation" : "mechanism",
+      "concept" : "stable key",
+      "documentID" : "CE34CADA-2833-4534-B044-FC583C3FDB76",
+      "evidence" : {
+        "range" : {
+          "length" : 90,
+          "location" : 42
+        },
+        "text" : "A stable key helps React match an item to its previous\ninstance within a list of siblings."
+      },
+      "id" : "FEA5D796-9693-519B-9306-7D12A52D1BAA",
+      "negated" : false,
+      "object" : "React match an item to its previous instance within a list of siblings",
+      "pageIndex" : 2,
+      "predicate" : "helps",
+      "prompt" : "Which effect does a stable key help achieve?",
+      "relation" : "mechanism"
+    }
+  ],
+  "questions" : [
+    {
+      "choices" : [
+        "Reordering should\nnot make one item inherit the local state of another.",
+        "An array index can be a poor key when items move,\nare inserted or removed.",
+        "A freshly generated random\nkey also destroys continuity between renders."
+      ],
+      "concept" : "Reordering",
+      "correctChoice" : 0,
+      "explanation" : "Reordering should\nnot make one item inherit the local state of another.",
+      "prompt" : "Which restriction applies to Reordering?",
+      "selection" : {
+        "claimID" : "001D3082-8383-54A8-BB3D-4A4081023867",
+        "cognitiveOperation" : "constraint"
+      },
+      "skill" : "constraint",
+      "supportingQuote" : "Reordering should\nnot make one item inherit the local state of another."
+    },
+    {
+      "choices" : [
+        "A stable key helps React match an item to its previous\ninstance within a list of siblings.",
+        "Reordering should\nnot make one item inherit the local state of another.",
+        "An array index can be a poor key when items move,\nare inserted or removed."
+      ],
+      "concept" : "stable key",
+      "correctChoice" : 0,
+      "explanation" : "A stable key helps React match an item to its previous\ninstance within a list of siblings.",
+      "prompt" : "Which effect does a stable key help achieve?",
+      "selection" : {
+        "claimID" : "FEA5D796-9693-519B-9306-7D12A52D1BAA",
+        "cognitiveOperation" : "mechanism"
+      },
+      "skill" : "mechanism",
+      "supportingQuote" : "A stable key helps React match an item to its previous\ninstance within a list of siblings."
+    }
+  ],
+  "selectableClaims" : [
+    {
+      "cognitiveOperation" : "constraint",
+      "concept" : "Reordering",
+      "documentID" : "CE34CADA-2833-4534-B044-FC583C3FDB76",
+      "evidence" : {
+        "range" : {
+          "length" : 71,
+          "location" : 133
+        },
+        "text" : "Reordering should\nnot make one item inherit the local state of another."
+      },
+      "id" : "001D3082-8383-54A8-BB3D-4A4081023867",
+      "negated" : true,
+      "object" : "make one item inherit the local state of another",
+      "pageIndex" : 2,
+      "predicate" : "should not",
+      "prompt" : "Which restriction applies to Reordering?",
+      "relation" : "constraint"
+    },
+    {
+      "cognitiveOperation" : "mechanism",
+      "concept" : "stable key",
+      "documentID" : "CE34CADA-2833-4534-B044-FC583C3FDB76",
+      "evidence" : {
+        "range" : {
+          "length" : 90,
+          "location" : 42
+        },
+        "text" : "A stable key helps React match an item to its previous\ninstance within a list of siblings."
+      },
+      "id" : "FEA5D796-9693-519B-9306-7D12A52D1BAA",
+      "negated" : false,
+      "object" : "React match an item to its previous instance within a list of siblings",
+      "pageIndex" : 2,
+      "predicate" : "helps",
+      "prompt" : "Which effect does a stable key help achieve?",
+      "relation" : "mechanism"
+    }
+  ],
+  "status" : "representable"
+}

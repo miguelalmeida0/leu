@@ -1,0 +1,1 @@
+LEU_UI_CHECKPOINT: after-learning-connections nativeButtons=1 viewport=(2.0, 76.0, 416.0, 728.0) type=9 frame=(22.0, 302.66666666666663, 376.0, 58.00000000000006) enabled=true hittable=false

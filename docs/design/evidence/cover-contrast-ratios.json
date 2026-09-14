@@ -1,0 +1,74 @@
+[
+  {
+    "palette": "ocean",
+    "role": "foreground",
+    "before": 7.512521493827718,
+    "after": 7.512521493827718
+  },
+  {
+    "palette": "ocean",
+    "role": "muted",
+    "before": 3.3562604684085278,
+    "after": 5.402112267817585
+  },
+  {
+    "palette": "graphite",
+    "role": "foreground",
+    "before": 7.8702542367454615,
+    "after": 7.8702542367454615
+  },
+  {
+    "palette": "graphite",
+    "role": "muted",
+    "before": 5.655105480934336,
+    "after": 5.655105480934336
+  },
+  {
+    "palette": "ivory",
+    "role": "foreground",
+    "before": 12.228443354905826,
+    "after": 12.228443354905826
+  },
+  {
+    "palette": "ivory",
+    "role": "muted",
+    "before": 4.4296472292270135,
+    "after": 5.9215241734287325
+  },
+  {
+    "palette": "forest",
+    "role": "foreground",
+    "before": 4.788538501194929,
+    "after": 7.7692943570656565
+  },
+  {
+    "palette": "forest",
+    "role": "muted",
+    "before": 3.9344729472478286,
+    "after": 6.383592501021365
+  },
+  {
+    "palette": "sand",
+    "role": "foreground",
+    "before": 8.261836333167425,
+    "after": 8.261836333167425
+  },
+  {
+    "palette": "sand",
+    "role": "muted",
+    "before": 4.199249802497322,
+    "after": 5.891028724386358
+  },
+  {
+    "palette": "slate",
+    "role": "foreground",
+    "before": 4.309858134307202,
+    "after": 7.204609660782846
+  },
+  {
+    "palette": "slate",
+    "role": "muted",
+    "before": 3.395371991446308,
+    "after": 5.675901407705573
+  }
+]

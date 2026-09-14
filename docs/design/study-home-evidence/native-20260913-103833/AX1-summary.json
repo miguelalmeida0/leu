@@ -1,0 +1,61 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "modelName" : "iPhone Air",
+        "osBuildNumber" : "23F77",
+        "osVersion" : "26.5",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Shelf · Built with macOS 26.6",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1789290072.002,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "skippedTests" : 0,
+  "startTime" : 1789289881.431,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "failed - Could not place study-continue-field inside the actual Study viewport for capture.",
+      "targetName" : "ShelfUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "ShelfStudyHomeUITests/testContinueUsesRealRememberedSourceAndReturnsToReader()",
+      "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfUITests/ShelfStudyHomeUITests/testContinueUsesRealRememberedSourceAndReturnsToReader",
+      "testName" : "testContinueUsesRealRememberedSourceAndReturnsToReader()"
+    },
+    {
+      "failureText" : "failed - Could not place study-continue-field inside the actual Study viewport for capture.",
+      "targetName" : "ShelfUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "ShelfStudyHomeUITests/testEmptyStudyFieldsAndExistingDestinations()",
+      "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfUITests/ShelfStudyHomeUITests/testEmptyStudyFieldsAndExistingDestinations",
+      "testName" : "testEmptyStudyFieldsAndExistingDestinations()"
+    }
+  ],
+  "title" : "Test - Shelf",
+  "topInsights" : [
+    {
+      "category" : "Common Failures",
+      "impact" : "100% of failures",
+      "text" : "2 runs of 2 tests failed with failed - Could not place study-continue-field inside the actual Study viewport for capture."
+    }
+  ],
+  "totalTestCount" : 2
+}

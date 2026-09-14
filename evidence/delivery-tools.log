@@ -1,0 +1,15 @@
+PASS: simulator: prefers compatible booted iPhone
+PASS: simulator: accepts available override
+PASS: simulator: rejects unsupported iOS override
+PASS: simulator: prefers newest iOS when none booted
+PASS: simulator: reports damaged inventory
+PASS: extractor: byte-identical originals and metadata
+PASS: extractor: refuses existing destination
+PASS: extractor: rejects truncated with no committed output
+PASS: extractor: rejects tampered with no committed output
+PASS: extractor: rejects trailing with no committed output
+PASS: extractor: rejects bad-magic with no committed output
+PASS: extractor: failure staging cleaned up
+PASS: launcher: shell syntax validated
+PASS: launcher: help works without Xcode
+PASS: launcher: actionable non-macOS prerequisite error

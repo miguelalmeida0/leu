@@ -1,0 +1,10 @@
+{
+  "changedExistingCodeFiles": [
+    "ShelfUITests/ShelfStudyHomeUITests.swift"
+  ],
+  "unchangedProductPackageAndOtherTestFiles": 386,
+  "defaultEvidenceFilesPreserved": 1373,
+  "defaultPassed": 7,
+  "defaultFailed": 0,
+  "defaultSkipped": 0
+}

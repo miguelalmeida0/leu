@@ -1,0 +1,59 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "21B59112-9614-4F74-AC8A-78E483A6E0BF.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-v2-metrics_0_BC7C01EC-8EE1-4CF4-8D8E-3048FA6B958B.json",
+        "timestamp" : 1789298968.134
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "222CF3E7-A8FC-483E-A140-01353122F715.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-react-page-3_0_F6CED1BE-7469-4018-887D-EBD9EDB43B35.json",
+        "timestamp" : 1789298968.134
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "6746C4AD-871A-409C-A640-3C00BFFF25A9.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-source-packet-page-3_0_547860A7-A0D6-4660-AB0F-99B45C62E0CE.json",
+        "timestamp" : 1789298968.134
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "F4C1C216-51D6-4B8E-A97E-1EB4BA1EB43D.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-preflight-page-3_0_7E216BF4-9330-4B6D-A078-DFC2FEC375C3.json",
+        "timestamp" : 1789298968.133
+      }
+    ],
+    "testIdentifier" : "LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning()",
+    "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfTests/LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "23258B28-C34B-4966-BD87-78B1CE4FB49C.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "react-page3-representability-v2_0_FE0FAF78-2259-4C90-873D-500EA0BCEE1A.json",
+        "timestamp" : 1789298969.084
+      }
+    ],
+    "testIdentifier" : "QuestionContractV2IntegrationTests/testRealReactPageThreeHasMeaningfulRealizableClaimsAndExactPDFSpans()",
+    "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfTests/QuestionContractV2IntegrationTests/testRealReactPageThreeHasMeaningfulRealizableClaimsAndExactPDFSpans"
+  }
+]

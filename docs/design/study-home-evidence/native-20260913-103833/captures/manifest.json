@@ -1,0 +1,57 @@
+[
+  {
+    "capture": "01-study-empty",
+    "path": "/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/docs/design/study-home-evidence/native-20260913-103833/captures/01-study-empty.png",
+    "originalPath": "/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/docs/design/study-home-evidence/native-20260913-103833/default-attachments/53882546-6B03-4E49-A1E9-0C6C3865966E.png",
+    "sha256": "a1910270f313b02e82f23c0c6686d5f459c9c39a95efd83597d7fa08879e1269",
+    "test": "ShelfStudyHomeUITests/testEmptyStudyFieldsAndExistingDestinations()",
+    "device": "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+    "timestamp": 1789288937.695,
+    "contentSize": "large"
+  },
+  {
+    "capture": "02-study-populated",
+    "path": "/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/docs/design/study-home-evidence/native-20260913-103833/captures/02-study-populated.png",
+    "originalPath": "/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/docs/design/study-home-evidence/native-20260913-103833/default-attachments/103D2829-9D47-4F00-8E9C-3CFAA73874A5.png",
+    "sha256": "954706506aab1a0ddea19fedbd5084f9d5153f6e418fbb219150506035090dd4",
+    "test": "ShelfStudyHomeUITests/testContinueUsesRealRememberedSourceAndReturnsToReader()",
+    "device": "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+    "timestamp": 1789288907.379,
+    "contentSize": "large"
+  },
+  {
+    "capture": "03-fading",
+    "path": "/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/docs/design/study-home-evidence/native-20260913-103833/captures/03-fading.png",
+    "originalPath": "/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/docs/design/study-home-evidence/native-20260913-103833/default-attachments/9700325A-1A48-4AF7-9859-96A8D9F10974.png",
+    "sha256": "65f2d24b99dc9c6843cb09b8cc9c6909d1871b6dfe00c692553cac2f4d4c53cf",
+    "test": "ShelfStudyHomeUITests/testEmptyStudyFieldsAndExistingDestinations()",
+    "device": "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+    "timestamp": 1789288953.117,
+    "contentSize": "large"
+  },
+  {
+    "capture": "04-blind-spots",
+    "path": "/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/docs/design/study-home-evidence/native-20260913-103833/captures/04-blind-spots.png",
+    "originalPath": "/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/docs/design/study-home-evidence/native-20260913-103833/default-attachments/565D12D7-5EC7-4E7F-9A84-DA102C71F7F0.png",
+    "sha256": "f6c1001933146d673791296a8abbc340703212972dfeb9068b78ca2cf6ea96fd",
+    "test": "ShelfStudyHomeUITests/testEmptyStudyFieldsAndExistingDestinations()",
+    "device": "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+    "timestamp": 1789288954.683,
+    "contentSize": "large"
+  },
+  {
+    "capture": "05-reconstruction-labs",
+    "path": "/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/docs/design/study-home-evidence/native-20260913-103833/captures/05-reconstruction-labs.png",
+    "originalPath": "/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/docs/design/study-home-evidence/native-20260913-103833/default-attachments/9538B37A-6B00-4E24-B325-5B1C8947335D.png",
+    "sha256": "415095fe07ceaab28b165609a3ac9b239cec00b3c7be8fa11dd96bce60efb1a9",
+    "test": "ShelfStudyHomeUITests/testEmptyStudyFieldsAndExistingDestinations()",
+    "device": "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+    "timestamp": 1789288958.288,
+    "contentSize": "large"
+  },
+  {
+    "capture": "06-AX1-study",
+    "path": null,
+    "status": "NOT RUN: CoreSimulator access refused in this session"
+  }
+]

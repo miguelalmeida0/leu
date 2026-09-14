@@ -1,0 +1,716 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "9A190EC4-C13A-4D9D-A30B-1FDD1A83625E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "32-learn-session_0_037AD41D-D6C1-4930-8B3F-AB0D984BC057.png",
+        "timestamp" : 1789288887.521
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "6A077208-C5AF-439A-BCD7-0B65CCDA12C3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-start-learning-session_0_2C7E74A7-504C-430D-9FEA-B9C56591096E.png",
+        "timestamp" : 1789288886.394
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "63EF89DD-F0CA-4DC1-853A-15763CF32A89.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-start-learning-session-geometry_0_961F7671-2B88-4377-9BD2-800FDED5C5BB.txt",
+        "timestamp" : 1789288886.3
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "13FD2068-656B-4936-AA5C-FC13EB74DC88.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-start-learning-session_0_AEFE87BC-6747-4072-86B4-D40202257C9A.png",
+        "timestamp" : 1789288885.842
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "D3523F6E-EE00-48FC-B236-F23DB9F6A6EB.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-start-learning-session-geometry_0_8F96C1AF-33A2-4AF4-A305-B56FD3347DCA.txt",
+        "timestamp" : 1789288885.728
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "219996A5-7354-41B7-8C5C-CB6957BB08BD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-10 minutes_0_00ADD31F-13AE-4029-9737-1F0051A7E8A6.png",
+        "timestamp" : 1789288878.342
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "DFA6502D-9D77-4DED-8BA7-0348ABABDC93.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-10 minutes-geometry_0_04AFA743-FD99-46CF-8422-207E43080791.txt",
+        "timestamp" : 1789288878.232
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "D97FB8D8-5F9A-49B5-961D-5E3372DD7BE4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-10 minutes_0_5AE3070B-C38C-4C8A-9827-58F9FC4B8651.png",
+        "timestamp" : 1789288877.431
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "17A2CE41-1AFA-4633-8901-1B86B1172F86.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-10 minutes-geometry_0_7CB9B400-A7AF-43E7-8AA0-751144582AF5.txt",
+        "timestamp" : 1789288877.293
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "75B7496D-976E-45D7-8A2F-D6099AECA5DE.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-learn-topic-react_0_0AB03AA9-8484-4A86-A271-C81F0D360986.png",
+        "timestamp" : 1789288869.98
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "85BF5B50-C8B3-49AD-997A-CE9517F23FAC.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-learn-topic-react-geometry_0_3B3B4E54-B2CC-47AC-BE7A-EDB22F73106C.txt",
+        "timestamp" : 1789288869.871
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "0335860D-02DC-4F6E-AF80-720BC209885C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-learn-topic-react_0_2C6A3C00-EF9D-4768-8D93-E112EFAB8FE9.png",
+        "timestamp" : 1789288869.068
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "42841C85-024A-4B49-AFEE-5E6952EC1D99.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-learn-topic-react-geometry_0_3F6A099A-2790-4663-9FED-D50CEB772DE6.txt",
+        "timestamp" : 1789288868.937
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "E19610ED-B73C-4EB1-ABF2-C7C995FF831B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-session-options_0_CE58CC66-FBC9-4B1B-BF59-7E1E3002F817.png",
+        "timestamp" : 1789288862.256
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "DFCFB8B6-75DE-472B-9982-F7304D1C26C4.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-session-options-geometry_0_9E90C179-DAC8-41A5-BBD9-05122012E6BB.txt",
+        "timestamp" : 1789288862.082
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "A4D89448-F61E-4F2E-B072-3148A9F05E89.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-session-options_0_51582D46-1491-4821-8525-3C35F29C080E.png",
+        "timestamp" : 1789288860.365
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "446B2D14-D847-4A09-AE26-719BD5D98851.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-session-options-geometry_0_8105C589-5E3F-440A-903E-96167705385E.txt",
+        "timestamp" : 1789288859.91
+      }
+    ],
+    "testIdentifier" : "ShelfLearningOSUITests/test32LearnTodayCreatesLocalStudySession()",
+    "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfUITests/ShelfLearningOSUITests/test32LearnTodayCreatesLocalStudySession"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "8EC4882F-A68F-4500-932A-34A89B4BB280.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-continue-exact-source_0_D599F517-B57C-4446-94C2-4F89A195AEE9.png",
+        "timestamp" : 1789288926.136
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "EF2C4B92-46CA-4D6D-8703-BA3FD4FF8262.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-continue-populated_0_738A76B0-2DC6-4D01-B4D4-2DD335D82F07.png",
+        "timestamp" : 1789288923.466
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "3B019C96-311B-44AE-B355-0A1AD7161B97.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-continue-populated-geometry_0_B662864C-A247-42EB-8037-97BBF6E7146C.txt",
+        "timestamp" : 1789288923.252
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "3ADB59D8-947C-452D-8058-61AC90620E9D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-continue-populated_0_2361D7E4-E4E3-4F4D-9CBB-1140EE60FF1B.png",
+        "timestamp" : 1789288921.251
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "23D51DF4-E1F5-4A18-9665-8576D492E33E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-continue-populated-geometry_0_95C894DC-AF7C-4ED8-AD03-7F26E6893BFE.txt",
+        "timestamp" : 1789288921.113
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "4F385FBB-91AF-448A-98A0-1B91C2D7C951.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-02-populated-accessibility-tree_0_0E7F5312-C6B7-4509-9383-F3057B46CA09.txt",
+        "timestamp" : 1789288907.827
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "103D2829-9D47-4F00-8E9C-3CFAA73874A5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-02-populated_0_DC13A818-4E6C-41EF-A15D-D0205CCC448E.png",
+        "timestamp" : 1789288907.379
+      }
+    ],
+    "testIdentifier" : "ShelfStudyHomeUITests/testContinueUsesRealRememberedSourceAndReturnsToReader()",
+    "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfUITests/ShelfStudyHomeUITests/testContinueUsesRealRememberedSourceAndReturnsToReader"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "4ECA7BFD-865E-489D-BD87-F01468A66B4A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-session-options_0_84C04176-BAE8-4F9B-81D7-02BFFA360754.png",
+        "timestamp" : 1789288988.928
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "A9864931-D647-41E5-875F-2F9A4CB11CC2.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-session-options-geometry_0_F96A5DB1-7BC9-467A-AC53-0391D2E029AC.txt",
+        "timestamp" : 1789288988.808
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "DC9112F3-E04A-41CF-B6CB-BE8C88D1394E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-session-options_0_68B131F2-E714-45B7-9D8C-4DAE40EF6E21.png",
+        "timestamp" : 1789288988.121
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "ABD053DC-124F-4225-AFAF-003C7048BB47.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-session-options-geometry_0_A2D34C91-D32A-49FC-AA21-CCCBE7D935EC.txt",
+        "timestamp" : 1789288988.002
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "E6961E0F-7F69-450D-B9FD-8998334DF6AC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-session-options_0_67F904C2-AABC-44CD-A577-EC318901661B.png",
+        "timestamp" : 1789288982.451
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "58ABEDAE-D9C3-4F34-BB77-D2E41236B017.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-session-options-geometry_0_AE367F9B-ADF4-4D74-8292-08F65B5E6DF9.txt",
+        "timestamp" : 1789288982.347
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "D28BAC8E-CE77-4D86-AC2A-D7C4D2D89784.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-session-options_0_5BBAB910-167A-4FA3-B333-F6D085C3221A.png",
+        "timestamp" : 1789288981.56
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "B8129DE3-16E7-4A23-B167-8B0677AEA448.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-session-options-geometry_0_4CC6D751-9A2F-4937-9CB9-659457C73405.txt",
+        "timestamp" : 1789288981.46
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "3A7DC31B-381F-4297-8F53-F225EF090291.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-lab-destination_0_14EF1638-B056-4B2F-B7B5-6A3F50D2DDCF.png",
+        "timestamp" : 1789288966.643
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "B3625C73-2A3C-43D7-A2FF-9A7B3DF1BC5F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-lab-BC91DA05-5BD7-58C7-9D4C-023FCCF19686_0_F08650CA-E07F-49B0-8BF6-49CD4895DE4F.png",
+        "timestamp" : 1789288965.312
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "8DBF0B68-E0DD-41AE-A310-F896F9D19A8A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-lab-BC91DA05-5BD7-58C7-9D4C-023FCCF19686-geometry_0_2192464A-E09F-4E50-81E5-DFB2544AA060.txt",
+        "timestamp" : 1789288965.148
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "5925F0D0-7921-4CB8-A1C7-0E74BA392587.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-lab-BC91DA05-5BD7-58C7-9D4C-023FCCF19686_0_3534F3E3-46F0-43E8-BC01-958F0DF3BDE2.png",
+        "timestamp" : 1789288963.844
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "BD18C42E-7371-421C-B6E1-4694C1E10B11.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-lab-BC91DA05-5BD7-58C7-9D4C-023FCCF19686-geometry_0_F225F4A3-F7C1-483F-845C-D61537C0F756.txt",
+        "timestamp" : 1789288963.72
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "DAFC13F1-0ECC-4C3F-8565-041CB4BEB46A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-05-labs-accessibility-tree_0_51AA6433-5BE5-4D4F-B593-2B7F004C4409.txt",
+        "timestamp" : 1789288958.47
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "9538B37A-6B00-4E24-B325-5B1C8947335D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-05-labs_0_53F87509-564B-49E2-ACAE-160473E8CB1C.png",
+        "timestamp" : 1789288958.288
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "6848A527-08E6-4AB1-9D42-DF5396C59432.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-04-blind-spots-accessibility-tree_0_24E6D3BC-1E8B-4F6C-862C-D8B53F6B6D3F.txt",
+        "timestamp" : 1789288955.021
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "565D12D7-5EC7-4E7F-9A84-DA102C71F7F0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-04-blind-spots_0_6A696379-60AD-4279-8A0A-9EE0D722CE1F.png",
+        "timestamp" : 1789288954.683
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "99CAE01E-C26B-4ACE-9313-FE5BCEFC9B43.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-03-fading-accessibility-tree_0_E2C818A7-41F6-4F0E-811C-546732A2292E.txt",
+        "timestamp" : 1789288953.289
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "9700325A-1A48-4AF7-9859-96A8D9F10974.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-03-fading_0_FA580C7C-B992-415B-9F5C-C7EB9F67B1B6.png",
+        "timestamp" : 1789288953.117
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "3267E3F6-684E-41DF-A7CB-98A7BC6F6064.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-continue-empty_0_8388AF55-2559-46A8-A04E-02D3639BCAE2.png",
+        "timestamp" : 1789288946.82
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "02C6087C-A032-4B4A-A8C3-3E6E74D8A85C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-study-continue-empty-geometry_0_EE6A6153-1330-425A-BACA-913F832E9421.txt",
+        "timestamp" : 1789288946.691
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "C11A959C-7C7C-4B02-8432-7AB97A9F9086.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-continue-empty_0_C4A83DE0-EB72-402C-A00A-2C46A2E96C9C.png",
+        "timestamp" : 1789288945.015
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "CE1F5C5E-16E6-46CB-A81C-9FB9AC481208.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-study-continue-empty-geometry_0_9CA236E1-AB82-430F-914D-33051EC56BCC.txt",
+        "timestamp" : 1789288944.86
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "FCC6A44C-69A4-4E94-A6A3-7F6077A1DC74.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-01-empty-continue-accessibility-tree_0_ED1DA4E5-8A4E-42A8-B534-CC5A4CDCA260.txt",
+        "timestamp" : 1789288939.185
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "ACCA9E40-7A80-4B54-856B-7B5DEBCA568C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-01-empty-continue_0_E4D69C5B-C21C-4D94-A039-541648681BB8.png",
+        "timestamp" : 1789288938.995
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "53882546-6B03-4E49-A1E9-0C6C3865966E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "study-01-empty-overview_0_2D1A3E93-415B-443F-9CDA-155BD1F7F7C6.png",
+        "timestamp" : 1789288937.695
+      }
+    ],
+    "testIdentifier" : "ShelfStudyHomeUITests/testEmptyStudyFieldsAndExistingDestinations()",
+    "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfUITests/ShelfStudyHomeUITests/testEmptyStudyFieldsAndExistingDestinations"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "A0359454-4F52-43B5-B602-ABB78DAE2F8D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-learning-progress_0_5973FBD6-A925-4406-8FBF-06D9F285CF29.png",
+        "timestamp" : 1789289021.586
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "CF576E55-F05B-4361-80C3-033F3E83ABD3.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-learning-progress-geometry_0_E23B0C4D-1FF0-4AB9-B0FD-56873B7960AA.txt",
+        "timestamp" : 1789289021.446
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "F1CD979E-CCF5-42D3-89E0-F87A9BA46999.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-learning-progress_0_9E180BDD-D263-48A2-826C-5508B049135B.png",
+        "timestamp" : 1789289020.965
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "3A463681-494F-431E-9ACE-3936B0A6C9CC.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-learning-progress-geometry_0_2BB35321-69BA-4C7C-9347-23425A42DF6B.txt",
+        "timestamp" : 1789289020.82
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "94F541C6-87D3-4CEB-9F17-ACD5725B5CD1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-learning-progress_0_1B516CBF-E61C-4EE0-95E5-E6F252AC9352.png",
+        "timestamp" : 1789289004.808
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "80050403-51BD-4D94-9D5E-0697387AA8D8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-learning-progress-geometry_0_977875E2-875B-4BDE-B29F-7270FEA77A57.txt",
+        "timestamp" : 1789289004.672
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "E27FF1C8-BF93-4D27-B676-AE742E9743E0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-learning-progress_0_EDC101DA-1E97-49D9-A680-E5121C061794.png",
+        "timestamp" : 1789289004.201
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "C663619E-31DD-4734-8CBA-88AE4B0E558B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-learning-progress-geometry_0_C007A92E-41E7-4E29-BB61-670C57EDF9D9.txt",
+        "timestamp" : 1789289004.037
+      }
+    ],
+    "testIdentifier" : "ShelfStudyInteractionUITests/test48ProgressReopensAfterScrollingAndBothTabsWork()",
+    "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfUITests/ShelfStudyInteractionUITests/test48ProgressReopensAfterScrollingAndBothTabsWork"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "EBB82C95-5E3A-4A48-A37A-1F4923E7170D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failed-journey-accessibility-tree_0_B7EC7A6E-7F1B-4EFB-B3A8-4DA95CECF60D.txt",
+        "timestamp" : 1789289064.523
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "AD67CBDD-08D9-40D9-BB75-37D830C39D80.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failed-journey_0_6C898720-F129-4FCC-8F37-6E4B98F86E02.png",
+        "timestamp" : 1789289063.72
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "D50219D7-4AAA-4575-B523-46A2C9AA1E7C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-learning-mode-interview_0_61F8469A-4FF9-477E-B03C-9A46C33E9CDB.png",
+        "timestamp" : 1789289061.999
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "1F367A9F-9110-42EF-8336-092981B2B846.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-learning-mode-interview-geometry_0_C226D6B2-C2EE-4469-B2CB-2C507AFBBCD8.txt",
+        "timestamp" : 1789289061.88
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "CCF42FF9-868F-40FD-9A96-3C7F6636B61D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-09-13 at 10.44.20 AM",
+        "timestamp" : 1789289060.855
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "39068810-2A7F-45EA-AD35-EF921DF49533",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-09-13 at 10.44.21 AM",
+        "timestamp" : 1789289061.145
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "26BD9A03-6A9B-41F9-92C3-C31449B8BD7C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-learning-mode-interview_0_3EA6FF12-E4E7-46A4-A925-B8C598BA209C.png",
+        "timestamp" : 1789289060.814
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "69DE8F84-50C1-4B66-BC8D-0EC4966B1A2C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-learning-mode-interview-geometry_0_9B9E9074-1A0C-4747-AE7B-7516EBC0E8F9.txt",
+        "timestamp" : 1789289060.696
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "5A93BFAB-AE24-4E0F-819E-AB43766C9B28",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-09-13 at 10.44.13 AM",
+        "timestamp" : 1789289053.72
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "ABDEE3BC-4E01-45EE-857F-52AFC91D41FD",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-09-13 at 10.44.14 AM",
+        "timestamp" : 1789289054.016
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "EFFBB408-0B70-48BA-9C2B-9C9A9CF826D9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-learning-mode-active-recall_0_6C24D970-538A-4B5A-BB97-0BB26281326D.png",
+        "timestamp" : 1789289051.341
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "76AFF053-03F5-4CD3-B400-574758A41B46.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "after-learning-mode-active-recall-geometry_0_F8220323-35F3-4CB7-BA58-E49164DD14D8.txt",
+        "timestamp" : 1789289051.185
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "0C3C604C-0DE5-4FBB-89DD-0245DDDA370C",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-09-13 at 10.44.09 AM",
+        "timestamp" : 1789289049.8
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "4B1E77D7-13EE-44B5-A0F6-CDEECCA6245B",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-09-13 at 10.44.10 AM",
+        "timestamp" : 1789289050.101
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "599D23B2-09C6-4825-94EC-B9390C023794.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-learning-mode-active-recall_0_82C4844F-3BB1-4170-A700-3EC391033CDB.png",
+        "timestamp" : 1789289049.729
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "3A97ED31-7148-44AF-9692-E11620F6B120.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "before-learning-mode-active-recall-geometry_0_76478A6E-7E19-415B-BBB9-477D0C068460.txt",
+        "timestamp" : 1789289049.546
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "3CC2DFCA-1A7B-4729-B321-77021830D560",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-09-13 at 10.43.55 AM",
+        "timestamp" : 1789289035.577
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "548C3537-E31E-4450-8365-1B8D8303043D.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-09-13 at 10.43.48 AM.mp4",
+        "timestamp" : 1789289028.516
+      }
+    ],
+    "testIdentifier" : "ShelfStudyInteractionUITests/test49StudySecondaryButtonsOpenRealDestinationsAndCollapse()",
+    "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfUITests/ShelfStudyInteractionUITests/test49StudySecondaryButtonsOpenRealDestinationsAndCollapse"
+  }
+]

@@ -1,0 +1,119 @@
+{
+  "docs/design/study-home-evidence/native-20260913-111815/default-summary.json": {
+    "sha256": "dbad5149e8b920477fad0794f726837b62c843df34688a6a56de7d62d116df93",
+    "result": {
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+            "deviceName": "iPhone Air",
+            "modelName": "iPhone Air",
+            "osBuildNumber": "23F77",
+            "osVersion": "26.5",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 7,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "environmentDescription": "Shelf \u00b7 Built with macOS 26.6",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1789291678.945,
+      "passedTests": 7,
+      "result": "Passed",
+      "skippedTests": 0,
+      "startTime": 1789291115.634,
+      "statistics": [],
+      "testFailures": [],
+      "title": "Test - Shelf",
+      "topInsights": [],
+      "totalTestCount": 7
+    }
+  },
+  "docs/design/study-home-evidence/native-20260913-111815/ax1-repair/run-20260913-114600/single-summary.json": {
+    "sha256": "eab514cd041219316c0cda5c16ad711f0f594d913fdcd04a1395d1f4d50ae6d4",
+    "result": {
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+            "deviceName": "iPhone Air",
+            "modelName": "iPhone Air",
+            "osBuildNumber": "23F77",
+            "osVersion": "26.5",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "environmentDescription": "Shelf \u00b7 Built with macOS 26.6",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1789292906.667,
+      "passedTests": 1,
+      "result": "Passed",
+      "skippedTests": 0,
+      "startTime": 1789292765.687,
+      "statistics": [],
+      "testFailures": [],
+      "title": "Test - Shelf",
+      "topInsights": [],
+      "totalTestCount": 1
+    }
+  },
+  "docs/design/study-home-evidence/native-20260913-111815/ax1-repair/run-20260913-114600/full-summary.json": {
+    "sha256": "3d7bbfc072324825dd47c4e76e041ab031f1890cc60760a6426e039ca76fd631",
+    "result": {
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+            "deviceName": "iPhone Air",
+            "modelName": "iPhone Air",
+            "osBuildNumber": "23F77",
+            "osVersion": "26.5",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 4,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "environmentDescription": "Shelf \u00b7 Built with macOS 26.6",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1789293183.676,
+      "passedTests": 4,
+      "result": "Passed",
+      "skippedTests": 0,
+      "startTime": 1789292912.211,
+      "statistics": [],
+      "testFailures": [],
+      "title": "Test - Shelf",
+      "topInsights": [],
+      "totalTestCount": 4
+    }
+  }
+}

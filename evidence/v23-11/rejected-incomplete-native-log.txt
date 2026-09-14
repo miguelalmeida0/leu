@@ -1,0 +1,25 @@
+FAIL: complete native coverage was not established.
+ - Not recorded as passed: KnowledgeIntegrationTests.testKnowledgePersistenceIsSeparateFromDerivedIndex
+ - Not recorded as passed: KnowledgeIntegrationTests.testLearningAnalysisBecomesStableConnectedPassages
+ - Not recorded as passed: LearningIndexIntegrationTests.testCheckpointStoreRoundTripsPartialExtraction
+ - Not recorded as passed: LearningIndexIntegrationTests.testImageLikeLowTextPDFRemainsIndexableWithoutFakeStudyQuestions
+ - Not recorded as passed: LearningIndexIntegrationTests.testPDFLearningIndexerProducesSourceBoundLocalMaterialAndClearsCheckpointAfterCommit
+ - Not recorded as passed: PDFIntegrationTests.testAllBundledSamplesAreRealReadablePDFs
+ - Not recorded as passed: PDFIntegrationTests.testAnnotatedExportKeepsOriginalBytesAndPortableNotes
+ - Not recorded as passed: PDFIntegrationTests.testInspectorBuildsSelectableTextIndex
+ - Not recorded as passed: PDFIntegrationTests.testInspectorRejectsInvalidFile
+ - Not recorded as passed: PDFIntegrationTests.testOriginalExportIsByteIdentical
+ - Not recorded as passed: PDFIntegrationTests.testReadableModeRepairsKnownExtractionSeamsWithoutChangingSourcePDF
+ - Not recorded as passed: PDFIntegrationTests.testSearchReturnsMatchingSourcePages
+ - Not recorded as passed: PDFIntegrationTests.testSynchronizingAnnotationsDoesNotDuplicateThem
+ - Not recorded as passed: PDFIntegrationTests.testThumbnailProducesAnImage
+ - Not recorded as passed: PDFViewportGeometryTests.testMixedSizePagesFitInsideTheSameViewport
+ - Not recorded as passed: PDFViewportGeometryTests.testResizeRefitsOnePageWithoutChangingItsIdentity
+ - Not recorded as passed: PDFViewportGeometryTests.testUnchangedSwiftUIUpdateDoesNotUndoUserZoom
+ - Not recorded as passed: PDFViewportGeometryTests.testVerticalAndHorizontalModeChangesRetainPage
+ - Not recorded as passed: VoiceCatalogTests.testEnglishVoicesAreRankedByInstalledQuality
+ - Not recorded as passed: VoiceCatalogTests.testExplicitInstalledVoiceIdentifierWins
+ - Missing completed stage: === Leu screen-by-screen XCUITest audit ===
+ - ShelfStudyInteractionUITests.test49StudySecondaryButtonsOpenRealDestinationsAndCollapse: failed
+ - Not recorded as passed: ShelfStudyInteractionUITests.test49StudySecondaryButtonsOpenRealDestinationsAndCollapse
+ - Native stage did not report TEST SUCCEEDED.

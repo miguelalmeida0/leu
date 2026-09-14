@@ -1,0 +1,4 @@
+Leu Native V24.5 source archive.
+Based on the verified contents of the V24.4 Lens Compile Repair source archive.
+No remote repository was modified and no Git commit was created in this repair session.
+See PATCH_V24_5.md and docs/V24_5_CODE_CHANGES.diff for scope and validation.

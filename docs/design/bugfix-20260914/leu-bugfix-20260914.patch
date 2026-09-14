@@ -1,0 +1,540 @@
+diff --git a/Packages/ShelfCore/Sources/ShelfCore/Learning/Analysis/DocumentAnalyzer.swift b/Packages/ShelfCore/Sources/ShelfCore/Learning/Analysis/DocumentAnalyzer.swift
+index 3b9dc85..eae145a 100644
+--- a/Packages/ShelfCore/Sources/ShelfCore/Learning/Analysis/DocumentAnalyzer.swift
++++ b/Packages/ShelfCore/Sources/ShelfCore/Learning/Analysis/DocumentAnalyzer.swift
+@@ -141,12 +141,31 @@ public struct DocumentAnalyzer: Sendable {
+         let letters = trimmed.filter(\.isLetter)
+         guard !letters.isEmpty else { return false }
+         let upper = letters.filter(\.isUppercase).count
+-        let words = trimmed.split(separator: " ")
+-        if Double(upper) / Double(letters.count) > 0.72 && words.count <= 10 { return true }
+-        if words.count <= 8 && trimmed.last == ":" { return true }
++        let words = Self.spokenWordCount(trimmed)
++        if Double(upper) / Double(letters.count) > 0.72 && words <= 10 { return true }
++        if words <= 8 && trimmed.last == ":" { return true }
+         return false
+     }
+ 
++    /// Any extractor that still splits a tracked label into separate glyphs would
++    /// inflate "MAKE IT STICK" to eleven tokens and push a real section label past
++    /// the heading word limit, which silently merges it into the next paragraph.
++    /// A consecutive run of one- or two-letter capitals counts as a single word.
++    static func spokenWordCount(_ text: String) -> Int {
++        var count = 0
++        var inRun = false
++        for token in text.split(whereSeparator: \.isWhitespace) {
++            let fragment = token.count <= 2 && token.allSatisfy { $0.isUppercase && $0.isLetter }
++            if fragment {
++                if !inRun { count += 1; inRun = true }
++            } else {
++                count += 1
++                inRun = false
++            }
++        }
++        return count
++    }
++
+     private func definitionParts(_ text: String) -> (String, String)? {
+         for separator in [" is defined as ", " refers to ", " means ", " describes ", " is "] {
+             if let range = text.range(of: separator, options: .caseInsensitive) {
+diff --git a/Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift b/Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift
+index 1ad08ec..0249d8d 100644
+--- a/Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift
++++ b/Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift
+@@ -247,9 +247,15 @@ public actor LearningRepository {
+ 
+         for page in analysis.pages {
+             let primary = page.segments.filter { segment in
+-                segment.kind == .definition ||
+-                (segment.kind == .heading && segment.importance >= 0.78) ||
+-                (segment.kind == .paragraph && segment.importance >= 0.54)
++                // Front matter and how-to-study instructions read like clean prose but
++                // have no recoverable answer behind them. A reader asked to reconstruct
++                // "Do not memorize it word-for-word" is being quizzed on the book's own
++                // instructions. Memory hooks are filtered further upstream, where the
++                // claim's subject is known and the test can be precise.
++                guard !InstructionalText.isReaderInstruction(segment.text) else { return false }
++                return segment.kind == .definition ||
++                    (segment.kind == .heading && segment.importance >= 0.78) ||
++                    (segment.kind == .paragraph && segment.importance >= 0.54)
+             }
+             .sorted { lhs, rhs in
+                 lhs.importance == rhs.importance ? lhs.text.count < rhs.text.count : lhs.importance > rhs.importance
+diff --git a/Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/GeneralClaimExtractor.swift b/Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/GeneralClaimExtractor.swift
+index 83f1eeb..677188f 100644
+--- a/Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/GeneralClaimExtractor.swift
++++ b/Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/GeneralClaimExtractor.swift
+@@ -103,7 +103,15 @@ public struct GeneralClaimExtractor: Sendable {
+                       intent: QuestionIntent, relation: SemanticRelation, evidence: SemanticEvidenceSpan) -> ExtractedClaim? {
+         let canonical = Self.canonical(subject)
+         guard evidence.sourceText.range(of: #"(?i)\b(?:in the example|for example|shown above|shown below|is illustrated|is mentioned)\b"#, options: .regularExpression) == nil else { return nil }
+-        guard QuestionSelfContainment.validConcept(canonical), object.count >= 6,
++        // Instructions to the reader and memory hooks parse as clean sentences but
++        // carry no recoverable claim about the subject.
++        guard !InstructionalText.isReaderInstruction(evidence.sourceText),
++              !InstructionalText.isMemoryHook(subject: subject, sentence: evidence.sourceText) else { return nil }
++        // An unbounded object lets one runaway span become a 60-word option that
++        // no reader can compare against a three-word answer.
++        guard object.count >= 6, object.count <= 180,
++              object.split(whereSeparator: \.isWhitespace).count <= 28 else { return nil }
++        guard QuestionSelfContainment.validConcept(canonical),
+               !QuestionSelfContainment.hasUnresolvedReference(subject),
+               !QuestionSelfContainment.hasUnresolvedReference(object),
+               qualifier.map({ !QuestionSelfContainment.hasUnresolvedReference($0) }) ?? true else { return nil }
+diff --git a/Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/InstructionalText.swift b/Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/InstructionalText.swift
+new file mode 100644
+index 0000000..af6c9ce
+--- /dev/null
++++ b/Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/InstructionalText.swift
+@@ -0,0 +1,28 @@
++import Foundation
++
++/// Front matter, study instructions and how-to-use-this-book pages address the
++/// reader instead of asserting something about the subject. There is no derivable
++/// answer behind "Do not memorize it word-for-word", so such text must never
++/// become a recall prompt or quiz truth even though it parses as a clean sentence.
++public enum InstructionalText {
++    private static let imperativeOpener = #"(?i)^(?:do not|don'?t|never|always|please|remember|note|tip|try|make sure|keep|read|re-?read|write|say|speak|explain|reconstruct|predict|recall|review|ask|answer|check|skip|swipe|tap|scroll|open|close|download|install|start|stop|before you|after you|if you)\b"#
++    private static let readerAddress = #"(?i)\b(?:you|your|yours|yourself)\b"#
++
++    public static func isReaderInstruction(_ text: String) -> Bool {
++        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
++        guard !trimmed.isEmpty else { return false }
++        if trimmed.range(of: imperativeOpener, options: .regularExpression) != nil { return true }
++        return trimmed.range(of: readerAddress, options: .regularExpression) != nil
++    }
++
++    /// A memory hook states a resemblance, not a property. "One person viewed
++    /// through two windows is still the same person" defines nothing recoverable,
++    /// so a definition question built on it has no answer a reader could reason to.
++    private static let analogySubject = #"(?i)\b(?:viewed|seen|looked at|written|placed|shown|pictured|imagined|drawn|held|treated|thought of)\s+(?:through|as|in|on|by|with|from|like|at)\b"#
++    private static let analogyMarker = #"(?i)\b(?:is|are)\s+(?:just\s+)?like\b|\bthink of (?:it|this|them) as\b|\bimagine\b"#
++
++    public static func isMemoryHook(subject: String, sentence: String) -> Bool {
++        if subject.range(of: analogySubject, options: .regularExpression) != nil { return true }
++        return sentence.range(of: analogyMarker, options: .regularExpression) != nil
++    }
++}
+diff --git a/Packages/ShelfCore/Tests/ShelfCoreTests/Learning/TrackedLabelAndInstructionTests.swift b/Packages/ShelfCore/Tests/ShelfCoreTests/Learning/TrackedLabelAndInstructionTests.swift
+new file mode 100644
+index 0000000..75fceed
+--- /dev/null
++++ b/Packages/ShelfCore/Tests/ShelfCoreTests/Learning/TrackedLabelAndInstructionTests.swift
+@@ -0,0 +1,89 @@
++import XCTest
++@testable import ShelfCore
++
++/// Reproduces the study-material defects reported from the mid-level interview PDF:
++/// tracked section labels leaking into answer options, mnemonics becoming definition
++/// questions, front matter becoming recall prompts, and unbounded option length.
++final class TrackedLabelAndInstructionTests: XCTestCase {
++    private let analyzer = DocumentAnalyzer()
++    private let documentID = UUID(uuidString: "22222222-2222-2222-2222-222222222222")!
++
++    private func evidence(_ text: String, page: Int = 193) -> SemanticEvidenceSpan {
++        SemanticEvidenceSpan(documentID: documentID, pageIndex: page, sectionTitle: nil, sourceText: text)
++    }
++
++    // MARK: Tracked labels
++
++    func testLetterSpacedLabelStillCountsAsOneWordPerRun() {
++        XCTAssertEqual(DocumentAnalyzer.spokenWordCount("M A K E I T S T I C K"), 1)
++        XCTAssertEqual(DocumentAnalyzer.spokenWordCount("R E A L E X A M P L E"), 1)
++        XCTAssertEqual(DocumentAnalyzer.spokenWordCount("I N O N E B R E AT H"), 1)
++        XCTAssertEqual(DocumentAnalyzer.spokenWordCount("MAKE IT STICK"), 3)
++        XCTAssertEqual(DocumentAnalyzer.spokenWordCount("The event loop is a scheduler"), 6)
++    }
++
++    /// Before the fix "R E A L E X A M P L E" counted as eleven words, missed the
++    /// ten-word heading limit, and was merged into the preceding paragraph, which is
++    /// how a section label ended up inside a multiple-choice option.
++    func testTrackedLabelIsClassifiedAsHeadingNotParagraphTail() {
++        let page = SourcePageInput(pageIndex: 193, text: """
++        Reference identity is whether two references point to the same object.
++
++        R E A L E X A M P L E
++
++        Two objects with identical contents are still separate references.
++        """)
++        let result = analyzer.analyze(documentID: documentID, fingerprint: "x", pages: [page])
++        let segments = result.pages[0].segments
++        XCTAssertTrue(segments.contains { $0.kind == .heading && $0.text.contains("E X A M P L E") })
++        XCTAssertFalse(segments.contains { $0.kind == .paragraph && $0.text.contains("E X A M P L E") },
++                       "A tracked label must never survive inside a paragraph body")
++    }
++
++    // MARK: Memory hooks
++
++    func testMemoryHookDoesNotBecomeADefinitionClaim() {
++        let sentence = "One person viewed through two windows is still the same person."
++        let claims = GeneralClaimExtractor().extract(sentence, evidence: evidence(sentence))
++        XCTAssertTrue(claims.isEmpty, "A mnemonic has no recoverable answer and cannot be quiz truth")
++    }
++
++    func testOrdinaryDefinitionIsStillExtracted() {
++        let sentence = "An origin is the browser security identity formed by scheme, host and port."
++        let claims = GeneralClaimExtractor().extract(sentence, evidence: evidence(sentence))
++        XCTAssertFalse(claims.isEmpty, "Real definitions must keep working")
++        XCTAssertEqual(claims.first?.intent, .define)
++    }
++
++    // MARK: Reader instructions
++
++    func testFrontMatterInstructionIsRejected() {
++        XCTAssertTrue(InstructionalText.isReaderInstruction("Do not memorize it word-for-word. Keep the structure:"))
++        XCTAssertTrue(InstructionalText.isReaderInstruction("Reconstruct the idea in your own words before you look."))
++        XCTAssertTrue(InstructionalText.isReaderInstruction("If you cannot explain the definition in one breath, reread it."))
++        XCTAssertFalse(InstructionalText.isReaderInstruction("An origin is scheme plus host plus port."))
++    }
++
++    func testInstructionSentenceProducesNoClaim() {
++        let sentence = "Do not memorize it word-for-word."
++        XCTAssertTrue(GeneralClaimExtractor().extract(sentence, evidence: evidence(sentence, page: 1)).isEmpty)
++    }
++
++    // MARK: Option length
++
++    func testRunawayObjectIsRejectedBeforeItBecomesAnOption() {
++        let long = "Reference identity is "
++            + Array(repeating: "preserved across renders and memoization boundaries", count: 6).joined(separator: " and ")
++            + "."
++        let claims = GeneralClaimExtractor().extract(long, evidence: evidence(long))
++        XCTAssertTrue(claims.isEmpty, "An object past the length cap cannot reach the option set")
++    }
++
++    func testOptionSetRejectsLengthMismatch() {
++        XCTAssertNotNil(QuestionOptionQuality.rejectionReason(
++            prompt: "What does reference identity mean in this source?",
++            answer: "the same person",
++            alternatives: ["a labeled cupboard built into the house",
++                           Array(repeating: "preserved across renders", count: 12).joined(separator: " ")]))
++    }
++}
+diff --git a/Shelf/Infrastructure/PDF/PDFLineGrouper.swift b/Shelf/Infrastructure/PDF/PDFLineGrouper.swift
+index ee6a80d..12f008a 100644
+--- a/Shelf/Infrastructure/PDF/PDFLineGrouper.swift
++++ b/Shelf/Infrastructure/PDF/PDFLineGrouper.swift
+@@ -37,13 +37,22 @@ struct PDFLineGrouper {
+         guard let first = ink.first else { return nil }
+         let gaps = zip(ink, ink.dropFirst()).map { max(0, $1.bounds.minX - $0.bounds.maxX) }.sorted()
+         let tracking = gaps.isEmpty ? 0 : gaps[gaps.count / 2]
++        // A tracked small-caps label ("IN ONE BREATH") is emitted as separately
++        // positioned glyphs, and PDFKit's own string puts a space between every
++        // one of them. Those spaces are an extraction artifact, not word
++        // boundaries, so on such a line geometry decides and the wider word gap
++        // is the only thing that becomes a space.
++        let singleLetters = ink.filter { $0.text.count == 1 && $0.text.first?.isLetter == true }
++        let tracked = ink.count >= 6 && tracking > first.fontSize * 0.18
++            && Double(singleLetters.count) / Double(ink.count) > 0.8
++        let spaceThreshold = max(first.fontSize * 0.20, tracking * (tracked ? 1.8 : 2.6))
+         var text = ""
+         var previous: PDFGlyph?
+         for glyph in ink {
+             if let previous {
+                 let explicitSpace = glyphs.contains { $0.sourceIndex > previous.sourceIndex && $0.sourceIndex < glyph.sourceIndex && $0.text == " " }
+                 let gap = glyph.bounds.minX - previous.bounds.maxX
+-                if explicitSpace || gap > max(first.fontSize * 0.20, tracking * 2.6) { text += " " }
++                if (explicitSpace && !tracked) || gap > spaceThreshold { text += " " }
+             }
+             text += glyph.text; previous = glyph
+         }
+diff --git a/Shelf/Infrastructure/PDF/PDFReaderSurface.swift b/Shelf/Infrastructure/PDF/PDFReaderSurface.swift
+index f39c6d7..86d2f36 100644
+--- a/Shelf/Infrastructure/PDF/PDFReaderSurface.swift
++++ b/Shelf/Infrastructure/PDF/PDFReaderSurface.swift
+@@ -42,11 +42,11 @@ final class PDFPagingViewport: UIView {
+         driver.consumesVerticalAtFit = true
+         driver.diagnosticContext = { [weak self] in
+             guard let self else { return "mode=original detached" }
+-            return "mode=original flow=\(self.flow) zoom=\(self.controller.view.scaleFactor) fit=\(self.controller.isAtFitScale()) selection=\(!(self.controller.view.currentSelection?.string ?? "").isEmpty)"
++            return "mode=original flow=\(self.flow) zoom=\(self.controller.view.scaleFactor) fit=\(self.controller.isAtFitScale()) contained=\(self.controller.canPageHorizontally()) selection=\(!(self.controller.view.currentSelection?.string ?? "").isEmpty)"
+         }
+         driver.canBegin = { [weak self] in
+             guard let self else { return false }
+-            guard self.flow == .horizontal, self.controller.isAtFitScale() else { return false }
++            guard self.flow == .horizontal, self.controller.canPageHorizontally() else { return false }
+             // A finger resting on text leaves a PDFKit selection behind, and refusing to
+             // page until it clears is why real swipes stop working mid-session. A swipe
+             // dismisses the selection instead of being silently discarded.
+diff --git a/Shelf/Infrastructure/PDF/PDFSessionController.swift b/Shelf/Infrastructure/PDF/PDFSessionController.swift
+index 77f4c05..3bc4ca5 100644
+--- a/Shelf/Infrastructure/PDF/PDFSessionController.swift
++++ b/Shelf/Infrastructure/PDF/PDFSessionController.swift
+@@ -110,6 +110,10 @@ final class PDFSessionController {
+ 
+     func isAtFitScale() -> Bool { zoom.atFit }
+ 
++    /// Page turning owns the horizontal drag whenever the page has no width left
++    /// to pan. Only a genuinely wider-than-viewport zoom keeps PDFKit's native pan.
++    func canPageHorizontally() -> Bool { zoom.atFit || zoom.horizontallyContained }
++
+     func goRelative(_ delta: Int) {
+         guard let document = view.document, let page = view.currentPage else { return }
+         let current = document.index(for: page)
+diff --git a/Shelf/Infrastructure/PDF/PDFZoomState.swift b/Shelf/Infrastructure/PDF/PDFZoomState.swift
+index b4ed59e..47e8664 100644
+--- a/Shelf/Infrastructure/PDF/PDFZoomState.swift
++++ b/Shelf/Infrastructure/PDF/PDFZoomState.swift
+@@ -63,6 +63,16 @@ final class PDFZoomState {
+         return view.scaleFactor <= fitScale * 1.025
+     }
+ 
++    /// True when the scaled page is no wider than the viewport, so a horizontal
++    /// drag has no panning work to do. Fit-width on a portrait page sits above
++    /// fit-page scale yet still shows the whole width; that state must page.
++    var horizontallyContained: Bool {
++        guard let view, let page = view.currentPage, view.bounds.width > 1 else { return false }
++        let size = rotatedSize(page, box: view.displayBox)
++        guard size.width > 0 else { return false }
++        return size.width * view.scaleFactor <= view.bounds.width + 1
++    }
++
+     func widthMultiplier() -> CGFloat? {
+         guard let view, let page = view.currentPage, fitScale > 0 else { return nil }
+         let size = rotatedSize(page, box: view.displayBox)
+diff --git a/Shelf/Infrastructure/PDF/ReaderSpeechController.swift b/Shelf/Infrastructure/PDF/ReaderSpeechController.swift
+index 2583f30..a087cce 100644
+--- a/Shelf/Infrastructure/PDF/ReaderSpeechController.swift
++++ b/Shelf/Infrastructure/PDF/ReaderSpeechController.swift
+@@ -66,6 +66,9 @@ final class ReaderSpeechController {
+     var queuePosition: Int { queue.isEmpty ? 0 : min(queueIndex + 1, queue.count) }
+     var queueCount: Int { queue.count }
+     var voiceBackendName: String { engine.backendName }
++    /// True only when the Apple synthesizer is actually doing the reading. The
++    /// Apple voice-quality prompt is pointless while the neural engine is active.
++    var usesAppleVoices: Bool { engine.supportsSentenceRanges }
+ 
+     func toggle(blocks: [SpeechInputBlock], documentID: UUID, startAt sentence: String? = nil) {
+         if isPaused { resume(); return }
+diff --git a/Shelf/Learning/LearningModel.swift b/Shelf/Learning/LearningModel.swift
+index 958a44d..7f8e935 100644
+--- a/Shelf/Learning/LearningModel.swift
++++ b/Shelf/Learning/LearningModel.swift
+@@ -154,6 +154,7 @@ final class LearningModel {
+             indexingProgress = 0
+             defer { isIndexing = false; indexingLabel = nil }
+             var noText = 0
++            var failedDocuments: [String] = []
+             for (offset, book) in pending.enumerated() {
+                 guard !Task.isCancelled else { return }
+                 indexingLabel = "Preparing \(book.title) for study"
+@@ -195,11 +196,21 @@ final class LearningModel {
+                     monitor.cancel()
+                     return
+                 } catch {
+-                    errorMessage = "\(book.title): \(error.localizedDescription)"
++                    // Background indexing of a document the reader is not using must
++                    // never take over the screen. Record it, keep going, and let the
++                    // Library row for that document carry the state instead.
++                    failedDocuments.append(book.title)
++                    StudyInteractionTrace.record("index.failed document=\(book.id) reason=\(error)")
+                 }
+                 monitor.cancel()
+                 indexingProgress = Double(offset + 1) / Double(max(1, pending.count))
+             }
++            if !failedDocuments.isEmpty {
++                let names = failedDocuments.prefix(3).joined(separator: ", ")
++                notice = failedDocuments.count == 1
++                    ? "\(names) could not be prepared for study. Reading still works; try re-importing it."
++                    : "\(failedDocuments.count) documents could not be prepared for study (\(names)). Reading still works."
++            }
+             if noText > 0 {
+                 notice = "\(noText) PDF\(noText == 1 ? "" : "s") can still be read, but had too little selectable text for reliable study material."
+             }
+diff --git a/Shelf/Learning/RecallCardView.swift b/Shelf/Learning/RecallCardView.swift
+index 25d300f..b837bec 100644
+--- a/Shelf/Learning/RecallCardView.swift
++++ b/Shelf/Learning/RecallCardView.swift
+@@ -34,14 +34,22 @@ struct RecallCardView: View {
+     }
+ 
+     private func task(_ object: LearningObject) -> some View {
+-        VStack(alignment: .leading, spacing: 12) {
++        let prompt = object.prompt ?? object.title
++        // A heading segment records itself as its own section title, which printed
++        // the same sentence twice: once as the eyebrow, once as the prompt.
++        let label = object.source.sectionTitle.flatMap { section -> String? in
++            let a = section.trimmingCharacters(in: .whitespacesAndNewlines)
++            let b = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
++            return a.isEmpty || a.caseInsensitiveCompare(b) == .orderedSame ? nil : section
++        } ?? "Active recall"
++        return VStack(alignment: .leading, spacing: 12) {
+             HStack(spacing: 8) {
+-                Text(object.source.sectionTitle ?? "Active recall")
++                Text(label)
+                 Text("· p. \(object.source.pageIndex + 1)")
+                     .accessibilityIdentifier("recall-source-page")
+             }
+             .font(ShelfTheme.eyebrow(10)).tracking(1.2).foregroundStyle(ShelfTheme.accent)
+-            Text(object.prompt ?? object.title)
++            Text(prompt)
+                 .font(LearningTokens.Typography.title)
+                 .fixedSize(horizontal: false, vertical: true)
+                 .accessibilityAddTraits(.isHeader)
+diff --git a/Shelf/Learning/Services/PDFLearningIndexer.swift b/Shelf/Learning/Services/PDFLearningIndexer.swift
+index b30f965..be9d239 100644
+--- a/Shelf/Learning/Services/PDFLearningIndexer.swift
++++ b/Shelf/Learning/Services/PDFLearningIndexer.swift
+@@ -7,6 +7,7 @@ struct LearningIndexBundle: Sendable {
+     let questions: [LearningQuestion]
+     let semanticIndex: SemanticIndex
+     let hasUsableText: Bool
++    let degradedPages: [Int]
+ }
+ 
+ actor PDFLearningIndexer {
+@@ -55,7 +56,8 @@ actor PDFLearningIndexer {
+         try Task.checkCancellation()
+         currentProgress = 1
+         return LearningIndexBundle(analysis: analysis, topics: topics, questions: questions, semanticIndex: semanticIndex,
+-                                   hasUsableText: extraction.nonEmptyCharacters >= 80)
++                                   hasUsableText: extraction.nonEmptyCharacters >= 80,
++                                   degradedPages: extraction.degradedPages)
+     }
+ 
+     func commitCompleted(documentID: UUID) async {
+diff --git a/Shelf/Learning/Services/PDFTextExtractor.swift b/Shelf/Learning/Services/PDFTextExtractor.swift
+index 18b2f57..4298cfb 100644
+--- a/Shelf/Learning/Services/PDFTextExtractor.swift
++++ b/Shelf/Learning/Services/PDFTextExtractor.swift
+@@ -7,6 +7,9 @@ struct PDFTextExtraction: Sendable {
+     let outlineTitles: [String]
+     let nonEmptyCharacters: Int
+     var canonicalPages: [Int: String] = [:]
++    /// Pages whose spatial reconstruction disagreed with PDFKit's own text. Their
++    /// lossless canonical text is still indexed; they are reported, never fatal.
++    var degradedPages: [Int] = []
+ }
+ 
+ protocol PDFTextExtracting: Sendable {
+@@ -32,6 +35,7 @@ actor PDFKitTextExtractor: PDFTextExtracting {
+         }
+ 
+         let pageCount = document.pageCount
++        var degradedPages: [Int] = []
+         var pages = await resumablePages(documentID: documentID, fingerprint: fingerprint, pageCount: pageCount)
+         var nonEmptyCharacters = pages.reduce(0) {
+             $0 + $1.text.trimmingCharacters(in: .whitespacesAndNewlines).count
+@@ -44,9 +48,13 @@ actor PDFKitTextExtractor: PDFTextExtracting {
+             for index in startIndex..<pageCount {
+                 try Task.checkCancellation()
+                 let readable = PDFReadablePageExtractor().extract(document: document, pageIndex: index)
++                // A page whose spatial reconstruction could not be verified against
++                // PDFKit's own text is downgraded to its lossless canonical text and
++                // excluded from intelligence. One such page must never abandon the
++                // remaining pages of the document.
+                 if !readable.sourceIntegrityPassed && !(document.page(at: index)?.string ?? "").isEmpty {
+-                    throw NSError(domain: "Shelf.SourceIntegrity", code: 1,
+-                        userInfo: [NSLocalizedDescriptionKey: "SOURCE_INTEGRITY_FAILED on page \(index + 1)"])
++                    degradedPages.append(index)
++                    StudyInteractionTrace.record("index.degraded document=\(documentID) page=\(index) reason=reconstruction_unverified")
+                 }
+                 let text = readable.blocks.map(\.text).joined(separator: "\n\n")
+                 StudyInteractionTrace.record("index.extract document=\(documentID) page=\(index) blocks=\(readable.blocks.count) characters=\(text.count)")
+@@ -71,7 +79,8 @@ actor PDFKitTextExtractor: PDFTextExtracting {
+         return PDFTextExtraction(pages: pages,
+                                  outlineTitles: outlineTitles(document.outlineRoot),
+                                  nonEmptyCharacters: nonEmptyCharacters,
+-                                 canonicalPages: Dictionary(uniqueKeysWithValues: (0..<pageCount).map { ($0, document.page(at: $0)?.string ?? "") }))
++                                 canonicalPages: Dictionary(uniqueKeysWithValues: (0..<pageCount).map { ($0, document.page(at: $0)?.string ?? "") }),
++                                 degradedPages: degradedPages)
+     }
+ 
+     func clearCheckpoint(documentID: UUID) async {
+diff --git a/Shelf/Voice/Engine/SupertonicSpeechEngine.swift b/Shelf/Voice/Engine/SupertonicSpeechEngine.swift
+index 0912360..fc7dc08 100644
+--- a/Shelf/Voice/Engine/SupertonicSpeechEngine.swift
++++ b/Shelf/Voice/Engine/SupertonicSpeechEngine.swift
+@@ -56,6 +56,31 @@ enum SupertonicAssets {
+ }
+ 
+ 
++#if canImport(OnnxRuntimeBindings)
++/// Opening the four ONNX sessions costs far more than running them. Building a
++/// runtime inside every speak() made each sentence pay a full model load before
++/// any audio started. One runtime is kept alive and reused across utterances.
++actor SupertonicRuntimeCache {
++    static let shared = SupertonicRuntimeCache()
++    private var runtime: SupertonicRuntime?
++    private var loadedRoot: URL?
++
++    func synthesize(_ text: String, speed: Float, root: URL,
++                    voiceStyle: URL) throws -> (samples: [Float], sampleRate: Int) {
++        if runtime == nil || loadedRoot != root {
++            runtime = try SupertonicRuntime(root: root, voiceStyle: voiceStyle)
++            loadedRoot = root
++        }
++        guard let runtime else { throw URLError(.cannotOpenFile) }
++        return (try runtime.synthesize(text, speed: speed), runtime.sampleRate)
++    }
++
++    /// Called when the app leaves the foreground so the models do not hold
++    /// several hundred megabytes resident behind a suspended app.
++    func discard() { runtime = nil; loadedRoot = nil }
++}
++#endif
++
+ @MainActor
+ final class SupertonicSpeechEngine: NSObject, AVAudioPlayerDelegate {
+     var onStarted: (() -> Void)?
+@@ -78,9 +103,10 @@ final class SupertonicSpeechEngine: NSObject, AVAudioPlayerDelegate {
+         Task.detached(priority: .userInitiated) {
+             #if canImport(OnnxRuntimeBindings)
+             do {
+-                let runtime = try SupertonicRuntime(root: resources.modelRoot, voiceStyle: resources.voiceStyle)
+-                let waveform = try runtime.synthesize(text, speed: Float(min(max(userSpeed, 0.82), 1.4)))
+-                let url = try Self.writeWAV(waveform, sampleRate: runtime.sampleRate)
++                let output = try await SupertonicRuntimeCache.shared.synthesize(
++                    text, speed: Float(min(max(userSpeed, 0.82), 1.4)),
++                    root: resources.modelRoot, voiceStyle: resources.voiceStyle)
++                let url = try Self.writeWAV(output.samples, sampleRate: output.sampleRate)
+                 await MainActor.run {
+                     guard token == self.generation else { try? FileManager.default.removeItem(at: url); return }
+                     self.synthesizing = false
+@@ -122,7 +148,7 @@ final class SupertonicSpeechEngine: NSObject, AVAudioPlayerDelegate {
+         }
+     }
+ 
+-    private struct Resources { let modelRoot: URL; let voiceStyle: URL }
++    private struct Resources: Sendable { let modelRoot: URL; let voiceStyle: URL }
+     private static var resources: Resources? {
+         guard let urls = SupertonicAssets.resourceURLs() else { return nil }
+         return Resources(modelRoot: urls.modelRoot, voiceStyle: urls.voiceStyle)
+diff --git a/Shelf/Voice/UI/VoicePlayerStrip.swift b/Shelf/Voice/UI/VoicePlayerStrip.swift
+index 1bd8591..3cfd537 100644
+--- a/Shelf/Voice/UI/VoicePlayerStrip.swift
++++ b/Shelf/Voice/UI/VoicePlayerStrip.swift
+@@ -6,8 +6,10 @@ struct VoicePlayerStrip: View {
+     @Bindable var speech: ReaderSpeechController
+ 
+     var body: some View {
+-        VStack(spacing: 4) {
+-        VoiceQualityNotice(compactOnly: !speech.availableVoices.contains { $0.quality != .standard })
++        // The quality notice used to live here. Inside the bottom safe-area inset
++        // it added ~200pt the moment playback started, which squeezed the PDF into
++        // a letterboxed strip. It belongs in Voice settings, where there is room
++        // for it and where the reader goes to act on it.
+         HStack(spacing: 2) {
+             compactButton("gobackward.15", "Back 15 seconds") { speech.skipBackward() }
+             compactButton("backward.end", "Previous sentence") { speech.previousSentence() }
+@@ -19,7 +21,6 @@ struct VoicePlayerStrip: View {
+         .frame(minHeight: 46)
+         .accessibilityElement(children: .contain)
+         .accessibilityIdentifier("voice-player-strip")
+-        }
+     }
+ 
+     private func compactButton(_ symbol: String, _ label: String, action: @escaping () -> Void) -> some View {
+diff --git a/Shelf/Voice/UI/VoiceSettingsSheet.swift b/Shelf/Voice/UI/VoiceSettingsSheet.swift
+index 1f45bd6..3ea2fb5 100644
+--- a/Shelf/Voice/UI/VoiceSettingsSheet.swift
++++ b/Shelf/Voice/UI/VoiceSettingsSheet.swift
+@@ -13,7 +13,7 @@ struct VoiceSettingsSheet: View {
+             ScrollView {
+                 VStack(alignment: .leading, spacing: 26) {
+                     intro
+-                    VoiceQualityNotice(compactOnly: !speech.availableVoices.contains { $0.quality != .standard })
++                    VoiceQualityNotice(compactOnly: speech.usesAppleVoices && !speech.availableVoices.contains { $0.quality != .standard })
+                     voices
+                     speed
+                     pronunciation

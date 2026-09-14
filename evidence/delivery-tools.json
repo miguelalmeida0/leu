@@ -1,0 +1,21 @@
+{
+  "passed": 15,
+  "checks": [
+    "simulator: prefers compatible booted iPhone",
+    "simulator: accepts available override",
+    "simulator: rejects unsupported iOS override",
+    "simulator: prefers newest iOS when none booted",
+    "simulator: reports damaged inventory",
+    "extractor: byte-identical originals and metadata",
+    "extractor: refuses existing destination",
+    "extractor: rejects truncated with no committed output",
+    "extractor: rejects tampered with no committed output",
+    "extractor: rejects trailing with no committed output",
+    "extractor: rejects bad-magic with no committed output",
+    "extractor: failure staging cleaned up",
+    "launcher: shell syntax validated",
+    "launcher: help works without Xcode",
+    "launcher: actionable non-macOS prerequisite error"
+  ],
+  "nativeLaunchExecuted": false
+}

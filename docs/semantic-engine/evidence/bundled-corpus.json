@@ -1,0 +1,38 @@
+[
+  {
+    "file": "Shelf/Resources/Samples/Coding Interviews.pdf",
+    "pages": 4,
+    "bytes": 6731,
+    "textPages": 4
+  },
+  {
+    "file": "Shelf/Resources/Samples/Computer Science Essentials.pdf",
+    "pages": 4,
+    "bytes": 6701,
+    "textPages": 4
+  },
+  {
+    "file": "Shelf/Resources/Samples/Design Patterns.pdf",
+    "pages": 4,
+    "bytes": 6750,
+    "textPages": 4
+  },
+  {
+    "file": "Shelf/Resources/Samples/JavaScript Deep Dive.pdf",
+    "pages": 4,
+    "bytes": 6255,
+    "textPages": 4
+  },
+  {
+    "file": "Shelf/Resources/Samples/React Notes.pdf",
+    "pages": 4,
+    "bytes": 6689,
+    "textPages": 4
+  },
+  {
+    "file": "Shelf/Resources/Samples/System Design.pdf",
+    "pages": 4,
+    "bytes": 7573,
+    "textPages": 4
+  }
+]

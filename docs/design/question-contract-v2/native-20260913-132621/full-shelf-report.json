@@ -1,0 +1,25 @@
+{
+  "phase": "full-shelf",
+  "result": "PASS",
+  "xcodebuildExit": 0,
+  "passed": 89,
+  "failed": 0,
+  "skipped": 0,
+  "metrics": [
+    {
+      "accepted": 1,
+      "backend": "apple-on-device",
+      "cognitiveOperations": [
+        "mechanism"
+      ],
+      "generated": 1,
+      "inferenceAttempts": 1,
+      "inferenceErrors": [],
+      "meaningfulClaims": 4,
+      "rejected": 0,
+      "rejectionCodes": [],
+      "repairCount": 0,
+      "representableClaims": 2
+    }
+  ]
+}

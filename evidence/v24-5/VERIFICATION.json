@@ -1,0 +1,70 @@
+{
+  "core": {
+    "tests": 212,
+    "failures": 0,
+    "log": "core-tests.log"
+  },
+  "voiceCompilerBenchmark": {
+    "seconds": 0.06669191,
+    "unchangedLimitSeconds": 3,
+    "log": "core-tests.log"
+  },
+  "releaseRepairToolSuite": {
+    "tests": 23,
+    "failures": 0,
+    "log": "test-v245-release.log"
+  },
+  "releaseStateAndRecordedGeometry": {
+    "checks": 27,
+    "scope": "real state + arithmetic, not Apple UI"
+  },
+  "studyTools": {
+    "tests": 27,
+    "log": "test-study-repair-tools.log"
+  },
+  "settingsTools": {
+    "tests": 14,
+    "log": "test-settings-compile-repair.log"
+  },
+  "interactionPolicy": {
+    "tests": 17,
+    "log": "test-v242-interactions.log"
+  },
+  "rootLifecycle": {
+    "tests": 13,
+    "adaptedChecks": 30,
+    "log": "test-v243-root-compile.log"
+  },
+  "lensProjection": {
+    "tests": 11,
+    "adaptedChecks": 26,
+    "log": "test-v244-lens-compile.log"
+  },
+  "deliveryTools": {
+    "checks": 15,
+    "log": "test-tools.log"
+  },
+  "modelRecovery": {
+    "checks": 9,
+    "scope": "platform adapters",
+    "log": "recovery-model.log"
+  },
+  "swiftSyntax": {
+    "files": 300,
+    "failures": 0,
+    "log": "swift-syntax.json"
+  },
+  "project": {
+    "objects": 462,
+    "log": "validate-final.log"
+  },
+  "native": {
+    "status": "not executed here",
+    "appleTestsPlanned": 20,
+    "uiTestsPlanned": 57
+  },
+  "earlierFailure": {
+    "coreBeforeOptimization": "203/204; unchanged benchmark failed at 3.611906194s",
+    "log": "core-tests-before-optimization.log"
+  }
+}

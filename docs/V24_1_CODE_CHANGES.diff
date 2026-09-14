@@ -1,0 +1,196 @@
+--- V24.0/Shelf.xcodeproj/project.pbxproj
++++ V24.1/Shelf.xcodeproj/project.pbxproj
+@@ -2774,7 +2774,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "24.0";
++                "MARKETING_VERSION" = "24.1";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+@@ -2797,7 +2797,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "24.0";
++                "MARKETING_VERSION" = "24.1";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+--- V24.0/Shelf/Features/Settings/SettingsScreen.swift
++++ V24.1/Shelf/Features/Settings/SettingsScreen.swift
+@@ -87,7 +87,7 @@
+                     Button("Remove bundled sample PDFs") { removeSamples = true }
+                         .disabled(model.busy || !model.snapshot.activeBooks.contains(where: { $0.isSample }))
+                 }
+-                Section("Voice") {
++                Section {
+                     LabeledContent("Reading voice", value: SupertonicAssets.isInstalled ? "Leu Neural · Supertonic 3" : "Apple fallback")
+                     if voiceInstalling { ProgressView(value: voiceInstallProgress) }
+                     Button(SupertonicAssets.isInstalled ? "Neural voice installed" : "Install neural voice (~400 MB)") {
+@@ -97,6 +97,8 @@
+                     if let voiceInstallError {
+                         Text(voiceInstallError).font(.caption).foregroundStyle(ShelfTheme.danger)
+                     }
++                } header: {
++                    Text("Voice")
+                 } footer: {
+                     Text("The neural voice is downloaded once from the pinned open-weight Supertonic 3 archive and then runs locally with ONNX Runtime. Reading falls back to Apple speech if the model is not installed.")
+                 }
+@@ -116,7 +118,7 @@
+                 }
+                 Section {
+                     Button("Privacy & data ownership") { showPrivacy = true }
+-                    LabeledContent("Version", value: "24.0 · Semantic & Emotional Learning")
++                    LabeledContent("Version", value: "24.1 · Semantic & Emotional Learning")
+                     Text("No account. No ads. No subscription. No generative AI. Learning and reading data stay local unless you export a file yourself.")
+                         .font(.footnote).foregroundStyle(ShelfTheme.secondary)
+                 }
+--- V24.0/scripts/check-gallery-minimalism.py
++++ V24.1/scripts/check-gallery-minimalism.py
+@@ -39,7 +39,7 @@
+ plist=plistlib.loads((ROOT/'Shelf/Resources/Info.plist').read_bytes())
+ require(plist.get('CFBundleDisplayName')=='Leu', 'installed app name must be Leu')
+ project=(ROOT/'Shelf.xcodeproj/project.pbxproj').read_text()
+-require('"MARKETING_VERSION" = "24.0";' in project, 'V24.0 marketing version missing')
++require('"MARKETING_VERSION" = "24.1";' in project, 'V24.1 marketing version missing')
+ 
+ if problems:
+     print('FAIL: Leu Gallery Minimalism release contract')
+--- V24.0/scripts/check-v24-contract.py
++++ V24.1/scripts/check-v24-contract.py
+@@ -53,7 +53,7 @@
+     need(token in voice, f'neural voice integration missing: {token}')
+ need('OnnxRuntimeBindings' in runtime and 'ORTSession' in runtime, 'local ONNX inference runtime missing')
+ need('aafc6e32416a594460b32413efc49d7fe4ce6d46' in voice, 'Supertonic model revision is not pinned')
+-need('onnxruntime-swift-package-manager' in pbx and '"MARKETING_VERSION" = "24.0";' in pbx, 'V24 project/version/dependency contract incomplete')
++need('onnxruntime-swift-package-manager' in pbx and '"MARKETING_VERSION" = "24.1";' in pbx, 'V24 project/version/dependency contract incomplete')
+ # Design invariant.
+ hero=read('Shelf/Features/Library/Components/LibraryHeader.swift')
+ for forbidden in ['tree','foliage','leaf.fill','leaf.circle']:
+--- V24.0/scripts/qa-and-copy.sh
++++ V24.1/scripts/qa-and-copy.sh
+@@ -3,9 +3,9 @@
+ set -uo pipefail
+ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ cd "$ROOT" || exit 1
+-LOG="${SHELF_QA_LOG:-qa-v24.log}"
++LOG="${SHELF_QA_LOG:-qa-v24-1.log}"
+ SUMMARY="${LOG%.log}-summary.txt"
+-export SHELF_QA_RUN_DIR="$ROOT/.build/qa-runs/v24-$(date '+%Y%m%d-%H%M%S')-$$"
++export SHELF_QA_RUN_DIR="$ROOT/.build/qa-runs/v24-1-$(date '+%Y%m%d-%H%M%S')-$$"
+ mkdir -p "$SHELF_QA_RUN_DIR" || exit 1
+ date +%s > "$SHELF_QA_RUN_DIR/start-epoch.txt"
+ printf 'QA workspace: %s\nQA run: %s\n' "$ROOT" "$SHELF_QA_RUN_DIR"
+@@ -29,7 +29,7 @@
+     printf '\nDiagnostics export failed; originals remain in .build/results.\n' >> "$SUMMARY"
+ fi
+ printf '\nQA process exit code: %s\n' "$STATUS" >> "$SUMMARY"
+-printf '\n=== Leu V24.0 QA result ===\n'
++printf '\n=== Leu V24.1 QA result ===\n'
+ cat "$SUMMARY"
+ if command -v pbcopy >/dev/null 2>&1 && pbcopy < "$SUMMARY"; then
+     printf '\nSummary copied. Full log: %s\n' "$LOG"
+--- V24.0/scripts/check-swiftui-compile-contract.py
++++ V24.1/scripts/check-swiftui-compile-contract.py
+@@ -1,8 +1,9 @@
+ #!/usr/bin/env python3
+ from pathlib import Path
+ import re, sys
++from swiftui_section_contract import check as check_sections
+ root = Path(__file__).resolve().parents[1]
+-failures=[]
++failures=check_sections(root)
+ 
+ # Known illegal SwiftUI fixed-frame overload: frame(width:, minHeight:)
+ for p in (root/'Shelf').rglob('*.swift'):
+@@ -43,4 +44,4 @@
+     print('FAIL: SwiftUI compile-contract audit')
+     for f in failures: print(' -', f)
+     sys.exit(1)
+-print('PASS: SwiftUI compile-contract audit (result builders, Hashable navigation items, frame overloads, token namespace, actor-safe detached captures).')
++print('PASS: SwiftUI compile-contract audit (result builders, Hashable navigation items, frame overloads, token namespace, actor-safe detached captures, Section overloads).')
+--- V24.0/scripts/summarize-qa.py
++++ V24.1/scripts/summarize-qa.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Clipboard summary; preserve failure trees without printing trees for successful journeys."""
++"""Summarize the complete log, retaining early compiler errors and failure-only trees."""
+ import re
+ import sys
+ from pathlib import Path
+@@ -9,14 +9,26 @@
+ patterns = [
+     r"^===", r"^PASS:", r"^FAIL:", r"^NOT CHECKED:",
+     r"\*\* (?:BUILD|TEST) (?:SUCCEEDED|FAILED) \*\*",
+-    r"Test Case .*Shelf(?:UI|Reader|Interaction).*\b(?:passed|failed) \(",
++    r"Test Case .*Shelf(?:UI|Reader|Interaction).*\b(?:passed|failed|skipped) \(",
+     r"Executed \d+ tests, with \d+ failures",
+     r"(?:^|\s)(?:error:|fatal error:)", r"^Testing (?:failed|cancelled)",
+     r"^xcodebuild: error:", r"^Test result:", r"^Test session results,", r"^QA complete",
+     r"^LEU_UI_CHECKPOINT:", r"^Shelf:", r"Structural validation failed:",
++    r"^The following build commands failed:",
+ ]
+ match = re.compile("|".join(patterns))
+ outcome = re.compile(r"^Test Case .* (passed|failed|skipped) \(")
++lines = [re.sub(r"\x1b\[[0-?]*[ -/]*[@-~]", "", line).strip()
++         for line in Path(sys.argv[1]).read_text(errors="replace").splitlines()]
++diagnostic = re.compile(r"(?:^|\s)(?:error:|fatal error:|note:)")
++context_lines: set[int] = set()
++for index, line in enumerate(lines):
++    if diagnostic.search(line):
++        # An error may occur thousands of lines before the final build banner.
++        # Keep the source excerpt, caret and overload notes as well as the error.
++        context_lines.update(range(max(0, index - 2), min(len(lines), index + 5)))
++    if line.startswith("The following build commands failed:"):
++        context_lines.update(range(index, min(len(lines), index + 6)))
+ previous = None
+ in_tree = False
+ pending_trees: list[str] = []
+@@ -30,8 +42,7 @@
+         print("\n".join(pending_trees))
+ 
+ 
+-for line in Path(sys.argv[1]).read_text(errors="replace").splitlines():
+-    line = line.strip()
++for index, line in enumerate(lines):
+     if line.startswith("LEU_UI_TREE_BEGIN:"):
+         in_tree = True
+     if in_tree:
+@@ -44,9 +55,14 @@
+         if result.group(1) != "passed" and pending_trees:
+             emit_trees()
+         pending_trees.clear()
+-    if match.search(line) and line != previous:
++    if (match.search(line) or index in context_lines) and line != previous:
+         print(line)
+         previous = line
+ # A crashed/interrupted runner may never emit an outcome; retain those diagnostics.
+ if pending_trees:
+     emit_trees()
++
++if any("** BUILD FAILED **" in line for line in lines) and not any(
++    re.search(r"(?:^|\s)(?:error:|fatal error:)", line) for line in lines
++):
++    print("FAIL: Build failed without a captured compiler error diagnostic. Share the complete log; a tail alone is insufficient.")
+--- V24.0/scripts/qa-native.sh
++++ V24.1/scripts/qa-native.sh
+@@ -2,7 +2,7 @@
+ set -euo pipefail
+ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ cd "$ROOT"
+-printf '\n=== Leu V24.0 structural validation ===\n'; python3 scripts/validate.py
++printf '\n=== Leu V24.1 structural validation ===\n'; python3 scripts/validate.py
+ printf '\n=== Leu file-scoped import audit ===\n'; python3 scripts/check-shelfcore-imports.py
+ printf '\n=== Leu Learning OS offline/no-model audit ===\n'; python3 scripts/check-learning-offline.py
+ printf '\n=== Leu Learning OS architecture audit ===\n'; python3 scripts/check-learning-architecture.py
+@@ -11,7 +11,7 @@
+ printf '\n=== Leu Connected Knowledge + Voice privacy boundary ===\n'; python3 scripts/check-worldclass-offline.py
+ printf '\n=== Leu V24 semantic/emotional/neural release contract ===\n'; python3 scripts/check-v24-contract.py
+ printf '\n=== Leu native UI test contract audit ===\n'; python3 scripts/check-ui-test-contract.py; python3 scripts/check-study-interactions.py; python3 scripts/test-study-repair-tools.py
+-printf '\n=== Leu SwiftUI compile-contract audit ===\n'; python3 scripts/check-swiftui-compile-contract.py
++printf '\n=== Leu SwiftUI compile-contract audit ===\n'; python3 scripts/check-swiftui-compile-contract.py; python3 scripts/test-settings-compile-repair.py
+ printf '\n=== Leu Gallery Minimalism release contract ===\n'; python3 scripts/check-gallery-minimalism.py
+ printf '\n=== Leu native compile gate ===\n'; ./run.sh --build
+ printf '\n=== Leu portable core tests ===\n'; ./scripts/test-core.sh

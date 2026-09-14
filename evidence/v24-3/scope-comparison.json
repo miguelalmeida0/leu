@@ -1,0 +1,38 @@
+{
+  "basis": "Unmodified V24.2 archive; generated build caches excluded",
+  "changed_app_swift": [
+    "Shelf/App/RootView.swift",
+    "Shelf/Features/Reader/Components/ReadPageContent.swift",
+    "Shelf/Features/Reader/ReaderSearchSheet.swift",
+    "Shelf/Features/Settings/SettingsScreen.swift"
+  ],
+  "byte_identical_directories": [
+    "Packages/ShelfCore",
+    "ShelfUITests",
+    "ShelfTests",
+    "Shelf/DesignSystem",
+    "Shelf/Resources",
+    "Shelf/Learning",
+    "Shelf/Knowledge",
+    "Shelf/Voice"
+  ],
+  "prior_native_ui_tests_unchanged": true,
+  "code_files_changed": [
+    "Shelf.xcodeproj/project.pbxproj",
+    "Shelf/App/RootView.swift",
+    "Shelf/Features/Reader/Components/ReadPageContent.swift",
+    "Shelf/Features/Reader/ReaderSearchSheet.swift",
+    "Shelf/Features/Settings/SettingsScreen.swift",
+    "scripts/check-gallery-minimalism.py",
+    "scripts/check-v24-contract.py",
+    "scripts/qa-and-copy.sh",
+    "scripts/qa-native.sh"
+  ],
+  "new_code_files": [
+    "scripts/check-v243-root-compile.py",
+    "scripts/test-v243-root-compile.py",
+    "validation/v24-3/RootDependencies.swift",
+    "validation/v24-3/RootHarness.swift"
+  ],
+  "removed_files": []
+}

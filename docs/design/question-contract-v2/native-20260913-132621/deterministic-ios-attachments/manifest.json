@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "5FF9D206-CD9D-4E83-8D04-03EF65A5171C.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "react-page3-representability-v2_0_D5957C95-DBA3-4B01-B52F-9C6BF2639387.json",
+        "timestamp" : 1789298892.51
+      }
+    ],
+    "testIdentifier" : "QuestionContractV2IntegrationTests/testRealReactPageThreeHasMeaningfulRealizableClaimsAndExactPDFSpans()",
+    "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfTests/QuestionContractV2IntegrationTests/testRealReactPageThreeHasMeaningfulRealizableClaimsAndExactPDFSpans"
+  }
+]

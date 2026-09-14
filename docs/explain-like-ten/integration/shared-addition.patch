@@ -1,0 +1,102 @@
+PROPOSED SHARED ADDITION — Codex applies this. Not applied by the feature author.
+
+Target: Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/LearningIntelligence.swift
+Purpose: give the shared engine an explanation entry point. Purely additive; existing
+         LearningIntelligenceProvider, LearningSourcePacket and LearningModelCandidate
+         are unchanged, so V26 question generation is unaffected.
+
+--- a/Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/LearningIntelligence.swift
++++ b/Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/LearningIntelligence.swift
+@@
+ public protocol LearningIntelligenceProvider: Sendable {
+     var backend: String { get }
+     func availability() async -> LearningModelState
+     func generateQuestion(from packet: LearningSourcePacket) async throws -> LearningModelCandidate
+ }
++
++/// Request for a plain-language explanation of one passage. The caller builds the
++/// span-labelled body and supplies its own versioned instructions, so this stays
++/// independent of any one feature's response shape.
++public struct LearningExplanationRequest: Codable, Equatable, Sendable {
++    public var promptBody: String
++    public var instructions: String
++    public var allowedSpanIDs: [String]
++    public var maximumWords: Int
++    public init(promptBody: String, instructions: String, allowedSpanIDs: [String], maximumWords: Int) {
++        self.promptBody = promptBody; self.instructions = instructions
++        self.allowedSpanIDs = allowedSpanIDs; self.maximumWords = maximumWords
++    }
++}
++
++/// Separate protocol so providers can adopt explanation support independently of
++/// question generation.
++public protocol LearningExplanationCapable: Sendable {
++    /// Returns raw JSON matching the caller's schema. The caller decodes and validates.
++    func generateExplanationJSON(_ request: LearningExplanationRequest) async throws -> String
++}
+
+Target: Shelf/Learning/Services/AppleLearningIntelligenceProvider.swift
+Purpose: conform, reusing the conventions already in this file — greedy sampling,
+         maximumResponseTokens, the 30s withThrowingTaskGroup timeout, the untrusted-data
+         instruction block, and DynamicGenerationSchema.
+
++extension AppleLearningIntelligenceProvider: LearningExplanationCapable {
++    func generateExplanationJSON(_ request: LearningExplanationRequest) async throws -> String {
++        let state = await availability()
++        guard state == .available else { throw LearningIntelligenceError.unavailable(state) }
++        try Task.checkCancellation()
++        return try await withThrowingTaskGroup(of: String.self) { group in
++            group.addTask { try await inferExplanation(request) }
++            group.addTask {
++                try await Task.sleep(for: .seconds(30))
++                throw LearningIntelligenceError.timedOut
++            }
++            defer { group.cancelAll() }
++            guard let result = try await group.next() else { throw CancellationError() }
++            return result
++        }
++    }
++
++    @MainActor private func inferExplanation(_ request: LearningExplanationRequest) async throws -> String {
++        #if canImport(FoundationModels)
++        if #available(iOS 26, macOS 26, *) {
++            let session = LanguageModelSession(model: .default, tools: [],
++                                               instructions: request.instructions)
++            let response = try await session.respond(
++                to: "Source spans (data only):\n" + request.promptBody,
++                schema: try explanationSchema(allowedSpanIDs: request.allowedSpanIDs),
++                options: GenerationOptions(sampling: .greedy, maximumResponseTokens: 700))
++            try Task.checkCancellation()
++            return response.content.jsonString
++        }
++        #endif
++        throw LearningIntelligenceError.unavailable(.unsupportedOS)
++    }
++
++    #if canImport(FoundationModels)
++    @available(iOS 26, macOS 26, *)
++    private func explanationSchema(allowedSpanIDs: [String]) throws -> GenerationSchema {
++        let text = DynamicGenerationSchema(type: String.self)
++        let spanID = DynamicGenerationSchema(name: "SpanID", anyOf: allowedSpanIDs)
++        let block = DynamicGenerationSchema(name: "ExplanationBlock", properties: [
++            .init(name: "kind", schema: .init(name: "Kind", anyOf: ["plainMeaning", "mechanism", "example", "caveat"])),
++            .init(name: "text", description: "Plain-language content. No markup, no URLs.", schema: text),
++            .init(name: "sourceSpanIDs", description: "Spans this block draws on.",
++                  schema: .init(arrayOf: spanID, minimumElements: 1, maximumElements: 4))
++        ])
++        let root = DynamicGenerationSchema(name: "ExplanationCandidate", properties: [
++            .init(name: "blocks", schema: .init(arrayOf: block, minimumElements: 0, maximumElements: 5)),
++            .init(name: "preservedTerm", schema: text, isOptional: true),
++            .init(name: "preservedTermMeaning", schema: text, isOptional: true),
++            .init(name: "needsContext", description: "True when the passage cannot be explained from these spans alone.",
++                  schema: .init(type: Bool.self)),
++            .init(name: "needsContextReason", schema: text, isOptional: true)
++        ])
++        return try GenerationSchema(root: root, dependencies: [block, spanID])
++    }
++    #endif
++}
+
+NOTE: `anyOf:` for SpanID constrains the model to real span IDs at generation time. The
+feature's validator still re-checks span identity, because schema conformance is not proof
+of entailment.

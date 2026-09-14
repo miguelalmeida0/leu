@@ -1,0 +1,51 @@
+PROPOSED HOST HOOKS — Codex applies these. Three reserved files, one edit each.
+
+--- a/Shelf/Learning/LearningObjectActionSheet.swift
++++ b/Shelf/Learning/LearningObjectActionSheet.swift
+@@ line 58, immediately after the "Understand" row
+             action("Understand", "scope", "Inspect only source-backed concepts and relationships.", id: "learning-action-understand") { if let source { reader.requestLens(source) } }
++
++            action("Explain like I'm 10", "text.book.closed", "Rewrite this passage in plain words.", id: "learning-action-explain-like-ten") { if let source { reader.requestExplainLikeTen(source) } }
+
+--- a/Shelf/Features/Reader/ReaderModel.swift
++++ b/Shelf/Features/Reader/ReaderModel.swift
+@@ near line 64, beside showLearningActions
+     var showLearningActions = false
++    var explainLikeTenSource: LearningSource?
++
++    func requestExplainLikeTen(_ source: LearningSource) {
++        explainLikeTenSource = source
++        showLearningActions = false
++    }
+
+--- a/Shelf/Features/Reader/ReaderScreen.swift
++++ b/Shelf/Features/Reader/ReaderScreen.swift
+@@ after the existing Understanding Lens sheet (line 74-78)
++        .sheet(isPresented: Binding(get: { model.explainLikeTenSource != nil },
++                                    set: { if !$0 { model.explainLikeTenSource = nil } })) {
++            if let source = model.explainLikeTenSource,
++               let packet = ExplanationPacketBuilder().packet(
++                   selection: source,
++                   pageLabel: "\(model.book.title) · p. \(source.pageIndex + 1)",
++                   fingerprint: model.documentFingerprint,
++                   extractionVersion: model.extractionVersion,
++                   heading: source.sectionTitle) {
++                ExplainLikeTenSheet(controller: model.explainController,
++                                    sourceLabel: packet.pageLabel) {
++                    model.explainController.reset()
++                }
++                .task { model.explainController.start(packet: packet) }
++            }
++        }
+
+REQUIRED FROM THE HOST, names to be confirmed against V26:
+  model.documentFingerprint   — the analysis fingerprint for the open document
+  model.extractionVersion     — must be >= 4; the packet builder refuses below that
+  model.explainController     — one ExplanationController per reader session, built via
+                                ExplainLikeTenFeature.live(...) as shown in CODEX_INTEGRATION.md
+
+If the packet builder returns nil the sheet does not present, which is the correct
+behaviour for a too-short, over-long or damaged selection. Consider surfacing the existing
+`savedMessage` affordance in that case rather than adding a new alert.
+
+Then: python3 scripts/sync-xcode-sources.py && python3 scripts/validate.py

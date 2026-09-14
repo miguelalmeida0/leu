@@ -1,0 +1,42 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Shelf: Full native QA + clipboard summary",
+      "type": "shell",
+      "command": "./scripts/qa-and-copy.sh",
+      "problemMatcher": [],
+      "group": { "kind": "test", "isDefault": true }
+    },
+    {
+      "label": "Shelf: Full native QA (raw)",
+      "type": "shell",
+      "command": "./scripts/qa-native.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Shelf: UI audit only",
+      "type": "shell",
+      "command": "./scripts/test-ios.sh -only-testing:ShelfUITests",
+      "problemMatcher": []
+    },
+    {
+      "label": "Shelf: PDF integration only",
+      "type": "shell",
+      "command": "./scripts/test-ios.sh -only-testing:ShelfTests/PDFIntegrationTests",
+      "problemMatcher": []
+    },
+    {
+      "label": "Shelf: Structural validation",
+      "type": "shell",
+      "command": "python3 scripts/validate.py",
+      "problemMatcher": []
+    },
+    {
+      "label": "Shelf: Open in Xcode",
+      "type": "shell",
+      "command": "open Shelf.xcodeproj",
+      "problemMatcher": []
+    }
+  ]
+}

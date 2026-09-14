@@ -1,0 +1,1 @@
+LEU_UI_CHECKPOINT: after-learn-topic-react nativeButtons=1 viewport=(2.0, 76.0, 416.0, 703.0) type=9 frame=(43.650001525878906, 647.316650390625, 332.70001220703125, 57.70001220703125) enabled=true hittable=true

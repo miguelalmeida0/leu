@@ -1,0 +1,40 @@
+{
+  "changedExistingFiles": [
+    "Shelf/Learning/QuestionCardView.swift",
+    "Shelf/Learning/LearningModel.swift",
+    "Shelf/Learning/RecallCardView.swift",
+    "Shelf/Learning/LearningModel+Sessions.swift",
+    "Shelf/Learning/LabScreen.swift",
+    "Shelf/Learning/SessionCompleteView.swift",
+    "ShelfUITests/ShelfWorldClassUITests.swift",
+    "ShelfUITests/ShelfRecoveryV25UITests.swift",
+    "ShelfUITests/V24InteractionSupport.swift",
+    "scripts/sync-xcode-sources.py",
+    "Shelf.xcodeproj/project.pbxproj"
+  ],
+  "addedFiles": [
+    "Shelf/Learning/QuestionFeedbackView.swift",
+    "ShelfTests/RecallSessionStateTests.swift",
+    "ShelfTests/SessionExperienceTests.swift",
+    "ShelfUITests/ShelfSessionExperienceUITests.swift",
+    "scripts/verify-session-experience.sh"
+  ],
+  "protectedStudyFiles": {
+    "Shelf/Learning/LearnTodayScreen.swift": "369902f61ac980d9f0a2468e25c7667c953072bb60f75dbd17ba07e58cc22467",
+    "Shelf/Learning/LearnTodayScreen+MemorySections.swift": "2f8c849ce25325c75bd04c20828608db0feb03b3aab22bd7c1326ba74dd4a603",
+    "Shelf/Learning/Components/LearnSecondaryModes.swift": "fd15557dc910080842ae0dbfe71cced17b30734fc1ce3ca2166e45c24c4c3948",
+    "Shelf/App/RootView.swift": "93f34608ff48a9782441c2ff4ed9fe3c6d605252452892c6e5c56763142e5dd0",
+    "Shelf/Learning/Components/PrimaryTabBar.swift": "c841c78d5d04208ef0f3d657ae8bd1ac503a788895d46a68febded1f9a76314c",
+    "Shelf/DesignSystem/LeuDesign.swift": "f7ba521ee86f869968cacce234c80a0cb3dc59d700b97dff3d92ea3e4d3db8b9"
+  },
+  "protectedCoreUnchanged": true,
+  "priorCertification": {
+    "default": 7,
+    "AX1": 4,
+    "targetedAX1": 1
+  },
+  "currentNativeExecution": "BLOCKED before XCTest",
+  "sessionExperienceUnitTests": 7,
+  "recallStateUnitTests": 6,
+  "newNativeJourneysPerSize": 5
+}

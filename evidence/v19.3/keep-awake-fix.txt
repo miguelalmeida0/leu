@@ -1,0 +1,7 @@
+V19.3 Keep Awake first-touch repair
+- Replaced the reader SwiftUI Toggle with a UIKit-backed UISwitch bridge.
+- UISwitch owns first-touch tracking and native accessibility 0/1 state.
+- AppPreferences.keepAwake remains the single source of truth.
+- Reader idle-timer side effect runs from the same valueChanged event.
+- Global Settings uses the same switch component for consistency.
+- UI contract audit rejects regression back to the reader SwiftUI Toggle path.

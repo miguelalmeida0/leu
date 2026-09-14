@@ -1,0 +1,14 @@
+{
+  "changed": [
+    "Shelf/App/RootView.swift",
+    "Shelf/Learning/LearningStateSheet.swift",
+    "Shelf/Learning/InterviewSetupSheet.swift",
+    "Shelf/Learning/LearnTodayScreen+MemorySections.swift",
+    "Shelf/Learning/LearnTodayScreen.swift",
+    "Shelf/Learning/Components/PrimaryTabBar.swift",
+    "ShelfUITests/StudyInteractionSupport.swift",
+    "ShelfUITests/ShelfStudyHomeUITests.swift",
+    "ShelfUITests/ShelfStudyInteractionUITests.swift"
+  ],
+  "protectedAppAndPackageFilesUnchanged": 354
+}

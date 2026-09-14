@@ -1,0 +1,54 @@
+[
+  {
+    "check": "validate.py",
+    "exitCode": 0
+  },
+  {
+    "check": "check-shelfcore-imports.py",
+    "exitCode": 0
+  },
+  {
+    "check": "check-learning-offline.py",
+    "exitCode": 0
+  },
+  {
+    "check": "check-learning-architecture.py",
+    "exitCode": 0
+  },
+  {
+    "check": "check-connected-architecture.py",
+    "exitCode": 0
+  },
+  {
+    "check": "check-voice-architecture.py",
+    "exitCode": 0
+  },
+  {
+    "check": "check-worldclass-offline.py",
+    "exitCode": 0
+  },
+  {
+    "check": "check-ui-test-contract.py",
+    "exitCode": 0
+  },
+  {
+    "check": "check-study-interactions.py",
+    "exitCode": 0
+  },
+  {
+    "check": "check-swiftui-compile-contract.py",
+    "exitCode": 0
+  },
+  {
+    "check": "check-gallery-minimalism.py",
+    "exitCode": 0
+  },
+  {
+    "check": "test-study-repair-tools.py",
+    "exitCode": 0
+  },
+  {
+    "check": "test-tools.py",
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "release": "Leu Native V24.1 — Settings Compile Repair",
+  "status": "PORTABLE_CHECKS_PASSED_APPLE_BUILD_PENDING",
+  "recordedAtUTC": "2026-09-11T19:37:14.630628+00:00",
+  "baselineArchive": "Leu-Native-V24.0-Test-Candidate.zip",
+  "baselineSHA256": "4e3a24dc446e16a03c89ea30d4ed20f4bd4a54077643a6e181b41f03c8b888de",
+  "toolchain": "Swift version 6.2.1 (swift-6.2.1-RELEASE)\nTarget: x86_64-unknown-linux-gnu",
+  "suppliedMacLog": {
+    "version": "V24.0",
+    "buildSucceeded": false,
+    "failingSource": "SettingsScreen.swift",
+    "compilerDiagnosticIncluded": false,
+    "path": "evidence/v24-1/supplied-v24-0-mac-build-tail.txt"
+  },
+  "core": {
+    "passed": 195,
+    "failed": 0,
+    "sourceAndTestsUnchangedFromV240": true,
+    "log": "evidence/v24-1/core-tests.log"
+  },
+  "sourceChecks": {
+    "allPassed": true,
+    "projectObjects": 442,
+    "sourceScriptFiles": 305,
+    "swiftFilesSyntaxParsed": 277,
+    "log": "evidence/v24-1/static-checks.log"
+  },
+  "tooling": {
+    "existingChecksPassed": 15,
+    "existingRepairTestsPassed": 27,
+    "newSettingsAndSummaryTestsPassed": 14
+  },
+  "native": {
+    "xcodebuildExecutedHere": false,
+    "appleSDKTypecheckedHere": false,
+    "simulatorExecutedHere": false,
+    "appleTestsExpected": 20,
+    "v24GateTestsExpected": 5,
+    "studyGateTestsExpected": 5,
+    "uiTestsExpected": 55,
+    "nativeTestSourcesUnchanged": true,
+    "audioListenedTo": false
+  },
+  "scope": "One application Swift file changed: SettingsScreen.swift constructor plus displayed version. Core, speech, reader, design and all native tests unchanged.",
+  "evidenceDirectory": "evidence/v24-1/"
+}

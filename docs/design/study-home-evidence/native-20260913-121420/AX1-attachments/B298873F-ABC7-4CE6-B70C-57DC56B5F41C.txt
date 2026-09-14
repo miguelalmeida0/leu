@@ -1,0 +1,1 @@
+LEU_UI_CHECKPOINT: before-10 minutes nativeButtons=1 viewport=(2.0, 76.0, 416.0, 703.0) type=9 frame=(213.64999389648438, 581.9833374023438, 162.70001220703125, 64.36663818359375) enabled=true hittable=true

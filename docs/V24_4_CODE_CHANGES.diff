@@ -1,0 +1,598 @@
+--- V24.3/Shelf.xcodeproj/project.pbxproj
++++ V24.4/Shelf.xcodeproj/project.pbxproj
+@@ -5,6 +5,26 @@
+     };
+     "objectVersion" = "56";
+     "objects" = {
++        "DE210EC411B4DFA4AA514F0C" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "Components/UnderstandingLensFactRow.swift";
++            "sourceTree" = "<group>";
++        };
++        "44A68ABC934A831A512F1BE9" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "DE210EC411B4DFA4AA514F0C";
++        };
++        "AFD5C5D658B4738304DF632F" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "UnderstandingLensFact.swift";
++            "sourceTree" = "<group>";
++        };
++        "A666623A7F5ECA29F105AE6C" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "AFD5C5D658B4738304DF632F";
++        };
+         "BBE41D184D01324C486FD33A" = {
+             "isa" = "PBXFileReference";
+             "lastKnownFileType" = "sourcecode.swift";
+@@ -842,6 +862,8 @@
+                 "BC362872806FC2CF7641CBFD",
+                 "BBE41D184D01324C486FD33A",
+                 "A3A7CADF2B28C72682BB6FCB",
++                "DE210EC411B4DFA4AA514F0C",
++                "AFD5C5D658B4738304DF632F",
+             );
+             "path" = "Learning";
+             "sourceTree" = "<group>";
+@@ -2578,6 +2600,8 @@
+                 "2BB2EE39D170FCD8FF890D27",
+                 "A2E20E0B96D1736897C3E5CE",
+                 "F448B74661E8D64649D09DB0",
++                "44A68ABC934A831A512F1BE9",
++                "A666623A7F5ECA29F105AE6C",
+             );
+             "runOnlyForDeploymentPostprocessing" = "0";
+         };
+@@ -2822,7 +2846,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "24.3";
++                "MARKETING_VERSION" = "24.4";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+@@ -2845,7 +2869,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "24.3";
++                "MARKETING_VERSION" = "24.4";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+--- V24.3/Shelf/Features/Settings/SettingsScreen.swift
++++ V24.4/Shelf/Features/Settings/SettingsScreen.swift
+@@ -123,7 +123,7 @@
+                 }
+                 Section {
+                     Button("Privacy & data ownership") { showPrivacy = true }
+-                    LabeledContent("Version", value: "24.3 · Semantic & Emotional Learning")
++                    LabeledContent("Version", value: "24.4 · Semantic & Emotional Learning")
+                     Text("No account. No ads. No subscription. No generative AI. Learning and reading data stay local unless you export a file yourself.")
+                         .font(.footnote).foregroundStyle(ShelfTheme.secondary)
+                 }
+--- V24.3/Shelf/Learning/Components/UnderstandingLensFactRow.swift
++++ V24.4/Shelf/Learning/Components/UnderstandingLensFactRow.swift
+@@ -0,0 +1,49 @@
++import SwiftUI
++import ShelfCore
++
++@MainActor
++struct UnderstandingLensFactRow: View {
++    let fact: UnderstandingLensFact
++    let onSelect: @MainActor (LearningSource) -> Void
++
++    var body: some View {
++        Button(action: selectSource) { rowLabel }
++            .buttonStyle(.plain)
++            .accessibilityIdentifier(fact.accessibilityIdentifier)
++            .accessibilityLabel(Text(verbatim: fact.accessibilityLabel))
++            .accessibilityValue(Text(verbatim: fact.accessibilityValue))
++    }
++
++    private var rowLabel: some View {
++        VStack(alignment: .leading, spacing: 5) {
++            conceptTitle
++            relationship
++            sourceCaption
++        }
++        .frame(maxWidth: .infinity, alignment: .leading)
++        .padding(.vertical, 9)
++        .contentShape(Rectangle())
++    }
++
++    private var conceptTitle: some View {
++        Text(verbatim: fact.conceptName)
++            .font(.headline)
++            .foregroundStyle(ShelfTheme.text)
++    }
++
++    private var relationship: some View {
++        Text(verbatim: fact.relationshipText)
++            .font(.system(.body, design: .serif))
++            .foregroundStyle(ShelfTheme.text)
++    }
++
++    private var sourceCaption: some View {
++        Text(verbatim: fact.sourceCaption)
++            .font(.caption)
++            .foregroundStyle(ShelfTheme.secondary)
++    }
++
++    private func selectSource() {
++        onSelect(fact.target)
++    }
++}
+--- V24.3/Shelf/Learning/Services/ExplanationRecorder.swift
++++ V24.4/Shelf/Learning/Services/ExplanationRecorder.swift
+@@ -48,7 +48,7 @@
+ 
+     private func requestPermission() async -> Bool {
+         await withCheckedContinuation { continuation in
+-            AVAudioSession.sharedInstance().requestRecordPermission { granted in continuation.resume(returning: granted) }
++            AVAudioApplication.requestRecordPermission { granted in continuation.resume(returning: granted) }
+         }
+     }
+ }
+--- V24.3/Shelf/Learning/UnderstandingLensFact.swift
++++ V24.4/Shelf/Learning/UnderstandingLensFact.swift
+@@ -0,0 +1,59 @@
++import Foundation
++import ShelfCore
++
++/// A presentation-only projection. It does not create or reinterpret semantic facts.
++struct UnderstandingLensFact: Identifiable, Equatable, Sendable {
++    let id: String
++    let conceptName: String
++    let relationshipText: String
++    let sourceCaption: String
++    let accessibilityIdentifier: String
++    let accessibilityLabel: String
++    let accessibilityValue: String
++    let target: LearningSource
++    private let documentOrder: String
++    private let pageOrder: Int
++
++    init(concept: SemanticConcept, proposition: SemanticProposition) {
++        let evidence: SemanticEvidenceSpan = proposition.evidence
++        let pageNumber: Int = evidence.pageIndex + 1
++        let relationship: String = "\(proposition.relation.questionVerb) \(proposition.objectText)"
++        id = proposition.id
++        conceptName = concept.canonicalName
++        relationshipText = relationship
++        sourceCaption = "p. \(pageNumber) · \(proposition.truthClass.rawValue)"
++        accessibilityIdentifier = "understanding-lens-fact-\(proposition.id)"
++        accessibilityLabel = "\(concept.canonicalName): \(relationship)"
++        accessibilityValue = "Page \(pageNumber)"
++        target = evidence.learningSource
++        documentOrder = evidence.documentID.uuidString
++        pageOrder = evidence.pageIndex
++    }
++
++    static func matching(
++        source: LearningSource,
++        semanticIndexes: [UUID: SemanticIndex]
++    ) -> [UnderstandingLensFact] {
++        let selectedText: String = source.sourceText.lowercased()
++        var rows: [UnderstandingLensFact] = []
++        for index in semanticIndexes.values {
++            for proposition in index.propositions {
++                guard proposition.isQuizTruth else { continue }
++                guard let concept = index.concepts.first(where: { $0.id == proposition.subjectID }) else {
++                    continue
++                }
++                guard selectedText.contains(concept.canonicalName.lowercased()) else { continue }
++                rows.append(UnderstandingLensFact(concept: concept, proposition: proposition))
++            }
++        }
++        // Preserve the existing document/page/proposition order and 24-row bound.
++        rows.sort(by: orderedBefore)
++        return Array(rows.prefix(24))
++    }
++
++    private static func orderedBefore(_ left: UnderstandingLensFact, _ right: UnderstandingLensFact) -> Bool {
++        if left.documentOrder != right.documentOrder { return left.documentOrder < right.documentOrder }
++        if left.pageOrder != right.pageOrder { return left.pageOrder < right.pageOrder }
++        return left.id < right.id
++    }
++}
+--- V24.3/Shelf/Learning/UnderstandingLensSheet.swift
++++ V24.4/Shelf/Learning/UnderstandingLensSheet.swift
+@@ -9,69 +9,68 @@
+     @Environment(\.dismiss) private var dismiss
+ 
+     var body: some View {
+-        ShelfSheet(title: "Understanding Lens") {
+-            ScrollView {
+-                VStack(alignment: .leading, spacing: 18) {
+-                    Text(source.sourceText)
+-                        .accessibilityIdentifier("lens-origin-passage")
+-                        .font(.system(.body, design: .serif))
+-                        .foregroundStyle(ShelfTheme.secondary)
+-                        .padding(.leading, 12)
+-                        .overlay(alignment: .leading) { Rectangle().fill(ShelfTheme.accent).frame(width: 2) }
+-                    if facts.isEmpty {
+-                        Text("Leu does not have a verified relationship for this passage yet.")
+-                            .font(ShelfTheme.editorial(26))
+-                            .accessibilityIdentifier("understanding-lens-empty")
+-                        Text("Nothing is generated to fill the gap.")
+-                            .font(.callout).foregroundStyle(ShelfTheme.secondary)
+-                    } else {
+-                        ForEach(facts, id: \.proposition.id) { item in
+-                            Button {
+-                                if reader.knowledge.queueLensNavigation(to: item.proposition.evidence.learningSource, from: source) {
+-                                    dismiss()
+-                                }
+-                            } label: {
+-                                VStack(alignment: .leading, spacing: 5) {
+-                                    Text(item.concept.canonicalName)
+-                                        .font(.headline).foregroundStyle(ShelfTheme.text)
+-                                    Text(item.proposition.relation.questionVerb + " " + item.proposition.objectText)
+-                                        .font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.text)
+-                                    Text("p. \(item.proposition.evidence.pageIndex + 1) · \(item.proposition.truthClass.rawValue)")
+-                                        .font(.caption).foregroundStyle(ShelfTheme.secondary)
+-                                }
+-                                .frame(maxWidth: .infinity, alignment: .leading)
+-                                .padding(.vertical, 9)
+-                            }
+-                            .buttonStyle(.plain)
+-                            .accessibilityIdentifier("understanding-lens-fact-" + item.proposition.id)
+-                            .accessibilityLabel(item.concept.canonicalName + ": " + item.proposition.relation.questionVerb + " " + item.proposition.objectText)
+-                            .accessibilityValue("Page \(item.proposition.evidence.pageIndex + 1)")
+-                        }
+-                    }
+-                }
+-                .padding(ShelfTheme.gutter)
+-            }
+-            .background { UITestFrameProbe(identifier: "lens-scroll-frame") }
+-        }
+-        .background { UITestFrameProbe(identifier: "understanding-lens") }
++        ShelfSheet(title: "Understanding Lens") { scrollContent }
++            .background { UITestFrameProbe(identifier: "understanding-lens") }
+     }
+ 
+-    private var facts: [(concept: SemanticConcept, proposition: SemanticProposition)] {
+-        let selectedText = source.sourceText.lowercased()
+-        let all = model.snapshot.semanticIndexes.values.flatMap { index in
+-            index.propositions.compactMap { proposition -> (SemanticConcept, SemanticProposition)? in
+-                guard proposition.isQuizTruth,
+-                      let concept = index.concepts.first(where: { $0.id == proposition.subjectID }) else { return nil }
+-                let sameConcept = selectedText.contains(concept.canonicalName.lowercased())
+-                guard sameConcept else { return nil }
+-                return (concept, proposition)
++    private var scrollContent: some View {
++        ScrollView { passageContent }
++            .background { UITestFrameProbe(identifier: "lens-scroll-frame") }
++    }
++
++    private var passageContent: some View {
++        VStack(alignment: .leading, spacing: 18) {
++            originPassage
++            factContent
++        }
++        .padding(ShelfTheme.gutter)
++    }
++
++    private var originPassage: some View {
++        Text(verbatim: source.sourceText)
++            .accessibilityIdentifier("lens-origin-passage")
++            .font(.system(.body, design: .serif))
++            .foregroundStyle(ShelfTheme.secondary)
++            .padding(.leading, 12)
++            .overlay(alignment: .leading) { originRule }
++    }
++
++    private var originRule: some View {
++        Rectangle().fill(ShelfTheme.accent).frame(width: 2)
++    }
++
++    @ViewBuilder
++    private var factContent: some View {
++        let rows: [UnderstandingLensFact] = facts
++        if rows.isEmpty {
++            emptyTitle
++            emptyDetail
++        } else {
++            ForEach(rows) { (fact: UnderstandingLensFact) in
++                UnderstandingLensFactRow(fact: fact, onSelect: showSource)
+             }
+         }
+-        return Array(all.sorted {
+-            let left = $0.1.evidence, right = $1.1.evidence
+-            if left.documentID != right.documentID { return left.documentID.uuidString < right.documentID.uuidString }
+-            if left.pageIndex != right.pageIndex { return left.pageIndex < right.pageIndex }
+-            return $0.1.id < $1.1.id
+-        }.prefix(24))
++    }
++
++    private var emptyTitle: some View {
++        Text("Leu does not have a verified relationship for this passage yet.")
++            .font(ShelfTheme.editorial(26))
++            .accessibilityIdentifier("understanding-lens-empty")
++    }
++
++    private var emptyDetail: some View {
++        Text("Nothing is generated to fill the gap.")
++            .font(.callout)
++            .foregroundStyle(ShelfTheme.secondary)
++    }
++
++    private var facts: [UnderstandingLensFact] {
++        UnderstandingLensFact.matching(source: source, semanticIndexes: model.snapshot.semanticIndexes)
++    }
++
++    private func showSource(_ target: LearningSource) {
++        if reader.knowledge.queueLensNavigation(to: target, from: source) {
++            dismiss()
++        }
+     }
+ }
+--- V24.3/scripts/check-gallery-minimalism.py
++++ V24.4/scripts/check-gallery-minimalism.py
+@@ -39,7 +39,7 @@
+ plist=plistlib.loads((ROOT/'Shelf/Resources/Info.plist').read_bytes())
+ require(plist.get('CFBundleDisplayName')=='Leu', 'installed app name must be Leu')
+ project=(ROOT/'Shelf.xcodeproj/project.pbxproj').read_text()
+-require('"MARKETING_VERSION" = "24.3";' in project, 'V24.3 marketing version missing')
++require('"MARKETING_VERSION" = "24.4";' in project, 'V24.4 marketing version missing')
+ 
+ if problems:
+     print('FAIL: Leu Gallery Minimalism release contract')
+--- V24.3/scripts/check-v24-contract.py
++++ V24.4/scripts/check-v24-contract.py
+@@ -14,7 +14,8 @@
+ snapshot=read('Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/LearningSnapshot.swift')
+ repo=read('Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift')
+ indexer=read('Shelf/Learning/Services/PDFLearningIndexer.swift')
+-lens=read('Shelf/Learning/LearningObjectActionSheet.swift') + read('Shelf/Learning/UnderstandingLensSheet.swift')
++lens=(read('Shelf/Learning/LearningObjectActionSheet.swift') + read('Shelf/Learning/UnderstandingLensSheet.swift')
++      + read('Shelf/Learning/UnderstandingLensFact.swift') + read('Shelf/Learning/Components/UnderstandingLensFactRow.swift'))
+ confidence=read('Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/MemoryModels.swift')
+ emotion=read('Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/EmotionalModels.swift')
+ complete=read('Shelf/Learning/SessionCompleteView.swift')
+@@ -53,7 +54,7 @@
+     need(token in voice, f'neural voice integration missing: {token}')
+ need('OnnxRuntimeBindings' in runtime and 'ORTSession' in runtime, 'local ONNX inference runtime missing')
+ need('aafc6e32416a594460b32413efc49d7fe4ce6d46' in voice, 'Supertonic model revision is not pinned')
+-need('onnxruntime-swift-package-manager' in pbx and '"MARKETING_VERSION" = "24.3";' in pbx, 'V24 project/version/dependency contract incomplete')
++need('onnxruntime-swift-package-manager' in pbx and '"MARKETING_VERSION" = "24.4";' in pbx, 'V24 project/version/dependency contract incomplete')
+ # Design invariant.
+ hero=read('Shelf/Features/Library/Components/LibraryHeader.swift')
+ for forbidden in ['tree','foliage','leaf.fill','leaf.circle']:
+--- V24.3/scripts/check-v244-lens-compile.py
++++ V24.4/scripts/check-v244-lens-compile.py
+@@ -0,0 +1,70 @@
++#!/usr/bin/env python3
++"""Bounded Lens expressions and unchanged source-navigation contract; not Apple compilation."""
++from pathlib import Path
++import re
++import sys
++
++ROOT = Path(__file__).resolve().parents[1]
++SHEET = 'Shelf/Learning/UnderstandingLensSheet.swift'
++ROW = 'Shelf/Learning/Components/UnderstandingLensFactRow.swift'
++FACT = 'Shelf/Learning/UnderstandingLensFact.swift'
++RECORDER = 'Shelf/Learning/Services/ExplanationRecorder.swift'
++
++
++def member(source, marker):
++    start = source.index(marker)
++    opening = source.index('{', start)
++    depth = 1
++    index = opening + 1
++    while depth and index < len(source):
++        depth += (source[index] == '{') - (source[index] == '}')
++        index += 1
++    if depth:
++        raise ValueError('Unclosed source member: ' + marker)
++    return source[start:index]
++
++
++def violations(overrides=None):
++    overrides = overrides or {}
++    def read(path):
++        return overrides.get(path, (ROOT / path).read_text())
++    sheet, row, fact, recorder = [read(p) for p in (SHEET, ROW, FACT, RECORDER)]
++    issues = []
++    for name, text in [(SHEET, sheet), (ROW, row)]:
++        if 'AnyView(' in text or '.accessibilityElement(children: .ignore)' in text:
++            issues.append(name + ': type erasure/semantic replacement is not the repair')
++        for match in re.finditer(r'(?:private )?var \w+: some View', text):
++            if len(member(text, match.group()).splitlines()) > 18:
++                issues.append(name + ': view expression exceeds the 18-line source bound')
++        if 'item.proposition.' in text or '\\.proposition.id' in text:
++            issues.append(name + ': tuple/deep semantic expressions returned to ViewBuilder')
++    for token in ['struct UnderstandingLensFact: Identifiable', 'let accessibilityValue: String',
++                  'let target: LearningSource', 'guard proposition.isQuizTruth',
++                  'semanticIndexes.values', 'rows.sort(by: orderedBefore)', 'rows.prefix(24)',
++                  'target = evidence.learningSource']:
++        if token not in fact:
++            issues.append('Lens projection contract missing: ' + token)
++    for token in ['ForEach(rows)', '(fact: UnderstandingLensFact)',
++                  'queueLensNavigation(to: target, from: source)',
++                  'UITestFrameProbe(identifier: "understanding-lens")', 'Nothing is generated to fill the gap.']:
++        if token not in sheet:
++            issues.append('Lens sheet contract missing: ' + token)
++    for token in ['Button(action: selectSource)', 'onSelect(fact.target)',
++                  '.accessibilityValue(Text(verbatim: fact.accessibilityValue))',
++                  '.accessibilityLabel(Text(verbatim: fact.accessibilityLabel))',
++                  '.accessibilityIdentifier(fact.accessibilityIdentifier)', '.contentShape(Rectangle())']:
++        if token not in row:
++            issues.append('Native Lens row contract missing: ' + token)
++    if 'AVAudioSession.sharedInstance().requestRecordPermission' in recorder:
++        issues.append('Deprecated microphone permission API returned')
++    if 'AVAudioApplication.requestRecordPermission' not in recorder:
++        issues.append('iOS 17 microphone permission API missing')
++    return issues
++
++
++if __name__ == '__main__':
++    errors = violations()
++    if errors:
++        print('FAIL: V24.4 Lens source checks\n' + '\n'.join(errors))
++        sys.exit(1)
++    print('PASS: nominal Lens rows, bounded expressions, explicit accessibility Text and preserved source action')
+--- V24.3/scripts/qa-and-copy.sh
++++ V24.4/scripts/qa-and-copy.sh
+@@ -3,9 +3,9 @@
+ set -uo pipefail
+ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ cd "$ROOT" || exit 1
+-LOG="${SHELF_QA_LOG:-qa-v24-3.log}"
++LOG="${SHELF_QA_LOG:-qa-v24-4.log}"
+ SUMMARY="${LOG%.log}-summary.txt"
+-export SHELF_QA_RUN_DIR="$ROOT/.build/qa-runs/v24-3-$(date '+%Y%m%d-%H%M%S')-$$"
++export SHELF_QA_RUN_DIR="$ROOT/.build/qa-runs/v24-4-$(date '+%Y%m%d-%H%M%S')-$$"
+ mkdir -p "$SHELF_QA_RUN_DIR" || exit 1
+ date +%s > "$SHELF_QA_RUN_DIR/start-epoch.txt"
+ printf 'QA workspace: %s\nQA run: %s\n' "$ROOT" "$SHELF_QA_RUN_DIR"
+@@ -29,7 +29,7 @@
+     printf '\nDiagnostics export failed; originals remain in .build/results.\n' >> "$SUMMARY"
+ fi
+ printf '\nQA process exit code: %s\n' "$STATUS" >> "$SUMMARY"
+-printf '\n=== Leu V24.3 QA result ===\n'
++printf '\n=== Leu V24.4 QA result ===\n'
+ cat "$SUMMARY"
+ if command -v pbcopy >/dev/null 2>&1 && pbcopy < "$SUMMARY"; then
+     printf '\nSummary copied. Full log: %s\n' "$LOG"
+--- V24.3/scripts/qa-native.sh
++++ V24.4/scripts/qa-native.sh
+@@ -2,7 +2,7 @@
+ set -euo pipefail
+ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ cd "$ROOT"
+-printf '\n=== Leu V24.3 structural validation ===\n'; python3 scripts/validate.py
++printf '\n=== Leu V24.4 structural validation ===\n'; python3 scripts/validate.py
+ printf '\n=== Leu file-scoped import audit ===\n'; python3 scripts/check-shelfcore-imports.py
+ printf '\n=== Leu Learning OS offline/no-model audit ===\n'; python3 scripts/check-learning-offline.py
+ printf '\n=== Leu Learning OS architecture audit ===\n'; python3 scripts/check-learning-architecture.py
+@@ -15,6 +15,7 @@
+ printf '\n=== Leu Gallery Minimalism release contract ===\n'; python3 scripts/check-gallery-minimalism.py
+ printf '\n=== Leu V24.2 interaction and recovery source contracts ===\n'; python3 scripts/check-v242-interactions.py; python3 scripts/test-v242-interactions.py
+ printf '\n=== Leu V24.3 root compile source checks ===\n'; python3 scripts/check-v243-root-compile.py; python3 scripts/test-v243-root-compile.py
++printf '\n=== Leu V24.4 Lens compile source checks ===\n'; python3 scripts/check-v244-lens-compile.py; python3 scripts/test-v244-lens-compile.py
+ printf '\n=== Leu native compile gate ===\n'; ./run.sh --build
+ printf '\n=== Leu portable core tests ===\n'; ./scripts/test-core.sh
+ printf '\n=== Leu Apple PDF integration and viewport geometry tests ===\n'; ./scripts/test-ios.sh -only-testing:ShelfTests
+--- V24.3/scripts/test-v244-lens-compile.py
++++ V24.4/scripts/test-v244-lens-compile.py
+@@ -0,0 +1,116 @@
++#!/usr/bin/env python3
++"""Compile/run the real Lens projection with real core types, plus source mutation checks.
++Routing action adapters are NOT an Apple UI test. All native tests remain mandatory.
++"""
++import importlib.util
++from pathlib import Path
++import shutil
++import subprocess
++import tempfile
++import unittest
++
++ROOT = Path(__file__).resolve().parents[1]
++spec = importlib.util.spec_from_file_location('lens_policy', ROOT / 'scripts/check-v244-lens-compile.py')
++policy = importlib.util.module_from_spec(spec)
++spec.loader.exec_module(policy)
++
++
++class LensCompileRepairTests(unittest.TestCase):
++    def mutate(self, path, old, new):
++        text = (ROOT / path).read_text()
++        self.assertIn(old, text)
++        self.assertTrue(policy.violations({path: text.replace(old, new)}))
++
++    def testCurrentSource(self):
++        self.assertEqual(policy.violations(), [])
++
++    def testLargeBuilderRejected(self):
++        self.mutate(policy.SHEET, 'var body: some View {',
++                    'var body: some View {\n' + ' // extra builder work\n' * 30)
++
++    def testGenericTupleIdentityRejected(self):
++        self.mutate(policy.SHEET, 'ForEach(rows)', 'ForEach(rows, id: \\.proposition.id)')
++
++    def testAccessibilityValueIsExplicitText(self):
++        self.mutate(policy.ROW, '.accessibilityValue(Text(verbatim: fact.accessibilityValue))',
++                    '.accessibilityValue("Page \\(item.proposition.evidence.pageIndex + 1)")')
++
++    def testNativeButtonCannotBecomeIgnoredContainer(self):
++        self.mutate(policy.ROW, '.buttonStyle(.plain)',
++                    '.buttonStyle(.plain).accessibilityElement(children: .ignore)')
++
++    def testFactFilterMustRemain(self):
++        self.mutate(policy.FACT, 'guard proposition.isQuizTruth', 'guard true')
++
++    def testSourceProjectionMustRemain(self):
++        self.mutate(policy.FACT, 'target = evidence.learningSource', 'target = origin')
++
++    def testRowCapMustRemain(self):
++        self.mutate(policy.FACT, 'rows.prefix(24)', 'rows.prefix(1000)')
++
++    def testSourceOriginMustRemain(self):
++        self.mutate(policy.SHEET, 'queueLensNavigation(to: target, from: source)',
++                    'queueLensNavigation(to: target, from: target)')
++
++    def testDeprecatedPermissionAPIRejected(self):
++        self.mutate(policy.RECORDER, 'AVAudioApplication.requestRecordPermission',
++                    'AVAudioSession.sharedInstance().requestRecordPermission')
++
++    def testRealProjectionAndSourceActionBodies(self):
++        swiftc = shutil.which('swiftc')
++        self.assertIsNotNone(swiftc, 'Swift compiler is required; no silent skip')
++        source = (ROOT / policy.SHEET).read_text()
++        route = policy.member(source, 'private func showSource(').replace('private func', 'func', 1)
++        row = policy.member((ROOT / policy.ROW).read_text(), 'private func selectSource(')
++        row = row.replace('private func', 'func', 1)
++        generated = '''import ShelfCore
++@MainActor struct LensRouteProbe {
++    let reader: LensReaderProbe
++    let source: LearningSource
++    let dismiss: LensDismissProbe
++''' + route + '''
++}
++@MainActor struct LensRowActionProbe {
++    let fact: UnderstandingLensFact
++    let onSelect: @MainActor (LearningSource) -> Void
++''' + row + '\n}\n'
++        core = ROOT / 'Packages/ShelfCore/Sources/ShelfCore'
++        with tempfile.TemporaryDirectory(prefix='leu-lens-v244-') as temp:
++            temp = Path(temp)
++            # Unmodified production definitions only; no substitute semantic models.
++            definitions = [core / 'Learning/Domain/LearningSource.swift',
++                           core / 'Learning/Analysis/StableIdentity.swift',
++                           core / 'Learning/Semantic/SemanticModels.swift']
++            objects = []
++            for file in definitions:
++                output = temp / (file.stem + '.o')
++                # Each compilation sees the complete set of production type declarations.
++                objects.append(output)
++            output_map = {str(file): {'object': str(obj)} for file, obj in zip(definitions, objects)}
++            import json
++            mapping = temp / 'outputs.json'
++            mapping.write_text(json.dumps(output_map))
++            flags = ['-swift-version', '5', '-strict-concurrency=complete', '-warnings-as-errors']
++            build = subprocess.run([swiftc, *flags, '-parse-as-library', '-module-name', 'ShelfCore',
++                '-emit-module', '-emit-module-path', str(temp / 'ShelfCore.swiftmodule'),
++                '-c', *map(str, definitions), '-output-file-map', str(mapping)],
++                capture_output=True, text=True, timeout=90)
++            self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
++            extracted = temp / 'LensActions.swift'
++            extracted.write_text(generated)
++            executable = temp / 'lens-projection'
++            result = subprocess.run([swiftc, *flags, '-parse-as-library', '-I', str(temp),
++                str(ROOT / policy.FACT), str(extracted),
++                str(ROOT / 'validation/v24-4/LensSelectionReference.swift'),
++                str(ROOT / 'validation/v24-4/LensRouteDependencies.swift'),
++                str(ROOT / 'validation/v24-4/LensProjectionHarness.swift'),
++                *map(str, objects), '-o', str(executable)], capture_output=True, text=True, timeout=90)
++            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
++            run = subprocess.run([str(executable)], capture_output=True, text=True, timeout=20)
++            print(run.stdout, end='')
++            self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
++            self.assertIn('Lens projection/navigation checks', run.stdout)
++
++
++if __name__ == '__main__':
++    unittest.main(verbosity=2)

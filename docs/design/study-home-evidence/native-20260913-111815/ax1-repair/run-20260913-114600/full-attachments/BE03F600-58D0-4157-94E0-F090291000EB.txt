@@ -1,0 +1,1 @@
+LEU_UI_CHECKPOINT: after-study-lab-BC91DA05-5BD7-58C7-9D4C-023FCCF19686 nativeButtons=1 viewport=(2.0, 76.0, 416.0, 703.0) type=9 frame=(44.00000000000003, 299.66666666666674, 332.0, 97.66666666666652) enabled=true hittable=false

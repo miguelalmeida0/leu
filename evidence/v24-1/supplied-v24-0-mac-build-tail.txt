@@ -1,0 +1,220 @@
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReadingPositionRecorder.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Settings/PrivacySheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Settings/SettingsScreen.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Settings/TrashSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/Files/AppPaths.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/Files/IncomingFileService.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/Files/SampleLibrarySeeder.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/PDF/PDFAnnotationRenderer.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/PDF/PDFDocumentLoader.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/PDF/PDFInspector.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling SupertonicSpeechEngine.swift, AppleSpeechEngine.swift, AudioSessionCoordinator.swift, PronunciationPreferenceStore.swift, VoicePlayerStrip.swift, VoiceSettingsSheet.swift, VoiceCatalog.swift, VoiceDescriptor.swift, VoicePreferenceStore.swift, VoiceQualityRanker.swift, RemoteCommandCoordinator.swift, KnowledgeModel+ConceptsAndChains.swift, KnowledgeModel+Connections.swift, KnowledgeModel+Search.swift, LearnSecondaryModes.swift, StudyInteractionTrace.swift, GeneratedAssetSymbols.swift (in target 'Shelf' from project 'Shelf')
+
+SwiftMergeGeneratedHeaders /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/DerivedSources/Shelf-Swift.h /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/arm64/Shelf-Swift.h /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/x86_64/Shelf-Swift.h (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    builtin-swiftHeaderTool -arch arm64 /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/arm64/Shelf-Swift.h -arch x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/x86_64/Shelf-Swift.h -o /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/DerivedSources/Shelf-Swift.h
+
+SwiftDriverJobDiscovery normal arm64 Compiling PDFPageSearch.swift, PDFSessionController.swift, PDFThumbnailService.swift, PDFExportService.swift, ShareSheet.swift, AppPreferences.swift, OpeningTimeline.swift, OpeningDustView.swift, OpeningExperienceView.swift, ReadablePage.swift, ReadablePageView.swift, ReaderStudyDrawer.swift, ReaderTextSizeMenu.swift, PDFReadablePageExtractor.swift, ReaderSpeechController.swift, ReaderTrackingSlider.swift, ReadContinuousDocumentView.swift, ReadHorizontalPager.swift (in target 'Shelf' from project 'Shelf')
+
+Copy /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Products/Debug-iphonesimulator/Shelf.swiftmodule/x86_64-apple-ios-simulator.swiftmodule /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/x86_64/Shelf.swiftmodule (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/x86_64/Shelf.swiftmodule /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Products/Debug-iphonesimulator/Shelf.swiftmodule/x86_64-apple-ios-simulator.swiftmodule
+
+Copy /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Products/Debug-iphonesimulator/Shelf.swiftmodule/x86_64-apple-ios-simulator.swiftdoc /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/x86_64/Shelf.swiftdoc (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/x86_64/Shelf.swiftdoc /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Products/Debug-iphonesimulator/Shelf.swiftmodule/x86_64-apple-ios-simulator.swiftdoc
+
+Copy /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Products/Debug-iphonesimulator/Shelf.swiftmodule/x86_64-apple-ios-simulator.abi.json /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/x86_64/Shelf.abi.json (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/x86_64/Shelf.abi.json /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Products/Debug-iphonesimulator/Shelf.swiftmodule/x86_64-apple-ios-simulator.abi.json
+
+Copy /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Products/Debug-iphonesimulator/Shelf.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/x86_64/Shelf.swiftsourceinfo (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Intermediates.noindex/Shelf.build/Debug-iphonesimulator/Shelf.build/Objects-normal/x86_64/Shelf.swiftsourceinfo /Users/malmeida/Downloads/LeuNativeV24_0/.build/ios/Build/Products/Debug-iphonesimulator/Shelf.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo
+
+SwiftCompile normal x86_64 Compiling\ SemanticZoomSurface.swift,\ TimedReadingSheet.swift,\ ReaderStateSheet.swift,\ SemanticZoom.swift,\ ReadingWindowPlanner.swift,\ ReadingAnchorStore.swift,\ ShelfHaptics.swift,\ ShelfMotion.swift,\ AppContainer.swift,\ RootView.swift,\ ShelfApp.swift,\ CoverIllustration.swift,\ ShelfControls.swift,\ ShelfTabBar.swift,\ ShelfTheme.swift,\ CollectionsSheet.swift,\ TagsScreen.swift,\ BookDetailsSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/Components/SemanticZoomSurface.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/Components/TimedReadingSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/Components/ReaderStateSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/SemanticZoom.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReadingWindowPlanner.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReadingAnchorStore.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Support/ShelfHaptics.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/DesignSystem/ShelfMotion.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/App/AppContainer.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/App/RootView.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/App/ShelfApp.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/DesignSystem/CoverIllustration.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/DesignSystem/ShelfControls.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/DesignSystem/ShelfTabBar.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/DesignSystem/ShelfTheme.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Collections/CollectionsSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Collections/TagsScreen.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/BookDetailsSheet.swift (in target 'Shelf' from project 'Shelf')
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/Components/SemanticZoomSurface.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/Components/TimedReadingSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/Components/ReaderStateSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/SemanticZoom.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReadingWindowPlanner.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReadingAnchorStore.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Support/ShelfHaptics.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/DesignSystem/ShelfMotion.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/App/AppContainer.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/App/RootView.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/App/ShelfApp.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/DesignSystem/CoverIllustration.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/DesignSystem/ShelfControls.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/DesignSystem/ShelfTabBar.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/DesignSystem/ShelfTheme.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Collections/CollectionsSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Collections/TagsScreen.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/BookDetailsSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling LabScreen.swift, LearnTodayScreen.swift, LearningModel+Objects.swift, LearningModel+Sessions.swift, LearningModel.swift, LearningObjectActionSheet.swift, LearningTimelineSheet.swift, LearningTokens.swift, MemoryMarginMarkers.swift, PrimaryArea.swift, QuestionCardView.swift, RecallCardView.swift, ExplanationRecorder.swift, PDFLearningIndexer.swift, SessionActivities.swift, SessionCompleteView.swift, StudySessionScreen.swift, TrailDetailScreen.swift (in target 'Shelf' from project 'Shelf')
+
+SwiftCompile normal x86_64 Compiling\ TrailsScreen.swift,\ ReaderModel+BlindPage.swift,\ ReaderModel+Learning.swift,\ LearnTodayScreen+MemorySections.swift,\ LearningStateSheet.swift,\ RecallPromptEditorSheet.swift,\ PDFTextExtractor.swift,\ LabScenarioView.swift,\ PDFTextExtractionCheckpointStore.swift,\ BookConnectionsSheet.swift,\ ConceptDetailSheet.swift,\ ConnectedPassageSheet.swift,\ ConnectionConstellationSheet.swift,\ KnowledgeSearchSheet.swift,\ TopicChainScreens.swift,\ KnowledgeModel.swift,\ SupertonicRuntime.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/TrailsScreen.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderModel+BlindPage.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderModel+Learning.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/LearnTodayScreen+MemorySections.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/LearningStateSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/RecallPromptEditorSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/Services/PDFTextExtractor.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/LabScenarioView.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/Services/PDFTextExtractionCheckpointStore.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/BookConnectionsSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/ConceptDetailSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/ConnectedPassageSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/ConnectionConstellationSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/KnowledgeSearchSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/TopicChainScreens.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/KnowledgeModel.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Voice/Engine/SupertonicRuntime.swift (in target 'Shelf' from project 'Shelf')
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/TrailsScreen.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderModel+BlindPage.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderModel+Learning.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/LearnTodayScreen+MemorySections.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/LearningStateSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/RecallPromptEditorSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/Services/PDFTextExtractor.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/LabScenarioView.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Learning/Services/PDFTextExtractionCheckpointStore.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/BookConnectionsSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/ConceptDetailSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/ConnectedPassageSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/ConnectionConstellationSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/KnowledgeSearchSheet.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/Components/TopicChainScreens.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Knowledge/KnowledgeModel.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal x86_64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Voice/Engine/SupertonicRuntime.swift (in target 'Shelf' from project 'Shelf')
+    cd /Users/malmeida/Downloads/LeuNativeV24_0
+    
+
+SwiftCompile normal arm64 Compiling\ BookActionsMenu.swift,\ BookTile.swift,\ CollectionFilterBar.swift,\ LibraryHeader.swift,\ PassageResultsView.swift,\ LibraryModel+Backup.swift,\ LibraryModel+Editing.swift,\ LibraryModel+Import.swift,\ LibraryModel+Search.swift,\ LibraryModel.swift,\ LibraryScreen.swift,\ PDFDocumentPickerView.swift,\ LibraryState.swift,\ ReaderBottomBar.swift,\ ReaderTopBar.swift,\ NoteEditorSheet.swift,\ ReaderContentsSheet.swift,\ ReaderModel+Annotations.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/Components/BookActionsMenu.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/Components/BookTile.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/Components/CollectionFilterBar.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/Components/LibraryHeader.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/Components/PassageResultsView.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/LibraryModel+Backup.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/LibraryModel+Editing.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/LibraryModel+Import.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/LibraryModel+Search.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/LibraryModel.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/LibraryScreen.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/PDFDocumentPickerView.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Library/LibraryState.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/Components/ReaderBottomBar.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/Components/ReaderTopBar.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/NoteEditorSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderContentsSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderModel+Annotations.swift (in target 'Shelf' from project 'Shelf')
+
+** BUILD FAILED **
+
+
+The following build commands failed:
+	SwiftCompile normal arm64 /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Settings/SettingsScreen.swift (in target 'Shelf' from project 'Shelf')
+	SwiftCompile normal arm64 Compiling\ ReaderModel+Search.swift,\ ReaderModel+Reading.swift,\ ReaderModel.swift,\ ReaderNotesSheet.swift,\ ReaderScreen.swift,\ ReaderSearchSheet.swift,\ ReaderSettingsSheet.swift,\ ReaderState.swift,\ ReadingPositionRecorder.swift,\ PrivacySheet.swift,\ SettingsScreen.swift,\ TrashSheet.swift,\ AppPaths.swift,\ IncomingFileService.swift,\ SampleLibrarySeeder.swift,\ PDFAnnotationRenderer.swift,\ PDFDocumentLoader.swift,\ PDFInspector.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderModel+Search.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderModel+Reading.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderModel.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderNotesSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderScreen.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderSearchSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderSettingsSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReaderState.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Reader/ReadingPositionRecorder.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Settings/PrivacySheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Settings/SettingsScreen.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Features/Settings/TrashSheet.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/Files/AppPaths.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/Files/IncomingFileService.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/Files/SampleLibrarySeeder.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/PDF/PDFAnnotationRenderer.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/PDF/PDFDocumentLoader.swift /Users/malmeida/Downloads/LeuNativeV24_0/Shelf/Infrastructure/PDF/PDFInspector.swift (in target 'Shelf' from project 'Shelf')
+	Building project Shelf with scheme Shelf and configuration Debug
+(3 failures)

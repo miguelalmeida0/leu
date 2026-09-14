@@ -1,0 +1,23 @@
+LEU CLAUDE REDESIGN SOURCE SNAPSHOT
+Created: 2026-09-12T23:27:04+02:00
+Source workspace: /Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5
+
+Git branch: master
+Git HEAD: HEAD
+Git status:
+?? ../Leu-Native-LATEST.zip
+?? ../Leu-Native-V25-Reconstructed-Checkpoint.package.json
+?? ../Leu-Native-V25-Reconstructed-Checkpoint.zip
+?? ../Leu-V25-BLOCKED-Checkpoint.zip
+?? ./
+
+Swift files: 373
+Files total: 1089
+
+LATEST KNOWN PRODUCT VERIFICATION BEFORE PACKAGING:
+- Real iOS Explain-like-10 single journey: PASS
+- Standard / Even simpler / Show an example / return to p.3: PASS
+- withExample first-pass schema: plainMeaning + example, accepted, no repair, ~4.61s
+- Full Explain-like-10 UI: 2/2 PASS
+- Latest attached unit run: 43 executed with 2 assertion failures in one prompt-version persistence test
+See REDESIGN_HANDOFF/01_CURRENT_VERIFIED_STATE.md and attached evidence.

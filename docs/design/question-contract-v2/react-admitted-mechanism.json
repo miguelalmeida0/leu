@@ -1,0 +1,67 @@
+{
+  "question" : {
+    "correctOptionID" : "D31AF602-1DC7-5785-B846-852B29F060FA",
+    "generatedAt" : 810990627.49562097,
+    "id" : "DB93E331-EC8F-5005-B183-7F82B40002C6",
+    "kind" : "semanticRelationship",
+    "modelProvenance" : {
+      "availability" : "available",
+      "backend" : "apple-on-device",
+      "cognitiveOperation" : "mechanism",
+      "explanation" : "A stable key helps React match an item to its previous\ninstance within a list of siblings.",
+      "generatedAt" : 810990627.49562705,
+      "generationConfiguration" : "grounded-selection-v2; greedy; maximumResponseTokens=256; timeout=30s; no-tools",
+      "packet" : {
+        "claimSegments" : [
+          "Keys describe identity",
+          "A stable key helps React match an item to its previous instance within a list of siblings. Reordering should not make one item inherit the local state of another.",
+          "));",
+          "An array index can be a poor key when items move, are inserted or removed. A freshly generated random key also destroys continuity between renders.",
+          "Practice: explain why editing a row can reveal a bad key choice."
+        ],
+        "documentID" : "CE34CADA-2833-4534-B044-FC583C3FDB76",
+        "extractionVersion" : 4,
+        "fingerprint" : "7d42381fcbb2e1c6252457bced1a3970015142adbac4a556fb35d7ab4e318640",
+        "pageIndex" : 2,
+        "range" : {
+          "length" : 507,
+          "location" : 0
+        },
+        "sourceText" : "SHELF SAMPLES \/ 03\nKeys describe identity\nA stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another.\nitems.map(item => (\n<Row key={item.id} item={item} \/>\n));\nAn array index can be a poor key when items move,\nare inserted or removed. A freshly generated random\nkey also destroys continuity between renders.\nPractice: explain why editing a row can reveal a bad key\nchoice.\nSHELF \/ ORIGINAL SAMPLE NOTES 3"
+      },
+      "schemaVersion" : 2,
+      "selectedClaimID" : "FEA5D796-9693-519B-9306-7D12A52D1BAA",
+      "validatorVersion" : 2
+    },
+    "options" : [
+      {
+        "id" : "D31AF602-1DC7-5785-B846-852B29F060FA",
+        "text" : "A stable key helps React match an item to its previous\ninstance within a list of siblings."
+      },
+      {
+        "id" : "23BFFBA4-7C65-5DBB-8E5A-000F0E72230E",
+        "text" : "Reordering should\nnot make one item inherit the local state of another."
+      },
+      {
+        "id" : "CCE40F60-B38A-5ED0-8F40-4973B6F2F6D3",
+        "text" : "An array index can be a poor key when items move,\nare inserted or removed."
+      }
+    ],
+    "prompt" : "Which effect does a stable key help achieve?",
+    "qualityScore" : 0.80000000000000004,
+    "source" : {
+      "documentID" : "CE34CADA-2833-4534-B044-FC583C3FDB76",
+      "pageIndex" : 2,
+      "range" : {
+        "length" : 90,
+        "location" : 42
+      },
+      "sourceText" : "A stable key helps React match an item to its previous\ninstance within a list of siblings."
+    },
+    "stableKey" : "CE34CADA-2833-4534-B044-FC583C3FDB76|7d42381fcbb2e1c6252457bced1a3970015142adbac4a556fb35d7ab4e318640|4|2|6691559082614345171|apple-on-device|question|schema2|validator2|claims1|which effect does a stable key help achieve?",
+    "topicIDs" : [
+
+    ]
+  },
+  "verificationKind" : "deterministic-host-replay-no-model-inference"
+}

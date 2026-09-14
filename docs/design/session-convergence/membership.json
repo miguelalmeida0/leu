@@ -1,0 +1,12 @@
+{
+  "Shelf": [
+    "QuestionFeedbackView.swift"
+  ],
+  "ShelfTests": [
+    "SessionExperienceTests.swift",
+    "RecallSessionStateTests.swift"
+  ],
+  "ShelfUITests": [
+    "ShelfSessionExperienceUITests.swift"
+  ]
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "FDE50E47-D5B9-4825-9755-467E41335F97.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-react-page-3_0_E9264311-A4D6-4002-8B75-133F14A9D642.json",
+        "timestamp" : 1789294394.374
+      }
+    ],
+    "testIdentifier" : "LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning()",
+    "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfTests/LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning"
+  }
+]

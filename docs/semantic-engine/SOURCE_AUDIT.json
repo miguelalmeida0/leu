@@ -1,0 +1,3388 @@
+{
+  "scope": "Repository-wide source inventory and dependency scan, with focused inspection of import, reader, learning, knowledge, persistence and voice paths; not a claim of runtime verification.",
+  "counts": {
+    "Shelf": 156,
+    "Packages/ShelfCore/Sources": 101,
+    "Packages/ShelfCore/Tests": 38,
+    "ShelfTests": 6,
+    "ShelfUITests": 12,
+    "scripts": 38
+  },
+  "files": [
+    {
+      "path": "Shelf/App/AppContainer.swift",
+      "sha256": "b31e0e0a1ad7e1538938ff8bd377d1e43450c1bd6f44d987549442fc3ab224f9",
+      "lines": 62,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/App/RootView.swift",
+      "sha256": "71ef8f434e43876537016250e68c09661dee311e981dbd34a8bf0bba7db36bbf",
+      "lines": 250,
+      "imports": [
+        "Foundation",
+        "SwiftUI",
+        "UniformTypeIdentifiers"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/App/ShelfApp.swift",
+      "sha256": "3ff4fe9518711da856d6aebdd5117a498dfa32ff663c5faed864c1d6e60376f9",
+      "lines": 27,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/DesignSystem/CoverIllustration.swift",
+      "sha256": "65cea2572f64e96d61f32008ef9a51c47058975afb486d5838687462ee557467",
+      "lines": 89,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/DesignSystem/ReaderTrackingSlider.swift",
+      "sha256": "71d230cfe3a66ff295aaedc28e1255f2427ab2ae3bb22d943c274c99def55157",
+      "lines": 137,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/DesignSystem/ShelfControls.swift",
+      "sha256": "16967692c52e2b3f807dc30a017331352a9d0da38ad7758291169a75d5eb9456",
+      "lines": 167,
+      "imports": [
+        "SwiftUI",
+        "UIKit"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/DesignSystem/ShelfMotion.swift",
+      "sha256": "d07a802ecd80f1f79448f48d064428aeae1098def12b3f1010864a7400e62c90",
+      "lines": 18,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/DesignSystem/ShelfTabBar.swift",
+      "sha256": "73f716536805a7a9a818cc7e3d74063e9584cd480370ee21a9dfbd948a54588e",
+      "lines": 43,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/DesignSystem/ShelfTheme.swift",
+      "sha256": "cfffbe6f0cade7c20aeeeb28d0a9e8f6b5294ad60b547bcf4ec20006f20195d2",
+      "lines": 97,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Development/VoiceBenchmarkCorpus.swift",
+      "sha256": "67319438cf73b84b9bb60b885889bcf6d149a43beaa2b97846292fdbd0a1bee1",
+      "lines": 64,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Collections/CollectionsSheet.swift",
+      "sha256": "b7962b7d0c15a04d3acfcc6cff242ad9e2e00a36377d0ff4da75d1f31d406da6",
+      "lines": 57,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Collections/TagsScreen.swift",
+      "sha256": "8648438fb05d138737eb61e31f8f95ebb6aa50486d98aba6e155060eadbee818",
+      "lines": 117,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/BookDetailsSheet.swift",
+      "sha256": "8096f53e66af7791b942c05058bf86218133e22a2f6bcd08dc3bc8cedd35086f",
+      "lines": 62,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/Components/BookActionsMenu.swift",
+      "sha256": "f74c1ca5bd178ee79d051595d96b753b5ded6764c6f090795cfa45e15f2db2dd",
+      "lines": 52,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/Components/BookTile.swift",
+      "sha256": "30f42ae72e680276a8c154411fc48921c173eb5cecbc28e7acfd231573eefd55",
+      "lines": 91,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/Components/CollectionFilterBar.swift",
+      "sha256": "e12a2e44a4588bcda233fcfefd3310ac38b88a5618a4f155f2e8c9466b8fa165",
+      "lines": 59,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/Components/LibraryHeader.swift",
+      "sha256": "2de38f3ea3124af2b08c3993143200086bac56010925aac3368f8a78a9c47fa2",
+      "lines": 215,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/Components/PassageResultsView.swift",
+      "sha256": "cb6b1c2547f979fb5eefefa6fbbf8c16e73b76a3c09432a281d545dc4f579499",
+      "lines": 39,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/LibraryModel+Backup.swift",
+      "sha256": "56c25c320802d1a7c8fb74b1ac5a8f3213d41f99ebd16b808f7a06bff97d06b3",
+      "lines": 27,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/LibraryModel+Editing.swift",
+      "sha256": "b1ccf90715bf842238c89e72b644274a0534816fb4605d5c57afe7a8e34d6d7c",
+      "lines": 60,
+      "imports": [
+        "Foundation",
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/LibraryModel+Import.swift",
+      "sha256": "d4454a2d3296798b2e70b318c1553160eec36cd5a40eadbebf8ec78d8d4749ea",
+      "lines": 56,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/LibraryModel+Search.swift",
+      "sha256": "a51e0d818e30dd36872df431ea943d179162381b6afbd037c49dfbc42cff5d36",
+      "lines": 24,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/LibraryModel.swift",
+      "sha256": "78ec2016fd18609a95e6833460fd2f5f824a11b2dfcff5d0dec6c9ced5dc69f8",
+      "lines": 129,
+      "imports": [
+        "Foundation",
+        "Observation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/LibraryScreen.swift",
+      "sha256": "1abfb08a66c4b1d102bc8f3fb2953cdffe251df47ba2a3f06639a7c4859b3d81",
+      "lines": 271,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/LibraryState.swift",
+      "sha256": "e8dde3bbc2b1d7b846498eee6c85c3c7cd5625291afb2ac7baac1e2984bc1eb2",
+      "lines": 48,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Library/PDFDocumentPickerView.swift",
+      "sha256": "c7ac32ed380b709aa6ec745213549b9c49820c9a7034633d3f24eea21a0b225f",
+      "lines": 55,
+      "imports": [
+        "SwiftUI",
+        "UniformTypeIdentifiers",
+        "UIKit"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Opening/OpeningDustView.swift",
+      "sha256": "4d0789c3bd6c641ce5ad9e282bba68227be258859f2b05f851acdb56250abf0a",
+      "lines": 7,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Opening/OpeningExperienceView.swift",
+      "sha256": "4a51826bb7b6260b88ec350e4af8b7301e2055d803a2625d59c0b3330ff66a7f",
+      "lines": 40,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Opening/OpeningTimeline.swift",
+      "sha256": "9f26c5cbf39765cd62aa4ec1f93b34e71e04e15d45f4baf2e7e8ea1c84ba13da",
+      "lines": 63,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/ReadContinuousDocumentView.swift",
+      "sha256": "6a24681d1e5ff0a48786aa58979eeda5f064dcf0145b504f01fbddf5b5f33aca",
+      "lines": 78,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/ReadHorizontalPager.swift",
+      "sha256": "8ec16f74920b5dd52a4b135fbb16bbd7aec12950974f6d25abb16d0056f80188",
+      "lines": 108,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/ReadPageContent.swift",
+      "sha256": "7996cfe783656bd78df4868343bb37a60b087af3b30333f33981ae965ba049f1",
+      "lines": 76,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/ReadablePageView.swift",
+      "sha256": "ce7fdd9a30e96fbf4bb561e61cc36ba66d534f63fe0efa5f3762a67dab92f182",
+      "lines": 29,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/ReaderBottomBar.swift",
+      "sha256": "524c4ef3fa0316123c1d76b8da0e442ab0d49952989ca921b2252c336c5b7064",
+      "lines": 248,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/ReaderFocusBar.swift",
+      "sha256": "548041585c3060b4a2855485d362ef3ff8745b7dfea0f70ec6370425ca6e469a",
+      "lines": 38,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/ReaderStateSheet.swift",
+      "sha256": "5a9f06b5bf68f6e0cc101b63dd227ebc5d9cd02181151a39a473081772816f1b",
+      "lines": 28,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/ReaderStudyDrawer.swift",
+      "sha256": "d968dc10ee5f7240b8b824f84ed42d25a61af53848cf2626a72bc69cbddb986b",
+      "lines": 174,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/ReaderTextSizeMenu.swift",
+      "sha256": "f657d37ea14894ef7cfac47282c3f065d52d6197807b179feef514171443c75a",
+      "lines": 40,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/ReaderTopBar.swift",
+      "sha256": "60c524c65f33c33cd455d34b3fafa57cdb67833829f72defbaafa651878d27b6",
+      "lines": 103,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/SemanticZoomSurface.swift",
+      "sha256": "bbddadef1a619b53b0474dc47e231ee5d22a16a28f3601d536fa533e4888c349",
+      "lines": 88,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Components/TimedReadingSheet.swift",
+      "sha256": "68a3bff863d048d8a43ff09a7f8d611d6fd7296ac3608b13918d925b7493f699",
+      "lines": 70,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/Interaction/ReaderPageTurnDriver.swift",
+      "sha256": "88719aa272e7d86c8e53f2e9e9ae6800093ef84993efb57398f916fd9cd1190e",
+      "lines": 185,
+      "imports": [
+        "UIKit",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/NoteEditorSheet.swift",
+      "sha256": "6956b9547489b590b830403f3a53cdc7d960dd60fc046d8c0d8de3674cad31da",
+      "lines": 49,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReadablePage.swift",
+      "sha256": "33d22c2704b4f7f80c87bcb062201bbccac10b09c696a1ac4f87cfd7496376b7",
+      "lines": 5,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderContentsSheet.swift",
+      "sha256": "efefcf0924d3b48a293ccb5d4d65e60c0247816ce537e875831ae03d25a2f99d",
+      "lines": 232,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderModel+Annotations.swift",
+      "sha256": "b71b43931fc5d4a052696052c9fd824be497ae1b3bef60fcb2bfa219aa7c8a0b",
+      "lines": 125,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderModel+BlindPage.swift",
+      "sha256": "c86cbafc20197ff806fbfa645d6d3c975d471e627803b58e7d7c5c94461c8922",
+      "lines": 38,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderModel+Learning.swift",
+      "sha256": "4b45f7947df3f4c6615929ce046c9263272da3e693232310789ddd8ea4123a9b",
+      "lines": 49,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderModel+Lens.swift",
+      "sha256": "a41f91b916b0827837f23a0790a316952957605c7666c5decf0f3826b2891568",
+      "lines": 43,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderModel+Location.swift",
+      "sha256": "8d173b570a8b93a138ada75179bb5143574924c97e52d671b67372c7530d8dc9",
+      "lines": 63,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderModel+Reading.swift",
+      "sha256": "4676da5bbb44c950ded70f30c72ff38dee5c30ee3b836d9e75d721f1c8ecef72",
+      "lines": 96,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderModel+Search.swift",
+      "sha256": "8aa70ef35db8eb923b3aa9af0bff094d96ba4fd30532d34435a91a9da5367795",
+      "lines": 37,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderModel.swift",
+      "sha256": "64ddee1af988bd7cf6bd45a2d7279e28699fe64e0ab02b663ebf247547309e15",
+      "lines": 298,
+      "imports": [
+        "Foundation",
+        "Observation",
+        "ShelfCore",
+        "UIKit",
+        "PDFKit"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderNotesSheet.swift",
+      "sha256": "0b25affd5148a3b2d3498f3d693f0aa52edb8cb40fb581b0eb8248b02189765b",
+      "lines": 87,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderScreen.swift",
+      "sha256": "21eaab3caca5cd0d590ded743ca94be2adaaa6dc1b549f32effcf738fe8f1e4f",
+      "lines": 150,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderSearchSheet.swift",
+      "sha256": "acbfaf71d8d6bd69ef57f32954bffd1f74c3a0ca023cfcf2207085a394b22b2c",
+      "lines": 126,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderSettingsSheet.swift",
+      "sha256": "a9516588a2414236754820c2e61ce863d312dd5d75dc1bb91310bdf8a8bba80a",
+      "lines": 136,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderState.swift",
+      "sha256": "ce28c5efca20075820a2a3f18369593ba83ea5a4944b8bf73d8e8802cd8fdd7b",
+      "lines": 24,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReadingAnchorStore.swift",
+      "sha256": "605a1bca4f0cab9ab9e680cbc8c0f9eb289a805b349beca2939c4d1a808df8cf",
+      "lines": 33,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReadingPositionRecorder.swift",
+      "sha256": "72a9f5969d9015b5b80e4a893351ad6430cfeedaf695b5a3628a8921bb0d6c95",
+      "lines": 30,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/ReadingWindowPlanner.swift",
+      "sha256": "7644b15902a3add903a764d3555d3db5d957f5ea4609361dc1332b70e419589c",
+      "lines": 68,
+      "imports": [
+        "Foundation",
+        "PDFKit"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Reader/SemanticZoom.swift",
+      "sha256": "97a69c3ac407318d057cca1cde47a26047ff1f21aea0416ebe9ab77156c2783a",
+      "lines": 38,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Settings/PrivacySheet.swift",
+      "sha256": "71e7e3b7dced582cf2702e91a0d83ddb9bc970405c4189ec9d9d6ae598a5eb22",
+      "lines": 25,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Settings/SettingsScreen.swift",
+      "sha256": "1c1c31edacdfaff5b6dd1760d211dc50c6494af5a149b0f3ff46d47c1a80c792",
+      "lines": 158,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Features/Settings/TrashSheet.swift",
+      "sha256": "4c4f4334af95eb9086cefc98ed786bcba9932e3818668e9f923f1635c032fadf",
+      "lines": 38,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/Files/AppPaths.swift",
+      "sha256": "a5303e3592a3c0701689fd6da8392716d7226624435faab72cc996a83a6d22a7",
+      "lines": 28,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/Files/IncomingFileService.swift",
+      "sha256": "e9802a88dde22694d67c9374e2a83a6485131b08bec6070be1687c5c949b39de",
+      "lines": 34,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/Files/SampleLibrarySeeder.swift",
+      "sha256": "0bd1d4ed785698f366cd2157845694a9437c6fc9d4822c9c2c4f17d4d6001270",
+      "lines": 47,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFAnnotationRenderer.swift",
+      "sha256": "85b29890c6c19424ea4b9cd25256ffe2abf9068898d1fedb513cc550445a0f72",
+      "lines": 46,
+      "imports": [
+        "PDFKit",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFBlockClassifier.swift",
+      "sha256": "9843e5138b6c52b772b126cf8a9076fb34195284029b603fcb27b17fb390aede",
+      "lines": 22,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFDocumentLoader.swift",
+      "sha256": "7f6fe7c6cc0c3c820fec6903d6e1eb6d22be1bb9dbd8752b2d972a271a6632d9",
+      "lines": 202,
+      "imports": [
+        "PDFKit",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFInspector.swift",
+      "sha256": "0791e94a3664a951c09f0179794836167f94dcb76881f9c4ad8010808979aceb",
+      "lines": 34,
+      "imports": [
+        "PDFKit",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFLineGrouper.swift",
+      "sha256": "97ebc315c5c2ade84bbba5a1b384e433a792cc218665c81d12ca212481498f38",
+      "lines": 69,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFPageSearch.swift",
+      "sha256": "6527b0cf5f6bbfadc116cccba5c9f3367f3f59edcf934244c07dc3629bb8c054",
+      "lines": 60,
+      "imports": [
+        "PDFKit",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFReadablePageExtractor.swift",
+      "sha256": "fdfcd1a342205b9a69d7fa66316985526ce85804462f61f6bdd08e9bfbc77435",
+      "lines": 30,
+      "imports": [
+        "Foundation",
+        "PDFKit"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFReaderSurface.swift",
+      "sha256": "806bdf0fad7124c6325811809a37d34ffdf79579fa3759cb892b1d0c31069d75",
+      "lines": 120,
+      "imports": [
+        "PDFKit",
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFSessionController.swift",
+      "sha256": "ca4f851ae0013fe41d4976009f4162134362e61258dc6fb812aea6c3a8c6f71d",
+      "lines": 247,
+      "imports": [
+        "PDFKit",
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFSpatialText.swift",
+      "sha256": "15265fc212a2afecadad5ba5126c24765e967bbfba81c3d93ee930bd3cd43643",
+      "lines": 39,
+      "imports": [
+        "Foundation",
+        "PDFKit",
+        "UIKit"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFTextReconstructor.swift",
+      "sha256": "b4c8b1a09ecd253a14057d11e812b457972fb712ef6cd9f176fd28f638fb545c",
+      "lines": 46,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFThumbnailService.swift",
+      "sha256": "f9ad221ea6c518d13a14394f1e308c48144afe87415df7bca961a6c8ee8ccace",
+      "lines": 22,
+      "imports": [
+        "PDFKit"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/PDFZoomState.swift",
+      "sha256": "7021ca913a3c025865381e5361b3def05b28a120e33601c480910f3c1b399c3c",
+      "lines": 86,
+      "imports": [
+        "PDFKit"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/PDF/ReaderSpeechController.swift",
+      "sha256": "318b1c759e82514ef087e4e3881a79e2f53fcc301a7987a8984b6ad74364e7dc",
+      "lines": 282,
+      "imports": [
+        "AVFoundation",
+        "Foundation",
+        "Observation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/Sharing/PDFExportService.swift",
+      "sha256": "9ef9495f9f062e3e7638d652acb0335e0a9a73af3fc37783e818e21825a98ead",
+      "lines": 28,
+      "imports": [
+        "Foundation",
+        "PDFKit",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Infrastructure/Sharing/ShareSheet.swift",
+      "sha256": "85ac134bacb88f5e9ce2bef92b8d2dc77f2f877be8f60623d4076031131856f0",
+      "lines": 12,
+      "imports": [
+        "SwiftUI",
+        "UIKit"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Knowledge/Components/BookConnectionsSheet.swift",
+      "sha256": "cf1f1dffd6ede58ce93d414062ea5a707c4d38f98f1dccc9d85bd8cad00e75f4",
+      "lines": 48,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Knowledge/Components/ConceptDetailSheet.swift",
+      "sha256": "d74e14a39ea881a636e4973c537ef6b533e645f18c5e8c19bc72fad3285e467f",
+      "lines": 105,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Knowledge/Components/ConnectedPassageSheet.swift",
+      "sha256": "6c7eb8a6a1b460725e13c3c58d1367e765e49a5b3070eec2f74a991a9ec29ae2",
+      "lines": 254,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Knowledge/Components/ConnectionConstellationSheet.swift",
+      "sha256": "657043b854c9e567ecf0015a3f71c431243aeb695ff1f5141218d85da03e2925",
+      "lines": 72,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Knowledge/Components/KnowledgeSearchSheet.swift",
+      "sha256": "dd294e4d35139276ce5056c0e8efd6f6c2a993439348ddb980bb1a54a86fb326",
+      "lines": 135,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Knowledge/Components/TopicChainScreens.swift",
+      "sha256": "0b0f3d450b9e9e4685a1b50354797fb43ac047a69e1e15b3af00302fd60d3d52",
+      "lines": 177,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Knowledge/KnowledgeModel+ConceptsAndChains.swift",
+      "sha256": "f5d9bf1970f0d3fc432f5e1ac1c0b1061a5ffb99f3439d0e269d6aa2841f7c1c",
+      "lines": 102,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Knowledge/KnowledgeModel+Connections.swift",
+      "sha256": "741a6cf07ccf8e80c451e5743024f45628d63dfc1263d9070e173c116dfd4376",
+      "lines": 104,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Knowledge/KnowledgeModel+Search.swift",
+      "sha256": "8736a87e315dd6d35f093109835fbf1107218d3f531d1cce395198dd1737c8ff",
+      "lines": 29,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Knowledge/KnowledgeModel.swift",
+      "sha256": "e454fd53bd5bc8c4b4dd55ca4e5e5432539f29795790fed6626b95e81d5586c1",
+      "lines": 143,
+      "imports": [
+        "Foundation",
+        "Observation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/ActiveRecallSetupSheet.swift",
+      "sha256": "99e94c2a123d609a1b08fe2a3c43cb610cd7887383a79d4cb472ded58b56ca2a",
+      "lines": 53,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/BlindPageSheet.swift",
+      "sha256": "19ceeead6b7d57bf9ffd2002087cbaf574c95168c258977f0fec4091e3c06577",
+      "lines": 47,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/Components/LearnSecondaryModes.swift",
+      "sha256": "11e03731bc1fadf7d6fdebd8cdaf509178d24b7caa7c7310fe854abf4a5c914b",
+      "lines": 150,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/Components/PrimaryTabBar.swift",
+      "sha256": "09142f8250eda3eaa98cee51645af09db2afb165cb4f91965f727decbaa9dd47",
+      "lines": 40,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/Components/ReleaseSurface.swift",
+      "sha256": "34881e5581a0ed81abe46619fc79206fe39bb58daa10525d416949979f6b8f67",
+      "lines": 139,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/Components/ShelfSectionSwitcher.swift",
+      "sha256": "42e5e756490debffa0f08a2e3d71a768b3b6b9ce0aa46242fc4e4c771cd96a72",
+      "lines": 50,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/Components/UnderstandingLensFactRow.swift",
+      "sha256": "e9a38c97b3a8c0a4f72d84a66d3e1ea3c39f5919571f4557329127a2c1f6afd9",
+      "lines": 49,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/ConnectionsOverviewSheet.swift",
+      "sha256": "7f21bd2ed1e731619ee44d95c29f1c80ae14a9870ae857ce78de1b85a796e475",
+      "lines": 77,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/ConnectionsSheet.swift",
+      "sha256": "a25a41bd5ed31a04e38839cd3b766fca38391138287b8f911c4cd3a8eb7a29d1",
+      "lines": 74,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/DiagramMaskEditor.swift",
+      "sha256": "de641387186e57806ebba04240c9451258416ad1fc89e1a1aa1b1f0a347166ad",
+      "lines": 96,
+      "imports": [
+        "SwiftUI",
+        "PDFKit",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/DiagramRecallStudyView.swift",
+      "sha256": "1952abc33a7b4429b64db337d6b9079996409d103bae7fcac2f5b4b2014fb70a",
+      "lines": 58,
+      "imports": [
+        "SwiftUI",
+        "PDFKit",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/DocumentTopicsSheet.swift",
+      "sha256": "1ec092de0eb7f28af63e30ace658dc91371a41fa7840fec0bb1e1bbe4e2b828f",
+      "lines": 50,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/ExplanationRecorderSheet.swift",
+      "sha256": "6a38a8c8b8ac9c4b745f43c5abaa286e97d57c18781bf437663d1713457d0206",
+      "lines": 113,
+      "imports": [
+        "SwiftUI",
+        "AVFoundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/InterviewSetupSheet.swift",
+      "sha256": "592403ef7985734b85c9820c463075e426b9275d7e3f90bed2973e4356d4444c",
+      "lines": 36,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LabRunPreview.swift",
+      "sha256": "f49bc05c812cb67f9ad29c795ce9dffde2043ef2e972fc1dd233c7013a2a67d2",
+      "lines": 82,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LabScenarioView.swift",
+      "sha256": "ce45adfd5786ea22cb8b25f8b3fbe0d43a7fbc314f8d3e200f8d6673ca124f0d",
+      "lines": 90,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LabScreen.swift",
+      "sha256": "f73b68164ad293a03e53463065d7ff36f1fec4cc017143e3fdf4b9e815177888",
+      "lines": 81,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LearnTodayScreen+MemorySections.swift",
+      "sha256": "56f4415ccc6b9dbbcc2ea03688296f8c299b33d2b3a6ed212dda4a507fd8bc62",
+      "lines": 74,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LearnTodayScreen.swift",
+      "sha256": "6b8a335870ce05118350f08235390f0b3b3e4cf98434b8d5dbb8893f41191a09",
+      "lines": 229,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LearningModel+Objects.swift",
+      "sha256": "774e917301fb2fd5f61de8105fa0df9039272c14cce1d66aaba9982224f52556",
+      "lines": 116,
+      "imports": [
+        "Foundation",
+        "CoreGraphics",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LearningModel+Recovery.swift",
+      "sha256": "a98daae4c3d73cb6270c278898a84616b1c439505198b0397d260e26f5dce307",
+      "lines": 57,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LearningModel+Sessions.swift",
+      "sha256": "b14de424c50022e9ff4c2108ee1bdbc700bbb14eac746bcecb2b79bfbd0bef68",
+      "lines": 232,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LearningModel.swift",
+      "sha256": "bffa1193e719cb6b075965e5e4ef4326e497b5d29e0f6afb7925a024bbd3a3cb",
+      "lines": 171,
+      "imports": [
+        "Foundation",
+        "Observation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LearningObjectActionSheet.swift",
+      "sha256": "871add3b06df0d5f685d5e44865e34d03cfad0148196f3278e039c703fec13b6",
+      "lines": 102,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LearningStateSheet.swift",
+      "sha256": "7cf42fc7961b7d69364046d5482a798770fe4606914fdd85bedfd7d6e3a080a3",
+      "lines": 250,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LearningTimelineSheet.swift",
+      "sha256": "d4588ebee088e6247adffc95a7ace907355f9f821e6c8e036dd553429e3bbdc8",
+      "lines": 96,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/LearningTokens.swift",
+      "sha256": "82a8118ecf84d0844860080c92b984556f9534e657157f17f2e5da929d227fed",
+      "lines": 41,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/MemoryMarginMarkers.swift",
+      "sha256": "9774b11a7bc70fbf879933d237f3c342eb32d569b08f5f5e683dc3d30f291ecb",
+      "lines": 70,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/PrimaryArea.swift",
+      "sha256": "c3fcfa7fc1b288cc56a85fc3f1219b67feec0f76cd6bdc5320887f895095d474",
+      "lines": 20,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/QuestionCardView.swift",
+      "sha256": "d3f57a034feb30743001fb05479d1be3b7671b7fb47f126d9751f56709d5ef1d",
+      "lines": 224,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/RecallCardView.swift",
+      "sha256": "fdd6c14c79a4a5c775acbdef3e9d086f5ac54827d4c2d00971ac0bc58a4c064c",
+      "lines": 42,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/RecallPromptEditorSheet.swift",
+      "sha256": "3a5d4fc7346ee8c653325415e4544740965c305153cd8c47a8c3beec4d03c03d",
+      "lines": 105,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/ReleaseInteractionState.swift",
+      "sha256": "409ca2635cc3aba16e23c0e50429331d032d09aba1b34b7d54635ee53eba3b44",
+      "lines": 55,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/Services/ExplanationRecorder.swift",
+      "sha256": "94064edc8906abe242631ca99df3d840ee8d3fcc0749cce1d159c723c0b3a116",
+      "lines": 54,
+      "imports": [
+        "AVFoundation",
+        "Foundation",
+        "Observation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/Services/PDFLearningIndexer.swift",
+      "sha256": "de85fb70b813c7387e1f90d7aed95a887362fcb9d6f7bce773822cce892525b8",
+      "lines": 63,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/Services/PDFTextExtractionCheckpointStore.swift",
+      "sha256": "7d20bdf93239401b610ee5bdcc4d26f52d1b4a02149f8dc0a7c4bee6884f6322",
+      "lines": 57,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/Services/PDFTextExtractor.swift",
+      "sha256": "55bc8beb9057aaa104064fa0a484051324512157b7cd4bac0e0bf70de2de84a6",
+      "lines": 101,
+      "imports": [
+        "Foundation",
+        "PDFKit",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/SessionActivities.swift",
+      "sha256": "7b5b209d67ba2513c5dafd5a1069561224ae3e7dbf35b2720f0f92b022012c9f",
+      "lines": 43,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/SessionCompleteView.swift",
+      "sha256": "6fe3fba7c6d55ae0c0444e6a03c35acf90b96f55f5bf05a642167090e0bab0a2",
+      "lines": 243,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/StudyInteractionTrace.swift",
+      "sha256": "040d790cc0028dedc508b251d60ab974e4ba10df9039206b8c399ad3de0a846f",
+      "lines": 34,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/StudySessionScreen.swift",
+      "sha256": "01b4f7d06aff83672a2ba0061d10e4d8c29007cb2b7a151d08cf841804c5e120",
+      "lines": 76,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/TrailAddSheet.swift",
+      "sha256": "d66109477960adf3c311263499c8f2ff236263159e0974483a5ff60cfa6f902f",
+      "lines": 105,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/TrailDetailScreen.swift",
+      "sha256": "1a928463f1203437d4e2600d3bd1459b0b429e004f0e51bc34370d3338f3c106",
+      "lines": 147,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/TrailsScreen.swift",
+      "sha256": "676b83022241c9c8aa81dffc76ec078f1fb7348e69a9749b43b2db3bcfc35636",
+      "lines": 115,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/UnderstandingLensFact.swift",
+      "sha256": "d6fe8b1a96befafc1bef56a5da3635b4d18547091338526ff89385f068d4faef",
+      "lines": 62,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Learning/UnderstandingLensSheet.swift",
+      "sha256": "6a5f48477804f7a4d1301d7ae65104200fc36155e3f725a4f91c828d2a53f1d0",
+      "lines": 154,
+      "imports": [
+        "SwiftUI",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Support/AppPreferences.swift",
+      "sha256": "8744f812261e3d94ddaa311bebfec774aa0294d2fc4c75e113d3a555f08b208b",
+      "lines": 93,
+      "imports": [
+        "SwiftUI",
+        "Observation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Support/ShelfHaptics.swift",
+      "sha256": "fd689bcf8b75315f293663d946a778bae5d205f620a21fcada0b877800c2778f",
+      "lines": 111,
+      "imports": [
+        "CoreHaptics",
+        "UIKit"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/Engine/AppleSpeechEngine.swift",
+      "sha256": "8a8ea8eaae99da5c991dcf4f2c332beaffdf63b805b6490e58b086a3477efdff",
+      "lines": 54,
+      "imports": [
+        "AVFoundation",
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/Engine/SupertonicRuntime.swift",
+      "sha256": "f52c6792577affcab00ee8caad0f7eba28043a445127990c88034b5adc46335c",
+      "lines": 130,
+      "imports": [
+        "Accelerate",
+        "Foundation",
+        "OnnxRuntimeBindings"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/Engine/SupertonicSpeechEngine.swift",
+      "sha256": "d2eceb3e4487801b11d50e2d92a9d9d13e36284b52496e2b70057c628a08b9c8",
+      "lines": 184,
+      "imports": [
+        "AVFoundation",
+        "Foundation",
+        "ShelfCore",
+        "OnnxRuntimeBindings"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/Playback/AudioSessionCoordinator.swift",
+      "sha256": "a791ea4bac1c5714107c3a18962751ba2429304e21ddb392175f927ed25df572",
+      "lines": 50,
+      "imports": [
+        "AVFoundation",
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/Playback/RemoteCommandCoordinator.swift",
+      "sha256": "6f80c42634672a87f2ec8c20cf1f98ec7927989d0ea87ee8186e74590c93b044",
+      "lines": 68,
+      "imports": [
+        "MediaPlayer",
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/Pronunciation/PronunciationPreferenceStore.swift",
+      "sha256": "7468b49e6c385e8a9be10ecb1a184184e79c7ef234ebfef384e1998c7114190f",
+      "lines": 35,
+      "imports": [
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/UI/VoiceBenchmarkScreen.swift",
+      "sha256": "98c6a624b1929819aad579a5e03ebb6d74c38affb7160983bbcf7f1c6082e51a",
+      "lines": 87,
+      "imports": [
+        "SwiftUI",
+        "AVFoundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/UI/VoicePlayerStrip.swift",
+      "sha256": "e93a652138e6b37a1c6eb46b238cff741bdb64b81c84a5f71e95c627c2fd19ac",
+      "lines": 59,
+      "imports": [
+        "SwiftUI",
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/UI/VoiceQualityNotice.swift",
+      "sha256": "ddc67d2ff691d501bac2278eb06f640ec1a1df9bf1d4d5355f15ff2cbfa916cd",
+      "lines": 19,
+      "imports": [
+        "SwiftUI"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/UI/VoiceSettingsSheet.swift",
+      "sha256": "94699049fcd480f677e59717c5f7c15c045e440f26cc4a5e2c9a2038ae90abcc",
+      "lines": 111,
+      "imports": [
+        "SwiftUI",
+        "Foundation",
+        "ShelfCore"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/Voices/VoiceCatalog.swift",
+      "sha256": "be0893a47b495e15241bd94fbe25c3ae3a3c06902d30c4002b96f9c41dc8f868",
+      "lines": 35,
+      "imports": [
+        "AVFoundation",
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/Voices/VoiceDescriptor.swift",
+      "sha256": "8953d3204f51c71eee8ee25caab4b5065d0461fc157e53bb8405a71fa0d051be",
+      "lines": 16,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/Voices/VoicePreferenceStore.swift",
+      "sha256": "698949a34112f145ee41674a7acebeccacc56976d8103c2023b5c284d23bad7a",
+      "lines": 21,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Shelf/Voice/Voices/VoiceQualityRanker.swift",
+      "sha256": "f084c52896489eb061a4766d6ad8f19a75eee6bb3bcb65389843159df1f22a65",
+      "lines": 13,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Application/DocumentImportService.swift",
+      "sha256": "36d34f65e65cf94e8bd02e04f9b155be6236c7e5d671ef39bef51a78e94e191b",
+      "lines": 58,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Application/LibraryRepository+Annotations.swift",
+      "sha256": "44a163cb5d0bf947fab085ca39365391b391f5bac6a7a44752461a4324811900",
+      "lines": 58,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Application/LibraryRepository+Collections.swift",
+      "sha256": "d990d624e91695211b1c1596495cea3badebac6014be9de40802434196ff9bd4",
+      "lines": 49,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Application/LibraryRepository+Restore.swift",
+      "sha256": "ede77d79259d78ff85f2c6f48f077305e2ced41678bee4866e3ff9b6e11626d8",
+      "lines": 21,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Application/LibraryRepository.swift",
+      "sha256": "0c1825bb7960c0bdfecee6f2d7c9ce7dc726f8e8e2f4d4c15968780657b61e7f",
+      "lines": 72,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Backup/BackupManifest.swift",
+      "sha256": "99362d794a87adbc984fe14cdf3696d534f6123ce93b9f9b5b20c3cd3ba5e942",
+      "lines": 36,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Backup/BackupMerger.swift",
+      "sha256": "23289bf84b150e5c88b41880def0a341ebcb6f99eb1e271f57cd71829e37277f",
+      "lines": 73,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Backup/BackupReader.swift",
+      "sha256": "92cd517df78ea456f8543b2ba5751797f554bd6779c24aeedc38decf41a7d713",
+      "lines": 84,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Backup/BackupService.swift",
+      "sha256": "5cb557237be7bffc3a0452e6f991999c74a54d281af4c5e54fa4c8bb21298dcf",
+      "lines": 23,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Backup/BackupWriter.swift",
+      "sha256": "306ad5e0b73fbe711d6f9fec8a488fed57a85ff0cee3d9ddabe47ac79e497316",
+      "lines": 55,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Contracts/DocumentVault.swift",
+      "sha256": "38725815c716681ea16647e6458383929a9f7a7f5d246a2608cd591bbfd3fb6f",
+      "lines": 22,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Contracts/SnapshotPersistence.swift",
+      "sha256": "7c2cba25045ecdab419ad3c23d3b48df7be8ce6760b5a0bcb75ae57739c39021",
+      "lines": 16,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Contracts/TextIndexPersistence.swift",
+      "sha256": "1f078998843e62fcf1f3ae0a025881659138c44ff93fbb8e95e5851d66b5cf41",
+      "lines": 18,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Domain/Annotation.swift",
+      "sha256": "08810ab28ec15b80058572d144cf2e1764ab8abcba8a6e425d7ade75ad165d26",
+      "lines": 47,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Domain/Book.swift",
+      "sha256": "34bcb221d7ee645a1975d18d7e62de2ef38227cb610224cb4fddf750bb25862d",
+      "lines": 60,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Domain/Collection.swift",
+      "sha256": "40636e2c3afff363a3771e06c2778262235e35a6db9c8d358020b2afa9a08eca",
+      "lines": 28,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Domain/ContentsLocation.swift",
+      "sha256": "0605d3d2dd5f908cf93df00892addb4f4538abefc7daa52056457bd4272fd9dc",
+      "lines": 11,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Domain/LibraryQuery.swift",
+      "sha256": "71a3d8559bde2aa33fc1ece1c2ea71c14abc40ae48441979ad5c207fe91397b5",
+      "lines": 63,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Domain/LibrarySnapshot.swift",
+      "sha256": "5e68e9d5203b86375779351c1721305456bf6e636aee828bfc9e595f33bd545b",
+      "lines": 68,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Domain/PageTurnPolicy.swift",
+      "sha256": "f202347ea6a1517e49eb8c1dea787e19d7aacd061a508829b7989778be489aee",
+      "lines": 38,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Domain/ReadingPosition.swift",
+      "sha256": "b0e011ef7a6f72dc0a5c8f866702ae81019fa41a54011aeaf7eabad2698eb282",
+      "lines": 29,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Domain/ShelfError.swift",
+      "sha256": "833ce687cc2184e38941b9d1421d68cc52e6c4291d4903c7d42ecf10654ef27b",
+      "lines": 33,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Domain/SourcePassageMatcher.swift",
+      "sha256": "4eb6640f1559ea4f938667e9cdb00ebf722e58b2a8d59f067a29e70e278ba4c1",
+      "lines": 35,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/KnowledgeConcept.swift",
+      "sha256": "efbce6001cc451a73bede7f95a4d5271c3e4c6a718090c5beb591f123235fe41",
+      "lines": 38,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/KnowledgeConnection.swift",
+      "sha256": "4bf395193f48c42466be88ed47265637fb7a7c7d541246de30835e6a4dbe57d6",
+      "lines": 63,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/KnowledgeIndex.swift",
+      "sha256": "8c3b606147390e01619ace99bffb5c8c7db37756d18c6ecde28c3821f5786f9f",
+      "lines": 48,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/KnowledgePassage.swift",
+      "sha256": "79c6e48f2216b5494b14379051786d3b0c1ecf350a838889b14d716e31200cf5",
+      "lines": 76,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/KnowledgeSnapshot.swift",
+      "sha256": "105f5d3f881328648ccb72434966d9b649903622a2213dbb923f424d695bb52d",
+      "lines": 35,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/TopicChain.swift",
+      "sha256": "060ec85f59851c15eea7e69f1b7e739637e3873959bdde5366064148256b8222",
+      "lines": 45,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/BM25Index.swift",
+      "sha256": "69d45aa17e32059e12f8434efd613c4c1031c215325002c57d14e50a929abd9c",
+      "lines": 61,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/ConceptCatalog.swift",
+      "sha256": "6b2dd92a7c46025133fc250dec420ee5bb6a85895adddaf2d8f48fe4cb6b50cd",
+      "lines": 70,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/ConnectionRanker.swift",
+      "sha256": "80d428e621e8610405aa95b8216909932ee0fa89af737340a163df4edc00d45c",
+      "lines": 77,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/KnowledgeIndexBuilder.swift",
+      "sha256": "bd410bf61bc1e05659301ca9578b475d1cdd2588c09e23580145b8d61238e07b",
+      "lines": 57,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/KnowledgePipeline.swift",
+      "sha256": "5d24ab94cc0e5228da940b6caf39845202374cc638e1480257fd23ced9da0f41",
+      "lines": 24,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/PassageAssembler.swift",
+      "sha256": "ae750240e66ee20fdaa79a813438a4607d654e9ba35367064a7d40f51ef13369",
+      "lines": 80,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/PassageReanchorer.swift",
+      "sha256": "f46255dd9bf2f12100b46d199781112dc23db0e59e83f8bd02c2312d965e2101",
+      "lines": 28,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/TechnicalTokenizer.swift",
+      "sha256": "e19f53044fbc70d1c6ebb5af9a02572e800477df1d6010e1cffa24c9037f0e4b",
+      "lines": 89,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/KnowledgeCapabilities.swift",
+      "sha256": "0a0c45fd18a725122a6ed0d4bb51d273c1dac1e62f2fabaf596070cf70dd8b4a",
+      "lines": 18,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Persistence/KnowledgeRepository.swift",
+      "sha256": "4740f88b4f0acf353d49d00897016cbd9c94f27cbc4bb93fa84a3f9f87314945",
+      "lines": 212,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Persistence/KnowledgeSnapshotPersistence.swift",
+      "sha256": "83cec0548dbf952286e69be4d706a336ef1aff19a4fb9a278d18f425040a2783",
+      "lines": 72,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Search/KnowledgeSearchEngine.swift",
+      "sha256": "6a6ac3546ec87f21dda3e588d5518e6efd2b0972524992bb072925bed32a46dc",
+      "lines": 48,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Analysis/DocumentAnalyzer.swift",
+      "sha256": "a51a487dd3f744aa1eaf74086a166f293654e38559f3928f1baf5e7ee84fc4e2",
+      "lines": 167,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Analysis/StableIdentity.swift",
+      "sha256": "dc936482be9825535c1c9aa260b7a71fc2babb8593a64cfd495d79762e7ae96a",
+      "lines": 24,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Analysis/TopicClassifier.swift",
+      "sha256": "b3765a7995b5cdda11d5d9c4b8c6697a2edb842786514c5e0bf8b502e6a14c37",
+      "lines": 78,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Capabilities.swift",
+      "sha256": "dd74786a5895293e6e0e380d737ed77735f3bbd62bb56d1b0acdb0af699d38a8",
+      "lines": 20,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/AnalysisModels.swift",
+      "sha256": "1fbefc3dd93d27482927322851c1d1cfc086c74ea52987cd8cb1a429adc1e4a3",
+      "lines": 46,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/Artifacts.swift",
+      "sha256": "ecdc6876429c138e551ce36d182bcc8a68d2d540999069d086de01c457a70e25",
+      "lines": 48,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/EmotionalModels.swift",
+      "sha256": "185bd9e77a41587ee4cbba948a66999de173d23250cbbf876d2d0d5a4a1bbe85",
+      "lines": 58,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/LabModels.swift",
+      "sha256": "2cb166cc18ca8ef6a3192a49a01483363f0f096b5920ce5a1271574d01a13d70",
+      "lines": 54,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/LearningObject.swift",
+      "sha256": "a1aa801262257b74ad5ca0f243a2635002564a79dced3340babbb5f313ff680c",
+      "lines": 41,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/LearningSnapshot.swift",
+      "sha256": "33706f8d35c5ae4416e2c768a25bfd7366a9ed1cc0b836c57d25877db0b6df11",
+      "lines": 76,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/LearningSource.swift",
+      "sha256": "33ac52a82d5ec9994674bcb50d562ae0c9ad43cfaa0961eb226230721ba6bdda",
+      "lines": 40,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/MemoryModels.swift",
+      "sha256": "86ce6878c20ae10a1da388924a4063a3e047f48bff54fc0ebaaf1c41da881cb3",
+      "lines": 105,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/Question.swift",
+      "sha256": "cc66a6a4f8ea831ab10a381fa22a0bef703a9ef84ead32e89dbff832b70bb8a0",
+      "lines": 43,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/Relationships.swift",
+      "sha256": "fdc1e3e4b9c131b680f83527889a90c9c844272d62e8782cfb009de01e312bb4",
+      "lines": 51,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/ResumeStudyContext.swift",
+      "sha256": "f6342063825bc276a483fb21e529b99c48ebaeb8f7fee864d1e44f94cd4da87d",
+      "lines": 45,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/StudyModels.swift",
+      "sha256": "7978aa8fab9414e77b11641135c3d8d3c651cbd610962668996298e6aeaff564",
+      "lines": 44,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Memory/BlindPagePolicy.swift",
+      "sha256": "8493f0354be24ac09152867b892207d4d33d3d7db45058ada900734b84a35ecb",
+      "lines": 23,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Memory/ReviewScheduler.swift",
+      "sha256": "c6b1a300b1911fc86cfb5abcd4615516c0fab6024b949ff5e520866a637b4d78",
+      "lines": 70,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Memory/TopicLearningAggregator.swift",
+      "sha256": "47945b81774c161a1defd1939bae2fbcfaef333a77e76505b5dc6af85b329a16",
+      "lines": 37,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift",
+      "sha256": "eebf11eb10e08b71b906ac05f58b597b21145a3523a43928c9394ff22c78aaf6",
+      "lines": 250,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningSnapshotPersistence.swift",
+      "sha256": "c43535f7ae8f46fc8f6ad37a2ed675a3efdcf2c55db12f6cc4917f6d8b7b5091",
+      "lines": 96,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/StudyCheckpointMutation.swift",
+      "sha256": "8d572149ed61449f0bc9ee979d06d8ca2113b258cf6dd60bd219503840e77624",
+      "lines": 26,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Questions/DeterministicQuestionEngine+Utilities.swift",
+      "sha256": "0d5f93b9b6341d154a6233563aa61138b63f565ed99f8d11b1e66fcf1858f3bb",
+      "lines": 96,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Questions/DeterministicQuestionEngine.swift",
+      "sha256": "6b06f7e216a63038e58c66bdfe251fa3428e78e4db745323ac366d56449531dd",
+      "lines": 177,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Questions/ProgressiveHintBuilder.swift",
+      "sha256": "34dd9f4a197ce10c4f1b994d4019e5737f22b6911efe3419050c3345f7c0bccf",
+      "lines": 41,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Questions/QuestionQualityEvaluator.swift",
+      "sha256": "0a0af5d9ba970977cc706da67011dd3a6f710a914ed324c8eb2c5861a9c84371",
+      "lines": 71,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/ConceptImportanceModel.swift",
+      "sha256": "cad85a5b7e2a40b8185a3a4fcaf73993e0fd3f2ac6d5ac701d656e0e09311b04",
+      "lines": 50,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/GeneralClaimExtractor.swift",
+      "sha256": "bd8b69593fd133329e7709059352c536881e7fc40ef0ac34195059b4a1414e47",
+      "lines": 128,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/QuestionRealizer.swift",
+      "sha256": "5d22285e227fad52b7126174bff2b50323ab0816136aa928e2a91f4663c380ab",
+      "lines": 128,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/SemanticCompiler.swift",
+      "sha256": "6c4477e224a119a75446418e1122032ab016df1a0e55d91edde5b0d6a5c3b95a",
+      "lines": 165,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/SemanticModels.swift",
+      "sha256": "1fc32d6087af707db3d53cc6fd62730a02a0e075bce7fe3539c11736dca70e9b",
+      "lines": 198,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/SemanticQuestionCompiler.swift",
+      "sha256": "b20b915f9a65f9914768b0c24074e40ecc7b571e0929ee1b8dab036718513815",
+      "lines": 75,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/SourceMeaningComposer.swift",
+      "sha256": "2730f083a613f0028fabe998b936bf6890ea383aed83f616db87bf63c442a6bd",
+      "lines": 59,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Sessions/LabCatalog.swift",
+      "sha256": "d50b3dfebbe49a0562423a9a5d6fa9fd63e90f3e7037c1006b376f584082c376",
+      "lines": 71,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Sessions/StudySessionPlanner.swift",
+      "sha256": "a659fb9ac4e27deec64e5af499ce78afdb03e64174d0c1b766049ce008e604a4",
+      "lines": 76,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Sessions/TrailNavigation.swift",
+      "sha256": "c8f3685a2ee36965d1b1e976eaa73ba59265c8902f9a1a5d78a576c0ae0c5513",
+      "lines": 24,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Persistence/FileDocumentVault.swift",
+      "sha256": "708de3d237e5ba9fe164ac7ea80b26dfa2faafcddf102b4c9fb233a252bf6eb3",
+      "lines": 31,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Persistence/FileTextIndexStore.swift",
+      "sha256": "9f3f471e3cc19c6e712160b73f0c1d4da4b4e715bbc140235fb69084868703e2",
+      "lines": 25,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Persistence/JSONSnapshotStore.swift",
+      "sha256": "2ea8737054df5a7bcb15caea0accf78ed0ed11c9a0775f21ff5e74554aa14e6c",
+      "lines": 66,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Search/IndexRebuilder.swift",
+      "sha256": "a1ca1d424cbd4bed67d39ae5004e56c920e39335c04e67ff1580157631a660a5",
+      "lines": 29,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Search/LibraryTextSearch.swift",
+      "sha256": "0e63bbb6057ba768d8c468727082a1d62a8dfe28ac3234582a28f5a8346df2c7",
+      "lines": 44,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Security/FileDigest.swift",
+      "sha256": "c71874b9d93086d23c0455e972e9a5136a7a18271e58b755655140209c3771cc",
+      "lines": 30,
+      "imports": [
+        "Foundation",
+        "CryptoKit"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Security/PortableSHA256.swift",
+      "sha256": "f658de4f2f1a5e07b5519f9d362a4b1209273c988b4c1bb53f09691cd5e3ced1",
+      "lines": 77,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Compilation/SpeechCompiler.swift",
+      "sha256": "386e45e9776755ab76f18cc8c24d9e701c90b8f3418e2260d63270f92ba41581",
+      "lines": 80,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Compilation/SpeechNormalizationCache.swift",
+      "sha256": "ccf237f9586ccbe61dd1cf2a30fb2854e3995a98fb191a99f2ef15c9f6e8a9d9",
+      "lines": 22,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Compilation/SpeechParagraphBuilder.swift",
+      "sha256": "b9944957c3821f06df79630c3a932ce5fd46af77e63f6554727b7265c4636b16",
+      "lines": 44,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Domain/SpeechModels.swift",
+      "sha256": "d1fafcca3462407c10525dca68bcc0c8be3ea2a5a69d956be27f5e66c66bd66a",
+      "lines": 84,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/AcronymSpeechNormalizer.swift",
+      "sha256": "c29ef2aa38cfc1916ef0d7b3f6265166bbd73a767a111c121341b6eb821da27e",
+      "lines": 21,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/CodeSpeechNormalizer.swift",
+      "sha256": "a8532bf15641374ec7a5b11f68c638bdf0462017e5af61d70bcc5a90f85ab986",
+      "lines": 63,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/MathSpeechNormalizer.swift",
+      "sha256": "e166c62fd383d4a6dac618546c68c815bbf6cc52db1b11b0b39fb415f172c961",
+      "lines": 17,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/NetworkingSpeechNormalizer.swift",
+      "sha256": "ab3d9edc82fb4b7d78688b826cef72434d90ca31ebcbcea1b717050d91fad947",
+      "lines": 19,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/OperatorSpeechNormalizer.swift",
+      "sha256": "98ba092902abe53934c5b55d6db4e7b00671c17f2b6e81b87872a2d4e1529e32",
+      "lines": 25,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/PDFTextCleaner.swift",
+      "sha256": "788c21b02b99f3eeb0f6ecbcf76bcc36847c1d68cfed77bb86ffb8393f731d6a",
+      "lines": 62,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/SpeechNormalizationSupport.swift",
+      "sha256": "5359107e3cdf27cfa18c501d9fa70e230441fd6d46b4ec275d7305d63c5df590",
+      "lines": 22,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/TechnicalSpeechNormalizer.swift",
+      "sha256": "83a15d943a9a1805ff81332aba015f6ec8219bc8e5a22cdb1d874d8890af547f",
+      "lines": 32,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/TypeScriptSpeechNormalizer.swift",
+      "sha256": "f32103c068b1878b7849b35706be9a3b8841b4b9cb75c476f16359257e1a0a73",
+      "lines": 20,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/URLSpeechNormalizer.swift",
+      "sha256": "9a074dd49f9c6bc9dca89ff0adf142e031a7ea4f9fc63862e1a2f462924d6cb1",
+      "lines": 32,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Pronunciation/PronunciationDictionary.swift",
+      "sha256": "03701fed2e73f7aeebb2b08c086ebad7108a5bcce3f3ba1562adaae36694ca3b",
+      "lines": 55,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/Prosody/SpeechProsodyPlanner.swift",
+      "sha256": "6435c4efaa3f6a8be2de2cb350754d861e4bee7047ec2af7dad241ad62996156",
+      "lines": 30,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Voice/SpeechCapabilities.swift",
+      "sha256": "417545650fdede5195f82f6838a5cac4e8dd491a6c493daa68dc1f8c6e972e3c",
+      "lines": 8,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/AnnotationTests.swift",
+      "sha256": "314787caa526e840cf18e1b4edef0767fadecc785156c42bd785eaa6b5cfb759",
+      "lines": 59,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 9
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/BackupMergerTests.swift",
+      "sha256": "1b073713595130f5bcd98430047c4c893b96948dc8eb4ada0b7a788230c18994",
+      "lines": 64,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 8
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/BackupTests.swift",
+      "sha256": "b1d9a8af196bd61621db685b9ed948ee03bebd4de59c4e1ec24fed0d7eeccaba",
+      "lines": 103,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 14
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/CollectionTests.swift",
+      "sha256": "fb394136395fed9b004b86fb86bef719724c216c2725de0f93cc3310523995d9",
+      "lines": 43,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 7
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/DigestTests.swift",
+      "sha256": "3cf47edd6ae8f029ee60bea79c3cb38dcdcfbad92d253e2ec2efe5f074725e47",
+      "lines": 42,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 7
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/ImportTests.swift",
+      "sha256": "1854059abe0b9b4ed5c5a23811f63fd9e63d7ce0cb2dbf3c66fc33c46884d6df",
+      "lines": 64,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 7
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Knowledge/KnowledgeRankingTests.swift",
+      "sha256": "d4aa35d6542b24488dc4bc7424b21f39d9f94ffc3d5a889c35d2c3797e6c5915",
+      "lines": 40,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 2
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Knowledge/KnowledgeRepositoryTests.swift",
+      "sha256": "d04ef5683947cbb0f336baa04adcbc08263d4348c0444d7082ce00327ca67e42",
+      "lines": 84,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 4
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Knowledge/KnowledgeSearchTests.swift",
+      "sha256": "b1fb9fe9314ef7e7aa02fcb6f09f51539f87bf55568d5f500ea09d505751f8ee",
+      "lines": 38,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 2
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Knowledge/TechnicalTokenizerTests.swift",
+      "sha256": "e53ebf28e755307d0f90d7fd68e5b0f8937cf6b8b8b6d454da0f530f6e6005a0",
+      "lines": 26,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 2
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/BlindPageAndLabTests.swift",
+      "sha256": "b41c3d8f307fc6ad77fb726d675f481cbbbac46c01835f8c7fbf931ed0810ddc",
+      "lines": 28,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 3
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/DocumentAnalysisTests.swift",
+      "sha256": "07570f2d06629b7924b4698f416672e31ffaa4ae410b5c59ee4122ad3f4c400d",
+      "lines": 53,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 6
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/EmotionalV24Tests.swift",
+      "sha256": "30d22255912a695bbb22596197c7ae4ca889388696205abf815831cbaaaa7b27",
+      "lines": 67,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 6
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/GeneralExtractionV25Tests.swift",
+      "sha256": "875519dd7ad7551cf0cc7c8f548365c6df3b3c164b5f99da94a31b0699e84380",
+      "lines": 120,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 8
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/LearningPersistenceRecoveryTests.swift",
+      "sha256": "6725c88a3f7d776b4abf5f1a39a08bc665d809ee1d6944245714d37573f48c78",
+      "lines": 53,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 3
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/LearningRepositoryTests.swift",
+      "sha256": "52c247e0f2fa09ed1f2f0ca0fb9ff4d6e198f85565dbd24849ad7bc0c45cc2b8",
+      "lines": 102,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 5
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/LensDifferentiationV25Tests.swift",
+      "sha256": "41350ce28dc2bdbecee20accb247361bd46730fe31d85c39e641337c68233bab",
+      "lines": 49,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 3
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/NavigationV25Tests.swift",
+      "sha256": "75b73c3c1e5f6a8bb10350d3881a6938b767de8e8f1c15f911c96c7003e0e8d8",
+      "lines": 67,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 7
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/QuestionEngineTests.swift",
+      "sha256": "c0d484e05b432cbd0cf99692f86643e983613c98d9b65d95204983dc6df97da5",
+      "lines": 109,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 7
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/QuestionQualityCorpus.swift",
+      "sha256": "d98ceca192428e973633c27a392896b16ab36c8ec37bbcf79c46b3d0aca0d2af",
+      "lines": 136,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/ReviewSchedulerTests.swift",
+      "sha256": "d900a4792e408f8c05211b1fd4daa1032a3fc18083aff8f0678b356e6c6e0145",
+      "lines": 47,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 5
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/SemanticCoreV24Tests.swift",
+      "sha256": "74da66957230b0f4f87a6c6a4309d5a710409d837ac5dd50db300fd449002411",
+      "lines": 96,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 7
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/StudyCheckpointTests.swift",
+      "sha256": "8f6598ee17beb54ce3801cfa5b3eabfb2f864cca03c489b1e768233b99f632c9",
+      "lines": 119,
+      "imports": [
+        "Foundation",
+        "XCTest"
+      ],
+      "tests": 9
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/StudyPlannerTests.swift",
+      "sha256": "1b703524394b025e574f567af566bc5c44b7b27aa42e11429ba1c2d0ba0faa7e",
+      "lines": 71,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 4
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/TopicLearningAggregatorTests.swift",
+      "sha256": "40c0fde6c1d5efb3cefd7e79e3527c0a3276027a3ded0a5b4a0af4a13726c545",
+      "lines": 39,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 2
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/LibraryRepositoryTests.swift",
+      "sha256": "1747679ca425c2609a2bf2d1ebb32f11126650d9f0f094adb89e0ce634a3106e",
+      "lines": 69,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 10
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/PageTurnPolicyTests.swift",
+      "sha256": "3ac6783a9c3e75758ea90438d1533c947cb26b9a7415c0e02550b244afbd1de4",
+      "lines": 92,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 19
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/PersistenceTests.swift",
+      "sha256": "4be0ec00f7a65f9b6512f1a5b885addf6e0395ee7956b0c971d64a688709f73e",
+      "lines": 72,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 10
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/QueryAndSearchTests.swift",
+      "sha256": "8ae90b6e9a10fa52b3adb8007ae0b3e0e4f20ce6381394137b15b0dc7f0c1d9e",
+      "lines": 83,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 14
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/ReadingPositionTests.swift",
+      "sha256": "b19d1265d81b024cac498de0fa7f014d63e7697271c29d5aa1d6eb3f2623afbe",
+      "lines": 30,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 7
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/TestSupport.swift",
+      "sha256": "dce5b2cde4dea5053578917c6ec2afe1732018cd1c7374956e65008310b643b0",
+      "lines": 54,
+      "imports": [
+        "Foundation",
+        "XCTest"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/ValidationTests.swift",
+      "sha256": "9d88f8f2adf655f8f20e69e7682ec06ba084ea23e273d3532948fb826e5c6945",
+      "lines": 38,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 8
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Voice/CodeSpeechNormalizerTests.swift",
+      "sha256": "9683cefc2f4fa6c244e49e296165b1e1c26052f7eb6e555bebc50a6cb51d8cae",
+      "lines": 22,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 3
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Voice/PDFTextCleanerTests.swift",
+      "sha256": "d5a4d374ee02c981fc29d4e421bed38a6fe1ea1f850e6b3bd15cd50328d89007",
+      "lines": 17,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 2
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Voice/SpeechCompilerTests.swift",
+      "sha256": "49c700a07e253273001a1eec7c69b9e17ad15e6ea6e586233b5dc2a84536b76d",
+      "lines": 69,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 5
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Voice/SpeechNormalizationCacheTests.swift",
+      "sha256": "efca8af1bd37d48c48930315b9af870ab1d2b3963ae5aa2df39335de8a7b70c7",
+      "lines": 112,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 8
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Voice/SpeechParagraphV25Tests.swift",
+      "sha256": "69bf5bf999052ac35241982b358ff4982ba174d51d526422852a0f8878c61149",
+      "lines": 53,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 5
+    },
+    {
+      "path": "Packages/ShelfCore/Tests/ShelfCoreTests/Voice/TechnicalSpeechNormalizerTests.swift",
+      "sha256": "73b9962c03e4ab6bdb883d4c24b65894cbe7c3ace5af0b2d83ced82a56f18b0c",
+      "lines": 65,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 7
+    },
+    {
+      "path": "ShelfTests/KnowledgeIntegrationTests.swift",
+      "sha256": "5e9b45a6db30d056b8299129475ddffe65b9b986549bf0846eff7a4e38630da3",
+      "lines": 42,
+      "imports": [
+        "XCTest",
+        "ShelfCore"
+      ],
+      "tests": 2
+    },
+    {
+      "path": "ShelfTests/LearningIndexIntegrationTests.swift",
+      "sha256": "3bcd7e7337025cb3004e4ebd43c42a9f94efe9f1add0bf1e1a89b0c953f0ea8a",
+      "lines": 81,
+      "imports": [
+        "XCTest",
+        "PDFKit",
+        "UIKit",
+        "ShelfCore"
+      ],
+      "tests": 3
+    },
+    {
+      "path": "ShelfTests/PDFIntegrationTests.swift",
+      "sha256": "586ab3743d0e36509f49be22646c3e4b4fb930fbc8786b5f3785ad24bb394a21",
+      "lines": 117,
+      "imports": [
+        "XCTest",
+        "PDFKit",
+        "UIKit",
+        "ShelfCore"
+      ],
+      "tests": 9
+    },
+    {
+      "path": "ShelfTests/PDFReconstructionV25Tests.swift",
+      "sha256": "3a2ae391e314f2ed6f47bf514b96b60678e3f38dd681871b302ef3513dc43fe0",
+      "lines": 96,
+      "imports": [
+        "XCTest",
+        "PDFKit",
+        "UIKit",
+        "ShelfCore"
+      ],
+      "tests": 6
+    },
+    {
+      "path": "ShelfTests/PDFViewportGeometryTests.swift",
+      "sha256": "5137913ee4cd0324611eedc39517f4d1b38bc14809f7db36fcef2387628585d5",
+      "lines": 110,
+      "imports": [
+        "XCTest",
+        "PDFKit",
+        "UIKit",
+        "ShelfCore"
+      ],
+      "tests": 4
+    },
+    {
+      "path": "ShelfTests/VoiceCatalogTests.swift",
+      "sha256": "d45654ab1b885ebabbe04b7765767fc76b115713e285829af9815c9fbc137b35",
+      "lines": 19,
+      "imports": [
+        "XCTest",
+        "AVFoundation"
+      ],
+      "tests": 2
+    },
+    {
+      "path": "ShelfUITests/ReleaseInteractionSupport.swift",
+      "sha256": "55845e4dc2bd8b80e2901ea4364a02b5436f5289c65fdbd1126c5e4fc0770413",
+      "lines": 54,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "ShelfUITests/ShelfEmotionalFlowUITests.swift",
+      "sha256": "f54529cc465f2d7cd229d1c745199efcb1e655ff6058b8b136f874d1137e2def",
+      "lines": 55,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 2
+    },
+    {
+      "path": "ShelfUITests/ShelfInteractionRepairUITests.swift",
+      "sha256": "8d847fdd6d0abd81609e0d05b6a4fc2d4c6d93c847fdc4846371e4b136684714",
+      "lines": 160,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 10
+    },
+    {
+      "path": "ShelfUITests/ShelfLearningOSUITests.swift",
+      "sha256": "30b86db2608c73a009564b4e6adf8e6287fc6541ee99199b9056d39238bd4f6e",
+      "lines": 191,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 10
+    },
+    {
+      "path": "ShelfUITests/ShelfReaderRegressionUITests.swift",
+      "sha256": "7886f19cbbdf185bde6c0838da0016dad6aab300a85a9337f9aa492d770f358c",
+      "lines": 87,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 7
+    },
+    {
+      "path": "ShelfUITests/ShelfRecoveryV25UITests.swift",
+      "sha256": "50dd6296c9ded1a64a983da5acad34f88dee1dc1082018cdd4462022823b8b0e",
+      "lines": 48,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 2
+    },
+    {
+      "path": "ShelfUITests/ShelfStudyInteractionUITests.swift",
+      "sha256": "c373295343c08602a38fac4fce7cda6a9bd54a68374683fe01e8f1c71e3b8bd5",
+      "lines": 105,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 2
+    },
+    {
+      "path": "ShelfUITests/ShelfUITestCase.swift",
+      "sha256": "6bb6580cd8d736b25c6549ebb50c89cd90cf3a242b9ce1ab39b19df98aafc468",
+      "lines": 177,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "ShelfUITests/ShelfUITests.swift",
+      "sha256": "c153a4263cad59388414eb7ce1159502c33dce4e2208623117338132a793719f",
+      "lines": 128,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 15
+    },
+    {
+      "path": "ShelfUITests/ShelfWorldClassUITests.swift",
+      "sha256": "92effa92e3d616cdafb1b7b02a3ea93527a208d839dcbeb4807318198a595a8e",
+      "lines": 213,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 11
+    },
+    {
+      "path": "ShelfUITests/StudyInteractionSupport.swift",
+      "sha256": "ad50b37b904d848fcfc16a2bf627519c67282c0bcb854f439c1c9868222e8f1e",
+      "lines": 124,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "ShelfUITests/V24InteractionSupport.swift",
+      "sha256": "9c8fa3a214f0e2d93d26d554ea7850b2f8a9941eeea95a30b0828ec52cfe6ab9",
+      "lines": 109,
+      "imports": [
+        "XCTest"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-connected-architecture.py",
+      "sha256": "f167b1c3ed53c33367ff934113cc551e081a0a68d6b8e7badfc41508d80e01d8",
+      "lines": 37,
+      "imports": [
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-gallery-minimalism.py",
+      "sha256": "c22360cce9af60b50db0ffc5440968a7cb378cdc367d200030749e1137a7bab1",
+      "lines": 48,
+      "imports": [
+        "plistlib",
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-learning-architecture.py",
+      "sha256": "285a0cded4504cccb8fb17b3189ce0b7ed55d23c9e12913e31a0434b4b6bb5ee",
+      "lines": 60,
+      "imports": [
+        "re",
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-learning-offline.py",
+      "sha256": "da522a5ce882bf10dfa74fa00c992e1b66af4c65cd5db712065648afbc341d74",
+      "lines": 55,
+      "imports": [
+        "plistlib",
+        "re",
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-shelfcore-imports.py",
+      "sha256": "728eb8541216d3f90fb51d3c2b13f5002f699cfc2817518972a536e93b3cc01a",
+      "lines": 38,
+      "imports": [
+        "re",
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-study-interactions.py",
+      "sha256": "53e6629ef759a82c8aecb3ddd23e428b9fb6679fae55f8914d3d11d99ba0a01c",
+      "lines": 93,
+      "imports": [
+        "sys",
+        "re"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-swiftui-compile-contract.py",
+      "sha256": "d61a5dde6989a0228e9042dfd0f154bf66ed0da0c2d2f7071cf2562342ca7bd0",
+      "lines": 47,
+      "imports": [
+        "re"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-ui-test-contract.py",
+      "sha256": "a33c926e42c25df1db0b039b1d68e153617f7cd4b39952ca804081dcc2f27d22",
+      "lines": 164,
+      "imports": [
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-v24-contract.py",
+      "sha256": "940d658fb9fa6a480963c10e9c2103264088986035031e5c75bd8f07e620650a",
+      "lines": 69,
+      "imports": [
+        "re"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-v242-interactions.py",
+      "sha256": "656f5feaafca49cb0861b6df4402bb116d826ef8f215d239faae2ca7a5b1707d",
+      "lines": 56,
+      "imports": [
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-v243-root-compile.py",
+      "sha256": "d7d0f4aea63b0f1d75bfef09a08049e51f8b79cc698c8d51529c47a21e29bcd2",
+      "lines": 97,
+      "imports": [
+        "re",
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-v244-lens-compile.py",
+      "sha256": "80b58c225c522845600825891d19b2ae08aa0743e1a74bf2eea4f78af19c9ebc",
+      "lines": 70,
+      "imports": [
+        "re",
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-v245-release.py",
+      "sha256": "12d485a065cb738aa262df862c7283e896058653998964401d20e357fea589b5",
+      "lines": 68,
+      "imports": [
+        "re",
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-voice-architecture.py",
+      "sha256": "d7699714ac8ae2ccf3358c63da3c93a2e577e88b8d341a913b3db55cb645492b",
+      "lines": 35,
+      "imports": [
+        "re"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/check-worldclass-offline.py",
+      "sha256": "89381a6e18a01c28f502168dcb53322463d88e3563b670dfaaa3cce54282f6f2",
+      "lines": 36,
+      "imports": [
+        "re"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/choose-simulator.swift",
+      "sha256": "effe6db8798f4ee24ad6c020884cee3d12768856b594423bc3e4fa8326402408",
+      "lines": 47,
+      "imports": [
+        "Foundation"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/collect-qa-diagnostics.py",
+      "sha256": "ddaa0b4618a82030a93c9dab2b4c5ac835f723034e9fed8ec96187f01f6d2925",
+      "lines": 123,
+      "imports": [
+        "argparse",
+        "hashlib",
+        "json",
+        "os",
+        "shutil",
+        "subprocess",
+        "sys",
+        "zipfile"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/common.sh",
+      "sha256": "860e93bd32ac869429f168c891bd74e063b9cbef49b59b2fb4bd7b15aabba1d9",
+      "lines": 40,
+      "imports": [],
+      "tests": 0
+    },
+    {
+      "path": "scripts/qa-and-copy.sh",
+      "sha256": "4ecebbe42be5efd3f96fac59a8b678a7553c85abd8032356f43abee52f01a015",
+      "lines": 39,
+      "imports": [],
+      "tests": 0
+    },
+    {
+      "path": "scripts/qa-native.sh",
+      "sha256": "72d3739f796079d8015c8996dbc7e0c30f65831b104a81c5450f8e1307d52cf7",
+      "lines": 21,
+      "imports": [],
+      "tests": 0
+    },
+    {
+      "path": "scripts/qa_inventory.py",
+      "sha256": "82b4036bd5a3ae2be7530ddef79d0123ebf359c548c1dc35a5162090d8fdbc81",
+      "lines": 66,
+      "imports": [
+        "json",
+        "re"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/run-qa-suites.py",
+      "sha256": "8f7f2873290ff806c29f671c9d6fbe1a635cde7fbc73cd7095f89decd3e15e70",
+      "lines": 57,
+      "imports": [
+        "json",
+        "os",
+        "subprocess",
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/summarize-qa.py",
+      "sha256": "fbfc713b3f2a80367ff2ddcd6746bc79f267d8efcc7aba41c9c8702b7e142cb2",
+      "lines": 78,
+      "imports": [
+        "re",
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/swiftui_section_contract.py",
+      "sha256": "0fa7a30aebb16ef6bf442c1a809c261142e579eaa1b14ba2ab3d0463219c2414",
+      "lines": 95,
+      "imports": [
+        "re"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/sync-xcode-sources.py",
+      "sha256": "36fe25de7abd8eb6527b213b67f8ff2c8d17bd7ef7e655df8644fc4c282accfd",
+      "lines": 233,
+      "imports": [
+        "hashlib"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/test-core.sh",
+      "sha256": "a27fa6e952dfb8b1eff09f9682c4b77f2684b3f67d6f49073e9d061e43211c44",
+      "lines": 6,
+      "imports": [],
+      "tests": 0
+    },
+    {
+      "path": "scripts/test-ios.sh",
+      "sha256": "6cf9989cabc093f647edf875a4875d5b655eea4c3ac42595cb2b7e91bdd63bac",
+      "lines": 25,
+      "imports": [],
+      "tests": 0
+    },
+    {
+      "path": "scripts/test-settings-compile-repair.py",
+      "sha256": "338b8e41500a3758a9ab5861ba5e10ef2ed04f118828c09502af325e01bf90e7",
+      "lines": 104,
+      "imports": [
+        "subprocess",
+        "sys",
+        "tempfile",
+        "unittest"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/test-study-repair-tools.py",
+      "sha256": "94beafcf97f1be658037fe2ec4e12c0866c7a837bfb63ca14925948fa9cfbde9",
+      "lines": 216,
+      "imports": [
+        "contextlib",
+        "importlib",
+        "io",
+        "json",
+        "os",
+        "shutil",
+        "subprocess",
+        "sys",
+        "tempfile",
+        "unittest",
+        "zipfile"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/test-tools.py",
+      "sha256": "0c784505b64a49ed0692c6d6fb7dbb6918c4ed4a5a259e5c6ca8773721332e06",
+      "lines": 43,
+      "imports": [
+        "subprocess"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/test-v24-recovery-model.sh",
+      "sha256": "8c4f670a5828f5cc10860448a051dc0d287439e72d0898b3fd2e39766872123d",
+      "lines": 32,
+      "imports": [
+        "sys"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/test-v242-interactions.py",
+      "sha256": "44221b69275444c9cc2ebb19e377448b869737f9a5497cda0639d1ed882fdd35",
+      "lines": 59,
+      "imports": [
+        "importlib",
+        "subprocess",
+        "sys",
+        "tempfile",
+        "unittest"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/test-v243-root-compile.py",
+      "sha256": "307cb54894bd818d0efcd283dba0a85581904d202e45841fbdc66ed4e934a78d",
+      "lines": 99,
+      "imports": [
+        "importlib",
+        "shutil",
+        "subprocess",
+        "tempfile",
+        "unittest"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/test-v244-lens-compile.py",
+      "sha256": "1418aa68df2008d8f5b8c0e8aff2a692c2da5b3ad8a8c7349f06c28e17b502ba",
+      "lines": 118,
+      "imports": [
+        "importlib",
+        "shutil",
+        "subprocess",
+        "tempfile",
+        "unittest",
+        "json"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/test-v245-release.py",
+      "sha256": "19d222e9caaf79dea6d920df917889809d23f9a1168ea6d00cfb8e674dac6e37",
+      "lines": 178,
+      "imports": [
+        "contextlib",
+        "importlib",
+        "io",
+        "json",
+        "os",
+        "shutil",
+        "subprocess",
+        "tempfile",
+        "unittest"
+      ],
+      "tests": 1
+    },
+    {
+      "path": "scripts/unpack-backup.py",
+      "sha256": "128d062bebd1df792f37cfbf6e120fb73d7994c3844b6d65d963097f321860a7",
+      "lines": 131,
+      "imports": [
+        "argparse",
+        "hashlib",
+        "json",
+        "os",
+        "re",
+        "shutil",
+        "struct",
+        "sys",
+        "tempfile",
+        "uuid"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/validate.py",
+      "sha256": "b17db902df9c2b80dcedf50f03ce7e6b1a2d0c33447c17987546bfc20e9ff1d6",
+      "lines": 121,
+      "imports": [
+        "json",
+        "plistlib",
+        "re",
+        "shutil",
+        "subprocess",
+        "sys",
+        "tempfile",
+        "xml"
+      ],
+      "tests": 0
+    },
+    {
+      "path": "scripts/verify-qa-results.py",
+      "sha256": "7f2fdfc47fe3c99b179140d850505544ba54460dd9a3bd296d1e321ce4a891ac",
+      "lines": 55,
+      "imports": [
+        "re",
+        "sys"
+      ],
+      "tests": 0
+    }
+  ]
+}

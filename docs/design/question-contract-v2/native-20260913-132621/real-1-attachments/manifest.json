@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "12B76C96-8C9C-4A12-B5F4-818343F35ADC.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-v2-metrics_0_21EEECF3-D9DC-417B-BDD5-AF17EC28C888.json",
+        "timestamp" : 1789298914.015
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "9DB8FF8C-5171-4D7E-A017-7AA135F1152A.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-react-page-3_0_317DBD2B-1FA6-4295-94B9-8D37A653FDB4.json",
+        "timestamp" : 1789298914.014
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "8309B05B-70C0-4A3D-8600-82E642216D84.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-source-packet-page-3_0_F4EA038C-9515-484A-AD7E-F687277DAB52.json",
+        "timestamp" : 1789298914.014
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A248FB9E-B969-4CF6-A0ED-B2013A3C60A6",
+        "deviceName" : "iPhone Air",
+        "exportedFileName" : "28C22195-739C-4D96-B301-FBEAD23DF6DD.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "real-model-preflight-page-3_0_34841F8B-DB82-4A7F-AD82-78FB0FB82364.json",
+        "timestamp" : 1789298914.012
+      }
+    ],
+    "testIdentifier" : "LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning()",
+    "testIdentifierURL" : "test://com.apple.xcode/Shelf/ShelfTests/LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning"
+  }
+]

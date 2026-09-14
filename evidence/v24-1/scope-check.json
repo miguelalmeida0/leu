@@ -1,0 +1,21 @@
+{
+  "changedBaselineFiles": [
+    "Shelf.xcodeproj/project.pbxproj",
+    "README.md",
+    "Shelf/Features/Settings/SettingsScreen.swift",
+    "scripts/check-gallery-minimalism.py",
+    "scripts/check-v24-contract.py",
+    "scripts/qa-and-copy.sh",
+    "scripts/check-swiftui-compile-contract.py",
+    "scripts/summarize-qa.py",
+    "scripts/qa-native.sh"
+  ],
+  "unchangedComparedWithV240": {
+    "Packages/ShelfCore": true,
+    "ShelfTests": true,
+    "ShelfUITests": true,
+    "Shelf/Voice": true,
+    "Shelf/Features/Reader": true,
+    "Shelf/DesignSystem": true
+  }
+}

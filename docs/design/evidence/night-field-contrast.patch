@@ -1,0 +1,2086 @@
+--- a/Shelf/App/RootView.swift
++++ b/Shelf/App/RootView.swift
+@@ -13,7 +13,7 @@
+     // Opaque subexpressions bound inference without adding a new state owner or container.
+     var body: some View {
+         backupPresentation
+-            .alert("Leu needs your attention", isPresented: libraryErrorPresented) {
++            .leuDialog("Leu needs your attention", isPresented: libraryErrorPresented) {
+                 Button("OK") { container.library.errorMessage = nil }
+             } message: { Text(container.library.errorMessage ?? "") }
+     }
+@@ -85,7 +85,7 @@
+                           allowsMultipleSelection: false) { (result: Result<[URL], Error>) in
+                 backupImportCompleted(result)
+             }
+-            .confirmationDialog("Restore this backup?", isPresented: backupConfirmationPresented,
++            .leuDialog("Restore this backup?", isPresented: backupConfirmationPresented,
+                                 titleVisibility: .visible, presenting: model.pendingBackupURL) { url in
+                 Button("Merge into my library") { mergeBackup(url) }
+                 Button("Cancel", role: .cancel) { model.pendingBackupURL = nil }
+--- a/Shelf/App/ShelfApp.swift
++++ b/Shelf/App/ShelfApp.swift
+@@ -20,7 +20,7 @@
+ 
+     private var application: some View {
+             RootView(container: container)
+-                .preferredColorScheme(.light)
++                .preferredColorScheme(.dark)
+                 .tint(ShelfTheme.accent)
+                 .onOpenURL { container.library.receive($0) }
+     }
+--- /dev/null
++++ b/Shelf/DesignSystem/LeuAccessibleSurfaces.swift
+@@ -0,0 +1,157 @@
++import SwiftUI
++
++/// Opaque, bounded, scrollable menu. The system owns placement and dismissal,
++/// while Leu owns every pixel behind readable content, including the popover arrow.
++struct LeuMenu<Content: View, Label: View>: View {
++    @ViewBuilder let content: () -> Content
++    @ViewBuilder let label: () -> Label
++    @State private var presented = false
++
++    var body: some View {
++        Button { presented = true } label: { label() }
++            .buttonStyle(.plain)
++            .popover(isPresented: $presented) {
++                ScrollView {
++                    VStack(alignment: .leading, spacing: 8) {
++                        content()
++                        Button("Close menu", systemImage: "xmark") { presented = false }
++                    }
++                    .padding(16)
++                }
++                .frame(idealWidth: 320, maxWidth: 380, idealHeight: 420, maxHeight: 560)
++                .foregroundStyle(LeuDesign.menuForeground)
++                .background(LeuDesign.menuSurface)
++                .tint(LeuDesign.signal)
++                .buttonStyle(LeuMenuActionStyle())
++                .pickerStyle(.inline)
++                .preferredColorScheme(.dark)
++                .presentationBackground(LeuDesign.menuSurface)
++                .presentationCompactAdaptation(.popover)
++                .accessibilityAction(.escape) { presented = false }
++            }
++    }
++}
++
++extension LeuMenu where Label == Text {
++    init(_ title: String, @ViewBuilder content: @escaping () -> Content) {
++        self.content = content
++        self.label = { Text(title) }
++    }
++}
++
++/// Actions close only their presenting menu/dialog, after invoking the original callback.
++private struct LeuMenuActionStyle: PrimitiveButtonStyle {
++    @Environment(\.dismiss) private var dismiss
++    @Environment(\.isEnabled) private var enabled
++
++    func makeBody(configuration: Configuration) -> some View {
++        Button {
++            configuration.trigger()
++            dismiss()
++        } label: {
++            configuration.label
++                .font(.body)
++                .multilineTextAlignment(.leading)
++                .fixedSize(horizontal: false, vertical: true)
++                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
++                .foregroundStyle(enabled ? (configuration.role == .destructive ? LeuDesign.danger : LeuDesign.menuForeground) : LeuDesign.disabledForeground)
++                .padding(.horizontal, 10)
++                .background(LeuDesign.menuSurface)
++                .contentShape(Rectangle())
++        }
++        .buttonStyle(.plain)
++    }
++}
++
++/// Explicit placeholder and focus contrast, independent of the surrounding color scheme.
++struct LeuTextField: View {
++    let title: String
++    @Binding var text: String
++    @FocusState private var focused: Bool
++
++    init(_ title: String, text: Binding<String>) {
++        self.title = title
++        self._text = text
++    }
++
++    var body: some View {
++        TextField(title, text: $text, prompt: Text(title).foregroundStyle(LeuDesign.fieldPlaceholder))
++            .textFieldStyle(.plain)
++            .foregroundStyle(LeuDesign.fieldForeground)
++            .tint(LeuDesign.signal)
++            .focused($focused)
++            .padding(10)
++            .frame(minHeight: 44)
++            .background(LeuDesign.fieldSurface, in: RoundedRectangle(cornerRadius: LeuDesign.smallRadius))
++            .overlay {
++                RoundedRectangle(cornerRadius: LeuDesign.smallRadius)
++                    .stroke(focused ? LeuDesign.signal : LeuDesign.separator, lineWidth: focused ? 2 : 1)
++            }
++    }
++}
++
++extension View {
++    func leuContextMenu<Actions: View>(@ViewBuilder actions: @escaping () -> Actions) -> some View {
++        padding(.trailing, 48)
++            .overlay(alignment: .trailing) {
++                LeuMenu(content: actions) {
++                    Image(systemName: "ellipsis").leuTapTarget()
++                        .foregroundStyle(LeuDesign.textPrimary)
++                }
++                .accessibilityLabel("Stop actions")
++            }
++    }
++
++    func leuDialog<Actions: View, Message: View>(
++        _ title: String, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic,
++        @ViewBuilder actions: @escaping () -> Actions,
++        @ViewBuilder message: @escaping () -> Message
++    ) -> some View {
++        sheet(isPresented: isPresented) {
++            ScrollView {
++                VStack(alignment: .leading, spacing: 20) {
++                    Text(title).font(.title2.bold()).accessibilityAddTraits(.isHeader)
++                    message().foregroundStyle(LeuDesign.menuSecondary)
++                    actions()
++                    Button("Close", role: .cancel) { isPresented.wrappedValue = false }
++                }.padding(24)
++            }
++            .foregroundStyle(LeuDesign.menuForeground)
++            .background(LeuDesign.menuSurface)
++            .buttonStyle(LeuMenuActionStyle())
++            .tint(LeuDesign.signal)
++            .preferredColorScheme(.dark)
++            .presentationBackground(LeuDesign.menuSurface)
++            .presentationDetents([.medium, .large])
++            .accessibilityAction(.escape) { isPresented.wrappedValue = false }
++        }
++    }
++
++    func leuDialog<Actions: View>(
++        _ title: String, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic,
++        @ViewBuilder actions: @escaping () -> Actions
++    ) -> some View {
++        leuDialog(title, isPresented: isPresented, titleVisibility: titleVisibility,
++                  actions: actions, message: { EmptyView() })
++    }
++
++    func leuDialog<Data, Actions: View, Message: View>(
++        _ title: String, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic,
++        presenting data: Data?, @ViewBuilder actions: @escaping (Data) -> Actions,
++        @ViewBuilder message: @escaping (Data) -> Message
++    ) -> some View {
++        leuDialog(title, isPresented: isPresented, titleVisibility: titleVisibility) {
++            if let data { actions(data) }
++        } message: {
++            if let data { message(data) }
++        }
++    }
++
++    func leuDialog<Data, Actions: View>(
++        _ title: String, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic,
++        presenting data: Data?, @ViewBuilder actions: @escaping (Data) -> Actions
++    ) -> some View {
++        leuDialog(title, isPresented: isPresented, titleVisibility: titleVisibility,
++                  presenting: data, actions: actions, message: { _ in EmptyView() })
++    }
++}
+--- a/Shelf/DesignSystem/LeuComponents.swift
++++ b/Shelf/DesignSystem/LeuComponents.swift
+@@ -10,7 +10,7 @@
+     }
+     var body: some View {
+         Text(text.uppercased())
+-            .font(LeuDesign.eyebrow())
++            .leuScaledFont(11, weight: .semibold, design: .monospaced, relativeTo: .caption)
+             .tracking(LeuDesign.eyebrowTracking)
+             .foregroundStyle(tint)
+     }
+@@ -26,7 +26,7 @@
+         self.tint = tint
+     }
+     var body: some View {
+-        Text(text).font(LeuDesign.meta()).foregroundStyle(tint)
++        Text(text).leuScaledFont(12, weight: .medium, design: .monospaced, relativeTo: .caption).foregroundStyle(tint)
+     }
+ }
+ 
+@@ -50,7 +50,7 @@
+ 
+     var body: some View {
+         ZStack {
+-            Circle().stroke(LeuDesign.line, lineWidth: lineWidth)
++            Circle().stroke(LeuDesign.separator, lineWidth: lineWidth)
+             Circle()
+                 .trim(from: 0, to: max(0.02, min(held, 1)))
+                 .stroke(tint, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+@@ -147,7 +147,7 @@
+             withAnimation(LeuDesign.motion(LeuDesign.snap, reduced: reduceMotion)) { action() }
+         } label: {
+             Text(title)
+-                .font(.system(size: 13, weight: .semibold))
++                .font(.subheadline.weight(.semibold))
+                 .foregroundStyle(isOn ? LeuDesign.onSignal : LeuDesign.secondary)
+                 .padding(.horizontal, 14)
+                 .frame(minHeight: LeuDesign.touchTarget)
+@@ -155,7 +155,7 @@
+                             in: Capsule(style: .continuous))
+                 .overlay {
+                     Capsule(style: .continuous)
+-                        .stroke(isOn ? Color.clear : LeuDesign.line, lineWidth: LeuDesign.hairline)
++                        .stroke(isOn ? Color.clear : LeuDesign.separator, lineWidth: LeuDesign.hairline)
+                 }
+                 .contentShape([.interaction, .accessibility], Capsule(style: .continuous))
+         }
+@@ -168,19 +168,7 @@
+ struct LeuSignalButton: ButtonStyle {
+     var isQuiet = false
+     func makeBody(configuration: Configuration) -> some View {
+-        configuration.label
+-            .font(.system(size: 15, weight: .semibold))
+-            .foregroundStyle(isQuiet ? LeuDesign.text : LeuDesign.onSignal)
+-            .padding(.horizontal, 20)
+-            .frame(minHeight: LeuDesign.touchTarget)
+-            .background(isQuiet ? LeuDesign.surface : LeuDesign.signal,
+-                        in: Capsule(style: .continuous))
+-            .overlay {
+-                Capsule(style: .continuous)
+-                    .stroke(isQuiet ? LeuDesign.line : Color.clear, lineWidth: LeuDesign.hairline)
+-            }
+-            .contentShape([.interaction, .accessibility], Capsule(style: .continuous))
+-            .opacity(configuration.isPressed ? 0.82 : 1)
++        LeuPrimaryButtonStyle(filled: !isQuiet, pill: true).makeBody(configuration: configuration)
+     }
+ }
+ 
+@@ -207,7 +195,7 @@
+ 
+             Button(action: dismiss) {
+                 Image(systemName: "xmark")
+-                    .font(.system(size: 13, weight: .semibold))
++                    .font(.subheadline.weight(.semibold))
+                     .foregroundStyle(LeuDesign.secondary)
+                     .frame(
+                         width: LeuDesign.touchTarget,
+--- a/Shelf/DesignSystem/LeuDesign.swift
++++ b/Shelf/DesignSystem/LeuDesign.swift
+@@ -29,9 +29,9 @@
+     // MARK: - Type colour
+ 
+     static let text = Color(hex: 0xF3F2EE)
+-    static let secondary = Color(hex: 0x8B8B86)
++    static let secondary = Color(hex: 0xB9B9B2)
+     /// Metadata and timestamps. Quiet enough to scan past.
+-    static let tertiary = Color(hex: 0x5F5F5C)
++    static let tertiary = Color(hex: 0xA2A29C)
+ 
+     // MARK: - Signal
+ 
+@@ -50,7 +50,7 @@
+     /// Recall is holding.
+     static let held = signal
+     /// Never recalled yet.
+-    static let untested = Color(hex: 0x6E6E74)
++    static let untested = Color(hex: 0x929298)
+     /// Where the learner's model and the source diverged.
+     static let bend = Color(hex: 0xE05C42)
+ 
+@@ -65,6 +65,35 @@
+         let hash = key.unicodeScalars.reduce(UInt64(5_381)) { ($0 &* 33) &+ UInt64($1.value) }
+         return conceptPalette[Int(hash % UInt64(conceptPalette.count))]
+     }
++
++    // Opaque semantic pairings. Fill and foreground roles are intentionally separate.
++    static let surfacePrimary = void
++    static let surfaceSecondary = surface
++    static let surfaceRaised = raised
++    static let textPrimary = text
++    static let textSecondary = secondary
++    static let textTertiary = tertiary
++    static let signalForeground = onSignal
++    static let signalPressed = Color(hex: 0xB4D92F)
++    static let signalText = Color(hex: 0x365500)
++    static let fieldSurface = raised
++    static let fieldForeground = text
++    static let fieldPlaceholder = secondary
++    static let menuSurface = raised
++    static let menuForeground = text
++    static let menuSecondary = secondary
++    static let separator = Color(hex: 0x81817C)
++    static let disabledSurface = raised
++    static let disabledForeground = secondary
++    static let success = Color(hex: 0x58D69B)
++    static let successForeground = onSignal
++    static let warning = Color(hex: 0xE8B54A)
++    static let warningForeground = onSignal
++    static let danger = Color(hex: 0xF18B79)
++    static let dangerForeground = onSignal
++    static let readingSurface = Color(hex: 0xFBF8F2)
++    static let readingForeground = Color(hex: 0x1F1E1B)
++    static let readingSecondary = Color(hex: 0x56534B)
+ 
+     // MARK: - Type
+     //
+--- /dev/null
++++ b/Shelf/DesignSystem/LeuPrimaryButtonStyle.swift
+@@ -0,0 +1,75 @@
++import SwiftUI
++
++/// Shared fill/foreground contract for normal, pressed and disabled primary actions.
++struct LeuPrimaryButtonStyle: ButtonStyle {
++    var filled = true
++    var pill = false
++    @Environment(\.isEnabled) private var enabled
++
++    func makeBody(configuration: Configuration) -> some View {
++        configuration.label
++            .font(.body.weight(.semibold))
++            .multilineTextAlignment(.center)
++            .fixedSize(horizontal: false, vertical: true)
++            .foregroundStyle(enabled ? (filled ? LeuDesign.onSignal : LeuDesign.textPrimary) : LeuDesign.disabledForeground)
++            .padding(.horizontal, 18)
++            .padding(.vertical, 10)
++            .frame(minHeight: 48)
++            .background(fill(pressed: configuration.isPressed), in: RoundedRectangle(cornerRadius: pill ? 100 : LeuDesign.smallRadius))
++            .overlay {
++                RoundedRectangle(cornerRadius: pill ? 100 : LeuDesign.smallRadius)
++                    .stroke(filled && enabled ? Color.clear : LeuDesign.separator, lineWidth: 1)
++            }
++    }
++
++    private func fill(pressed: Bool) -> Color {
++        guard enabled else { return LeuDesign.disabledSurface }
++        return filled ? (pressed ? LeuDesign.signalPressed : LeuDesign.signal) : (pressed ? LeuDesign.surfaceRaised : LeuDesign.surfaceSecondary)
++    }
++}
++
++/// Confirmation belongs inside the item's own circle. Other positions stay neutral.
++struct LeuStepIndicator: View {
++    let number: Int
++    let confirmed: Bool
++    @ScaledMetric(relativeTo: .body) private var diameter: CGFloat = 32
++
++    var body: some View {
++        ZStack {
++            Circle().fill(LeuDesign.surfaceRaised)
++            Circle().stroke(confirmed ? LeuDesign.success : LeuDesign.separator, lineWidth: 2)
++            if confirmed {
++                Image(systemName: "checkmark").font(.body.bold()).foregroundStyle(LeuDesign.success)
++            } else {
++                Text("\(number)").font(.body.monospacedDigit()).foregroundStyle(LeuDesign.textSecondary)
++            }
++        }
++        .frame(width: diameter, height: diameter)
++        .accessibilityElement(children: .ignore)
++        .accessibilityLabel("Step \(number)")
++        .accessibilityValue(confirmed ? "Confirmed correct" : "Unresolved")
++    }
++}
++
++private struct LeuScaledFont: ViewModifier {
++    @ScaledMetric private var size: CGFloat
++    let weight: Font.Weight
++    let design: Font.Design
++
++    init(size: CGFloat, weight: Font.Weight, design: Font.Design, relativeTo: Font.TextStyle) {
++        self._size = ScaledMetric(wrappedValue: size, relativeTo: relativeTo)
++        self.weight = weight
++        self.design = design
++    }
++
++    func body(content: Content) -> some View {
++        content.font(.system(size: size, weight: weight, design: design))
++    }
++}
++
++extension View {
++    func leuScaledFont(_ size: CGFloat, weight: Font.Weight = .regular,
++                       design: Font.Design = .default, relativeTo: Font.TextStyle = .body) -> some View {
++        modifier(LeuScaledFont(size: size, weight: weight, design: design, relativeTo: relativeTo))
++    }
++}
+--- a/Shelf/DesignSystem/ReaderTrackingSlider.swift
++++ b/Shelf/DesignSystem/ReaderTrackingSlider.swift
+@@ -28,7 +28,7 @@
+         slider.maximumValue = Float(range.upperBound)
+         slider.step = Float(step)
+         slider.minimumTrackTintColor = UIColor(ShelfTheme.accent)
+-        slider.maximumTrackTintColor = UIColor(ShelfTheme.secondary.opacity(0.23))
++        slider.maximumTrackTintColor = UIColor(LeuDesign.separator)
+         slider.accessibilityLabel = label
+         slider.accessibilityIdentifier = identifier
+         slider.valueDescription = valueDescription
+--- a/Shelf/DesignSystem/ShelfControls.swift
++++ b/Shelf/DesignSystem/ShelfControls.swift
+@@ -3,17 +3,8 @@
+ 
+ struct ShelfButtonStyle: ButtonStyle {
+     var filled = false
+-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+     func makeBody(configuration: Configuration) -> some View {
+-        configuration.label
+-            .font(.system(.body, design: .serif).weight(.semibold))
+-            .foregroundStyle(filled ? Color.white : ShelfTheme.text)
+-            .padding(.horizontal, 18).frame(minHeight: 48)
+-            .background(filled ? ShelfTheme.action : ShelfTheme.surface, in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius))
+-            .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(filled ? ShelfTheme.action : ShelfTheme.line, lineWidth: 0.8) }
+-            .opacity(configuration.isPressed ? 0.78 : 1)
+-            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.98 : 1)
+-            .animation(reduceMotion ? nil : .easeOut(duration: 0.16), value: configuration.isPressed)
++        LeuPrimaryButtonStyle(filled: filled).makeBody(configuration: configuration)
+     }
+ }
+ 
+@@ -105,7 +96,8 @@
+     }
+ 
+     private func configure(_ control: UISwitch) {
+-        control.onTintColor = UIColor(ShelfTheme.accent)
++        control.onTintColor = UIColor(LeuDesign.signal)
++        control.thumbTintColor = UIColor(LeuDesign.onSignal)
+         control.isAccessibilityElement = true
+         control.accessibilityIdentifier = identifier
+         control.accessibilityLabel = label
+@@ -140,7 +132,7 @@
+         VStack(spacing: 15) {
+             Image(systemName: symbol).font(.system(size: 37, weight: .ultraLight))
+                 .foregroundStyle(ShelfTheme.accent).padding(.bottom, 8)
+-            Text(title).font(ShelfTheme.editorial(27)).multilineTextAlignment(.center)
++            Text(title).leuScaledFont(27, weight: .regular, design: .serif).multilineTextAlignment(.center)
+             Text(message).font(.body).foregroundStyle(ShelfTheme.secondary)
+                 .multilineTextAlignment(.center).frame(maxWidth: 300)
+             if let actionTitle, let action {
+@@ -158,10 +150,15 @@
+     var body: some View {
+         NavigationStack {
+             content().scrollContentBackground(.hidden).background(ShelfTheme.background)
++                .foregroundStyle(LeuDesign.textPrimary)
++                .pickerStyle(.inline)
++                .toolbarBackground(LeuDesign.surfacePrimary, for: .navigationBar)
++                .toolbarBackground(.visible, for: .navigationBar)
+                 .navigationTitle(title).navigationBarTitleDisplayMode(.inline)
+                 .toolbar {
+                     ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
+                 }
+-        }.tint(ShelfTheme.accent).preferredColorScheme(.light)
++        }.tint(ShelfTheme.accent).preferredColorScheme(.dark)
++            .presentationBackground(LeuDesign.surfacePrimary)
+     }
+ }
+--- a/Shelf/DesignSystem/ShelfTheme.swift
++++ b/Shelf/DesignSystem/ShelfTheme.swift
+@@ -1,18 +1,7 @@
+ import SwiftUI
+ import ShelfCore
+ 
+-/// Leu Gallery Minimalism — the single owner of product color, spacing,
+-/// corner radius, typography and tonal hierarchy.
+-///
+-/// The design intentionally avoids dark-dashboard conventions. Reading and
+-/// learning live on warm paper and stone surfaces with ink typography. Accent
+-/// colors are semantic and sparse: ochre for provenance/marks, olive for
+-/// knowledge/progress, and oxblood for decisive primary actions.
+-/// Leu tokens.
+-///
+-/// The values now resolve to `LeuDesign` (Night Field). This type is kept as the
+-/// app-wide alias so every existing call site inherits the redesign without churn;
+-/// `LeuDesign` is the single source of truth.
++/// Compatibility names resolved by the semantic Night Field system.
+ enum ShelfTheme {
+     static let background = LeuDesign.void
+     static let surface = LeuDesign.surface
+@@ -23,9 +12,9 @@
+ 
+     /// Reader appearance stays a reader decision. Night Field is the product shell;
+     /// a book is still allowed to be paper. Reading wins over shell consistency.
+-    static let nightSurface = Color(hex: 0x141416)
+-    static let nightText = Color(hex: 0xD9D5CC)
+-    static let nightSecondary = Color(hex: 0x9A958B)
++    static let nightSurface = LeuDesign.surfaceSecondary
++    static let nightText = LeuDesign.textPrimary
++    static let nightSecondary = LeuDesign.textSecondary
+ 
+     /// Provenance, selection and reading marks — the signal colour.
+     static let accent = LeuDesign.signal
+@@ -33,12 +22,12 @@
+     static let action = LeuDesign.signal
+     /// Durable recall and progress.
+     static let olive = LeuDesign.held
+-    static let danger = LeuDesign.bend
++    static let danger = LeuDesign.danger
+ 
+     /// Paper tokens remain warm: they are used by reading surfaces, not by the shell.
+-    static let paper = Color(hex: 0xFBF8F2)
+-    static let ink = Color(hex: 0x1F1E1B)
+-    static let paperSecondary = Color(hex: 0x6F6A61)
++    static let paper = LeuDesign.readingSurface
++    static let ink = LeuDesign.readingForeground
++    static let paperSecondary = LeuDesign.readingSecondary
+ 
+     static let importantBackground = Color(hex: 0x241F12)
+     static let importantAccent = LeuDesign.signal
+@@ -46,7 +35,7 @@
+     static let reviewAccent = LeuDesign.held
+     static let confusingBackground = Color(hex: 0x241612)
+     static let confusingAccent = LeuDesign.fading
+-    static let spokenHighlight = Color(hex: 0xC8F135, opacity: 0.22)
++    static let spokenHighlight = LeuDesign.signal
+ 
+     static let gutter = LeuDesign.gutter
+     static let radius = LeuDesign.radius
+@@ -85,21 +74,21 @@
+         switch palette {
+         case .ocean:
+             background = Color(hex: 0xB7C2C2); foreground = Color(hex: 0x203033)
+-            muted = Color(hex: 0x536568); light = Color(hex: 0xDCE3E1); shadow = Color(hex: 0x819497)
++            muted = Color(hex: 0x334746); light = Color(hex: 0xDCE3E1); shadow = Color(hex: 0x819497)
+         case .graphite:
+             background = Color(hex: 0x4B4A46); foreground = Color(hex: 0xF5F1E8)
+             muted = Color(hex: 0xD3CEC3); light = Color(hex: 0x85827B); shadow = Color(hex: 0x343330)
+         case .ivory:
+             background = Color(hex: 0xE9E4D9); foreground = Color(hex: 0x26241F)
+-            muted = Color(hex: 0x6C675E); light = Color(hex: 0xF9F6EF); shadow = Color(hex: 0xBFB8AA)
++            muted = Color(hex: 0x59544C); light = Color(hex: 0xF9F6EF); shadow = Color(hex: 0xBFB8AA)
+         case .forest:
+-            background = Color(hex: 0x69705A); foreground = Color(hex: 0xFAF6ED)
++            background = Color(hex: 0x4A503D); foreground = Color(hex: 0xFAF6ED)
+             muted = Color(hex: 0xDFE2D7); light = Color(hex: 0x9AA08B); shadow = Color(hex: 0x4E5543)
+         case .sand:
+             background = Color(hex: 0xD8C4A4); foreground = Color(hex: 0x332A22)
+-            muted = Color(hex: 0x625647); light = Color(hex: 0xF2E7D4); shadow = Color(hex: 0xAE9470)
++            muted = Color(hex: 0x4D4033); light = Color(hex: 0xF2E7D4); shadow = Color(hex: 0xAE9470)
+         case .slate:
+-            background = Color(hex: 0x77756E); foreground = Color(hex: 0xFAF7F0)
++            background = Color(hex: 0x54534E); foreground = Color(hex: 0xFAF7F0)
+             muted = Color(hex: 0xE0DDD4); light = Color(hex: 0xA7A49D); shadow = Color(hex: 0x57564F)
+         }
+     }
+--- a/Shelf/Features/Collections/CollectionsSheet.swift
++++ b/Shelf/Features/Collections/CollectionsSheet.swift
+@@ -13,7 +13,7 @@
+             List {
+                 Section {
+                     HStack {
+-                        TextField("New collection", text: $name).submitLabel(.done)
++                        LeuTextField("New collection", text: $name).submitLabel(.done)
+                             .onSubmit { create() }.accessibilityIdentifier("collection-name-input")
+                         Button("Add", action: create).disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                     }
+@@ -35,14 +35,14 @@
+                 }
+                 if let error = model.errorMessage { Text(error).foregroundStyle(ShelfTheme.danger) }
+             }.environment(\.editMode, .constant(.active))
+-                .alert("Rename collection", isPresented: Binding(get: { editing != nil }, set: { if !$0 { editing = nil } })) {
+-                    TextField("Collection name", text: $rename)
++                .leuDialog("Rename collection", isPresented: Binding(get: { editing != nil }, set: { if !$0 { editing = nil } })) {
++                    LeuTextField("Collection name", text: $rename)
+                     Button("Save") {
+                         if let collection = editing { Task { _ = await model.renameCollection(collection.id, name: rename) } }
+                     }
+                     Button("Cancel", role: .cancel) { editing = nil }
+                 }
+-                .confirmationDialog("Delete this collection? Your PDFs will stay in the library.",
++                .leuDialog("Delete this collection? Your PDFs will stay in the library.",
+                     isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } }), titleVisibility: .visible) {
+                         Button("Delete collection", role: .destructive) {
+                             if let collection = deleteTarget { Task { await model.deleteCollection(collection.id) } }
+--- a/Shelf/Features/Collections/TagsScreen.swift
++++ b/Shelf/Features/Collections/TagsScreen.swift
+@@ -27,7 +27,7 @@
+ 
+                 VStack(alignment: .leading, spacing: 6) {
+                     Text("LEU").font(ShelfTheme.eyebrow()).tracking(3).foregroundStyle(ShelfTheme.secondary)
+-                    Text("Tags & Marks").font(ShelfTheme.editorial(36))
++                    Text("Tags & Marks").leuScaledFont(36, weight: .regular, design: .serif)
+                     Text("Labels for books, and passages worth returning to.")
+                         .font(.system(.subheadline, design: .serif).italic())
+                         .foregroundStyle(ShelfTheme.secondary)
+@@ -40,7 +40,7 @@
+                         Image(systemName: "bookmark")
+                             .font(.title3).foregroundStyle(ShelfTheme.accent).frame(width: 28)
+                         VStack(alignment: .leading, spacing: 5) {
+-                            Text("Your Marks").font(ShelfTheme.editorial(21)).foregroundStyle(ShelfTheme.text)
++                            Text("Your Marks").leuScaledFont(21, weight: .regular, design: .serif).foregroundStyle(ShelfTheme.text)
+                             Text("\(model.studyMarks.count) important, review or confusing passages")
+                                 .font(.subheadline).foregroundStyle(ShelfTheme.secondary)
+                         }
+--- a/Shelf/Features/ExplainLikeTen/ExplainLikeTenSheet.swift
++++ b/Shelf/Features/ExplainLikeTen/ExplainLikeTenSheet.swift
+@@ -180,7 +180,7 @@
+ 
+     private func notice(title: String, detail: String, id: String) -> some View {
+         VStack(alignment: .leading, spacing: 8) {
+-            Text(title).font(ShelfTheme.editorial(24)).foregroundStyle(ShelfTheme.text)
++            Text(title).leuScaledFont(24, weight: .regular, design: .serif).foregroundStyle(ShelfTheme.text)
+             Text(detail).font(.callout).foregroundStyle(ShelfTheme.secondary)
+                 .fixedSize(horizontal: false, vertical: true)
+         }
+--- a/Shelf/Features/Library/BookDetailsSheet.swift
++++ b/Shelf/Features/Library/BookDetailsSheet.swift
+@@ -14,7 +14,7 @@
+     var body: some View {
+         NavigationStack {
+             Form {
+-                Section("Title") { TextField("Document title", text: $draft.title).accessibilityIdentifier("book-title-input") }
++                Section("Title") { LeuTextField("Document title", text: $draft.title).accessibilityIdentifier("book-title-input") }
+                 Section("Collections") {
+                     ForEach(model.collections) { collection in
+                         Toggle(collection.name, isOn: Binding(
+@@ -23,7 +23,7 @@
+                     }
+                     if model.collections.isEmpty { Text("Create a collection from the Library screen.").foregroundStyle(ShelfTheme.secondary) }
+                 }
+-                Section { TextField("react, frontend, interview", text: $draft.tags).autocorrectionDisabled() }
++                Section { LeuTextField("react, frontend, interview", text: $draft.tags).autocorrectionDisabled() }
+                     header: { Text("Tags") } footer: { Text("Separate tags with commas. A document can belong to several collections without being copied.") }
+                 Section("Cover") {
+                     Picker("Palette", selection: $draft.palette) {
+@@ -57,6 +57,6 @@
+                             .accessibilityIdentifier("save-book-details")
+                     }
+                 }
+-        }.tint(ShelfTheme.accent).preferredColorScheme(.light).onAppear { model.errorMessage = nil }
++        }.tint(ShelfTheme.accent).preferredColorScheme(.dark).onAppear { model.errorMessage = nil }
+     }
+ }
+--- a/Shelf/Features/Library/Components/BookActionsMenu.swift
++++ b/Shelf/Features/Library/Components/BookActionsMenu.swift
+@@ -8,7 +8,7 @@
+     @Bindable var knowledge: KnowledgeModel
+     @State private var showConnections = false
+     var body: some View {
+-        Menu {
++        LeuMenu {
+             Button("Open", systemImage: "book") { model.open(book) }
+             Button(book.isFavorite ? "Remove favorite" : "Add to favorites", systemImage: book.isFavorite ? "heart.slash" : "heart") {
+                 Task { await model.favorite(book) }
+--- a/Shelf/Features/Library/Components/BookTile.swift
++++ b/Shelf/Features/Library/Components/BookTile.swift
+@@ -41,14 +41,14 @@
+                                 Text("Page \(book.currentPageNumber)").font(.caption)
+                             }
+                             .padding(.horizontal, 8).padding(.vertical, 5)
+-                            .background(colors.background.opacity(0.95), in: Capsule())
++                            .background(colors.background, in: Capsule())
+                         }
+                     }
+                     .foregroundStyle(colors.foreground)
+                     .padding(.horizontal, 16).padding(.top, 22).padding(.bottom, 14)
+                     .background(alignment: .top) {
+                         if preferences.usePDFCovers {
+-                            colors.background.opacity(0.97).frame(height: height * 0.53)
++                            colors.background.frame(height: height * 0.53)
+                         }
+                     }
+                 }.frame(height: height).clipShape(RoundedRectangle(cornerRadius: 7))
+--- a/Shelf/Features/Library/Components/CollectionFilterBar.swift
++++ b/Shelf/Features/Library/Components/CollectionFilterBar.swift
+@@ -25,7 +25,7 @@
+                             .frame(minHeight: 38)
+                             .foregroundStyle(ShelfTheme.secondary)
+                             .background(Color.clear, in: Capsule())
+-                            .overlay { Capsule().stroke(ShelfTheme.line, lineWidth: 0.7) }
++                            .overlay { Capsule().stroke(LeuDesign.separator, lineWidth: 0.7) }
+                     }
+                     .buttonStyle(.plain)
+                     .accessibilityLabel("Add or manage collections")
+@@ -48,9 +48,9 @@
+                 .lineLimit(1)
+                 .padding(.horizontal, 13)
+                 .frame(minHeight: 38)
+-                .foregroundStyle(selected ? Color.white : ShelfTheme.secondary)
++                .foregroundStyle(selected ? LeuDesign.onSignal : ShelfTheme.secondary)
+                 .background(selected ? ShelfTheme.olive : ShelfTheme.surface, in: Capsule())
+-                .overlay { Capsule().stroke(selected ? ShelfTheme.olive : ShelfTheme.line, lineWidth: 0.7) }
++                .overlay { Capsule().stroke(selected ? ShelfTheme.olive : LeuDesign.separator, lineWidth: 0.7) }
+         }
+         .id(id)
+         .buttonStyle(.plain)
+--- a/Shelf/Features/Library/Components/LibraryHeader.swift
++++ b/Shelf/Features/Library/Components/LibraryHeader.swift
+@@ -14,14 +14,14 @@
+                     // everything here is local, which is the thing worth saying.
+                     LeuEyebrow("On this device")
+                     Text(title)
+-                        .font(LeuDesign.display(40))
++                        .leuScaledFont(40, weight: .bold, relativeTo: .largeTitle)
+                         .tracking(LeuDesign.displayTracking)
+                         .foregroundStyle(LeuDesign.text)
+                         .accessibilityAddTraits(.isHeader)
+                 }
+                 Spacer(minLength: 12)
+ 
+-                Menu {
++                LeuMenu {
+                     Picker("Sort by", selection: $model.sort) {
+                         ForEach(LibrarySort.allCases, id: \.self) { Text($0.title).tag($0) }
+                     }
+@@ -116,7 +116,7 @@
+             Image(systemName: "magnifyingglass")
+                 .font(.system(size: 15, weight: .regular))
+                 .foregroundStyle(ShelfTheme.secondary)
+-            TextField("Search books and passages…", text: $text)
++            LeuTextField("Search books and passages…", text: $text)
+                 .font(.system(.body, design: .serif))
+                 .autocorrectionDisabled()
+                 .textInputAutocapitalization(.never)
+@@ -133,7 +133,7 @@
+         .padding(.horizontal, 14)
+         .frame(minHeight: 48)
+         .background(ShelfTheme.surface, in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius))
+-        .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(ShelfTheme.line, lineWidth: 0.7) }
++        .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(LeuDesign.separator, lineWidth: 0.7) }
+     }
+ }
+ 
+@@ -152,7 +152,7 @@
+                             .tracking(2.2)
+                             .foregroundStyle(ShelfTheme.accent)
+                         Text("You were in the middle\nof a thought.")
+-                            .font(ShelfTheme.editorial(31))
++                            .leuScaledFont(31, weight: .regular, design: .serif)
+                             .multilineTextAlignment(.leading)
+                             .foregroundStyle(ShelfTheme.text)
+                         Text("Continue from page \(book.currentPageNumber).")
+@@ -162,7 +162,7 @@
+                     Spacer(minLength: 12)
+                     ZStack {
+                         Circle().fill(ShelfTheme.action).frame(width: 44, height: 44)
+-                        Image(systemName: "arrow.right").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.white)
++                        Image(systemName: "arrow.right").font(.system(size: 15, weight: .semibold)).foregroundStyle(LeuDesign.onSignal)
+                     }
+                 }
+ 
+@@ -178,7 +178,7 @@
+                         .overlay { RoundedRectangle(cornerRadius: 4).stroke(ShelfTheme.line.opacity(0.8), lineWidth: 0.6) }
+                     VStack(alignment: .leading, spacing: 4) {
+                         Text(book.title)
+-                            .font(ShelfTheme.editorial(18))
++                            .leuScaledFont(18, weight: .regular, design: .serif)
+                             .foregroundStyle(ShelfTheme.text)
+                             .lineLimit(2)
+                         Text("Page \(book.currentPageNumber) of \(book.pageCount)")
+@@ -195,7 +195,7 @@
+             }
+             .padding(20)
+             .background(
+-                LinearGradient(colors: [ShelfTheme.paper, ShelfTheme.raised.opacity(0.55)], startPoint: .topLeading, endPoint: .bottomTrailing),
++                LeuDesign.surfaceSecondary,
+                 in: RoundedRectangle(cornerRadius: 12)
+             )
+             .overlay { RoundedRectangle(cornerRadius: 12).stroke(ShelfTheme.line, lineWidth: 0.8) }
+--- a/Shelf/Features/Reader/Components/ReadContinuousDocumentView.swift
++++ b/Shelf/Features/Reader/Components/ReadContinuousDocumentView.swift
+@@ -66,10 +66,10 @@
+             Spacer(minLength: 12)
+             Text("Page \(index + 1) of \(model.book.pageCount)")
+                 .font(.caption.monospacedDigit())
+-                .foregroundStyle(ShelfTheme.ink.opacity(0.65))
++                .foregroundStyle(LeuDesign.readingSecondary)
+                 .padding(.horizontal, 24).padding(.bottom, 16)
+                 .accessibilityIdentifier("read-boundary-\(index)")
+-            Rectangle().fill(ShelfTheme.ink.opacity(0.12)).frame(height: 1)
++            Rectangle().fill(LeuDesign.readingSecondary).frame(height: 1)
+         }
+         .frame(maxWidth: .infinity, minHeight: minimumHeight, alignment: .topLeading)
+         .foregroundStyle(ShelfTheme.ink)
+--- a/Shelf/Features/Reader/Components/ReadPageContent.swift
++++ b/Shelf/Features/Reader/Components/ReadPageContent.swift
+@@ -46,26 +46,26 @@
+         switch block.kind {
+         case .heading:
+             highlightedText(block.text)
+-                .font(.system(size: (index == 0 ? 34 : 25) * textScale, weight: .semibold, design: .serif))
++                .leuScaledFont((index == 0 ? 34 : 25) * textScale, weight: .semibold, design: .serif)
+                 .tracking(index == 0 ? -0.5 : 0.1)
+                 .padding(.top, index == 0 ? 0 : 24)
+                 .padding(.bottom, 12)
+         case .paragraph:
+             highlightedText(block.text)
+-                .font(.system(size: 20 * textScale, design: .serif))
++                .leuScaledFont(20 * textScale, design: .serif)
+                 .lineSpacing(7 * textScale)
+                 .padding(.bottom, 20)
+         case .bullet:
+             HStack(alignment: .firstTextBaseline, spacing: 10) {
+                 highlightedText(block.text)
+-                    .font(.system(size: 19 * textScale, design: .serif))
++                    .leuScaledFont(19 * textScale, design: .serif)
+                     .lineSpacing(6 * textScale)
+             }
+             .padding(.bottom, 14)
+         case .code:
+             ScrollView(.horizontal) {
+                 highlightedText(block.text)
+-                    .font(.system(size: 17 * textScale, design: .monospaced))
++                    .leuScaledFont(17 * textScale, design: .monospaced)
+                     .fixedSize(horizontal: true, vertical: false)
+             }.padding(.bottom, 20)
+         }
+--- a/Shelf/Features/Reader/Components/ReaderBottomBar.swift
++++ b/Shelf/Features/Reader/Components/ReaderBottomBar.swift
+@@ -40,8 +40,8 @@
+             lastChapterDetent = page
+             model.playHaptic(.chapterBoundary)
+         }
+-        .alert("Go to page", isPresented: $showJump) {
+-            TextField("Page number", text: $jumpText)
++        .leuDialog("Go to page", isPresented: $showJump) {
++            LeuTextField("Page number", text: $jumpText)
+                 .keyboardType(.numberPad)
+             Button("Go") {
+                 if let page = Int(jumpText), (1...model.book.pageCount).contains(page) {
+@@ -60,7 +60,7 @@
+                 model.go(to: model.pageIndex - 1)
+             }
+             .disabled(model.pageIndex == 0)
+-            .opacity(model.pageIndex == 0 ? 0.35 : 1)
++            
+ 
+             Button {
+                 jumpText = String(model.pageNumber)
+@@ -87,13 +87,13 @@
+                 model.go(to: model.pageIndex + 1)
+             }
+             .disabled(model.pageNumber >= model.book.pageCount)
+-            .opacity(model.pageNumber >= model.book.pageCount ? 0.35 : 1)
++            
+ 
+             Button { model.toggleSpeech() } label: {
+                 Image(systemName: model.speech.isSpeaking && !model.speech.isPaused ? "pause.fill" : "play.fill")
+                     .font(.system(size: 17, weight: .semibold))
+                     .frame(width: 48, height: 48)
+-                    .foregroundStyle(Color.white)
++                    .foregroundStyle(LeuDesign.onSignal)
+                     .background(model.speech.isSpeaking ? ShelfTheme.olive : ShelfTheme.action, in: Circle())
+             }
+             .buttonStyle(.plain)
+@@ -150,7 +150,7 @@
+     }
+ 
+     private var annotationMenu: some View {
+-        Menu {
++        LeuMenu {
+             if model.displayMode == .original {
+                 Button("Highlight selection", systemImage: "highlighter") {
+                     Task { await model.highlight(kind: .highlight) }
+@@ -204,8 +204,8 @@
+             .foregroundStyle(ShelfTheme.action)
+             .padding(.horizontal, 12)
+             .frame(minHeight: 36)
+-            .background(ShelfTheme.paper, in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius))
+-            .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(ShelfTheme.line, lineWidth: 0.7) }
++            .background(ShelfTheme.surface, in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius))
++            .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(LeuDesign.separator, lineWidth: 0.7) }
+         }
+         .buttonStyle(.plain)
+         .accessibilityIdentifier("reader-search-return")
+--- a/Shelf/Features/Reader/Components/ReaderStateSheet.swift
++++ b/Shelf/Features/Reader/Components/ReaderStateSheet.swift
+@@ -8,7 +8,7 @@
+             ScrollView {
+                 VStack(alignment: .leading, spacing: 18) {
+                     Text("Your place, not just your page.")
+-                        .font(ShelfTheme.editorial(27, weight: .semibold))
++                        .leuScaledFont(27, weight: .semibold, design: .serif)
+                     Text("Leu keeps the reading position aligned across Read, Original and voice playback.")
+                         .foregroundStyle(ShelfTheme.secondary)
+                     VStack(alignment: .leading, spacing: 10) {
+--- a/Shelf/Features/Reader/Components/ReaderStudyDrawer.swift
++++ b/Shelf/Features/Reader/Components/ReaderStudyDrawer.swift
+@@ -27,7 +27,7 @@
+         HStack {
+             VStack(alignment: .leading, spacing: 3) {
+                 Text("Your Marks")
+-                    .font(ShelfTheme.editorial(28))
++                    .leuScaledFont(28, weight: .regular, design: .serif)
+                 Text("Highlights, notes and passages worth returning to.")
+                     .font(.caption)
+                     .foregroundStyle(ShelfTheme.secondary)
+@@ -124,7 +124,7 @@
+     }
+ 
+     private func markMenu(_ mark: StudyAnnotation) -> some View {
+-        Menu {
++        LeuMenu {
+             Button("Go to mark", systemImage: "arrow.right") {
+                 model.openStudyMark(mark)
+                 model.showStudyDrawer = false
+--- a/Shelf/Features/Reader/Components/ReaderTextSizeMenu.swift
++++ b/Shelf/Features/Reader/Components/ReaderTextSizeMenu.swift
+@@ -5,7 +5,7 @@
+     @Bindable var model: ReaderModel
+ 
+     var body: some View {
+-        Menu {
++        LeuMenu {
+             if model.displayMode == .read {
+                 Button("Smaller", systemImage: "textformat.size.smaller") { model.decreaseTextSize() }
+                 Button("Reset text size", systemImage: "arrow.counterclockwise") { model.resetTextSize() }
+--- a/Shelf/Features/Reader/Components/ReaderTopBar.swift
++++ b/Shelf/Features/Reader/Components/ReaderTopBar.swift
+@@ -30,7 +30,7 @@
+                 .frame(maxWidth: .infinity)
+                 .accessibilityLabel("Reading \(model.book.title)")
+ 
+-                Menu {
++                LeuMenu {
+                     if model.displayMode == .read {
+                         Button(model.semanticLevel == .page ? "Reading overview" : "Back to current page",
+                                systemImage: model.semanticLevel == .page ? "square.grid.2x2" : "doc.text") {
+--- a/Shelf/Features/Reader/Components/SemanticZoomSurface.swift
++++ b/Shelf/Features/Reader/Components/SemanticZoomSurface.swift
+@@ -19,7 +19,7 @@
+                 }
+ 
+                 Text(title)
+-                    .font(ShelfTheme.editorial(34, weight: .semibold))
++                    .leuScaledFont(34, weight: .semibold, design: .serif)
+                     .foregroundStyle(ShelfTheme.text)
+ 
+                 content
+--- a/Shelf/Features/Reader/Components/TimedReadingSheet.swift
++++ b/Shelf/Features/Reader/Components/TimedReadingSheet.swift
+@@ -14,7 +14,7 @@
+                 VStack(alignment: .leading, spacing: 20) {
+                     VStack(alignment: .leading, spacing: 6) {
+                         Text("How much time do you have?")
+-                            .font(ShelfTheme.editorial(27, weight: .semibold))
++                            .leuScaledFont(27, weight: .semibold, design: .serif)
+                         Text("Leu estimates a nearby stopping point from the PDF text and prefers a detected section boundary when one is close.")
+                             .foregroundStyle(ShelfTheme.secondary)
+                     }
+--- a/Shelf/Features/Reader/NoteEditorSheet.swift
++++ b/Shelf/Features/Reader/NoteEditorSheet.swift
+@@ -42,7 +42,7 @@
+                             .disabled(model.isSaving).accessibilityIdentifier("save-note")
+                     }
+                 }
+-        }.preferredColorScheme(.light).tint(ShelfTheme.accent)
++        }.preferredColorScheme(.dark).tint(ShelfTheme.accent)
+             .interactiveDismissDisabled(model.isSaving)
+             .onAppear { model.errorMessage = nil }
+     }
+--- a/Shelf/Features/Reader/ReaderNotesSheet.swift
++++ b/Shelf/Features/Reader/ReaderNotesSheet.swift
+@@ -57,7 +57,7 @@
+                     documentID: note.bookID, pageIndex: note.pageIndex, sourceText: note.quote,
+                     sectionTitle: model.sectionTitle(for: note.pageIndex)))
+             }
+-            .confirmationDialog("Remove this annotation?", isPresented: Binding(get: { removing != nil }, set: { if !$0 { removing = nil } }), titleVisibility: .visible, presenting: removing) { note in
++            .leuDialog("Remove this annotation?", isPresented: Binding(get: { removing != nil }, set: { if !$0 { removing = nil } }), titleVisibility: .visible, presenting: removing) { note in
+                 Button("Remove annotation", role: .destructive) {
+                     Task { await model.deleteAnnotation(note) }
+                 }
+--- a/Shelf/Features/Reader/ReaderScreen.swift
++++ b/Shelf/Features/Reader/ReaderScreen.swift
+@@ -91,13 +91,13 @@
+         .sheet(isPresented: $model.showVoiceSettings) { VoiceSettingsSheet(speech: model.speech) }
+         .sheet(isPresented: $model.showKnowledgeSearch) { KnowledgeSearchSheet(knowledge: model.knowledge) }
+         .sheet(isPresented: $model.blindPagePresented) { BlindPageSheet(model: model) }
+-        .alert("Your change needs attention", isPresented: Binding(
++        .leuDialog("Your change needs attention", isPresented: Binding(
+             get: { model.errorMessage != nil && model.noteDraft == nil && model.panel == nil },
+             set: { if !$0 { model.errorMessage = nil } })) {
+                 Button("OK") { model.errorMessage = nil }
+             } message: { Text(model.errorMessage ?? "") }
+         .background { UITestFrameProbe(identifier: "reader-screen") }
+-        .preferredColorScheme(.light)
++        .preferredColorScheme(.dark)
+         .interactiveDismissDisabled(model.isSaving)
+     }
+     @ViewBuilder
+--- a/Shelf/Features/Reader/ReaderSearchSheet.swift
++++ b/Shelf/Features/Reader/ReaderSearchSheet.swift
+@@ -40,7 +40,7 @@
+         HStack {
+             Image(systemName: "magnifyingglass")
+                 .foregroundStyle(ShelfTheme.secondary)
+-            TextField("Find a word or phrase", text: $model.searchText)
++            LeuTextField("Find a word or phrase", text: $model.searchText)
+                 .focused($focused)
+                 .autocorrectionDisabled()
+                 .textInputAutocapitalization(.never)
+@@ -118,8 +118,8 @@
+         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
+         guard !needle.isEmpty,
+               let range = result.range(of: needle, options: [.caseInsensitive, .diacriticInsensitive]) else { return result }
+-        result[range][AttributeScopes.SwiftUIAttributes.BackgroundColorAttribute.self] = ShelfTheme.accent.opacity(0.30)
+-        result[range][AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute.self] = ShelfTheme.text
++        result[range][AttributeScopes.SwiftUIAttributes.BackgroundColorAttribute.self] = LeuDesign.signal
++        result[range][AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute.self] = LeuDesign.onSignal
+         result[range][AttributeScopes.SwiftUIAttributes.FontAttribute.self] = .body.bold()
+         return result
+     }
+--- a/Shelf/Features/Settings/SettingsScreen.swift
++++ b/Shelf/Features/Settings/SettingsScreen.swift
+@@ -18,7 +18,7 @@
+             Form {
+                 Section {
+                     VStack(alignment: .leading, spacing: 10) {
+-                        Text("Leu").font(ShelfTheme.editorial(38))
++                        Text("Leu").leuScaledFont(38, weight: .regular, design: .serif)
+                         Text("Library, reader, backup and local data controls.").foregroundStyle(ShelfTheme.secondary)
+                     }.padding(.vertical, 8).listRowBackground(Color.clear)
+                 }
+@@ -113,7 +113,7 @@
+                         Text("Reduced").tag(EmotionalCheckInPreference.reduced)
+                         Text("Off").tag(EmotionalCheckInPreference.off)
+                     }
+-                    .pickerStyle(.menu)
++                    .pickerStyle(.inline)
+                     .accessibilityIdentifier("settings-check-ins")
+                     Button("Delete emotional check-in history", role: .destructive) {
+                         Task { await learning.deleteEmotionalCheckIns() }
+@@ -137,7 +137,7 @@
+                 }
+                 .sheet(isPresented: $showTrash) { TrashSheet(model: model) }
+                 .sheet(isPresented: $showPrivacy) { PrivacySheet() }
+-                .confirmationDialog("Move the bundled samples to Trash?", isPresented: $removeSamples, titleVisibility: .visible) {
++                .leuDialog("Move the bundled samples to Trash?", isPresented: $removeSamples, titleVisibility: .visible) {
+                     Button("Remove sample PDFs", role: .destructive) { Task { await model.removeSamples() } }
+                 } message: { Text("Your imported documents will not be changed.") }
+         }
+--- a/Shelf/Features/Settings/TrashSheet.swift
++++ b/Shelf/Features/Settings/TrashSheet.swift
+@@ -25,7 +25,7 @@
+                         }.padding(.vertical, 8)
+                     }
+                 } footer: { Text("Trash is never emptied automatically. Restore a document with its notes and reading position intact.") }
+-            }.confirmationDialog("Permanently delete this PDF and its notes?", isPresented: Binding(
++            }.leuDialog("Permanently delete this PDF and its notes?", isPresented: Binding(
+                 get: { deleting != nil }, set: { if !$0 { deleting = nil } }), titleVisibility: .visible, presenting: deleting) { book in
+                     Button("Delete permanently", role: .destructive) {
+                         Task { await model.permanentlyDelete(book) }
+--- a/Shelf/Knowledge/Components/ConceptDetailSheet.swift
++++ b/Shelf/Knowledge/Components/ConceptDetailSheet.swift
+@@ -24,13 +24,13 @@
+                 }.padding(ShelfTheme.gutter)
+             }
+         }
+-        .alert("Add alias", isPresented: $aliasPresented) {
+-            TextField("Alias", text: $newAlias)
++        .leuDialog("Add alias", isPresented: $aliasPresented) {
++            LeuTextField("Alias", text: $newAlias)
+             Button("Save") { saveAlias() }
+             Button("Cancel", role: .cancel) { newAlias = "" }
+         } message: { Text("Aliases help Leu recognize the same concept across different books.") }
+-        .alert("New Topic Chain", isPresented: $createChain) {
+-            TextField(concept.name, text: $newChainTitle)
++        .leuDialog("New Topic Chain", isPresented: $createChain) {
++            LeuTextField(concept.name, text: $newChainTitle)
+             Button("Create") { Task { _ = await knowledge.createChain(title: newChainTitle, passageIDs: highlights.prefix(1).map(\.id)) } }
+             Button("Cancel", role: .cancel) {}
+         }
+--- a/Shelf/Knowledge/Components/ConnectedPassageSheet.swift
++++ b/Shelf/Knowledge/Components/ConnectedPassageSheet.swift
+@@ -32,13 +32,13 @@
+                 ConnectionConstellationSheet(knowledge: knowledge, source: sourcePassage, related: related)
+             }
+         }
+-        .alert("Create Concept", isPresented: $createConceptPresented) {
+-            TextField("Concept name", text: $conceptTitle)
++        .leuDialog("Create Concept", isPresented: $createConceptPresented) {
++            LeuTextField("Concept name", text: $conceptTitle)
+             Button("Create") { createConcept() }
+             Button("Cancel", role: .cancel) { conceptTitle = "" }
+         } message: { Text("Make this passage part of a permanent concept in your library.") }
+-        .alert("New trail", isPresented: Binding(get: { chainCandidate != nil }, set: { if !$0 { chainCandidate = nil } })) {
+-            TextField("React Identity", text: $newChainTitle)
++        .leuDialog("New trail", isPresented: Binding(get: { chainCandidate != nil }, set: { if !$0 { chainCandidate = nil } })) {
++            LeuTextField("React Identity", text: $newChainTitle)
+             Button("Create") { createChain() }
+             Button("Cancel", role: .cancel) { chainCandidate = nil; newChainTitle = "" }
+         } message: { Text("Start a reading path with these two passages.") }
+@@ -113,7 +113,7 @@
+                     }
+                     if let section = passage.sectionTitle { Text(section).font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent).lineLimit(1) }
+                     Text(passage.text).font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.secondary).lineLimit(4)
+-                    Text(reason).font(.caption).foregroundStyle(ShelfTheme.secondary.opacity(0.85))
++                    Text(reason).font(.caption).foregroundStyle(LeuDesign.textSecondary)
+                 }.contentShape(Rectangle())
+             }.buttonStyle(.plain)
+             HStack(spacing: 10) {
+@@ -122,7 +122,7 @@
+                         .font(.caption.weight(.semibold))
+                         .foregroundStyle(ShelfTheme.olive)
+                     Spacer()
+-                    Menu {
++                    LeuMenu {
+                         Section("Relationship") {
+                             connectionType("Related", .related, sourcePassage, passage)
+                             connectionType("Prerequisite", .prerequisite, sourcePassage, passage)
+@@ -170,7 +170,7 @@
+     }
+ 
+     private func sourceTopicChainMenu(_ passage: KnowledgePassage) -> some View {
+-        Menu("Add to Topic Chain") {
++        LeuMenu("Add to Topic Chain") {
+             ForEach(knowledge.snapshot.topicChains.prefix(24)) { chain in
+                 Button(chain.title) { Task { await knowledge.addPassages([passage.id], to: chain.id) } }
+             }
+@@ -182,7 +182,7 @@
+     }
+ 
+     private func topicChainMenu(sourcePassage: KnowledgePassage, destination: KnowledgePassage) -> some View {
+-        Menu("Add to Topic Chain") {
++        LeuMenu("Add to Topic Chain") {
+             ForEach(knowledge.snapshot.topicChains.prefix(24)) { chain in
+                 Button(chain.title) {
+                     Task { await knowledge.addPassages([sourcePassage.id, destination.id], to: chain.id) }
+--- a/Shelf/Knowledge/Components/ConnectionConstellationSheet.swift
++++ b/Shelf/Knowledge/Components/ConnectionConstellationSheet.swift
+@@ -44,7 +44,7 @@
+             .font(.system(.headline, design: .serif)).multilineTextAlignment(.center).lineLimit(3)
+             .padding(14).frame(width: 150).frame(minHeight: 78)
+             .background(ShelfTheme.raised, in: RoundedRectangle(cornerRadius: 18))
+-            .overlay { RoundedRectangle(cornerRadius: 18).stroke(ShelfTheme.accent.opacity(0.55)) }
++            .overlay { RoundedRectangle(cornerRadius: 18).stroke(ShelfTheme.accent) }
+     }
+ 
+     private func node(_ item: RankedKnowledgeConnection) -> some View {
+--- a/Shelf/Knowledge/Components/KnowledgeSearchSheet.swift
++++ b/Shelf/Knowledge/Components/KnowledgeSearchSheet.swift
+@@ -29,7 +29,7 @@
+     private var searchField: some View {
+         HStack(spacing: 10) {
+             Image(systemName: "magnifyingglass").foregroundStyle(ShelfTheme.secondary)
+-            TextField("Search concepts, passages, chains…", text: $knowledge.searchText)
++            LeuTextField("Search concepts, passages, chains…", text: $knowledge.searchText)
+                 .textInputAutocapitalization(.never).autocorrectionDisabled()
+                 .onChange(of: knowledge.searchText) { _, _ in knowledge.search() }
+                 .accessibilityIdentifier("knowledge-search-field")
+--- a/Shelf/Knowledge/Components/TopicChainScreens.swift
++++ b/Shelf/Knowledge/Components/TopicChainScreens.swift
+@@ -76,7 +76,7 @@
+                         Text(provenance(item)).font(.caption).foregroundStyle(ShelfTheme.secondary)
+                     }
+                     Spacer()
+-                    Menu {
++                    LeuMenu {
+                         Button("Move earlier", systemImage: "arrow.up") { move(item, by: -1, in: chain) }
+                             .disabled(item.position == 0)
+                         Button("Move later", systemImage: "arrow.down") { move(item, by: 1, in: chain) }
+@@ -142,7 +142,7 @@
+             .navigationTitle(chain.title).navigationBarTitleDisplayMode(.inline)
+             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+         }
+-        .preferredColorScheme(.light)
++        .preferredColorScheme(.dark)
+     }
+ 
+     private var readableItems: [TopicChainItem] { chain.items.sorted { $0.position < $1.position }.filter { knowledge.passage($0.passageID) != nil } }
+--- a/Shelf/Learning/Components/PrimaryTabBar.swift
++++ b/Shelf/Learning/Components/PrimaryTabBar.swift
+@@ -36,13 +36,12 @@
+         } label: {
+             HStack(spacing: 7) {
+                 Image(systemName: area.symbol)
+-                    .font(.system(size: 14, weight: isOn ? .semibold : .regular))
++                    .font(.subheadline.weight(isOn ? .semibold : .regular))
+                 // The label stays at every size: an icon alone is not a sufficient
+                 // affordance, so the row is allowed to grow instead of dropping text.
+                 Text(area.title)
+-                    .font(.system(size: 14, weight: isOn ? .semibold : .medium))
+-                    .lineLimit(1)
+-                    .minimumScaleFactor(0.8)
++                    .font(.subheadline.weight(isOn ? .semibold : .medium))
++                    .fixedSize(horizontal: false, vertical: true)
+             }
+             .foregroundStyle(isOn ? LeuDesign.onSignal : LeuDesign.secondary)
+             .frame(maxWidth: .infinity)
+--- a/Shelf/Learning/Components/ReleaseSurface.swift
++++ b/Shelf/Learning/Components/ReleaseSurface.swift
+@@ -29,7 +29,7 @@
+                 .font(ShelfTheme.eyebrow()).tracking(2)
+                 .foregroundStyle(ShelfTheme.olive)
+             Text(interaction.phase == .released ? "Better?" : "Get it out?")
+-                .font(ShelfTheme.editorial(32))
++                .leuScaledFont(32, weight: .regular, design: .serif)
+                 .accessibilityIdentifier("release-heading")
+             if interaction.phase == .released {
+                 Text("The surface is clear. Your study record is unchanged.")
+@@ -129,7 +129,7 @@
+         Text(title)
+             .frame(maxWidth: .infinity, minHeight: 44)
+             .background(ShelfTheme.surface, in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius))
+-            .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(ShelfTheme.line, lineWidth: 0.8) }
++            .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(LeuDesign.separator, lineWidth: 0.8) }
+             .contentShape([.interaction, .accessibility], Rectangle())
+     }
+ 
+--- a/Shelf/Learning/ConnectionsSheet.swift
++++ b/Shelf/Learning/ConnectionsSheet.swift
+@@ -19,13 +19,13 @@
+                         ForEach(RelationshipKind.allCases, id: \.self) { kind in
+                             Text(label(kind)).tag(kind)
+                         }
+-                    }.pickerStyle(.menu)
++                    }.pickerStyle(.inline)
+                     if kind == .custom {
+-                        TextField("Describe the relationship", text: $customLabel)
++                        LeuTextField("Describe the relationship", text: $customLabel)
+                             .textFieldStyle(.roundedBorder)
+                             .accessibilityIdentifier("connection-custom-label")
+                     }
+-                    TextField("Search concepts or PDFs", text: $query)
++                    LeuTextField("Search concepts or PDFs", text: $query)
+                         .textFieldStyle(.roundedBorder).accessibilityIdentifier("connection-search")
+                 }.padding(ShelfTheme.gutter)
+                 Divider().overlay(ShelfTheme.line)
+--- a/Shelf/Learning/DiagramMaskEditor.swift
++++ b/Shelf/Learning/DiagramMaskEditor.swift
+@@ -18,7 +18,7 @@
+                 Text("Drag over one or more regions you want hidden during recall.")
+                     .font(.callout).foregroundStyle(ShelfTheme.secondary).padding(.horizontal, ShelfTheme.gutter)
+                 pageCanvas
+-                TextField("Optional label", text: $label).textFieldStyle(.roundedBorder)
++                LeuTextField("Optional label", text: $label).textFieldStyle(.roundedBorder)
+                     .padding(.horizontal, ShelfTheme.gutter)
+                 HStack {
+                     Button("Clear") { normalizedRegions.removeAll() }.buttonStyle(ShelfButtonStyle())
+@@ -28,7 +28,7 @@
+             }
+             .background(ShelfTheme.background).navigationTitle("Diagram Mask").navigationBarTitleDisplayMode(.inline)
+             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } } }
+-        }.preferredColorScheme(.light).tint(ShelfTheme.accent)
++        }.preferredColorScheme(.dark).tint(ShelfTheme.accent)
+     }
+ 
+     private var pageCanvas: some View {
+@@ -80,7 +80,7 @@
+                width: rect.width * size.width, height: rect.height * size.height)
+     }
+     private func maskRect(_ rect: CGRect) -> some View {
+-        RoundedRectangle(cornerRadius: 6).fill(ShelfTheme.ink.opacity(0.88))
++        RoundedRectangle(cornerRadius: 6).fill(ShelfTheme.ink)
+             .overlay(RoundedRectangle(cornerRadius: 6).stroke(ShelfTheme.accent, lineWidth: 1))
+             .frame(width: rect.width, height: rect.height).offset(x: rect.minX, y: rect.minY)
+     }
+--- a/Shelf/Learning/DiagramRecallStudyView.swift
++++ b/Shelf/Learning/DiagramRecallStudyView.swift
+@@ -46,7 +46,7 @@
+                     .overlay(alignment: .topLeading) {
+                         ForEach(Array(regions.enumerated()), id: \.offset) { _, region in
+                             if !revealed {
+-                                RoundedRectangle(cornerRadius: 6).fill(ShelfTheme.ink.opacity(0.96))
++                                RoundedRectangle(cornerRadius: 6).fill(ShelfTheme.ink)
+                                     .frame(width: proxy.size.width * region.width, height: proxy.size.height * region.height)
+                                     .offset(x: proxy.size.width * region.x, y: proxy.size.height * region.y)
+                             }
+--- a/Shelf/Learning/DocumentTopicsSheet.swift
++++ b/Shelf/Learning/DocumentTopicsSheet.swift
+@@ -31,7 +31,7 @@
+                     }
+                     Section("Add a topic") {
+                         HStack {
+-                            TextField("e.g. GraphQL", text: $newTopic)
++                            LeuTextField("e.g. GraphQL", text: $newTopic)
+                             Button("Add") { Task { if let topic = await model.addTopic(name: newTopic) { selection.insert(topic.id); newTopic = "" } } }
+                                 .disabled(newTopic.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                         }
+--- a/Shelf/Learning/ExplanationRecorderSheet.swift
++++ b/Shelf/Learning/ExplanationRecorderSheet.swift
+@@ -27,8 +27,8 @@
+             }
+             .background(ShelfTheme.background).navigationTitle("Explain").navigationBarTitleDisplayMode(.inline)
+             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Close") { if recorder.isRecording { _ = recorder.stop() }; dismiss() } } }
+-        }.preferredColorScheme(.light).tint(ShelfTheme.accent)
+-            .alert("Recording", isPresented: Binding(get: { recorder.errorMessage != nil }, set: { if !$0 { recorder.errorMessage = nil } })) {
++        }.preferredColorScheme(.dark).tint(ShelfTheme.accent)
++            .leuDialog("Recording", isPresented: Binding(get: { recorder.errorMessage != nil }, set: { if !$0 { recorder.errorMessage = nil } })) {
+                 Button("OK") { recorder.errorMessage = nil }
+             } message: { Text(recorder.errorMessage ?? "") }
+     }
+--- a/Shelf/Learning/InterviewSetupSheet.swift
++++ b/Shelf/Learning/InterviewSetupSheet.swift
+@@ -16,7 +16,7 @@
+                     Picker("Subject", selection: $topicID) {
+                         Text("All topics").tag(UUID?.none)
+                         ForEach(model.visibleTopics) { topic in Text(topic.name).tag(UUID?.some(topic.id)) }
+-                    }
++                    }.pickerStyle(.inline)
+                 }
+                 Section("Session") {
+                     Picker("Questions", selection: $choice) { ForEach(Choice.allCases, id: \.self) { Text($0.rawValue).tag($0) } }
+--- a/Shelf/Learning/LabRunPreview.swift
++++ b/Shelf/Learning/LabRunPreview.swift
+@@ -8,16 +8,27 @@
+     let runToken: Int
+     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+     @State private var activeIndex = -1
++    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+ 
+     var body: some View {
+         VStack(alignment: .leading, spacing: 12) {
++            if dynamicTypeSize.isAccessibilitySize {
++                VStack(alignment: .leading, spacing: 12) {
++                    ForEach(Array(order.enumerated()), id: \.element.id) { index, element in
++                        HStack(alignment: .top, spacing: 12) {
++                            LeuStepIndicator(number: index + 1,
++                                confirmed: runToken > 0 && lab.correctOrder.indices.contains(index) && lab.correctOrder[index] == element.id)
++                            Text(element.title).font(.body).foregroundStyle(LeuDesign.textPrimary)
++                                .fixedSize(horizontal: false, vertical: true)
++                        }
++                    }
++                }
++            } else {
+             HStack(spacing: 7) {
+                 ForEach(Array(order.enumerated()), id: \.element.id) { index, element in
+                     VStack(spacing: 6) {
+-                        Circle()
+-                            .fill(nodeColor(index))
+-                            .frame(width: activeIndex == index ? 14 : 9, height: activeIndex == index ? 14 : 9)
+-                            .animation(reduceMotion ? nil : LearningTokens.Motion.selection, value: activeIndex)
++                        LeuStepIndicator(number: index + 1,
++                            confirmed: runToken > 0 && lab.correctOrder.indices.contains(index) && lab.correctOrder[index] == element.id)
+                         Text(short(element.title))
+                             .font(.caption2.weight(activeIndex == index ? .semibold : .regular))
+                             .foregroundStyle(activeIndex == index ? ShelfTheme.text : ShelfTheme.secondary)
+@@ -26,11 +37,13 @@
+                             .frame(maxWidth: .infinity)
+                     }
+                     if index < order.count - 1 {
+-                        Rectangle().fill(ShelfTheme.line).frame(width: 12, height: 1).padding(.bottom, 29)
++                        Rectangle().fill(LeuDesign.separator).frame(width: 12, height: 1).padding(.bottom, 29)
+                     }
+                 }
+             }
+             .frame(maxWidth: .infinity)
++
++            }
+ 
+             Text(isSolved ? insight : "The sequence is not coherent yet. Rearrange it and run again.")
+                 .font(.callout)
+@@ -55,12 +68,6 @@
+         }
+     }
+ 
+-    private func nodeColor(_ index: Int) -> Color {
+-        if activeIndex == index { return ShelfTheme.accent }
+-        if activeIndex > index { return ShelfTheme.reviewAccent.opacity(0.8) }
+-        return ShelfTheme.line
+-    }
+-
+     private func short(_ title: String) -> String {
+         title.replacingOccurrences(of: " / ", with: "\n")
+     }
+--- a/Shelf/Learning/LabScreen.swift
++++ b/Shelf/Learning/LabScreen.swift
+@@ -16,7 +16,7 @@
+                 Text("Drag each row into the order that makes the system work.").font(.callout).foregroundStyle(ShelfTheme.secondary)
+                 List {
+                     ForEach(order) { element in
+-                        HStack { Image(systemName: "line.3.horizontal").foregroundStyle(ShelfTheme.secondary); Text(element.title); Spacer(); if revealed && isCorrect(element) { Image(systemName: "checkmark").foregroundStyle(ShelfTheme.reviewAccent) } }
++                        HStack { LeuStepIndicator(number: (order.firstIndex(where: { $0.id == element.id }) ?? 0) + 1, confirmed: revealed && isCorrect(element)); Text(element.title); Spacer() }
+                             .padding(.vertical, 7).listRowBackground(ShelfTheme.surface)
+                     }.onMove(perform: move)
+                 }.scrollContentBackground(.hidden).environment(\.editMode, .constant(.active))
+@@ -42,7 +42,7 @@
+             }.padding(.horizontal, 18).padding(.bottom, 18)
+                 .background(ShelfTheme.background).navigationTitle(lab.title).navigationBarTitleDisplayMode(.inline)
+                 .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Close") { dismiss() } } }
+-        }.preferredColorScheme(.light).tint(ShelfTheme.accent)
++        }.preferredColorScheme(.dark).tint(ShelfTheme.accent)
+     }
+ 
+     private var isSolved: Bool { order.map(\.id) == lab.correctOrder }
+@@ -51,7 +51,7 @@
+         return lab.correctOrder[i] == element.id
+     }
+     private func move(from source: IndexSet, to destination: Int) {
+-        order.move(fromOffsets: source, toOffset: destination); revealed = false; ShelfHaptics.shared.play(.selectionChanged)
++        order.move(fromOffsets: source, toOffset: destination); ShelfHaptics.shared.play(.selectionChanged)
+     }
+ }
+ 
+@@ -63,12 +63,12 @@
+     var body: some View {
+         VStack(spacing: 8) {
+             ForEach(Array(order.enumerated()), id: \.element.id) { index, item in
+-                HStack { Text("\(index + 1)").monospacedDigit().foregroundStyle(ShelfTheme.secondary); Text(item.title); Spacer(); if checked && lab.correctOrder.indices.contains(index) && lab.correctOrder[index] == item.id { Image(systemName: "checkmark").foregroundStyle(ShelfTheme.reviewAccent) } }
++                HStack { LeuStepIndicator(number: index + 1, confirmed: checked && lab.correctOrder.indices.contains(index) && lab.correctOrder[index] == item.id); Text(item.title); Spacer() }
+                     .padding(13).background(ShelfTheme.surface, in: RoundedRectangle(cornerRadius: 12))
+                     .draggable(item.id.uuidString)
+                     .dropDestination(for: String.self) { values, _ in
+                         guard let raw = values.first, let id = UUID(uuidString: raw), let from = order.firstIndex(where: { $0.id == id }) else { return false }
+-                        let moved = order.remove(at: from); order.insert(moved, at: min(index, order.count)); checked = false; ShelfHaptics.shared.play(.snapToTarget); return true
++                        let moved = order.remove(at: from); order.insert(moved, at: min(index, order.count)); ShelfHaptics.shared.play(.snapToTarget); return true
+                     }
+             }
+             Button("Run") { checked = true; ShelfHaptics.shared.play(order.map(\.id) == lab.correctOrder ? .answerCorrect : .answerIncorrect) }
+--- a/Shelf/Learning/LearnTodayScreen.swift
++++ b/Shelf/Learning/LearnTodayScreen.swift
+@@ -16,7 +16,7 @@
+             else { landing }
+         }
+         .task { await model.bootstrap() }
+-        .alert("Leu needs your attention", isPresented: Binding(
++        .leuDialog("Leu needs your attention", isPresented: Binding(
+             get: { model.errorMessage != nil }, set: { if !$0 { model.errorMessage = nil } })) {
+                 Button("OK") { model.errorMessage = nil }
+             } message: { Text(model.errorMessage ?? "") }
+@@ -58,7 +58,7 @@
+                 .tracking(2.8)
+                 .foregroundStyle(ShelfTheme.olive)
+             Text("What should come back next?")
+-                .font(ShelfTheme.editorial(36))
++                .leuScaledFont(36, weight: .regular, design: .serif)
+                 .fixedSize(horizontal: false, vertical: true)
+             Text("Questions are built locally from your books and stay linked to the exact source.")
+                 .font(.system(.callout, design: .serif))
+@@ -111,8 +111,8 @@
+             VStack(alignment: .leading, spacing: 3) {
+                 Text(title).font(.system(.body, design: .serif).weight(.medium))
+                 if let subtitle {
+-                    Text(subtitle.uppercased()).font(.system(size: 9, weight: .semibold, design: .serif)).tracking(1.1)
+-                        .opacity(selected ? 0.78 : 1)
++                    Text(subtitle.uppercased()).font(.caption2.weight(.semibold)).tracking(1.1)
++                        
+                 }
+             }
+             Spacer(minLength: 8)
+@@ -120,9 +120,9 @@
+         }
+         .padding(.horizontal, 14)
+         .frame(minHeight: 55)
+-        .foregroundStyle(selected ? Color.white : ShelfTheme.text)
++        .foregroundStyle(selected ? LeuDesign.onSignal : ShelfTheme.text)
+         .background(selected ? ShelfTheme.olive : ShelfTheme.surface, in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius))
+-        .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(selected ? ShelfTheme.olive : ShelfTheme.line, lineWidth: 0.7) }
++        .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(selected ? ShelfTheme.olive : LeuDesign.separator, lineWidth: 0.7) }
+     }
+ 
+     private func masteryLabel(_ state: MasteryState) -> String {
+@@ -148,14 +148,14 @@
+                         ShelfHaptics.shared.play(.selectionChanged)
+                     } label: {
+                         VStack(spacing: 1) {
+-                            Text("\(minutes)").font(ShelfTheme.editorial(21, weight: .medium)).monospacedDigit()
+-                            Text("MIN").font(.system(size: 8, weight: .semibold, design: .serif)).tracking(1.2)
++                            Text("\(minutes)").leuScaledFont(21, weight: .medium, design: .serif).monospacedDigit()
++                            Text("MIN").font(.caption2.weight(.semibold)).tracking(1.2)
+                         }
+                         .frame(maxWidth: .infinity, minHeight: 52)
+-                        .foregroundStyle(selected ? Color.white : ShelfTheme.text)
++                        .foregroundStyle(selected ? LeuDesign.onSignal : ShelfTheme.text)
+                         .background(selected ? ShelfTheme.action : ShelfTheme.surface,
+                                     in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius))
+-                        .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(selected ? ShelfTheme.action : ShelfTheme.line, lineWidth: 0.7) }
++                        .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(selected ? ShelfTheme.action : LeuDesign.separator, lineWidth: 0.7) }
+                     }
+                     .buttonStyle(.plain)
+                     .accessibilityLabel("\(minutes) minutes")
+@@ -172,7 +172,7 @@
+                 HStack {
+                     Text("Start study session")
+                     Spacer()
+-                    Text("~\(selectedMinutes) min").font(.callout.monospacedDigit()).opacity(0.82)
++                    Text("~\(selectedMinutes) min").font(.callout.monospacedDigit())
+                     Image(systemName: "arrow.right")
+                 }
+                 .frame(maxWidth: .infinity)
+--- a/Shelf/Learning/LearningStateSheet.swift
++++ b/Shelf/Learning/LearningStateSheet.swift
+@@ -19,7 +19,7 @@
+                         .tracking(2.0)
+                         .foregroundStyle(ShelfTheme.olive)
+                     Text("Your understanding")
+-                        .font(ShelfTheme.editorial(28))
++                        .leuScaledFont(28, weight: .regular, design: .serif)
+                         .foregroundStyle(ShelfTheme.text)
+                         .accessibilityLabel("Your understanding")
+                         .accessibilityAddTraits(.isHeader)
+@@ -61,12 +61,12 @@
+             Text(tab.rawValue)
+                 .font(.system(.callout, design: .serif).weight(.semibold))
+                 .frame(maxWidth: .infinity, minHeight: 42)
+-                .foregroundStyle(selected ? Color.white : ShelfTheme.text)
++                .foregroundStyle(selected ? LeuDesign.onSignal : ShelfTheme.text)
+                 .background(selected ? ShelfTheme.olive : ShelfTheme.surface,
+                             in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius))
+                 .overlay {
+                     RoundedRectangle(cornerRadius: ShelfTheme.smallRadius)
+-                        .stroke(selected ? ShelfTheme.olive : ShelfTheme.line, lineWidth: 0.7)
++                        .stroke(selected ? ShelfTheme.olive : LeuDesign.separator, lineWidth: 0.7)
+                 }
+         }
+         .buttonStyle(.plain)
+@@ -110,7 +110,7 @@
+                         .font(ShelfTheme.eyebrow()).tracking(1.8).foregroundStyle(ShelfTheme.olive)
+                         .accessibilityIdentifier("progress-history-view")
+                     Text("See how your thinking evolves.")
+-                        .font(ShelfTheme.editorial(27))
++                        .leuScaledFont(27, weight: .regular, design: .serif)
+                     Text("Earlier attempts and notes stay attached to the source that shaped them.")
+                         .font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.secondary)
+                 }
+--- a/Shelf/Learning/LearningTimelineSheet.swift
++++ b/Shelf/Learning/LearningTimelineSheet.swift
+@@ -13,7 +13,7 @@
+                         Text("UNDERSTANDING TIME MACHINE")
+                             .font(ShelfTheme.eyebrow()).tracking(1.8).foregroundStyle(ShelfTheme.olive)
+                         Text("See how your thinking evolves.")
+-                            .font(ShelfTheme.editorial(27))
++                            .leuScaledFont(27, weight: .regular, design: .serif)
+                         Text("Earlier attempts and notes stay attached to the source that shaped them.")
+                             .font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.secondary)
+                     }
+--- a/Shelf/Learning/MemoryMarginMarkers.swift
++++ b/Shelf/Learning/MemoryMarginMarkers.swift
+@@ -12,7 +12,7 @@
+             ForEach(Array(objects.prefix(5))) { object in
+                 Button { selected = object } label: {
+                     Circle().fill(color(object)).frame(width: 7, height: 7)
+-                        .overlay(Circle().stroke(ShelfTheme.background.opacity(0.7), lineWidth: 1))
++                        .overlay(Circle().stroke(ShelfTheme.background, lineWidth: 1))
+                         .frame(width: 28, height: 28)
+                 }
+                 .buttonStyle(.plain).accessibilityLabel("Memory state for \(object.title)")
+@@ -30,12 +30,12 @@
+     private func color(_ object: LearningObject) -> Color {
+         let state = learning.snapshot.reviewStates[object.id] ?? ReviewState(learningObjectID: object.id)
+         switch learning.scheduler.mastery(for: state, at: Date()) {
+-        case .new: return ShelfTheme.secondary.opacity(0.35)
+-        case .learning: return ShelfTheme.secondary.opacity(0.62)
+-        case .strengthening: return ShelfTheme.accent.opacity(0.72)
++        case .new: return LeuDesign.textTertiary
++        case .learning: return LeuDesign.textSecondary
++        case .strengthening: return LeuDesign.signal
+         case .durable: return ShelfTheme.reviewAccent
+         case .due: return ShelfTheme.accent
+-        case .fading: return ShelfTheme.danger.opacity(0.68)
++        case .fading: return LeuDesign.danger
+         }
+     }
+ }
+--- a/Shelf/Learning/QuestionCardView.swift
++++ b/Shelf/Learning/QuestionCardView.swift
+@@ -3,6 +3,7 @@
+ 
+ @MainActor
+ struct QuestionCardView: View {
++    @ScaledMetric(relativeTo: .callout) private var optionDiameter: CGFloat = 30
+     @Bindable var model: LearningModel
+     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+@@ -13,7 +14,7 @@
+             VStack(alignment: .leading, spacing: 24) {
+                 sourceLabel(question)
+                 Text(question.prompt).accessibilityIdentifier("question-prompt")
+-                    .font(ShelfTheme.editorial(30))
++                    .leuScaledFont(30, weight: .regular, design: .serif)
+                     .fixedSize(horizontal: false, vertical: true)
+                 confidencePicker
+                 options(question)
+@@ -96,9 +97,9 @@
+                         Text(optionLetter(index))
+                             .font(.system(.callout, design: .serif).weight(.semibold))
+                             .foregroundStyle(optionAccent(option, question: question))
+-                            .frame(width: 30, height: 30)
++                            .frame(width: optionDiameter, height: optionDiameter)
+                             .background(Color.clear, in: Circle())
+-                            .overlay { Circle().stroke(optionAccent(option, question: question).opacity(0.65), lineWidth: 0.8) }
++                            .overlay { Circle().stroke(optionAccent(option, question: question), lineWidth: 0.8) }
+                         Text(option.text).font(.system(.body, design: .serif)).multilineTextAlignment(.leading).foregroundStyle(ShelfTheme.text)
+                         Spacer(minLength: 0)
+                         if model.answerCommitted && option.id == question.correctOptionID {
+@@ -145,7 +146,7 @@
+                 Image(systemName: model.selectedAnswerID == question.correctOptionID ? "checkmark.circle.fill" : "arrow.clockwise.circle")
+                     .foregroundStyle(model.selectedAnswerID == question.correctOptionID ? ShelfTheme.olive : ShelfTheme.accent)
+                 Text(model.selectedAnswerID == question.correctOptionID ? "Correct" : "Look once more")
+-                    .font(ShelfTheme.editorial(24))
++                    .leuScaledFont(24, weight: .regular, design: .serif)
+             }
+             Text(question.source.sourceText)
+                 .accessibilityIdentifier("question-supporting-quote")
+@@ -198,8 +199,8 @@
+     }
+ 
+     private func optionStroke(_ option: QuestionOption, question: LearningQuestion) -> Color {
+-        if model.answerCommitted && option.id == question.correctOptionID { return ShelfTheme.reviewAccent.opacity(0.7) }
+-        return model.selectedAnswerID == option.id ? ShelfTheme.accent.opacity(0.8) : ShelfTheme.line
++        if model.answerCommitted && option.id == question.correctOptionID { return ShelfTheme.reviewAccent }
++        return model.selectedAnswerID == option.id ? ShelfTheme.accent : ShelfTheme.line
+     }
+ 
+     private func optionAccent(_ option: QuestionOption, question: LearningQuestion) -> Color {
+@@ -213,15 +214,14 @@
+     func makeBody(configuration: Configuration) -> some View {
+         configuration.label
+             .font(.callout.weight(.semibold))
+-            .lineLimit(1)
+-            .minimumScaleFactor(0.82)
++            .fixedSize(horizontal: false, vertical: true)
+             .padding(.horizontal, 8)
+             .frame(maxWidth: .infinity, minHeight: 44)
+             .background(selected ? ShelfTheme.olive : ShelfTheme.surface, in: Capsule())
+-            .overlay { Capsule().stroke(selected ? ShelfTheme.olive : ShelfTheme.line, lineWidth: selected ? 1.4 : 0.7) }
+-            .foregroundStyle(selected ? Color.white : ShelfTheme.text)
++            .overlay { Capsule().stroke(selected ? ShelfTheme.olive : LeuDesign.separator, lineWidth: selected ? 1.4 : 0.7) }
++            .foregroundStyle(selected ? LeuDesign.onSignal : ShelfTheme.text)
+             .contentShape([.interaction, .accessibility], Capsule())
+-            .opacity(configuration.isPressed ? 0.8 : 1)
++            
+     }
+ }
+ 
+--- a/Shelf/Learning/SessionCompleteView.swift
++++ b/Shelf/Learning/SessionCompleteView.swift
+@@ -43,7 +43,7 @@
+             Text("SESSION COMPLETE")
+                 .font(ShelfTheme.eyebrow()).tracking(2.5).foregroundStyle(ShelfTheme.olive)
+             Text("Session Complete")
+-                .font(ShelfTheme.editorial(38))
++                .leuScaledFont(38, weight: .regular, design: .serif)
+             Text("A record of what you studied and what should return next.")
+                 .font(.system(.callout, design: .serif).italic())
+                 .foregroundStyle(ShelfTheme.secondary)
+@@ -126,7 +126,7 @@
+                 emotionalResponse(feeling)
+             } else {
+                 Text("How did that one feel?")
+-                    .font(ShelfTheme.editorial(28))
++                    .leuScaledFont(28, weight: .regular, design: .serif)
+                 Text("Optional. Leu only stores the feeling you choose on this device.")
+                     .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+@@ -146,13 +146,13 @@
+     private func emotionalResponse(_ feeling: StudyFeeling) -> some View {
+         switch feeling {
+         case .amazing:
+-            Text("Keep going while the idea is alive.").font(ShelfTheme.editorial(25))
++            Text("Keep going while the idea is alive.").leuScaledFont(25, weight: .regular, design: .serif)
+             Button("Keep going") { startDifficult() }.buttonStyle(ShelfButtonStyle(filled: true))
+         case .accomplished:
+-            Text(concreteAccomplishment).font(ShelfTheme.editorial(25))
++            Text(concreteAccomplishment).leuScaledFont(25, weight: .regular, design: .serif)
+             Button("Done", action: finishSession).buttonStyle(ShelfButtonStyle(filled: true))
+         case .irritated:
+-            Text("Get it out?").font(ShelfTheme.editorial(25))
++            Text("Get it out?").leuScaledFont(25, weight: .regular, design: .serif)
+             VStack(alignment: .leading, spacing: 10) {
+                 Button("Release") { model.releasePresented = true }
+                     .buttonStyle(ShelfButtonStyle(filled: true))
+@@ -167,7 +167,7 @@
+                 .accessibilityIdentifier("check-in-done")
+             }
+         case .drained:
+-            Text("You can stop here. Your place is saved.").font(ShelfTheme.editorial(25))
++            Text("You can stop here. Your place is saved.").leuScaledFont(25, weight: .regular, design: .serif)
+             VStack(alignment: .leading, spacing: 10) {
+                 Button("Save my place", action: finishSession)
+                     .buttonStyle(ShelfButtonStyle(filled: true))
+--- a/Shelf/Learning/TrailDetailScreen.swift
++++ b/Shelf/Learning/TrailDetailScreen.swift
+@@ -58,7 +58,7 @@
+                         }.frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                     }
+                     .buttonStyle(.plain).id(node.id)
+-                    .contextMenu {
++                    .leuContextMenu {
+                         Button("Move up") { move(from: IndexSet(integer: index), to: index - 1) }.disabled(index == 0)
+                         Button("Move down") { move(from: IndexSet(integer: index), to: index + 2) }.disabled(index == trail.nodes.count - 1)
+                         Button("Remove stop", role: .destructive) { delete(at: IndexSet(integer: index)) }
+--- a/Shelf/Learning/TrailsScreen.swift
++++ b/Shelf/Learning/TrailsScreen.swift
+@@ -40,8 +40,8 @@
+             .navigationDestination(item: $selectedTrail) { trail in TrailDetailScreen(model: model, trailID: trail.id) }
+         }
+         .task { await model.bootstrap() }
+-        .alert("New trail", isPresented: $creating) {
+-            TextField("Frontend interview", text: $newTrailTitle)
++        .leuDialog("New trail", isPresented: $creating) {
++            LeuTextField("Frontend interview", text: $newTrailTitle)
+             Button("Create") { Task { await model.createTrail(title: newTrailTitle); newTrailTitle = "" } }
+             Button("Cancel", role: .cancel) { newTrailTitle = "" }
+         } message: {
+@@ -55,7 +55,7 @@
+             Text("TRAILS")
+                 .font(ShelfTheme.eyebrow()).tracking(2.8).foregroundStyle(ShelfTheme.olive)
+             Text("Ideas, across time.")
+-                .font(ShelfTheme.editorial(36))
++                .leuScaledFont(36, weight: .regular, design: .serif)
+             Text("Keep related passages in an order that helps you think through them.")
+                 .font(.system(.callout, design: .serif).italic())
+                 .foregroundStyle(ShelfTheme.secondary)
+@@ -65,7 +65,7 @@
+ 
+     private var emptyState: some View {
+         VStack(alignment: .leading, spacing: 10) {
+-            Text("No trails yet.").font(ShelfTheme.editorial(24))
++            Text("No trails yet.").leuScaledFont(24, weight: .regular, design: .serif)
+             Text("Save a path when one idea leads naturally into another. The underlying PDFs stay untouched.")
+                 .font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.secondary)
+         }
+--- a/Shelf/Learning/UnderstandingLensSheet.swift
++++ b/Shelf/Learning/UnderstandingLensSheet.swift
+@@ -71,7 +71,7 @@
+         let projection = meaning
+         if let idea = projection.keyIdea {
+             Text("Key idea").font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.secondary)
+-            Text(idea).font(ShelfTheme.editorial(26))
++            Text(idea).leuScaledFont(26, weight: .regular, design: .serif)
+         }
+         if projection.terms.count > 1 {
+             Text(projection.terms.joined(separator: " · ")).font(.callout).foregroundStyle(ShelfTheme.secondary)
+@@ -143,7 +143,7 @@
+ 
+     private var emptyTitle: some View {
+         Text("This passage needs more context before Leu can explain it.")
+-            .font(ShelfTheme.editorial(26))
++            .leuScaledFont(26, weight: .regular, design: .serif)
+             .accessibilityIdentifier("understanding-lens-empty")
+     }
+ 
+--- a/Shelf/Support/AppPreferences.swift
++++ b/Shelf/Support/AppPreferences.swift
+@@ -18,7 +18,7 @@
+     /// Read Mode surfaces, where Leu owns both background and type.
+     var readingBackground: Color {
+         switch self {
+-        case .paper: return ShelfTheme.background
++        case .paper: return LeuDesign.readingSurface
+         case .warm: return ShelfTheme.paper
+         case .dark: return ShelfTheme.nightSurface
+         }
+@@ -26,7 +26,7 @@
+ 
+     var readingText: Color {
+         switch self {
+-        case .paper, .warm: return ShelfTheme.text
++        case .paper, .warm: return LeuDesign.readingForeground
+         case .dark: return ShelfTheme.nightText
+         }
+     }
+--- a/Shelf/Voice/UI/VoicePlayerStrip.swift
++++ b/Shelf/Voice/UI/VoicePlayerStrip.swift
+@@ -28,12 +28,12 @@
+     }
+ 
+     private var speedMenu: some View {
+-        Menu {
++        LeuMenu {
+             ForEach([0.8, 0.9, 1.0, 1.1, 1.25, 1.5, 1.75, 2.0], id: \.self) { speed in
+                 Button(speedLabel(speed)) { speech.setSpeed(speed) }
+             }
+         } label: {
+-            Text(speedLabel(speech.speed)).font(.system(size: 12, weight: .semibold)).frame(maxWidth: .infinity, minHeight: 44)
++            Text(speedLabel(speech.speed)).font(.caption.weight(.semibold)).frame(maxWidth: .infinity, minHeight: 44)
+         }
+         .accessibilityLabel("Reading speed")
+         .accessibilityValue(speedLabel(speech.speed))
+@@ -41,7 +41,7 @@
+     }
+ 
+     private var voiceMenu: some View {
+-        Menu {
++        LeuMenu {
+             ForEach(speech.availableVoices.prefix(20)) { voice in
+                 Button("\(voice.name) · \(voice.quality.title)") { speech.selectVoice(voice) }
+             }
+--- a/Shelf/Voice/UI/VoiceSettingsSheet.swift
++++ b/Shelf/Voice/UI/VoiceSettingsSheet.swift
+@@ -80,8 +80,8 @@
+         VStack(alignment: .leading, spacing: 12) {
+             Text("Pronunciation overrides").font(.headline)
+             Text("Your overrides win everywhere and stay on this iPhone.").font(.footnote).foregroundStyle(ShelfTheme.secondary)
+-            TextField("Written term, e.g. PostgreSQL", text: $pronunciationDisplay).textInputAutocapitalization(.never)
+-            TextField("Speak as…", text: $pronunciationSpoken)
++            LeuTextField("Written term, e.g. PostgreSQL", text: $pronunciationDisplay).textInputAutocapitalization(.never)
++            LeuTextField("Speak as…", text: $pronunciationSpoken)
+             Button("Save pronunciation") {
+                 speech.savePronunciation(display: pronunciationDisplay, spoken: pronunciationSpoken)
+                 pronunciationDisplay = ""; pronunciationSpoken = ""
+--- a/Shelf.xcodeproj/project.pbxproj
++++ b/Shelf.xcodeproj/project.pbxproj
+@@ -5,6 +5,26 @@
+     };
+     "objectVersion" = "56";
+     "objects" = {
++        "D4E7A7BC5F35844133C4AB5D" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "LeuAccessibleSurfaces.swift";
++            "sourceTree" = "<group>";
++        };
++        "EDD47CCCF5F6AA2B6E966660" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "D4E7A7BC5F35844133C4AB5D";
++        };
++        "B462E67F24FE3415636ACC11" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "LeuPrimaryButtonStyle.swift";
++            "sourceTree" = "<group>";
++        };
++        "294EF00A3469E40C3A0A07CC" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "B462E67F24FE3415636ACC11";
++        };
+         "EC1E81226A62583C135AF299" = {
+             "isa" = "PBXFileReference";
+             "lastKnownFileType" = "sourcecode.swift";
+@@ -1692,6 +1712,8 @@
+                 "ED46E315AF63C498B15B8E21",
+                 "DB4D180A2A90AD63240B77DB",
+                 "11C28BEF589761715B314EEF",
++                "D4E7A7BC5F35844133C4AB5D",
++                "B462E67F24FE3415636ACC11",
+             );
+             "path" = "DesignSystem";
+             "sourceTree" = "<group>";
+@@ -3155,6 +3177,8 @@
+                 "EEE5DC2EBA294341976C745E",
+                 "368C6A553D23B55EDDB96185",
+                 "435FBCB26C2BE12C374507CE",
++                "EDD47CCCF5F6AA2B6E966660",
++                "294EF00A3469E40C3A0A07CC",
+             );
+             "runOnlyForDeploymentPostprocessing" = "0";
+         };
+--- a/evidence/project-manifest.json
++++ b/evidence/project-manifest.json
+@@ -4,8 +4,10 @@
+     "Shelf/App/RootView.swift",
+     "Shelf/App/ShelfApp.swift",
+     "Shelf/DesignSystem/CoverIllustration.swift",
++    "Shelf/DesignSystem/LeuAccessibleSurfaces.swift",
+     "Shelf/DesignSystem/LeuComponents.swift",
+     "Shelf/DesignSystem/LeuDesign.swift",
++    "Shelf/DesignSystem/LeuPrimaryButtonStyle.swift",
+     "Shelf/DesignSystem/ReaderTrackingSlider.swift",
+     "Shelf/DesignSystem/ShelfControls.swift",
+     "Shelf/DesignSystem/ShelfMotion.swift",
+--- a/scripts/check-night-field.py
++++ b/scripts/check-night-field.py
+@@ -8,6 +8,7 @@
+ """
+ from pathlib import Path
+ import plistlib
++import re
+ import sys
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+@@ -49,7 +50,7 @@
+         'rounded system type reads as consumer-toy; Night Field uses sans, serif and mono only')
+ 
+ # --- Locked rule: no generic AI slop ----------------------------------------
+-for forbidden in ['ultraThinMaterial', 'regularMaterial', 'thickMaterial']:
++for forbidden in ['ultraThinMaterial', 'thinMaterial', 'regularMaterial', 'thickMaterial', 'ultraThickMaterial']:
+     require(forbidden not in all_swift, f'generic glassmorphism is locked out: {forbidden}')
+ for forbidden in ['sparkle', 'sparkles', 'wand.and.stars']:
+     require(forbidden not in all_swift, f'sparkle-as-intelligence iconography is locked out: {forbidden}')
+@@ -93,6 +94,32 @@
+ require('readingBackground' in preferences and 'readingText' in preferences,
+         'the reader must keep its own paper/warm/dark appearance independent of the shell')
+ 
++# These are deliberately narrow regression alarms, not a SwiftUI accessibility parser.
++for path in all_swift_paths:
++    code = strip_comments(path.read_text(errors='replace'))
++    name = str(path.relative_to(ROOT))
++    require(not re.search(r'\.\s*material\b|\bMaterial\s*[.(]', code),
++            f'{name}: material surface needs removal')
++    require(not re.search(r'\bMenu\s*[({]|\.contextMenu\b|\.pickerStyle\(\.menu\)', code),
++            f'{name}: use an opaque Leu menu/inline picker')
++    for number, line in enumerate(code.splitlines(), 1):
++        require(not re.search(r'foreground(?:Style|Color)\([^\n]*\.opacity\(', line),
++                f'{name}:{number}: foreground opacity is not a typography token')
++        if 'Text(' in line:
++            require(not re.search(r'\.opacity\(0\.[0-6]\d*\)', line),
++                    f'{name}:{number}: low-opacity text needs an explicit foreground')
++    # A known signal-fill file with an explicit white label is suspicious. This alarm
++    # intentionally does not infer arbitrary computed fill colors or view ancestry.
++    if re.search(r'(?:LeuDesign.signal|ShelfTheme.(?:action|olive))', code):
++        require(not re.search(r'foreground(?:Style|Color)\([^\n]*(?:Color\.)?\bwhite\b', code),
++                f'{name}: white foreground in a signal-fill component')
++
++for token in ['surfacePrimary', 'surfaceSecondary', 'surfaceRaised', 'textPrimary',
++              'textSecondary', 'textTertiary', 'onSignal', 'signalText', 'fieldSurface',
++              'fieldForeground', 'fieldPlaceholder', 'menuSurface', 'menuForeground',
++              'menuSecondary', 'separator', 'successForeground', 'warningForeground', 'dangerForeground']:
++    require(f'static let {token} =' in design, f'Semantic contrast token missing: {token}')
++
+ if problems:
+     print('FAIL: Leu Night Field design contract')
+     for p in problems: print(' -', p)
+--- a/scripts/sync-xcode-sources.py
++++ b/scripts/sync-xcode-sources.py
+@@ -110,8 +110,15 @@
+     ui_paths += sorted(p.name for p in (ROOT / 'ShelfUITests').glob('ShelfExpl*.swift'))
+ 
+     new_objects = []
++    design_refs = []
+     learning_refs = []
+     app_builds = []
++    for rel in ['LeuAccessibleSurfaces.swift', 'LeuPrimaryButtonStyle.swift']:
++        full = f'Shelf/DesignSystem/{rel}'
++        ref, build = stable_id('ref', full), stable_id('build', full)
++        design_refs.append(ref); app_builds.append(build)
++        if f'"{ref}" = {{' not in text:
++            new_objects += [object_block(ref, rel), build_block(build, ref)]
+     for rel in learning_paths:
+         full = f'Shelf/Learning/{rel}'
+         ref, build = stable_id('ref', full), stable_id('build', full)
+@@ -225,6 +232,7 @@
+ 
+     text = replace_children(text, SHELF_GROUP, [LEARNING_GROUP, KNOWLEDGE_GROUP, VOICE_GROUP, RECONSTRUCTION_GROUP, DEVELOPMENT_GROUP, explanation_group])
+     text = replace_children(text, explanation_group, explanation_refs)
++    text = replace_children(text, '919A3B1BFCD57D44EF6E1DB7', design_refs)
+     text = replace_children(text, RECONSTRUCTION_GROUP, reconstruction_refs)
+     text = replace_children(text, DEVELOPMENT_GROUP, development_refs)
+     text = replace_children(text, LEARNING_GROUP, learning_refs)
+--- /dev/null
++++ b/scripts/test-night-field-contrast.py
+@@ -0,0 +1,119 @@
++#!/usr/bin/env python3
++"""Deterministic WCAG checks against the actual Swift palette, not a copied palette.
++
++This measures declared solid pairings only; it does not certify rendered screens.
++"""
++from pathlib import Path
++import json
++import re
++import unittest
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++def luminance(rgb):
++    def linear(byte):
++        value = byte / 255
++        return value / 12.92 if value <= 0.04045 else ((value + 0.055) / 1.055) ** 2.4
++    return sum(weight * linear(byte) for weight, byte in zip((0.2126, 0.7152, 0.0722), rgb))
++
++
++def contrast(a, b):
++    light, dark = sorted((luminance(a), luminance(b)), reverse=True)
++    return (light + 0.05) / (dark + 0.05)
++
++
++def palette():
++    source = (ROOT / 'Shelf/DesignSystem/LeuDesign.swift').read_text()
++    literals = dict(re.findall(r'static let (\w+) = Color\(hex: 0x([0-9A-Fa-f]{6})\)', source))
++    aliases = dict(re.findall(r'static let (\w+) = (\w+)\s*$', source, re.M))
++
++    def resolve(name, seen=()):
++        if name in seen:
++            raise ValueError(f'Cyclic color alias: {name}')
++        if name in literals:
++            value = int(literals[name], 16)
++            return (value >> 16, (value >> 8) & 255, value & 255)
++        return resolve(aliases[name], (*seen, name))
++
++    return {name: resolve(name) for name in literals.keys() | aliases.keys()}
++
++
++PAIRS = [
++    (foreground, surface, 4.5 if foreground == 'textTertiary' else 7.0)
++    for foreground in ('textPrimary', 'textSecondary', 'textTertiary')
++    for surface in ('surfacePrimary', 'surfaceSecondary', 'surfaceRaised')
++] + [
++    ('onSignal', 'signal', 7), ('onSignal', 'signalPressed', 7),
++    ('menuForeground', 'menuSurface', 7), ('menuSecondary', 'menuSurface', 7),
++    ('fieldForeground', 'fieldSurface', 7), ('fieldPlaceholder', 'fieldSurface', 7),
++    ('disabledForeground', 'disabledSurface', 4.5),
++    ('successForeground', 'success', 7), ('warningForeground', 'warning', 7),
++    ('dangerForeground', 'danger', 7),
++    ('readingForeground', 'readingSurface', 7), ('readingSecondary', 'readingSurface', 7),
++    ('signalText', 'readingSurface', 7),
++    ('signal', 'fieldSurface', 3), ('success', 'surfaceRaised', 3),
++    ('separator', 'fieldSurface', 3), ('separator', 'surfacePrimary', 3),
++    ('separator', 'surfaceSecondary', 3), ('separator', 'menuSurface', 3),
++    ('danger', 'menuSurface', 4.5), ('untested', 'surfaceRaised', 3),
++]
++
++
++class ContrastMathTests(unittest.TestCase):
++    def test_black_white(self):
++        self.assertAlmostEqual(contrast((0, 0, 0), (255, 255, 255)), 21)
++
++    def test_identical(self):
++        self.assertEqual(contrast((150, 180, 30), (150, 180, 30)), 1)
++
++    def test_known_gray_and_symmetry(self):
++        self.assertAlmostEqual(contrast((119, 119, 119), (255, 255, 255)), 4.478089, places=5)
++        self.assertEqual(contrast((0, 20, 90), (100, 230, 240)), contrast((100, 230, 240), (0, 20, 90)))
++
++
++class NightFieldPairTests(unittest.TestCase):
++    pass
++
++
++class CoverPairTests(unittest.TestCase):
++    pass
++
++
++def pair_test(foreground, surface, minimum):
++    def test(self):
++        colors = palette()
++        self.assertGreaterEqual(contrast(colors[foreground], colors[surface]), minimum,
++                                f'{foreground}/{surface} must meet {minimum}:1')
++    return test
++
++
++for foreground, surface, minimum in PAIRS:
++    setattr(NightFieldPairTests, f'test_{foreground}_on_{surface}', pair_test(foreground, surface, minimum))
++
++
++def cover_test(name, foreground):
++    def test(self):
++        source = (ROOT / 'Shelf/DesignSystem/ShelfTheme.swift').read_text()
++        body = re.search(r'case \.' + name + r':(.+?)(?=case |\n        })', source, re.S)[1]
++        colors = dict(re.findall(r'(background|foreground|muted) = Color\(hex: 0x([A-F0-9]{6})\)', body))
++        ratio = contrast(tuple(bytes.fromhex(colors[foreground])), tuple(bytes.fromhex(colors['background'])))
++        self.assertGreaterEqual(ratio, 4.5, f'{name} cover {foreground}: {ratio:.2f}:1')
++    return test
++
++
++for name in ('ocean', 'graphite', 'ivory', 'forest', 'sand', 'slate'):
++    for foreground in ('foreground', 'muted'):
++        setattr(CoverPairTests, f'test_{name}_{foreground}', cover_test(name, foreground))
++
++
++if __name__ == '__main__':
++    colors = palette()
++    output = ROOT / 'docs/design/evidence/contrast-ratios.json'
++    output.parent.mkdir(parents=True, exist_ok=True)
++    output.write_text(json.dumps([
++        {'foreground': f, 'surface': s, 'minimum': minimum,
++         'foregroundRGB': colors[f], 'surfaceRGB': colors[s],
++         'ratio': contrast(colors[f], colors[s])}
++        for f, s, minimum in PAIRS
++    ], indent=2) + '\n')
++    unittest.main(verbosity=2)
+--- /dev/null
++++ b/scripts/verify-night-field-contrast.sh
+@@ -0,0 +1,25 @@
++#!/bin/bash
++# Native verification. Existing UI tests use the app's isolated Shelf-UITests store.
++set -euo pipefail
++cd "$(dirname "$0")/.."
++run="$PWD/docs/design/evidence/native-$(date +%Y%m%d-%H%M%S)"
++mkdir -p "$run"
++python3 scripts/check-night-field.py | tee "$run/night-field.log"
++python3 scripts/test-night-field-contrast.py > "$run/contrast.log" 2>&1
++python3 scripts/validate.py | tee "$run/validate.log"
++common=(-project Shelf.xcodeproj -scheme Shelf -configuration Debug
++  -destination 'platform=iOS Simulator,id=A248FB9E-B969-4CF6-A0ED-B2013A3C60A6'
++  -derivedDataPath .build/night-field-contrast CODE_SIGNING_ALLOWED=NO)
++xcodebuild "${common[@]}" build > "$run/build.log" 2>&1
++set +e
++xcodebuild "${common[@]}" -parallel-testing-enabled NO -resultBundlePath "$run/ui.xcresult" test \
++  '-only-testing:ShelfUITests' > "$run/ui.log" 2>&1
++status=$?
++set -e
++if [ -d "$run/ui.xcresult" ]; then
++  xcrun xcresulttool get test-results summary --path "$run/ui.xcresult" > "$run/summary.json"
++  xcrun xcresulttool export attachments --path "$run/ui.xcresult" --output-path "$run/attachments"
++fi
++echo "Native evidence: $run"
++echo "Screenshots still require visual review, including the 16-screen AX1 pass."
++exit "$status"

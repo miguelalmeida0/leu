@@ -1,0 +1,668 @@
+--- a/Shelf/Learning/QuestionCardView.swift
++++ b/Shelf/Learning/QuestionCardView.swift
+@@ -12,12 +12,24 @@
+     var body: some View {
+         if let question = model.currentQuestion {
+             VStack(alignment: .leading, spacing: 24) {
+-                sourceLabel(question)
+-                Text(question.prompt).accessibilityIdentifier("question-prompt")
+-                    .leuScaledFont(30, weight: .regular, design: .serif)
+-                    .fixedSize(horizontal: false, vertical: true)
++                // Task region: where it came from, then the question, and nothing
++                // between the question and the way to answer it.
++                VStack(alignment: .leading, spacing: 14) {
++                    sourceLabel(question)
++                    Text(question.prompt).accessibilityIdentifier("question-prompt")
++                        .leuScaledFont(30, weight: .regular, design: .serif)
++                        .fixedSize(horizontal: false, vertical: true)
++                        .accessibilityAddTraits(.isHeader)
++                }
++                .frame(maxWidth: .infinity, alignment: .leading)
++                .padding(18)
++                .background(LeuDesign.surfaceSecondary,
++                            in: RoundedRectangle(cornerRadius: ShelfTheme.radius, style: .continuous))
++
++                options(question)
++                // Confidence is a prediction made after choosing and before committing,
++                // so it sits with the answer rather than interrupting the question.
+                 confidencePicker
+-                options(question)
+                 if model.answerCommitted { revealed(question) }
+                 else { preCommit(question) }
+             }
+@@ -43,9 +55,12 @@
+ 
+     @ViewBuilder
+     private var confidencePicker: some View {
+-        if shouldAskConfidence && !model.answerCommitted {
++        if shouldAskConfidence && model.selectedAnswerID != nil && !model.answerCommitted {
+             VStack(alignment: .leading, spacing: 8) {
+                 Text("How sure are you?").font(.callout.weight(.semibold))
++                Text("Your prediction before you commit. It is not a grade.")
++                    .font(.caption).foregroundStyle(ShelfTheme.secondary)
++                    .fixedSize(horizontal: false, vertical: true)
+                 confidenceOptions
+             }
+         }
+@@ -100,7 +115,15 @@
+                             .frame(width: optionDiameter, height: optionDiameter)
+                             .background(Color.clear, in: Circle())
+                             .overlay { Circle().stroke(optionAccent(option, question: question), lineWidth: 0.8) }
+-                        Text(option.text).font(.system(.body, design: .serif)).multilineTextAlignment(.leading).foregroundStyle(ShelfTheme.text)
++                        VStack(alignment: .leading, spacing: 5) {
++                            Text(option.text).font(.system(.body))
++                                .multilineTextAlignment(.leading).foregroundStyle(ShelfTheme.text)
++                                .fixedSize(horizontal: false, vertical: true)
++                            if let word = outcomeWord(option, question: question) {
++                                Text(word).font(.caption.weight(.semibold))
++                                    .foregroundStyle(optionAccent(option, question: question))
++                            }
++                        }
+                         Spacer(minLength: 0)
+                         if model.answerCommitted && option.id == question.correctOptionID {
+                             Image(systemName: "checkmark.circle.fill").foregroundStyle(ShelfTheme.reviewAccent)
+@@ -116,7 +139,7 @@
+                 .accessibilityIdentifier("question-option-\(index)")
+                 .accessibilityLabel("Option \(optionLetter(index)). \(option.text)")
+                 .accessibilityHint(model.answerCommitted ? "Answer already committed" : "Select this answer")
+-                .accessibilityValue(model.selectedAnswerID == option.id ? "Selected" : "Not selected")
++                .accessibilityValue(outcomeWord(option, question: question) ?? (model.selectedAnswerID == option.id ? "Selected" : "Not selected"))
+                 .buttonStyle(PressScaleStyle(enabled: !reduceMotion))
+                 .disabled(model.answerCommitted)
+             }
+@@ -138,26 +161,7 @@
+     }
+ 
+     private func revealed(_ question: LearningQuestion) -> some View {
+-        VStack(alignment: .leading, spacing: 16) {
+-            if let explanation = question.modelProvenance?.explanation {
+-                Text(explanation).accessibilityIdentifier("question-explanation")
+-            }
+-            HStack(spacing: 10) {
+-                Image(systemName: model.selectedAnswerID == question.correctOptionID ? "checkmark.circle.fill" : "arrow.clockwise.circle")
+-                    .foregroundStyle(model.selectedAnswerID == question.correctOptionID ? ShelfTheme.olive : ShelfTheme.accent)
+-                Text(model.selectedAnswerID == question.correctOptionID ? "Correct" : "Look once more")
+-                    .leuScaledFont(24, weight: .regular, design: .serif)
+-            }
+-            Text(question.source.sourceText)
+-                .accessibilityIdentifier("question-supporting-quote")
+-                .font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.text)
+-                .lineSpacing(4)
+-                .padding(.leading, 14)
+-                .overlay(alignment: .leading) { Rectangle().fill(ShelfTheme.accent).frame(width: 2) }
+-            Button("View source") { model.openSource(question.source) }
+-                .buttonStyle(ShelfButtonStyle()).accessibilityIdentifier("view-question-source")
+-            judgement
+-        }
++        QuestionFeedbackView(model: model, question: question)
+     }
+ 
+     private var hintStack: some View {
+@@ -169,22 +173,13 @@
+         }
+     }
+ 
+-    private var judgement: some View {
+-        VStack(alignment: .leading, spacing: 10) {
+-            Text("HOW DID RECALL FEEL?").font(ShelfTheme.eyebrow(10)).tracking(1.5).foregroundStyle(ShelfTheme.secondary)
+-            HStack(spacing: 8) {
+-                rating("Forgot", .forgot)
+-                rating("Difficult", .difficult)
+-                rating("Knew it", .knewIt)
+-            }
+-        }
+-    }
+-
+-    private func rating(_ title: String, _ rating: RecallRating) -> some View {
+-        Button(title) { Task { await model.rateCurrent(rating) } }
+-            .accessibilityIdentifier("recall-rating-" + rating.rawValue)
+-            .buttonStyle(ShelfButtonStyle(filled: rating == .knewIt))
+-            .frame(maxWidth: .infinity)
++    private func outcomeWord(_ option: QuestionOption, question: LearningQuestion) -> String? {
++        guard model.answerCommitted else { return nil }
++        let isChosen = option.id == model.selectedAnswerID
++        if option.id == question.correctOptionID {
++            return isChosen ? "Your answer · supported by the source" : "Supported by the source"
++        }
++        return isChosen ? "Your answer" : nil
+     }
+ 
+     private func optionLetter(_ index: Int) -> String {
+--- a/Shelf/Learning/LearningModel.swift
++++ b/Shelf/Learning/LearningModel.swift
+@@ -25,6 +25,9 @@
+     var selectedAnswerID: UUID?
+     var answerCommitted = false
+     var selectedConfidence: ConfidenceLevel?
++    // Transient recall input belongs to the session, never to its durable checkpoint.
++    var recallDraft = ""
++    var recallMarkedUnknown = false
+     var revealedHintCount = 0
+     var sessionStartedAt: Date?
+     var activityStartedAt: Date?
+--- a/Shelf/Learning/RecallCardView.swift
++++ b/Shelf/Learning/RecallCardView.swift
+@@ -1,32 +1,23 @@
+ import SwiftUI
+ import ShelfCore
+ 
++/// Open recall.
++///
++/// Honest about what exists today: typing is always available, and there is no transcript
++/// field and no microphone waveform because Leu does not transcribe speech. Revealing the
++/// source and rating recall stay two separate operations, and admitting a gap sits at the
++/// same weight as answering.
+ @MainActor
+ struct RecallCardView: View {
+     @Bindable var model: LearningModel
+     @State private var revealed = false
++    @FocusState private var typing: Bool
+ 
+     var body: some View {
+         if let object = model.currentObject {
+             VStack(alignment: .leading, spacing: 22) {
+-                Text(object.source.sectionTitle ?? "Active recall")
+-                    .font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
+-                Text(object.prompt ?? object.title)
+-                    .font(LearningTokens.Typography.title)
+-                Text("Before revealing the source, reconstruct the idea in your own words.")
+-                    .foregroundStyle(ShelfTheme.secondary)
+-                if !revealed {
+-                    Button("Reveal source") { revealed = true; model.play(.sourceRevealed) }
+-                        .buttonStyle(ShelfButtonStyle(filled: true))
+-                } else {
+-                    Text(object.source.sourceText)
+-                        .font(.system(.title3, design: .serif)).lineSpacing(5)
+-                        .padding(.vertical, 4)
+-                    Button("View in PDF") { model.openSource(object.source) }.buttonStyle(ShelfButtonStyle())
+-                    HStack(spacing: 8) {
+-                        rate("Forgot", .forgot); rate("Difficult", .difficult); rate("Knew it", .knewIt)
+-                    }
+-                }
++                task(object)
++                if !revealed { attempt } else { comparison(object) }
+             }
+             .background { UITestFrameProbe(identifier: "recall-card") }
+             .onAppear {
+@@ -34,10 +25,132 @@
+                 StudyInteractionTrace.record("study.recall object=\(object.id) document=\(object.source.documentID) page=\(object.source.pageIndex + 1) source=\(object.source.sourceText)")
+                 #endif
+             }
+-            .onChange(of: object.id) { _, _ in revealed = false }
++            .onChange(of: object.id) { _, _ in
++                revealed = false // The model resets recall input when it advances the activity.
++            }
+         } else {
+             Button("Continue") { model.advance() }.buttonStyle(ShelfButtonStyle(filled: true))
+         }
++    }
++
++    private func task(_ object: LearningObject) -> some View {
++        VStack(alignment: .leading, spacing: 12) {
++            HStack(spacing: 8) {
++                Text(object.source.sectionTitle ?? "Active recall")
++                Text("· p. \(object.source.pageIndex + 1)")
++                    .accessibilityIdentifier("recall-source-page")
++            }
++            .font(ShelfTheme.eyebrow(10)).tracking(1.2).foregroundStyle(ShelfTheme.accent)
++            Text(object.prompt ?? object.title)
++                .font(LearningTokens.Typography.title)
++                .fixedSize(horizontal: false, vertical: true)
++                .accessibilityAddTraits(.isHeader)
++                .accessibilityIdentifier("recall-prompt")
++        }
++        .frame(maxWidth: .infinity, alignment: .leading)
++        .padding(18)
++        .background(LeuDesign.surfaceSecondary,
++                    in: RoundedRectangle(cornerRadius: ShelfTheme.radius, style: .continuous))
++    }
++
++    private var attempt: some View {
++        VStack(alignment: .leading, spacing: 14) {
++            Text("Reconstruct the idea in your own words before you look.")
++                .font(.callout).foregroundStyle(ShelfTheme.secondary)
++                .fixedSize(horizontal: false, vertical: true)
++
++            TextEditor(text: $model.recallDraft)
++                .focused($typing)
++                .font(.system(.body, design: .serif))
++                .foregroundStyle(ShelfTheme.text)
++                .scrollContentBackground(.hidden)
++                .frame(minHeight: 120)
++                .padding(10)
++                .background(LeuDesign.fieldSurface,
++                            in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius, style: .continuous))
++                .overlay {
++                    RoundedRectangle(cornerRadius: ShelfTheme.smallRadius, style: .continuous)
++                        .stroke(typing ? ShelfTheme.accent : ShelfTheme.line, lineWidth: typing ? 1.4 : 0.7)
++                }
++                .disabled(model.recallMarkedUnknown)
++                .accessibilityLabel("Your answer")
++                .accessibilityIdentifier("recall-typed-answer")
++
++            Button {
++                model.recallMarkedUnknown.toggle()
++                if model.recallMarkedUnknown { typing = false }
++            } label: {
++                HStack(spacing: 10) {
++                    Image(systemName: model.recallMarkedUnknown ? "checkmark.circle.fill" : "circle")
++                    Text("I don't know yet").font(.callout.weight(.semibold))
++                    Spacer(minLength: 0)
++                }
++                .foregroundStyle(model.recallMarkedUnknown ? ShelfTheme.accent : ShelfTheme.secondary)
++                .padding(13)
++                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
++                .background(ShelfTheme.surface,
++                            in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius, style: .continuous))
++                .overlay {
++                    RoundedRectangle(cornerRadius: ShelfTheme.smallRadius, style: .continuous)
++                        .stroke(model.recallMarkedUnknown ? ShelfTheme.accent : ShelfTheme.line,
++                                lineWidth: model.recallMarkedUnknown ? 1.4 : 0.7)
++                }
++                .contentShape([.interaction, .accessibility], Rectangle())
++            }
++            .buttonStyle(.plain)
++            .accessibilityIdentifier("recall-dont-know")
++            .accessibilityAddTraits(model.recallMarkedUnknown ? .isSelected : [])
++
++            Button("Reveal source") { revealed = true; typing = false; model.play(.sourceRevealed) }
++                .buttonStyle(ShelfButtonStyle(filled: true))
++                .accessibilityIdentifier("recall-reveal-source")
++        }
++    }
++
++    /// Your words beside the page's words. Leu does not evaluate the answer, so nothing
++    /// here claims the attempt was right or wrong: the learner decides that below.
++    private func comparison(_ object: LearningObject) -> some View {
++        VStack(alignment: .leading, spacing: 18) {
++            if model.recallMarkedUnknown || !model.recallDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
++                VStack(alignment: .leading, spacing: 8) {
++                    label("Your answer")
++                    Text(model.recallMarkedUnknown ? "You marked this one as not known yet." : model.recallDraft)
++                        .font(.system(.body)).foregroundStyle(ShelfTheme.text)
++                        .fixedSize(horizontal: false, vertical: true)
++                        .accessibilityIdentifier("recall-your-answer")
++                }
++            }
++            VStack(alignment: .leading, spacing: 8) {
++                label("From your source")
++                Text(object.source.sourceText)
++                    .accessibilityIdentifier("recall-source-quote")
++                    .font(.system(.title3, design: .serif)).lineSpacing(5)
++                    .fixedSize(horizontal: false, vertical: true)
++                    .padding(.leading, 14)
++                    .overlay(alignment: .leading) { Rectangle().fill(ShelfTheme.accent).frame(width: 2) }
++            }
++            Button("View in PDF") { model.openSource(object.source) }
++                .buttonStyle(ShelfButtonStyle())
++                .accessibilityIdentifier("recall-view-source")
++            VStack(alignment: .leading, spacing: 10) {
++                label("How did recall feel?")
++                Text("Your own read on it. This schedules the next visit; it does not mark the answer.")
++                    .font(.caption).foregroundStyle(ShelfTheme.secondary)
++                    .fixedSize(horizontal: false, vertical: true)
++                HStack(spacing: 8) {
++                    rate("Forgot", .forgot); rate("Difficult", .difficult); rate("Knew it", .knewIt)
++                }
++            }
++        }
++        .frame(maxWidth: .infinity, alignment: .leading)
++        .padding(18)
++        .background(LeuDesign.surfaceSecondary,
++                    in: RoundedRectangle(cornerRadius: ShelfTheme.radius, style: .continuous))
++    }
++
++    private func label(_ text: String) -> some View {
++        Text(text.uppercased())
++            .font(ShelfTheme.eyebrow(10)).tracking(1.4).foregroundStyle(ShelfTheme.secondary)
+     }
+ 
+     private func rate(_ title: String, _ rating: RecallRating) -> some View {
+--- a/Shelf/Learning/LearningModel+Sessions.swift
++++ b/Shelf/Learning/LearningModel+Sessions.swift
+@@ -141,6 +141,8 @@
+ 
+     func endSession() {
+         activeSession = nil
++        recallDraft = ""
++        recallMarkedUnknown = false
+         sessionSummaryPresented = false
+         activityIndex = 0
+         selectedFeeling = nil
+@@ -192,6 +194,8 @@
+     }
+ 
+     func resetActivityState() {
++        recallDraft = ""
++        recallMarkedUnknown = false
+         selectedAnswerID = nil
+         answerCommitted = false
+         selectedConfidence = nil
+--- a/Shelf/Learning/LabScreen.swift
++++ b/Shelf/Learning/LabScreen.swift
+@@ -13,10 +13,16 @@
+         NavigationStack {
+             VStack(alignment: .leading, spacing: 18) {
+                 Text(lab.instruction).foregroundStyle(ShelfTheme.secondary)
+-                Text("Drag each row into the order that makes the system work.").font(.callout).foregroundStyle(ShelfTheme.secondary)
++                Text("Drag each row into the order that makes the system work. A step turns green as soon as it is in the right place.")
++                    .font(.callout).foregroundStyle(ShelfTheme.secondary)
++                    .fixedSize(horizontal: false, vertical: true)
++                // A count, not a score, and it never names the steps still missing.
++                Text("\(confirmedCount) of \(order.count) in place")
++                    .font(.callout.monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
++                    .accessibilityIdentifier("lab-progress")
+                 List {
+                     ForEach(order) { element in
+-                        HStack { LeuStepIndicator(number: (order.firstIndex(where: { $0.id == element.id }) ?? 0) + 1, confirmed: revealed && isCorrect(element)); Text(element.title); Spacer() }
++                        HStack { LeuStepIndicator(number: (order.firstIndex(where: { $0.id == element.id }) ?? 0) + 1, confirmed: isCorrect(element)); Text(element.title); Spacer() }
+                             .padding(.vertical, 7).listRowBackground(ShelfTheme.surface)
+                     }.onMove(perform: move)
+                 }.scrollContentBackground(.hidden).environment(\.editMode, .constant(.active))
+@@ -46,6 +52,10 @@
+     }
+ 
+     private var isSolved: Bool { order.map(\.id) == lab.correctOrder }
++
++    /// Recomputed on every render, so a move that invalidates a previously correct
++    /// position clears its check immediately rather than after the next Run.
++    private var confirmedCount: Int { order.filter(isCorrect).count }
+     private func isCorrect(_ element: LabElement) -> Bool {
+         guard let i = order.firstIndex(where: { $0.id == element.id }), lab.correctOrder.indices.contains(i) else { return false }
+         return lab.correctOrder[i] == element.id
+@@ -58,24 +68,92 @@
+ struct MiniLabSequence: View {
+     let lab: ReconstructionLab
+     @State private var order: [LabElement]
+-    @State private var checked = false
+     init(lab: ReconstructionLab) { self.lab = lab; _order = State(initialValue: lab.elements.shuffled()) }
++
++    /// Correctness comes from the lab's own `correctOrder`, never from visual position.
++    private func isConfirmed(_ item: LabElement, at index: Int) -> Bool {
++        lab.correctOrder.indices.contains(index) && lab.correctOrder[index] == item.id
++    }
++
++    private var confirmedCount: Int {
++        order.enumerated().filter { isConfirmed($0.element, at: $0.offset) }.count
++    }
++
++    private func moveButton(systemName: String, label: String, id: String,
++                            enabled: Bool, action: @escaping () -> Void) -> some View {
++        Button(action: action) {
++            Image(systemName: systemName)
++                .font(.system(size: 12, weight: .bold))
++                .foregroundStyle(enabled ? ShelfTheme.text : LeuDesign.disabledForeground)
++                .frame(width: 44, height: 44)
++                .contentShape([.interaction, .accessibility], Rectangle())
++        }
++        .buttonStyle(.plain)
++        .disabled(!enabled)
++        .accessibilityLabel(label)
++        .accessibilityIdentifier(id)
++    }
++
++    private func move(from: Int, to: Int) {
++        guard order.indices.contains(from), order.indices.contains(to) else { return }
++        let moved = order.remove(at: from)
++        order.insert(moved, at: to)
++        ShelfHaptics.shared.play(.selectionChanged)
++    }
++
+     var body: some View {
+         VStack(spacing: 8) {
++            Text("\(confirmedCount) of \(order.count) in place")
++                .font(.callout.monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
++                .frame(maxWidth: .infinity, alignment: .leading)
++                .accessibilityIdentifier("mini-lab-progress")
+             ForEach(Array(order.enumerated()), id: \.element.id) { index, item in
+-                HStack { LeuStepIndicator(number: index + 1, confirmed: checked && lab.correctOrder.indices.contains(index) && lab.correctOrder[index] == item.id); Text(item.title); Spacer() }
+-                    .padding(13).background(ShelfTheme.surface, in: RoundedRectangle(cornerRadius: 12))
++                HStack(spacing: 12) {
++                    LeuStepIndicator(number: index + 1, confirmed: isConfirmed(item, at: index))
++                    Text(item.title)
++                        .fixedSize(horizontal: false, vertical: true)
++                        .frame(maxWidth: .infinity, alignment: .leading)
++                    // Visible, opaque reorder controls: the exercise is completable
++                    // without dragging, and without a translucent system menu.
++                    VStack(spacing: 0) {
++                        moveButton(systemName: "chevron.up", label: "Move up",
++                                   id: "mini-lab-up-\(index)", enabled: index > 0) {
++                            move(from: index, to: index - 1)
++                        }
++                        moveButton(systemName: "chevron.down", label: "Move down",
++                                   id: "mini-lab-down-\(index)", enabled: index < order.count - 1) {
++                            move(from: index, to: index + 1)
++                        }
++                    }
++                }
++                    .padding(13).frame(minHeight: 56)
++                    .background(ShelfTheme.surface, in: RoundedRectangle(cornerRadius: 12))
++                    .overlay {
++                        RoundedRectangle(cornerRadius: 12)
++                            .stroke(isConfirmed(item, at: index) ? LeuDesign.success : ShelfTheme.line,
++                                    lineWidth: isConfirmed(item, at: index) ? 1.4 : 0.7)
++                    }
+                     .draggable(item.id.uuidString)
+                     .dropDestination(for: String.self) { values, _ in
+                         guard let raw = values.first, let id = UUID(uuidString: raw), let from = order.firstIndex(where: { $0.id == id }) else { return false }
+                         let moved = order.remove(at: from); order.insert(moved, at: min(index, order.count)); ShelfHaptics.shared.play(.snapToTarget); return true
+                     }
++                    .accessibilityElement(children: .contain)
++                    .accessibilityLabel("Step \(index + 1), \(item.title)")
++                    .accessibilityValue(isConfirmed(item, at: index) ? "Confirmed correct" : "Unresolved")
++                    .accessibilityIdentifier("mini-lab-step-\(index)")
++                    // Reordering must be possible without dragging.
++                    .accessibilityActions {
++                        Button("Move up") { move(from: index, to: index - 1) }
++                        Button("Move down") { move(from: index, to: index + 1) }
++                    }
+             }
+-            Button("Run") { checked = true; ShelfHaptics.shared.play(order.map(\.id) == lab.correctOrder ? .answerCorrect : .answerIncorrect) }
+-                .buttonStyle(ShelfButtonStyle())
+-            if checked && order.map(\.id) == lab.correctOrder {
++            if order.map(\.id) == lab.correctOrder {
++                // The scenario appears only on a complete, validator-confirmed solve,
++                // so partial progress never reveals the remaining answers.
+                 LabScenarioView(lab: lab)
+             }
+         }
++        .onChange(of: lab.id) { _, _ in order = lab.elements.shuffled() }
+     }
+ }
+--- a/Shelf/Learning/SessionCompleteView.swift
++++ b/Shelf/Learning/SessionCompleteView.swift
+@@ -21,14 +21,8 @@
+             VStack(alignment: .leading, spacing: 28) {
+                 header
+                 sessionOverview
+-                if !recentAttempts.isEmpty {
+-                    VStack(alignment: .leading, spacing: 0) {
+-                        Text("WHAT CHANGED")
+-                            .font(ShelfTheme.eyebrow(10)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
+-                            .padding(.bottom, 8)
+-                        summaryRows
+-                    }
+-                }
++                if !practiced.isEmpty { practisedSection }
++                if !revisit.isEmpty { revisitSection }
+                 if model.shouldOfferEmotionalCheckIn || model.selectedFeeling != nil { emotionalCheckIn }
+                 actions
+             }
+@@ -42,41 +36,68 @@
+         VStack(alignment: .leading, spacing: 8) {
+             Text("SESSION COMPLETE")
+                 .font(ShelfTheme.eyebrow()).tracking(2.5).foregroundStyle(ShelfTheme.olive)
+-            Text("Session Complete")
++            Text(headline)
+                 .leuScaledFont(38, weight: .regular, design: .serif)
+-            Text("A record of what you studied and what should return next.")
+-                .font(.system(.callout, design: .serif).italic())
+-                .foregroundStyle(ShelfTheme.secondary)
+-            Rectangle().fill(ShelfTheme.line).frame(height: 0.5).padding(.top, 6)
+-        }
+-    }
++                .fixedSize(horizontal: false, vertical: true)
++                .accessibilityIdentifier("session-summary-headline")
++        }
++    }
++    /// States what the session recorded, with no adjective attached to it.
++    private var headline: String {
++        switch activityCount {
++        case 0: return "Nothing was recorded this time."
++        case 1: return "One activity completed."
++        default: return "\(activityCount) activities completed."
++        }
++    }
++    /// Counts only. `knewItCount` is what the learner said, not a measure of memory,
++    /// so the label says so.
+     private var sessionOverview: some View {
+         VStack(spacing: 0) {
+-            overviewRow(symbol: "book.closed", title: "Studied", value: "\(activityCount) activities")
++            overviewRow(symbol: "checkmark.circle", title: "You said you knew", value: "\(knewItCount)")
+             Divider().overlay(ShelfTheme.line)
+-            overviewRow(symbol: "checkmark.circle", title: "Retrieved", value: "\(knownCount) strong")
+-            Divider().overlay(ShelfTheme.line)
+-            overviewRow(symbol: "arrow.clockwise", title: "Returning later", value: "\(difficultObjectIDs.count) items")
++            overviewRow(symbol: "arrow.clockwise", title: "Marked for another pass", value: "\(revisit.count)")
+         }
+         .padding(.vertical, 4)
++        .accessibilityIdentifier("session-summary-overview")
+     }
+     private func overviewRow(symbol: String, title: String, value: String) -> some View {
+         HStack(spacing: 14) {
+             Image(systemName: symbol).frame(width: 28).foregroundStyle(ShelfTheme.accent)
+-            Text(title).font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.text)
++            Text(title).font(.system(.body)).foregroundStyle(ShelfTheme.text)
+             Spacer()
+-            Text(value).font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.secondary)
++            Text(value).font(.system(.callout).monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
+         }
+         .frame(minHeight: 54)
++        .accessibilityElement(children: .combine)
+     }
+     private var recentAttempts: [LearningAttempt] {
+         let since = model.sessionStartedAt ?? .distantPast
+         return Array(model.snapshot.attempts.filter { $0.occurredAt >= since }
+             .sorted { $0.occurredAt > $1.occurredAt }.prefix(12))
+     }
+-    private var summaryRows: some View {
+-        VStack(spacing: 0) {
+-            ForEach(recentAttempts) { attempt in
++    /// Distinct items attempted in this session, newest first.
++    private var practiced: [LearningAttempt] {
++        var seen = Set<UUID>()
++        return recentAttempts.filter { seen.insert($0.learningObjectID).inserted }
++    }
++    /// Only what the learner or the engine actually marked: a self-reported miss, or a
++    /// recorded wrong answer. Nothing is inferred.
++    private var revisit: [LearningAttempt] {
++        practiced.filter { $0.rating != .knewIt || $0.wasCorrect == false }
++    }
++    private var practisedSection: some View {
++        section("What you practised", rows: practiced, identifier: "session-summary-practised")
++    }
++    private var revisitSection: some View {
++        section("Coming back", rows: revisit, identifier: "session-summary-revisit")
++    }
++    private func section(_ title: String, rows: [LearningAttempt], identifier: String) -> some View {
++        VStack(alignment: .leading, spacing: 0) {
++            Text(title.uppercased())
++                .font(ShelfTheme.eyebrow(10)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
++                .padding(.bottom, 8)
++            ForEach(rows) { attempt in
+                 HStack(alignment: .top, spacing: 12) {
+                     Rectangle()
+                         .fill(stateColor(attempt))
+@@ -84,7 +105,7 @@
+                         .padding(.top, 2)
+                     VStack(alignment: .leading, spacing: 3) {
+                         Text(objectTitle(attempt.learningObjectID))
+-                            .font(.system(.body, design: .serif)).lineLimit(2)
++                            .font(.system(.body)).lineLimit(2)
+                         Text(topicLabel(attempt.learningObjectID))
+                             .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                     }
+@@ -95,28 +116,39 @@
+                         .multilineTextAlignment(.trailing)
+                 }
+                 .padding(.vertical, 12)
++                .accessibilityElement(children: .combine)
+                 Divider().overlay(ShelfTheme.line)
+             }
+         }
+-    }
++        .accessibilityIdentifier(identifier)
++    }
++    /// One primary next action, one secondary route back. Revisiting what the learner
++    /// just missed outranks reading on, and when there is neither, no primary appears
++    /// rather than a button that does nothing meaningful.
+     private var actions: some View {
+         VStack(spacing: 10) {
+-            if let source = lastSessionSource {
++            if !revisit.isEmpty {
++                Button("Review what you marked") { startDifficult() }
++                    .buttonStyle(ShelfButtonStyle(filled: true))
++                    .frame(maxWidth: .infinity)
++                    .accessibilityIdentifier("session-summary-primary")
++            } else if let source = lastSessionSource {
+                 Button("Continue reading") { model.openSource(source) }
+                     .buttonStyle(ShelfButtonStyle(filled: true))
+                     .frame(maxWidth: .infinity)
+-            }
+-            if !difficultObjectIDs.isEmpty {
+-                Button("Review difficult items") { startDifficult() }
+-                    .buttonStyle(ShelfButtonStyle())
++                    .accessibilityIdentifier("session-summary-primary")
+             }
+             Button(action: finishSession) {
+-                Text("Done").frame(minWidth: 44, minHeight: 44)
+-            }
+-                .accessibilityIdentifier("session-summary-done")
+-                .font(.system(.callout, design: .serif))
+-                .foregroundStyle(ShelfTheme.secondary)
+-                .frame(minHeight: 44)
++                // The shape goes on the label: a bare Text in a .plain button exports its
++                // glyph box as the accessibility frame, which is smaller than the target.
++                Text("Back to Study")
++                    .font(.system(.callout))
++                    .foregroundStyle(ShelfTheme.secondary)
++                    .frame(maxWidth: .infinity, minHeight: 44)
++                    .contentShape([.interaction, .accessibility], Rectangle())
++            }
++            .buttonStyle(.plain)
++            .accessibilityIdentifier("session-summary-done")
+         }
+     }
+     @ViewBuilder
+@@ -199,7 +231,8 @@
+         }
+     }
+     private var activityCount: Int { model.activeSession?.activities.count ?? recentAttempts.count }
+-    private var knownCount: Int { recentAttempts.filter { $0.rating == .knewIt && $0.wasCorrect != false }.count }
++    /// What the learner reported, not a measure of retention.
++    private var knewItCount: Int { practiced.filter { $0.rating == .knewIt && $0.wasCorrect != false }.count }
+     private var lastSessionSource: LearningSource? {
+         guard let session = model.activeSession else { return nil }
+         for activity in session.activities.reversed() {
+@@ -222,14 +255,17 @@
+         let since = model.sessionStartedAt ?? .distantPast
+         return model.snapshot.attempts.filter { attempt in
+             attempt.occurredAt >= since && (attempt.rating != .knewIt || attempt.wasCorrect == false)
+-        }.sorted { $0.occurredAt > $1.occurredAt }.map(\.learningObjectID)
++        }.sorted { $0.occurredAt > $1.occurredAt }
++            .reduce(into: [UUID]()) { ids, attempt in
++                if !ids.contains(attempt.learningObjectID) { ids.append(attempt.learningObjectID) }
++            }
+     }
+     private func stateLabel(_ attempt: LearningAttempt) -> String {
+         if attempt.confidence == .certain && attempt.wasCorrect == false { return "Confident miss" }
+         switch attempt.rating {
+-        case .forgot: return "Another pass"
+-        case .difficult: return "Strengthening"
+-        case .knewIt: return "Strong"
++        case .forgot: return "Forgot"
++        case .difficult: return "Difficult"
++        case .knewIt: return "Knew it"
+         }
+     }
+     private func stateColor(_ attempt: LearningAttempt) -> Color {

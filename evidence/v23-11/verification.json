@@ -1,0 +1,50 @@
+{
+  "recordedAtUTC": "2026-09-11T12:07:06.423726+00:00",
+  "release": "Leu Native V23.11 \u2014 Study Disclosure Lifecycle Repair",
+  "status": "PORTABLE_VERIFIED_NATIVE_PENDING",
+  "baseline": "V23.10; supplied Mac run passes tests 36,39,40,48; fails test49 at collapsed-tools hit testing; full50 not run",
+  "platform": "Linux-6.18.35-x86_64-with-glibc2.41",
+  "toolchain": "Swift version 6.2.1 (swift-6.2.1-RELEASE)\nTarget: x86_64-unknown-linux-gnu",
+  "core": {
+    "testsPassed": 182,
+    "testsFailed": 0,
+    "voiceStressSeconds": 2.253705082,
+    "voiceStressThresholdSeconds": 3.0,
+    "sourceAndTestsUnchanged": true,
+    "log": "evidence/v23-11/core-tests.log"
+  },
+  "source": {
+    "projectObjects": 435,
+    "sourceScriptFiles": 294,
+    "swiftFilesSyntaxParsed": 269,
+    "syntaxIncludesSimulatorSelectionScript": true,
+    "architecturePrivacyAndDesignChecksPassed": true
+  },
+  "tooling": {
+    "existingChecksPassed": 15,
+    "repairRegressionTestsPassed": 27
+  },
+  "native": {
+    "appleSDKTypechecked": false,
+    "xcodebuildExecuted": false,
+    "simulatorLaunched": false,
+    "appleTestsExpected": 20,
+    "focusedStudyTestsExpected": 5,
+    "uiTestsExpected": 50,
+    "physicalIPhoneVerified": false
+  },
+  "changedCodeFiles": [
+    "Shelf/Learning/Components/LearnSecondaryModes.swift",
+    "ShelfUITests/ShelfStudyInteractionUITests.swift",
+    "ShelfUITests/ShelfUITestCase.swift",
+    "scripts/check-gallery-minimalism.py",
+    "scripts/check-study-interactions.py",
+    "scripts/qa-and-copy.sh",
+    "scripts/qa-native.sh",
+    "scripts/summarize-qa.py",
+    "scripts/test-study-repair-tools.py",
+    "Shelf.xcodeproj/project.pbxproj"
+  ],
+  "causalityLimit": "The supplied runtime establishes the collapsed-state hit-testing defect and surviving controls. V23.11 structural removal must still be exercised with the Apple runtime.",
+  "userNativeLogSHA256": "8b1b88abcd33f03e0e89813a33ca807f3c58cf538b268058cfd26a0e3abad73c"
+}

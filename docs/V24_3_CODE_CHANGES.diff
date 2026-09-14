@@ -1,0 +1,840 @@
+--- V24.2/Shelf.xcodeproj/project.pbxproj
++++ V24.3/Shelf.xcodeproj/project.pbxproj
+@@ -2822,7 +2822,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "24.2";
++                "MARKETING_VERSION" = "24.3";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+@@ -2845,7 +2845,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "24.2";
++                "MARKETING_VERSION" = "24.3";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+--- V24.2/Shelf/App/RootView.swift
++++ V24.3/Shelf/App/RootView.swift
+@@ -1,3 +1,4 @@
++import Foundation
+ import SwiftUI
+ import UniformTypeIdentifiers
+ 
+@@ -9,106 +10,106 @@
+     @State private var primaryArea: PrimaryArea = .shelf
+     @State private var studySurface: StudySurface = .landing
+ 
++    // Opaque subexpressions bound inference without adding a new state owner or container.
+     var body: some View {
+-        @Bindable var model = container.library
++        backupPresentation
++            .alert("Leu needs your attention", isPresented: libraryErrorPresented) {
++                Button("OK") { container.library.errorMessage = nil }
++            } message: { Text(container.library.errorMessage ?? "") }
++    }
++
++    private var rootContent: some View {
+         ZStack {
+             ShelfTheme.background.ignoresSafeArea()
+-            switch model.phase {
++            switch container.library.phase {
+             case .failed(let message):
+                 EmptyLibraryState(symbol: "externaldrive.badge.exclamationmark",
+                     title: "Your library needs attention.", message: message, actionTitle: "Try again") {
+-                        Task { await model.bootstrap(); await container.learning.bootstrap(); await container.knowledge.bootstrap() }
++                        Task { await retryBootstrap() }
+                     }
+             case .loading:
+                 ProgressView().tint(ShelfTheme.accent).accessibilityLabel("Opening Leu")
+             case .ready:
+-                primaryContent(model)
++                primaryContent(container.library)
+             }
+         }
+         .foregroundStyle(ShelfTheme.text)
+-        .safeAreaInset(edge: .bottom, spacing: 0) {
+-            VStack(spacing: 0) {
+-                if let notice = model.notice { NoticeBar(text: notice) { model.notice = nil } }
+-                if let notice = container.learning.notice { NoticeBar(text: notice) { container.learning.notice = nil } }
+-                PrimaryTabBar(selection: $primaryArea)
+-            }
+-            .background { UITestFrameProbe(identifier: "root-bottom-chrome-frame") }
+-        }
+-        .task {
+-            await model.bootstrap()
+-            await container.learning.bootstrap()
+-            if container.learning.isReady && !didRestoreStudyOnLaunch {
+-                didRestoreStudyOnLaunch = true
+-                if container.learning.activeSession?.completedAt == nil && container.learning.activeSession != nil {
+-                    primaryArea = .learn
+-                    studySurface = .landing
+-                    StudyInteractionTrace.record("route.study.restored")
+-                }
+-            }
+-            await container.knowledge.bootstrap()
+-        }
+-        .onChange(of: scenePhase) { _, phase in
+-            if phase != .active && container.learning.activeSession != nil {
+-                container.learning.persistStudyState()
+-            }
+-        }
+-        .onChange(of: model.selectedTab) { _, _ in resetLibraryScope(model) }
+-        .onChange(of: model.snapshot.activeBooks.map { "\($0.id.uuidString)|\($0.fingerprint)" }) { _, _ in
+-            Task {
+-                await container.learning.syncLibrary()
+-                await container.knowledge.syncLibrary()
+-            }
+-        }
+-        .onChange(of: primaryArea) { _, area in
+-            if area != .learn { studySurface = .landing }
+-            if area == .learn || area == .trails {
+-                Task { await container.learning.syncLibrary(); await container.knowledge.syncLibrary() }
+-            }
+-        }
+-        // A recall launched from Progress must reveal the session, not remain behind Progress.
+-        .onChange(of: container.learning.activeSession?.id) { _, sessionID in
+-            guard sessionID != nil, primaryArea == .learn else { return }
+-            StudyInteractionTrace.record("route.session.requested")
+-            studySurface = .landing
+-        }
+-        .onChange(of: container.knowledge.pendingDestination) { _, destination in
+-            guard destination != nil, model.readerRoute == nil else { return }
+-            openKnowledgeDestination(model)
+-        }
+-        .fullScreenCover(item: $model.readerRoute, onDismiss: {
+-            model.readerClosed()
+-            if container.knowledge.pendingDestination != nil {
+-                DispatchQueue.main.async { openKnowledgeDestination(model) }
+-            }
+-        }) { route in
+-            ReaderScreen(model: container.reader(for: route), thumbnails: container.thumbnails)
+-        }
+-        .sheet(item: $model.editingBook) { book in BookDetailsSheet(book: book, model: model) }
+-        .sheet(isPresented: $model.showCollections) { CollectionsSheet(model: model) }
+-        .sheet(item: $model.shareFile) { file in ShareSheet(file: file) }
+-        .fileImporter(isPresented: $model.showBackupImporter, allowedContentTypes: [.shelfBackup, .data],
+-                      allowsMultipleSelection: false) { result in
+-            switch result {
+-            case .success(let urls): model.pendingBackupURL = urls.first
+-            case .failure(let error): model.errorMessage = error.localizedDescription
+-            }
+-        }
+-        .confirmationDialog("Restore this backup?", isPresented: Binding(
+-            get: { model.pendingBackupURL != nil }, set: { if !$0 { model.pendingBackupURL = nil } }),
+-            titleVisibility: .visible, presenting: model.pendingBackupURL) { url in
+-                Button("Merge into my library") {
+-                    Task { await model.restoreBackup(url); await container.learning.syncLibrary(); await container.knowledge.syncLibrary() }
+-                    model.pendingBackupURL = nil
+-                }
++        .safeAreaInset(edge: .bottom, spacing: 0) { bottomChrome }
++    }
++
++    private var bottomChrome: some View {
++        VStack(spacing: 0) {
++            if let notice = container.library.notice {
++                NoticeBar(text: notice) { container.library.notice = nil }
++            }
++            if let notice = container.learning.notice {
++                NoticeBar(text: notice) { container.learning.notice = nil }
++            }
++            PrimaryTabBar(selection: $primaryArea)
++        }
++        .background { UITestFrameProbe(identifier: "root-bottom-chrome-frame") }
++    }
++
++    private var lifecycleContent: some View {
++        rootContent
++            .task { await bootstrapOnLaunch() }
++            .onChange(of: scenePhase) { _, phase in scenePhaseChanged(phase) }
++            .onChange(of: container.library.selectedTab) { _, _ in resetLibraryScope(container.library) }
++            .onChange(of: activeBookVersions) { _, _ in
++                Task { await synchronizeLibraryIndexes() }
++            }
++            .onChange(of: primaryArea) { _, area in primaryAreaChanged(area) }
++            .onChange(of: container.learning.activeSession?.id) { _, sessionID in
++                activeSessionChanged(sessionID)
++            }
++            .onChange(of: container.knowledge.pendingDestination) { _, destination in
++                knowledgeDestinationChanged(destination)
++            }
++    }
++
++    private var readerAndSheetPresentation: some View {
++        @Bindable var model = container.library
++        return lifecycleContent
++            .fullScreenCover(item: $model.readerRoute, onDismiss: { readerDidDismiss() }) { route in
++                ReaderScreen(model: container.reader(for: route), thumbnails: container.thumbnails)
++            }
++            .sheet(item: $model.editingBook) { book in BookDetailsSheet(book: book, model: model) }
++            .sheet(isPresented: $model.showCollections) { CollectionsSheet(model: model) }
++            .sheet(item: $model.shareFile) { file in ShareSheet(file: file) }
++    }
++
++    private var backupPresentation: some View {
++        @Bindable var model = container.library
++        return readerAndSheetPresentation
++            .fileImporter(isPresented: $model.showBackupImporter, allowedContentTypes: [.shelfBackup, .data],
++                          allowsMultipleSelection: false) { (result: Result<[URL], Error>) in
++                backupImportCompleted(result)
++            }
++            .confirmationDialog("Restore this backup?", isPresented: backupConfirmationPresented,
++                                titleVisibility: .visible, presenting: model.pendingBackupURL) { url in
++                Button("Merge into my library") { mergeBackup(url) }
+                 Button("Cancel", role: .cancel) { model.pendingBackupURL = nil }
+             } message: { _ in
+                 Text("Existing PDFs and edits are preserved. New documents and notes are added. Every PDF is checked before changes are committed.")
+             }
+-        .alert("Leu needs your attention", isPresented: Binding(
+-            get: { model.errorMessage != nil && model.editingBook == nil && !model.showCollections },
+-            set: { if !$0 { model.errorMessage = nil } })) {
+-                Button("OK") { model.errorMessage = nil }
+-            } message: { Text(model.errorMessage ?? "") }
++    }
++
++    private var activeBookVersions: [String] {
++        container.library.snapshot.activeBooks.map { book -> String in
++            "\(book.id.uuidString)|\(book.fingerprint)"
++        }
++    }
++
++    private var backupConfirmationPresented: Binding<Bool> {
++        Binding(get: { container.library.pendingBackupURL != nil },
++                set: { if !$0 { container.library.pendingBackupURL = nil } })
++    }
++
++    private var libraryErrorPresented: Binding<Bool> {
++        Binding(get: {
++            let model = container.library
++            return model.errorMessage != nil && model.editingBook == nil && !model.showCollections
++        }, set: { if !$0 { container.library.errorMessage = nil } })
+     }
+ 
+     @ViewBuilder
+@@ -147,13 +148,90 @@
+         }
+     }
+ 
++    // Lifecycle work is typechecked independently of SwiftUI's generic modifier chain.
++    private func bootstrapOnLaunch() async {
++        await container.library.bootstrap()
++        await container.learning.bootstrap()
++        restoreStudyOnLaunchIfNeeded()
++        await container.knowledge.bootstrap()
++    }
++
++    private func restoreStudyOnLaunchIfNeeded() {
++        guard container.learning.isReady, !didRestoreStudyOnLaunch else { return }
++        didRestoreStudyOnLaunch = true
++        guard let session = container.learning.activeSession, session.completedAt == nil else { return }
++        primaryArea = .learn
++        studySurface = .landing
++        StudyInteractionTrace.record("route.study.restored")
++    }
++
++    private func retryBootstrap() async {
++        await container.library.bootstrap()
++        await container.learning.bootstrap()
++        await container.knowledge.bootstrap()
++    }
++
++    private func synchronizeLibraryIndexes() async {
++        await container.learning.syncLibrary()
++        await container.knowledge.syncLibrary()
++    }
++
++    private func scenePhaseChanged(_ phase: ScenePhase) {
++        if phase != .active && container.learning.activeSession != nil {
++            container.learning.persistStudyState()
++        }
++    }
++
++    private func primaryAreaChanged(_ area: PrimaryArea) {
++        if area != .learn { studySurface = .landing }
++        if area == .learn || area == .trails {
++            Task { await synchronizeLibraryIndexes() }
++        }
++    }
++
++    private func activeSessionChanged(_ sessionID: UUID?) {
++        // A recall launched from Progress must reveal the session, not remain behind Progress.
++        guard sessionID != nil, primaryArea == .learn else { return }
++        StudyInteractionTrace.record("route.session.requested")
++        studySurface = .landing
++    }
++
++    private func knowledgeDestinationChanged(_ destination: KnowledgeDestination?) {
++        guard destination != nil, container.library.readerRoute == nil else { return }
++        openKnowledgeDestination(container.library)
++    }
++
++    private func readerDidDismiss() {
++        let model = container.library
++        model.readerClosed()
++        if container.knowledge.pendingDestination != nil {
++            DispatchQueue.main.async { openKnowledgeDestination(model) }
++        }
++    }
++
++    private func backupImportCompleted(_ result: Result<[URL], Error>) {
++        switch result {
++        case .success(let urls): container.library.pendingBackupURL = urls.first
++        case .failure(let error): container.library.errorMessage = error.localizedDescription
++        }
++    }
++
++    private func mergeBackup(_ url: URL) {
++        Task {
++            await container.library.restoreBackup(url)
++            await synchronizeLibraryIndexes()
++        }
++        container.library.pendingBackupURL = nil
++    }
++
+     private func openKnowledgeDestination(_ model: LibraryModel) {
+         guard let destination = container.knowledge.consumeDestination() else { return }
+         guard let book = model.snapshot.activeBooks.first(where: { $0.id == destination.documentID }) else {
+             container.knowledge.errorMessage = "That source PDF is not currently available on this iPhone."
+             return
+         }
+-        model.open(book, page: destination.pageIndex, sourceText: destination.sourceText, knowledgeTravel: true, restoreLens: destination.restoreLens)
++        model.open(book, page: destination.pageIndex, sourceText: destination.sourceText,
++                   knowledgeTravel: true, restoreLens: destination.restoreLens)
+     }
+ 
+     private func resetLibraryScope(_ model: LibraryModel) {
+--- V24.2/Shelf/Features/Reader/Components/ReadPageContent.swift
++++ V24.3/Shelf/Features/Reader/Components/ReadPageContent.swift
+@@ -65,8 +65,8 @@
+         if let activeSentence,
+            !activeSentence.isEmpty,
+            let range = attributed.range(of: activeSentence, options: .caseInsensitive) {
+-            attributed[range].backgroundColor = ShelfTheme.spokenHighlight
+-            attributed[range].foregroundColor = ShelfTheme.ink
++            attributed[range][AttributeScopes.SwiftUIAttributes.BackgroundColorAttribute.self] = ShelfTheme.spokenHighlight
++            attributed[range][AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute.self] = ShelfTheme.ink
+         }
+         return Text(attributed)
+     }
+--- V24.2/Shelf/Features/Reader/ReaderSearchSheet.swift
++++ V24.3/Shelf/Features/Reader/ReaderSearchSheet.swift
+@@ -118,9 +118,9 @@
+         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
+         guard !needle.isEmpty,
+               let range = result.range(of: needle, options: [.caseInsensitive, .diacriticInsensitive]) else { return result }
+-        result[range].backgroundColor = ShelfTheme.accent.opacity(0.30)
+-        result[range].foregroundColor = ShelfTheme.text
+-        result[range].font = .body.bold()
++        result[range][AttributeScopes.SwiftUIAttributes.BackgroundColorAttribute.self] = ShelfTheme.accent.opacity(0.30)
++        result[range][AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute.self] = ShelfTheme.text
++        result[range][AttributeScopes.SwiftUIAttributes.FontAttribute.self] = .body.bold()
+         return result
+     }
+ }
+--- V24.2/Shelf/Features/Settings/SettingsScreen.swift
++++ V24.3/Shelf/Features/Settings/SettingsScreen.swift
+@@ -123,7 +123,7 @@
+                 }
+                 Section {
+                     Button("Privacy & data ownership") { showPrivacy = true }
+-                    LabeledContent("Version", value: "24.2 · Semantic & Emotional Learning")
++                    LabeledContent("Version", value: "24.3 · Semantic & Emotional Learning")
+                     Text("No account. No ads. No subscription. No generative AI. Learning and reading data stay local unless you export a file yourself.")
+                         .font(.footnote).foregroundStyle(ShelfTheme.secondary)
+                 }
+--- V24.2/scripts/check-gallery-minimalism.py
++++ V24.3/scripts/check-gallery-minimalism.py
+@@ -39,7 +39,7 @@
+ plist=plistlib.loads((ROOT/'Shelf/Resources/Info.plist').read_bytes())
+ require(plist.get('CFBundleDisplayName')=='Leu', 'installed app name must be Leu')
+ project=(ROOT/'Shelf.xcodeproj/project.pbxproj').read_text()
+-require('"MARKETING_VERSION" = "24.2";' in project, 'V24.2 marketing version missing')
++require('"MARKETING_VERSION" = "24.3";' in project, 'V24.3 marketing version missing')
+ 
+ if problems:
+     print('FAIL: Leu Gallery Minimalism release contract')
+--- V24.2/scripts/check-v24-contract.py
++++ V24.3/scripts/check-v24-contract.py
+@@ -53,7 +53,7 @@
+     need(token in voice, f'neural voice integration missing: {token}')
+ need('OnnxRuntimeBindings' in runtime and 'ORTSession' in runtime, 'local ONNX inference runtime missing')
+ need('aafc6e32416a594460b32413efc49d7fe4ce6d46' in voice, 'Supertonic model revision is not pinned')
+-need('onnxruntime-swift-package-manager' in pbx and '"MARKETING_VERSION" = "24.2";' in pbx, 'V24 project/version/dependency contract incomplete')
++need('onnxruntime-swift-package-manager' in pbx and '"MARKETING_VERSION" = "24.3";' in pbx, 'V24 project/version/dependency contract incomplete')
+ # Design invariant.
+ hero=read('Shelf/Features/Library/Components/LibraryHeader.swift')
+ for forbidden in ['tree','foliage','leaf.fill','leaf.circle']:
+--- V24.2/scripts/check-v243-root-compile.py
++++ V24.3/scripts/check-v243-root-compile.py
+@@ -0,0 +1,97 @@
++#!/usr/bin/env python3
++"""Narrow source policy for this repair; not a Swift parser or Apple typecheck."""
++from pathlib import Path
++import re
++import sys
++
++ROOT = Path(__file__).resolve().parents[1]
++ROOT_VIEW = 'Shelf/App/RootView.swift'
++READ_PAGE = 'Shelf/Features/Reader/Components/ReadPageContent.swift'
++SEARCH = 'Shelf/Features/Reader/ReaderSearchSheet.swift'
++VIEW_MEMBERS = ('body', 'rootContent', 'bottomChrome', 'lifecycleContent',
++                'readerAndSheetPresentation', 'backupPresentation')
++LIFECYCLE = ('bootstrapOnLaunch', 'restoreStudyOnLaunchIfNeeded', 'retryBootstrap',
++             'synchronizeLibraryIndexes', 'scenePhaseChanged', 'primaryAreaChanged',
++             'activeSessionChanged', 'knowledgeDestinationChanged', 'readerDidDismiss',
++             'backupImportCompleted', 'mergeBackup', 'openKnowledgeDestination', 'resetLibraryScope')
++
++
++def member(source: str, marker: str) -> str:
++    """Extract a known braced member, ignoring ordinary string/comment braces."""
++    masked = re.sub(r'"(?:\\.|[^"\\])*"|//[^\n]*|/\*[\s\S]*?\*/',
++                    lambda m: re.sub(r'[^\n]', ' ', m.group()), source)
++    begin = masked.find(marker)
++    if begin < 0:
++        raise ValueError('Missing member: ' + marker)
++    opening = masked.index('{', begin)
++    depth = 1
++    for end in range(opening + 1, len(masked)):
++        if masked[end] == '{': depth += 1
++        elif masked[end] == '}': depth -= 1
++        if depth == 0:
++            return source[begin:end + 1]
++    raise ValueError('Unbalanced member: ' + marker)
++
++
++def violations(overrides=None):
++    overrides = overrides or {}
++    def read(path): return overrides.get(path, (ROOT / path).read_text())
++    root, page, search = read(ROOT_VIEW), read(READ_PAGE), read(SEARCH)
++    errors = []
++    for name in VIEW_MEMBERS:
++        try:
++            expression = member(root, 'var ' + name + ': some View')
++        except ValueError as error:
++            errors.append(str(error)); continue
++        if len(expression.splitlines()) > 35:
++            errors.append(name + ': split oversized view expressions')
++        if re.search(r'await\s+(?:container\.|model\.)', expression):
++            errors.append(name + ': model lifecycle belongs in typed methods')
++    for name in LIFECYCLE:
++        try: member(root, 'private func ' + name + '(')
++        except ValueError as error: errors.append(str(error))
++    for token in ('AnyView(', '@unchecked Sendable', 'nonisolated(unsafe)',
++                  'learningStatePresented'):
++        if token in root: errors.append('Forbidden workaround: ' + token)
++    required = ('@State private var studySurface: StudySurface = .landing',
++                '@Environment(\\.scenePhase)', 'private var activeBookVersions: [String]',
++                '.task { await bootstrapOnLaunch() }', 'case .progress:',
++                'LearningStateSheet(model: container.learning)',
++                'restoreLens: destination.restoreLens',
++                '.onChange(of: container.learning.activeSession?.id)',
++                '.onChange(of: container.knowledge.pendingDestination)',
++                'StudyInteractionTrace.record("route.session.requested")')
++    for token in required:
++        if token not in root: errors.append('Missing preserved behavior: ' + token)
++    try:
++        boot = member(root, 'private func bootstrapOnLaunch(')
++        sequence = ('await container.library.bootstrap()', 'await container.learning.bootstrap()',
++                    'restoreStudyOnLaunchIfNeeded()', 'await container.knowledge.bootstrap()')
++        locations = [boot.find(token) for token in sequence]
++        if -1 in locations or locations != sorted(locations):
++            errors.append('Launch order must remain library, learning, restore, knowledge')
++        restore = member(root, 'private func restoreStudyOnLaunchIfNeeded(')
++        for token in ('container.learning.isReady', '!didRestoreStudyOnLaunch',
++                      'didRestoreStudyOnLaunch = true', 'session.completedAt == nil',
++                      'primaryArea = .learn', 'studySurface = .landing'):
++            if token not in restore: errors.append('Missing launch guard/state: ' + token)
++        sync = member(root, 'private func synchronizeLibraryIndexes(')
++        if sync.find('await container.learning.syncLibrary()') < 0 or \
++           sync.find('await container.knowledge.syncLibrary()') < sync.find('await container.learning.syncLibrary()'):
++            errors.append('Index sync order must remain learning then knowledge')
++    except ValueError as error:
++        errors.append(str(error))
++    for label, source, expected in (('reading highlight', page, 2), ('search highlight', search, 3)):
++        if re.search(r'\[range\]\.(?:backgroundColor|foregroundColor|font)\s*=', source):
++            errors.append(label + ': avoid dynamically inferred attribute key paths')
++        if source.count('[range][AttributeScopes.SwiftUIAttributes.') != expected:
++            errors.append(label + ': preserve explicit typed attribute assignments')
++    return errors
++
++
++if __name__ == '__main__':
++    failures = violations()
++    if failures:
++        print('\n'.join('FAIL: ' + failure for failure in failures))
++        sys.exit(1)
++    print('PASS: bounded RootView expressions, typed lifecycle callbacks, preserved route ownership and explicit highlight keys')
+--- V24.2/scripts/qa-and-copy.sh
++++ V24.3/scripts/qa-and-copy.sh
+@@ -3,9 +3,9 @@
+ set -uo pipefail
+ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ cd "$ROOT" || exit 1
+-LOG="${SHELF_QA_LOG:-qa-v24-2.log}"
++LOG="${SHELF_QA_LOG:-qa-v24-3.log}"
+ SUMMARY="${LOG%.log}-summary.txt"
+-export SHELF_QA_RUN_DIR="$ROOT/.build/qa-runs/v24-2-$(date '+%Y%m%d-%H%M%S')-$$"
++export SHELF_QA_RUN_DIR="$ROOT/.build/qa-runs/v24-3-$(date '+%Y%m%d-%H%M%S')-$$"
+ mkdir -p "$SHELF_QA_RUN_DIR" || exit 1
+ date +%s > "$SHELF_QA_RUN_DIR/start-epoch.txt"
+ printf 'QA workspace: %s\nQA run: %s\n' "$ROOT" "$SHELF_QA_RUN_DIR"
+@@ -29,7 +29,7 @@
+     printf '\nDiagnostics export failed; originals remain in .build/results.\n' >> "$SUMMARY"
+ fi
+ printf '\nQA process exit code: %s\n' "$STATUS" >> "$SUMMARY"
+-printf '\n=== Leu V24.2 QA result ===\n'
++printf '\n=== Leu V24.3 QA result ===\n'
+ cat "$SUMMARY"
+ if command -v pbcopy >/dev/null 2>&1 && pbcopy < "$SUMMARY"; then
+     printf '\nSummary copied. Full log: %s\n' "$LOG"
+--- V24.2/scripts/qa-native.sh
++++ V24.3/scripts/qa-native.sh
+@@ -2,7 +2,7 @@
+ set -euo pipefail
+ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ cd "$ROOT"
+-printf '\n=== Leu V24.2 structural validation ===\n'; python3 scripts/validate.py
++printf '\n=== Leu V24.3 structural validation ===\n'; python3 scripts/validate.py
+ printf '\n=== Leu file-scoped import audit ===\n'; python3 scripts/check-shelfcore-imports.py
+ printf '\n=== Leu Learning OS offline/no-model audit ===\n'; python3 scripts/check-learning-offline.py
+ printf '\n=== Leu Learning OS architecture audit ===\n'; python3 scripts/check-learning-architecture.py
+@@ -14,6 +14,7 @@
+ printf '\n=== Leu SwiftUI compile-contract audit ===\n'; python3 scripts/check-swiftui-compile-contract.py; python3 scripts/test-settings-compile-repair.py
+ printf '\n=== Leu Gallery Minimalism release contract ===\n'; python3 scripts/check-gallery-minimalism.py
+ printf '\n=== Leu V24.2 interaction and recovery source contracts ===\n'; python3 scripts/check-v242-interactions.py; python3 scripts/test-v242-interactions.py
++printf '\n=== Leu V24.3 root compile source checks ===\n'; python3 scripts/check-v243-root-compile.py; python3 scripts/test-v243-root-compile.py
+ printf '\n=== Leu native compile gate ===\n'; ./run.sh --build
+ printf '\n=== Leu portable core tests ===\n'; ./scripts/test-core.sh
+ printf '\n=== Leu Apple PDF integration and viewport geometry tests ===\n'; ./scripts/test-ios.sh -only-testing:ShelfTests
+--- V24.2/scripts/test-v243-root-compile.py
++++ V24.3/scripts/test-v243-root-compile.py
+@@ -0,0 +1,99 @@
++#!/usr/bin/env python3
++"""Mutation checks + execution of actual RootView handlers with portable adapters.
++No SwiftUI, PDFKit, ONNX or Apple SDK is provided by these tests.
++"""
++import importlib.util
++from pathlib import Path
++import shutil
++import subprocess
++import tempfile
++import unittest
++
++ROOT = Path(__file__).resolve().parents[1]
++spec = importlib.util.spec_from_file_location('root_policy', ROOT / 'scripts/check-v243-root-compile.py')
++policy = importlib.util.module_from_spec(spec)
++spec.loader.exec_module(policy)
++
++
++class RootCompileRepairTests(unittest.TestCase):
++    def mutate(self, path, old, new):
++        text = (ROOT / path).read_text()
++        self.assertIn(old, text)
++        self.assertTrue(policy.violations({path: text.replace(old, new)}))
++
++    def testCurrentSource(self):
++        self.assertEqual(policy.violations(), [])
++
++    def testOversizedBodyIsRejected(self):
++        self.mutate(policy.ROOT_VIEW, 'var body: some View {',
++                    'var body: some View {\n' + ' // more inline expression work\n' * 40)
++
++    def testModelLifecycleCannotReturnToBuilder(self):
++        self.mutate(policy.ROOT_VIEW, '.task { await bootstrapOnLaunch() }',
++                    '.task { await container.library.bootstrap() }')
++
++    def testMissingTypedBookIdentityIsRejected(self):
++        self.mutate(policy.ROOT_VIEW, 'private var activeBookVersions: [String]',
++                    'private var activeBookVersions: ArraySlice<String>')
++
++    def testLaunchOrderMustStayTheSame(self):
++        self.mutate(policy.ROOT_VIEW, 'await container.library.bootstrap()\n        await container.learning.bootstrap()',
++                    'await container.learning.bootstrap()\n        await container.library.bootstrap()')
++
++    def testRecoveryMustWaitForReadiness(self):
++        self.mutate(policy.ROOT_VIEW, 'guard container.learning.isReady, !didRestoreStudyOnLaunch',
++                    'guard !didRestoreStudyOnLaunch')
++
++    def testRecoveryMustRunOnlyOnce(self):
++        self.mutate(policy.ROOT_VIEW, '!didRestoreStudyOnLaunch', 'true')
++
++    def testCompletedSessionMustNotRestore(self):
++        self.mutate(policy.ROOT_VIEW, 'session.completedAt == nil', 'true')
++
++    def testLensOriginMustNotBeDropped(self):
++        self.mutate(policy.ROOT_VIEW, 'restoreLens: destination.restoreLens', 'restoreLens: nil')
++
++    def testTypeErasureIsNotACompileRepair(self):
++        self.mutate(policy.ROOT_VIEW, '        backupPresentation\n', '        AnyView(backupPresentation)\n')
++
++    def testDynamicReadingAttributesAreRejected(self):
++        self.mutate(policy.READ_PAGE, '[range][AttributeScopes.SwiftUIAttributes.BackgroundColorAttribute.self]',
++                    '[range].backgroundColor')
++
++    def testDynamicSearchFontIsRejected(self):
++        self.mutate(policy.SEARCH, '[range][AttributeScopes.SwiftUIAttributes.FontAttribute.self]', '[range].font')
++
++    def testActualLifecycleMethodBodies(self):
++        swiftc = shutil.which('swiftc')
++        self.assertIsNotNone(swiftc, 'Swift compiler required; this test must not silently skip')
++        source = (ROOT / policy.ROOT_VIEW).read_text()
++        methods = [policy.member(source, 'private func ' + name + '(').replace('private func', 'func', 1)
++                   for name in policy.LIFECYCLE]
++        versions = policy.member(source, 'var activeBookVersions: [String]')
++        generated = '''import Foundation
++@MainActor struct RootLogicProbe {
++    let container = AppContainer()
++    @RootTestState var didRestoreStudyOnLaunch = false
++    @RootTestState var primaryArea: PrimaryArea = .shelf
++    @RootTestState var studySurface: StudySurface = .landing
++''' + '\n'.join(methods) + '\n' + versions + '\n}\n'
++        with tempfile.TemporaryDirectory(prefix='leu-root-v243-') as temp:
++            temp = Path(temp)
++            extracted = temp / 'RootLogicProbe.swift'
++            extracted.write_text(generated)
++            executable = temp / 'root-handlers'
++            result = subprocess.run([swiftc, '-swift-version', '5', '-strict-concurrency=complete',
++                '-warnings-as-errors', '-parse-as-library', str(extracted),
++                str(ROOT / 'Shelf/Learning/PrimaryArea.swift'),
++                str(ROOT / 'validation/v24-3/RootDependencies.swift'),
++                str(ROOT / 'validation/v24-3/RootHarness.swift'), '-o', str(executable)],
++                capture_output=True, text=True, timeout=120)
++            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
++            run = subprocess.run([str(executable)], capture_output=True, text=True, timeout=30)
++            print(run.stdout, end='')
++            self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
++            self.assertIn('extracted RootView lifecycle checks', run.stdout)
++
++
++if __name__ == '__main__':
++    unittest.main(verbosity=2)
+--- V24.2/validation/v24-3/RootDependencies.swift
++++ V24.3/validation/v24-3/RootDependencies.swift
+@@ -0,0 +1,73 @@
++import Foundation
++
++// Portable adapters for testing extracted RootView method bodies, not SwiftUI rendering.
++@MainActor @propertyWrapper final class RootTestState<Value> {
++    var wrappedValue: Value
++    init(wrappedValue: Value) { self.wrappedValue = wrappedValue }
++}
++enum ScenePhase { case active, inactive, background }
++enum StudySurface { case landing, progress }
++struct Session { let id = UUID(); var completedAt: Date? = nil }
++struct LensOrigin: Equatable { let id: Int }
++struct Book { let id: UUID; let fingerprint: String }
++struct Snapshot { var activeBooks: [Book] = [] }
++struct ReaderRoute {
++    let documentID: UUID
++    let pageIndex: Int
++    let sourceText: String
++    let knowledgeTravel: Bool
++    let restoreLens: LensOrigin?
++}
++struct KnowledgeDestination {
++    let documentID: UUID
++    let pageIndex: Int
++    let sourceText: String
++    let restoreLens: LensOrigin?
++}
++@MainActor enum StudyInteractionTrace {
++    static var events: [String] = []
++    static func record(_ name: String) { events.append(name) }
++}
++@MainActor final class LibraryModel {
++    var snapshot = Snapshot()
++    var query = "query"
++    var selectedCollectionID: UUID? = UUID()
++    var selectedTag: String? = "tag"
++    var passages = ["passage"]
++    var readerRoute: ReaderRoute?
++    var pendingBackupURL: URL?
++    var errorMessage: String?
++    func bootstrap() async { StudyInteractionTrace.record("library.bootstrap") }
++    func restoreBackup(_ url: URL) async { StudyInteractionTrace.record("library.restore") }
++    func readerClosed() { readerRoute = nil; StudyInteractionTrace.record("library.readerClosed") }
++    func updateSearch() { StudyInteractionTrace.record("library.search") }
++    func open(_ book: Book, page: Int, sourceText: String, knowledgeTravel: Bool, restoreLens: LensOrigin?) {
++        readerRoute = ReaderRoute(documentID: book.id, pageIndex: page, sourceText: sourceText,
++                                  knowledgeTravel: knowledgeTravel, restoreLens: restoreLens)
++        StudyInteractionTrace.record("library.open")
++    }
++}
++@MainActor final class LearningModel {
++    var isReady = true
++    var activeSession: Session?
++    var writes = 0
++    func bootstrap() async { StudyInteractionTrace.record("learning.bootstrap") }
++    func syncLibrary() async { StudyInteractionTrace.record("learning.sync") }
++    func persistStudyState() { writes += 1 }
++}
++@MainActor final class KnowledgeModel {
++    var pendingDestination: KnowledgeDestination?
++    var errorMessage: String?
++    func bootstrap() async { StudyInteractionTrace.record("knowledge.bootstrap") }
++    func syncLibrary() async { StudyInteractionTrace.record("knowledge.sync") }
++    func consumeDestination() -> KnowledgeDestination? {
++        let result = pendingDestination
++        pendingDestination = nil
++        return result
++    }
++}
++@MainActor final class AppContainer {
++    let library = LibraryModel()
++    let learning = LearningModel()
++    let knowledge = KnowledgeModel()
++}
+--- V24.2/validation/v24-3/RootHarness.swift
++++ V24.3/validation/v24-3/RootHarness.swift
+@@ -0,0 +1,147 @@
++import Foundation
++
++@main struct RootHarness {
++    @MainActor static var checks = 0
++    @MainActor static func require(_ condition: Bool, _ name: String) throws {
++        guard condition else { throw Failure.assertion(name) }
++        checks += 1
++        print("PASS: " + name)
++    }
++    @MainActor static func probe() -> RootLogicProbe {
++        StudyInteractionTrace.events = []
++        return RootLogicProbe()
++    }
++    // Wait for bounded, scheduled callbacks without invoking their bodies from the test.
++    @MainActor static func waitForEvent(_ name: String) async throws {
++        for _ in 0..<10_000 {
++            if StudyInteractionTrace.events.contains(name) { return }
++            await Task.yield()
++        }
++        throw Failure.assertion("Scheduled callback did not complete: " + name)
++    }
++    @MainActor static func main() async throws {
++        try await launchChecks()
++        try await routingChecks()
++        try await sourceChecks()
++        try await backupChecks()
++        print("PASS: \(checks) extracted RootView lifecycle checks; platform adapters, not Apple UI certification")
++    }
++    @MainActor static func launchChecks() async throws {
++        let resumed = probe()
++        resumed.container.learning.activeSession = Session()
++        await resumed.bootstrapOnLaunch()
++        try require(StudyInteractionTrace.events == ["library.bootstrap", "learning.bootstrap",
++            "route.study.restored", "knowledge.bootstrap"], "bootstrap and recovery preserve execution order")
++        try require(resumed.primaryArea == .learn && resumed.studySurface == .landing,
++                    "unfinished Study restores directly")
++        resumed.primaryArea = .shelf
++        resumed.restoreStudyOnLaunchIfNeeded()
++        try require(resumed.primaryArea == .shelf, "recovery does not override a later manual navigation")
++        let empty = probe()
++        await empty.bootstrapOnLaunch()
++        try require(empty.primaryArea == .shelf && empty.didRestoreStudyOnLaunch, "no session stays in Library")
++        let finished = probe()
++        finished.container.learning.activeSession = Session(completedAt: Date())
++        await finished.bootstrapOnLaunch()
++        try require(finished.primaryArea == .shelf, "completed sessions do not reopen as unfinished")
++        let waiting = probe()
++        waiting.container.learning.isReady = false
++        waiting.container.learning.activeSession = Session()
++        waiting.restoreStudyOnLaunchIfNeeded()
++        try require(!waiting.didRestoreStudyOnLaunch && waiting.primaryArea == .shelf,
++                    "recovery waits for Learning readiness")
++        waiting.container.learning.isReady = true
++        waiting.restoreStudyOnLaunchIfNeeded()
++        try require(waiting.primaryArea == .learn, "ready recovery can still run after an unready attempt")
++        let retry = probe()
++        await retry.retryBootstrap()
++        try require(StudyInteractionTrace.events == ["library.bootstrap", "learning.bootstrap", "knowledge.bootstrap"],
++                    "retry retains original bootstrap order")
++        StudyInteractionTrace.events = []
++        await retry.synchronizeLibraryIndexes()
++        try require(StudyInteractionTrace.events == ["learning.sync", "knowledge.sync"], "index synchronization is ordered")
++    }
++    @MainActor static func routingChecks() async throws {
++        let current = probe()
++        current.container.learning.activeSession = Session()
++        current.scenePhaseChanged(.active)
++        try require(current.container.learning.writes == 0, "active scene does not request a checkpoint")
++        current.scenePhaseChanged(.inactive); current.scenePhaseChanged(.background)
++        try require(current.container.learning.writes == 2, "inactive and background request checkpoints")
++        current.container.learning.activeSession = nil
++        current.scenePhaseChanged(.background)
++        try require(current.container.learning.writes == 2, "no session means no checkpoint request")
++        current.primaryArea = .learn; current.studySurface = .progress
++        current.activeSessionChanged(nil)
++        try require(current.studySurface == .progress, "nil session changes do not dismiss Progress")
++        current.activeSessionChanged(UUID())
++        try require(current.studySurface == .landing && StudyInteractionTrace.events.contains("route.session.requested"),
++                    "recall from Progress reveals the Study session")
++        current.primaryArea = .shelf; current.studySurface = .progress
++        current.activeSessionChanged(UUID())
++        try require(current.studySurface == .progress && current.primaryArea == .shelf,
++                    "session changes do not steal a different tab")
++        StudyInteractionTrace.events = []
++        current.primaryAreaChanged(.shelf)
++        try require(current.studySurface == .landing && StudyInteractionTrace.events.isEmpty,
++                    "leaving Study resets only its internal surface")
++        current.primaryAreaChanged(.trails)
++        try await waitForEvent("knowledge.sync")
++        try require(StudyInteractionTrace.events == ["learning.sync", "knowledge.sync"], "Trails refreshes both indexes")
++        StudyInteractionTrace.events = []; current.primaryArea = .learn
++        current.primaryAreaChanged(.learn)
++        try await waitForEvent("knowledge.sync")
++        try require(StudyInteractionTrace.events == ["learning.sync", "knowledge.sync"], "Study refreshes both indexes")
++    }
++    @MainActor static func sourceChecks() async throws {
++        let current = probe(), book = Book(id: UUID(), fingerprint: "sha")
++        let destination = KnowledgeDestination(documentID: book.id, pageIndex: 7, sourceText: "Source",
++                                               restoreLens: LensOrigin(id: 42))
++        current.container.library.snapshot.activeBooks = [book]
++        current.container.knowledge.pendingDestination = destination
++        current.knowledgeDestinationChanged(nil)
++        try require(current.container.knowledge.pendingDestination != nil, "nil destination is ignored")
++        current.knowledgeDestinationChanged(destination)
++        let route = current.container.library.readerRoute
++        try require(route?.documentID == book.id && route?.pageIndex == 7 && route?.sourceText == "Source" &&
++                    route?.restoreLens == LensOrigin(id: 42) && route?.knowledgeTravel == true,
++                    "source navigation retains document, page, excerpt and Lens origin")
++        current.container.knowledge.pendingDestination = destination
++        current.knowledgeDestinationChanged(destination)
++        try require(current.container.knowledge.pendingDestination != nil, "a presented Reader defers another destination")
++        StudyInteractionTrace.events = []
++        current.readerDidDismiss()
++        try await waitForEvent("library.open")
++        try require(StudyInteractionTrace.events == ["library.readerClosed", "library.open"],
++                    "dismissal closes the old Reader before opening the queued source")
++        current.container.library.readerRoute = nil
++        current.container.library.snapshot.activeBooks = []
++        current.container.knowledge.pendingDestination = destination
++        current.knowledgeDestinationChanged(destination)
++        try require(current.container.library.readerRoute == nil && current.container.knowledge.errorMessage != nil,
++                    "unavailable source produces an error, not a route")
++        current.container.library.snapshot.activeBooks = [book]
++        try require(current.activeBookVersions == ["\(book.id.uuidString)|sha"], "typed book identity includes its fingerprint")
++    }
++    @MainActor static func backupChecks() async throws {
++        let current = probe(), first = URL(fileURLWithPath: "/first"), second = URL(fileURLWithPath: "/second")
++        current.backupImportCompleted(.success([first, second]))
++        try require(current.container.library.pendingBackupURL == first, "file selection keeps the first URL")
++        current.backupImportCompleted(.success([]))
++        try require(current.container.library.pendingBackupURL == nil, "empty file selection clears confirmation")
++        current.backupImportCompleted(.failure(Failure.assertion("import")))
++        try require(current.container.library.errorMessage != nil, "import errors remain visible")
++        current.container.library.pendingBackupURL = first
++        current.mergeBackup(first)
++        try require(current.container.library.pendingBackupURL == nil, "merge immediately clears the confirmation")
++        try await waitForEvent("knowledge.sync")
++        try require(StudyInteractionTrace.events == ["library.restore", "learning.sync", "knowledge.sync"],
++                    "merge refreshes indexes only after restore")
++        current.resetLibraryScope(current.container.library)
++        let model = current.container.library
++        try require(model.query.isEmpty && model.selectedCollectionID == nil && model.selectedTag == nil &&
++                    model.passages.isEmpty && StudyInteractionTrace.events.last == "library.search",
++                    "library scope reset clears filters and refreshes search")
++    }
++}
++private enum Failure: Error { case assertion(String) }

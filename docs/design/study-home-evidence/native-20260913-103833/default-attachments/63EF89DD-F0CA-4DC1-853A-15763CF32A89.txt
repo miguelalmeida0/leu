@@ -1,0 +1,1 @@
+LEU_UI_CHECKPOINT: after-start-learning-session nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0) 

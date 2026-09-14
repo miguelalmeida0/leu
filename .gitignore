@@ -1,0 +1,29 @@
+.DS_Store
+.build/
+.swiftpm/
+DerivedData/
+*.xcresult/
+xcuserdata/
+*.xcuserstate
+*.shelfbackup
+*.log
+!evidence/*.log
+
+# Local/generated
+.DS_Store
+.build/
+DerivedData/
+.swiftpm/
+**/xcuserdata/
+*.xcuserstate
+*.xcresult
+*.zip
+
+# Large locally-installed inference assets
+*.onnx
+*.ort
+
+# Generated certification evidence
+docs/v27/evidence/
+docs/v28/evidence/
+docs/design/bugfix-20260914/native-*/

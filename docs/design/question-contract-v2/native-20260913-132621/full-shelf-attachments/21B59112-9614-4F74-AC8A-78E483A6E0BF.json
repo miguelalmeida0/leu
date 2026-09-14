@@ -1,0 +1,19 @@
+{
+  "accepted" : 1,
+  "backend" : "apple-on-device",
+  "cognitiveOperations" : [
+    "mechanism"
+  ],
+  "generated" : 1,
+  "inferenceAttempts" : 1,
+  "inferenceErrors" : [
+
+  ],
+  "meaningfulClaims" : 4,
+  "rejected" : 0,
+  "rejectionCodes" : [
+
+  ],
+  "repairCount" : 0,
+  "representableClaims" : 2
+}

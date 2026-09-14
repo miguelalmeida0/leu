@@ -1,0 +1,109 @@
+#!/bin/bash
+# Run in local Terminal. Uses only the existing isolated Shelf-UITests library.
+# --resume <evidence-directory> exports saved results and runs only missing variants.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+device=A248FB9E-B969-4CF6-A0ED-B2013A3C60A6
+resume=false
+if [ "$#" -eq 2 ] && [ "$1" = --resume ]; then
+  run=$(cd "$2" && pwd)
+  resume=true
+elif [ "$#" -eq 0 ]; then
+  run="$PWD/docs/design/study-home-evidence/native-$(date +%Y%m%d-%H%M%S)"
+  mkdir -p "$run"
+else
+  echo "Usage: bash scripts/verify-study-home.sh [--resume evidence-directory]" >&2
+  exit 2
+fi
+echo "Study Home evidence: $run"
+common=(-project Shelf.xcodeproj -scheme Shelf -configuration Debug
+  -destination "platform=iOS Simulator,id=$device"
+  -derivedDataPath .build/study-home CODE_SIGNING_ALLOWED=NO)
+if [ "$resume" = false ]; then
+  python3 scripts/test-night-field-contrast.py > "$run/contrast.log" 2>&1
+  python3 scripts/check-night-field.py > "$run/night-field.log"
+  python3 scripts/check-study-interactions.py > "$run/interactions.log"
+  python3 scripts/validate.py > "$run/validate.log"
+  xcodebuild "${common[@]}" build > "$run/build.log" 2>&1
+fi
+
+export_results() {
+  local variant=$1
+  if [ ! -s "$run/$variant-summary.json" ]; then
+    xcrun xcresulttool get test-results summary --path "$run/$variant.xcresult" > "$run/$variant-summary.json.tmp"
+    mv "$run/$variant-summary.json.tmp" "$run/$variant-summary.json"
+  fi
+  if [ ! -s "$run/$variant-attachments/manifest.json" ]; then
+    xcrun xcresulttool export attachments --path "$run/$variant.xcresult" --output-path "$run/$variant-attachments"
+  fi
+}
+
+summary_passed() {
+  python3 - "$1" <<'PY'
+import json, sys
+summary = json.load(open(sys.argv[1]))
+print("Saved result:", summary.get("result"),
+      "passed:", summary.get("passedTests"), "failed:", summary.get("failedTests"),
+      "skipped:", summary.get("skippedTests"))
+sys.exit(0 if summary.get("result") == "Passed" and
+         summary.get("failedTests") == 0 and summary.get("skippedTests") == 0 and
+         summary.get("passedTests", 0) > 0 else 1)
+PY
+}
+
+simulator_ready=false
+result=0
+for variant in default AX1; do
+  if [ -d "$run/$variant.xcresult" ]; then
+    echo "Reusing $variant.xcresult; no build or test rerun."
+    export_results "$variant"
+    if ! summary_passed "$run/$variant-summary.json"; then result=65; fi
+    continue
+  fi
+  if [ "$resume" = true ]; then
+    # Never silently rebuild a missing test product during evidence recovery.
+    for product in Shelf.app ShelfUITests-Runner.app; do
+      if [ ! -d ".build/study-home/Build/Products/Debug-iphonesimulator/$product" ]; then
+        echo "Cannot resume without existing $product. No rebuild attempted." >&2
+        exit 2
+      fi
+    done
+  fi
+  if [ "$simulator_ready" = false ]; then
+    xcrun simctl bootstatus "$device" -b
+    original_size=$(xcrun simctl ui "$device" content_size)
+    trap 'xcrun simctl ui "$device" content_size "$original_size" >/dev/null 2>&1 || true' EXIT
+    simulator_ready=true
+  fi
+  size=large
+  if [ "$variant" = AX1 ]; then size=accessibility-medium; fi
+  xcrun simctl ui "$device" content_size "$size"
+  xcrun simctl ui "$device" content_size > "$run/$variant-content-size-$(date +%Y%m%d-%H%M%S).txt"
+  # Always nonempty: Bash 3.2 treats an empty array as unset under nounset.
+  selected_tests=('-only-testing:ShelfUITests/ShelfStudyHomeUITests')
+  if [ "$variant" = default ]; then
+    selected_tests+=('-only-testing:ShelfUITests/ShelfStudyInteractionUITests'
+      '-only-testing:ShelfUITests/ShelfLearningOSUITests/test32LearnTodayCreatesLocalStudySession')
+  fi
+  action=test
+  if [ "$resume" = true ] || [ "$variant" = AX1 ]; then action=test-without-building; fi
+  log="$run/$variant-ui.log"
+  if [ -e "$log" ]; then log="$run/$variant-ui-$(date +%Y%m%d-%H%M%S).log"; fi
+  set +e
+  xcodebuild "${common[@]}" -parallel-testing-enabled NO -resultBundlePath "$run/$variant.xcresult" "$action" \
+    "${selected_tests[@]}" > "$log" 2>&1
+  status=$?
+  set -e
+  if [ "$status" -ne 0 ]; then result=$status; fi
+  if [ -d "$run/$variant.xcresult" ]; then
+    export_results "$variant"
+    if ! summary_passed "$run/$variant-summary.json"; then result=65; fi
+  else
+    echo "No $variant result bundle was produced; see $log" >&2
+    if [ "$status" -eq 0 ]; then status=1; fi
+    exit "$status"
+  fi
+done
+echo "Study Home native test exit: $result (includes failures in reused results)"
+echo "Inspect real default/AX1 attachments before certifying the redesign."
+exit "$result"

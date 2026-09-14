@@ -1,0 +1,411 @@
+--- a/Shelf/App/RootView.swift
++++ b/Shelf/App/RootView.swift
+@@ -19,8 +19,20 @@
+     }
+ 
+     private var rootContent: some View {
++        VStack(spacing: 0) {
++            phaseContent
++                .frame(maxWidth: .infinity, maxHeight: .infinity)
++                .contentShape(Rectangle())
++                .clipped()
++                .background { UITestFrameProbe(identifier: "root-content-viewport") }
++            bottomChrome
++        }
++        .background(ShelfTheme.background.ignoresSafeArea())
++        .foregroundStyle(ShelfTheme.text)
++    }
++
++    private var phaseContent: some View {
+         ZStack {
+-            ShelfTheme.background.ignoresSafeArea()
+             switch container.library.phase {
+             case .failed(let message):
+                 EmptyLibraryState(symbol: "externaldrive.badge.exclamationmark",
+@@ -33,8 +45,6 @@
+                 primaryContent(container.library)
+             }
+         }
+-        .foregroundStyle(ShelfTheme.text)
+-        .safeAreaInset(edge: .bottom, spacing: 0) { bottomChrome }
+     }
+ 
+     private var bottomChrome: some View {
+@@ -47,6 +57,7 @@
+             }
+             PrimaryTabBar(selection: $primaryArea)
+         }
++        .background(ShelfTheme.background)
+         .background { UITestFrameProbe(identifier: "root-bottom-chrome-frame") }
+     }
+ 
+--- a/Shelf/Learning/LearningStateSheet.swift
++++ b/Shelf/Learning/LearningStateSheet.swift
+@@ -100,6 +100,7 @@
+             .frame(maxWidth: 720)
+             .frame(maxWidth: .infinity)
+         }
++        .clipped()
+         .accessibilityIdentifier("progress-now-scroll").background { UITestFrameProbe(identifier: "progress-now-scroll-frame") }
+     }
+     private var historyContent: some View {
+@@ -154,7 +155,9 @@
+             .padding(.horizontal, ShelfTheme.gutter)
+             .padding(.bottom, 30)
+         }
++        .clipped()
+         .accessibilityIdentifier("progress-history-scroll")
++        .background { UITestFrameProbe(identifier: "progress-history-scroll-frame") }
+     }
+     private func topicRow(_ topic: LearningTopic) -> some View {
+         let state = model.mastery(topic: topic)
+--- a/Shelf/Learning/InterviewSetupSheet.swift
++++ b/Shelf/Learning/InterviewSetupSheet.swift
+@@ -25,12 +25,22 @@
+                 Section {
+                     Text("Answers stay hidden until you commit. Confidence is sampled more often, and source links appear after answering.")
+                         .font(.callout).foregroundStyle(ShelfTheme.secondary)
+-                    Button("Start interview") {
++                }
++            }.scrollContentBackground(.hidden)
++                .safeAreaInset(edge: .bottom, spacing: 0) {
++                    Button {
+                         let count = choice == .ten ? 10 : (choice == .twenty ? 20 : nil)
+                         model.startInterview(topicID: topicID, questionCount: count); dismiss()
+-                    }.buttonStyle(ShelfButtonStyle(filled: true))
++                    } label: {
++                        Text("Start interview").frame(maxWidth: .infinity)
++                    }
++                    .buttonStyle(ShelfButtonStyle(filled: true))
++                    .accessibilityIdentifier("start-interview")
++                    .padding(.horizontal, ShelfTheme.gutter)
++                    .padding(.vertical, 12)
++                    .frame(maxWidth: .infinity)
++                    .background(ShelfTheme.background)
+                 }
+-            }.scrollContentBackground(.hidden)
+         }
+     }
+ }
+--- a/Shelf/Learning/LearnTodayScreen+MemorySections.swift
++++ b/Shelf/Learning/LearnTodayScreen+MemorySections.swift
+@@ -11,8 +11,8 @@
+                     if let source = event.source { model.openSource(source) }
+                     else { onOpenProgress() }
+                 } label: {
+-                    continueLabel(title: event.title,
+-                        detail: "Last activity · " + event.occurredAt.formatted(date: .abbreviated, time: .shortened),
++                    continueLabel(title: continueTitle(for: event), excerpt: sourceExcerpt(for: event),
++                        detail: continueDetail(for: event),
+                         action: event.source == nil ? "View progress" : "Continue at source")
+                 }
+                 .buttonStyle(.plain)
+@@ -50,12 +50,53 @@
+         }
+     }
+ 
+-    private func continueLabel(title: String, detail: String, action: String) -> some View {
++    private func continueTitle(for event: LearningTimelineEvent) -> String {
++        guard let source = event.source else { return event.title }
++        if let heading = nonempty(source.sectionTitle) { return heading }
++        let page = model.snapshot.analyses[source.documentID]?.pages.first { $0.pageIndex == source.pageIndex }
++        if let segment = page?.segments.first(where: {
++            !$0.text.isEmpty && !source.sourceText.isEmpty &&
++            ($0.text.contains(source.sourceText) || source.sourceText.contains($0.text))
++        }), let heading = nonempty(segment.sectionTitle) { return heading }
++        if let object = model.snapshot.studyObjects.first(where: { $0.id == event.learningObjectID }),
++           object.origin == .userAuthored, let title = nonempty(object.title) { return title }
++        return model.library.snapshot.activeBooks.first { $0.id == source.documentID }?.title ?? "Continue reading"
++    }
++
++    private func sourceExcerpt(for event: LearningTimelineEvent) -> String? {
++        guard let text = nonempty(event.source?.sourceText) else { return nil }
++        let compact = text.split(whereSeparator: \.isWhitespace).joined(separator: " ")
++        guard compact.count > 160 else { return compact }
++        let prefix = String(compact.prefix(160))
++        return String(prefix.prefix(upTo: prefix.lastIndex(of: " ") ?? prefix.endIndex)) + "…"
++    }
++
++    private func continueDetail(for event: LearningTimelineEvent) -> String {
++        let date = event.occurredAt.formatted(date: .abbreviated, time: .omitted)
++        guard let source = event.source else { return "Last activity · " + date }
++        let document = model.library.snapshot.activeBooks.first { $0.id == source.documentID }?.title ?? "Source"
++        return "\(document) · p. \(source.pageIndex + 1) · \(date)"
++    }
++
++    private func nonempty(_ text: String?) -> String? {
++        guard let value = text?.trimmingCharacters(in: .whitespacesAndNewlines), !value.isEmpty else { return nil }
++        return value
++    }
++
++    private func continueLabel(title: String, excerpt: String? = nil, detail: String, action: String) -> some View {
+         VStack(alignment: .leading, spacing: 14) {
+             Text("CONTINUE LEARNING").font(.caption.weight(.bold)).tracking(1.4)
+                 .foregroundStyle(LeuDesign.studyContinueSecondary)
+             Text(title).leuScaledFont(28, weight: .bold, relativeTo: .title)
++                .lineLimit(2)
+                 .fixedSize(horizontal: false, vertical: true)
++                .accessibilityIdentifier("study-continue-title")
++            if let excerpt {
++                Text(excerpt).font(.callout)
++                    .foregroundStyle(LeuDesign.studyContinueSecondary)
++                    .lineLimit(3).fixedSize(horizontal: false, vertical: true)
++                    .accessibilityIdentifier("study-continue-excerpt")
++            }
+             Text(detail).font(.subheadline)
+                 .foregroundStyle(LeuDesign.studyContinueSecondary)
+                 .fixedSize(horizontal: false, vertical: true)
+@@ -93,7 +134,7 @@
+                              identifier: String) -> some View {
+         let label = reviewLabel(title: title, items: items, empty: empty, summary: summary,
+                                 action: action, foreground: foreground, secondary: secondary)
+-            .frame(maxWidth: .infinity, minHeight: minimumHeight, alignment: .topLeading)
++            .frame(maxWidth: .infinity, minHeight: items.isEmpty ? 126 : minimumHeight, alignment: .topLeading)
+             .padding(18)
+             .background(surface, in: RoundedRectangle(cornerRadius: radius))
+             .contentShape(RoundedRectangle(cornerRadius: radius))
+--- a/Shelf/Learning/LearnTodayScreen.swift
++++ b/Shelf/Learning/LearnTodayScreen.swift
+@@ -56,6 +56,7 @@
+             .padding(.top, 24).padding(.bottom, 42)
+             .frame(maxWidth: 760).frame(maxWidth: .infinity)
+         }
++        .clipped()
+         .background(ShelfTheme.background)
+         .background { UITestFrameProbe(identifier: "learn-screen-frame") }
+         .accessibilityIdentifier("learn-screen")
+@@ -99,8 +100,12 @@
+     private var sessionComposer: some View {
+         VStack(alignment: .leading, spacing: 22) {
+             topicPicker
+-            timePicker
+-            startButton
++            VStack(alignment: .leading, spacing: 22) {
++                timePicker
++                startButton
++            }
++            .accessibilityElement(children: .contain)
++            .accessibilityIdentifier("study-time-and-start")
+         }
+     }
+ 
+@@ -168,7 +173,7 @@
+         VStack(alignment: .leading, spacing: 12) {
+             Text("TIME")
+                 .font(.caption.weight(.semibold)).tracking(1.8).foregroundStyle(LeuDesign.studyContinueSecondary)
+-            HStack(spacing: 8) {
++            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: dynamicTypeSize.isAccessibilitySize ? 2 : 4), spacing: 8) {
+                 ForEach([5, 10, 20, 30], id: \.self) { minutes in
+                     let selected = selectedMinutes == minutes
+                     Button {
+@@ -198,9 +203,9 @@
+                 model.startSession(topicID: selectedTopicID, minutes: selectedMinutes, mode: .learn)
+             } label: {
+                 HStack {
+-                    Text("Start study session")
++                    Text("Start study session").fixedSize(horizontal: false, vertical: true)
+                     Spacer()
+-                    Text("~\(selectedMinutes) min").font(.callout.monospacedDigit())
++                    if !dynamicTypeSize.isAccessibilitySize { Text("~\(selectedMinutes) min").font(.callout.monospacedDigit()) }
+                     Image(systemName: "arrow.right")
+                 }
+                 .frame(maxWidth: .infinity)
+--- a/Shelf/Learning/Components/PrimaryTabBar.swift
++++ b/Shelf/Learning/Components/PrimaryTabBar.swift
+@@ -2,13 +2,14 @@
+ 
+ /// Leu's single persistent navigation level, as a floating pill.
+ ///
+-/// It sits above the content rather than sealing the bottom of the screen with a bar and a
+-/// divider, which keeps the reading surface feeling like a page rather than a panel.
++/// RootView reserves its measured height below the clipped content viewport.
++/// The capsule floats within that opaque reserved region, without covering scroll content.
+ /// Library filters and Settings stay inside Library: there is no second global nav.
+ @MainActor
+ struct PrimaryTabBar: View {
+     @Binding var selection: PrimaryArea
+     @Environment(\.accessibilityReduceMotion) private var reduceMotion
++    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+     @Namespace private var indicator
+ 
+     var body: some View {
+@@ -34,7 +35,9 @@
+             }
+             ShelfHaptics.shared.play(.selectionChanged)
+         } label: {
+-            HStack(spacing: 7) {
++            let layout = dynamicTypeSize.isAccessibilitySize
++                ? AnyLayout(VStackLayout(spacing: 4)) : AnyLayout(HStackLayout(spacing: 7))
++            layout {
+                 Image(systemName: area.symbol)
+                     .font(.subheadline.weight(isOn ? .semibold : .regular))
+                 // The label stays at every size: an icon alone is not a sufficient
+--- a/ShelfUITests/StudyInteractionSupport.swift
++++ b/ShelfUITests/StudyInteractionSupport.swift
+@@ -94,12 +94,14 @@
+     func studyViewport(_ scroll: XCUIElement) -> CGRect {
+         guard scroll.exists else { return .zero }
+         let intersection = scroll.frame.intersection(app.frame)
++        let content = element("root-content-viewport")
++        let safeIntersection = content.exists ? intersection.intersection(content.frame) : intersection
+         let navigation = app.buttons["primary-learn"]
+         let chrome = element("root-bottom-chrome-frame")
+         let chromeTop = chrome.exists ? chrome.frame.minY : (navigation.exists ? navigation.frame.minY : intersection.maxY)
+-        let bottom = min(intersection.maxY, chromeTop)
+-        return CGRect(x: intersection.minX, y: intersection.minY, width: intersection.width,
+-                      height: max(0, bottom - intersection.minY)).insetBy(dx: 2, dy: 8)
++        let bottom = min(safeIntersection.maxY, chromeTop)
++        return CGRect(x: safeIntersection.minX, y: safeIntersection.minY, width: safeIntersection.width,
++                      height: max(0, bottom - safeIntersection.minY)).insetBy(dx: 2, dy: 8)
+     }
+ 
+     func dragStudyViewport(_ viewport: CGRect, upward: Bool) {
+--- a/ShelfUITests/ShelfStudyHomeUITests.swift
++++ b/ShelfUITests/ShelfStudyHomeUITests.swift
+@@ -7,7 +7,9 @@
+         openStudyHome()
+         XCTAssertTrue(app.buttons["study-continue-empty"].waitForExistence(timeout: 8))
+         XCTAssertTrue(app.staticTexts["No session yet"].exists)
+-        capture("study-01-empty-overview")
++        assertContentViewport()
++        capture("01-study-empty-collapsed")
++        capture("07-study-top")
+         captureField("study-continue-field", name: "study-01-empty-continue")
+         tapStudyButton("study-continue-empty")
+         XCTAssertTrue(app.navigationBars["Active Recall"].waitForExistence(timeout: 6))
+@@ -17,7 +19,13 @@
+ 
+         captureField("study-fading-field", name: "study-03-fading")
+         captureField("study-blind-spots-field", name: "study-04-blind-spots")
++        capture("04-fading-blind-spots")
+         captureField("study-labs-field", name: "study-05-labs")
++        let lastLab = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "study-lab-")).allElementsBoundByIndex.last!
++        let visibleLastLab = revealStudyButton(lastLab.identifier)
++        assertClearance(visibleLastLab)
++        capture("05-labs-last-row")
++        capture("10-labs-last-row")
+         let lab = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "study-lab-")).firstMatch
+         XCTAssertTrue(lab.exists)
+         let title = lab.label
+@@ -49,7 +57,12 @@
+         XCTAssertTrue(app.buttons["study-continue-populated"].waitForExistence(timeout: 8),
+                       "Remember must supply the real source-bound timeline event.")
+         XCTAssertFalse(app.buttons["study-continue-empty"].exists)
+-        captureField("study-continue-field", name: "study-02-populated")
++        captureField("study-continue-field", name: "02-study-populated-collapsed")
++        let title = app.staticTexts["study-continue-title"]
++        let excerpt = app.staticTexts["study-continue-excerpt"]
++        XCTAssertTrue(title.exists); XCTAssertTrue(excerpt.exists)
++        XCTAssertNotEqual(title.label, excerpt.label, "The source excerpt must not become the hero heading.")
++        XCTAssertLessThanOrEqual(excerpt.label.count, 161)
+         XCTAssertTrue(app.staticTexts["Continue at source"].exists)
+         tapStudyButton("study-continue-populated")
+         XCTAssertTrue(element("reader-screen").waitForExistence(timeout: 8))
+@@ -57,10 +70,69 @@
+         capture("study-continue-exact-source")
+     }
+ 
++    func testBuilderSubjectTimeAndStartRemainAboveNavigation() {
++        openStudyHome()
++        revealStudySessionOptions()
++        XCTAssertTrue(app.buttons["learn-topic-react"].waitForExistence(timeout: 25))
++        let subject = revealStudyButton("learn-topic-react")
++        assertClearance(subject)
++        capture("03-builder-expanded")
++        capture("08-builder-subjects")
++        tapStudyButton("learn-topic-react")
++        tapStudyButton("10 minutes")
++        let start = app.buttons["start-learning-session"]
++        let ready = XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: start)
++        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 35), .completed)
++        captureField("study-time-and-start", name: "09-builder-time-and-start")
++        assertClearance(start)
++        for duration in ["5 minutes", "10 minutes", "20 minutes", "30 minutes"] {
++            assertClearance(app.buttons[duration])
++        }
++        XCTAssertTrue(start.isHittable)
++        start.tap()
++        XCTAssertTrue(element("study-session-screen").waitForExistence(timeout: 12))
++    }
++
++    func testProgressLastRowRemainsAboveNavigation() {
++        openStudyHome()
++        XCTAssertTrue(app.buttons["study-session-options"].waitForExistence(timeout: 8))
++        tapStudyButton("learning-progress")
++        expectProgressOpen()
++        let topics = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "progress-topic-"))
++        XCTAssertTrue(topics.firstMatch.waitForExistence(timeout: 25))
++        let lastTopic = topics.allElementsBoundByIndex.last!
++        let lastRow = revealStudyButton(lastTopic.identifier, scrollID: "progress-now-scroll")
++        assertClearance(lastRow)
++        capture("06-progress-last-row")
++        closeProgress()
++    }
++
++    private func assertContentViewport() {
++        let content = element("root-content-viewport")
++        let chrome = element("root-bottom-chrome-frame")
++        XCTAssertTrue(content.waitForExistence(timeout: 5))
++        XCTAssertTrue(chrome.exists)
++        XCTAssertGreaterThan(content.frame.height, 0)
++        XCTAssertGreaterThan(content.frame.minY, app.frame.minY, "Study must respect the top safe area.")
++        XCTAssertLessThanOrEqual(content.frame.maxY, chrome.frame.minY)
++        let status = app.statusBars.firstMatch
++        if status.exists { XCTAssertGreaterThanOrEqual(content.frame.minY, status.frame.maxY) }
++    }
++
++    private func assertClearance(_ control: XCUIElement) {
++        assertContentViewport()
++        XCTAssertTrue(control.exists)
++        XCTAssertTrue(control.isHittable)
++        XCTAssertTrue(element("root-content-viewport").frame.contains(control.frame),
++                      "The complete control must fit in the visible content region: \(control.identifier)")
++        XCTAssertLessThanOrEqual(control.frame.maxY, element("root-bottom-chrome-frame").frame.minY - 8)
++    }
++
+     private func openStudyHome() {
+         XCTAssertTrue(app.buttons["primary-learn"].waitForExistence(timeout: 8))
+         app.buttons["primary-learn"].tap()
+         XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 8))
++        assertContentViewport()
+     }
+ 
+     private func captureField(_ identifier: String, name: String) {
+@@ -71,7 +143,9 @@
+             let viewport = studyViewport(viewportElement)
+             let frame = field.frame
+             // Tall AX fields need multiple real viewport captures, never a scaled composite.
+-            if frame.minY >= viewport.minY && frame.minY < viewport.minY + viewport.height * 0.55 {
++            let fits = frame.height <= viewport.height
++            let topVisible = frame.minY >= viewport.minY && frame.minY < viewport.minY + viewport.height * 0.55
++            if (fits && viewport.contains(frame)) || (!fits && topVisible) {
+                 capture(name)
+                 if frame.maxY > viewport.maxY {
+                     var lastBottom = frame.minY
+@@ -89,7 +163,14 @@
+                 attachAccessibilityTree(name: name)
+                 return
+             }
+-            dragStudyViewport(viewport, upward: frame.minY >= viewport.minY)
++            // Position the field with a measured drag, avoiding AX1 overshoot/oscillation.
++            let delta = frame.minY - (viewport.minY + 20)
++            let distance = min(abs(delta), viewport.height * 0.45)
++            let origin = app.coordinate(withNormalizedOffset: .zero)
++            let startY = delta > 0 ? viewport.maxY - 20 : viewport.minY + 20
++            let endY = startY + (delta > 0 ? -distance : distance)
++            origin.withOffset(CGVector(dx: viewport.midX, dy: startY))
++                .press(forDuration: 0.05, thenDragTo: origin.withOffset(CGVector(dx: viewport.midX, dy: endY)))
+         }
+         XCTFail("Could not place \(identifier) inside the actual Study viewport for capture.")
+     }
+--- a/ShelfUITests/ShelfStudyInteractionUITests.swift
++++ b/ShelfUITests/ShelfStudyInteractionUITests.swift
+@@ -31,6 +31,8 @@
+             tapStudyButton(identifier)
+             XCTAssertTrue(app.navigationBars[title].waitForExistence(timeout: 6))
+             XCTAssertTrue(app.buttons[contentID].exists)
++            XCTAssertTrue(app.buttons[contentID].isHittable,
++                          "The setup action must be reachable when its sheet opens.")
+             closeStudySheet(title)
+         }
+         revealStudyTools()

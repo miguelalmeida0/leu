@@ -1,0 +1,1694 @@
+=== Leu V24.5 structural validation ===
+PASS: 484 project objects; source and scheme references resolve.
+PASS: 367 source/script files; largest 298 lines (Shelf/Features/Reader/ReaderModel.swift).
+PASS: assets, plist/JSON/XML, local package and native membership checks.
+NOT CHECKED: Apple SDK typechecking, native runtime, performance, or physical installation.
+=== Leu file-scoped import audit ===
+PASS: ShelfCore file-scoped import audit.
+=== Leu Learning OS offline/no-model audit ===
+PASS: Learning OS is dependency-free for studying; no network, model-inference, camera, or external AI client found.
+=== Leu Learning OS architecture audit ===
+PASS: Learning OS domain/services/UI boundaries, modularity, haptic protocol, and calm-product guardrails are present.
+=== Leu Connected Knowledge architecture audit ===
+PASS: connected-library architecture, ranking floor, one-action connection saving, Trails refinement and reindex recovery contracts.
+=== Leu Voice architecture audit ===
+PASS: Shelf Voice uses a source-mapped compiler, quality-ranked Apple voices, and native background/remote transport.
+=== Leu Connected Knowledge + Voice privacy boundary ===
+PASS: Knowledge and learning remain offline; Supertonic uses one explicit pinned asset download and local ONNX inference thereafter.
+=== Leu V24 semantic/emotional/neural release contract ===
+PASS: V24 semantic truth, persistence, certainty, Lens/source-return, emotional privacy/release, interruption, neural voice and no-tree contracts.
+=== Leu native UI test contract audit ===
+PASS: native UI test contract (unambiguous controls + real viewport gesture driver).
+PASS: Study native-button, visible-viewport, session handoff, collapsed-subtree and diagnostic source contracts (runtime still requires Xcode).
+=== Leu SwiftUI compile-contract audit ===
+PASS: SwiftUI compile-contract audit (result builders, Hashable navigation items, frame overloads, token namespace, actor-safe detached captures, Section overloads).
+=== Leu Gallery Minimalism release contract ===
+PASS: Gallery Minimalism system, light-first surfaces, one-tier IA, no-tree resume invariant, and visible return paths.
+=== Leu V24.2 interaction and recovery source contracts ===
+PASS: isolated identifiers, Lens round-trip, launch restoration, ordered checkpoints and visible native-control journeys
+=== Leu V24.3 root compile source checks ===
+PASS: bounded RootView expressions, typed lifecycle callbacks, preserved route ownership and explicit highlight keys
+PASS: bootstrap and recovery preserve execution order
+PASS: unfinished Study restores directly
+PASS: recovery does not override a later manual navigation
+PASS: no session stays in Library
+PASS: completed sessions do not reopen as unfinished
+PASS: recovery waits for Learning readiness
+PASS: ready recovery can still run after an unready attempt
+PASS: retry retains original bootstrap order
+PASS: index synchronization is ordered
+PASS: active scene does not request a checkpoint
+PASS: inactive and background request checkpoints
+PASS: no session means no checkpoint request
+PASS: nil session changes do not dismiss Progress
+PASS: recall from Progress reveals the Study session
+PASS: session changes do not steal a different tab
+PASS: leaving Study resets only its internal surface
+PASS: Trails refreshes both indexes
+PASS: Study refreshes both indexes
+PASS: nil destination is ignored
+PASS: source navigation retains document, page, excerpt and Lens origin
+PASS: a presented Reader defers another destination
+PASS: dismissal closes the old Reader before opening the queued source
+PASS: unavailable source produces an error, not a route
+PASS: typed book identity includes its fingerprint
+PASS: file selection keeps the first URL
+PASS: empty file selection clears confirmation
+PASS: import errors remain visible
+PASS: merge immediately clears the confirmation
+PASS: merge refreshes indexes only after restore
+PASS: library scope reset clears filters and refreshes search
+PASS: 30 extracted RootView lifecycle checks; platform adapters, not Apple UI certification
+=== Leu V24.4 Lens compile source checks ===
+PASS: nominal Lens rows, bounded expressions, explicit accessibility Text and preserved source action
+PASS: 26 Lens projection/navigation checks; real source types and extracted actions, not Apple UI certification
+=== Leu V24.5 Release interaction and complete-suite checks ===
+PASS: isolated Release surface, pinned native actions, bounded ephemeral drawing and acknowledged exit
+PASS: Release is initially optional, without required drawing
+PASS: No previous drawing is loaded
+PASS: Accessible Release works with an empty canvas
+PASS: Release produces a distinct completed state
+PASS: Repeated completion cannot repeat its haptic effect
+PASS: Late gesture events after release do not resurrect drawings
+PASS: Finger input changes actual state
+PASS: Subpixel gesture noise is not stored indefinitely
+PASS: One stroke preserves its ordered points
+PASS: Separate strokes are not joined by a false line
+PASS: Drawing locations remain inside the canvas
+PASS: Non-finite gesture locations are rejected
+PASS: Invalid canvas geometry is rejected
+PASS: Release clears a populated canvas
+PASS: Released content is erased, not merely hidden
+PASS: Point accounting resets when content is erased
+PASS: Long gestures have a fixed storage ceiling
+PASS: Point accounting matches retained storage
+PASS: New strokes cannot bypass the total-point ceiling
+PASS: Closing clears all ephemeral storage
+PASS: Erasing resets the open-stroke state
+PASS: Many short strokes also have a storage ceiling
+PASS: Stroke limit cannot leak orphan points
+PASS: Release remains available at the storage ceiling
+PASS: The logged V24.4 action really crosses the unobscured viewport
+PASS: The old reveal helper starts its scroll gesture inside the canvas
+PASS: The logged action overlaps the actual bottom navigation
+PASS: 27 Release state/recorded-geometry checks; no Apple UI execution claimed
+=== Leu native compile gate ===
+** BUILD SUCCEEDED **
+=== Leu portable core tests ===
+Executed 9 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+Executed 8 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Executed 14 tests, with 0 failures (0 unexpected) in 0.089 (0.090) seconds
+Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Executed 3 tests, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Executed 7 tests, with 0 failures (0 unexpected) in 0.426 (0.426) seconds
+Executed 6 tests, with 0 failures (0 unexpected) in 0.025 (0.025) seconds
+Executed 6 tests, with 0 failures (0 unexpected) in 0.010 (0.010) seconds
+Executed 12 tests, with 0 failures (0 unexpected) in 4.094 (4.095) seconds
+Executed 7 tests, with 0 failures (0 unexpected) in 0.024 (0.025) seconds
+Executed 2 tests, with 0 failures (0 unexpected) in 0.026 (0.026) seconds
+Executed 4 tests, with 0 failures (0 unexpected) in 0.085 (0.085) seconds
+Executed 2 tests, with 0 failures (0 unexpected) in 0.542 (0.542) seconds
+Executed 3 tests, with 0 failures (0 unexpected) in 0.020 (0.020) seconds
+Executed 5 tests, with 0 failures (0 unexpected) in 0.044 (0.044) seconds
+Executed 4 tests, with 0 failures (0 unexpected) in 0.030 (0.031) seconds
+Executed 10 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Executed 22 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Executed 10 tests, with 0 failures (0 unexpected) in 0.037 (0.038) seconds
+Executed 14 tests, with 0 failures (0 unexpected) in 0.010 (0.011) seconds
+Executed 7 tests, with 0 failures (0 unexpected) in 0.063 (0.064) seconds
+Executed 7 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Executed 5 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Executed 7 tests, with 0 failures (0 unexpected) in 0.051 (0.052) seconds
+Executed 5 tests, with 0 failures (0 unexpected) in 0.028 (0.028) seconds
+Executed 8 tests, with 0 failures (0 unexpected) in 0.074 (0.074) seconds
+Executed 5 tests, with 0 failures (0 unexpected) in 0.009 (0.009) seconds
+Executed 9 tests, with 0 failures (0 unexpected) in 0.029 (0.030) seconds
+Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Executed 7 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Executed 8 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Executed 243 tests, with 0 failures (0 unexpected) in 5.743 (5.757) seconds
+Executed 243 tests, with 0 failures (0 unexpected) in 5.743 (5.767) seconds
+QA_STAGE_RESULT: Leu portable core tests | exit code 0
+=== Leu Apple PDF integration and viewport geometry tests ===
+Executed 2 tests, with 0 failures (0 unexpected) in 0.058 (0.059) seconds
+Executed 3 tests, with 0 failures (0 unexpected) in 0.266 (0.294) seconds
+2026-09-12 14:39:44.403105+0200 Shelf[78047:566174] CoreText note: Client requested name ".SFUI-Regular_wdth_opsz140000_GRAD_wght", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[UIFont systemFontOfSize:].
+2026-09-12 14:39:44.403151+0200 Shelf[78047:566174] CoreText note: Client requested name ".SFUI-Regular_wdth_opsz140000_GRAD_wght", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[UIFont systemFontOfSize:].
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfTests/PDFIntegrationTests.swift:108: error: -[ShelfTests.PDFIntegrationTests testReadableModeRepairsKnownExtractionSeamsWithoutChangingSourcePDF] : XCTAssertEqual failed: ("Optional(6452 bytes)") is not equal to ("Optional(6452 bytes)")
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfTests/PDFIntegrationTests.swift:112: error: -[ShelfTests.PDFIntegrationTests testReadableModeRepairsKnownExtractionSeamsWithoutChangingSourcePDF] : XCTAssertTrue failed
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfTests/PDFIntegrationTests.swift:113: error: -[ShelfTests.PDFIntegrationTests testReadableModeRepairsKnownExtractionSeamsWithoutChangingSourcePDF] : XCTAssertTrue failed
+Test Case '-[ShelfTests.PDFIntegrationTests testReadableModeRepairsKnownExtractionSeamsWithoutChangingSourcePDF]' failed (0.425 seconds).
+Test Case '-[ShelfTests.PDFIntegrationTests testSearchReturnsMatchingSourcePages]' started.
+Test Case '-[ShelfTests.PDFIntegrationTests testSearchReturnsMatchingSourcePages]' passed (0.010 seconds).
+Test Case '-[ShelfTests.PDFIntegrationTests testSynchronizingAnnotationsDoesNotDuplicateThem]' started.
+Executed 9 tests, with 3 failures (0 unexpected) in 0.707 (0.711) seconds
+2026-09-12 14:39:45.146480+0200 Shelf[78047:566174] CoreText note: Client requested name ".SFUI-Regular_wdth_opsz110000_GRAD_wght", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[UIFont systemFontOfSize:].
+2026-09-12 14:39:45.146511+0200 Shelf[78047:566174] CoreText note: Client requested name ".SFUI-Regular_wdth_opsz110000_GRAD_wght", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[UIFont systemFontOfSize:].
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfTests/PDFReconstructionV25Tests.swift:32: error: -[ShelfTests.PDFReconstructionV25Tests testFragmentedRunsBecomeOneHeadingFromRealPDFGeometry] : XCTAssertTrue failed
+Test Case '-[ShelfTests.PDFReconstructionV25Tests testFragmentedRunsBecomeOneHeadingFromRealPDFGeometry]' failed (0.047 seconds).
+Test Case '-[ShelfTests.PDFReconstructionV25Tests testNumberedListsCodeAndRealHyphensSurvive]' started.
+2026-09-12 14:39:45.175305+0200 Shelf[78047:566174] attributedStringScaled count: 1
+2026-09-12 14:39:45.175392+0200 Shelf[78047:566174] attributedStringScaled i: 0
+2026-09-12 14:39:45.187792+0200 Shelf[78047:566174] CoreText note: Client requested name ".SFUIMono-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[UIFont systemFontOfSize:].
+2026-09-12 14:39:45.187826+0200 Shelf[78047:566174] CoreText note: Client requested name ".SFUIMono-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[UIFont systemFontOfSize:].
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfTests/PDFReconstructionV25Tests.swift:58: error: -[ShelfTests.PDFReconstructionV25Tests testNumberedListsCodeAndRealHyphensSurvive] : XCTAssertEqual failed: ("0") is not equal to ("2")
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfTests/PDFReconstructionV25Tests.swift:59: error: -[ShelfTests.PDFReconstructionV25Tests testNumberedListsCodeAndRealHyphensSurvive] : XCTAssertTrue failed
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfTests/PDFReconstructionV25Tests.swift:60: error: -[ShelfTests.PDFReconstructionV25Tests testNumberedListsCodeAndRealHyphensSurvive] : XCTAssertTrue failed
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfTests/PDFReconstructionV25Tests.swift:61: error: -[ShelfTests.PDFReconstructionV25Tests testNumberedListsCodeAndRealHyphensSurvive] : XCTAssertTrue failed
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfTests/PDFReconstructionV25Tests.swift:62: error: -[ShelfTests.PDFReconstructionV25Tests testNumberedListsCodeAndRealHyphensSurvive] : XCTAssertTrue failed - Numeric body content must not be mistaken for a footer
+Test Case '-[ShelfTests.PDFReconstructionV25Tests testNumberedListsCodeAndRealHyphensSurvive]' failed (0.030 seconds).
+Test Case '-[ShelfTests.PDFReconstructionV25Tests testSourceRoundTripHighlightsCorrectPageWithoutChangingOriginalBytes]' started.
+Test Case '-[ShelfTests.PDFReconstructionV25Tests testSourceRoundTripHighlightsCorrectPageWithoutChangingOriginalBytes]' passed (0.007 seconds).
+Test Case '-[ShelfTests.PDFReconstructionV25Tests testTwoColumnsRemainInReadingOrder]' started.
+Executed 6 tests, with 6 failures (0 unexpected) in 0.336 (0.339) seconds
+Executed 4 tests, with 0 failures (0 unexpected) in 0.044 (0.045) seconds
+Executed 2 tests, with 0 failures (0 unexpected) in 0.304 (0.305) seconds
+Executed 26 tests, with 9 failures (0 unexpected) in 1.716 (1.754) seconds
+Test session results, code coverage, and logs:
+** TEST FAILED **
+Test result: /Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/.build/results/Shelf-20260912-143800-77727.xcresult
+QA_STAGE_RESULT: Leu Apple PDF integration and viewport geometry tests | exit code 65
+FAIL: Stage recorded; continuing independent suites to collect the full failure set.
+=== Leu Release regression (54) ===
+LEU_UI_CHECKPOINT: before-recall-rating-forgot nativeButtons=1 viewport=(2.0, 134.33333333333331, 416.0, 677.6666666666666) type=9 frame=(36.93333435058594, 555.933349609375, 90.46665954589844, 48.79998779296875) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-recall-rating-forgot nativeButtons=0 viewport=(2.0, 134.33333333333331, 416.0, 677.6666666666666)
+LEU_UI_CHECKPOINT: before-feeling-irritated nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(69.5999984741211, 543.5999755859375, 106.79999542236328, 48.800048828125) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-feeling-irritated nativeButtons=0 viewport=(2.0, 76.0, 416.0, 736.0)
+LEU_UI_CHECKPOINT: before-check-in-open-release nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(39.599998474121094, 437.6000061035156, 100.13333892822266, 48.79998779296875) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-check-in-open-release nativeButtons=0 viewport=(2.0, 76.0, 416.0, 736.0)
+LEU_UI_CHECKPOINT: before-session-summary-done nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(188.00000000000003, 754.0, 44.0, 44.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-session-summary-done nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+Test Case '-[ShelfUITests.ShelfWorldClassUITests test54IrritatedCheckInOffersOptionalRelease]' passed (81.664 seconds).
+Test session results, code coverage, and logs:
+** TEST SUCCEEDED **
+Test result: /Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/.build/results/Shelf-20260912-144017-78336.xcresult
+QA_STAGE_RESULT: Leu Release regression (54) | exit code 0
+=== Leu remaining V24 features (50 / 51 / 52 / 53 / 55 / 56) ===
+LEU_UI_CHECKPOINT: before-learn-topic-react nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(21.649999618530273, 378.98333740234375, 184.70001220703125, 55.699981689453125) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learn-topic-react nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(21.649999618530273, 378.98333740234375, 184.70001220703125, 55.699981689453125) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-start-learning-session nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(21.600000381469727, 616.933349609375, 376.79998779296875, 48.79998779296875) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-start-learning-session nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+LEU_UI_CHECKPOINT: before-recall-rating-forgot nativeButtons=1 viewport=(2.0, 134.33333333333331, 416.0, 677.6666666666666) type=9 frame=(36.93333435058594, 527.2666625976562, 90.46665954589844, 48.79998779296875) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-recall-rating-forgot nativeButtons=0 viewport=(2.0, 134.33333333333331, 416.0, 677.6666666666666)
+LEU_UI_CHECKPOINT: before-feeling-irritated nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(69.5999984741211, 543.5999755859375, 106.79999542236328, 48.800048828125) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-feeling-irritated nativeButtons=0 viewport=(2.0, 76.0, 416.0, 736.0)
+LEU_UI_CHECKPOINT: before-check-in-open-release nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(39.599998474121094, 437.6000061035156, 100.13333892822266, 48.79998779296875) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-check-in-open-release nativeButtons=0 viewport=(2.0, 76.0, 416.0, 736.0)
+Test Case '-[ShelfUITests.ShelfEmotionalFlowUITests test55DrawingCannotHideReleaseOrExitControls]' passed (102.713 seconds).
+LEU_UI_CHECKPOINT: before-learn-topic-react nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(21.649999618530273, 378.98333740234375, 184.70001220703125, 55.699981689453125) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learn-topic-react nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(21.649999618530273, 378.98333740234375, 184.70001220703125, 55.699981689453125) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-start-learning-session nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(21.600000381469727, 616.933349609375, 376.79998779296875, 48.79998779296875) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-start-learning-session nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+LEU_UI_CHECKPOINT: before-recall-rating-forgot nativeButtons=1 viewport=(2.0, 134.33333333333331, 416.0, 677.6666666666666) type=9 frame=(36.93333435058594, 555.933349609375, 90.46665954589844, 48.79998779296875) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-recall-rating-forgot nativeButtons=0 viewport=(2.0, 134.33333333333331, 416.0, 677.6666666666666)
+LEU_UI_CHECKPOINT: before-feeling-drained nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(244.93333435058594, 543.5999755859375, 104.46665954589844, 48.800048828125) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-feeling-drained nativeButtons=0 viewport=(2.0, 76.0, 416.0, 736.0)
+LEU_UI_CHECKPOINT: before-check-in-save-place nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(39.599998474121094, 485.6000061035156, 152.13333129882812, 48.800018310546875) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-check-in-save-place nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+LEU_UI_CHECKPOINT: before-learning-progress nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 290.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-progress nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+LEU_UI_CHECKPOINT: before-learning-progress nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 288.66666666666674, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-progress nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+Test Case '-[ShelfUITests.ShelfEmotionalFlowUITests test56DrainedCanFinishWithoutLosingCompletedHistory]' passed (86.963 seconds).
+Executed 2 tests, with 0 failures (0 unexpected) in 189.676 (189.680) seconds
+t =    29.09s Collecting debug information to assist test failure triage
+t =    29.09s     Requesting snapshot of accessibility hierarchy for app with pid 79395
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfUITests/ShelfWorldClassUITests.swift:72: error: -[ShelfUITests.ShelfWorldClassUITests test50SemanticQuestionUsesFourLevelCertainty] : XCTAssertTrue failed - The seeded React study session must expose a compiled semantic question.
+t =    29.37s Tear Down
+t =    29.37s     Find the Target Application 'dev.shelf.personal'
+t =    29.51s     Added attachment named 'failed-journey'
+t =    29.51s     Requesting snapshot of accessibility hierarchy for app with pid 79395
+LEU_UI_TREE_BEGIN: failed-journey
+Optional(Attributes: Application, 0x1149ad400, pid: 79395, label: 'Leu'
+Element subtree:
+→Application, 0x1149ad400, pid: 79395, label: 'Leu'
+Window (Main), 0x1149ad540, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1149ac280, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1149ad900, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1149ada40, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1149ac140, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1149aea80, {{0.0, 68.0}, {420.0, 752.0}}, identifier: 'study-session-screen', label: 'study-session-screen'
+Button, 0x1149aed00, {{12.0, 75.0}, {44.0, 44.0}}, identifier: 'xmark', label: 'End study session'
+StaticText, 0x1149aebc0, {{70.0, 73.2}, {40.0, 11.0}}, label: 'STUDY'
+StaticText, 0x1149ae6c0, {{70.0, 86.2}, {42.3, 19.3}}, identifier: 'study-progress', label: '1 of 3'
+StaticText, 0x1149ae940, {{70.0, 107.5}, {32.0, 13.3}}, identifier: 'study-save-status', label: 'Saved'
+StaticText, 0x1149ae800, {{349.0, 87.3}, {59.0, 19.3}}, label: '~10 min'
+Other, 0x1149ae300, {{0.0, 126.3}, {420.0, 693.7}}, identifier: 'study-activity-frame', label: 'study-activity-frame'
+ScrollView, 0x1149ae580, {{0.0, 126.3}, {420.0, 785.7}}
+Other, 0x1149ae440, {{0.0, 126.3}, {420.0, 320.3}}
+StaticText, 0x1149ae1c0, {{22.7, 150.3}, {72.7, 14.3}}, label: 'Active recall'
+StaticText, 0x1149ad2c0, {{22.7, 186.7}, {365.0, 101.7}}, label: 'ot cha ge he st te varia le ins de he ev nt hand er t ha is alr ady run'
+StaticText, 0x1149ade00, {{22.7, 310.3}, {374.7, 42.3}}, label: 'Before revealing the source, reconstruct the idea in your own words.'
+Other, 0x1149adf40, {{22.7, 150.3}, {374.7, 272.3}}, identifier: 'recall-card', label: 'recall-card'
+Button, 0x1149adb80, {{22.3, 374.3}, {150.5, 48.8}}, label: 'Reveal source'
+Other, 0x1149adcc0, {{387.0, 154.3}, {30.0, 665.7}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x1149acc80, {{414.0, 530.7}, {3.0, 286.3}}
+Other, 0x1149ad180, {{387.0, 154.3}, {30.0, 665.7}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x1149ad040, {{414.0, 530.7}, {3.0, 286.3}}
+Other, 0x1149acf00, {{0.0, 820.0}, {420.0, 58.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+Button, 0x1149acdc0, {{20.0, 820.0}, {126.7, 58.0}}, identifier: 'primary-shelf', label: 'Library'
+Image, 0x1149ae080, {{73.0, 830.0}, {20.7, 18.7}}, identifier: 'books.vertical', label: 'books.vertical'
+StaticText, 0x1149acb40, {{64.2, 855.7}, {38.3, 13.3}}, label: 'Library'
+Button, 0x1149aca00, {{146.7, 820.0}, {126.7, 58.0}}, identifier: 'primary-learn', label: 'Study', Selected
+Image, 0x1149ac8c0, {{198.7, 829.0}, {23.0, 20.7}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x1149ac780, {{194.2, 857.0}, {31.7, 13.3}}, label: 'Study'
+Button, 0x1149ac640, {{273.3, 820.0}, {126.7, 58.0}}, identifier: 'primary-trails', label: 'Trails'
+Image, 0x1149ac500, {{327.7, 832.0}, {18.0, 14.7}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+StaticText, 0x1149ac3c0, {{321.8, 853.7}, {29.7, 13.3}}, label: 'Trails'
+Path to element:
+→Application, 0x1149ad400, pid: 79395, label: 'Leu'
+Query chain:
+→Find: Target Application 'dev.shelf.personal'
+Output: {
+Application, 0x1149aee40, pid: 79395, label: 'Leu'
+}
+)
+LEU_UI_TREE_END: failed-journey
+Test Case '-[ShelfUITests.ShelfWorldClassUITests test50SemanticQuestionUsesFourLevelCertainty]' failed (29.845 seconds).
+t =    22.20s Collecting debug information to assist test failure triage
+t =    22.20s     Requesting snapshot of accessibility hierarchy for app with pid 79449
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfUITests/ShelfWorldClassUITests.swift:94: error: -[ShelfUITests.ShelfWorldClassUITests test51UnderstandingLensUsesVerifiedSourceFacts] : XCTAssertTrue failed
+t =    22.34s Tear Down
+t =    22.34s     Find the Target Application 'dev.shelf.personal'
+t =    22.51s     Added attachment named 'failed-journey'
+t =    22.51s     Requesting snapshot of accessibility hierarchy for app with pid 79449
+LEU_UI_TREE_BEGIN: failed-journey
+Optional(Attributes: Application, 0x1167b5f40, pid: 79449, label: 'Leu'
+Element subtree:
+→Application, 0x1167b5f40, pid: 79449, label: 'Leu'
+Window (Main), 0x1167b6080, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1167b4500, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1167b4640, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1167b4780, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1167b48c0, {{0.0, 0.0}, {420.0, 912.0}}
+ScrollView, 0x1167b4b40, {{0.0, 0.0}, {420.0, 912.0}}, identifier: 'library-screen'
+Other, 0x1167b5cc0, {{0.0, 68.0}, {420.0, 1147.0}}
+StaticText, 0x1167b5e00, {{22.0, 100.2}, {36.7, 15.7}}, label: 'LEU'
+Button, 0x1167b5a40, {{304.0, 84.0}, {44.0, 44.0}}, identifier: 'library-options', label: 'Library options'
+Button, 0x1167b5b80, {{304.0, 84.0}, {44.0, 44.0}}
+Image, 0x1167b5040, {{317.7, 104.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1167b5900, {{356.0, 85.7}, {42.0, 42.0}}, identifier: 'import-pdf', label: 'Import PDFs'
+StaticText, 0x1167b57c0, {{22.0, 121.8}, {121.0, 45.7}}, label: 'Library'
+StaticText, 0x1167b5680, {{22.0, 173.5}, {268.7, 18.0}}, label: 'Your books, passages and reading history.'
+ScrollView, 0x1167b5540, {{22.0, 232.0}, {376.0, 38.0}}
+Other, 0x1167b5180, {{22.0, 232.0}, {308.0, 38.0}}
+Button, 0x1167b5400, {{21.6, 231.6}, {49.4, 38.7}}, identifier: 'library-filter-all', label: 'All', Selected
+Button, 0x1167b52c0, {{78.3, 231.6}, {92.0, 38.7}}, identifier: 'library-filter-favorites', label: 'Favorites'
+Button, 0x1167b4f00, {{177.6, 231.6}, {84.0, 38.7}}, identifier: 'library-filter-recents', label: 'Recents'
+Button, 0x1167b4c80, {{269.0, 231.6}, {61.4, 38.7}}, identifier: 'library-filter-tags', label: 'Tags'
+Image, 0x1167b4dc0, {{37.7, 308.7}, {14.3, 14.7}}, identifier: 'magnifyingglass', label: 'Search'
+TextField, 0x1167b4a00, {{63.7, 305.0}, {320.3, 22.0}}, identifier: 'library-search', placeholderValue: 'Search books and passages…'
+StaticText, 0x1167b4140, {{22.0, 354.0}, {102.0, 13.3}}, label: 'COLLECTIONS'
+ScrollView, 0x1167b4280, {{22.0, 381.3}, {376.0, 38.0}}
+Other, 0x1167b43c0, {{22.0, 381.3}, {400.3, 38.0}}
+Button, 0x1167b4000, {{22.6, 381.0}, {47.4, 38.7}}, label: 'All', Selected
+Button, 0x1167b6300, {{77.3, 381.0}, {67.0, 38.7}}, label: 'Study'
+Button, 0x1167b6440, {{151.6, 381.0}, {91.0, 38.7}}, label: 'Frontend'
+Button, 0x1167b6580, {{250.0, 381.0}, {86.7, 38.7}}, label: 'Backend'
+Button, 0x1167b66c0, {{344.0, 381.0}, {77.7, 38.7}}, label: 'Add or manage collections'
+Image, 0x1167b6800, {{358.3, 394.0}, {12.3, 12.3}}, identifier: 'plus', label: 'Add'
+StaticText, 0x1167b6940, {{358.3, 391.3}, {51.0, 18.0}}, label: 'Edit'
+Other, 0x1167b6a80, {{22.0, 441.3}, {376.0, 462.0}}
+Button, 0x1167b6bc0, {{22.0, 441.3}, {181.0, 222.0}}, identifier: 'book-React Notes', label: 'Open React Notes, 4 pages'
+Other, 0x1167b6d00, {{22.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x1167b6e40, {{38.0, 463.3}, {111.0, 24.0}}, label: 'React Notes'
+StaticText, 0x1167b6f80, {{38.0, 495.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x1167b70c0, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-React Notes', label: 'Actions for React Notes'
+Button, 0x1167b7200, {{156.0, 444.3}, {44.0, 44.0}}
+Image, 0x1167b7340, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1167b7480, {{217.0, 441.3}, {181.0, 222.0}}, identifier: 'book-System Design', label: 'Open System Design, 4 pages'
+Other, 0x1167b75c0, {{217.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x1167b7700, {{233.0, 463.3}, {72.3, 49.0}}, label: 'System Design'
+StaticText, 0x1167b7840, {{233.0, 520.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x1167b7980, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-System Design', label: 'Actions for System Design'
+Button, 0x1167b7ac0, {{351.0, 444.3}, {44.0, 44.0}}
+Image, 0x1167b7c00, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1167b7d40, {{22.0, 681.3}, {181.0, 222.0}}, identifier: 'book-JavaScript Deep Dive', label: 'Open JavaScript Deep Dive, 4 pages'
+Other, 0x1167b7e80, {{22.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x1148b0640, {{38.0, 703.3}, {98.0, 49.0}}, label: 'JavaScript Deep Dive'
+StaticText, 0x1148b1e00, {{38.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x1148b2580, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-JavaScript Deep Dive', label: 'Actions for JavaScript Deep Dive'
+Button, 0x1148b1cc0, {{156.0, 684.3}, {44.0, 44.0}}
+Image, 0x1148b1040, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1148b2bc0, {{217.0, 681.3}, {181.0, 222.0}}, identifier: 'book-Coding Interviews', label: 'Open Coding Interviews, 4 pages'
+Other, 0x1148b2940, {{217.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x1148b0000, {{233.0, 703.3}, {98.7, 49.0}}, label: 'Coding Interviews'
+StaticText, 0x1148b3d40, {{233.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x1148b0280, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-Coding Interviews', label: 'Actions for Coding Interviews'
+Button, 0x1148b03c0, {{351.0, 684.3}, {44.0, 44.0}}
+Image, 0x1148b3200, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+StaticText, 0x1148b3ac0, {{118.7, 1173.3}, {182.7, 15.7}}, label: '6 PDFs · stored on this iPhone'
+Other, 0x1148b12c0, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x1148b0140, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x1148b2080, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x1167a9540, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x1167a9680, {{0.0, 820.0}, {420.0, 58.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+Button, 0x1167a97c0, {{20.0, 820.0}, {126.7, 58.0}}, identifier: 'primary-shelf', label: 'Library', Selected
+Image, 0x1167a9900, {{72.7, 830.0}, {21.3, 18.7}}, identifier: 'books.vertical', label: 'books.vertical'
+StaticText, 0x1167a9a40, {{63.0, 856.0}, {40.7, 13.3}}, label: 'Library'
+Button, 0x1167a9b80, {{146.7, 820.0}, {126.7, 58.0}}, identifier: 'primary-learn', label: 'Study'
+Image, 0x1167a9cc0, {{198.7, 829.3}, {22.7, 20.3}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x1167a9e00, {{194.8, 856.5}, {30.3, 13.3}}, label: 'Study'
+Button, 0x1167abe80, {{273.3, 820.0}, {126.7, 58.0}}, identifier: 'primary-trails', label: 'Trails'
+Image, 0x1167ab340, {{327.7, 832.0}, {18.0, 14.7}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+StaticText, 0x1167ab480, {{321.8, 853.7}, {29.7, 13.3}}, label: 'Trails'
+Other, 0x1167abac0, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1167abd40, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1167abc00, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1167ab980, {{0.0, 68.0}, {420.0, 810.0}}, identifier: 'reader-screen', label: 'reader-screen'
+Other, 0x1167ab840, {{0.0, 158.0}, {420.0, 521.0}}, identifier: 'read-paged-viewport', label: 'Reading area'
+Other, 0x1167ab700, {{0.0, 158.0}, {420.0, 521.0}}
+Other, 0x1167ab5c0, {{0.0, 158.0}, {420.0, 521.0}}
+ScrollView, 0x1167ab200, {{0.0, 158.0}, {420.0, 521.0}}
+Other, 0x1167ab0c0, {{0.0, 158.0}, {420.0, 968.0}}
+StaticText, 0x1167aaf80, {{28.0, 188.0}, {325.0, 52.7}}, label: 'SHELF SAMPLES / 01'
+StaticText, 0x1167aa800, {{28.0, 240.7}, {120.0, 66.0}}, label: 'Reac Note'
+StaticText, 0x1167aa940, {{28.0, 306.7}, {251.7, 66.0}}, label: 'sA clearr modl fr Rea'
+StaticText, 0x1167aae40, {{28.0, 372.7}, {349.3, 105.7}}, label: 'c A componnt descries he interf ce o a particu lar se of p ps, s ate and con xt. Rende ing calcul'
+StaticText, 0x1167aad00, {{28.0, 478.3}, {8.3, 44.0}}, label: 'r'
+StaticText, 0x1167aabc0, {{28.0, 522.3}, {7.0, 44.0}}, label: 't'
+StaticText, 0x1167aaa80, {{28.0, 566.3}, {355.3, 75.0}}, label: 'ates that descrip ion; commi ting ap lie the nece ssary c an es o the'
+StaticText, 0x1167aa6c0, {{28.0, 641.3}, {9.3, 44.0}}, label: 's'
+StaticText, 0x1167aa580, {{28.0, 685.3}, {129.3, 44.0}}, label: 'Inputs Render'
+StaticText, 0x1167aa440, {{28.0, 729.3}, {55.7, 44.0}}, label: 'creen.'
+StaticText, 0x1167aa080, {{28.0, 773.3}, {358.7, 105.7}}, label: 'Com it Keep r nderi g ure do no change u related objec s, start re uests or ub cribe o eve ts while ca lcu ating the'
+StaticText, 0x1167aa1c0, {{28.0, 879.0}, {364.0, 75.0}}, label: 'interfa e. Readin que tion: w at belongs i ren erin'
+StaticText, 0x1167aa300, {{28.0, 954.0}, {12.3, 44.0}}, label: 'n'
+StaticText, 0x1167a9f40, {{28.0, 998.0}, {227.3, 44.0}}, label: 'g, and ha b longs in an ev'
+StaticText, 0x1167ac000, {{28.0, 1042.0}, {281.0, 44.0}}, label: 'ent h n ler?SHE F / OR GINAL S'
+Other, 0x1167ac140, {{387.0, 158.0}, {30.0, 521.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x1167ac280, {{414.0, 669.0}, {3.0, 7.0}}
+Other, 0x1167ac3c0, {{387.0, 158.0}, {30.0, 521.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x1167ac500, {{414.0, 669.0}, {3.0, 7.0}}
+Button, 0x1167ac640, {{24.3, 84.0}, {9.3, 16.3}}, identifier: 'close-reader', label: 'Back to library'
+StaticText, 0x1167ac780, {{169.8, 76.3}, {80.3, 17.0}}, label: 'Reading React Notes'
+StaticText, 0x1167ac8c0, {{60.5, 94.3}, {299.0, 13.3}}, label: 'Reading React Notes'
+Button, 0x1167aca00, {{368.0, 70.0}, {44.0, 44.0}}, label: 'Reader options'
+Button, 0x1167acb40, {{368.0, 70.0}, {44.0, 44.0}}
+Image, 0x1167acc80, {{381.7, 90.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+SegmentedControl, 0x1167acdc0, {{120.0, 120.0}, {180.0, 31.0}}
+Button, 0x1167acf00, {{120.0, 120.0}, {90.0, 32.0}}, label: 'Read', Selected
+Button, 0x1167ad040, {{210.0, 120.0}, {90.0, 32.0}}, label: 'Original'
+Other, 0x1167ad180, {{0.0, 679.0}, {420.0, 233.0}}, identifier: 'reader-bottom-bar'
+Other, 0x1167ad2c0, {{0.0, 679.0}, {420.0, 199.0}}, identifier: 'reader-bottom-bar-frame', label: 'reader-bottom-bar-frame'
+Other, 0x1167ad400, {{28.3, 699.0}, {364.0, 48.0}}, identifier: 'reader-transport-row'
+Button, 0x1167ad540, {{28.3, 715.0}, {9.3, 16.3}}, identifier: 'previous-page', label: 'Previous page', Disabled
+Button, 0x1167ad680, {{65.7, 706.2}, {180.7, 33.7}}, identifier: 'reader-page-count', label: 'Page 1 of 4'
+StaticText, 0x1167ad7c0, {{139.3, 706.2}, {33.3, 19.3}}, label: '1 / 4'
+StaticText, 0x1167ad900, {{65.7, 726.5}, {180.7, 13.3}}, label: 'A component describes the interface for a particular set of props, state and context. Rendering calculates'
+Button, 0x1167ada40, {{274.7, 715.0}, {9.3, 16.3}}, identifier: 'next-page', label: 'Next page'
+Button, 0x1167adb80, {{308.0, 699.0}, {48.0, 48.0}}, identifier: 'speech-control', label: 'Read page aloud', value: Stopped
+Button, 0x1167adcc0, {{379.7, 713.0}, {12.7, 20.0}}, identifier: 'bookmark-page', label: 'Bookmark'
+Slider, 0x1167ade00, {{12.0, 761.0}, {396.0, 44.0}}, identifier: 'reader-scrubber', label: 'Page scrubber', value: Page 1 of 4
+Button, 0x1167adf40, {{36.8, 826.0}, {49.3, 32.5}}, identifier: 'reader-tool-contents', label: 'Contents'
+Image, 0x1167ae080, {{52.7, 826.0}, {18.0, 13.0}}, identifier: 'list.bullet', label: 'List'
+StaticText, 0x1167ae1c0, {{36.8, 845.2}, {49.3, 13.3}}, label: 'Contents'
+Button, 0x1167ae300, {{142.0, 823.7}, {37.0, 37.2}}, identifier: 'reader-tool-search', label: 'Search'
+Image, 0x1167ae440, {{152.0, 823.7}, {17.3, 17.7}}, identifier: 'magnifyingglass', label: 'Search'
+StaticText, 0x1167ae580, {{142.0, 847.5}, {37.0, 13.3}}, label: 'Search'
+Button, 0x1167ae6c0, {{210.0, 815.0}, {99.0, 53.0}}, identifier: 'reader-tool-mark', label: 'Mark important parts'
+Button, 0x1167ae800, {{210.0, 815.0}, {99.0, 53.0}}
+Image, 0x1167ae940, {{254.0, 824.0}, {11.3, 16.7}}, identifier: 'pencil.tip', label: 'pencil.tip'
+StaticText, 0x1167aea80, {{245.3, 847.0}, {28.3, 13.3}}, label: 'Mark'
+Button, 0x1167aebc0, {{343.0, 821.7}, {31.0, 41.2}}, identifier: 'reader-tool-learn', label: 'Study'
+Image, 0x1167aed00, {{346.7, 821.7}, {24.0, 21.7}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x1167aee40, {{343.0, 849.5}, {31.0, 13.3}}, label: 'Study'
+Button, 0x1167aef80, {{400.2, 94.2}, {8.0, 8.0}}, label: 'Memory state for interfa e'
+Button, 0x1167af0c0, {{400.2, 131.2}, {8.0, 8.0}}, label: 'Memory state for ates that descrip ion; commi ting ap lie the nece ssary c an es o the'
+Button, 0x1167af200, {{400.2, 168.2}, {8.0, 8.0}}, label: 'Memory state for c A componnt descries he interf ce o a particu lar se of p ps, s ate and'
+Other, 0x1167af340, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1167af480, {{-420.0, -912.0}, {1260.0, 2736.0}}
+Other, 0x1167af5c0, {{0.0, 78.0}, {420.0, 834.0}}
+Image, 0x1167af700, {{-150.0, -72.0}, {720.0, 1134.0}}
+Other, 0x1167af840, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167af980, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167afac0, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167afc00, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167afd40, {{0.0, 78.0}, {420.0, 800.0}}, identifier: 'understanding-lens', label: 'understanding-lens'
+Other, 0x1167afe80, {{0.0, 78.0}, {420.0, 834.0}}
+NavigationBar, 0x1167b0000, {{0.0, 98.0}, {420.0, 54.0}}, identifier: 'Understanding Lens'
+StaticText, 0x1167b0140, {{130.0, 109.7}, {160.0, 20.7}}, label: 'Understanding Lens'
+Other, 0x1167b0280, {{330.3, 102.0}, {65.7, 36.0}}, label: 'Done'
+Other, 0x1167b03c0, {{330.3, 102.0}, {65.7, 36.0}}
+Button, 0x1167b0500, {{330.3, 102.0}, {65.7, 36.0}}, label: 'Done'
+Other, 0x1167b0640, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167b0780, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167b08c0, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167b0a00, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167b0b40, {{0.0, 152.0}, {420.0, 726.0}}, identifier: 'lens-scroll-frame', label: 'lens-scroll-frame'
+ScrollView, 0x1167b0c80, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167b0dc0, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167b0f00, {{0.0, 78.0}, {420.0, 128.8}}
+Other, 0x1167b1040, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167b1180, {{0.0, 152.0}, {420.0, 373.3}}
+Button, 0x1167b12c0, {{29.0, 174.0}, {152.0, 44.0}}, identifier: 'lens-view-source', label: 'React Notes · p. 1'
+Image, 0x1167b1400, {{31.0, 186.3}, {15.7, 19.3}}, identifier: 'doc.text.magnifyingglass', label: 'Search Document'
+StaticText, 0x1167b1540, {{29.0, 174.0}, {152.0, 44.0}}, label: 'React Notes · p. 1'
+StaticText, 0x1167b1680, {{40.8, 236.0}, {166.0, 86.3}}, identifier: 'lens-origin-passage', label: 'SHELF SAMPLES / 01
+
+Reac Note
+
+sA clearr modl fr Rea
+
+c A componnt descries he interf ce o a particu lar se of p ps, s ate and con xt. Rende ing calcul
+
+r
+
+t
+
+ates that descrip ion; commi ting ap lie the nece ssary c an es o the
+
+s
+
+Inputs Render
+
+creen.
+
+Com it Keep r nderi g ure do no change u related objec s, start re uests or ub cribe o eve ts while ca lcu ating the
+
+interfa e. Readin que tion: w at belongs i ren erin
+
+n
+
+g, and ha b longs in an ev
+
+ent h n ler?SHE F / OR GINAL S'
+Button, 0x1167b17c0, {{29.0, 340.3}, {100.0, 14.3}}, label: 'Read full passage'
+StaticText, 0x1167b1900, {{28.8, 372.7}, {362.3, 93.3}}, identifier: 'understanding-lens-empty', label: 'This passage needs more context before Leu can explain it.'
+StaticText, 0x1167b1a40, {{28.8, 484.0}, {254.7, 19.3}}, label: 'Nothing is generated to fill the gap.'
+Other, 0x1167b1b80, {{387.0, 152.0}, {30.0, 698.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x1167b1cc0, {{414.0, 507.7}, {3.0, 345.3}}
+Other, 0x1167b1e00, {{387.0, 152.0}, {30.0, 698.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x1167b1f40, {{414.0, 507.7}, {3.0, 345.3}}
+Other, 0x1167b2080, {{0.0, 78.0}, {420.0, 834.0}}
+Other, 0x1167b21c0, {{0.0, 78.0}, {420.0, 834.0}}
+Path to element:
+→Application, 0x1167b5f40, pid: 79449, label: 'Leu'
+Query chain:
+→Find: Target Application 'dev.shelf.personal'
+Output: {
+Application, 0x1167b2300, pid: 79449, label: 'Leu'
+}
+)
+LEU_UI_TREE_END: failed-journey
+Test Case '-[ShelfUITests.ShelfWorldClassUITests test51UnderstandingLensUsesVerifiedSourceFacts]' failed (23.203 seconds).
+Test Case '-[ShelfUITests.ShelfWorldClassUITests test52V24PrivacyAndNeuralVoiceControlsAreExposed]' passed (90.392 seconds).
+t =    27.15s Collecting debug information to assist test failure triage
+t =    27.15s     Requesting snapshot of accessibility hierarchy for app with pid 79733
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfUITests/ShelfWorldClassUITests.swift:140: error: -[ShelfUITests.ShelfWorldClassUITests test53ActiveStudyContextSurvivesInterruption] : XCTAssertTrue failed
+t =    27.18s Tear Down
+t =    27.18s     Find the Target Application 'dev.shelf.personal'
+t =    27.35s     Added attachment named 'failed-journey'
+t =    27.35s     Requesting snapshot of accessibility hierarchy for app with pid 79733
+LEU_UI_TREE_BEGIN: failed-journey
+Optional(Attributes: Application, 0x1168970c0, pid: 79733, label: 'Leu'
+Element subtree:
+→Application, 0x1168970c0, pid: 79733, label: 'Leu'
+Window (Main), 0x116897200, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x116897340, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x116897ac0, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x116894000, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x116894140, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x116897840, {{0.0, 68.0}, {420.0, 752.0}}, identifier: 'study-session-screen', label: 'study-session-screen'
+Button, 0x116894640, {{12.0, 75.0}, {44.0, 44.0}}, identifier: 'xmark', label: 'End study session'
+StaticText, 0x116894500, {{70.0, 73.2}, {40.0, 11.0}}, label: 'STUDY'
+StaticText, 0x116895a40, {{70.0, 86.2}, {42.3, 19.3}}, identifier: 'study-progress', label: '1 of 3'
+StaticText, 0x116897700, {{70.0, 107.5}, {32.0, 13.3}}, identifier: 'study-save-status', label: 'Saved'
+StaticText, 0x116895b80, {{349.0, 87.3}, {59.0, 19.3}}, label: '~10 min'
+Other, 0x116895680, {{0.0, 126.3}, {420.0, 693.7}}, identifier: 'study-activity-frame', label: 'study-activity-frame'
+ScrollView, 0x116895900, {{0.0, 126.3}, {420.0, 785.7}}
+Other, 0x1168957c0, {{0.0, 126.3}, {420.0, 320.3}}
+StaticText, 0x116895540, {{22.0, 150.3}, {72.7, 14.3}}, label: 'Active recall'
+StaticText, 0x116896e40, {{22.0, 186.7}, {376.0, 101.7}}, label: 'yA stabe ky hels Reat math n itm o is previo us insta ce wit i a l st of'
+StaticText, 0x116897480, {{22.0, 310.3}, {374.7, 42.3}}, label: 'Before revealing the source, reconstruct the idea in your own words.'
+Other, 0x1168975c0, {{22.0, 150.3}, {376.0, 272.3}}, identifier: 'recall-card', label: 'recall-card'
+Button, 0x116896080, {{21.6, 374.3}, {150.5, 48.8}}, label: 'Reveal source'
+Other, 0x1168961c0, {{387.0, 154.3}, {30.0, 665.7}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x1168943c0, {{414.0, 530.7}, {3.0, 286.3}}
+Other, 0x116895f40, {{387.0, 154.3}, {30.0, 665.7}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x116895e00, {{414.0, 530.7}, {3.0, 286.3}}
+Other, 0x116895cc0, {{0.0, 820.0}, {420.0, 58.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+Button, 0x116896a80, {{20.0, 820.0}, {126.7, 58.0}}, identifier: 'primary-shelf', label: 'Library'
+Image, 0x116895400, {{73.0, 830.0}, {20.7, 18.7}}, identifier: 'books.vertical', label: 'books.vertical'
+StaticText, 0x116894280, {{64.2, 855.7}, {38.3, 13.3}}, label: 'Library'
+Button, 0x116896d00, {{146.7, 820.0}, {126.7, 58.0}}, identifier: 'primary-learn', label: 'Study', Selected
+Image, 0x116896bc0, {{198.7, 829.0}, {23.0, 20.7}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x116896800, {{194.2, 857.0}, {31.7, 13.3}}, label: 'Study'
+Button, 0x1168966c0, {{273.3, 820.0}, {126.7, 58.0}}, identifier: 'primary-trails', label: 'Trails'
+Image, 0x116896580, {{327.7, 832.0}, {18.0, 14.7}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+StaticText, 0x116896440, {{321.8, 853.7}, {29.7, 13.3}}, label: 'Trails'
+Path to element:
+→Application, 0x1168970c0, pid: 79733, label: 'Leu'
+Query chain:
+→Find: Target Application 'dev.shelf.personal'
+Output: {
+Application, 0x116896f80, pid: 79733, label: 'Leu'
+}
+)
+LEU_UI_TREE_END: failed-journey
+Test Case '-[ShelfUITests.ShelfWorldClassUITests test53ActiveStudyContextSurvivesInterruption]' failed (27.642 seconds).
+Executed 4 tests, with 3 failures (0 unexpected) in 171.082 (171.086) seconds
+Executed 6 tests, with 3 failures (0 unexpected) in 360.758 (360.768) seconds
+Executed 6 tests, with 3 failures (0 unexpected) in 360.758 (360.771) seconds
+Test session results, code coverage, and logs:
+** TEST FAILED **
+Test result: /Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/.build/results/Shelf-20260912-144206-78641.xcresult
+QA_STAGE_RESULT: Leu remaining V24 features (50 / 51 / 52 / 53 / 55 / 56) | exit code 65
+FAIL: Stage recorded; continuing independent suites to collect the full failure set.
+=== Leu Study regression (36 / 39 / 40 / 48 / 49) ===
+LEU_UI_CHECKPOINT: before-learning-progress nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 295.33333333333326, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-progress nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+LEU_UI_CHECKPOINT: before-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 345.6666666666665, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 345.6666666666665, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-learning-connections nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(52.0, 401.6666666666665, 346.0, 58.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-connections nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(52.0, 401.6666666666665, 346.0, 58.0) enabled=true hittable=false
+Test Case '-[ShelfUITests.ShelfLearningOSUITests test36LearningTimelineAndConnectionsOpen]' passed (50.715 seconds).
+LEU_UI_CHECKPOINT: before-learning-progress nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 290.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-progress nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+LEU_UI_CHECKPOINT: before-learning-progress nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 290.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-progress nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+Test Case '-[ShelfUITests.ShelfLearningOSUITests test39LearningObjectSurvivesRelaunch]' passed (52.260 seconds).
+LEU_UI_CHECKPOINT: before-learning-progress nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 288.66666666666674, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-progress nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+LEU_UI_CHECKPOINT: before-progress-topic-E1769AA9-8DB1-5832-BE68-52643B9EFD7F nativeButtons=1 viewport=(2.0, 209.33333333333334, 416.0, 602.6666666666666) type=9 frame=(22.0, 588.3333333333333, 376.0, 81.66666666666674) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-progress-topic-E1769AA9-8DB1-5832-BE68-52643B9EFD7F nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+Test Case '-[ShelfUITests.ShelfLearningOSUITests test40LearningStateIsARealRecallEntryPoint]' passed (33.624 seconds).
+Executed 3 tests, with 0 failures (0 unexpected) in 136.599 (136.604) seconds
+LEU_UI_CHECKPOINT: before-learning-progress nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 294.33333333333326, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-progress nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+LEU_UI_CHECKPOINT: before-learning-progress nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 433.3333333333333, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-progress nativeButtons=0 viewport=(0.0, 0.0, 0.0, 0.0)
+Test Case '-[ShelfUITests.ShelfStudyInteractionUITests test48ProgressReopensAfterScrollingAndBothTabsWork]' passed (35.906 seconds).
+LEU_UI_CHECKPOINT: before-learning-mode-active-recall nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 715.3333333333334, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-mode-active-recall nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 715.3333333333334, 376.0, 56.0) enabled=true hittable=false
+LEU_UI_CHECKPOINT: before-learning-mode-interview nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 231.33333333333337, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-mode-interview nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 231.33333333333337, 376.0, 56.0) enabled=true hittable=false
+LEU_UI_CHECKPOINT: before-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-learning-connections nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(52.0, 400.0, 346.0, 58.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-connections nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(52.0, 400.0, 346.0, 58.0) enabled=true hittable=false
+LEU_UI_CHECKPOINT: before-learning-document-topics nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(52.0, 458.3333333333333, 346.0, 58.00000000000006) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-document-topics nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(52.0, 458.3333333333333, 346.0, 58.00000000000006) enabled=true hittable=false
+LEU_UI_CHECKPOINT: before-learning-search-ideas nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(52.0, 516.6666666666667, 346.0, 58.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-search-ideas nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(52.0, 516.6666666666667, 346.0, 58.0) enabled=true hittable=false
+LEU_UI_CHECKPOINT: before-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: before-learning-connections nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(52.0, 400.0, 346.0, 58.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-connections nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(52.0, 400.0, 346.0, 58.0) enabled=true hittable=false
+LEU_UI_CHECKPOINT: before-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-more nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 344.0, 376.0, 56.0) enabled=true hittable=true
+Test Case '-[ShelfUITests.ShelfStudyInteractionUITests test49StudySecondaryButtonsOpenRealDestinationsAndCollapse]' passed (231.251 seconds).
+Executed 2 tests, with 0 failures (0 unexpected) in 267.157 (267.161) seconds
+Executed 5 tests, with 0 failures (0 unexpected) in 403.756 (403.768) seconds
+Executed 5 tests, with 0 failures (0 unexpected) in 403.756 (403.771) seconds
+Test session results, code coverage, and logs:
+** TEST SUCCEEDED **
+Test result: /Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/.build/results/Shelf-20260912-144856-79853.xcresult
+QA_STAGE_RESULT: Leu Study regression (36 / 39 / 40 / 48 / 49) | exit code 0
+=== Leu remaining UI regression (complete inventory, no repeats) ===
+Test Case '-[ShelfUITests.ShelfInteractionRepairUITests test22ReadVerticalScrollCrossesSourcePageBoundary]' passed (23.870 seconds).
+Test Case '-[ShelfUITests.ShelfInteractionRepairUITests test23ReadVerticalArrowsMoveAndReopenAtThatPage]' passed (29.866 seconds).
+t =    19.24s         Find: Descendants matching type Any
+t =    19.24s         Requesting snapshot of accessibility hierarchy for app with pid 81277
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfUITests/ShelfUITestCase.swift:125: error: -[ShelfUITests.ShelfInteractionRepairUITests test24OriginalFitRejectsVerticalDriftButTurnsOnHorizontalDrag] : Asynchronous wait failed: Exceeded timeout of 6 seconds, with unfulfilled expectations: "Expect predicate `label == "Page 2 of 4" OR value == "Page 2 of 4"` for object "reader-page-count" Any".
+t =    19.76s Tear Down
+t =    19.76s     Find the Target Application 'dev.shelf.personal'
+t =    19.90s     Added attachment named 'failed-journey'
+t =    19.90s     Requesting snapshot of accessibility hierarchy for app with pid 81277
+LEU_UI_TREE_BEGIN: failed-journey
+Optional(Attributes: Application, 0x10be9f840, pid: 81277, label: 'Leu'
+Element subtree:
+→Application, 0x10be9f840, pid: 81277, label: 'Leu'
+Window (Main), 0x10be9f980, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x10be9fe80, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x10be9fd40, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x10be9fc00, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x10be9f340, {{0.0, 0.0}, {420.0, 912.0}}
+ScrollView, 0x10be9f480, {{0.0, 0.0}, {420.0, 912.0}}, identifier: 'library-screen'
+Other, 0x10be9f5c0, {{0.0, 68.0}, {420.0, 1147.0}}
+StaticText, 0x10be9ef80, {{22.0, 100.2}, {36.7, 15.7}}, label: 'LEU'
+Button, 0x10be9f0c0, {{304.0, 84.0}, {44.0, 44.0}}, identifier: 'library-options', label: 'Library options'
+Button, 0x10be9f200, {{304.0, 84.0}, {44.0, 44.0}}
+Image, 0x10be9ed00, {{317.7, 104.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+Button, 0x10be9ee40, {{356.0, 85.7}, {42.0, 42.0}}, identifier: 'import-pdf', label: 'Import PDFs'
+StaticText, 0x109f6fe80, {{22.0, 121.8}, {121.0, 45.7}}, label: 'Library'
+StaticText, 0x10beb30c0, {{22.0, 173.5}, {268.7, 18.0}}, label: 'Your books, passages and reading history.'
+ScrollView, 0x10beb3200, {{22.0, 232.0}, {376.0, 38.0}}
+Other, 0x10beb3ac0, {{22.0, 232.0}, {308.0, 38.0}}
+Button, 0x10beb3340, {{21.6, 231.6}, {49.4, 38.7}}, identifier: 'library-filter-all', label: 'All', Selected
+Button, 0x10beb3d40, {{78.3, 231.6}, {92.0, 38.7}}, identifier: 'library-filter-favorites', label: 'Favorites'
+Button, 0x10beb3e80, {{177.6, 231.6}, {84.0, 38.7}}, identifier: 'library-filter-recents', label: 'Recents'
+Button, 0x10beb3980, {{269.0, 231.6}, {61.4, 38.7}}, identifier: 'library-filter-tags', label: 'Tags'
+Image, 0x10beb3c00, {{37.7, 308.7}, {14.3, 14.7}}, identifier: 'magnifyingglass', label: 'Search'
+TextField, 0x10beb3700, {{63.7, 305.0}, {320.3, 22.0}}, identifier: 'library-search', placeholderValue: 'Search books and passages…'
+StaticText, 0x10beb3840, {{22.0, 354.0}, {102.0, 13.3}}, label: 'COLLECTIONS'
+ScrollView, 0x10beb3480, {{22.0, 381.3}, {376.0, 38.0}}
+Other, 0x10beb35c0, {{22.0, 381.3}, {400.3, 38.0}}
+Button, 0x10befc780, {{22.6, 381.0}, {47.4, 38.7}}, label: 'All', Selected
+Button, 0x10befca00, {{77.3, 381.0}, {67.0, 38.7}}, label: 'Study'
+Button, 0x10befc500, {{151.6, 381.0}, {91.0, 38.7}}, label: 'Frontend'
+Button, 0x10befc3c0, {{250.0, 381.0}, {86.7, 38.7}}, label: 'Backend'
+Button, 0x10befc000, {{344.0, 381.0}, {77.7, 38.7}}, label: 'Add or manage collections'
+Image, 0x10befc140, {{358.3, 394.0}, {12.3, 12.3}}, identifier: 'plus', label: 'Add'
+StaticText, 0x10befcdc0, {{358.3, 391.3}, {51.0, 18.0}}, label: 'Edit'
+Other, 0x10befc280, {{22.0, 441.3}, {376.0, 462.0}}
+Button, 0x10befc640, {{22.0, 441.3}, {181.0, 222.0}}, identifier: 'book-React Notes', label: 'Open React Notes, 4 pages'
+Other, 0x10befcc80, {{22.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x10befcf00, {{38.0, 463.3}, {111.0, 24.0}}, label: 'React Notes'
+StaticText, 0x10befc8c0, {{38.0, 495.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x10befd180, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-React Notes', label: 'Actions for React Notes'
+Button, 0x10befe440, {{156.0, 444.3}, {44.0, 44.0}}
+Image, 0x10befd2c0, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x10befd540, {{217.0, 441.3}, {181.0, 222.0}}, identifier: 'book-System Design', label: 'Open System Design, 4 pages'
+Other, 0x10befebc0, {{217.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x10befe080, {{233.0, 463.3}, {72.3, 49.0}}, label: 'System Design'
+StaticText, 0x10befe1c0, {{233.0, 520.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x10befe6c0, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-System Design', label: 'Actions for System Design'
+Button, 0x10befea80, {{351.0, 444.3}, {44.0, 44.0}}
+Image, 0x10befe800, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x10befe580, {{22.0, 681.3}, {181.0, 222.0}}, identifier: 'book-JavaScript Deep Dive', label: 'Open JavaScript Deep Dive, 4 pages'
+Other, 0x10befcb40, {{22.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x10befdcc0, {{38.0, 703.3}, {98.0, 49.0}}, label: 'JavaScript Deep Dive'
+StaticText, 0x10befde00, {{38.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x10befdf40, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-JavaScript Deep Dive', label: 'Actions for JavaScript Deep Dive'
+Button, 0x10befe940, {{156.0, 684.3}, {44.0, 44.0}}
+Image, 0x10befdb80, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x10befd900, {{217.0, 681.3}, {181.0, 222.0}}, identifier: 'book-Coding Interviews', label: 'Open Coding Interviews, 4 pages'
+Other, 0x10befda40, {{217.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x10befd7c0, {{233.0, 703.3}, {98.7, 49.0}}, label: 'Coding Interviews'
+StaticText, 0x10befd040, {{233.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x10befd400, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-Coding Interviews', label: 'Actions for Coding Interviews'
+Button, 0x10befe300, {{351.0, 684.3}, {44.0, 44.0}}
+Image, 0x10befd680, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+StaticText, 0x10bea7200, {{118.7, 1173.3}, {182.7, 15.7}}, label: '6 PDFs · stored on this iPhone'
+Other, 0x10bea6e40, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x10bea6d00, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x10bea75c0, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x10bea6f80, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x10bea70c0, {{0.0, 820.0}, {420.0, 58.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+Button, 0x10bea7d40, {{20.0, 820.0}, {126.7, 58.0}}, identifier: 'primary-shelf', label: 'Library', Selected
+Image, 0x10bea7480, {{72.7, 830.0}, {21.3, 18.7}}, identifier: 'books.vertical', label: 'books.vertical'
+StaticText, 0x10bea7340, {{63.0, 856.0}, {40.7, 13.3}}, label: 'Library'
+Button, 0x10bea7c00, {{146.7, 820.0}, {126.7, 58.0}}, identifier: 'primary-learn', label: 'Study'
+Image, 0x10bea7840, {{198.7, 829.3}, {22.7, 20.3}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x10bea7980, {{194.8, 856.5}, {30.3, 13.3}}, label: 'Study'
+Button, 0x10bea7e80, {{273.3, 820.0}, {126.7, 58.0}}, identifier: 'primary-trails', label: 'Trails'
+Image, 0x10bea7700, {{327.7, 832.0}, {18.0, 14.7}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+StaticText, 0x10bea7ac0, {{321.8, 853.7}, {29.7, 13.3}}, label: 'Trails'
+Other, 0x10bee3700, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x10bee3840, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x10bee3980, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x10bee3ac0, {{0.0, 68.0}, {420.0, 810.0}}, identifier: 'reader-screen', label: 'reader-screen'
+Other, 0x10bee3c00, {{0.0, 158.0}, {420.0, 521.0}}, identifier: 'pdf-surface', label: 'original-viewport-frame'
+Other, 0x10bee3d40, {{0.0, 158.0}, {420.0, 521.0}}, identifier: 'pdf-surface', label: 'Original PDF reading area'
+Other, 0x10bee3e80, {{0.0, 158.0}, {420.0, 521.0}}
+ScrollView, 0x10bee2bc0, {{0.0, 158.0}, {420.0, 521.0}}
+TextView, 0x10bee2a80, {{40.3, 164.0}, {339.3, 509.0}}, value: SHELF SAMPLES / 01...
+Other, 0x10bee2940, {{40.3, 164.0}, {339.3, 509.0}}
+Other, 0x10bee0b40, {{68.6, 195.5}, {282.8, 461.9}}
+Other, 0x10bee2580, {{68.6, 195.5}, {282.8, 461.9}}
+Other, 0x10bee2800, {{73.3, 195.5}, {261.4, 162.9}}
+Other, 0x10bee26c0, {{73.3, 195.5}, {73.1, 7.1}}, label: 'SHELF SAMPLES / 01'
+StaticText, 0x10bee2080, {{73.3, 195.5}, {73.1, 7.1}}, label: 'SHELF SAMPLES / 01'
+Other, 0x10bee0280, {{73.3, 217.7}, {118.3, 27.0}}, label: 'React Notes'
+StaticText, 0x10bee0140, {{73.3, 217.7}, {118.3, 27.0}}, label: 'React Notes'
+Other, 0x10bee0000, {{73.3, 257.9}, {199.7, 20.0}}, label: 'A clearer model for React'
+StaticText, 0x10bee1180, {{73.3, 257.9}, {199.7, 20.0}}, label: 'A clearer model for React'
+Other, 0x10bee0f00, {{73.3, 290.3}, {261.4, 68.1}}, label: 'A component describes the interface for a particular
+set of props, state and context. Rendering calculates
+that description; committing applies the necessary
+changes to the screen.'
+StaticText, 0x10bee03c0, {{73.3, 290.3}, {261.4, 68.1}}, label: 'A component describes the interface for a particular
+set of props, state and context. Rendering calculates
+that description; committing applies the necessary
+changes to the screen.'
+Other, 0x10bee0640, {{104.4, 396.4}, {223.6, 8.2}}
+Other, 0x10bee0500, {{104.4, 396.4}, {223.6, 8.2}}, label: 'Inputs Render Commit'
+StaticText, 0x10bee08c0, {{104.4, 396.4}, {223.6, 8.2}}, label: 'Inputs Render Commit'
+Other, 0x10bee0a00, {{73.3, 434.0}, {272.2, 50.1}}
+Other, 0x10bee0780, {{73.3, 434.0}, {272.2, 50.1}}, label: 'Keep rendering pure: do not change unrelated objects,
+start requests or subscribe to events while calculating
+the interface.'
+StaticText, 0x10bee0c80, {{73.3, 434.0}, {272.2, 50.1}}, label: 'Keep rendering pure: do not change unrelated objects,
+start requests or subscribe to events while calculating
+the interface.'
+Other, 0x10bee12c0, {{73.3, 499.4}, {268.9, 25.1}}
+Other, 0x10bee1040, {{73.3, 499.4}, {268.9, 25.1}}, label: 'Reading question: what belongs in rendering, and what
+belongs in an event handler?'
+StaticText, 0x10bee1400, {{73.3, 499.4}, {268.9, 25.1}}, label: 'Reading question: what belongs in rendering, and what
+belongs in an event handler?'
+Other, 0x10bee1b80, {{68.6, 650.3}, {282.8, 7.1}}
+Other, 0x10bee1a40, {{68.6, 650.3}, {282.8, 7.1}}, label: 'SHELF / ORIGINAL SAMPLE NOTES 1'
+StaticText, 0x10bee1540, {{68.6, 650.3}, {282.8, 7.1}}, label: 'SHELF / ORIGINAL SAMPLE NOTES 1'
+Other, 0x10bee1680, {{387.0, 158.0}, {30.0, 521.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x10bee0dc0, {{414.0, 119.0}, {3.0, 36.0}}
+Other, 0x10bee17c0, {{387.0, 158.0}, {30.0, 521.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x10bee1900, {{414.0, 119.0}, {3.0, 36.0}}
+Button, 0x10bee1e00, {{24.3, 84.0}, {9.3, 16.3}}, identifier: 'close-reader', label: 'Back to library'
+StaticText, 0x10bee1f40, {{169.8, 76.3}, {80.3, 17.0}}, label: 'Reading React Notes'
+StaticText, 0x10bee2440, {{60.5, 94.3}, {299.0, 13.3}}, label: 'Reading React Notes'
+Button, 0x10bee2300, {{368.0, 70.0}, {44.0, 44.0}}, label: 'Reader options'
+Button, 0x10bee1cc0, {{368.0, 70.0}, {44.0, 44.0}}
+Image, 0x10bee21c0, {{381.7, 90.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+SegmentedControl, 0x10bee8000, {{120.0, 120.0}, {180.0, 31.0}}
+Button, 0x10bee8140, {{120.0, 120.0}, {90.0, 32.0}}, label: 'Read'
+Button, 0x10bee8280, {{210.0, 120.0}, {90.0, 32.0}}, label: 'Original', Selected
+Other, 0x10bee83c0, {{0.0, 679.0}, {420.0, 233.0}}, identifier: 'reader-bottom-bar'
+Other, 0x10bee8500, {{0.0, 679.0}, {420.0, 199.0}}, identifier: 'reader-bottom-bar-frame', label: 'reader-bottom-bar-frame'
+Other, 0x10bee8640, {{28.3, 699.0}, {364.0, 48.0}}, identifier: 'reader-transport-row'
+Button, 0x10bee8780, {{28.3, 715.0}, {9.3, 16.3}}, identifier: 'previous-page', label: 'Previous page', Disabled
+Button, 0x10bee88c0, {{65.7, 706.2}, {180.7, 33.7}}, identifier: 'reader-page-count', label: 'Page 1 of 4'
+StaticText, 0x10bee8a00, {{139.3, 706.2}, {33.3, 19.3}}, label: '1 / 4'
+StaticText, 0x10bee8b40, {{65.7, 726.5}, {180.7, 13.3}}, label: 'A component describes the interface for a particular set of props, state and context. Rendering calculates'
+Button, 0x10bee8c80, {{274.7, 715.0}, {9.3, 16.3}}, identifier: 'next-page', label: 'Next page'
+Button, 0x10bee8dc0, {{308.0, 699.0}, {48.0, 48.0}}, identifier: 'speech-control', label: 'Read page aloud', value: Stopped
+Button, 0x10bee8f00, {{379.7, 713.0}, {12.7, 20.0}}, identifier: 'bookmark-page', label: 'Bookmark'
+Slider, 0x10bee9040, {{12.0, 761.0}, {396.0, 44.0}}, identifier: 'reader-scrubber', label: 'Page scrubber', value: Page 1 of 4
+Button, 0x10bee9180, {{36.8, 826.0}, {49.3, 32.5}}, identifier: 'reader-tool-contents', label: 'Contents'
+Image, 0x10bee92c0, {{52.7, 826.0}, {18.0, 13.0}}, identifier: 'list.bullet', label: 'List'
+StaticText, 0x10bee9400, {{36.8, 845.2}, {49.3, 13.3}}, label: 'Contents'
+Button, 0x10bee9540, {{142.0, 823.7}, {37.0, 37.2}}, identifier: 'reader-tool-search', label: 'Search'
+Image, 0x10bee9680, {{152.0, 823.7}, {17.3, 17.7}}, identifier: 'magnifyingglass', label: 'Search'
+StaticText, 0x10bee97c0, {{142.0, 847.5}, {37.0, 13.3}}, label: 'Search'
+Button, 0x10bee9900, {{210.0, 815.0}, {99.0, 53.0}}, identifier: 'reader-tool-mark', label: 'Mark important parts'
+Button, 0x10bee9a40, {{210.0, 815.0}, {99.0, 53.0}}
+Image, 0x10bee9b80, {{254.0, 824.0}, {11.3, 16.7}}, identifier: 'pencil.tip', label: 'pencil.tip'
+StaticText, 0x10bee9cc0, {{245.3, 847.0}, {28.3, 13.3}}, label: 'Mark'
+Button, 0x10bee9e00, {{343.0, 821.7}, {31.0, 41.2}}, identifier: 'reader-tool-learn', label: 'Study'
+Image, 0x10bee9f40, {{346.7, 821.7}, {24.0, 21.7}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x10beea080, {{343.0, 849.5}, {31.0, 13.3}}, label: 'Study'
+Button, 0x10beea1c0, {{400.2, 94.2}, {8.0, 8.0}}, label: 'Memory state for interfa e'
+Button, 0x10beea300, {{400.2, 131.2}, {8.0, 8.0}}, label: 'Memory state for ates that descrip ion; commi ting ap lie the nece ssary c an es o the'
+Button, 0x10beea440, {{400.2, 168.2}, {8.0, 8.0}}, label: 'Memory state for c A componnt descries he interf ce o a particu lar se of p ps, s ate and'
+Path to element:
+→Application, 0x10be9f840, pid: 81277, label: 'Leu'
+Query chain:
+→Find: Target Application 'dev.shelf.personal'
+Output: {
+Application, 0x10beea580, pid: 81277, label: 'Leu'
+}
+)
+LEU_UI_TREE_END: failed-journey
+Test Case '-[ShelfUITests.ShelfInteractionRepairUITests test24OriginalFitRejectsVerticalDriftButTurnsOnHorizontalDrag]' failed (20.470 seconds).
+t =    16.32s Added attachment named 'missing-reader-screen-accessibility-tree'
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfUITests/ShelfUITestCase.swift:24: error: -[ShelfUITests.ShelfInteractionRepairUITests test25OriginalFocusTurnsAndControlsDoNotCoverTheViewport] : failed - Missing accessibility identifier: reader-screen
+t =    16.34s Tear Down
+t =    16.34s     Find the Target Application 'dev.shelf.personal'
+t =    16.45s     Added attachment named 'failed-journey'
+t =    16.45s     Requesting snapshot of accessibility hierarchy for app with pid 81372
+LEU_UI_TREE_BEGIN: missing-reader-screen
+Optional(Attributes: Application, 0x11911c3c0, pid: 81372, label: 'Leu'
+Element subtree:
+→Application, 0x11911c3c0, pid: 81372, label: 'Leu'
+Window (Main), 0x11911c500, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11911c640, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11911c780, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11911c8c0, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11911ca00, {{0.0, 0.0}, {420.0, 912.0}}
+ScrollView, 0x11911cb40, {{0.0, 0.0}, {420.0, 912.0}}, identifier: 'library-screen'
+Other, 0x11911cc80, {{0.0, 68.0}, {420.0, 1147.0}}
+StaticText, 0x11911cdc0, {{22.0, 100.2}, {36.7, 15.7}}, label: 'LEU'
+Button, 0x11911cf00, {{304.0, 84.0}, {44.0, 44.0}}, identifier: 'library-options', label: 'Library options'
+Button, 0x11911d040, {{304.0, 84.0}, {44.0, 44.0}}
+Image, 0x11911d180, {{317.7, 104.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+Button, 0x11911d2c0, {{356.0, 85.7}, {42.0, 42.0}}, identifier: 'import-pdf', label: 'Import PDFs'
+StaticText, 0x11911d400, {{22.0, 121.8}, {121.0, 45.7}}, label: 'Library'
+StaticText, 0x11911d540, {{22.0, 173.5}, {268.7, 18.0}}, label: 'Your books, passages and reading history.'
+ScrollView, 0x11911d680, {{22.0, 232.0}, {376.0, 38.0}}
+Other, 0x11911d7c0, {{22.0, 232.0}, {308.0, 38.0}}
+Button, 0x11911d900, {{21.6, 231.6}, {49.4, 38.7}}, identifier: 'library-filter-all', label: 'All', Selected
+Button, 0x11911da40, {{78.3, 231.6}, {92.0, 38.7}}, identifier: 'library-filter-favorites', label: 'Favorites'
+Button, 0x11911db80, {{177.6, 231.6}, {84.0, 38.7}}, identifier: 'library-filter-recents', label: 'Recents'
+Button, 0x11911dcc0, {{269.0, 231.6}, {61.4, 38.7}}, identifier: 'library-filter-tags', label: 'Tags'
+Image, 0x11911de00, {{37.7, 308.7}, {14.3, 14.7}}, identifier: 'magnifyingglass', label: 'Search'
+TextField, 0x11911df40, {{63.7, 305.0}, {320.3, 22.0}}, identifier: 'library-search', placeholderValue: 'Search books and passages…'
+StaticText, 0x11911e080, {{22.0, 354.0}, {102.0, 13.3}}, label: 'COLLECTIONS'
+ScrollView, 0x11911e1c0, {{22.0, 381.3}, {376.0, 38.0}}
+Other, 0x11911e300, {{22.0, 381.3}, {400.3, 38.0}}
+Button, 0x11911e440, {{22.6, 381.0}, {47.4, 38.7}}, label: 'All', Selected
+Button, 0x11911e580, {{77.3, 381.0}, {67.0, 38.7}}, label: 'Study'
+Button, 0x11911e6c0, {{151.6, 381.0}, {91.0, 38.7}}, label: 'Frontend'
+Button, 0x11911e800, {{250.0, 381.0}, {86.7, 38.7}}, label: 'Backend'
+Button, 0x11911e940, {{344.0, 381.0}, {77.7, 38.7}}, label: 'Add or manage collections'
+Image, 0x11911ea80, {{358.3, 394.0}, {12.3, 12.3}}, identifier: 'plus', label: 'Add'
+StaticText, 0x11911ebc0, {{358.3, 391.3}, {51.0, 18.0}}, label: 'Edit'
+Other, 0x11911ed00, {{22.0, 441.3}, {376.0, 462.0}}
+Button, 0x11911ee40, {{22.0, 441.3}, {181.0, 222.0}}, identifier: 'book-React Notes', label: 'Open React Notes, 4 pages'
+Other, 0x11911ef80, {{22.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x11911f0c0, {{38.0, 463.3}, {111.0, 24.0}}, label: 'React Notes'
+StaticText, 0x11911f200, {{38.0, 495.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x11911f340, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-React Notes', label: 'Actions for React Notes'
+Button, 0x11911f480, {{156.0, 444.3}, {44.0, 44.0}}
+Image, 0x11911f5c0, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x11911f700, {{217.0, 441.3}, {181.0, 222.0}}, identifier: 'book-System Design', label: 'Open System Design, 4 pages'
+Other, 0x11911f840, {{217.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x11911f980, {{233.0, 463.3}, {72.3, 49.0}}, label: 'System Design'
+StaticText, 0x11911fac0, {{233.0, 520.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x11911fc00, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-System Design', label: 'Actions for System Design'
+Button, 0x11911fd40, {{351.0, 444.3}, {44.0, 44.0}}
+Image, 0x11911fe80, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1191021c0, {{22.0, 681.3}, {181.0, 222.0}}, identifier: 'book-JavaScript Deep Dive', label: 'Open JavaScript Deep Dive, 4 pages'
+Other, 0x119164000, {{22.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x119164140, {{38.0, 703.3}, {98.0, 49.0}}, label: 'JavaScript Deep Dive'
+StaticText, 0x119164280, {{38.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x1191643c0, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-JavaScript Deep Dive', label: 'Actions for JavaScript Deep Dive'
+Button, 0x119164500, {{156.0, 684.3}, {44.0, 44.0}}
+Image, 0x119164640, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x119164780, {{217.0, 681.3}, {181.0, 222.0}}, identifier: 'book-Coding Interviews', label: 'Open Coding Interviews, 4 pages'
+Other, 0x1191648c0, {{217.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x119164a00, {{233.0, 703.3}, {98.7, 49.0}}, label: 'Coding Interviews'
+StaticText, 0x119164b40, {{233.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x119164c80, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-Coding Interviews', label: 'Actions for Coding Interviews'
+Button, 0x119164dc0, {{351.0, 684.3}, {44.0, 44.0}}
+Image, 0x119164f00, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+StaticText, 0x119165040, {{118.7, 1173.3}, {182.7, 15.7}}, label: '6 PDFs · stored on this iPhone'
+Other, 0x119165180, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x1191652c0, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x119165400, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x119165540, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x119165680, {{0.0, 820.0}, {420.0, 58.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+Button, 0x1191657c0, {{20.0, 820.0}, {126.7, 58.0}}, identifier: 'primary-shelf', label: 'Library', Selected
+Image, 0x119165900, {{72.7, 830.0}, {21.3, 18.7}}, identifier: 'books.vertical', label: 'books.vertical'
+StaticText, 0x119165a40, {{63.0, 856.0}, {40.7, 13.3}}, label: 'Library'
+Button, 0x119165b80, {{146.7, 820.0}, {126.7, 58.0}}, identifier: 'primary-learn', label: 'Study'
+Image, 0x119165cc0, {{198.7, 829.3}, {22.7, 20.3}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x119165e00, {{194.8, 856.5}, {30.3, 13.3}}, label: 'Study'
+Button, 0x119165f40, {{273.3, 820.0}, {126.7, 58.0}}, identifier: 'primary-trails', label: 'Trails'
+Image, 0x119166080, {{327.7, 832.0}, {18.0, 14.7}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+StaticText, 0x1191661c0, {{321.8, 853.7}, {29.7, 13.3}}, label: 'Trails'
+Path to element:
+→Application, 0x11911c3c0, pid: 81372, label: 'Leu'
+Query chain:
+→Find: Target Application 'dev.shelf.personal'
+Output: {
+Application, 0x119166300, pid: 81372, label: 'Leu'
+}
+)
+LEU_UI_TREE_END: missing-reader-screen
+LEU_UI_TREE_BEGIN: failed-journey
+Optional(Attributes: Application, 0x119119f40, pid: 81372, label: 'Leu'
+Element subtree:
+→Application, 0x119119f40, pid: 81372, label: 'Leu'
+Window (Main), 0x11911a1c0, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11911a080, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x119119b80, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x119119e00, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x119119cc0, {{0.0, 0.0}, {420.0, 912.0}}
+ScrollView, 0x1191197c0, {{0.0, 0.0}, {420.0, 912.0}}, identifier: 'library-screen'
+Other, 0x119119a40, {{0.0, 68.0}, {420.0, 1147.0}}
+StaticText, 0x119119900, {{22.0, 100.2}, {36.7, 15.7}}, label: 'LEU'
+Button, 0x119119680, {{304.0, 84.0}, {44.0, 44.0}}, identifier: 'library-options', label: 'Library options'
+Button, 0x119119400, {{304.0, 84.0}, {44.0, 44.0}}
+Image, 0x119119540, {{317.7, 104.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+Button, 0x119119180, {{356.0, 85.7}, {42.0, 42.0}}, identifier: 'import-pdf', label: 'Import PDFs'
+StaticText, 0x1191192c0, {{22.0, 121.8}, {121.0, 45.7}}, label: 'Library'
+StaticText, 0x119119040, {{22.0, 173.5}, {268.7, 18.0}}, label: 'Your books, passages and reading history.'
+ScrollView, 0x119118c80, {{22.0, 232.0}, {376.0, 38.0}}
+Other, 0x119118dc0, {{22.0, 232.0}, {308.0, 38.0}}
+Button, 0x119118f00, {{21.6, 231.6}, {49.4, 38.7}}, identifier: 'library-filter-all', label: 'All', Selected
+Button, 0x119118780, {{78.3, 231.6}, {92.0, 38.7}}, identifier: 'library-filter-favorites', label: 'Favorites'
+Button, 0x119118b40, {{177.6, 231.6}, {84.0, 38.7}}, identifier: 'library-filter-recents', label: 'Recents'
+Button, 0x119118a00, {{269.0, 231.6}, {61.4, 38.7}}, identifier: 'library-filter-tags', label: 'Tags'
+Image, 0x1191188c0, {{37.7, 308.7}, {14.3, 14.7}}, identifier: 'magnifyingglass', label: 'Search'
+TextField, 0x1191183c0, {{63.7, 305.0}, {320.3, 22.0}}, identifier: 'library-search', placeholderValue: 'Search books and passages…'
+StaticText, 0x119118500, {{22.0, 354.0}, {102.0, 13.3}}, label: 'COLLECTIONS'
+ScrollView, 0x119118640, {{22.0, 381.3}, {376.0, 38.0}}
+Other, 0x119118280, {{22.0, 381.3}, {400.3, 38.0}}
+Button, 0x119118140, {{22.6, 381.0}, {47.4, 38.7}}, label: 'All', Selected
+Button, 0x119118000, {{77.3, 381.0}, {67.0, 38.7}}, label: 'Study'
+Button, 0x11911a440, {{151.6, 381.0}, {91.0, 38.7}}, label: 'Frontend'
+Button, 0x11911a580, {{250.0, 381.0}, {86.7, 38.7}}, label: 'Backend'
+Button, 0x11911a6c0, {{344.0, 381.0}, {77.7, 38.7}}, label: 'Add or manage collections'
+Image, 0x11911a800, {{358.3, 394.0}, {12.3, 12.3}}, identifier: 'plus', label: 'Add'
+StaticText, 0x11911a940, {{358.3, 391.3}, {51.0, 18.0}}, label: 'Edit'
+Other, 0x11911aa80, {{22.0, 441.3}, {376.0, 462.0}}
+Button, 0x11911abc0, {{22.0, 441.3}, {181.0, 222.0}}, identifier: 'book-React Notes', label: 'Open React Notes, 4 pages'
+Other, 0x11911ad00, {{22.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x11911ae40, {{38.0, 463.3}, {111.0, 24.0}}, label: 'React Notes'
+StaticText, 0x11911af80, {{38.0, 495.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x11911b0c0, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-React Notes', label: 'Actions for React Notes'
+Button, 0x11911b200, {{156.0, 444.3}, {44.0, 44.0}}
+Image, 0x11911b340, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x11911b480, {{217.0, 441.3}, {181.0, 222.0}}, identifier: 'book-System Design', label: 'Open System Design, 4 pages'
+Other, 0x11911b5c0, {{217.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x11911b700, {{233.0, 463.3}, {72.3, 49.0}}, label: 'System Design'
+StaticText, 0x11911b840, {{233.0, 520.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x11911b980, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-System Design', label: 'Actions for System Design'
+Button, 0x11911bac0, {{351.0, 444.3}, {44.0, 44.0}}
+Image, 0x11911bc00, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x11911bd40, {{22.0, 681.3}, {181.0, 222.0}}, identifier: 'book-JavaScript Deep Dive', label: 'Open JavaScript Deep Dive, 4 pages'
+Other, 0x11911be80, {{22.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x1191021c0, {{38.0, 703.3}, {98.0, 49.0}}, label: 'JavaScript Deep Dive'
+StaticText, 0x119102bc0, {{38.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x119102d00, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-JavaScript Deep Dive', label: 'Actions for JavaScript Deep Dive'
+Button, 0x119102e40, {{156.0, 684.3}, {44.0, 44.0}}
+Image, 0x119102f80, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1191030c0, {{217.0, 681.3}, {181.0, 222.0}}, identifier: 'book-Coding Interviews', label: 'Open Coding Interviews, 4 pages'
+Other, 0x119103840, {{217.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x119103200, {{233.0, 703.3}, {98.7, 49.0}}, label: 'Coding Interviews'
+StaticText, 0x119103340, {{233.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x119103480, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-Coding Interviews', label: 'Actions for Coding Interviews'
+Button, 0x119103c00, {{351.0, 684.3}, {44.0, 44.0}}
+Image, 0x119103ac0, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+StaticText, 0x119103980, {{118.7, 1173.3}, {182.7, 15.7}}, label: '6 PDFs · stored on this iPhone'
+Other, 0x119103e80, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x119103700, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x1191035c0, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x119103d40, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x119102800, {{0.0, 820.0}, {420.0, 58.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+Button, 0x119102a80, {{20.0, 820.0}, {126.7, 58.0}}, identifier: 'primary-shelf', label: 'Library', Selected
+Image, 0x119102940, {{72.7, 830.0}, {21.3, 18.7}}, identifier: 'books.vertical', label: 'books.vertical'
+StaticText, 0x1191026c0, {{63.0, 856.0}, {40.7, 13.3}}, label: 'Library'
+Button, 0x119102580, {{146.7, 820.0}, {126.7, 58.0}}, identifier: 'primary-learn', label: 'Study'
+Image, 0x119102440, {{198.7, 829.3}, {22.7, 20.3}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x119102300, {{194.8, 856.5}, {30.3, 13.3}}, label: 'Study'
+Button, 0x119164000, {{273.3, 820.0}, {126.7, 58.0}}, identifier: 'primary-trails', label: 'Trails'
+Image, 0x119164140, {{327.7, 832.0}, {18.0, 14.7}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+StaticText, 0x119164280, {{321.8, 853.7}, {29.7, 13.3}}, label: 'Trails'
+Path to element:
+→Application, 0x119119f40, pid: 81372, label: 'Leu'
+Query chain:
+→Find: Target Application 'dev.shelf.personal'
+Output: {
+Application, 0x1191643c0, pid: 81372, label: 'Leu'
+}
+)
+LEU_UI_TREE_END: failed-journey
+Test Case '-[ShelfUITests.ShelfInteractionRepairUITests test25OriginalFocusTurnsAndControlsDoNotCoverTheViewport]' failed (16.862 seconds).
+Test Case '-[ShelfUITests.ShelfInteractionRepairUITests test26TextSizeMovesOnFirstDragAndPersistsAfterDismissal]' passed (22.523 seconds).
+Test Case '-[ShelfUITests.ShelfInteractionRepairUITests test27BrightnessMovesOnFirstDragAndKeepAwakeTogglesOnce]' passed (19.757 seconds).
+Test Case '-[ShelfUITests.ShelfInteractionRepairUITests test28ScrubberCommitsOnReleaseWithoutMovingOtherControls]' passed (11.602 seconds).
+t =    40.17s         Find: Descendants matching type Any
+t =    40.17s         Requesting snapshot of accessibility hierarchy for app with pid 81639
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfUITests/ShelfUITestCase.swift:125: error: -[ShelfUITests.ShelfInteractionRepairUITests test29FlowRoundTripDoesNotDisableReadPaging] : Asynchronous wait failed: Exceeded timeout of 6 seconds, with unfulfilled expectations: "Expect predicate `label == "Page 3 of 4" OR value == "Page 3 of 4"` for object "reader-page-count" Any".
+t =    40.98s Tear Down
+t =    40.98s     Find the Target Application 'dev.shelf.personal'
+t =    41.11s     Added attachment named 'failed-journey'
+t =    41.11s     Requesting snapshot of accessibility hierarchy for app with pid 81639
+LEU_UI_TREE_BEGIN: failed-journey
+Optional(Attributes: Application, 0x11919ea80, pid: 81639, label: 'Leu'
+Element subtree:
+→Application, 0x11919ea80, pid: 81639, label: 'Leu'
+Window (Main), 0x11919e940, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11919e800, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11919ca00, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11919e440, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11919e6c0, {{0.0, 0.0}, {420.0, 912.0}}
+ScrollView, 0x11919e580, {{0.0, 0.0}, {420.0, 912.0}}, identifier: 'library-screen'
+Other, 0x11919df40, {{0.0, 68.0}, {420.0, 1147.0}}
+StaticText, 0x11919e080, {{22.0, 100.2}, {36.7, 15.7}}, label: 'LEU'
+Button, 0x11919e300, {{304.0, 84.0}, {44.0, 44.0}}, identifier: 'library-options', label: 'Library options'
+Button, 0x11919e1c0, {{304.0, 84.0}, {44.0, 44.0}}
+Image, 0x11919db80, {{317.7, 104.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+Button, 0x11919de00, {{356.0, 85.7}, {42.0, 42.0}}, identifier: 'import-pdf', label: 'Import PDFs'
+StaticText, 0x11919dcc0, {{22.0, 121.8}, {121.0, 45.7}}, label: 'Library'
+StaticText, 0x11919d7c0, {{22.0, 173.5}, {268.7, 18.0}}, label: 'Your books, passages and reading history.'
+ScrollView, 0x11919da40, {{22.0, 232.0}, {376.0, 38.0}}
+Other, 0x11919d900, {{22.0, 232.0}, {308.0, 38.0}}
+Button, 0x11919d680, {{21.6, 231.6}, {49.4, 38.7}}, identifier: 'library-filter-all', label: 'All', Selected
+Button, 0x11919cc80, {{78.3, 231.6}, {92.0, 38.7}}, identifier: 'library-filter-favorites', label: 'Favorites'
+Button, 0x11919d540, {{177.6, 231.6}, {84.0, 38.7}}, identifier: 'library-filter-recents', label: 'Recents'
+Button, 0x11919d400, {{269.0, 231.6}, {61.4, 38.7}}, identifier: 'library-filter-tags', label: 'Tags'
+Image, 0x11919d2c0, {{37.7, 308.7}, {14.3, 14.7}}, identifier: 'magnifyingglass', label: 'Search'
+TextField, 0x11919cf00, {{63.7, 305.0}, {320.3, 22.0}}, identifier: 'library-search', placeholderValue: 'Search books and passages…'
+StaticText, 0x11919d180, {{22.0, 354.0}, {102.0, 13.3}}, label: 'COLLECTIONS'
+ScrollView, 0x11919d040, {{22.0, 381.3}, {376.0, 38.0}}
+Other, 0x11919cdc0, {{22.0, 381.3}, {400.3, 38.0}}
+Button, 0x11919cb40, {{22.6, 381.0}, {47.4, 38.7}}, label: 'All', Selected
+Button, 0x11919c640, {{77.3, 381.0}, {67.0, 38.7}}, label: 'Study'
+Button, 0x11919c8c0, {{151.6, 381.0}, {91.0, 38.7}}, label: 'Frontend'
+Button, 0x11919c780, {{250.0, 381.0}, {86.7, 38.7}}, label: 'Backend'
+Button, 0x11919c280, {{344.0, 381.0}, {77.7, 38.7}}, label: 'Add or manage collections'
+Image, 0x11919c3c0, {{358.3, 394.0}, {12.3, 12.3}}, identifier: 'plus', label: 'Add'
+StaticText, 0x11919c500, {{358.3, 391.3}, {51.0, 18.0}}, label: 'Edit'
+Other, 0x11919c140, {{22.0, 441.3}, {376.0, 462.0}}
+Button, 0x11919c000, {{22.0, 441.3}, {181.0, 222.0}}, identifier: 'book-React Notes', label: 'Open React Notes, 4 pages'
+Other, 0x11919ed00, {{22.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x11919ee40, {{38.0, 463.3}, {111.0, 24.0}}, label: 'React Notes'
+StaticText, 0x11919ef80, {{38.0, 495.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x11919f0c0, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-React Notes', label: 'Actions for React Notes'
+Button, 0x11919f200, {{156.0, 444.3}, {44.0, 44.0}}
+Image, 0x11919f340, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x11919f480, {{217.0, 441.3}, {181.0, 222.0}}, identifier: 'book-System Design', label: 'Open System Design, 4 pages'
+Other, 0x11919f5c0, {{217.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x11919f700, {{233.0, 463.3}, {72.3, 49.0}}, label: 'System Design'
+StaticText, 0x11919f840, {{233.0, 520.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x11919f980, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-System Design', label: 'Actions for System Design'
+Button, 0x11919fac0, {{351.0, 444.3}, {44.0, 44.0}}
+Image, 0x11919fc00, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x11919fd40, {{22.0, 681.3}, {181.0, 222.0}}, identifier: 'book-JavaScript Deep Dive', label: 'Open JavaScript Deep Dive, 4 pages'
+Other, 0x11919fe80, {{22.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x1191757c0, {{38.0, 703.3}, {98.0, 49.0}}, label: 'JavaScript Deep Dive'
+StaticText, 0x1191935c0, {{38.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x119193840, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-JavaScript Deep Dive', label: 'Actions for JavaScript Deep Dive'
+Button, 0x119193980, {{156.0, 684.3}, {44.0, 44.0}}
+Image, 0x119193ac0, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x119193700, {{217.0, 681.3}, {181.0, 222.0}}, identifier: 'book-Coding Interviews', label: 'Open Coding Interviews, 4 pages'
+Other, 0x119193c00, {{217.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x119193d40, {{233.0, 703.3}, {98.7, 49.0}}, label: 'Coding Interviews'
+StaticText, 0x119193e80, {{233.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x119193480, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-Coding Interviews', label: 'Actions for Coding Interviews'
+Button, 0x119193340, {{351.0, 684.3}, {44.0, 44.0}}
+Image, 0x1191930c0, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+StaticText, 0x119193200, {{118.7, 1173.3}, {182.7, 15.7}}, label: '6 PDFs · stored on this iPhone'
+Other, 0x119192e40, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x119192f80, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x119192bc0, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x119192d00, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x1191a5680, {{0.0, 820.0}, {420.0, 58.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+Button, 0x1191a4500, {{20.0, 820.0}, {126.7, 58.0}}, identifier: 'primary-shelf', label: 'Library', Selected
+Image, 0x1191a4000, {{72.7, 830.0}, {21.3, 18.7}}, identifier: 'books.vertical', label: 'books.vertical'
+StaticText, 0x1191a4140, {{63.0, 856.0}, {40.7, 13.3}}, label: 'Library'
+Button, 0x1191a4780, {{146.7, 820.0}, {126.7, 58.0}}, identifier: 'primary-learn', label: 'Study'
+Image, 0x1191a6940, {{198.7, 829.3}, {22.7, 20.3}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x1191a6800, {{194.8, 856.5}, {30.3, 13.3}}, label: 'Study'
+Button, 0x1191a4a00, {{273.3, 820.0}, {126.7, 58.0}}, identifier: 'primary-trails', label: 'Trails'
+Image, 0x1191a5b80, {{327.7, 832.0}, {18.0, 14.7}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+StaticText, 0x1191a6a80, {{321.8, 853.7}, {29.7, 13.3}}, label: 'Trails'
+Other, 0x1191a6440, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1191a6580, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1191a66c0, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1191a61c0, {{0.0, 68.0}, {420.0, 810.0}}, identifier: 'reader-screen', label: 'reader-screen'
+Other, 0x1191a5f40, {{0.0, 158.0}, {420.0, 521.0}}, identifier: 'read-paged-viewport', label: 'Reading area'
+Other, 0x1191a6080, {{0.0, 158.0}, {420.0, 521.0}}
+Other, 0x1191a5cc0, {{0.0, 158.0}, {420.0, 521.0}}
+ScrollView, 0x1191a5e00, {{0.0, 158.0}, {420.0, 521.0}}
+Other, 0x1191a5900, {{0.0, 158.0}, {420.0, 1019.0}}
+StaticText, 0x1191a5a40, {{28.0, 188.0}, {328.0, 52.7}}, label: 'SHELF SAMPLES / 02'
+StaticText, 0x1191a6300, {{28.0, 240.7}, {168.3, 66.0}}, label: 'Stat i snapsho'
+StaticText, 0x1191a57c0, {{28.0, 306.7}, {328.7, 75.0}}, label: 't Setti g stae reques s anothr rend . t dos n'
+StaticText, 0x1191a4f00, {{28.0, 381.7}, {10.7, 44.0}}, label: 'e'
+StaticText, 0x1191a5400, {{28.0, 425.7}, {360.7, 75.0}}, label: 'ot cha ge he st te varia le ins de he ev nt hand er t ha is alr ady run'
+StaticText, 0x1191a5540, {{28.0, 500.7}, {12.3, 44.0}}, label: 'n'
+ScrollView, 0x1191a4c80, {{28.0, 544.7}, {364.0, 61.0}}
+Other, 0x1191a52c0, {{28.0, 544.7}, {200.0, 61.0}}
+StaticText, 0x1191a5180, {{28.0, 544.7}, {200.0, 61.0}}, label: 'ing. setCount( o nt
++ 1); c nsole.log(c
+o'
+Other, 0x1191a5040, {{28.0, 572.7}, {364.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0 %
+Other, 0x1191a4b40, {{382.0, 599.7}, {7.0, 3.0}}
+Other, 0x1191a4640, {{28.0, 572.7}, {364.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0 %
+Other, 0x1191a48c0, {{382.0, 599.7}, {7.0, 3.0}}
+ScrollView, 0x1191a4dc0, {{28.0, 625.7}, {364.0, 20.3}}
+Other, 0x1191a43c0, {{28.0, 625.7}, {347.0, 20.3}}
+StaticText, 0x1191a4280, {{28.0, 625.7}, {347.0, 20.3}}, label: 'ou t); / St ll the urrent r nder''
+Other, 0x119195b80, {{28.0, 632.8}, {364.0, 10.2}}, label: 'Horizontal scroll bar, 1 page', value: 0 %
+Other, 0x119195cc0, {{382.0, 640.0}, {7.0, 3.0}}
+Other, 0x119195e00, {{28.0, 632.8}, {364.0, 10.2}}, label: 'Horizontal scroll bar, 1 page', value: 0 %
+Other, 0x119195a40, {{382.0, 640.0}, {7.0, 3.0}}
+ScrollView, 0x119196300, {{28.0, 666.0}, {364.0, 20.3}}
+Other, 0x119196080, {{28.0, 666.0}, {10.7, 20.3}}
+StaticText, 0x1191961c0, {{28.0, 666.0}, {10.7, 20.3}}, label: 's'
+Other, 0x119197980, {{28.0, 673.2}, {364.0, 10.2}}, label: 'Horizontal scroll bar, 1 page', value: 0 %
+Other, 0x119195f40, {{382.0, 680.3}, {7.0, 3.0}}
+Other, 0x119197e80, {{28.0, 673.2}, {364.0, 10.2}}, label: 'Horizontal scroll bar, 1 page', value: 0 %
+Other, 0x119197ac0, {{382.0, 680.3}, {7.0, 3.0}}
+StaticText, 0x119197840, {{28.0, 706.3}, {338.0, 75.0}}, label: 'val e. hen he ne t value de end on the reviou s que d v l e, use a f nctiona u'
+StaticText, 0x119197d40, {{28.0, 781.3}, {5.7, 44.0}}, label: 'l'
+ScrollView, 0x119197c00, {{28.0, 825.3}, {364.0, 40.7}}
+Other, 0x119197700, {{28.0, 825.3}, {357.3, 40.7}}
+StaticText, 0x1191975c0, {{28.0, 825.3}, {357.3, 40.7}}, label: 'updater. setCoun (p evious = rev
+ious + 1); setCou t( revious > pre'
+Other, 0x119196e40, {{44.0, 842.7}, {332.0, 20.3}}, label: 'Horizontal scroll bar, 1 page', value: 0 %
+Other, 0x119197480, {{366.0, 860.0}, {7.0, 3.0}}
+Other, 0x119197340, {{44.0, 842.7}, {332.0, 20.3}}, label: 'Horizontal scroll bar, 1 page', value: 0 %
+Other, 0x119196f80, {{366.0, 860.0}, {7.0, 3.0}}
+StaticText, 0x1191970c0, {{28.0, 886.0}, {342.0, 75.0}}, label: 'vio s + 1); The upda er eceives he prev ous p din'
+StaticText, 0x119196d00, {{28.0, 961.0}, {10.7, 44.0}}, label: 'e'
+StaticText, 0x119196bc0, {{28.0, 1005.0}, {256.7, 44.0}}, label: 'value, no a magi ally utated l'
+StaticText, 0x119197200, {{28.0, 1049.0}, {11.7, 44.0}}, label: 'o'
+StaticText, 0x119196a80, {{28.0, 1093.0}, {264.7, 44.0}}, label: 'cal v r able. SH LF / O IGINAL'
+Other, 0x119196940, {{387.0, 158.0}, {30.0, 521.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x1191966c0, {{414.0, 161.0}, {3.0, 263.3}}
+Other, 0x119196800, {{387.0, 158.0}, {30.0, 521.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x119196440, {{414.0, 161.0}, {3.0, 263.3}}
+Button, 0x119196580, {{24.3, 84.0}, {9.3, 16.3}}, identifier: 'close-reader', label: 'Back to library'
+StaticText, 0x11918ebc0, {{169.8, 76.3}, {80.3, 17.0}}, label: 'Reading React Notes'
+StaticText, 0x11918ed00, {{61.8, 94.3}, {296.3, 13.3}}, label: 'Reading React Notes'
+Button, 0x11918ee40, {{368.0, 70.0}, {44.0, 44.0}}, label: 'Reader options'
+Button, 0x11918ef80, {{368.0, 70.0}, {44.0, 44.0}}
+Image, 0x11918f0c0, {{381.7, 90.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+SegmentedControl, 0x11918f200, {{120.0, 120.0}, {180.0, 31.0}}
+Button, 0x11918f340, {{120.0, 120.0}, {90.0, 32.0}}, label: 'Read', Selected
+Button, 0x11918f480, {{210.0, 120.0}, {90.0, 32.0}}, label: 'Original'
+Other, 0x11918fe80, {{0.0, 679.0}, {420.0, 233.0}}, identifier: 'reader-bottom-bar'
+Other, 0x11918fd40, {{0.0, 679.0}, {420.0, 199.0}}, identifier: 'reader-bottom-bar-frame', label: 'reader-bottom-bar-frame'
+Other, 0x11918fc00, {{28.3, 699.0}, {364.0, 48.0}}, identifier: 'reader-transport-row'
+Button, 0x11918fac0, {{28.3, 715.0}, {9.3, 16.3}}, identifier: 'previous-page', label: 'Previous page'
+Button, 0x11918f700, {{65.0, 706.2}, {182.0, 33.7}}, identifier: 'reader-page-count', label: 'Page 2 of 4'
+StaticText, 0x11918f840, {{139.3, 706.2}, {33.3, 19.3}}, label: '2 / 4'
+StaticText, 0x11918f980, {{65.0, 726.5}, {182.0, 13.3}}, label: 'Setting state requests another render. It does not change the state variable inside the event handler that'
+Button, 0x11918f5c0, {{274.7, 715.0}, {9.3, 16.3}}, identifier: 'next-page', label: 'Next page'
+Button, 0x1191a1680, {{308.0, 699.0}, {48.0, 48.0}}, identifier: 'speech-control', label: 'Read page aloud', value: Stopped
+Button, 0x1191a0500, {{379.7, 713.0}, {12.7, 20.0}}, identifier: 'bookmark-page', label: 'Bookmark'
+Slider, 0x1191a0000, {{12.0, 761.0}, {396.0, 44.0}}, identifier: 'reader-scrubber', label: 'Page scrubber', value: Page 2 of 4
+Button, 0x1191a0140, {{36.8, 826.0}, {49.3, 32.5}}, identifier: 'reader-tool-contents', label: 'Contents'
+Image, 0x1191a0780, {{52.7, 826.0}, {18.0, 13.0}}, identifier: 'list.bullet', label: 'List'
+StaticText, 0x1191a0280, {{36.8, 845.2}, {49.3, 13.3}}, label: 'Contents'
+Button, 0x1191a03c0, {{142.0, 823.7}, {37.0, 37.2}}, identifier: 'reader-tool-search', label: 'Search'
+Image, 0x1191a0dc0, {{152.0, 823.7}, {17.3, 17.7}}, identifier: 'magnifyingglass', label: 'Search'
+StaticText, 0x1191a08c0, {{142.0, 847.5}, {37.0, 13.3}}, label: 'Search'
+Button, 0x1191a0640, {{210.0, 815.0}, {99.0, 53.0}}, identifier: 'reader-tool-mark', label: 'Mark important parts'
+Button, 0x1191a0b40, {{210.0, 815.0}, {99.0, 53.0}}
+Image, 0x1191a0f00, {{254.0, 824.0}, {11.3, 16.7}}, identifier: 'pencil.tip', label: 'pencil.tip'
+StaticText, 0x1191a1180, {{245.3, 847.0}, {28.3, 13.3}}, label: 'Mark'
+Button, 0x1191a1040, {{343.0, 821.7}, {31.0, 41.2}}, identifier: 'reader-tool-learn', label: 'Study'
+Image, 0x1191a0c80, {{346.7, 821.7}, {24.0, 21.7}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x1191a12c0, {{343.0, 849.5}, {31.0, 13.3}}, label: 'Study'
+Button, 0x1191a1400, {{400.2, 94.2}, {8.0, 8.0}}, label: 'Memory state for ot cha ge he st te varia le ins de he ev nt hand er t ha is alr ady run'
+Button, 0x1191a1540, {{400.2, 131.2}, {8.0, 8.0}}, label: 'Memory state for ing'
+Button, 0x1191a2080, {{400.2, 168.2}, {8.0, 8.0}}, label: 'Memory state for t Setti g stae reques s anothr rend '
+Path to element:
+→Application, 0x11919ea80, pid: 81639, label: 'Leu'
+Query chain:
+→Find: Target Application 'dev.shelf.personal'
+Output: {
+Application, 0x1191a2300, pid: 81639, label: 'Leu'
+}
+)
+LEU_UI_TREE_END: failed-journey
+Test Case '-[ShelfUITests.ShelfInteractionRepairUITests test29FlowRoundTripDoesNotDisableReadPaging]' failed (41.770 seconds).
+Test Case '-[ShelfUITests.ShelfInteractionRepairUITests test30PlayButtonHasBreathingRoomInsideTheBar]' passed (10.736 seconds).
+Test Case '-[ShelfUITests.ShelfInteractionRepairUITests test31ReadVerticalPositionIsNotReplacedByHiddenPDFPosition]' passed (27.132 seconds).
+Executed 10 tests, with 3 failures (0 unexpected) in 224.588 (224.598) seconds
+Test Case '-[ShelfUITests.ShelfLearningOSUITests test32LearnTodayCreatesLocalStudySession]' passed (13.576 seconds).
+t =    24.97s Collecting debug information to assist test failure triage
+t =    24.97s     Requesting snapshot of accessibility hierarchy for app with pid 81914
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfUITests/ShelfLearningOSUITests.swift:22: error: -[ShelfUITests.ShelfLearningOSUITests test33QuestionCommitAndSourceRoundTrip] : failed - The seeded study plan must include the question required by this round-trip test.
+t =    25.00s Tear Down
+t =    25.00s     Find the Target Application 'dev.shelf.personal'
+t =    25.10s     Added attachment named 'failed-journey'
+t =    25.10s     Requesting snapshot of accessibility hierarchy for app with pid 81914
+LEU_UI_TREE_BEGIN: failed-journey
+Optional(Attributes: Application, 0x1192fb0c0, pid: 81914, label: 'Leu'
+Element subtree:
+→Application, 0x1192fb0c0, pid: 81914, label: 'Leu'
+Window (Main), 0x1192f8280, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1192f83c0, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1192f8500, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1192f8640, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1192f9a40, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1192f9400, {{0.0, 68.0}, {420.0, 752.0}}, identifier: 'study-session-screen', label: 'study-session-screen'
+Button, 0x1192f9680, {{12.0, 75.0}, {44.0, 44.0}}, identifier: 'xmark', label: 'End study session'
+StaticText, 0x1192f9540, {{70.0, 73.2}, {40.0, 11.0}}, label: 'STUDY'
+StaticText, 0x1192f8000, {{70.0, 86.2}, {42.3, 19.3}}, identifier: 'study-progress', label: '1 of 3'
+StaticText, 0x1192f92c0, {{70.0, 107.5}, {32.0, 13.3}}, identifier: 'study-save-status', label: 'Saved'
+StaticText, 0x1192f8140, {{349.0, 87.3}, {59.0, 19.3}}, label: '~10 min'
+Other, 0x1192fbc00, {{0.0, 126.3}, {420.0, 693.7}}, identifier: 'study-activity-frame', label: 'study-activity-frame'
+ScrollView, 0x1192fbe80, {{0.0, 126.3}, {420.0, 785.7}}
+Other, 0x1192fbd40, {{0.0, 126.3}, {420.0, 320.3}}
+StaticText, 0x1192fb980, {{22.7, 150.3}, {72.7, 14.3}}, label: 'Active recall'
+StaticText, 0x1192f8780, {{22.7, 186.7}, {365.0, 101.7}}, label: 'ot cha ge he st te varia le ins de he ev nt hand er t ha is alr ady run'
+StaticText, 0x1192fb700, {{22.7, 310.3}, {374.7, 42.3}}, label: 'Before revealing the source, reconstruct the idea in your own words.'
+Other, 0x1192fb840, {{22.7, 150.3}, {374.7, 272.3}}, identifier: 'recall-card', label: 'recall-card'
+Button, 0x1192fb480, {{22.3, 374.3}, {150.5, 48.8}}, label: 'Reveal source'
+Other, 0x1192fb5c0, {{387.0, 154.3}, {30.0, 665.7}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x1192fae40, {{414.0, 530.7}, {3.0, 286.3}}
+Other, 0x1192fb340, {{387.0, 154.3}, {30.0, 665.7}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x1192fb200, {{414.0, 530.7}, {3.0, 286.3}}
+Other, 0x1192fa440, {{0.0, 820.0}, {420.0, 58.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+Button, 0x1192f8c80, {{20.0, 820.0}, {126.7, 58.0}}, identifier: 'primary-shelf', label: 'Library'
+Image, 0x1192f88c0, {{73.0, 830.0}, {20.7, 18.7}}, identifier: 'books.vertical', label: 'books.vertical'
+StaticText, 0x1192fad00, {{64.2, 855.7}, {38.3, 13.3}}, label: 'Library'
+Button, 0x1192fabc0, {{146.7, 820.0}, {126.7, 58.0}}, identifier: 'primary-learn', label: 'Study', Selected
+Image, 0x1192fa940, {{198.7, 829.0}, {23.0, 20.7}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x1192f8a00, {{194.2, 857.0}, {31.7, 13.3}}, label: 'Study'
+Button, 0x1192f8dc0, {{273.3, 820.0}, {126.7, 58.0}}, identifier: 'primary-trails', label: 'Trails'
+Image, 0x1192fa800, {{327.7, 832.0}, {18.0, 14.7}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+StaticText, 0x1192fa6c0, {{321.8, 853.7}, {29.7, 13.3}}, label: 'Trails'
+Path to element:
+→Application, 0x1192fb0c0, pid: 81914, label: 'Leu'
+Query chain:
+→Find: Target Application 'dev.shelf.personal'
+Output: {
+Application, 0x1192faf80, pid: 81914, label: 'Leu'
+}
+)
+LEU_UI_TREE_END: failed-journey
+Test Case '-[ShelfUITests.ShelfLearningOSUITests test33QuestionCommitAndSourceRoundTrip]' failed (25.408 seconds).
+LEU_UI_CHECKPOINT: before-learning-mode-active-recall nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 715.3333333333334, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-mode-active-recall nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 715.3333333333334, 376.0, 56.0) enabled=true hittable=false
+Test Case '-[ShelfUITests.ShelfLearningOSUITests test34ActiveRecallEntryPoint]' passed (15.852 seconds).
+LEU_UI_CHECKPOINT: before-learning-mode-interview nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 231.66666666666663, 376.0, 56.0) enabled=true hittable=true
+LEU_UI_CHECKPOINT: after-learning-mode-interview nativeButtons=1 viewport=(2.0, 76.0, 416.0, 736.0) type=9 frame=(22.0, 231.66666666666663, 376.0, 56.0) enabled=true hittable=false
+Test Case '-[ShelfUITests.ShelfLearningOSUITests test35InterviewModeEntryPoint]' passed (19.619 seconds).
+Test Case '-[ShelfUITests.ShelfLearningOSUITests test37TrailsCanCreatePersistentLearningPath]' passed (12.633 seconds).
+Test Case '-[ShelfUITests.ShelfLearningOSUITests test38ReaderExposesLearningObjectActions]' passed (11.281 seconds).
+Test Case '-[ShelfUITests.ShelfLearningOSUITests test41ReaderTestActionOpensSourceBoundPromptEditor]' passed (13.891 seconds).
+Test Case '-[ShelfUITests.ShelfReaderRegressionUITests test15OriginalZoomPansWithoutTurningPageAndArrowStillTurns]' passed (18.621 seconds).
+Test Case '-[ShelfUITests.ShelfReaderRegressionUITests test16SearchResultNavigatesThroughReaderLocation]' passed (15.941 seconds).
+Test Case '-[ShelfUITests.ShelfReaderRegressionUITests test17PagesNavigatorOpensAroundCurrentPage]' passed (14.937 seconds).
+Test Case '-[ShelfUITests.ShelfReaderRegressionUITests test18EmptyBookmarksCanBookmarkCurrentPage]' passed (14.276 seconds).
+Test Case '-[ShelfUITests.ShelfReaderRegressionUITests test19ReadModeStudyMarkIsExplicitlyWholePage]' passed (18.134 seconds).
+Test Case '-[ShelfUITests.ShelfReaderRegressionUITests test20FocusModeKeepsExplicitLibraryExit]' passed (17.194 seconds).
+Test Case '-[ShelfUITests.ShelfReaderRegressionUITests test21EmptyFavoritesHasBrowseLibraryRecovery]' passed (10.471 seconds).
+Executed 7 tests, with 0 failures (0 unexpected) in 109.573 (109.578) seconds
+t =    29.38s Collecting debug information to assist test failure triage
+t =    29.38s     Requesting snapshot of accessibility hierarchy for app with pid 82594
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfUITests/ShelfRecoveryV25UITests.swift:6: error: -[ShelfUITests.ShelfRecoveryV25UITests test57ConfidenceControlsHaveEqualGeometryAndCompleteLabels] : XCTAssertTrue failed
+t =    29.42s Tear Down
+t =    29.42s     Find the Target Application 'dev.shelf.personal'
+t =    29.53s     Added attachment named 'failed-journey'
+t =    29.53s     Requesting snapshot of accessibility hierarchy for app with pid 82594
+LEU_UI_TREE_BEGIN: failed-journey
+Optional(Attributes: Application, 0x11930de00, pid: 82594, label: 'Leu'
+Element subtree:
+→Application, 0x11930de00, pid: 82594, label: 'Leu'
+Window (Main), 0x11930e080, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11930df40, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11930e6c0, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11930dcc0, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11930db80, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11930e580, {{0.0, 68.0}, {420.0, 752.0}}, identifier: 'study-session-screen', label: 'study-session-screen'
+Button, 0x11930e800, {{12.0, 75.0}, {44.0, 44.0}}, identifier: 'xmark', label: 'End study session'
+StaticText, 0x11930f980, {{70.0, 73.2}, {40.0, 11.0}}, label: 'STUDY'
+StaticText, 0x11930ef80, {{70.0, 86.2}, {42.3, 19.3}}, identifier: 'study-progress', label: '1 of 3'
+StaticText, 0x11930d180, {{70.0, 107.5}, {32.0, 13.3}}, identifier: 'study-save-status', label: 'Saved'
+StaticText, 0x11930f200, {{349.0, 87.3}, {59.0, 19.3}}, label: '~10 min'
+Other, 0x11930f480, {{0.0, 126.3}, {420.0, 693.7}}, identifier: 'study-activity-frame', label: 'study-activity-frame'
+ScrollView, 0x11930f700, {{0.0, 126.3}, {420.0, 785.7}}
+Other, 0x11930e1c0, {{0.0, 126.3}, {420.0, 320.3}}
+StaticText, 0x11930f340, {{22.7, 150.3}, {72.7, 14.3}}, label: 'Active recall'
+StaticText, 0x11930f5c0, {{22.7, 186.7}, {365.0, 101.7}}, label: 'ot cha ge he st te varia le ins de he ev nt hand er t ha is alr ady run'
+StaticText, 0x11930ee40, {{22.7, 310.3}, {374.7, 42.3}}, label: 'Before revealing the source, reconstruct the idea in your own words.'
+Other, 0x11930e940, {{22.7, 150.3}, {374.7, 272.3}}, identifier: 'recall-card', label: 'recall-card'
+Button, 0x11930ea80, {{22.3, 374.3}, {150.5, 48.8}}, label: 'Reveal source'
+Other, 0x11930ebc0, {{387.0, 154.3}, {30.0, 665.7}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x11930d2c0, {{414.0, 530.7}, {3.0, 286.3}}
+Other, 0x11930d400, {{387.0, 154.3}, {30.0, 665.7}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x11930f0c0, {{414.0, 530.7}, {3.0, 286.3}}
+Other, 0x11930da40, {{0.0, 820.0}, {420.0, 58.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+Button, 0x11930fd40, {{20.0, 820.0}, {126.7, 58.0}}, identifier: 'primary-shelf', label: 'Library'
+Image, 0x11930ed00, {{73.0, 830.0}, {20.7, 18.7}}, identifier: 'books.vertical', label: 'books.vertical'
+StaticText, 0x11930fac0, {{64.2, 855.7}, {38.3, 13.3}}, label: 'Library'
+Button, 0x11930e440, {{146.7, 820.0}, {126.7, 58.0}}, identifier: 'primary-learn', label: 'Study', Selected
+Image, 0x11930fe80, {{198.7, 829.0}, {23.0, 20.7}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x11930f840, {{194.2, 857.0}, {31.7, 13.3}}, label: 'Study'
+Button, 0x11930d540, {{273.3, 820.0}, {126.7, 58.0}}, identifier: 'primary-trails', label: 'Trails'
+Image, 0x11930d680, {{327.7, 832.0}, {18.0, 14.7}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+StaticText, 0x11930d7c0, {{321.8, 853.7}, {29.7, 13.3}}, label: 'Trails'
+Path to element:
+→Application, 0x11930de00, pid: 82594, label: 'Leu'
+Query chain:
+→Find: Target Application 'dev.shelf.personal'
+Output: {
+Application, 0x11930fc00, pid: 82594, label: 'Leu'
+}
+)
+LEU_UI_TREE_END: failed-journey
+Test Case '-[ShelfUITests.ShelfRecoveryV25UITests test57ConfidenceControlsHaveEqualGeometryAndCompleteLabels]' failed (29.836 seconds).
+Test Case '-[ShelfUITests.ShelfRecoveryV25UITests test58TrailContinueReturnsToTheRetainedTrail]' passed (22.755 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test00AccessibilityContract]' passed (10.523 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test01LibraryBaselineAndPrimaryTabs]' passed (12.329 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test02ReaderBaselineReadAndOriginalModes]' passed (11.788 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test03ArrowPagingAndPositionPersistence]' passed (15.336 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test04ReaderContentsSectionsPagesBookmarks]' passed (14.986 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test05BookmarkAppearsInContents]' passed (12.583 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test06ReaderSearchFindsAndNavigates]' passed (19.662 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test07PageStudyMarksAndDrawerFilters]' passed (50.854 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test08AddNoteSurvivesReopen]' passed (92.903 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test09TextControlsAreReachableInBothModes]' passed (25.248 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test10SpeechControlChangesState]' passed (12.276 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test11LibrarySearchAndFavorites]' passed (19.278 seconds).
+Test Case '-[ShelfUITests.ShelfUITests test12SettingsAndBackupEntryPoint]' passed (15.087 seconds).
+t =    15.54s         Find: Descendants matching type Any
+t =    15.54s         Requesting snapshot of accessibility hierarchy for app with pid 83676
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfUITests/ShelfUITestCase.swift:125: error: -[ShelfUITests.ShelfUITests test13HorizontalGestureSmokeTestInReadMode] : Asynchronous wait failed: Exceeded timeout of 6 seconds, with unfulfilled expectations: "Expect predicate `label == "Page 2 of 4" OR value == "Page 2 of 4"` for object "reader-page-count" Any".
+t =    16.00s Tear Down
+t =    16.00s     Find the Target Application 'dev.shelf.personal'
+t =    16.15s     Added attachment named 'failed-journey'
+t =    16.15s     Requesting snapshot of accessibility hierarchy for app with pid 83676
+LEU_UI_TREE_BEGIN: failed-journey
+Optional(Attributes: Application, 0x119351540, pid: 83676, label: 'Leu'
+Element subtree:
+→Application, 0x119351540, pid: 83676, label: 'Leu'
+Window (Main), 0x119351680, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1193512c0, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x119351900, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x119351400, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1193517c0, {{0.0, 0.0}, {420.0, 912.0}}
+ScrollView, 0x119351f40, {{0.0, 0.0}, {420.0, 912.0}}, identifier: 'library-screen'
+Other, 0x119351a40, {{0.0, 68.0}, {420.0, 1147.0}}
+StaticText, 0x119351e00, {{22.0, 100.2}, {36.7, 15.7}}, label: 'LEU'
+Button, 0x119352080, {{304.0, 84.0}, {44.0, 44.0}}, identifier: 'library-options', label: 'Library options'
+Button, 0x119352a80, {{304.0, 84.0}, {44.0, 44.0}}
+Image, 0x1193521c0, {{317.7, 104.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+Button, 0x119351cc0, {{356.0, 85.7}, {42.0, 42.0}}, identifier: 'import-pdf', label: 'Import PDFs'
+StaticText, 0x119351b80, {{22.0, 121.8}, {121.0, 45.7}}, label: 'Library'
+StaticText, 0x119352580, {{22.0, 173.5}, {268.7, 18.0}}, label: 'Your books, passages and reading history.'
+ScrollView, 0x119352300, {{22.0, 232.0}, {376.0, 38.0}}
+Other, 0x119352440, {{22.0, 232.0}, {308.0, 38.0}}
+Button, 0x119352940, {{21.6, 231.6}, {49.4, 38.7}}, identifier: 'library-filter-all', label: 'All', Selected
+Button, 0x119352bc0, {{78.3, 231.6}, {92.0, 38.7}}, identifier: 'library-filter-favorites', label: 'Favorites'
+Button, 0x119352e40, {{177.6, 231.6}, {84.0, 38.7}}, identifier: 'library-filter-recents', label: 'Recents'
+Button, 0x119352f80, {{269.0, 231.6}, {61.4, 38.7}}, identifier: 'library-filter-tags', label: 'Tags'
+Image, 0x1193530c0, {{37.7, 308.7}, {14.3, 14.7}}, identifier: 'magnifyingglass', label: 'Search'
+TextField, 0x119353480, {{63.7, 305.0}, {320.3, 22.0}}, identifier: 'library-search', placeholderValue: 'Search books and passages…'
+StaticText, 0x1193526c0, {{22.0, 354.0}, {102.0, 13.3}}, label: 'COLLECTIONS'
+ScrollView, 0x119352800, {{22.0, 381.3}, {376.0, 38.0}}
+Other, 0x1193535c0, {{22.0, 381.3}, {400.3, 38.0}}
+Button, 0x119353700, {{22.6, 381.0}, {47.4, 38.7}}, label: 'All', Selected
+Button, 0x119353340, {{77.3, 381.0}, {67.0, 38.7}}, label: 'Study'
+Button, 0x119353980, {{151.6, 381.0}, {91.0, 38.7}}, label: 'Frontend'
+Button, 0x119353ac0, {{250.0, 381.0}, {86.7, 38.7}}, label: 'Backend'
+Button, 0x119353d40, {{344.0, 381.0}, {77.7, 38.7}}, label: 'Add or manage collections'
+Image, 0x119353840, {{358.3, 394.0}, {12.3, 12.3}}, identifier: 'plus', label: 'Add'
+StaticText, 0x119353e80, {{358.3, 391.3}, {51.0, 18.0}}, label: 'Edit'
+Other, 0x119353c00, {{22.0, 441.3}, {376.0, 462.0}}
+Button, 0x119353200, {{22.0, 441.3}, {181.0, 222.0}}, identifier: 'book-React Notes', label: 'Open React Notes, 4 pages'
+Other, 0x119351180, {{22.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x119351040, {{38.0, 463.3}, {111.0, 24.0}}, label: 'React Notes'
+StaticText, 0x119350f00, {{38.0, 495.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x119350dc0, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-React Notes', label: 'Actions for React Notes'
+Button, 0x119350c80, {{156.0, 444.3}, {44.0, 44.0}}
+Image, 0x119350b40, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x119350a00, {{217.0, 441.3}, {181.0, 222.0}}, identifier: 'book-System Design', label: 'Open System Design, 4 pages'
+Other, 0x1193508c0, {{217.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x119333ac0, {{233.0, 463.3}, {72.3, 49.0}}, label: 'System Design'
+StaticText, 0x1193652c0, {{233.0, 520.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x119365400, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-System Design', label: 'Actions for System Design'
+Button, 0x119365540, {{351.0, 444.3}, {44.0, 44.0}}
+Image, 0x119365680, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1193657c0, {{22.0, 681.3}, {181.0, 222.0}}, identifier: 'book-JavaScript Deep Dive', label: 'Open JavaScript Deep Dive, 4 pages'
+Other, 0x119365900, {{22.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x119365a40, {{38.0, 703.3}, {98.0, 49.0}}, label: 'JavaScript Deep Dive'
+StaticText, 0x119364780, {{38.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x119364640, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-JavaScript Deep Dive', label: 'Actions for JavaScript Deep Dive'
+Button, 0x119364500, {{156.0, 684.3}, {44.0, 44.0}}
+Image, 0x119364140, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1193643c0, {{217.0, 681.3}, {181.0, 222.0}}, identifier: 'book-Coding Interviews', label: 'Open Coding Interviews, 4 pages'
+Other, 0x119364280, {{217.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x119364000, {{233.0, 703.3}, {98.7, 49.0}}, label: 'Coding Interviews'
+StaticText, 0x11935ea80, {{233.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x11935f0c0, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-Coding Interviews', label: 'Actions for Coding Interviews'
+Button, 0x11935ed00, {{351.0, 684.3}, {44.0, 44.0}}
+Image, 0x11935ef80, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+StaticText, 0x11935e1c0, {{118.7, 1173.3}, {182.7, 15.7}}, label: '6 PDFs · stored on this iPhone'
+Other, 0x11935e940, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x11935ee40, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x11935e440, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x11935e800, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x11935e580, {{0.0, 820.0}, {420.0, 58.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+Button, 0x11935e300, {{20.0, 820.0}, {126.7, 58.0}}, identifier: 'primary-shelf', label: 'Library', Selected
+Image, 0x11935e6c0, {{72.7, 830.0}, {21.3, 18.7}}, identifier: 'books.vertical', label: 'books.vertical'
+StaticText, 0x11935ebc0, {{63.0, 856.0}, {40.7, 13.3}}, label: 'Library'
+Button, 0x11935f200, {{146.7, 820.0}, {126.7, 58.0}}, identifier: 'primary-learn', label: 'Study'
+Image, 0x11935f340, {{198.7, 829.3}, {22.7, 20.3}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x11935f480, {{194.8, 856.5}, {30.3, 13.3}}, label: 'Study'
+Button, 0x11935fac0, {{273.3, 820.0}, {126.7, 58.0}}, identifier: 'primary-trails', label: 'Trails'
+Image, 0x11935f980, {{327.7, 832.0}, {18.0, 14.7}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+StaticText, 0x11935fc00, {{321.8, 853.7}, {29.7, 13.3}}, label: 'Trails'
+Other, 0x11935f700, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11935f840, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11935f5c0, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x11935fe80, {{0.0, 68.0}, {420.0, 810.0}}, identifier: 'reader-screen', label: 'reader-screen'
+Other, 0x11935e080, {{0.0, 158.0}, {420.0, 521.0}}, identifier: 'read-paged-viewport', label: 'Reading area'
+Other, 0x11935dcc0, {{0.0, 158.0}, {420.0, 521.0}}
+Other, 0x11935da40, {{0.0, 158.0}, {420.0, 521.0}}
+ScrollView, 0x11935fd40, {{0.0, 158.0}, {420.0, 521.0}}
+Other, 0x11935d7c0, {{0.0, 158.0}, {420.0, 968.0}}
+StaticText, 0x11935de00, {{28.0, 188.0}, {325.0, 52.7}}, label: 'SHELF SAMPLES / 01'
+StaticText, 0x11935d900, {{28.0, 240.7}, {120.0, 66.0}}, label: 'Reac Note'
+StaticText, 0x11935db80, {{28.0, 306.7}, {251.7, 66.0}}, label: 'sA clearr modl fr Rea'
+StaticText, 0x11935df40, {{28.0, 372.7}, {349.3, 105.7}}, label: 'c A componnt descries he interf ce o a particu lar se of p ps, s ate and con xt. Rende ing calcul'
+StaticText, 0x119370140, {{28.0, 478.3}, {8.3, 44.0}}, label: 'r'
+StaticText, 0x119370640, {{28.0, 522.3}, {7.0, 44.0}}, label: 't'
+StaticText, 0x119370500, {{28.0, 566.3}, {355.3, 75.0}}, label: 'ates that descrip ion; commi ting ap lie the nece ssary c an es o the'
+StaticText, 0x119370000, {{28.0, 641.3}, {9.3, 44.0}}, label: 's'
+StaticText, 0x119370280, {{28.0, 685.3}, {129.3, 44.0}}, label: 'Inputs Render'
+StaticText, 0x119370780, {{28.0, 729.3}, {55.7, 44.0}}, label: 'creen.'
+StaticText, 0x1193703c0, {{28.0, 773.3}, {358.7, 105.7}}, label: 'Com it Keep r nderi g ure do no change u related objec s, start re uests or ub cribe o eve ts while ca lcu ating the'
+StaticText, 0x11935ad00, {{28.0, 879.0}, {364.0, 75.0}}, label: 'interfa e. Readin que tion: w at belongs i ren erin'
+StaticText, 0x11935b5c0, {{28.0, 954.0}, {12.3, 44.0}}, label: 'n'
+StaticText, 0x119358b40, {{28.0, 998.0}, {227.3, 44.0}}, label: 'g, and ha b longs in an ev'
+StaticText, 0x1193588c0, {{28.0, 1042.0}, {281.0, 44.0}}, label: 'ent h n ler?SHE F / OR GINAL S'
+Other, 0x119358a00, {{387.0, 158.0}, {30.0, 521.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x119358f00, {{414.0, 161.0}, {3.0, 277.3}}
+Other, 0x119358dc0, {{387.0, 158.0}, {30.0, 521.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x119358c80, {{414.0, 161.0}, {3.0, 277.3}}
+Button, 0x11935bc00, {{24.3, 84.0}, {9.3, 16.3}}, identifier: 'close-reader', label: 'Back to library'
+StaticText, 0x119359040, {{169.8, 76.3}, {80.3, 17.0}}, label: 'Reading React Notes'
+StaticText, 0x119359180, {{60.5, 94.3}, {299.0, 13.3}}, label: 'Reading React Notes'
+Button, 0x11935b200, {{368.0, 70.0}, {44.0, 44.0}}, label: 'Reader options'
+Button, 0x11935bd40, {{368.0, 70.0}, {44.0, 44.0}}
+Image, 0x11935b840, {{381.7, 90.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+SegmentedControl, 0x11935be80, {{120.0, 120.0}, {180.0, 31.0}}
+Button, 0x11935b700, {{120.0, 120.0}, {90.0, 32.0}}, label: 'Read', Selected
+Button, 0x11935bac0, {{210.0, 120.0}, {90.0, 32.0}}, label: 'Original'
+Other, 0x11935b980, {{0.0, 679.0}, {420.0, 233.0}}, identifier: 'reader-bottom-bar'
+Other, 0x11935b340, {{0.0, 679.0}, {420.0, 199.0}}, identifier: 'reader-bottom-bar-frame', label: 'reader-bottom-bar-frame'
+Other, 0x11935a440, {{28.3, 699.0}, {364.0, 48.0}}, identifier: 'reader-transport-row'
+Button, 0x11935a940, {{28.3, 715.0}, {9.3, 16.3}}, identifier: 'previous-page', label: 'Previous page', Disabled
+Button, 0x11935b480, {{65.7, 706.2}, {180.7, 33.7}}, identifier: 'reader-page-count', label: 'Page 1 of 4'
+StaticText, 0x11935a800, {{139.3, 706.2}, {33.3, 19.3}}, label: '1 / 4'
+StaticText, 0x11935a6c0, {{65.7, 726.5}, {180.7, 13.3}}, label: 'A component describes the interface for a particular set of props, state and context. Rendering calculates'
+Button, 0x11935b0c0, {{274.7, 715.0}, {9.3, 16.3}}, identifier: 'next-page', label: 'Next page'
+Button, 0x11935af80, {{308.0, 699.0}, {48.0, 48.0}}, identifier: 'speech-control', label: 'Read page aloud', value: Stopped
+Button, 0x11935ae40, {{379.7, 713.0}, {12.7, 20.0}}, identifier: 'bookmark-page', label: 'Bookmark'
+Slider, 0x11935abc0, {{12.0, 761.0}, {396.0, 44.0}}, identifier: 'reader-scrubber', label: 'Page scrubber', value: Page 1 of 4
+Button, 0x11935a300, {{36.8, 826.0}, {49.3, 32.5}}, identifier: 'reader-tool-contents', label: 'Contents'
+Image, 0x11935a580, {{52.7, 826.0}, {18.0, 13.0}}, identifier: 'list.bullet', label: 'List'
+StaticText, 0x119359b80, {{36.8, 845.2}, {49.3, 13.3}}, label: 'Contents'
+Button, 0x119359a40, {{142.0, 823.7}, {37.0, 37.2}}, identifier: 'reader-tool-search', label: 'Search'
+Image, 0x119359e00, {{152.0, 823.7}, {17.3, 17.7}}, identifier: 'magnifyingglass', label: 'Search'
+StaticText, 0x119359cc0, {{142.0, 847.5}, {37.0, 13.3}}, label: 'Search'
+Button, 0x11935a1c0, {{210.0, 815.0}, {99.0, 53.0}}, identifier: 'reader-tool-mark', label: 'Mark important parts'
+Button, 0x11935aa80, {{210.0, 815.0}, {99.0, 53.0}}
+Image, 0x11935a080, {{254.0, 824.0}, {11.3, 16.7}}, identifier: 'pencil.tip', label: 'pencil.tip'
+StaticText, 0x119359f40, {{245.3, 847.0}, {28.3, 13.3}}, label: 'Mark'
+Button, 0x1193597c0, {{343.0, 821.7}, {31.0, 41.2}}, identifier: 'reader-tool-learn', label: 'Study'
+Image, 0x119359400, {{346.7, 821.7}, {24.0, 21.7}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x119359680, {{343.0, 849.5}, {31.0, 13.3}}, label: 'Study'
+Button, 0x1193592c0, {{400.2, 94.2}, {8.0, 8.0}}, label: 'Memory state for interfa e'
+Button, 0x119359900, {{400.2, 131.2}, {8.0, 8.0}}, label: 'Memory state for ates that descrip ion; commi ting ap lie the nece ssary c an es o the'
+Button, 0x119359540, {{400.2, 168.2}, {8.0, 8.0}}, label: 'Memory state for c A componnt descries he interf ce o a particu lar se of p ps, s ate and'
+Path to element:
+→Application, 0x119351540, pid: 83676, label: 'Leu'
+Query chain:
+→Find: Target Application 'dev.shelf.personal'
+Output: {
+Application, 0x119352d00, pid: 83676, label: 'Leu'
+}
+)
+LEU_UI_TREE_END: failed-journey
+Test Case '-[ShelfUITests.ShelfUITests test13HorizontalGestureSmokeTestInReadMode]' failed (16.727 seconds).
+t =    16.59s         Find: Descendants matching type Any
+t =    16.60s         Requesting snapshot of accessibility hierarchy for app with pid 83744
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/ShelfUITests/ShelfUITestCase.swift:125: error: -[ShelfUITests.ShelfUITests test14HorizontalGestureSmokeTestInOriginalMode] : Asynchronous wait failed: Exceeded timeout of 6 seconds, with unfulfilled expectations: "Expect predicate `label == "Page 2 of 4" OR value == "Page 2 of 4"` for object "reader-page-count" Any".
+t =    17.39s Tear Down
+t =    17.39s     Find the Target Application 'dev.shelf.personal'
+t =    17.52s     Added attachment named 'failed-journey'
+t =    17.53s     Requesting snapshot of accessibility hierarchy for app with pid 83744
+LEU_UI_TREE_BEGIN: failed-journey
+Optional(Attributes: Application, 0x1193e6f80, pid: 83744, label: 'Leu'
+Element subtree:
+→Application, 0x1193e6f80, pid: 83744, label: 'Leu'
+Window (Main), 0x1193e6e40, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1193e6d00, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1193e4f00, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1193e6940, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1193e6bc0, {{0.0, 0.0}, {420.0, 912.0}}
+ScrollView, 0x1193e6a80, {{0.0, 0.0}, {420.0, 912.0}}, identifier: 'library-screen'
+Other, 0x1193e6440, {{0.0, 68.0}, {420.0, 1147.0}}
+StaticText, 0x1193e6580, {{22.0, 100.2}, {36.7, 15.7}}, label: 'LEU'
+Button, 0x1193e6800, {{304.0, 84.0}, {44.0, 44.0}}, identifier: 'library-options', label: 'Library options'
+Button, 0x1193e66c0, {{304.0, 84.0}, {44.0, 44.0}}
+Image, 0x1193e6080, {{317.7, 104.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1193e6300, {{356.0, 85.7}, {42.0, 42.0}}, identifier: 'import-pdf', label: 'Import PDFs'
+StaticText, 0x1193e61c0, {{22.0, 121.8}, {121.0, 45.7}}, label: 'Library'
+StaticText, 0x1193e5cc0, {{22.0, 173.5}, {268.7, 18.0}}, label: 'Your books, passages and reading history.'
+ScrollView, 0x1193e5f40, {{22.0, 232.0}, {376.0, 38.0}}
+Other, 0x1193e5e00, {{22.0, 232.0}, {308.0, 38.0}}
+Button, 0x1193e5b80, {{21.6, 231.6}, {49.4, 38.7}}, identifier: 'library-filter-all', label: 'All', Selected
+Button, 0x1193e5180, {{78.3, 231.6}, {92.0, 38.7}}, identifier: 'library-filter-favorites', label: 'Favorites'
+Button, 0x1193e5a40, {{177.6, 231.6}, {84.0, 38.7}}, identifier: 'library-filter-recents', label: 'Recents'
+Button, 0x1193e5900, {{269.0, 231.6}, {61.4, 38.7}}, identifier: 'library-filter-tags', label: 'Tags'
+Image, 0x1193e57c0, {{37.7, 308.7}, {14.3, 14.7}}, identifier: 'magnifyingglass', label: 'Search'
+TextField, 0x1193e5400, {{63.7, 305.0}, {320.3, 22.0}}, identifier: 'library-search', placeholderValue: 'Search books and passages…'
+StaticText, 0x1193e5680, {{22.0, 354.0}, {102.0, 13.3}}, label: 'COLLECTIONS'
+ScrollView, 0x1193e5540, {{22.0, 381.3}, {376.0, 38.0}}
+Other, 0x1193e52c0, {{22.0, 381.3}, {400.3, 38.0}}
+Button, 0x1193e5040, {{22.6, 381.0}, {47.4, 38.7}}, label: 'All', Selected
+Button, 0x1193e4b40, {{77.3, 381.0}, {67.0, 38.7}}, label: 'Study'
+Button, 0x1193e4dc0, {{151.6, 381.0}, {91.0, 38.7}}, label: 'Frontend'
+Button, 0x1193e4c80, {{250.0, 381.0}, {86.7, 38.7}}, label: 'Backend'
+Button, 0x1193e4780, {{344.0, 381.0}, {77.7, 38.7}}, label: 'Add or manage collections'
+Image, 0x1193e48c0, {{358.3, 394.0}, {12.3, 12.3}}, identifier: 'plus', label: 'Add'
+StaticText, 0x1193e4a00, {{358.3, 391.3}, {51.0, 18.0}}, label: 'Edit'
+Other, 0x1193e4640, {{22.0, 441.3}, {376.0, 462.0}}
+Button, 0x1193e4500, {{22.0, 441.3}, {181.0, 222.0}}, identifier: 'book-React Notes', label: 'Open React Notes, 4 pages'
+Other, 0x1193e43c0, {{22.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x1193e4140, {{38.0, 463.3}, {111.0, 24.0}}, label: 'React Notes'
+StaticText, 0x1193e4280, {{38.0, 495.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x1193e4000, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-React Notes', label: 'Actions for React Notes'
+Button, 0x1193e7200, {{156.0, 444.3}, {44.0, 44.0}}
+Image, 0x1193e7340, {{156.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1193e7480, {{217.0, 441.3}, {181.0, 222.0}}, identifier: 'book-System Design', label: 'Open System Design, 4 pages'
+Other, 0x1193e75c0, {{217.0, 541.3}, {181.0, 122.0}}
+StaticText, 0x1193e7700, {{233.0, 463.3}, {72.3, 49.0}}, label: 'System Design'
+StaticText, 0x1193e7840, {{233.0, 520.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x1193e7980, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'actions-System Design', label: 'Actions for System Design'
+Button, 0x1193e7ac0, {{351.0, 444.3}, {44.0, 44.0}}
+Image, 0x1193e7c00, {{351.0, 444.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1193e7d40, {{22.0, 681.3}, {181.0, 222.0}}, identifier: 'book-JavaScript Deep Dive', label: 'Open JavaScript Deep Dive, 4 pages'
+Other, 0x1193e7e80, {{22.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x1193bf700, {{38.0, 703.3}, {98.0, 49.0}}, label: 'JavaScript Deep Dive'
+StaticText, 0x1193d7ac0, {{38.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x1193d7c00, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-JavaScript Deep Dive', label: 'Actions for JavaScript Deep Dive'
+Button, 0x1193d7d40, {{156.0, 684.3}, {44.0, 44.0}}
+Image, 0x1193d7e80, {{156.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+Button, 0x1193d7700, {{217.0, 681.3}, {181.0, 222.0}}, identifier: 'book-Coding Interviews', label: 'Open Coding Interviews, 4 pages'
+Other, 0x1193d7840, {{217.0, 781.3}, {181.0, 122.0}}
+StaticText, 0x1193d7980, {{233.0, 703.3}, {98.7, 49.0}}, label: 'Coding Interviews'
+StaticText, 0x1193d7340, {{233.0, 760.3}, {98.0, 14.3}}, label: '4 pages · Sample'
+Button, 0x1193d7480, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'actions-Coding Interviews', label: 'Actions for Coding Interviews'
+Button, 0x1193d75c0, {{351.0, 684.3}, {44.0, 44.0}}
+Image, 0x1193d70c0, {{351.0, 684.3}, {44.0, 44.0}}, identifier: 'ellipsis', label: 'More'
+StaticText, 0x1193d7200, {{118.7, 1173.3}, {182.7, 15.7}}, label: '6 PDFs · stored on this iPhone'
+Other, 0x1193f1680, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x1193f2300, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x1193f21c0, {{387.0, 62.0}, {30.0, 758.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+Other, 0x1193f1a40, {{414.0, 65.0}, {3.0, 524.7}}
+Other, 0x1193f1b80, {{0.0, 820.0}, {420.0, 58.0}}, identifier: 'root-bottom-chrome-frame', label: 'root-bottom-chrome-frame'
+Button, 0x1193f1e00, {{20.0, 820.0}, {126.7, 58.0}}, identifier: 'primary-shelf', label: 'Library', Selected
+Image, 0x1193f1f40, {{72.7, 830.0}, {21.3, 18.7}}, identifier: 'books.vertical', label: 'books.vertical'
+StaticText, 0x1193f1cc0, {{63.0, 856.0}, {40.7, 13.3}}, label: 'Library'
+Button, 0x1193f2080, {{146.7, 820.0}, {126.7, 58.0}}, identifier: 'primary-learn', label: 'Study'
+Image, 0x1193f26c0, {{198.7, 829.3}, {22.7, 20.3}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x1193f2f80, {{194.8, 856.5}, {30.3, 13.3}}, label: 'Study'
+Button, 0x1193f2800, {{273.3, 820.0}, {126.7, 58.0}}, identifier: 'primary-trails', label: 'Trails'
+Image, 0x1193f2d00, {{327.7, 832.0}, {18.0, 14.7}}, identifier: 'point.3.connected.trianglepath.dotted', label: 'point.3.connected.trianglepath.dotted'
+StaticText, 0x1193f2e40, {{321.8, 853.7}, {29.7, 13.3}}, label: 'Trails'
+Other, 0x1193f2a80, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1193f2bc0, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1193f2580, {{0.0, 0.0}, {420.0, 912.0}}
+Other, 0x1193f2440, {{0.0, 68.0}, {420.0, 810.0}}, identifier: 'reader-screen', label: 'reader-screen'
+Other, 0x1193f0f00, {{0.0, 158.0}, {420.0, 521.0}}, identifier: 'pdf-surface', label: 'original-viewport-frame'
+Other, 0x1193f2940, {{0.0, 158.0}, {420.0, 521.0}}, identifier: 'pdf-surface', label: 'Original PDF reading area'
+Other, 0x1193f1900, {{0.0, 158.0}, {420.0, 521.0}}
+ScrollView, 0x1193f1180, {{0.0, 158.0}, {420.0, 521.0}}
+TextView, 0x1193f1400, {{40.3, 164.0}, {339.3, 509.0}}, value: SHELF SAMPLES / 01...
+Other, 0x1193f1540, {{40.3, 164.0}, {339.3, 509.0}}
+Other, 0x1193f12c0, {{68.6, 195.5}, {282.8, 461.9}}
+Other, 0x1193f1040, {{68.6, 195.5}, {282.8, 461.9}}
+Other, 0x1193f0dc0, {{73.3, 195.5}, {261.4, 162.9}}
+Other, 0x1193f0b40, {{73.3, 195.5}, {73.1, 7.1}}, label: 'SHELF SAMPLES / 01'
+StaticText, 0x1193f0a00, {{73.3, 195.5}, {73.1, 7.1}}, label: 'SHELF SAMPLES / 01'
+Other, 0x1193f0780, {{73.3, 217.7}, {118.3, 27.0}}, label: 'React Notes'
+StaticText, 0x1193f08c0, {{73.3, 217.7}, {118.3, 27.0}}, label: 'React Notes'
+Other, 0x1193f0c80, {{73.3, 257.9}, {199.7, 20.0}}, label: 'A clearer model for React'
+StaticText, 0x1193f0500, {{73.3, 257.9}, {199.7, 20.0}}, label: 'A clearer model for React'
+Other, 0x1193f03c0, {{73.3, 290.3}, {261.4, 68.1}}, label: 'A component describes the interface for a particular
+set of props, state and context. Rendering calculates
+that description; committing applies the necessary
+changes to the screen.'
+StaticText, 0x1193f0280, {{73.3, 290.3}, {261.4, 68.1}}, label: 'A component describes the interface for a particular
+set of props, state and context. Rendering calculates
+that description; committing applies the necessary
+changes to the screen.'
+Other, 0x1193f0640, {{104.4, 396.4}, {223.6, 8.2}}
+Other, 0x1193f0000, {{104.4, 396.4}, {223.6, 8.2}}, label: 'Inputs Render Commit'
+StaticText, 0x1193f17c0, {{104.4, 396.4}, {223.6, 8.2}}, label: 'Inputs Render Commit'
+Other, 0x1193f0140, {{73.3, 434.0}, {272.2, 50.1}}
+Other, 0x1193e3480, {{73.3, 434.0}, {272.2, 50.1}}, label: 'Keep rendering pure: do not change unrelated objects,
+start requests or subscribe to events while calculating
+the interface.'
+StaticText, 0x1193e3ac0, {{73.3, 434.0}, {272.2, 50.1}}, label: 'Keep rendering pure: do not change unrelated objects,
+start requests or subscribe to events while calculating
+the interface.'
+Other, 0x1193e3840, {{73.3, 499.4}, {268.9, 25.1}}
+Other, 0x1193e3700, {{73.3, 499.4}, {268.9, 25.1}}, label: 'Reading question: what belongs in rendering, and what
+belongs in an event handler?'
+StaticText, 0x1193e35c0, {{73.3, 499.4}, {268.9, 25.1}}, label: 'Reading question: what belongs in rendering, and what
+belongs in an event handler?'
+Other, 0x1193e3980, {{68.6, 650.3}, {282.8, 7.1}}
+Other, 0x1193e3d40, {{68.6, 650.3}, {282.8, 7.1}}, label: 'SHELF / ORIGINAL SAMPLE NOTES 1'
+StaticText, 0x1193e3c00, {{68.6, 650.3}, {282.8, 7.1}}, label: 'SHELF / ORIGINAL SAMPLE NOTES 1'
+Other, 0x1193e3e80, {{387.0, 158.0}, {30.0, 521.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x1193d30c0, {{414.0, 119.0}, {3.0, 36.0}}
+Other, 0x1193d3200, {{387.0, 158.0}, {30.0, 521.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+Other, 0x1193d3340, {{414.0, 119.0}, {3.0, 36.0}}
+Button, 0x1193d3480, {{24.3, 84.0}, {9.3, 16.3}}, identifier: 'close-reader', label: 'Back to library'
+StaticText, 0x1193d35c0, {{169.8, 76.3}, {80.3, 17.0}}, label: 'Reading React Notes'
+StaticText, 0x1193d3700, {{60.5, 94.3}, {299.0, 13.3}}, label: 'Reading React Notes'
+Button, 0x1193d3840, {{368.0, 70.0}, {44.0, 44.0}}, label: 'Reader options'
+Button, 0x1193d3980, {{368.0, 70.0}, {44.0, 44.0}}
+Image, 0x1193d3c00, {{381.7, 90.3}, {17.0, 3.7}}, identifier: 'ellipsis', label: 'More'
+SegmentedControl, 0x1193d3d40, {{120.0, 120.0}, {180.0, 31.0}}
+Button, 0x1193d3e80, {{120.0, 120.0}, {90.0, 32.0}}, label: 'Read'
+Button, 0x1193d3ac0, {{210.0, 120.0}, {90.0, 32.0}}, label: 'Original', Selected
+Other, 0x1193e97c0, {{0.0, 679.0}, {420.0, 233.0}}, identifier: 'reader-bottom-bar'
+Other, 0x1193e8140, {{0.0, 679.0}, {420.0, 199.0}}, identifier: 'reader-bottom-bar-frame', label: 'reader-bottom-bar-frame'
+Other, 0x1193e8000, {{28.3, 699.0}, {364.0, 48.0}}, identifier: 'reader-transport-row'
+Button, 0x1193e8280, {{28.3, 715.0}, {9.3, 16.3}}, identifier: 'previous-page', label: 'Previous page', Disabled
+Button, 0x1193e8640, {{65.7, 706.2}, {180.7, 33.7}}, identifier: 'reader-page-count', label: 'Page 1 of 4'
+StaticText, 0x1193e8500, {{139.3, 706.2}, {33.3, 19.3}}, label: '1 / 4'
+StaticText, 0x1193e83c0, {{65.7, 726.5}, {180.7, 13.3}}, label: 'A component describes the interface for a particular set of props, state and context. Rendering calculates'
+Button, 0x1193e8c80, {{274.7, 715.0}, {9.3, 16.3}}, identifier: 'next-page', label: 'Next page'
+Button, 0x1193e8a00, {{308.0, 699.0}, {48.0, 48.0}}, identifier: 'speech-control', label: 'Read page aloud', value: Stopped
+Button, 0x1193e88c0, {{379.7, 713.0}, {12.7, 20.0}}, identifier: 'bookmark-page', label: 'Bookmark'
+Slider, 0x1193e8780, {{12.0, 761.0}, {396.0, 44.0}}, identifier: 'reader-scrubber', label: 'Page scrubber', value: Page 1 of 4
+Button, 0x1193e9040, {{36.8, 826.0}, {49.3, 32.5}}, identifier: 'reader-tool-contents', label: 'Contents'
+Image, 0x1193e8b40, {{52.7, 826.0}, {18.0, 13.0}}, identifier: 'list.bullet', label: 'List'
+StaticText, 0x1193e8dc0, {{36.8, 845.2}, {49.3, 13.3}}, label: 'Contents'
+Button, 0x1193e9400, {{142.0, 823.7}, {37.0, 37.2}}, identifier: 'reader-tool-search', label: 'Search'
+Image, 0x1193e92c0, {{152.0, 823.7}, {17.3, 17.7}}, identifier: 'magnifyingglass', label: 'Search'
+StaticText, 0x1193e9540, {{142.0, 847.5}, {37.0, 13.3}}, label: 'Search'
+Button, 0x1193e9680, {{210.0, 815.0}, {99.0, 53.0}}, identifier: 'reader-tool-mark', label: 'Mark important parts'
+Button, 0x1193ea300, {{210.0, 815.0}, {99.0, 53.0}}
+Image, 0x1193ea1c0, {{254.0, 824.0}, {11.3, 16.7}}, identifier: 'pencil.tip', label: 'pencil.tip'
+StaticText, 0x1193e9180, {{245.3, 847.0}, {28.3, 13.3}}, label: 'Mark'
+Button, 0x1193e9900, {{343.0, 821.7}, {31.0, 41.2}}, identifier: 'reader-tool-learn', label: 'Study'
+Image, 0x1193e9a40, {{346.7, 821.7}, {24.0, 21.7}}, identifier: 'graduationcap', label: 'Itunes U'
+StaticText, 0x1193e9b80, {{343.0, 849.5}, {31.0, 13.3}}, label: 'Study'
+Button, 0x1193e9e00, {{400.2, 94.2}, {8.0, 8.0}}, label: 'Memory state for interfa e'
+Button, 0x1193e9f40, {{400.2, 131.2}, {8.0, 8.0}}, label: 'Memory state for ates that descrip ion; commi ting ap lie the nece ssary c an es o the'
+Button, 0x1193e9cc0, {{400.2, 168.2}, {8.0, 8.0}}, label: 'Memory state for c A componnt descries he interf ce o a particu lar se of p ps, s ate and'
+Path to element:
+→Application, 0x1193e6f80, pid: 83744, label: 'Leu'
+Query chain:
+→Find: Target Application 'dev.shelf.personal'
+Output: {
+Application, 0x1193ea080, pid: 83744, label: 'Leu'
+}
+)
+LEU_UI_TREE_END: failed-journey
+Test Case '-[ShelfUITests.ShelfUITests test14HorizontalGestureSmokeTestInOriginalMode]' failed (18.168 seconds).
+Executed 15 tests, with 2 failures (0 unexpected) in 347.751 (347.772) seconds
+Test Case '-[ShelfUITests.ShelfWorldClassUITests test42ReaderConnectOpensCrossLibraryPassageExperience]' passed (15.348 seconds).
+Test Case '-[ShelfUITests.ShelfWorldClassUITests test43KnowledgeSearchPreservesTechnicalTerms]' passed (16.106 seconds).
+Test Case '-[ShelfUITests.ShelfWorldClassUITests test44VoiceSettingsExposeQualitySpeedAndTechnicalReading]' passed (15.886 seconds).
+Test Case '-[ShelfUITests.ShelfWorldClassUITests test45SpeechStartsAndCompactTechnicalControlsAppear]' passed (11.868 seconds).
+Test Case '-[ShelfUITests.ShelfWorldClassUITests test46TrailsHaveOneCreationSurface]' passed (13.283 seconds).
+Test Case '-[ShelfUITests.ShelfWorldClassUITests test47BookMenuExposesConnectionsWithoutDashboard]' passed (11.113 seconds).
+Executed 6 tests, with 0 failures (0 unexpected) in 83.604 (83.608) seconds
+Executed 47 tests, with 7 failures (0 unexpected) in 930.368 (930.419) seconds
+Executed 47 tests, with 7 failures (0 unexpected) in 930.368 (930.420) seconds
+Test session results, code coverage, and logs:
+** TEST FAILED **
+Test result: /Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/.build/results/Shelf-20260912-145601-81049.xcresult
+QA_STAGE_RESULT: Leu remaining UI regression (complete inventory, no repeats) | exit code 65
+FAIL: Stage recorded; continuing independent suites to collect the full failure set.
+QA complete. Every planned suite was attempted once; failures above remain failures.
+FAIL: complete native coverage was not established.
+Diagnostics bundle: /Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/Leu-QA-Diagnostics-v24-5-20260912-143655-77247.zip
+
+QA process exit code: 65

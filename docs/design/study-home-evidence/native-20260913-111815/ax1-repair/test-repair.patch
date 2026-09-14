@@ -1,0 +1,14 @@
+--- a/ShelfUITests/ShelfStudyHomeUITests.swift
++++ b/ShelfUITests/ShelfStudyHomeUITests.swift
+@@ -38,7 +38,11 @@
+         XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 6))
+ 
+         revealStudySessionOptions()
++        // At AX1 the duration grid is below the subject rows and is realized on scroll.
++        let duration = revealStudyButton("10 minutes")
+         XCTAssertTrue(app.buttons["10 minutes"].exists)
++        assertClearance(duration)
++        capture("empty-builder-duration-reachable")
+         tapStudyButton("study-session-options")
+         XCTAssertEqual(app.buttons["study-session-options"].value as? String, "Collapsed")
+         XCTAssertFalse(app.buttons["start-learning-session"].exists)

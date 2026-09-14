@@ -1,0 +1,14 @@
+{
+  "result": "passed",
+  "scripts": [
+    "Start Leu.command",
+    "run.sh",
+    "scripts/common.sh",
+    "scripts/qa-and-copy.sh",
+    "scripts/qa-native.sh",
+    "scripts/test-core.sh",
+    "scripts/test-ios.sh",
+    "scripts/test-v24-recovery-model.sh"
+  ],
+  "native_stages_executed": false
+}

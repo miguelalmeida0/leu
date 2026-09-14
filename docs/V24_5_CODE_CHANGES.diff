@@ -1,0 +1,1791 @@
+--- a/Shelf/Features/Settings/SettingsScreen.swift
++++ b/Shelf/Features/Settings/SettingsScreen.swift
+@@ -123,7 +123,7 @@
+                 }
+                 Section {
+                     Button("Privacy & data ownership") { showPrivacy = true }
+-                    LabeledContent("Version", value: "24.4 · Semantic & Emotional Learning")
++                    LabeledContent("Version", value: "24.5 · Semantic & Emotional Learning")
+                     Text("No account. No ads. No subscription. No generative AI. Learning and reading data stay local unless you export a file yourself.")
+                         .font(.footnote).foregroundStyle(ShelfTheme.secondary)
+                 }
+--- a/Shelf/Learning/Components/ReleaseSurface.swift
++++ b/Shelf/Learning/Components/ReleaseSurface.swift
+@@ -0,0 +1,123 @@
++import SwiftUI
++
++/// A focused surface, not an expanding canvas inside the scrolling session summary.
++/// The drawing gesture cannot consume a drag needed to reach the pinned controls.
++@MainActor
++struct ReleaseSurface: View {
++    let onRelease: () -> Void
++    let onContinue: () -> Void
++    let onEnd: () -> Void
++    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
++    @State private var interaction = ReleaseInteractionState()
++
++    var body: some View {
++        ScrollView {
++            content
++                .frame(maxWidth: 640, alignment: .leading)
++                .padding(ShelfTheme.gutter)
++                .frame(maxWidth: .infinity, alignment: .center)
++        }
++        .safeAreaInset(edge: .bottom, spacing: 0) { controls }
++        .background(ShelfTheme.background)
++        .background { UITestFrameProbe(identifier: "release-surface") }
++        .onDisappear { interaction.erase() }
++    }
++
++    private var content: some View {
++        VStack(alignment: .leading, spacing: 18) {
++            Text("OPTIONAL PAUSE")
++                .font(ShelfTheme.eyebrow()).tracking(2)
++                .foregroundStyle(ShelfTheme.olive)
++            Text(interaction.phase == .released ? "Better?" : "Get it out?")
++                .font(ShelfTheme.editorial(32))
++                .accessibilityIdentifier("release-heading")
++            if interaction.phase == .released {
++                Text("The surface is clear. Your study record is unchanged.")
++                    .font(.body).foregroundStyle(ShelfTheme.secondary)
++                    .accessibilityIdentifier("release-completed-message")
++            } else {
++                Text("Scribble here, or use Release without drawing. You can leave at any time.")
++                    .font(.body).foregroundStyle(ShelfTheme.secondary)
++                drawingArea
++                Text("Nothing you draw is saved.")
++                    .font(.caption).foregroundStyle(ShelfTheme.secondary)
++            }
++        }
++    }
++
++    private var drawingArea: some View {
++        GeometryReader { geometry in
++            Canvas { context, _ in
++                for stroke in interaction.strokes where !stroke.isEmpty {
++                    var path = Path()
++                    path.move(to: stroke[0])
++                    for point in stroke.dropFirst() { path.addLine(to: point) }
++                    context.stroke(path, with: .color(ShelfTheme.accent), lineWidth: 4)
++                }
++            }
++            .contentShape(Rectangle())
++            .gesture(DragGesture(minimumDistance: 0)
++                .onChanged { interaction.append($0.location, in: geometry.size) }
++                .onEnded { _ in interaction.endStroke() })
++            .accessibilityLabel("Scribble area")
++            .accessibilityValue(Text(interaction.hasDrawing ? "Drawing present" : "Empty"))
++            .accessibilityHint("Use the Release button for the same action without drawing.")
++            .accessibilityIdentifier("release-canvas")
++        }
++        .frame(height: 160)
++        .background(ShelfTheme.raised, in: RoundedRectangle(cornerRadius: 14))
++        .clipped()
++    }
++
++    private var controls: some View {
++        VStack(spacing: 10) {
++            if interaction.phase != .released {
++                Button(action: releaseDrawing) {
++                    Text("Release").frame(maxWidth: .infinity, minHeight: 24)
++                }
++                .buttonStyle(ShelfButtonStyle(filled: true))
++                .accessibilityIdentifier("release-accessible-action")
++            }
++            secondaryActions
++        }
++        .font(.body)
++        .foregroundStyle(ShelfTheme.text)
++        .padding(.horizontal, ShelfTheme.gutter)
++        .padding(.top, 12)
++        .padding(.bottom, 16)
++        .frame(maxWidth: 720)
++        .frame(maxWidth: .infinity)
++        .background(ShelfTheme.background)
++        .overlay(alignment: .top) { Divider().overlay(ShelfTheme.line) }
++        .background { UITestFrameProbe(identifier: "release-controls-frame") }
++    }
++
++    @ViewBuilder
++    private var secondaryActions: some View {
++        if dynamicTypeSize.isAccessibilitySize {
++            VStack(spacing: 4) { continueButton; endButton }
++        } else {
++            HStack(spacing: 12) { continueButton; endButton }
++        }
++    }
++
++    private var continueButton: some View {
++        Button(action: onContinue) {
++            Text("Continue").frame(maxWidth: .infinity, minHeight: 44)
++        }
++        .buttonStyle(.plain)
++        .accessibilityIdentifier("release-continue")
++    }
++
++    private var endButton: some View {
++        Button(action: onEnd) {
++            Text("I'm done").frame(maxWidth: .infinity, minHeight: 44)
++        }
++        .buttonStyle(.plain)
++        .accessibilityIdentifier("release-done")
++    }
++
++    private func releaseDrawing() {
++        if interaction.release() { onRelease() }
++    }
++}
+--- a/Shelf/Learning/ReleaseInteractionState.swift
++++ b/Shelf/Learning/ReleaseInteractionState.swift
+@@ -0,0 +1,55 @@
++import Foundation
++
++/// Ephemeral drawing state: never persisted, scored, or attached to a learning attempt.
++/// Both finger input and the accessible button share the same completion transition.
++struct ReleaseInteractionState {
++    enum Phase: Equatable { case drawing, released }
++    static let maximumPoints = 2_048
++    static let maximumStrokes = 64
++
++    private(set) var phase: Phase = .drawing
++    private(set) var strokes: [[CGPoint]] = []
++    private(set) var pointCount = 0
++    private var strokeIsOpen = false
++
++    var hasDrawing: Bool { pointCount > 0 }
++
++    mutating func append(_ point: CGPoint, in size: CGSize) {
++        guard phase == .drawing, pointCount < Self.maximumPoints,
++              point.x.isFinite, point.y.isFinite,
++              size.width.isFinite, size.height.isFinite,
++              size.width > 0, size.height > 0 else { return }
++        let bounded = CGPoint(x: min(size.width, max(0, point.x)),
++                              y: min(size.height, max(0, point.y)))
++        if !strokeIsOpen {
++            guard strokes.count < Self.maximumStrokes else { return }
++            strokes.append([])
++            strokeIsOpen = true
++        }
++        let index = strokes.count - 1
++        if let previous = strokes[index].last {
++            let dx = bounded.x - previous.x
++            let dy = bounded.y - previous.y
++            guard dx * dx + dy * dy >= 4 else { return }
++        }
++        strokes[index].append(bounded)
++        pointCount += 1
++    }
++
++    mutating func endStroke() { strokeIsOpen = false }
++
++    /// Returns true only for the first completion, preventing repeat haptic events.
++    @discardableResult
++    mutating func release() -> Bool {
++        guard phase != .released else { return false }
++        erase()
++        phase = .released
++        return true
++    }
++
++    mutating func erase() {
++        strokes.removeAll(keepingCapacity: false)
++        pointCount = 0
++        strokeIsOpen = false
++    }
++}
+--- a/Shelf/Learning/SessionCompleteView.swift
++++ b/Shelf/Learning/SessionCompleteView.swift
+@@ -4,6 +4,19 @@
+ struct SessionCompleteView: View {
+     @Bindable var model: LearningModel
+     var body: some View {
++        Group {
++            if model.releasePresented {
++                ReleaseSurface(onRelease: { model.play(.selectionChanged) },
++                               onContinue: closeRelease, onEnd: finishSession)
++            } else {
++                summaryContent
++            }
++        }
++        .background(ShelfTheme.background)
++        .background { UITestFrameProbe(identifier: "session-summary-frame") }
++        .background { UITestFrameProbe(identifier: "session-complete-screen") }
++    }
++    private var summaryContent: some View {
+         ScrollView {
+             VStack(alignment: .leading, spacing: 28) {
+                 header
+@@ -24,8 +37,6 @@
+             .frame(maxWidth: 720).frame(maxWidth: .infinity)
+         }
+         .background(ShelfTheme.background)
+-        .background { UITestFrameProbe(identifier: "session-summary-frame") }
+-        .background { UITestFrameProbe(identifier: "session-complete-screen") }
+     }
+     private var header: some View {
+         VStack(alignment: .leading, spacing: 8) {
+@@ -99,7 +110,10 @@
+                 Button("Review difficult items") { startDifficult() }
+                     .buttonStyle(ShelfButtonStyle())
+             }
+-            Button("Done") { model.endSession() }
++            Button(action: finishSession) {
++                Text("Done").frame(minWidth: 44, minHeight: 44)
++            }
++                .accessibilityIdentifier("session-summary-done")
+                 .font(.system(.callout, design: .serif))
+                 .foregroundStyle(ShelfTheme.secondary)
+                 .frame(minHeight: 44)
+@@ -136,33 +150,51 @@
+             Button("Keep going") { startDifficult() }.buttonStyle(ShelfButtonStyle(filled: true))
+         case .accomplished:
+             Text(concreteAccomplishment).font(ShelfTheme.editorial(25))
+-            Button("Done") { model.endSession() }.buttonStyle(ShelfButtonStyle(filled: true))
++            Button("Done", action: finishSession).buttonStyle(ShelfButtonStyle(filled: true))
+         case .irritated:
+             Text("Get it out?").font(ShelfTheme.editorial(25))
+-            HStack {
+-                Button("Release") { model.releasePresented = true }.buttonStyle(ShelfButtonStyle(filled: true))
++            VStack(alignment: .leading, spacing: 10) {
++                Button("Release") { model.releasePresented = true }
++                    .buttonStyle(ShelfButtonStyle(filled: true))
+                     .accessibilityIdentifier("check-in-open-release")
+-                Button("Continue") { model.selectedFeeling = nil }.buttonStyle(ShelfButtonStyle())
+-                Button("I'm done") { model.endSession() }.buttonStyle(.plain)
+-            }
+-            if model.releasePresented { ReleaseSurface(model: model) }
++                Button("Continue") { model.selectedFeeling = nil }
++                    .buttonStyle(ShelfButtonStyle())
++                    .accessibilityIdentifier("check-in-continue")
++                Button(action: finishSession) {
++                    Text("I'm done").frame(minWidth: 44, minHeight: 44)
++                }
++                .buttonStyle(.plain)
++                .accessibilityIdentifier("check-in-done")
++            }
+         case .drained:
+             Text("You can stop here. Your place is saved.").font(ShelfTheme.editorial(25))
+-            HStack {
+-                Button("Save my place") { savePlaceAndEnd() }.buttonStyle(ShelfButtonStyle(filled: true))
+-                Button("Finish here") { model.endSession() }.buttonStyle(ShelfButtonStyle())
+-            }
++            VStack(alignment: .leading, spacing: 10) {
++                Button("Save my place", action: finishSession)
++                    .buttonStyle(ShelfButtonStyle(filled: true))
++                    .accessibilityIdentifier("check-in-save-place")
++                Button("Finish here", action: finishSession)
++                    .buttonStyle(ShelfButtonStyle())
++                    .accessibilityIdentifier("check-in-finish-here")
++            }
++            .disabled(model.isSavingStudyState)
+         }
+     }
+     private var concreteAccomplishment: String {
+         let correct = recentAttempts.filter { $0.wasCorrect == true }.count
+         return correct > 0 ? "You answered \(correct) source-bound question\(correct == 1 ? "" : "s") correctly." : "You completed this study round."
+     }
+-    private func savePlaceAndEnd() {
++    private func closeRelease() {
++        model.releasePresented = false
++        model.selectedFeeling = nil
++    }
++    private func finishSession() {
++        // Keep the summary available until its ordered checkpoint has been acknowledged.
++        let finishingSessionID = model.activeSession?.id
++        model.persistStudyState()
+         Task {
+-            try? await model.repository.saveResumeStudyContext(ResumeStudyContext(sessionID: model.activeSession?.id,
+-                                                                                activityIndex: model.activityIndex))
+-            model.snapshot = (try? await model.repository.snapshot()) ?? model.snapshot
++            await model.studySaveTask?.value
++            guard model.activeSession?.id == finishingSessionID, !model.isSavingStudyState else { return }
++            guard model.studySaveError == nil else { return }
+             model.endSession()
+         }
+     }
+@@ -209,34 +241,3 @@
+         model.startReview(objectIDs: ids)
+     }
+ }
+-@MainActor
+-private struct ReleaseSurface: View {
+-    @Bindable var model: LearningModel
+-    @State private var points: [CGPoint] = []
+-    var body: some View {
+-        VStack(alignment: .leading, spacing: 12) {
+-            Text("Release").font(.headline)
+-            Canvas { context, _ in
+-                guard points.count > 1 else { return }
+-                var path = Path(); path.move(to: points[0])
+-                for point in points.dropFirst() { path.addLine(to: point) }
+-                context.stroke(path, with: .color(ShelfTheme.accent), lineWidth: 4)
+-            }
+-            .frame(height: 130)
+-            .background(ShelfTheme.raised, in: RoundedRectangle(cornerRadius: 14))
+-            .gesture(DragGesture(minimumDistance: 0).onChanged { value in points.append(value.location) })
+-            .accessibilityLabel("Release surface")
+-            .accessibilityHint("Scribble freely, or use the Release button below.")
+-            HStack {
+-                Button("Release") { points.removeAll(); model.play(.selectionChanged) }
+-                    .buttonStyle(ShelfButtonStyle(filled: true))
+-                    .accessibilityIdentifier("release-accessible-action")
+-                Button("Better?") { model.releasePresented = false; model.selectedFeeling = nil }
+-                    .buttonStyle(ShelfButtonStyle())
+-                Button("I'm done") { model.endSession() }.buttonStyle(.plain)
+-            }
+-        }
+-        .padding(.top, 6)
+-        .background { UITestFrameProbe(identifier: "release-surface") }
+-    }
+-}
+--- a/Packages/ShelfCore/Sources/ShelfCore/Voice/Compilation/SpeechCompiler.swift
++++ b/Packages/ShelfCore/Sources/ShelfCore/Voice/Compilation/SpeechCompiler.swift
+@@ -11,14 +11,16 @@
+     public func compile(document: SpeechDocument, dictionary: PronunciationDictionary = PronunciationDictionary(),
+                         rate: SpeechRateProfile = SpeechRateProfile(), codeMode: CodeSpeechMode = .natural) -> SpeechPlan {
+         var segments: [SpeechSegment] = []
++        var normalization = SpeechNormalizationCache()
+         for block in document.blocks {
+             let sourceParts = split(block)
+             for part in sourceParts {
+-                let cleaned = cleaner.clean(part.text)
+-                guard cleaned.count > 1 else { continue }
+-                let spoken: String
+-                if block.kind == .code { spoken = code.normalize(cleaned, mode: codeMode, dictionary: dictionary) }
+-                else { spoken = technical.normalize(cleaned, dictionary: dictionary) }
++                let spoken = normalization.value(for: part.text, isCode: block.kind == .code) {
++                    let cleaned = cleaner.clean(part.text)
++                    guard cleaned.count > 1 else { return "" }
++                    if block.kind == .code { return code.normalize(cleaned, mode: codeMode, dictionary: dictionary) }
++                    return technical.normalize(cleaned, dictionary: dictionary)
++                }
+                 guard !spoken.isEmpty else { continue }
+                 let mappedRange = offset(block.sourceRange, by: part.range.location, length: part.range.length)
+                 let mapping = SpeechSourceMapping(documentID: block.documentID ?? document.documentID,
+--- a/Packages/ShelfCore/Sources/ShelfCore/Voice/Compilation/SpeechNormalizationCache.swift
++++ b/Packages/ShelfCore/Sources/ShelfCore/Voice/Compilation/SpeechNormalizationCache.swift
+@@ -0,0 +1,22 @@
++import Foundation
++
++/// A bounded, compilation-local memo. It stores spoken text only, never source mappings.
++/// Dictionary and code mode are fixed for a single compile call; no cache survives that call.
++struct SpeechNormalizationCache {
++    struct Key: Hashable { let source: String; let isCode: Bool }
++    static let maximumEntries = 256
++    static let maximumEntryBytes = 4_096
++    private var values: [Key: String] = [:]
++    var count: Int { values.count }
++
++    mutating func value(for source: String, isCode: Bool, normalize: () -> String) -> String {
++        let key = Key(source: source, isCode: isCode)
++        if let cached = values[key] { return cached }
++        let spoken = normalize()
++        if values.count < Self.maximumEntries,
++           source.utf8.count + spoken.utf8.count <= Self.maximumEntryBytes {
++            values[key] = spoken
++        }
++        return spoken
++    }
++}
+--- a/Packages/ShelfCore/Tests/ShelfCoreTests/Voice/SpeechNormalizationCacheTests.swift
++++ b/Packages/ShelfCore/Tests/ShelfCoreTests/Voice/SpeechNormalizationCacheTests.swift
+@@ -0,0 +1,112 @@
++import XCTest
++@testable import ShelfCore
++
++final class SpeechNormalizationCacheTests: XCTestCase {
++    func testRepeatedNormalizationRunsOnceButKeepsBothSources() {
++        var cache = SpeechNormalizationCache()
++        var calls = 0
++        for _ in 0..<1_000 {
++            let value = cache.value(for: "useEffect", isCode: false) { calls += 1; return "use effect" }
++            XCTAssertEqual(value, "use effect")
++        }
++        XCTAssertEqual(calls, 1)
++        XCTAssertEqual(cache.count, 1)
++    }
++
++    func testCodeAndProseDoNotShareNormalization() {
++        var cache = SpeechNormalizationCache()
++        XCTAssertEqual(cache.value(for: "f(x)", isCode: false) { "prose" }, "prose")
++        XCTAssertEqual(cache.value(for: "f(x)", isCode: true) { "code" }, "code")
++        XCTAssertEqual(cache.count, 2)
++    }
++
++    func testCacheHasEntryAndByteLimits() {
++        var cache = SpeechNormalizationCache()
++        for index in 0..<2_000 {
++            XCTAssertEqual(cache.value(for: "source \(index)", isCode: false) { "spoken \(index)" }, "spoken \(index)")
++        }
++        XCTAssertEqual(cache.count, SpeechNormalizationCache.maximumEntries)
++        var large = SpeechNormalizationCache()
++        let long = String(repeating: "x", count: SpeechNormalizationCache.maximumEntryBytes)
++        XCTAssertEqual(large.value(for: long, isCode: false) { long }, long)
++        XCTAssertEqual(large.count, 0)
++    }
++
++    func testCachePreservesEverySegmentIdentityMappingKindAndProsody() {
++        let id = UUID()
++        let text = "useEffect runs after rendering. HTTPS uses TLS."
++        let blocks = (0..<50).map { index in
++            SpeechInputBlock(documentID: id, pageIndex: index, kind: index.isMultiple(of: 3) ? .quote : .prose,
++                             text: text, sourceRange: SourceTextRange(location: index * 100, length: text.utf16.count))
++        }
++        let compiler = SpeechCompiler()
++        let combined = compiler.compile(document: SpeechDocument(documentID: id, blocks: blocks)).segments
++        let independentlyCompiled = blocks.flatMap {
++            compiler.compile(document: SpeechDocument(documentID: id, blocks: [$0])).segments
++        }
++        XCTAssertEqual(combined, independentlyCompiled)
++        XCTAssertEqual(Set(combined.map(\.id)).count, 100)
++        XCTAssertEqual(Set(combined.map { $0.source.pageIndex }).count, 50)
++    }
++
++    func testUserDictionaryAndCodeModeCannotLeakBetweenCompileCalls() {
++        let compiler = SpeechCompiler()
++        let document = SpeechDocument(blocks: [SpeechInputBlock(pageIndex: 0, kind: .code, text: "PostgreSQL(x);")])
++        var first = PronunciationDictionary(); first.setUserOverride(display: "PostgreSQL", spoken: "Database One")
++        var second = PronunciationDictionary(); second.setUserOverride(display: "PostgreSQL", spoken: "Database Two")
++        let a = compiler.compile(document: document, dictionary: first, codeMode: .natural).segments[0].spokenText
++        let b = compiler.compile(document: document, dictionary: second, codeMode: .literal).segments[0].spokenText
++        XCTAssertTrue(a.contains("Database One"))
++        XCTAssertTrue(b.contains("Database Two"))
++        XCTAssertFalse(b.contains("Database One"))
++        XCTAssertTrue(b.contains("open parenthesis"))
++    }
++
++    func testRawUTF16SourceAndPerBlockDocumentIdentityArePreserved() {
++        let text = "Résumé: useEffect runs after rendering."
++        let blocks = [UUID(), UUID()].enumerated().map { index, id in
++            SpeechInputBlock(documentID: id, pageIndex: index, kind: .prose, text: text,
++                             sourceRange: SourceTextRange(location: 70 + index, length: text.utf16.count))
++        }
++        let plan = SpeechCompiler().compile(document: SpeechDocument(blocks: blocks))
++        XCTAssertEqual(plan.segments.count, 2)
++        for (index, segment) in plan.segments.enumerated() {
++            XCTAssertEqual(segment.source.sourceText, text)
++            XCTAssertEqual(segment.source.sourceRange?.location, 70 + index)
++            XCTAssertEqual(segment.source.sourceRange?.length, text.utf16.count)
++            XCTAssertEqual(segment.source.documentID, blocks[index].documentID)
++        }
++    }
++
++    func testEmptyNormalizationCanBeCachedWithoutCreatingAnAudioSegment() {
++        var cache = SpeechNormalizationCache()
++        var calls = 0
++        for _ in 0..<10 {
++            XCTAssertEqual(cache.value(for: " ", isCode: false) { calls += 1; return "" }, "")
++        }
++        XCTAssertEqual(calls, 1)
++        XCTAssertTrue(SpeechCompiler().compile(document: SpeechDocument(blocks: [
++            SpeechInputBlock(pageIndex: 0, kind: .prose, text: " ")])).segments.isEmpty)
++    }
++
++    func testConcurrentCompilesHaveIndependentDictionaries() async {
++        let compiler = SpeechCompiler()
++        let values = await withTaskGroup(of: Bool.self, returning: [Bool].self) { group in
++            for index in 0..<16 {
++                group.addTask {
++                    var dictionary = PronunciationDictionary()
++                    let phrase = "Database number \(index)"
++                    dictionary.setUserOverride(display: "PostgreSQL", spoken: phrase)
++                    let blocks = (0..<5).map { SpeechInputBlock(pageIndex: $0, kind: .prose, text: "PostgreSQL uses MVCC.") }
++                    return compiler.compile(document: SpeechDocument(blocks: blocks), dictionary: dictionary)
++                        .segments.allSatisfy { $0.spokenText.contains(phrase) }
++                }
++            }
++            var results: [Bool] = []
++            for await value in group { results.append(value) }
++            return results
++        }
++        XCTAssertEqual(values.count, 16)
++        XCTAssertTrue(values.allSatisfy { $0 })
++    }
++}
+--- a/ShelfUITests/ReleaseInteractionSupport.swift
++++ b/ShelfUITests/ReleaseInteractionSupport.swift
+@@ -0,0 +1,54 @@
++import XCTest
++
++extension ShelfUITestCase {
++    func assertReleaseControlsVisible(beforeRelease: Bool,
++                                      file: StaticString = #filePath, line: UInt = #line) {
++        let ids = ["release-continue", "release-done"] + (beforeRelease ? ["release-accessible-action"] : [])
++        for id in ids { assertPinnedReleaseButton(id, file: file, line: line) }
++    }
++
++    func tapPinnedReleaseButton(_ identifier: String,
++                                file: StaticString = #filePath, line: UInt = #line) {
++        assertPinnedReleaseButton(identifier, file: file, line: line)
++        app.buttons[identifier].tap()
++    }
++
++    private func assertPinnedReleaseButton(_ identifier: String,
++                                          file: StaticString, line: UInt) {
++        let query = app.buttons.matching(identifier: identifier)
++        let button = query.firstMatch
++        XCTAssertTrue(button.waitForExistence(timeout: 5), file: file, line: line)
++        let probe = element("session-summary-frame")
++        let dock = element("release-controls-frame")
++        XCTAssertTrue(dock.waitForExistence(timeout: 5), file: file, line: line)
++        let visible = NSPredicate { _, _ in
++            query.count == 1 && button.isEnabled && button.isHittable
++                && self.studyViewport(probe).contains(button.frame)
++                && dock.frame.insetBy(dx: -1, dy: -1).contains(button.frame)
++        }
++        let expectation = XCTNSPredicateExpectation(predicate: visible, object: nil)
++        XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: 5), .completed,
++                       "Pinned Release controls must be fully visible without scrolling or drawing: " + identifier,
++                       file: file, line: line)
++        XCTAssertGreaterThanOrEqual(button.frame.height, 44, file: file, line: line)
++    }
++
++    func finishRoundForEmotionalFlow() {
++        app.terminate()
++        app.launchArguments = ["--uitesting", "--reset-library", "--force-emotional-checkin"]
++        app.launch()
++        XCTAssertTrue(app.buttons["book-React Notes"].waitForExistence(timeout: 25))
++        app.buttons["primary-learn"].tap()
++        XCTAssertTrue(app.buttons["learn-topic-react"].waitForExistence(timeout: 25))
++        tapStudyButton("learn-topic-react")
++        app.buttons["5 minutes"].tap()
++        let start = app.buttons["start-learning-session"]
++        let ready = XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: start)
++        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 35), .completed)
++        tapStudyButton("start-learning-session")
++        XCTAssertTrue(element("study-session-screen").waitForExistence(timeout: 12))
++        completeStudySessionForEmotionalAcceptance()
++        XCTAssertTrue(element("session-complete-screen").waitForExistence(timeout: 10))
++        XCTAssertTrue(element("emotional-check-in").waitForExistence(timeout: 5))
++    }
++}
+--- a/ShelfUITests/ShelfEmotionalFlowUITests.swift
++++ b/ShelfUITests/ShelfEmotionalFlowUITests.swift
+@@ -0,0 +1,55 @@
++import XCTest
++
++final class ShelfEmotionalFlowUITests: ShelfUITestCase {
++    func test55DrawingCannotHideReleaseOrExitControls() {
++        finishRoundForEmotionalFlow()
++        tapStudyButton("feeling-irritated", scrollID: "session-summary")
++        tapStudyButton("check-in-open-release", scrollID: "session-summary")
++        assertReleaseControlsVisible(beforeRelease: true)
++        let canvas = element("release-canvas")
++        XCTAssertTrue(canvas.waitForExistence(timeout: 5))
++        XCTAssertTrue(studyViewport(element("session-summary-frame")).contains(canvas.frame))
++        let start = canvas.coordinate(withNormalizedOffset: CGVector(dx: 0.3, dy: 0.25))
++        let end = canvas.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.75))
++        start.press(forDuration: 0.05, thenDragTo: end)
++        let drawn = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "Drawing present"), object: canvas)
++        XCTAssertEqual(XCTWaiter.wait(for: [drawn], timeout: 4), .completed)
++        assertReleaseControlsVisible(beforeRelease: true)
++        tapPinnedReleaseButton("release-accessible-action")
++        XCTAssertTrue(app.staticTexts["release-completed-message"].waitForExistence(timeout: 5))
++        XCTAssertFalse(element("release-canvas").exists, "Released drawings must leave the view hierarchy.")
++        assertReleaseControlsVisible(beforeRelease: false)
++        tapPinnedReleaseButton("release-done")
++        XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 8))
++        relaunchWithoutReset()
++        XCTAssertTrue(app.buttons["primary-learn"].waitForExistence(timeout: 25))
++        XCTAssertFalse(element("release-surface").exists, "Drawings must not persist across launches.")
++        XCTAssertFalse(element("study-session-screen").exists, "A finished round must not be resurrected.")
++        capture("55-release-drawing-and-exit")
++    }
++
++    func test56DrainedCanFinishWithoutLosingCompletedHistory() {
++        finishRoundForEmotionalFlow()
++        tapStudyButton("feeling-drained", scrollID: "session-summary")
++        XCTAssertTrue(app.buttons["check-in-finish-here"].exists)
++        tapStudyButton("check-in-save-place", scrollID: "session-summary")
++        XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 8))
++        tapStudyButton("learning-progress")
++        expectProgressOpen()
++        app.buttons["progress-tab-history"].tap()
++        let event = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "progress-event-")).firstMatch
++        XCTAssertTrue(event.waitForExistence(timeout: 8))
++        let savedEvent = event.identifier
++        closeProgress()
++        relaunchWithoutReset()
++        XCTAssertTrue(app.buttons["primary-learn"].waitForExistence(timeout: 25))
++        XCTAssertFalse(element("study-session-screen").exists)
++        app.buttons["primary-learn"].tap()
++        tapStudyButton("learning-progress")
++        expectProgressOpen()
++        app.buttons["progress-tab-history"].tap()
++        XCTAssertTrue(app.buttons[savedEvent].waitForExistence(timeout: 8),
++                      "The same real learning event must survive drained exit and relaunch.")
++        capture("56-drained-durable-history")
++    }
++}
+--- a/ShelfUITests/ShelfWorldClassUITests.swift
++++ b/ShelfUITests/ShelfWorldClassUITests.swift
+@@ -176,8 +176,19 @@
+         XCTAssertTrue(app.buttons["I'm done"].exists)
+         tapStudyButton("check-in-open-release", scrollID: "session-summary")
+         XCTAssertTrue(element("release-surface").waitForExistence(timeout: 5))
+-        tapStudyButton("release-accessible-action", scrollID: "session-summary")
++        assertReleaseControlsVisible(beforeRelease: true)
++        tapPinnedReleaseButton("release-accessible-action")
++        XCTAssertTrue(app.staticTexts["release-completed-message"].waitForExistence(timeout: 5))
++        XCTAssertEqual(app.staticTexts["release-heading"].label, "Better?")
++        XCTAssertFalse(app.buttons["release-accessible-action"].exists)
++        assertReleaseControlsVisible(beforeRelease: false)
+         capture("54-irritated-release-accessible")
++        tapPinnedReleaseButton("release-continue")
++        XCTAssertFalse(element("release-surface").exists)
++        XCTAssertTrue(element("session-complete-screen").exists,
++                      "Continue must restore the completed round, not discard its context.")
++        tapStudyButton("session-summary-done", scrollID: "session-summary")
++        XCTAssertTrue(element("learn-screen").waitForExistence(timeout: 8))
+     }
+ 
+     private func openStudyAndStart(minutes: String) {
+--- a/scripts/check-gallery-minimalism.py
++++ b/scripts/check-gallery-minimalism.py
+@@ -39,7 +39,7 @@
+ plist=plistlib.loads((ROOT/'Shelf/Resources/Info.plist').read_bytes())
+ require(plist.get('CFBundleDisplayName')=='Leu', 'installed app name must be Leu')
+ project=(ROOT/'Shelf.xcodeproj/project.pbxproj').read_text()
+-require('"MARKETING_VERSION" = "24.4";' in project, 'V24.4 marketing version missing')
++require('"MARKETING_VERSION" = "24.5";' in project, 'V24.5 marketing version missing')
+ 
+ if problems:
+     print('FAIL: Leu Gallery Minimalism release contract')
+--- a/scripts/check-v24-contract.py
++++ b/scripts/check-v24-contract.py
+@@ -18,7 +18,7 @@
+       + read('Shelf/Learning/UnderstandingLensFact.swift') + read('Shelf/Learning/Components/UnderstandingLensFactRow.swift'))
+ confidence=read('Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/MemoryModels.swift')
+ emotion=read('Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/EmotionalModels.swift')
+-complete=read('Shelf/Learning/SessionCompleteView.swift')
++complete=(read('Shelf/Learning/SessionCompleteView.swift') + read('Shelf/Learning/Components/ReleaseSurface.swift'))
+ sessions=read('Shelf/Learning/LearningModel+Sessions.swift')
+ voice=read('Shelf/Voice/Engine/SupertonicSpeechEngine.swift')
+ runtime=read('Shelf/Voice/Engine/SupertonicRuntime.swift')
+@@ -54,7 +54,7 @@
+     need(token in voice, f'neural voice integration missing: {token}')
+ need('OnnxRuntimeBindings' in runtime and 'ORTSession' in runtime, 'local ONNX inference runtime missing')
+ need('aafc6e32416a594460b32413efc49d7fe4ce6d46' in voice, 'Supertonic model revision is not pinned')
+-need('onnxruntime-swift-package-manager' in pbx and '"MARKETING_VERSION" = "24.4";' in pbx, 'V24 project/version/dependency contract incomplete')
++need('onnxruntime-swift-package-manager' in pbx and '"MARKETING_VERSION" = "24.5";' in pbx, 'V24 project/version/dependency contract incomplete')
+ # Design invariant.
+ hero=read('Shelf/Features/Library/Components/LibraryHeader.swift')
+ for forbidden in ['tree','foliage','leaf.fill','leaf.circle']:
+--- a/scripts/check-v242-interactions.py
++++ b/scripts/check-v242-interactions.py
+@@ -8,7 +8,8 @@
+  'Shelf/Learning/StudySessionScreen.swift':['study-session-screen'],
+  'Shelf/Learning/QuestionCardView.swift':['question-card'],
+  'Shelf/Learning/RecallCardView.swift':['recall-card'],
+- 'Shelf/Learning/SessionCompleteView.swift':['session-complete-screen','emotional-check-in','release-surface'],
++ 'Shelf/Learning/SessionCompleteView.swift':['session-complete-screen','emotional-check-in'],
++ 'Shelf/Learning/Components/ReleaseSurface.swift':['release-surface'],
+  'Shelf/Learning/UnderstandingLensSheet.swift':['understanding-lens']}
+ 
+ def violations(root=ROOT, overrides=None):
+--- a/scripts/check-v245-release.py
++++ b/scripts/check-v245-release.py
+@@ -0,0 +1,68 @@
++#!/usr/bin/env python3
++"""Narrow regression policies for the Release gesture/viewport boundary, not native certification."""
++from pathlib import Path
++import re
++import sys
++
++ROOT = Path(__file__).resolve().parents[1]
++SUMMARY = 'Shelf/Learning/SessionCompleteView.swift'
++RELEASE = 'Shelf/Learning/Components/ReleaseSurface.swift'
++STATE = 'Shelf/Learning/ReleaseInteractionState.swift'
++HELPER = 'ShelfUITests/ReleaseInteractionSupport.swift'
++
++
++def member(text, marker):
++    start = text.index(marker)
++    opening = text.index('{', start)
++    depth, end = 1, opening + 1
++    while depth and end < len(text):
++        depth += (text[end] == '{') - (text[end] == '}')
++        end += 1
++    if depth:
++        raise ValueError('Unclosed member: ' + marker)
++    return text[start:end]
++
++
++def violations(overrides=None):
++    overrides = overrides or {}
++    def read(path): return overrides.get(path, (ROOT / path).read_text())
++    summary, release, state, helper = [read(path) for path in [SUMMARY, RELEASE, STATE, HELPER]]
++    issues = []
++    summary_content = member(summary, 'private var summaryContent:')
++    if 'ReleaseSurface(' in summary_content or 'Canvas' in summary_content:
++        issues.append('Do not embed the drawing surface inside the scrolling summary.')
++    body = member(summary, 'var body: some View')
++    if 'if model.releasePresented' not in body or 'ReleaseSurface(' not in body or 'else' not in body:
++        issues.append('Release and the summary must be mutually exclusive surfaces.')
++    for token in ['.safeAreaInset(edge: .bottom, spacing: 0) { controls }',
++                  'minHeight: 44', '.padding(.bottom, 16)', 'dynamicTypeSize.isAccessibilitySize',
++                  'release-accessible-action', 'release-continue', 'release-done',
++                  'release-completed-message', 'UITestFrameProbe(identifier: "release-surface")']:
++        if token not in release: issues.append('Missing Release boundary: ' + token)
++    controls = member(release, 'private var controls:')
++    if 'Canvas' in controls or '.gesture(' in controls:
++        issues.append('Pinned actions must not be inside the drawing gesture.')
++    for token in ['AnyView(', '.accessibilityElement(children: .ignore)', '.highPriorityGesture(']:
++        if token in release: issues.append('Unsafe Release workaround: ' + token)
++    if 'private func savePlaceAndEnd' in summary or 'try? await model.repository.saveResumeStudyContext' in summary:
++        issues.append('Completion exit must not create an unordered, swallowed resume write.')
++    for token in ['model.persistStudyState()', 'await model.studySaveTask?.value', 'guard model.studySaveError == nil']:
++        if token not in member(summary, 'private func finishSession('):
++            issues.append('Completion exit must await a successful checkpoint: ' + token)
++    for token in ['maximumPoints = 2_048', 'maximumStrokes = 64', 'phase != .released',
++                  'point.x.isFinite', 'point.y.isFinite', 'strokes.removeAll(keepingCapacity: false)']:
++        if token not in state: issues.append('Missing bounded ephemeral-state invariant: ' + token)
++    if 'dragStudyViewport(' in helper or 'coordinate(withNormalizedOffset:' in helper:
++        issues.append('Pinned-control acceptance must not scroll around the defect.')
++    for token in ['studyViewport(probe).contains(button.frame)', 'query.count == 1',
++                  'button.isEnabled && button.isHittable', 'app.buttons[identifier].tap()']:
++        if token not in helper: issues.append('Pinned acceptance must verify real full-size controls: ' + token)
++    return issues
++
++
++if __name__ == '__main__':
++    issues = violations()
++    if issues:
++        print('FAIL: Release interaction source policy\n' + '\n'.join(issues))
++        sys.exit(1)
++    print('PASS: isolated Release surface, pinned native actions, bounded ephemeral drawing and acknowledged exit')
+--- a/scripts/collect-qa-diagnostics.py
++++ b/scripts/collect-qa-diagnostics.py
+@@ -34,13 +34,14 @@
+         shutil.copy2(log, output / 'qa-full.log')
+     manifest = root / 'SOURCE_SHA256SUMS.txt'
+     metadata = {
+-        'version': '23.10', 'qaExitCode': qa_status, 'workspace': str(root),
++        'version': '24.5', 'qaExitCode': qa_status, 'workspace': str(root),
+         'sourceManifestSHA256': hashlib.sha256(manifest.read_bytes()).hexdigest() if manifest.exists() else None,
+         'nativeResults': unique_lines(run / 'native-results.txt'),
+         'devices': unique_lines(run / 'native-devices.txt'),
+         'disclaimer': 'Local QA data only. No test was rerun by this collector.'
+     }
+-    for name in ['native-results.txt', 'native-devices.txt', 'native-commands.txt']:
++    for name in ['native-results.txt', 'native-devices.txt', 'native-commands.txt',
++                 'suite-plan.json', 'suite-results.json', 'coverage-check.txt']:
+         source = run / name
+         if source.is_file():
+             shutil.copy2(source, output / name)
+--- a/scripts/qa-and-copy.sh
++++ b/scripts/qa-and-copy.sh
+@@ -3,9 +3,9 @@
+ set -uo pipefail
+ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ cd "$ROOT" || exit 1
+-LOG="${SHELF_QA_LOG:-qa-v24-4.log}"
++LOG="${SHELF_QA_LOG:-qa-v24-5.log}"
+ SUMMARY="${LOG%.log}-summary.txt"
+-export SHELF_QA_RUN_DIR="$ROOT/.build/qa-runs/v24-4-$(date '+%Y%m%d-%H%M%S')-$$"
++export SHELF_QA_RUN_DIR="$ROOT/.build/qa-runs/v24-5-$(date '+%Y%m%d-%H%M%S')-$$"
+ mkdir -p "$SHELF_QA_RUN_DIR" || exit 1
+ date +%s > "$SHELF_QA_RUN_DIR/start-epoch.txt"
+ printf 'QA workspace: %s\nQA run: %s\n' "$ROOT" "$SHELF_QA_RUN_DIR"
+@@ -13,11 +13,11 @@
+ PIPE_CODES=("${PIPESTATUS[@]}")
+ STATUS=${PIPE_CODES[0]}
+ if [[ "$STATUS" -eq 0 && "${PIPE_CODES[1]}" -ne 0 ]]; then STATUS=74; fi
+-if [[ "$STATUS" -eq 0 ]]; then
+-    python3 scripts/verify-qa-results.py "$LOG" > "$SHELF_QA_RUN_DIR/coverage-check.txt" 2>&1
+-    STATUS=$?
+-    cat "$SHELF_QA_RUN_DIR/coverage-check.txt" | tee -a "$LOG"
+-fi
++# Verify even a red run, so missing/failed tests are explicitly reported.
++python3 scripts/verify-qa-results.py "$LOG" > "$SHELF_QA_RUN_DIR/coverage-check.txt" 2>&1
++COVERAGE_STATUS=$?
++cat "$SHELF_QA_RUN_DIR/coverage-check.txt" | tee -a "$LOG"
++if [[ "$STATUS" -eq 0 && "$COVERAGE_STATUS" -ne 0 ]]; then STATUS=$COVERAGE_STATUS; fi
+ python3 scripts/collect-qa-diagnostics.py --root "$ROOT" --run-dir "$SHELF_QA_RUN_DIR" \
+     --log "$LOG" --qa-status "$STATUS" > "$SHELF_QA_RUN_DIR/export.txt" 2>&1
+ EXPORT_STATUS=$?
+@@ -29,7 +29,7 @@
+     printf '\nDiagnostics export failed; originals remain in .build/results.\n' >> "$SUMMARY"
+ fi
+ printf '\nQA process exit code: %s\n' "$STATUS" >> "$SUMMARY"
+-printf '\n=== Leu V24.4 QA result ===\n'
++printf '\n=== Leu V24.5 QA result ===\n'
+ cat "$SUMMARY"
+ if command -v pbcopy >/dev/null 2>&1 && pbcopy < "$SUMMARY"; then
+     printf '\nSummary copied. Full log: %s\n' "$LOG"
+--- a/scripts/qa-native.sh
++++ b/scripts/qa-native.sh
+@@ -2,7 +2,7 @@
+ set -euo pipefail
+ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ cd "$ROOT"
+-printf '\n=== Leu V24.4 structural validation ===\n'; python3 scripts/validate.py
++printf '\n=== Leu V24.5 structural validation ===\n'; python3 scripts/validate.py
+ printf '\n=== Leu file-scoped import audit ===\n'; python3 scripts/check-shelfcore-imports.py
+ printf '\n=== Leu Learning OS offline/no-model audit ===\n'; python3 scripts/check-learning-offline.py
+ printf '\n=== Leu Learning OS architecture audit ===\n'; python3 scripts/check-learning-architecture.py
+@@ -16,22 +16,6 @@
+ printf '\n=== Leu V24.2 interaction and recovery source contracts ===\n'; python3 scripts/check-v242-interactions.py; python3 scripts/test-v242-interactions.py
+ printf '\n=== Leu V24.3 root compile source checks ===\n'; python3 scripts/check-v243-root-compile.py; python3 scripts/test-v243-root-compile.py
+ printf '\n=== Leu V24.4 Lens compile source checks ===\n'; python3 scripts/check-v244-lens-compile.py; python3 scripts/test-v244-lens-compile.py
++printf '\n=== Leu V24.5 Release interaction and complete-suite checks ===\n'; python3 scripts/check-v245-release.py; python3 scripts/test-v245-release.py
+ printf '\n=== Leu native compile gate ===\n'; ./run.sh --build
+-printf '\n=== Leu portable core tests ===\n'; ./scripts/test-core.sh
+-printf '\n=== Leu Apple PDF integration and viewport geometry tests ===\n'; ./scripts/test-ios.sh -only-testing:ShelfTests
+-printf '\n=== Leu V24 feature gate (50 / 51 / 52 / 53 / 54) ===\n'
+-./scripts/test-ios.sh \
+-  -only-testing:ShelfUITests/ShelfWorldClassUITests/test50SemanticQuestionUsesFourLevelCertainty \
+-  -only-testing:ShelfUITests/ShelfWorldClassUITests/test51UnderstandingLensUsesVerifiedSourceFacts \
+-  -only-testing:ShelfUITests/ShelfWorldClassUITests/test52V24PrivacyAndNeuralVoiceControlsAreExposed \
+-  -only-testing:ShelfUITests/ShelfWorldClassUITests/test53ActiveStudyContextSurvivesInterruption \
+-  -only-testing:ShelfUITests/ShelfWorldClassUITests/test54IrritatedCheckInOffersOptionalRelease
+-printf '\n=== Leu Study regression gate (36 / 39 / 40 / 48 / 49) ===\n'
+-./scripts/test-ios.sh -only-testing:ShelfUITests/ShelfStudyInteractionUITests/test49StudySecondaryButtonsOpenRealDestinationsAndCollapse
+-./scripts/test-ios.sh \
+-  -only-testing:ShelfUITests/ShelfLearningOSUITests/test36LearningTimelineAndConnectionsOpen \
+-  -only-testing:ShelfUITests/ShelfLearningOSUITests/test39LearningObjectSurvivesRelaunch \
+-  -only-testing:ShelfUITests/ShelfLearningOSUITests/test40LearningStateIsARealRecallEntryPoint \
+-  -only-testing:ShelfUITests/ShelfStudyInteractionUITests/test48ProgressReopensAfterScrollingAndBothTabsWork
+-printf '\n=== Leu complete screen-by-screen XCUITest regression ===\n'; ./scripts/test-ios.sh -only-testing:ShelfUITests
+-printf '\nQA complete. Inspect .build/results/*.xcresult in Xcode for screenshots, logs, and failures.\n'
++python3 scripts/run-qa-suites.py
+--- a/scripts/qa_inventory.py
++++ b/scripts/qa_inventory.py
+@@ -0,0 +1,66 @@
++"""A complete, non-overlapping native test inventory shared by execution and verification."""
++from pathlib import Path
++import json
++import re
++
++ROOT = Path(__file__).resolve().parents[1]
++APPLE_MARKER = '=== Leu Apple PDF integration and viewport geometry tests ==='
++RELEASE_MARKER = '=== Leu Release regression (54) ==='
++V24_MARKER = '=== Leu remaining V24 features (50 / 51 / 52 / 53 / 55 / 56) ==='
++STUDY_MARKER = '=== Leu Study regression (36 / 39 / 40 / 48 / 49) ==='
++REMAINING_MARKER = '=== Leu remaining UI regression (complete inventory, no repeats) ==='
++
++
++def expected_tests(folder: Path) -> set[tuple[str, str]]:
++    expected = set()
++    for source in sorted(folder.glob('*.swift')):
++        text = source.read_text()
++        classes = re.findall(r'\b(?:final\s+)?class\s+(\w+)\s*:\s*\w+', text)
++        methods = re.findall(r'\bfunc\s+(test\w+)\s*\(', text)
++        if not methods:
++            continue
++        if len(classes) != 1 or len(methods) != len(set(methods)):
++            raise ValueError('Ambiguous test inventory: ' + str(source))
++        for method in methods:
++            key = (classes[0], method)
++            if key in expected:
++                raise ValueError('Duplicate native test: ' + '/'.join(key))
++            expected.add(key)
++    return expected
++
++
++def native_batches(root: Path = ROOT):
++    apple = expected_tests(root / 'ShelfTests')
++    ui = expected_tests(root / 'ShelfUITests')
++    lock = json.loads((root / 'validation/v24-5/baseline-test-inventory.json').read_text())
++    for name, actual in [('apple', apple), ('ui', ui)]:
++        baseline = {tuple(item) for item in lock[name]}
++        missing = baseline - actual
++        if missing:
++            raise ValueError('Baseline tests were removed: ' + ', '.join('/'.join(x) for x in sorted(missing)))
++    release = {('ShelfWorldClassUITests', 'test54IrritatedCheckInOffersOptionalRelease')}
++    v24 = {('ShelfWorldClassUITests', name) for name in [
++        'test50SemanticQuestionUsesFourLevelCertainty',
++        'test51UnderstandingLensUsesVerifiedSourceFacts',
++        'test52V24PrivacyAndNeuralVoiceControlsAreExposed',
++        'test53ActiveStudyContextSurvivesInterruption']}
++    v24 |= {('ShelfEmotionalFlowUITests', name) for name in [
++        'test55DrawingCannotHideReleaseOrExitControls',
++        'test56DrainedCanFinishWithoutLosingCompletedHistory']}
++    study = {('ShelfLearningOSUITests', name) for name in [
++        'test36LearningTimelineAndConnectionsOpen',
++        'test39LearningObjectSurvivesRelaunch', 'test40LearningStateIsARealRecallEntryPoint']}
++    study |= {('ShelfStudyInteractionUITests', name) for name in [
++        'test48ProgressReopensAfterScrollingAndBothTabsWork',
++        'test49StudySecondaryButtonsOpenRealDestinationsAndCollapse']}
++    required = release | v24 | study
++    if not required <= ui:
++        raise ValueError('Required acceptance tests are missing: ' + repr(required - ui))
++    remaining = ui - required
++    batches = [(APPLE_MARKER, 'ShelfTests', apple), (RELEASE_MARKER, 'ShelfUITests', release),
++               (V24_MARKER, 'ShelfUITests', v24), (STUDY_MARKER, 'ShelfUITests', study),
++               (REMAINING_MARKER, 'ShelfUITests', remaining)]
++    scheduled = [test for _, target, tests in batches if target == 'ShelfUITests' for test in tests]
++    if len(scheduled) != len(set(scheduled)) or set(scheduled) != ui:
++        raise ValueError('UI batches must cover every test exactly once.')
++    return batches
+--- a/scripts/run-qa-suites.py
++++ b/scripts/run-qa-suites.py
+@@ -0,0 +1,57 @@
++#!/usr/bin/env python3
++"""Run every independent suite once after a successful build; preserve the first failure."""
++from __future__ import annotations
++from pathlib import Path
++import json
++import os
++import subprocess
++import sys
++from qa_inventory import ROOT, native_batches
++
++
++def plan(root: Path):
++    commands = [('=== Leu portable core tests ===', [str(root / 'scripts/test-core.sh')])]
++    for marker, target, tests in native_batches(root):
++        args = [str(root / 'scripts/test-ios.sh')]
++        args += ['-only-testing:' + target + '/' + suite + '/' + name for suite, name in sorted(tests)]
++        commands.append((marker, args))
++    return commands
++
++
++def run(root: Path = ROOT, run_dir: Path | None = None) -> int:
++    commands = plan(root)  # Reject incomplete inventories before starting any tests.
++    records = []
++    if run_dir:
++        run_dir.mkdir(parents=True, exist_ok=True)
++        (run_dir / 'suite-plan.json').write_text(json.dumps(commands, indent=2) + '\n')
++    first_failure = 0
++    for marker, args in commands:
++        print('\n' + marker, flush=True)
++        try:
++            code = subprocess.run(args, cwd=root, check=False).returncode
++            if code < 0:
++                code = 128 - code
++        except OSError as error:
++            print('FAIL: Cannot execute suite: ' + str(error), flush=True)
++            code = 127
++        except KeyboardInterrupt:
++            print('FAIL: QA was interrupted; unexecuted tests are not passed.', flush=True)
++            return 130
++        records.append({'stage': marker, 'exitCode': code, 'command': args})
++        if run_dir:
++            (run_dir / 'suite-results.json').write_text(json.dumps(records, indent=2) + '\n')
++        print(f'QA_STAGE_RESULT: {marker.strip("= ")} | exit code {code}', flush=True)
++        if code != 0:
++            first_failure = first_failure or code
++            print('FAIL: Stage recorded; continuing independent suites to collect the full failure set.', flush=True)
++    print('\nQA complete. Every planned suite was attempted once; failures above remain failures.', flush=True)
++    return first_failure
++
++
++if __name__ == '__main__':
++    try:
++        value = os.environ.get('SHELF_QA_RUN_DIR')
++        raise SystemExit(run(run_dir=Path(value) if value else None))
++    except (ValueError, OSError) as error:
++        print('FAIL: QA inventory could not be established: ' + str(error), file=sys.stderr)
++        raise SystemExit(2)
+--- a/scripts/summarize-qa.py
++++ b/scripts/summarize-qa.py
+@@ -13,7 +13,7 @@
+     r"Executed \d+ tests, with \d+ failures",
+     r"(?:^|\s)(?:error:|fatal error:)", r"^Testing (?:failed|cancelled)",
+     r"^xcodebuild: error:", r"^Test result:", r"^Test session results,", r"^QA complete",
+-    r"^LEU_UI_CHECKPOINT:", r"^Shelf:", r"Structural validation failed:",
++    r"^QA_STAGE_RESULT:", r"^LEU_UI_CHECKPOINT:", r"^Shelf:", r"Structural validation failed:",
+     r"^The following build commands failed:",
+ ]
+ match = re.compile("|".join(patterns))
+--- a/scripts/sync-xcode-sources.py
++++ b/scripts/sync-xcode-sources.py
+@@ -103,7 +103,7 @@
+     voice_paths = sorted(str(p.relative_to(ROOT / 'Shelf/Voice')) for p in (ROOT / 'Shelf/Voice').rglob('*.swift'))
+     unit_paths = ['LearningIndexIntegrationTests.swift', 'KnowledgeIntegrationTests.swift', 'VoiceCatalogTests.swift']
+     ui_paths = ['ShelfLearningOSUITests.swift', 'ShelfWorldClassUITests.swift',
+-                'StudyInteractionSupport.swift', 'ShelfStudyInteractionUITests.swift', 'V24InteractionSupport.swift']
++                'StudyInteractionSupport.swift', 'ShelfStudyInteractionUITests.swift', 'V24InteractionSupport.swift', 'ReleaseInteractionSupport.swift', 'ShelfEmotionalFlowUITests.swift']
+ 
+     new_objects = []
+     learning_refs = []
+--- a/scripts/test-study-repair-tools.py
++++ b/scripts/test-study-repair-tools.py
+@@ -63,7 +63,7 @@
+ 
+     def testSourceInventory(self):
+         self.assertEqual(len(coverage.expected_tests(ROOT / 'ShelfTests')), 20)
+-        self.assertEqual(len(coverage.expected_tests(ROOT / 'ShelfUITests')), 55)
++        self.assertEqual(len(coverage.expected_tests(ROOT / 'ShelfUITests')), 57)
+ 
+ 
+ class PolicyTests(unittest.TestCase):
+--- a/scripts/test-v245-release.py
++++ b/scripts/test-v245-release.py
+@@ -0,0 +1,178 @@
++#!/usr/bin/env python3
++"""Actual portable Release-state tests, source mutations, and all-suite orchestration tests."""
++import contextlib
++import importlib.util
++import io
++import json
++import os
++from pathlib import Path
++import shutil
++import subprocess
++import tempfile
++import unittest
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++def load(name, filename):
++    spec = importlib.util.spec_from_file_location(name, ROOT / 'scripts' / filename)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++
++policy = load('release_policy', 'check-v245-release.py')
++coverage = load('qa_coverage', 'verify-qa-results.py')
++runner = load('qa_runner', 'run-qa-suites.py')
++from qa_inventory import native_batches, RELEASE_MARKER, REMAINING_MARKER
++
++
++class ReleasePolicyTests(unittest.TestCase):
++    def mutate(self, path, old, new):
++        text = (ROOT / path).read_text()
++        self.assertIn(old, text)
++        self.assertTrue(policy.violations({path: text.replace(old, new)}))
++
++    def testCurrentSource(self):
++        self.assertEqual(policy.violations(), [])
++
++    def testInlineCanvasRegressionRejected(self):
++        self.mutate(policy.SUMMARY, 'private var summaryContent: some View {',
++                    'private var summaryContent: some View { ReleaseSurface()')
++
++    def testNonexclusiveReleaseRejected(self):
++        self.mutate(policy.SUMMARY, 'if model.releasePresented {', 'if true {')
++
++    def testOverlayCannotReplaceReservedControlSpace(self):
++        self.mutate(policy.RELEASE, '.safeAreaInset(edge: .bottom, spacing: 0) { controls }', '.overlay { controls }')
++
++    def testTinyTargetsRejected(self):
++        self.mutate(policy.RELEASE, 'minHeight: 44', 'minHeight: 20')
++
++    def testGestureCannotWrapActions(self):
++        self.mutate(policy.RELEASE, 'private var controls: some View {',
++                    'private var controls: some View { Canvas')
++
++    def testNativeButtonsCannotBeReplaced(self):
++        self.mutate(policy.RELEASE, '.buttonStyle(.plain)', '.buttonStyle(.plain).accessibilityElement(children: .ignore)')
++
++    def testNoSwallowedExitSave(self):
++        self.mutate(policy.SUMMARY, 'guard model.studySaveError == nil else { return }', '// swallowed error')
++
++    def testBoundedDrawingRequired(self):
++        self.mutate(policy.STATE, 'maximumPoints = 2_048', 'maximumPoints = Int.max')
++
++    def testFullViewportAssertionCannotBeRelaxed(self):
++        self.mutate(policy.HELPER, 'self.studyViewport(probe).contains(button.frame)', 'true')
++
++    def testPinnedControlsCannotDependOnScrollRetry(self):
++        self.mutate(policy.HELPER, 'app.buttons[identifier].tap()', 'dragStudyViewport(.zero, upward: true)')
++
++    def testRealPortableReleaseState(self):
++        with tempfile.TemporaryDirectory() as temp:
++            binary = Path(temp) / 'release-tests'
++            result = subprocess.run(['swiftc', '-swift-version', '5', '-strict-concurrency=complete',
++                                     '-warnings-as-errors', str(ROOT / policy.STATE),
++                                     str(ROOT / 'validation/v24-5/ReleaseStateHarness.swift'), '-o', str(binary)],
++                                    capture_output=True, text=True, timeout=60)
++            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
++            result = subprocess.run([str(binary)], capture_output=True, text=True, timeout=15)
++            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
++            self.assertIn('PASS: 27 Release state/recorded-geometry checks', result.stdout)
++            print(result.stdout)
++
++
++class CompleteInventoryTests(unittest.TestCase):
++    def outcomes(self, tests, replacement=None):
++        return '\n'.join(f"Test Case '-[ShelfUITests.{s} {m}]' {(replacement or {}).get((s,m), 'passed')} (1.0 seconds)."
++                         for s, m in sorted(tests))
++
++    def fullLog(self):
++        return '\n'.join(marker + '\n' + self.outcomes(tests) + '\n** TEST SUCCEEDED **'
++                         for marker, _, tests in native_batches()) + '\n'
++
++    def testEveryOldAndNewTestRunsExactlyOnce(self):
++        batches = native_batches()
++        tests = [test for _, target, group in batches if target == 'ShelfUITests' for test in group]
++        self.assertEqual(len(tests), 57)
++        self.assertEqual(len(set(tests)), 57)
++        self.assertEqual(len(batches[0][2]), 20)
++        self.assertEqual(len(batches[-1][2]), 45)
++
++    def testGreenFullCoverage(self):
++        self.assertEqual(coverage.verify_all(self.fullLog()), [])
++
++    def testMissingBatchRejected(self):
++        self.assertTrue(coverage.verify_all(self.fullLog().split(REMAINING_MARKER)[0]))
++
++    def testDuplicateSuccessfulExecutionRejected(self):
++        marker, _, tests = native_batches()[1]
++        log = marker + '\n' + self.outcomes(tests) + '\n' + self.outcomes(tests) + '\n** TEST SUCCEEDED **'
++        self.assertTrue(coverage.verify(log, tests, marker))
++
++    def testFailureAndRetryCannotBecomeGreen(self):
++        marker, _, tests = native_batches()[1]
++        log = marker + '\n' + self.outcomes(tests, {next(iter(tests)): 'failed'}) + '\n' + self.outcomes(tests) + '\n** TEST SUCCEEDED **'
++        self.assertTrue(coverage.verify(log, tests, marker))
++
++    def testSkippedTestRejected(self):
++        self.assertTrue(coverage.verify_all(self.fullLog().replace("' passed", "' skipped", 1)))
++
++    def testTestInWrongBatchRejected(self):
++        marker, _, tests = native_batches()[1]
++        other = {('Suite', 'testNotInThisBatch')}
++        self.assertTrue(coverage.verify(marker + '\n' + self.outcomes(tests | other) + '\n** TEST SUCCEEDED **', tests, marker))
++
++    def testRemovingBaselineTestRejected(self):
++        with tempfile.TemporaryDirectory() as temp:
++            root = Path(temp)
++            for name in ['ShelfTests', 'ShelfUITests', 'validation/v24-5']:
++                shutil.copytree(ROOT / name, root / name)
++            p = root / 'ShelfUITests/ShelfUITests.swift'
++            p.write_text(p.read_text().replace('func test00AccessibilityContract(', 'func removedAccessibilityContract('))
++            with self.assertRaisesRegex(ValueError, 'Baseline tests were removed'):
++                native_batches(root)
++
++    def execute(self, fail_core=False, fail_release=False):
++        with tempfile.TemporaryDirectory() as temp:
++            root = Path(temp)
++            for name in ['ShelfTests', 'ShelfUITests', 'validation/v24-5']:
++                shutil.copytree(ROOT / name, root / name)
++            scripts = root / 'scripts'; scripts.mkdir()
++            (scripts / 'test-core.sh').write_text('#!/bin/bash\nexit ' + ('1' if fail_core else '0') + '\n')
++            (scripts / 'test-ios.sh').write_text('''#!/bin/bash
++printf '%s\\n' "$*" >> calls.txt
++if [[ "$*" == *test54IrritatedCheckInOffersOptionalRelease* ]]; then exit ''' + ('65' if fail_release else '0') + '''; fi
++exit 0
++''')
++            for p in scripts.glob('*.sh'): p.chmod(0o755)
++            with contextlib.redirect_stdout(io.StringIO()) as output:
++                code = runner.run(root, root / 'run')
++            calls = (root / 'calls.txt').read_text().splitlines()
++            records = json.loads((root / 'run/suite-results.json').read_text())
++            return code, calls, records, output.getvalue()
++
++    def testUIFailureDoesNotHideOtherTests(self):
++        code, calls, records, text = self.execute(fail_release=True)
++        self.assertEqual(code, 65)
++        self.assertEqual(len(calls), 5)
++        self.assertEqual(len(records), 6)
++        self.assertEqual(sum('test54Irritated' in line for line in calls), 1)
++        self.assertIn(REMAINING_MARKER, text)
++        self.assertEqual(records[-1]['exitCode'], 0)
++
++    def testCoreFailureDoesNotHideNativeResults(self):
++        code, calls, records, _ = self.execute(fail_core=True, fail_release=True)
++        self.assertEqual(code, 1)
++        self.assertEqual(len(calls), 5)
++        self.assertEqual(records[2]['exitCode'], 65)
++
++    def testGenuinelyGreenOrchestrationReturnsZero(self):
++        code, calls, records, _ = self.execute()
++        self.assertEqual(code, 0)
++        self.assertEqual(len(records), 6)
++        self.assertEqual(sum(len(line.split('-only-testing:'))-1 for line in calls), 77)
++
++
++if __name__ == '__main__':
++    unittest.main(verbosity=2)
+--- a/scripts/verify-qa-results.py
++++ b/scripts/verify-qa-results.py
+@@ -1,52 +1,55 @@
+ #!/usr/bin/env python3
+-"""Reject a purported green V24 run if native coverage was missing, skipped or failure-retried."""
++"""Reject omissions, skips, duplicate execution, or retries in the complete native run."""
+ from pathlib import Path
+-import re, sys
+-ROOT=Path(__file__).resolve().parents[1]
++import re
++import sys
++from qa_inventory import ROOT, expected_tests, native_batches
+ 
+-def expected_tests(folder: Path) -> set[tuple[str,str]]:
+-    expected=set()
+-    for source in folder.glob('*.swift'):
+-        text=source.read_text()
+-        classes=re.findall(r'\b(?:final\s+)?class\s+(\w+)\s*:\s*\w+',text)
+-        methods=re.findall(r'\bfunc\s+(test\w+)\s*\(',text)
+-        if methods:
+-            if len(classes)!=1: raise ValueError(f'Cannot unambiguously inventory test class: {source.name}')
+-            expected.update((classes[0],m) for m in methods)
+-    return expected
+ 
+ def verify(text, expected, marker):
+-    if marker not in text: return [f'Missing completed stage: {marker}']
+-    stage=text.split(marker,1)[1].split('\n=== ',1)[0]
+-    outcomes=re.findall(r"Test Case '-\[(?:\w+\.)?(\w+)\s+(test\w+)\]' (passed|failed|skipped)",stage)
+-    passed={(s,m) for s,m,r in outcomes if r=='passed'}
+-    issues=[f'{s}.{m}: {r}' for s,m,r in outcomes if r!='passed']
+-    issues += [f'Not recorded as passed: {s}.{m}' for s,m in sorted(expected-passed)]
+-    # A test that fails then passes is still a failure-retry and must not be accepted.
+-    seen={}
+-    for s,m,r in outcomes: seen.setdefault((s,m),[]).append(r)
+-    issues += [f'{s}.{m}: failure-retry sequence {rs}' for (s,m),rs in seen.items() if 'failed' in rs and 'passed' in rs]
+-    if '** TEST SUCCEEDED **' not in stage: issues.append('Native stage did not report TEST SUCCEEDED.')
++    if text.count(marker) != 1:
++        return [f'Missing or duplicated stage: {marker}']
++    stage = text.split(marker, 1)[1].split('\n=== ', 1)[0]
++    outcomes = re.findall(r"Test Case '-\[(?:\w+\.)?(\w+)\s+(test\w+)\]' (passed|failed|skipped)", stage)
++    passed = {(s, m) for s, m, result in outcomes if result == 'passed'}
++    seen = {}
++    issues = [f'{s}.{m}: {result}' for s, m, result in outcomes if result != 'passed']
++    issues += [f'Not recorded as passed: {s}.{m}' for s, m in sorted(expected - passed)]
++    for suite, method, result in outcomes:
++        seen.setdefault((suite, method), []).append(result)
++    issues += [f'Unexpected test in this batch: {s}.{m}' for s, m in sorted(set(seen) - expected)]
++    issues += [f'{s}.{m}: duplicate/retry sequence {results}' for (s, m), results in seen.items() if len(results) != 1]
++    if '** TEST SUCCEEDED **' not in stage or '** TEST FAILED **' in stage:
++        issues.append('Native stage did not complete successfully.')
+     return issues
+ 
++
++def verify_all(text, root=ROOT):
++    issues = []
++    for marker, _, expected in native_batches(root):
++        issues += verify(text, expected, marker)
++    return issues
++
++
+ def main():
+-    if len(sys.argv)!=2:
+-        print('Usage: verify-qa-results.py <complete-native-qa-log>',file=sys.stderr); return 2
+-    text=Path(sys.argv[1]).read_text(errors='replace')
+-    apple=expected_tests(ROOT/'ShelfTests'); ui=expected_tests(ROOT/'ShelfUITests')
+-    v24={('ShelfWorldClassUITests',f'test{n}'+name) for n,name in [
+-        (50,'SemanticQuestionUsesFourLevelCertainty'),(51,'UnderstandingLensUsesVerifiedSourceFacts'),
+-        (52,'V24PrivacyAndNeuralVoiceControlsAreExposed'),(53,'ActiveStudyContextSurvivesInterruption'),
+-        (54,'IrritatedCheckInOffersOptionalRelease')]}
+-    study={('ShelfLearningOSUITests',m) for m in ['test36LearningTimelineAndConnectionsOpen','test39LearningObjectSurvivesRelaunch','test40LearningStateIsARealRecallEntryPoint']}
+-    study|={('ShelfStudyInteractionUITests','test48ProgressReopensAfterScrollingAndBothTabsWork'),('ShelfStudyInteractionUITests','test49StudySecondaryButtonsOpenRealDestinationsAndCollapse')}
+-    issues=[]
+-    issues+=verify(text,apple,'=== Leu Apple PDF integration and viewport geometry tests ===')
+-    issues+=verify(text,v24,'=== Leu V24 feature gate (50 / 51 / 52 / 53 / 54) ===')
+-    issues+=verify(text,study,'=== Leu Study regression gate (36 / 39 / 40 / 48 / 49) ===')
+-    issues+=verify(text,ui,'=== Leu complete screen-by-screen XCUITest regression ===')
++    if len(sys.argv) != 2:
++        print('Usage: verify-qa-results.py <complete-native-qa-log>', file=sys.stderr)
++        return 2
++    try:
++        text = Path(sys.argv[1]).read_text(errors='replace')
++        issues = verify_all(text)
++    except (ValueError, OSError) as error:
++        print('FAIL: Native inventory verification failed: ' + str(error))
++        return 2
+     if issues:
+-        print('FAIL: complete native V24 coverage was not established.'); print('\n'.join(' - '+x for x in issues)); return 1
+-    print(f'PASS: {len(apple)} Apple tests, 5 V24 feature-gate tests, 5 Study regression tests, and all {len(ui)} UI tests explicitly passed; no skips or failure-retries accepted.')
++        print('FAIL: complete native coverage was not established.')
++        print('\n'.join(' - ' + issue for issue in issues))
++        return 1
++    apple = expected_tests(ROOT / 'ShelfTests')
++    ui = expected_tests(ROOT / 'ShelfUITests')
++    print(f'PASS: all {len(apple)} Apple tests and all {len(ui)} unique UI tests passed exactly once across non-overlapping batches; no omissions, skips, duplicates or failure-retries accepted.')
+     return 0
+-if __name__=='__main__': raise SystemExit(main())
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+--- a/validation/v24-5/ReleaseStateHarness.swift
++++ b/validation/v24-5/ReleaseStateHarness.swift
+@@ -0,0 +1,81 @@
++import Foundation
++
++@main
++@MainActor
++struct ReleaseStateHarness {
++    static var checks = 0
++    static func expect(_ condition: Bool, _ message: String) {
++        guard condition else { fatalError("FAIL: " + message) }
++        checks += 1
++        print("PASS: " + message)
++    }
++
++    static func main() {
++        let size = CGSize(width: 340, height: 160)
++        var state = ReleaseInteractionState()
++        expect(state.phase == .drawing, "Release is initially optional, without required drawing")
++        expect(state.pointCount == 0 && state.strokes.isEmpty, "No previous drawing is loaded")
++        expect(state.release(), "Accessible Release works with an empty canvas")
++        expect(state.phase == .released, "Release produces a distinct completed state")
++        expect(!state.release(), "Repeated completion cannot repeat its haptic effect")
++        state.append(CGPoint(x: 10, y: 10), in: size)
++        expect(state.pointCount == 0, "Late gesture events after release do not resurrect drawings")
++
++        state = ReleaseInteractionState()
++        state.append(CGPoint(x: 10, y: 10), in: size)
++        expect(state.hasDrawing && state.pointCount == 1, "Finger input changes actual state")
++        state.append(CGPoint(x: 10.1, y: 10.1), in: size)
++        expect(state.pointCount == 1, "Subpixel gesture noise is not stored indefinitely")
++        state.append(CGPoint(x: 30, y: 30), in: size)
++        expect(state.strokes[0].count == 2, "One stroke preserves its ordered points")
++        state.endStroke()
++        state.append(CGPoint(x: 100, y: 100), in: size)
++        expect(state.strokes.count == 2, "Separate strokes are not joined by a false line")
++        state.append(CGPoint(x: -100, y: 600), in: size)
++        expect(state.strokes.last?.last == CGPoint(x: 0, y: 160), "Drawing locations remain inside the canvas")
++        let before = state.pointCount
++        state.append(CGPoint(x: CGFloat.nan, y: 0), in: size)
++        state.append(CGPoint(x: 0, y: CGFloat.infinity), in: size)
++        expect(state.pointCount == before, "Non-finite gesture locations are rejected")
++        state.append(.zero, in: .zero)
++        state.append(.zero, in: CGSize(width: CGFloat.infinity, height: 160))
++        expect(state.pointCount == before, "Invalid canvas geometry is rejected")
++        expect(state.release(), "Release clears a populated canvas")
++        expect(state.strokes.isEmpty && !state.hasDrawing, "Released content is erased, not merely hidden")
++        expect(state.pointCount == 0, "Point accounting resets when content is erased")
++
++        state = ReleaseInteractionState()
++        for index in 0..<30_000 {
++            state.append(CGPoint(x: index.isMultiple(of: 2) ? 1 : 300, y: 80), in: size)
++        }
++        expect(state.pointCount == ReleaseInteractionState.maximumPoints, "Long gestures have a fixed storage ceiling")
++        expect(state.strokes.flatMap { $0 }.count == state.pointCount, "Point accounting matches retained storage")
++        state.endStroke()
++        state.append(.zero, in: size)
++        expect(state.pointCount == ReleaseInteractionState.maximumPoints, "New strokes cannot bypass the total-point ceiling")
++        state.erase()
++        expect(state.strokes.isEmpty && state.pointCount == 0, "Closing clears all ephemeral storage")
++        state.append(CGPoint(x: 2, y: 2), in: size)
++        expect(state.strokes.count == 1, "Erasing resets the open-stroke state")
++
++        state = ReleaseInteractionState()
++        for _ in 0..<1_000 {
++            state.append(CGPoint(x: 1, y: 1), in: size)
++            state.endStroke()
++        }
++        expect(state.strokes.count == ReleaseInteractionState.maximumStrokes, "Many short strokes also have a storage ceiling")
++        expect(state.pointCount == ReleaseInteractionState.maximumStrokes, "Stroke limit cannot leak orphan points")
++        expect(state.release() && state.strokes.isEmpty, "Release remains available at the storage ceiling")
++
++        // Replay the recorded V24.4 geometry against the unchanged helper's formula.
++        // This checks the arithmetic, not a simulator's gesture-recognizer arbitration.
++        let viewport = CGRect(x: 2, y: 76, width: 416, height: 736)
++        let canvas = CGRect(x: 40.2, y: 644.3, width: 340.3, height: 130)
++        let button = CGRect(x: 39.8, y: 785.9, width: 100.1, height: 48.8)
++        let dragStart = CGPoint(x: viewport.midX, y: viewport.minY + viewport.height * 0.8)
++        expect(!viewport.contains(button), "The logged V24.4 action really crosses the unobscured viewport")
++        expect(canvas.contains(dragStart), "The old reveal helper starts its scroll gesture inside the canvas")
++        expect(button.maxY > 820, "The logged action overlaps the actual bottom navigation")
++        print("PASS: \(checks) Release state/recorded-geometry checks; no Apple UI execution claimed")
++    }
++}
+--- a/validation/v24-5/baseline-test-inventory.json
++++ b/validation/v24-5/baseline-test-inventory.json
+@@ -0,0 +1,307 @@
++{
++  "baseline": "Leu Native V24.4",
++  "apple": [
++    [
++      "KnowledgeIntegrationTests",
++      "testKnowledgePersistenceIsSeparateFromDerivedIndex"
++    ],
++    [
++      "KnowledgeIntegrationTests",
++      "testLearningAnalysisBecomesStableConnectedPassages"
++    ],
++    [
++      "LearningIndexIntegrationTests",
++      "testCheckpointStoreRoundTripsPartialExtraction"
++    ],
++    [
++      "LearningIndexIntegrationTests",
++      "testImageLikeLowTextPDFRemainsIndexableWithoutFakeStudyQuestions"
++    ],
++    [
++      "LearningIndexIntegrationTests",
++      "testPDFLearningIndexerProducesSourceBoundLocalMaterialAndClearsCheckpointAfterCommit"
++    ],
++    [
++      "PDFIntegrationTests",
++      "testAllBundledSamplesAreRealReadablePDFs"
++    ],
++    [
++      "PDFIntegrationTests",
++      "testAnnotatedExportKeepsOriginalBytesAndPortableNotes"
++    ],
++    [
++      "PDFIntegrationTests",
++      "testInspectorBuildsSelectableTextIndex"
++    ],
++    [
++      "PDFIntegrationTests",
++      "testInspectorRejectsInvalidFile"
++    ],
++    [
++      "PDFIntegrationTests",
++      "testOriginalExportIsByteIdentical"
++    ],
++    [
++      "PDFIntegrationTests",
++      "testReadableModeRepairsKnownExtractionSeamsWithoutChangingSourcePDF"
++    ],
++    [
++      "PDFIntegrationTests",
++      "testSearchReturnsMatchingSourcePages"
++    ],
++    [
++      "PDFIntegrationTests",
++      "testSynchronizingAnnotationsDoesNotDuplicateThem"
++    ],
++    [
++      "PDFIntegrationTests",
++      "testThumbnailProducesAnImage"
++    ],
++    [
++      "PDFViewportGeometryTests",
++      "testMixedSizePagesFitInsideTheSameViewport"
++    ],
++    [
++      "PDFViewportGeometryTests",
++      "testResizeRefitsOnePageWithoutChangingItsIdentity"
++    ],
++    [
++      "PDFViewportGeometryTests",
++      "testUnchangedSwiftUIUpdateDoesNotUndoUserZoom"
++    ],
++    [
++      "PDFViewportGeometryTests",
++      "testVerticalAndHorizontalModeChangesRetainPage"
++    ],
++    [
++      "VoiceCatalogTests",
++      "testEnglishVoicesAreRankedByInstalledQuality"
++    ],
++    [
++      "VoiceCatalogTests",
++      "testExplicitInstalledVoiceIdentifierWins"
++    ]
++  ],
++  "ui": [
++    [
++      "ShelfInteractionRepairUITests",
++      "test22ReadVerticalScrollCrossesSourcePageBoundary"
++    ],
++    [
++      "ShelfInteractionRepairUITests",
++      "test23ReadVerticalArrowsMoveAndReopenAtThatPage"
++    ],
++    [
++      "ShelfInteractionRepairUITests",
++      "test24OriginalFitRejectsVerticalDriftButTurnsOnHorizontalDrag"
++    ],
++    [
++      "ShelfInteractionRepairUITests",
++      "test25OriginalFocusTurnsAndControlsDoNotCoverTheViewport"
++    ],
++    [
++      "ShelfInteractionRepairUITests",
++      "test26TextSizeMovesOnFirstDragAndPersistsAfterDismissal"
++    ],
++    [
++      "ShelfInteractionRepairUITests",
++      "test27BrightnessMovesOnFirstDragAndKeepAwakeTogglesOnce"
++    ],
++    [
++      "ShelfInteractionRepairUITests",
++      "test28ScrubberCommitsOnReleaseWithoutMovingOtherControls"
++    ],
++    [
++      "ShelfInteractionRepairUITests",
++      "test29FlowRoundTripDoesNotDisableReadPaging"
++    ],
++    [
++      "ShelfInteractionRepairUITests",
++      "test30PlayButtonHasBreathingRoomInsideTheBar"
++    ],
++    [
++      "ShelfInteractionRepairUITests",
++      "test31ReadVerticalPositionIsNotReplacedByHiddenPDFPosition"
++    ],
++    [
++      "ShelfLearningOSUITests",
++      "test32LearnTodayCreatesLocalStudySession"
++    ],
++    [
++      "ShelfLearningOSUITests",
++      "test33QuestionCommitAndSourceRoundTrip"
++    ],
++    [
++      "ShelfLearningOSUITests",
++      "test34ActiveRecallEntryPoint"
++    ],
++    [
++      "ShelfLearningOSUITests",
++      "test35InterviewModeEntryPoint"
++    ],
++    [
++      "ShelfLearningOSUITests",
++      "test36LearningTimelineAndConnectionsOpen"
++    ],
++    [
++      "ShelfLearningOSUITests",
++      "test37TrailsCanCreatePersistentLearningPath"
++    ],
++    [
++      "ShelfLearningOSUITests",
++      "test38ReaderExposesLearningObjectActions"
++    ],
++    [
++      "ShelfLearningOSUITests",
++      "test39LearningObjectSurvivesRelaunch"
++    ],
++    [
++      "ShelfLearningOSUITests",
++      "test40LearningStateIsARealRecallEntryPoint"
++    ],
++    [
++      "ShelfLearningOSUITests",
++      "test41ReaderTestActionOpensSourceBoundPromptEditor"
++    ],
++    [
++      "ShelfReaderRegressionUITests",
++      "test15OriginalZoomPansWithoutTurningPageAndArrowStillTurns"
++    ],
++    [
++      "ShelfReaderRegressionUITests",
++      "test16SearchResultNavigatesThroughReaderLocation"
++    ],
++    [
++      "ShelfReaderRegressionUITests",
++      "test17PagesNavigatorOpensAroundCurrentPage"
++    ],
++    [
++      "ShelfReaderRegressionUITests",
++      "test18EmptyBookmarksCanBookmarkCurrentPage"
++    ],
++    [
++      "ShelfReaderRegressionUITests",
++      "test19ReadModeStudyMarkIsExplicitlyWholePage"
++    ],
++    [
++      "ShelfReaderRegressionUITests",
++      "test20FocusModeKeepsExplicitLibraryExit"
++    ],
++    [
++      "ShelfReaderRegressionUITests",
++      "test21EmptyFavoritesHasBrowseLibraryRecovery"
++    ],
++    [
++      "ShelfStudyInteractionUITests",
++      "test48ProgressReopensAfterScrollingAndBothTabsWork"
++    ],
++    [
++      "ShelfStudyInteractionUITests",
++      "test49StudySecondaryButtonsOpenRealDestinationsAndCollapse"
++    ],
++    [
++      "ShelfUITests",
++      "test00AccessibilityContract"
++    ],
++    [
++      "ShelfUITests",
++      "test01LibraryBaselineAndPrimaryTabs"
++    ],
++    [
++      "ShelfUITests",
++      "test02ReaderBaselineReadAndOriginalModes"
++    ],
++    [
++      "ShelfUITests",
++      "test03ArrowPagingAndPositionPersistence"
++    ],
++    [
++      "ShelfUITests",
++      "test04ReaderContentsSectionsPagesBookmarks"
++    ],
++    [
++      "ShelfUITests",
++      "test05BookmarkAppearsInContents"
++    ],
++    [
++      "ShelfUITests",
++      "test06ReaderSearchFindsAndNavigates"
++    ],
++    [
++      "ShelfUITests",
++      "test07PageStudyMarksAndDrawerFilters"
++    ],
++    [
++      "ShelfUITests",
++      "test08AddNoteSurvivesReopen"
++    ],
++    [
++      "ShelfUITests",
++      "test09TextControlsAreReachableInBothModes"
++    ],
++    [
++      "ShelfUITests",
++      "test10SpeechControlChangesState"
++    ],
++    [
++      "ShelfUITests",
++      "test11LibrarySearchAndFavorites"
++    ],
++    [
++      "ShelfUITests",
++      "test12SettingsAndBackupEntryPoint"
++    ],
++    [
++      "ShelfUITests",
++      "test13HorizontalGestureSmokeTestInReadMode"
++    ],
++    [
++      "ShelfUITests",
++      "test14HorizontalGestureSmokeTestInOriginalMode"
++    ],
++    [
++      "ShelfWorldClassUITests",
++      "test42ReaderConnectOpensCrossLibraryPassageExperience"
++    ],
++    [
++      "ShelfWorldClassUITests",
++      "test43KnowledgeSearchPreservesTechnicalTerms"
++    ],
++    [
++      "ShelfWorldClassUITests",
++      "test44VoiceSettingsExposeQualitySpeedAndTechnicalReading"
++    ],
++    [
++      "ShelfWorldClassUITests",
++      "test45SpeechStartsAndCompactTechnicalControlsAppear"
++    ],
++    [
++      "ShelfWorldClassUITests",
++      "test46TrailsHaveOneCreationSurface"
++    ],
++    [
++      "ShelfWorldClassUITests",
++      "test47BookMenuExposesConnectionsWithoutDashboard"
++    ],
++    [
++      "ShelfWorldClassUITests",
++      "test50SemanticQuestionUsesFourLevelCertainty"
++    ],
++    [
++      "ShelfWorldClassUITests",
++      "test51UnderstandingLensUsesVerifiedSourceFacts"
++    ],
++    [
++      "ShelfWorldClassUITests",
++      "test52V24PrivacyAndNeuralVoiceControlsAreExposed"
++    ],
++    [
++      "ShelfWorldClassUITests",
++      "test53ActiveStudyContextSurvivesInterruption"
++    ],
++    [
++      "ShelfWorldClassUITests",
++      "test54IrritatedCheckInOffersOptionalRelease"
++    ]
++  ]
++}
+--- a/Shelf.xcodeproj/project.pbxproj
++++ b/Shelf.xcodeproj/project.pbxproj
+@@ -5,6 +5,46 @@
+     };
+     "objectVersion" = "56";
+     "objects" = {
++        "162D86FB7163BF2066A2BFB8" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "Components/ReleaseSurface.swift";
++            "sourceTree" = "<group>";
++        };
++        "2DB559F35930CDB1A129ECEB" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "162D86FB7163BF2066A2BFB8";
++        };
++        "C07D56FA9E4828D08175AE20" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "ReleaseInteractionState.swift";
++            "sourceTree" = "<group>";
++        };
++        "A817FB9D6FCC09EB5357B937" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "C07D56FA9E4828D08175AE20";
++        };
++        "2A8A193F61E43BCA460240A4" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "ReleaseInteractionSupport.swift";
++            "sourceTree" = "<group>";
++        };
++        "D75A2A2D42C35BCDE61BC717" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "2A8A193F61E43BCA460240A4";
++        };
++        "45B5DCAC7721A3B112759BF7" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "ShelfEmotionalFlowUITests.swift";
++            "sourceTree" = "<group>";
++        };
++        "6B083504D3CB2E7F6342D4A2" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "45B5DCAC7721A3B112759BF7";
++        };
+         "DE210EC411B4DFA4AA514F0C" = {
+             "isa" = "PBXFileReference";
+             "lastKnownFileType" = "sourcecode.swift";
+@@ -864,6 +904,8 @@
+                 "A3A7CADF2B28C72682BB6FCB",
+                 "DE210EC411B4DFA4AA514F0C",
+                 "AFD5C5D658B4738304DF632F",
++                "162D86FB7163BF2066A2BFB8",
++                "C07D56FA9E4828D08175AE20",
+             );
+             "path" = "Learning";
+             "sourceTree" = "<group>";
+@@ -1770,6 +1812,8 @@
+                 "6C41DAE2DD1EEA89F3D830C0",
+                 "834E9DB078954EA102700669",
+                 "5603FB0A18A98331A9F68E7D",
++                "2A8A193F61E43BCA460240A4",
++                "45B5DCAC7721A3B112759BF7",
+             );
+             "path" = "ShelfUITests";
+             "sourceTree" = "<group>";
+@@ -2602,6 +2646,8 @@
+                 "F448B74661E8D64649D09DB0",
+                 "44A68ABC934A831A512F1BE9",
+                 "A666623A7F5ECA29F105AE6C",
++                "2DB559F35930CDB1A129ECEB",
++                "A817FB9D6FCC09EB5357B937",
+             );
+             "runOnlyForDeploymentPostprocessing" = "0";
+         };
+@@ -2725,6 +2771,8 @@
+                 "5446771B4EB0B46F6747F6FE",
+                 "8B08457D057140DF346EA029",
+                 "17B001FA8873F842178C2DBB",
++                "D75A2A2D42C35BCDE61BC717",
++                "6B083504D3CB2E7F6342D4A2",
+             );
+             "runOnlyForDeploymentPostprocessing" = "0";
+         };
+@@ -2846,7 +2894,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "24.4";
++                "MARKETING_VERSION" = "24.5";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+@@ -2869,7 +2917,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "24.4";
++                "MARKETING_VERSION" = "24.5";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";

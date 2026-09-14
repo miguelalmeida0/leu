@@ -1,0 +1,23 @@
+{
+  "changedAppFiles": [
+    "Shelf/DesignSystem/LeuDesign.swift",
+    "Shelf/Learning/LearnTodayScreen+MemorySections.swift",
+    "Shelf/Learning/LearnTodayScreen.swift",
+    "Shelf/Learning/Components/LearnSecondaryModes.swift"
+  ],
+  "changedExistingFiles": [
+    "Shelf/DesignSystem/LeuDesign.swift",
+    "Shelf/Learning/LearnTodayScreen+MemorySections.swift",
+    "Shelf/Learning/LearnTodayScreen.swift",
+    "Shelf/Learning/Components/LearnSecondaryModes.swift",
+    "ShelfUITests/ShelfUITestCase.swift",
+    "ShelfUITests/StudyInteractionSupport.swift",
+    "ShelfUITests/ReleaseInteractionSupport.swift",
+    "ShelfUITests/ShelfLearningOSUITests.swift",
+    "scripts/test-night-field-contrast.py",
+    "scripts/sync-xcode-sources.py"
+  ],
+  "protectedFileCount": 356,
+  "protectedFilesUnchanged": 356,
+  "unexpectedAppChanges": []
+}

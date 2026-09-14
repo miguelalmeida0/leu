@@ -1,0 +1,5 @@
+V19.2 final interaction fix
+- Native Toggle binds directly to $preferences.keepAwake.
+- Removed custom accessibilityValue override so UIKit/SwiftUI owns the switch state exposed to VoiceOver/XCUI.
+- Idle-timer side effect follows the source-of-truth preference via onChange.
+- Static UI-contract audit rejects reintroducing the custom accessibilityValue override.

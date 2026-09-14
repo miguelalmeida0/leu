@@ -1,0 +1,86 @@
+[
+  {
+    "command": [
+      "python3",
+      "scripts/validate.py"
+    ],
+    "returnCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-shelfcore-imports.py"
+    ],
+    "returnCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-learning-offline.py"
+    ],
+    "returnCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-learning-architecture.py"
+    ],
+    "returnCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-connected-architecture.py"
+    ],
+    "returnCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-voice-architecture.py"
+    ],
+    "returnCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-worldclass-offline.py"
+    ],
+    "returnCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-v24-contract.py"
+    ],
+    "returnCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-ui-test-contract.py"
+    ],
+    "returnCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-study-interactions.py"
+    ],
+    "returnCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-swiftui-compile-contract.py"
+    ],
+    "returnCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-gallery-minimalism.py"
+    ],
+    "returnCode": 0
+  }
+]

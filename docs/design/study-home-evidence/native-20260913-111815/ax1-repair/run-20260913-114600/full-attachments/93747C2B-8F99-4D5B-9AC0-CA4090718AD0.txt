@@ -1,0 +1,1 @@
+LEU_UI_CHECKPOINT: after-study-continue-populated nativeButtons=1 viewport=(2.0, 76.0, 416.0, 703.0) type=9 frame=(44.00000000000003, 131.33333333333331, 332.0, 371.33333333333337) enabled=true hittable=false

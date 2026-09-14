@@ -1,0 +1,1445 @@
+{
+  "scope": "syntax only; not Apple SDK typechecking",
+  "results": [
+    {
+      "file": "Packages/ShelfCore/Package.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Application/DocumentImportService.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Application/LibraryRepository+Annotations.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Application/LibraryRepository+Collections.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Application/LibraryRepository+Restore.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Application/LibraryRepository.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Backup/BackupManifest.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Backup/BackupMerger.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Backup/BackupReader.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Backup/BackupService.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Backup/BackupWriter.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Contracts/DocumentVault.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Contracts/SnapshotPersistence.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Contracts/TextIndexPersistence.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Domain/Annotation.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Domain/Book.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Domain/Collection.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Domain/LibraryQuery.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Domain/LibrarySnapshot.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Domain/PageTurnPolicy.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Domain/ReadingPosition.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Domain/ShelfError.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/KnowledgeConcept.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/KnowledgeConnection.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/KnowledgeIndex.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/KnowledgePassage.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/KnowledgeSnapshot.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Domain/TopicChain.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/BM25Index.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/ConceptCatalog.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/ConnectionRanker.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/KnowledgeIndexBuilder.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/KnowledgePipeline.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/PassageAssembler.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/PassageReanchorer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Indexing/TechnicalTokenizer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/KnowledgeCapabilities.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Persistence/KnowledgeRepository.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Persistence/KnowledgeSnapshotPersistence.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Knowledge/Search/KnowledgeSearchEngine.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Analysis/DocumentAnalyzer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Analysis/StableIdentity.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Analysis/TopicClassifier.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Capabilities.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/AnalysisModels.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/Artifacts.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/EmotionalModels.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/LabModels.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/LearningObject.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/LearningSnapshot.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/LearningSource.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/MemoryModels.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/Question.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/Relationships.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/ResumeStudyContext.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/StudyModels.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Memory/BlindPagePolicy.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Memory/ReviewScheduler.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Memory/TopicLearningAggregator.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningSnapshotPersistence.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/StudyCheckpointMutation.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Questions/DeterministicQuestionEngine+Utilities.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Questions/DeterministicQuestionEngine.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Questions/ProgressiveHintBuilder.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Questions/QuestionQualityEvaluator.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/SemanticCompiler.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/SemanticModels.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/SemanticQuestionCompiler.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Sessions/LabCatalog.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Learning/Sessions/StudySessionPlanner.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Persistence/FileDocumentVault.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Persistence/FileTextIndexStore.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Persistence/JSONSnapshotStore.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Search/IndexRebuilder.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Search/LibraryTextSearch.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Security/FileDigest.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Security/PortableSHA256.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Compilation/SpeechCompiler.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Domain/SpeechModels.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/AcronymSpeechNormalizer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/CodeSpeechNormalizer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/MathSpeechNormalizer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/NetworkingSpeechNormalizer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/OperatorSpeechNormalizer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/PDFTextCleaner.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/SpeechNormalizationSupport.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/TechnicalSpeechNormalizer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/TypeScriptSpeechNormalizer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Normalization/URLSpeechNormalizer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Pronunciation/PronunciationDictionary.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/Prosody/SpeechProsodyPlanner.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Sources/ShelfCore/Voice/SpeechCapabilities.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/AnnotationTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/BackupMergerTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/BackupTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/CollectionTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/DigestTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/ImportTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Knowledge/KnowledgeRankingTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Knowledge/KnowledgeRepositoryTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Knowledge/KnowledgeSearchTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Knowledge/TechnicalTokenizerTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/BlindPageAndLabTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/DocumentAnalysisTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/EmotionalV24Tests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/LearningPersistenceRecoveryTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/LearningRepositoryTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/QuestionEngineTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/ReviewSchedulerTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/SemanticCoreV24Tests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/StudyCheckpointTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/StudyPlannerTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/TopicLearningAggregatorTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/LibraryRepositoryTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/PageTurnPolicyTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/PersistenceTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/QueryAndSearchTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/ReadingPositionTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/TestSupport.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/ValidationTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Voice/CodeSpeechNormalizerTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Voice/PDFTextCleanerTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Voice/SpeechCompilerTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Packages/ShelfCore/Tests/ShelfCoreTests/Voice/TechnicalSpeechNormalizerTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/App/AppContainer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/App/RootView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/App/ShelfApp.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/DesignSystem/CoverIllustration.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/DesignSystem/ReaderTrackingSlider.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/DesignSystem/ShelfControls.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/DesignSystem/ShelfMotion.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/DesignSystem/ShelfTabBar.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/DesignSystem/ShelfTheme.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Collections/CollectionsSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Collections/TagsScreen.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/BookDetailsSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/Components/BookActionsMenu.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/Components/BookTile.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/Components/CollectionFilterBar.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/Components/LibraryHeader.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/Components/PassageResultsView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/LibraryModel+Backup.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/LibraryModel+Editing.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/LibraryModel+Import.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/LibraryModel+Search.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/LibraryModel.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/LibraryScreen.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/LibraryState.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Library/PDFDocumentPickerView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Opening/OpeningDustView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Opening/OpeningExperienceView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Opening/OpeningTimeline.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/ReadContinuousDocumentView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/ReadHorizontalPager.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/ReadPageContent.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/ReadablePageView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/ReaderBottomBar.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/ReaderFocusBar.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/ReaderStateSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/ReaderStudyDrawer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/ReaderTextSizeMenu.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/ReaderTopBar.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/SemanticZoomSurface.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Components/TimedReadingSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/Interaction/ReaderPageTurnDriver.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/NoteEditorSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReadablePage.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderContentsSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderModel+Annotations.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderModel+BlindPage.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderModel+Learning.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderModel+Lens.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderModel+Location.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderModel+Reading.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderModel+Search.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderModel.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderNotesSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderScreen.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderSearchSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderSettingsSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReaderState.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReadingAnchorStore.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReadingPositionRecorder.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/ReadingWindowPlanner.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Reader/SemanticZoom.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Settings/PrivacySheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Settings/SettingsScreen.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Features/Settings/TrashSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/Files/AppPaths.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/Files/IncomingFileService.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/Files/SampleLibrarySeeder.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/PDF/PDFAnnotationRenderer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/PDF/PDFDocumentLoader.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/PDF/PDFInspector.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/PDF/PDFPageSearch.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/PDF/PDFReadablePageExtractor.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/PDF/PDFReaderSurface.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/PDF/PDFSessionController.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/PDF/PDFThumbnailService.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/PDF/PDFZoomState.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/PDF/ReaderSpeechController.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/Sharing/PDFExportService.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Infrastructure/Sharing/ShareSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Knowledge/Components/BookConnectionsSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Knowledge/Components/ConceptDetailSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Knowledge/Components/ConnectedPassageSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Knowledge/Components/ConnectionConstellationSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Knowledge/Components/KnowledgeSearchSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Knowledge/Components/TopicChainScreens.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Knowledge/KnowledgeModel+ConceptsAndChains.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Knowledge/KnowledgeModel+Connections.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Knowledge/KnowledgeModel+Search.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Knowledge/KnowledgeModel.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/ActiveRecallSetupSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/BlindPageSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/Components/LearnSecondaryModes.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/Components/PrimaryTabBar.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/Components/ShelfSectionSwitcher.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/ConnectionsOverviewSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/ConnectionsSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/DiagramMaskEditor.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/DiagramRecallStudyView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/DocumentTopicsSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/ExplanationRecorderSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/InterviewSetupSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LabRunPreview.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LabScenarioView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LabScreen.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LearnTodayScreen+MemorySections.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LearnTodayScreen.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LearningModel+Objects.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LearningModel+Recovery.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LearningModel+Sessions.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LearningModel.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LearningObjectActionSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LearningStateSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LearningTimelineSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/LearningTokens.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/MemoryMarginMarkers.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/PrimaryArea.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/QuestionCardView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/RecallCardView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/RecallPromptEditorSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/Services/ExplanationRecorder.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/Services/PDFLearningIndexer.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/Services/PDFTextExtractionCheckpointStore.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/Services/PDFTextExtractor.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/SessionActivities.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/SessionCompleteView.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/StudyInteractionTrace.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/StudySessionScreen.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/TrailDetailScreen.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/TrailsScreen.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Learning/UnderstandingLensSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Support/AppPreferences.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Support/ShelfHaptics.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/Engine/AppleSpeechEngine.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/Engine/SupertonicRuntime.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/Engine/SupertonicSpeechEngine.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/Playback/AudioSessionCoordinator.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/Playback/RemoteCommandCoordinator.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/Pronunciation/PronunciationPreferenceStore.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/UI/VoicePlayerStrip.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/UI/VoiceSettingsSheet.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/Voices/VoiceCatalog.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/Voices/VoiceDescriptor.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/Voices/VoicePreferenceStore.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "Shelf/Voice/Voices/VoiceQualityRanker.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfTests/KnowledgeIntegrationTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfTests/LearningIndexIntegrationTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfTests/PDFIntegrationTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfTests/PDFViewportGeometryTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfTests/VoiceCatalogTests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfUITests/ShelfInteractionRepairUITests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfUITests/ShelfLearningOSUITests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfUITests/ShelfReaderRegressionUITests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfUITests/ShelfStudyInteractionUITests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfUITests/ShelfUITestCase.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfUITests/ShelfUITests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfUITests/ShelfWorldClassUITests.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfUITests/StudyInteractionSupport.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "ShelfUITests/V24InteractionSupport.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "scripts/choose-simulator.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "validation/v24-2/RecoveryDependencies.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "validation/v24-2/RecoveryHarness.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "validation/v24-3/RootDependencies.swift",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "validation/v24-3/RootHarness.swift",
+      "exit_code": 0,
+      "output": ""
+    }
+  ]
+}

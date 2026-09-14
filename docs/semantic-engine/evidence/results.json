@@ -1,0 +1,159 @@
+[
+  {
+    "stage": "scripts/validate.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-shelfcore-imports.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-learning-offline.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-learning-architecture.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-connected-architecture.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-voice-architecture.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-worldclass-offline.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-v24-contract.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-ui-test-contract.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-study-interactions.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/test-study-repair-tools.py",
+    "exitCode": 0,
+    "tests": 27,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-swiftui-compile-contract.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/test-settings-compile-repair.py",
+    "exitCode": 0,
+    "tests": 14,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-gallery-minimalism.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-v242-interactions.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/test-v242-interactions.py",
+    "exitCode": 0,
+    "tests": 17,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/check-v243-root-compile.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/test-v243-root-compile.py",
+    "exitCode": 1,
+    "tests": 13,
+    "failures": 1
+  },
+  {
+    "stage": "scripts/check-v244-lens-compile.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/test-v244-lens-compile.py",
+    "exitCode": 1,
+    "tests": 11,
+    "failures": 1
+  },
+  {
+    "stage": "scripts/check-v245-release.py",
+    "exitCode": 0,
+    "tests": null,
+    "failures": 0
+  },
+  {
+    "stage": "scripts/test-v245-release.py",
+    "exitCode": 1,
+    "tests": 23,
+    "failures": 1
+  },
+  {
+    "stage": "native build",
+    "exitCode": 74,
+    "command": [
+      "xcodebuild",
+      "-project",
+      "Shelf.xcodeproj",
+      "-scheme",
+      "Shelf",
+      "-configuration",
+      "Debug",
+      "-sdk",
+      "iphonesimulator",
+      "-destination",
+      "generic/platform=iOS Simulator",
+      "-derivedDataPath",
+      "/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5/.build/semantic-audit",
+      "CODE_SIGNING_ALLOWED=NO",
+      "build"
+    ]
+  },
+  {
+    "stage": "all independent runtime suites",
+    "exitCode": 1
+  }
+]

@@ -1,0 +1,1 @@
+LEU_UI_CHECKPOINT: after-study-session-options nativeButtons=1 viewport=(2.0, 76.0, 416.0, 703.0) type=9 frame=(44.00000000000003, 399.111785252889, 332.0, 44.0) enabled=true hittable=true

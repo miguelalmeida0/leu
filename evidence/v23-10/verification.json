@@ -1,0 +1,61 @@
+{
+  "recordedAtUTC": "2026-09-11T11:29:04.582127+00:00",
+  "release": "Leu Native V23.10 \u2014 Study Interaction Repair",
+  "status": "PORTABLE_VERIFIED_NATIVE_PENDING",
+  "platform": "Linux-6.18.35-x86_64-with-glibc2.41",
+  "toolchain": "Swift version 6.2.1 (swift-6.2.1-RELEASE)\nTarget: x86_64-unknown-linux-gnu",
+  "core": {
+    "testsPassed": 182,
+    "testsFailed": 0,
+    "elapsedSeconds": 4.623,
+    "voiceStressSeconds": 2.2050195,
+    "voiceStressThresholdSeconds": 3.0,
+    "sourceAndTestsUnchanged": true,
+    "log": "evidence/v23-10/core-v23-10.log"
+  },
+  "source": {
+    "projectObjects": 435,
+    "sourceScriptFiles": 294,
+    "swiftFilesSyntaxParsed": 268,
+    "architecturePrivacyAndDesignChecksPassed": true
+  },
+  "tooling": {
+    "existingChecksPassed": 15,
+    "repairRegressionTestsPassed": 17,
+    "debugTraceEnabledDisabledAndReleaseBuildChecksPassed": true
+  },
+  "native": {
+    "appleSDKTypechecked": false,
+    "xcodebuildExecuted": false,
+    "simulatorLaunched": false,
+    "appleTestsExpected": 20,
+    "focusedStudyTestsExpected": 5,
+    "uiTestsExpected": 50,
+    "physicalIPhoneVerified": false
+  },
+  "changedCodeFiles": [
+    "Shelf/App/RootView.swift",
+    "Shelf/Learning/Components/LearnSecondaryModes.swift",
+    "Shelf/Learning/LearnTodayScreen.swift",
+    "Shelf/Learning/LearningModel.swift",
+    "Shelf/Learning/LearningStateSheet.swift",
+    "Shelf/Learning/StudyInteractionTrace.swift",
+    "Shelf/Learning/StudySessionScreen.swift",
+    "ShelfUITests/ShelfLearningOSUITests.swift",
+    "ShelfUITests/ShelfStudyInteractionUITests.swift",
+    "ShelfUITests/ShelfUITestCase.swift",
+    "ShelfUITests/StudyInteractionSupport.swift",
+    "scripts/check-gallery-minimalism.py",
+    "scripts/check-study-interactions.py",
+    "scripts/collect-qa-diagnostics.py",
+    "scripts/qa-and-copy.sh",
+    "scripts/qa-native.sh",
+    "scripts/summarize-qa.py",
+    "scripts/sync-xcode-sources.py",
+    "scripts/test-ios.sh",
+    "scripts/test-study-repair-tools.py",
+    "scripts/verify-qa-results.py",
+    "Shelf.xcodeproj/project.pbxproj"
+  ],
+  "causalityLimit": "Supplied trace proves a generic Other target was tapped, not where the physical tap landed. Native rerun with activation traces is required to establish resolution."
+}

@@ -1,0 +1,34 @@
+{
+  "changed": [
+    "README.md",
+    "Shelf.xcodeproj/project.pbxproj",
+    "Shelf/Features/Settings/SettingsScreen.swift",
+    "evidence/VERIFICATION.md",
+    "evidence/verification.json",
+    "scripts/check-gallery-minimalism.py",
+    "scripts/check-swiftui-compile-contract.py",
+    "scripts/check-v24-contract.py",
+    "scripts/qa-and-copy.sh",
+    "scripts/qa-native.sh",
+    "scripts/summarize-qa.py"
+  ],
+  "added": [
+    "PATCH_V24_1.md",
+    "docs/V24_1_CODE_CHANGES.diff",
+    "evidence/v24-1/core-tests.log",
+    "evidence/v24-1/existing-tools.log",
+    "evidence/v24-1/inherited-v23-11-verification.json",
+    "evidence/v24-1/repair-tools.log",
+    "evidence/v24-1/scope-check.json",
+    "evidence/v24-1/section-before-after.json",
+    "evidence/v24-1/settings-repair-tests.log",
+    "evidence/v24-1/static-checks.json",
+    "evidence/v24-1/static-checks.log",
+    "evidence/v24-1/supplied-log-summary-replay.txt",
+    "evidence/v24-1/supplied-v24-0-mac-build-tail.txt",
+    "evidence/v24-1/swift-syntax.log",
+    "scripts/swiftui_section_contract.py",
+    "scripts/test-settings-compile-repair.py"
+  ],
+  "deleted": []
+}

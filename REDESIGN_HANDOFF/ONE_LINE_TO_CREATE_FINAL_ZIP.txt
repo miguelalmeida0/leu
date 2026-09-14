@@ -1,0 +1,13 @@
+1) Extract this handoff ZIP anywhere on your Mac.
+2) In Terminal, cd into the extracted folder.
+3) Run:
+
+bash PACK_CURRENT_SOURCE_FOR_CLAUDE.sh
+
+It will snapshot:
+/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5
+
+and create the final uploadable artifact next to that workspace:
+Leu-LATEST-Claude-Redesign-<timestamp>.zip
+
+That final ZIP contains the live latest Swift source PLUS this complete handoff and design references.

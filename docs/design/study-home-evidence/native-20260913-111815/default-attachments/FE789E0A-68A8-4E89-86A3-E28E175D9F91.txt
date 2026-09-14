@@ -1,0 +1,1 @@
+LEU_UI_CHECKPOINT: before-start-learning-session nativeButtons=1 viewport=(2.0, 76.0, 416.0, 728.0) type=9 frame=(44.0, 549.0, 332.0, 48.0) enabled=true hittable=true

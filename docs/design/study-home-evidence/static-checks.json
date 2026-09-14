@@ -1,0 +1,38 @@
+{
+  "contrast": {
+    "exit": 0,
+    "command": [
+      "python3",
+      "scripts/test-night-field-contrast.py"
+    ]
+  },
+  "night-field": {
+    "exit": 0,
+    "command": [
+      "python3",
+      "scripts/check-night-field.py"
+    ]
+  },
+  "interactions": {
+    "exit": 0,
+    "command": [
+      "python3",
+      "scripts/check-study-interactions.py"
+    ]
+  },
+  "validate": {
+    "exit": 0,
+    "command": [
+      "python3",
+      "scripts/validate.py"
+    ]
+  },
+  "runner-syntax": {
+    "exit": 0,
+    "command": [
+      "bash",
+      "-n",
+      "scripts/verify-study-home.sh"
+    ]
+  }
+}

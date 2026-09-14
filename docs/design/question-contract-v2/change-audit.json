@@ -1,0 +1,24 @@
+{
+  "changedExistingFiles": [
+    "Shelf/Learning/LearningModel+Intelligence.swift",
+    "Shelf/Learning/Services/AppleLearningIntelligenceProvider.swift",
+    "ShelfTests/LearningRealModelP0Tests.swift",
+    "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/LearningCandidateValidator.swift",
+    "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/LearningIntelligence.swift",
+    "scripts/sync-xcode-sources.py",
+    "Shelf.xcodeproj/project.pbxproj"
+  ],
+  "addedSourceTestScripts": [
+    "ShelfTests/QuestionContractV2IntegrationTests.swift",
+    "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/GroundedQuestionContract.swift",
+    "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/GroundedQuestionCompiler.swift",
+    "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/CanonicalWhitespaceResolver.swift",
+    "Packages/ShelfCore/Tests/ShelfCoreTests/Learning/GroundedQuestionContractTests.swift",
+    "scripts/verify-question-contract-v2.sh",
+    "scripts/test-question-contract-v2-host.py"
+  ],
+  "unchangedBaselineFiles": 437,
+  "protectedExistingFilesChanged": [],
+  "studySessionDesignExtractionVoiceExplanation": "UNCHANGED",
+  "nativeGate": "BLOCKED: no test execution from this session"
+}

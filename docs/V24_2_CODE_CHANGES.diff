@@ -1,0 +1,1836 @@
+--- V24.1/Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/EmotionalModels.swift
++++ V24.2/Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/EmotionalModels.swift
+@@ -43,16 +43,6 @@
+     }
+ }
+ 
+-public struct ResumeStudyContext: Codable, Equatable, Sendable {
+-    public var sessionID: UUID?
+-    public var activityIndex: Int
+-    public var updatedAt: Date
+-
+-    public init(sessionID: UUID? = nil, activityIndex: Int = 0, updatedAt: Date = Date()) {
+-        self.sessionID = sessionID; self.activityIndex = max(0, activityIndex); self.updatedAt = updatedAt
+-    }
+-}
+-
+ public struct EmotionalCheckInPolicy: Sendable {
+     public init() {}
+ 
+--- V24.1/Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/ResumeStudyContext.swift
++++ V24.2/Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/ResumeStudyContext.swift
+@@ -0,0 +1,45 @@
++import Foundation
++
++/// A committed study checkpoint. Optional additions preserve V24.0/V24.1 snapshots.
++public struct ResumeStudyContext: Codable, Equatable, Sendable {
++    public var sessionID: UUID?
++    public var activityIndex: Int
++    public var updatedAt: Date
++    public var questionID: UUID?
++    public var selectedAnswerID: UUID?
++    public var selectedConfidence: ConfidenceLevel?
++    public var answerCommitted: Bool
++    public var revealedHintCount: Int
++
++    public init(sessionID: UUID? = nil, activityIndex: Int = 0, updatedAt: Date = Date(),
++                questionID: UUID? = nil, selectedAnswerID: UUID? = nil,
++                selectedConfidence: ConfidenceLevel? = nil, answerCommitted: Bool = false,
++                revealedHintCount: Int = 0) {
++        self.sessionID = sessionID; self.activityIndex = max(0, activityIndex); self.updatedAt = updatedAt
++        self.questionID = questionID; self.selectedAnswerID = selectedAnswerID
++        self.selectedConfidence = selectedConfidence; self.answerCommitted = answerCommitted
++        self.revealedHintCount = max(0, revealedHintCount)
++    }
++
++    private enum CodingKeys: String, CodingKey {
++        case sessionID, activityIndex, updatedAt, questionID, selectedAnswerID, selectedConfidence
++        case answerCommitted, revealedHintCount
++    }
++
++    public init(from decoder: Decoder) throws {
++        let c = try decoder.container(keyedBy: CodingKeys.self)
++        sessionID = try c.decodeIfPresent(UUID.self, forKey: .sessionID)
++        activityIndex = max(0, try c.decode(Int.self, forKey: .activityIndex))
++        updatedAt = try c.decode(Date.self, forKey: .updatedAt)
++        questionID = try c.decodeIfPresent(UUID.self, forKey: .questionID)
++        selectedAnswerID = try c.decodeIfPresent(UUID.self, forKey: .selectedAnswerID)
++        selectedConfidence = try c.decodeIfPresent(ConfidenceLevel.self, forKey: .selectedConfidence)
++        answerCommitted = try c.decodeIfPresent(Bool.self, forKey: .answerCommitted) ?? false
++        revealedHintCount = max(0, try c.decodeIfPresent(Int.self, forKey: .revealedHintCount) ?? 0)
++    }
++}
++
++public enum StudyCheckpointError: LocalizedError, Equatable {
++    case inconsistentSession
++    public var errorDescription: String? { "The study checkpoint does not match an active session." }
++}
+--- V24.1/Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift
++++ V24.2/Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift
+@@ -175,14 +175,11 @@
+     }
+ 
+     public func saveSession(_ session: StudySession) throws {
+-        try transaction { snapshot in
+-            if let index = snapshot.sessions.firstIndex(where: { $0.id == session.id }) { snapshot.sessions[index] = session }
+-            else { snapshot.sessions.append(session) }
+-            if session.completedAt != nil {
+-                snapshot.timeline.append(LearningTimelineEvent(kind: .session,
+-                                                               title: "Study session · \(session.requestedMinutes) min"))
+-            }
+-        }
++        try transaction { StudyCheckpointMutation.storeSession(session, in: &$0) }
++    }
++
++    public func saveStudyCheckpoint(session: StudySession?, context: ResumeStudyContext?) throws {
++        try transaction { try StudyCheckpointMutation.apply(session: session, context: context, to: &$0) }
+     }
+ 
+     private func transaction<T>(_ mutation: (inout LearningSnapshot) throws -> T) throws -> T {
+--- V24.1/Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/StudyCheckpointMutation.swift
++++ V24.2/Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/StudyCheckpointMutation.swift
+@@ -0,0 +1,26 @@
++import Foundation
++
++/// Pure snapshot mutation; the repository performs its single durable commit.
++enum StudyCheckpointMutation {
++    static func apply(session: StudySession?, context: ResumeStudyContext?, to snapshot: inout LearningSnapshot) throws {
++        if let context {
++            guard let session, session.completedAt == nil, context.sessionID == session.id,
++                  session.activities.indices.contains(context.activityIndex) else {
++                throw StudyCheckpointError.inconsistentSession
++            }
++        }
++        if let session { storeSession(session, in: &snapshot) }
++        snapshot.resumeStudyContext = context
++    }
++
++    static func storeSession(_ session: StudySession, in snapshot: inout LearningSnapshot) {
++        let existing = snapshot.sessions.firstIndex(where: { $0.id == session.id })
++        let wasComplete = existing.map { snapshot.sessions[$0].completedAt != nil } ?? false
++        if let existing { snapshot.sessions[existing] = session }
++        else { snapshot.sessions.append(session) }
++        if session.completedAt != nil && !wasComplete {
++            snapshot.timeline.append(LearningTimelineEvent(kind: .session,
++                title: "Study session · \(session.requestedMinutes) min"))
++        }
++    }
++}
+--- V24.1/Packages/ShelfCore/Tests/ShelfCoreTests/Learning/StudyCheckpointTests.swift
++++ V24.2/Packages/ShelfCore/Tests/ShelfCoreTests/Learning/StudyCheckpointTests.swift
+@@ -0,0 +1,119 @@
++import Foundation
++import XCTest
++@testable import ShelfCore
++
++final class StudyCheckpointTests: XCTestCase {
++    func testLegacyResumeDecodesWithoutDiscardingSession() throws {
++        let id = UUID()
++        let data = Data("{\"sessionID\":\"\(id.uuidString)\",\"activityIndex\":2,\"updatedAt\":0}".utf8)
++        let context = try JSONDecoder().decode(ResumeStudyContext.self, from: data)
++        XCTAssertEqual(context.sessionID, id); XCTAssertEqual(context.activityIndex, 2)
++        XCTAssertNil(context.selectedAnswerID); XCTAssertNil(context.selectedConfidence)
++        XCTAssertFalse(context.answerCommitted); XCTAssertEqual(context.revealedHintCount, 0)
++    }
++
++    func testNewResumeRoundTripsEveryAnswerField() throws {
++        let context = ResumeStudyContext(sessionID: UUID(), activityIndex: 3, questionID: UUID(),
++            selectedAnswerID: UUID(), selectedConfidence: .certain, answerCommitted: true, revealedHintCount: 2)
++        XCTAssertEqual(try JSONDecoder().decode(ResumeStudyContext.self, from: JSONEncoder().encode(context)), context)
++    }
++
++    func testAtomicSessionAndContextSurviveNewRepository() async throws {
++        let root = directory(); defer { try? FileManager.default.removeItem(at: root) }
++        let repo = LearningRepository(persistence: FileLearningSnapshotStore(root: root))
++        let session = makeSession()
++        let context = ResumeStudyContext(sessionID: session.id, activityIndex: 1, questionID: UUID(),
++            selectedAnswerID: UUID(), selectedConfidence: .fairlySure, answerCommitted: true, revealedHintCount: 2)
++        try await repo.saveStudyCheckpoint(session: session, context: context)
++        let reopened = LearningRepository(persistence: FileLearningSnapshotStore(root: root))
++        let state = try await reopened.open()
++        XCTAssertEqual(state.sessions.first?.id, session.id)
++        XCTAssertEqual(state.resumeStudyContext?.activityIndex, 1)
++        XCTAssertEqual(state.resumeStudyContext?.selectedAnswerID, context.selectedAnswerID)
++        XCTAssertEqual(state.resumeStudyContext?.selectedConfidence, .fairlySure)
++        XCTAssertEqual(state.resumeStudyContext?.answerCommitted, true)
++        XCTAssertEqual(state.resumeStudyContext?.revealedHintCount, 2)
++    }
++
++    func testMismatchedSessionIsRejectedWithoutMutation() async throws {
++        let root = directory(); defer { try? FileManager.default.removeItem(at: root) }
++        let repo = LearningRepository(persistence: FileLearningSnapshotStore(root: root))
++        let session = makeSession()
++        do {
++            try await repo.saveStudyCheckpoint(session: session, context: ResumeStudyContext(sessionID: UUID()))
++            XCTFail("Mismatched checkpoint accepted")
++        } catch { XCTAssertEqual(error as? StudyCheckpointError, .inconsistentSession) }
++        let snapshot = try await repo.snapshot()
++        XCTAssertTrue(snapshot.sessions.isEmpty); XCTAssertNil(snapshot.resumeStudyContext)
++    }
++
++    func testOutOfBoundsActivityIsRejected() async throws {
++        let root = directory(); defer { try? FileManager.default.removeItem(at: root) }
++        let repo = LearningRepository(persistence: FileLearningSnapshotStore(root: root))
++        let session = makeSession()
++        do {
++            try await repo.saveStudyCheckpoint(session: session, context: ResumeStudyContext(sessionID: session.id, activityIndex: 99))
++            XCTFail("Out-of-bounds checkpoint accepted")
++        } catch { XCTAssertEqual(error as? StudyCheckpointError, .inconsistentSession) }
++    }
++
++    func testRepeatedCheckpointReplacesRatherThanDuplicatesSession() async throws {
++        let root = directory(); defer { try? FileManager.default.removeItem(at: root) }
++        let repo = LearningRepository(persistence: FileLearningSnapshotStore(root: root))
++        let session = makeSession()
++        for i in 0..<6 {
++            try await repo.saveStudyCheckpoint(session: session, context: ResumeStudyContext(sessionID: session.id, activityIndex: i % 2))
++        }
++        let state = try await repo.snapshot()
++        XCTAssertEqual(state.sessions.count, 1); XCTAssertEqual(state.resumeStudyContext?.activityIndex, 1)
++    }
++
++    func testCompletionClearsResumeAndRecordsOneHistoryEvent() async throws {
++        let root = directory(); defer { try? FileManager.default.removeItem(at: root) }
++        let repo = LearningRepository(persistence: FileLearningSnapshotStore(root: root))
++        var session = makeSession()
++        try await repo.saveStudyCheckpoint(session: session, context: ResumeStudyContext(sessionID: session.id))
++        session.completedAt = Date()
++        try await repo.saveStudyCheckpoint(session: session, context: nil)
++        try await repo.saveStudyCheckpoint(session: session, context: nil)
++        let state = try await repo.snapshot()
++        XCTAssertNil(state.resumeStudyContext)
++        XCTAssertEqual(state.timeline.filter { $0.kind == .session }.count, 1)
++    }
++
++    func testLeavingClearsPointerWithoutDeletingHistory() async throws {
++        let root = directory(); defer { try? FileManager.default.removeItem(at: root) }
++        let repo = LearningRepository(persistence: FileLearningSnapshotStore(root: root))
++        let session = makeSession()
++        try await repo.saveStudyCheckpoint(session: session, context: ResumeStudyContext(sessionID: session.id))
++        try await repo.saveStudyCheckpoint(session: nil, context: nil)
++        let state = try await repo.snapshot()
++        XCTAssertNil(state.resumeStudyContext); XCTAssertEqual(state.sessions.count, 1)
++    }
++
++    func testFailedCheckpointDoesNotPublishPartialState() async throws {
++        let persistence = RejectingStudyStore()
++        let repo = LearningRepository(persistence: persistence)
++        let session = makeSession()
++        do {
++            try await repo.saveStudyCheckpoint(session: session, context: ResumeStudyContext(sessionID: session.id))
++            XCTFail("A failed write was acknowledged")
++        } catch { XCTAssertEqual(error as? StudyStoreFailure, .writeRejected) }
++        let state = try await repo.snapshot()
++        XCTAssertTrue(state.sessions.isEmpty); XCTAssertNil(state.resumeStudyContext)
++    }
++
++    private func makeSession() -> StudySession {
++        StudySession(requestedMinutes: 5, activities: [
++            StudyActivity(kind: .question, title: "First", estimatedSeconds: 60),
++            StudyActivity(kind: .question, title: "Second", estimatedSeconds: 60)])
++    }
++    private func directory() -> URL {
++        FileManager.default.temporaryDirectory.appendingPathComponent("leu-checkpoint-" + UUID().uuidString)
++    }
++}
++private enum StudyStoreFailure: Error { case writeRejected }
++private struct RejectingStudyStore: LearningSnapshotPersistence {
++    func load() throws -> LearningSnapshot { LearningSnapshot() }
++    func save(_ snapshot: LearningSnapshot) throws { throw StudyStoreFailure.writeRejected }
++}
+--- V24.1/Shelf/App/AppContainer.swift
++++ V24.2/Shelf/App/AppContainer.swift
+@@ -57,6 +57,6 @@
+         ReaderModel(book: route.book, initialPage: route.pageIndex, repository: repository,
+             url: vault.originalURL(for: route.book.id), loader: loader,
+             search: pageSearch, exporter: exporter, preferences: preferences, learning: learning,
+-            knowledge: knowledge, initialSourceText: route.sourceText, initialKnowledgeTravel: route.knowledgeTravel)
++            knowledge: knowledge, initialSourceText: route.sourceText, initialKnowledgeTravel: route.knowledgeTravel, initialLensSource: route.restoreLens)
+     }
+ }
+--- V24.1/Shelf/App/RootView.swift
++++ V24.2/Shelf/App/RootView.swift
+@@ -4,6 +4,8 @@
+ @MainActor
+ struct RootView: View {
+     let container: AppContainer
++    @Environment(\.scenePhase) private var scenePhase
++    @State private var didRestoreStudyOnLaunch = false
+     @State private var primaryArea: PrimaryArea = .shelf
+     @State private var studySurface: StudySurface = .landing
+ 
+@@ -35,7 +37,20 @@
+         .task {
+             await model.bootstrap()
+             await container.learning.bootstrap()
++            if container.learning.isReady && !didRestoreStudyOnLaunch {
++                didRestoreStudyOnLaunch = true
++                if container.learning.activeSession?.completedAt == nil && container.learning.activeSession != nil {
++                    primaryArea = .learn
++                    studySurface = .landing
++                    StudyInteractionTrace.record("route.study.restored")
++                }
++            }
+             await container.knowledge.bootstrap()
++        }
++        .onChange(of: scenePhase) { _, phase in
++            if phase != .active && container.learning.activeSession != nil {
++                container.learning.persistStudyState()
++            }
+         }
+         .onChange(of: model.selectedTab) { _, _ in resetLibraryScope(model) }
+         .onChange(of: model.snapshot.activeBooks.map { "\($0.id.uuidString)|\($0.fingerprint)" }) { _, _ in
+@@ -138,7 +153,7 @@
+             container.knowledge.errorMessage = "That source PDF is not currently available on this iPhone."
+             return
+         }
+-        model.open(book, page: destination.pageIndex, sourceText: destination.sourceText, knowledgeTravel: true)
++        model.open(book, page: destination.pageIndex, sourceText: destination.sourceText, knowledgeTravel: true, restoreLens: destination.restoreLens)
+     }
+ 
+     private func resetLibraryScope(_ model: LibraryModel) {
+--- V24.1/Shelf/Features/Library/LibraryModel.swift
++++ V24.2/Shelf/Features/Library/LibraryModel.swift
+@@ -106,8 +106,8 @@
+         snapshot = try await repository.snapshot()
+     }
+     func reload() async throws { snapshot = try await repository.snapshot() }
+-    func open(_ book: Book, page: Int? = nil, sourceText: String? = nil, knowledgeTravel: Bool = false) {
+-        readerRoute = ReaderRoute(book: book, pageIndex: page, sourceText: sourceText, knowledgeTravel: knowledgeTravel)
++    func open(_ book: Book, page: Int? = nil, sourceText: String? = nil, knowledgeTravel: Bool = false, restoreLens: LearningSource? = nil) {
++        readerRoute = ReaderRoute(book: book, pageIndex: page, sourceText: sourceText, knowledgeTravel: knowledgeTravel, restoreLens: restoreLens)
+     }
+     func readerClosed() {
+         Task { do { try await reload() } catch { errorMessage = error.localizedDescription } }
+--- V24.1/Shelf/Features/Library/LibraryState.swift
++++ V24.2/Shelf/Features/Library/LibraryState.swift
+@@ -31,6 +31,7 @@
+     var pageIndex: Int? = nil
+     var sourceText: String? = nil
+     var knowledgeTravel: Bool = false
++    var restoreLens: LearningSource? = nil
+ }
+ 
+ struct BookDetailsDraft {
+--- V24.1/Shelf/Features/Reader/Components/ReaderTopBar.swift
++++ V24.2/Shelf/Features/Reader/Components/ReaderTopBar.swift
+@@ -85,10 +85,10 @@
+                     }
+                     .foregroundStyle(ShelfTheme.action)
+                     .padding(.horizontal, 11)
+-                    .frame(minHeight: 34)
++                    .frame(minHeight: 44)
++                    .contentShape(Rectangle())
+                 }
+                 .buttonStyle(.plain)
+-                .accessibilityElement(children: .ignore)
+                 .accessibilityLabel(model.returnLabel)
+                 .accessibilityHint("Return to the study context you came from")
+                 .accessibilityIdentifier("reader-context-return")
+--- V24.1/Shelf/Features/Reader/ReaderModel+Lens.swift
++++ V24.2/Shelf/Features/Reader/ReaderModel+Lens.swift
+@@ -0,0 +1,29 @@
++import Foundation
++import ShelfCore
++
++extension ReaderModel {
++    var returnLabel: String {
++        if initialKnowledgeTravel && knowledge.canNavigateBack {
++            return knowledge.backStack.last?.restoreLens != nil ? "Back to Understanding Lens" : "Back to previous passage"
++        }
++        if initialLensSource != nil { return "Back to library" }
++        return initialSourceText == nil ? "Back to library" : "Back to question"
++    }
++
++    func requestLens(_ source: LearningSource) {
++        pendingLensSource = source
++        showLearningActions = false
++    }
++
++    func presentRequestedLens() {
++        guard let source = pendingLensSource else { return }
++        pendingLensSource = nil
++        lensSource = source
++    }
++
++    func restoreInitialLens() {
++        guard let source = initialLensSource else { return }
++        selectedReadSource = source
++        lensSource = source
++    }
++}
+--- V24.1/Shelf/Features/Reader/ReaderModel.swift
++++ V24.2/Shelf/Features/Reader/ReaderModel.swift
+@@ -25,6 +25,9 @@
+     let learning: LearningModel
+     let knowledge: KnowledgeModel
+     let initialKnowledgeTravel: Bool
++    let initialLensSource: LearningSource?
++    var pendingLensSource: LearningSource?
++    var lensSource: LearningSource?
+ 
+     var navigationRevision = 0
+     @ObservationIgnored var readableCache: [Int: ReadablePage] = [:]
+@@ -73,7 +76,7 @@
+     init(book: Book, initialPage: Int?, repository: LibraryRepository, url: URL,
+          loader: PDFDocumentLoader, search: PDFPageSearch, exporter: PDFExportService,
+          preferences: AppPreferences, learning: LearningModel, knowledge: KnowledgeModel,
+-         initialSourceText: String? = nil, initialKnowledgeTravel: Bool = false) {
++         initialSourceText: String? = nil, initialKnowledgeTravel: Bool = false, initialLensSource: LearningSource? = nil) {
+         self.book = book
+         self.initialPage = initialPage
+         self.initialSourceText = initialSourceText
+@@ -86,6 +89,7 @@
+         self.learning = learning
+         self.knowledge = knowledge
+         self.initialKnowledgeTravel = initialKnowledgeTravel
++        self.initialLensSource = initialLensSource
+         self.speech = ReaderSpeechController(preferences: preferences, bookTitle: book.title)
+         self.recorder = ReadingPositionRecorder(repository: repository, bookID: book.id)
+         self.anchorStore = ReadingAnchorStore(bookID: book.id)
+@@ -106,10 +110,6 @@
+     }
+ 
+     var pageNumber: Int { pageIndex + 1 }
+-    var returnLabel: String {
+-        if initialKnowledgeTravel && knowledge.canNavigateBack { return "Back to previous passage" }
+-        return initialSourceText == nil ? "Back to library" : "Back to question"
+-    }
+     var isBookmarked: Bool { bookmarks.contains { $0.pageIndex == pageIndex } }
+     var canUndo: Bool { !undoStack.isEmpty && !isSaving }
+     var canRedo: Bool { !redoStack.isEmpty && !isSaving }
+--- V24.1/Shelf/Features/Reader/ReaderScreen.swift
++++ V24.2/Shelf/Features/Reader/ReaderScreen.swift
+@@ -31,7 +31,7 @@
+             if model.isLoaded { MemoryMarginMarkers(reader: model, learning: model.learning) }
+         }
+         .animation(reduceMotion ? nil : ShelfMotion.gentle, value: model.showStudyDrawer)
+-        .task { await model.load() }
++        .task { await model.load(); model.restoreInitialLens() }
+         .onChange(of: scenePhase) { _, phase in
+             if phase != .active { Task { _ = await model.flushPosition() } }
+             UIApplication.shared.isIdleTimerDisabled = phase == .active && model.preferences.keepAwake
+@@ -64,8 +64,13 @@
+         }
+         .sheet(item: $model.noteDraft) { NoteEditorSheet(model: model, draft: $0) }
+         .sheet(item: $model.shareFile) { ShareSheet(file: $0) }
+-        .sheet(isPresented: $model.showLearningActions) {
++        .sheet(isPresented: $model.showLearningActions, onDismiss: { model.presentRequestedLens() }) {
+             LearningObjectActionSheet(reader: model, learning: model.learning, knowledge: model.knowledge)
++        }
++        .sheet(isPresented: Binding(get: { model.lensSource != nil }, set: { if !$0 { model.lensSource = nil } })) {
++            if let source = model.lensSource {
++                UnderstandingLensSheet(reader: model, model: model.learning, source: source)
++            }
+         }
+         .sheet(isPresented: $model.showVoiceSettings) { VoiceSettingsSheet(speech: model.speech) }
+         .sheet(isPresented: $model.showKnowledgeSearch) { KnowledgeSearchSheet(knowledge: model.knowledge) }
+@@ -75,7 +80,7 @@
+             set: { if !$0 { model.errorMessage = nil } })) {
+                 Button("OK") { model.errorMessage = nil }
+             } message: { Text(model.errorMessage ?? "") }
+-        .accessibilityIdentifier("reader-screen")
++        .background { UITestFrameProbe(identifier: "reader-screen") }
+         .preferredColorScheme(.light)
+         .interactiveDismissDisabled(model.isSaving)
+     }
+--- V24.1/Shelf/Features/Settings/SettingsScreen.swift
++++ V24.2/Shelf/Features/Settings/SettingsScreen.swift
+@@ -89,11 +89,13 @@
+                 }
+                 Section {
+                     LabeledContent("Reading voice", value: SupertonicAssets.isInstalled ? "Leu Neural · Supertonic 3" : "Apple fallback")
++                        .accessibilityIdentifier("settings-voice-status")
+                     if voiceInstalling { ProgressView(value: voiceInstallProgress) }
+                     Button(SupertonicAssets.isInstalled ? "Neural voice installed" : "Install neural voice (~400 MB)") {
+                         installNeuralVoice()
+                     }
+                     .disabled(voiceInstalling || SupertonicAssets.isInstalled)
++                    .accessibilityIdentifier("settings-install-voice")
+                     if let voiceInstallError {
+                         Text(voiceInstallError).font(.caption).foregroundStyle(ShelfTheme.danger)
+                     }
+@@ -111,18 +113,22 @@
+                         Text("Reduced").tag(EmotionalCheckInPreference.reduced)
+                         Text("Off").tag(EmotionalCheckInPreference.off)
+                     }
++                    .pickerStyle(.menu)
++                    .accessibilityIdentifier("settings-check-ins")
+                     Button("Delete emotional check-in history", role: .destructive) {
+                         Task { await learning.deleteEmotionalCheckIns() }
+                     }
+                     .disabled(learning.snapshot.emotionalCheckIns.isEmpty)
++                    .accessibilityIdentifier("settings-delete-check-ins")
+                 }
+                 Section {
+                     Button("Privacy & data ownership") { showPrivacy = true }
+-                    LabeledContent("Version", value: "24.1 · Semantic & Emotional Learning")
++                    LabeledContent("Version", value: "24.2 · Semantic & Emotional Learning")
+                     Text("No account. No ads. No subscription. No generative AI. Learning and reading data stay local unless you export a file yourself.")
+                         .font(.footnote).foregroundStyle(ShelfTheme.secondary)
+                 }
+             }.scrollContentBackground(.hidden).background(ShelfTheme.background)
++                .background { UITestFrameProbe(identifier: "settings-form-frame") }
+                 .navigationTitle("Settings").navigationBarTitleDisplayMode(.inline)
+                 .toolbar {
+                     ToolbarItem(placement: .topBarLeading) {
+--- V24.1/Shelf/Knowledge/KnowledgeModel+Connections.swift
++++ V24.2/Shelf/Knowledge/KnowledgeModel+Connections.swift
+@@ -40,6 +40,20 @@
+         }
+         pendingDestination = KnowledgeDestination(documentID: passage.documentID,
+             pageIndex: passage.pageIndex, sourceText: passage.text)
++    }
++
++    @discardableResult
++    func queueLensNavigation(to target: LearningSource, from origin: LearningSource) -> Bool {
++        let active = Set(library.snapshot.activeBooks.map(\.id))
++        guard active.contains(target.documentID), active.contains(origin.documentID) else {
++            errorMessage = "A source PDF for this Lens journey is no longer available."
++            return false
++        }
++        backStack.append(KnowledgeDestination(documentID: origin.documentID,
++            pageIndex: origin.pageIndex, sourceText: origin.sourceText, restoreLens: origin))
++        pendingDestination = KnowledgeDestination(documentID: target.documentID,
++            pageIndex: target.pageIndex, sourceText: target.sourceText)
++        return true
+     }
+ 
+     var canNavigateBack: Bool { !backStack.isEmpty }
+--- V24.1/Shelf/Knowledge/KnowledgeModel.swift
++++ V24.2/Shelf/Knowledge/KnowledgeModel.swift
+@@ -6,6 +6,7 @@
+     var documentID: UUID
+     var pageIndex: Int
+     var sourceText: String
++    var restoreLens: LearningSource? = nil
+ }
+ 
+ /// Observable projection over the local connected-library repository.
+--- V24.1/Shelf/Learning/LearningModel+Recovery.swift
++++ V24.2/Shelf/Learning/LearningModel+Recovery.swift
+@@ -0,0 +1,57 @@
++import Foundation
++import ShelfCore
++
++@MainActor
++extension LearningModel {
++    func selectConfidence(_ level: ConfidenceLevel) {
++        guard !answerCommitted else { return }
++        selectedConfidence = level
++        play(.selectionChanged)
++        persistStudyState()
++    }
++
++    func restoreActivityState(_ context: ResumeStudyContext) {
++        resetActivityState()
++        guard let question = currentQuestion, context.questionID == question.id else { return }
++        selectedAnswerID = question.options.first(where: { $0.id == context.selectedAnswerID })?.id
++        selectedConfidence = context.selectedConfidence
++        answerCommitted = context.answerCommitted && selectedAnswerID != nil
++        revealedHintCount = min(context.revealedHintCount, hints.hints(for: question, topicName: nil).count)
++    }
++
++    /// Capture values before suspension and serialize writes in UI-event order.
++    /// No swallowed write errors; "Saved" is shown only after durable persistence succeeds.
++    func persistStudyState() {
++        let session = activeSession
++        let context = session.flatMap { session -> ResumeStudyContext? in
++            guard session.completedAt == nil, session.activities.indices.contains(activityIndex) else { return nil }
++            return ResumeStudyContext(sessionID: session.id, activityIndex: activityIndex,
++                questionID: currentQuestion?.id, selectedAnswerID: selectedAnswerID,
++                selectedConfidence: selectedConfidence, answerCommitted: answerCommitted,
++                revealedHintCount: revealedHintCount)
++        }
++        let previous = studySaveTask
++        let revision = UUID()
++        studySaveRevision = revision
++        isSavingStudyState = true
++        studySaveError = nil
++        studySaveTask = Task { [weak self, repository] in
++            await previous?.value
++            do {
++                try await repository.saveStudyCheckpoint(session: session, context: context)
++                let saved = try await repository.snapshot()
++                guard let self, studySaveRevision == revision else { return }
++                snapshot = saved
++                isSavingStudyState = false
++                StudyInteractionTrace.record("study.checkpoint.saved")
++            } catch {
++                guard let self, studySaveRevision == revision else { return }
++                isSavingStudyState = false
++                studySaveError = error.localizedDescription
++                notice = "Your latest study changes could not be saved. Keep Leu open and try again."
++                errorMessage = error.localizedDescription
++                StudyInteractionTrace.record("study.checkpoint.failed")
++            }
++        }
++    }
++}
+--- V24.1/Shelf/Learning/LearningModel+Sessions.swift
++++ V24.2/Shelf/Learning/LearningModel+Sessions.swift
+@@ -73,11 +73,13 @@
+         guard !answerCommitted else { return }
+         selectedAnswerID = id
+         play(.selectionChanged)
++        persistStudyState()
+     }
+ 
+     func commitAnswer() {
+         guard selectedAnswerID != nil, !answerCommitted else { return }
+         answerCommitted = true
++        persistStudyState()
+         play(.answerCommitted)
+         if let question = currentQuestion {
+             play(selectedAnswerID == question.correctOptionID ? .answerCorrect : .answerIncorrect)
+@@ -85,6 +87,11 @@
+     }
+ 
+     func rateCurrent(_ rating: RecallRating) async {
++        guard !isRecordingAttempt else { return }
++        isRecordingAttempt = true
++        defer { isRecordingAttempt = false }
++        await studySaveTask?.value
++        guard studySaveError == nil else { return }
+         guard let object = currentObject else { advance(); return }
+         let correct = currentQuestion.map { $0.correctOptionID == selectedAnswerID }
+         let responseTime = activityStartedAt.map { Date().timeIntervalSince($0) }
+@@ -103,6 +110,7 @@
+         let total = currentQuestion.map { hints.hints(for: $0, topicName: topicName(for: $0)).count } ?? 0
+         guard revealedHintCount < total else { return }
+         revealedHintCount += 1
++        persistStudyState()
+         play(.sourceRevealed)
+     }
+ 
+@@ -116,7 +124,7 @@
+         if activityIndex + 1 < session.activities.count {
+             activityIndex += 1
+             resetActivityState()
+-            Task { try? await repository.saveResumeStudyContext(ResumeStudyContext(sessionID: session.id, activityIndex: activityIndex)) }
++            persistStudyState()
+         } else { completeSession() }
+     }
+ 
+@@ -126,10 +134,7 @@
+         activeSession = session
+         sessionSummaryPresented = true
+         play(.studySessionCompleted)
+-        Task {
+-            try? await repository.saveSession(session)
+-            snapshot = (try? await repository.snapshot()) ?? snapshot
+-        }
++        persistStudyState()
+     }
+ 
+     func endSession() {
+@@ -138,7 +143,7 @@
+         activityIndex = 0
+         selectedFeeling = nil
+         releasePresented = false
+-        Task { try? await repository.saveResumeStudyContext(nil) }
++        persistStudyState()
+     }
+ 
+     private func begin(_ session: StudySession) {
+@@ -146,12 +151,10 @@
+         activityIndex = 0
+         sessionStartedAt = Date()
+         sessionSummaryPresented = false
++        selectedFeeling = nil; releasePresented = false
+         resetActivityState()
+         play(.studySessionStarted)
+-        Task {
+-            try? await repository.saveSession(session)
+-            try? await repository.saveResumeStudyContext(ResumeStudyContext(sessionID: session.id, activityIndex: 0))
+-        }
++        persistStudyState()
+     }
+ 
+     private func activity(for object: LearningObject) -> StudyActivity {
+--- V24.1/Shelf/Learning/LearningModel.swift
++++ V24.2/Shelf/Learning/LearningModel.swift
+@@ -38,6 +38,11 @@
+     var moreLearningExpanded = false
+     var selectedFeeling: StudyFeeling?
+     var releasePresented = false
++    var isSavingStudyState = false
++    var studySaveError: String?
++    var isRecordingAttempt = false
++    @ObservationIgnored var studySaveTask: Task<Void, Never>?
++    @ObservationIgnored var studySaveRevision = UUID()
+     @ObservationIgnored var indexingTask: Task<Void, Never>?
+ 
+     init(repository: LearningRepository, library: LibraryModel, recordingsDirectory: URL,
+@@ -106,7 +111,7 @@
+                 activeSession = session
+                 activityIndex = context.activityIndex
+                 sessionStartedAt = session.createdAt
+-                resetActivityState()
++                restoreActivityState(context)
+             }
+             isReady = true
+             await syncLibrary()
+--- V24.1/Shelf/Learning/LearningObjectActionSheet.swift
++++ V24.2/Shelf/Learning/LearningObjectActionSheet.swift
+@@ -14,7 +14,6 @@
+     enum FollowUp: Identifiable { case mask, explain; var id: String { String(describing: self) } }
+     @State private var testEditorPresented = false
+     @State private var connectPresented = false
+-    @State private var lensPresented = false
+ 
+     var body: some View {
+         ShelfSheet(title: "Learn from this") {
+@@ -32,7 +31,7 @@
+                 }.padding(ShelfTheme.gutter)
+             }
+         }
+-        .accessibilityIdentifier("learning-object-actions")
++        .background { UITestFrameProbe(identifier: "learning-object-actions") }
+         .task { source = reader.currentLearningSource() }
+         .sheet(isPresented: $testEditorPresented) {
+             if let source {
+@@ -52,14 +51,11 @@
+         )) {
+             if let source { ConnectedPassageSheet(knowledge: knowledge, source: source) }
+         }
+-        .sheet(isPresented: $lensPresented) {
+-            if let source { UnderstandingLensSheet(model: learning, source: source) }
+-        }
+     }
+ 
+     private var actions: some View {
+         VStack(spacing: 0) {
+-            action("Understand", "scope", "Inspect only source-backed concepts and relationships.", id: "learning-action-understand") { lensPresented = true }
++            action("Understand", "scope", "Inspect only source-backed concepts and relationships.", id: "learning-action-understand") { if let source { reader.requestLens(source) } }
+             Divider().overlay(ShelfTheme.line)
+             action("Remember", "bookmark", "Bring this back when it starts to fade.", id: "learning-action-remember") { capture(.passage) }
+             Divider().overlay(ShelfTheme.line)
+@@ -104,66 +100,3 @@
+     }
+ }
+ 
+-@MainActor
+-private struct UnderstandingLensSheet: View {
+-    @Bindable var model: LearningModel
+-    let source: LearningSource
+-    @Environment(\.dismiss) private var dismiss
+-
+-    var body: some View {
+-        ShelfSheet(title: "Understanding Lens") {
+-            ScrollView {
+-                VStack(alignment: .leading, spacing: 18) {
+-                    Text(source.sourceText)
+-                        .font(.system(.body, design: .serif))
+-                        .foregroundStyle(ShelfTheme.secondary)
+-                        .padding(.leading, 12)
+-                        .overlay(alignment: .leading) { Rectangle().fill(ShelfTheme.accent).frame(width: 2) }
+-                    if facts.isEmpty {
+-                        Text("Leu does not have a verified relationship for this passage yet.")
+-                            .font(ShelfTheme.editorial(26))
+-                            .accessibilityIdentifier("understanding-lens-empty")
+-                        Text("Nothing is generated to fill the gap.")
+-                            .font(.callout).foregroundStyle(ShelfTheme.secondary)
+-                    } else {
+-                        ForEach(facts, id: \.proposition.id) { item in
+-                            Button {
+-                                model.openSource(item.proposition.evidence.learningSource)
+-                                dismiss()
+-                            } label: {
+-                                VStack(alignment: .leading, spacing: 5) {
+-                                    Text(item.concept.canonicalName)
+-                                        .font(.headline).foregroundStyle(ShelfTheme.text)
+-                                    Text(item.proposition.relation.questionVerb + " " + item.proposition.objectText)
+-                                        .font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.text)
+-                                    Text("p. \(item.proposition.evidence.pageIndex + 1) · \(item.proposition.truthClass.rawValue)")
+-                                        .font(.caption).foregroundStyle(ShelfTheme.secondary)
+-                                }
+-                                .frame(maxWidth: .infinity, alignment: .leading)
+-                                .padding(.vertical, 9)
+-                            }
+-                            .buttonStyle(.plain)
+-                            .accessibilityIdentifier("understanding-lens-fact-" + item.proposition.id)
+-                        }
+-                    }
+-                }
+-                .padding(ShelfTheme.gutter)
+-            }
+-        }
+-        .accessibilityIdentifier("understanding-lens")
+-    }
+-
+-    private var facts: [(concept: SemanticConcept, proposition: SemanticProposition)] {
+-        let selectedText = source.sourceText.lowercased()
+-        let all = model.snapshot.semanticIndexes.values.flatMap { index in
+-            index.propositions.compactMap { proposition -> (SemanticConcept, SemanticProposition)? in
+-                guard proposition.isQuizTruth,
+-                      let concept = index.concepts.first(where: { $0.id == proposition.subjectID }) else { return nil }
+-                let sameConcept = selectedText.contains(concept.canonicalName.lowercased())
+-                guard sameConcept else { return nil }
+-                return (concept, proposition)
+-            }
+-        }
+-        return Array(all.prefix(24))
+-    }
+-}
+--- V24.1/Shelf/Learning/QuestionCardView.swift
++++ V24.2/Shelf/Learning/QuestionCardView.swift
+@@ -10,7 +10,7 @@
+         if let question = model.currentQuestion {
+             VStack(alignment: .leading, spacing: 24) {
+                 sourceLabel(question)
+-                Text(question.prompt)
++                Text(question.prompt).accessibilityIdentifier("question-prompt")
+                     .font(ShelfTheme.editorial(30))
+                     .fixedSize(horizontal: false, vertical: true)
+                 confidencePicker
+@@ -18,7 +18,7 @@
+                 if model.answerCommitted { revealed(question) }
+                 else { preCommit(question) }
+             }
+-            .accessibilityIdentifier("question-card")
++            .background { UITestFrameProbe(identifier: "question-card") }
+         } else {
+             Text("This question is no longer available.").foregroundStyle(ShelfTheme.secondary)
+             Button("Continue") { model.advance() }.buttonStyle(ShelfButtonStyle(filled: true))
+@@ -40,9 +40,11 @@
+                 HStack(spacing: 8) {
+                     ForEach(ConfidenceLevel.allCases, id: \.self) { level in
+                         Button(level.displayName) {
+-                            model.selectedConfidence = level; model.play(.selectionChanged)
++                            model.selectConfidence(level)
+                         }
+                         .buttonStyle(ConfidenceChipStyle(selected: model.selectedConfidence == level))
++                        .accessibilityIdentifier("question-confidence-" + level.rawValue)
++                        .accessibilityValue(model.selectedConfidence == level ? "Selected" : "Not selected")
+                     }
+                 }
+             }
+@@ -80,6 +82,7 @@
+                 .accessibilityIdentifier("question-option-\(index)")
+                 .accessibilityLabel("Option \(optionLetter(index)). \(option.text)")
+                 .accessibilityHint(model.answerCommitted ? "Answer already committed" : "Select this answer")
++                .accessibilityValue(model.selectedAnswerID == option.id ? "Selected" : "Not selected")
+                 .buttonStyle(PressScaleStyle(enabled: !reduceMotion))
+                 .disabled(model.answerCommitted)
+             }
+--- V24.1/Shelf/Learning/RecallCardView.swift
++++ V24.2/Shelf/Learning/RecallCardView.swift
+@@ -28,7 +28,7 @@
+                     }
+                 }
+             }
+-            .accessibilityIdentifier("recall-card")
++            .background { UITestFrameProbe(identifier: "recall-card") }
+         } else {
+             Button("Continue") { model.advance() }.buttonStyle(ShelfButtonStyle(filled: true))
+         }
+--- V24.1/Shelf/Learning/SessionCompleteView.swift
++++ V24.2/Shelf/Learning/SessionCompleteView.swift
+@@ -24,7 +24,8 @@
+             .frame(maxWidth: 720).frame(maxWidth: .infinity)
+         }
+         .background(ShelfTheme.background)
+-        .accessibilityIdentifier("session-complete-screen")
++        .background { UITestFrameProbe(identifier: "session-summary-frame") }
++        .background { UITestFrameProbe(identifier: "session-complete-screen") }
+     }
+     private var header: some View {
+         VStack(alignment: .leading, spacing: 8) {
+@@ -125,7 +126,7 @@
+         }
+         .padding(18)
+         .background(ShelfTheme.surface, in: RoundedRectangle(cornerRadius: 16))
+-        .accessibilityIdentifier("emotional-check-in")
++        .background { UITestFrameProbe(identifier: "emotional-check-in") }
+     }
+     @ViewBuilder
+     private func emotionalResponse(_ feeling: StudyFeeling) -> some View {
+@@ -140,6 +141,7 @@
+             Text("Get it out?").font(ShelfTheme.editorial(25))
+             HStack {
+                 Button("Release") { model.releasePresented = true }.buttonStyle(ShelfButtonStyle(filled: true))
++                    .accessibilityIdentifier("check-in-open-release")
+                 Button("Continue") { model.selectedFeeling = nil }.buttonStyle(ShelfButtonStyle())
+                 Button("I'm done") { model.endSession() }.buttonStyle(.plain)
+             }
+@@ -235,6 +237,6 @@
+             }
+         }
+         .padding(.top, 6)
+-        .accessibilityIdentifier("release-surface")
++        .background { UITestFrameProbe(identifier: "release-surface") }
+     }
+ }
+--- V24.1/Shelf/Learning/StudySessionScreen.swift
++++ V24.2/Shelf/Learning/StudySessionScreen.swift
+@@ -16,8 +16,9 @@
+                 .padding(.horizontal, ShelfTheme.gutter).padding(.vertical, 24)
+                 .frame(maxWidth: 720).frame(maxWidth: .infinity)
+             }
++            .background { UITestFrameProbe(identifier: "study-activity-frame") }
+         }
+-        .accessibilityIdentifier("study-session-screen")
++        .background { UITestFrameProbe(identifier: "study-session-screen") }
+         .onAppear { StudyInteractionTrace.record("surface.study-session.appeared") }
+     }
+ 
+@@ -29,6 +30,10 @@
+                 Text(model.activeSession?.mode == .interview ? "INTERVIEW" : "STUDY")
+                     .font(ShelfTheme.eyebrow(9)).tracking(1.6).foregroundStyle(ShelfTheme.secondary)
+                 Text(progressText).font(.system(.callout, design: .serif).monospacedDigit().weight(.medium))
++                    .accessibilityIdentifier("study-progress")
++                Text(model.studySaveError != nil ? "Not saved" : (model.isSavingStudyState ? "Saving…" : "Saved"))
++                    .font(.caption2).foregroundStyle(ShelfTheme.secondary)
++                    .accessibilityIdentifier("study-save-status")
+             }
+             Spacer()
+             if let session = model.activeSession {
+--- V24.1/Shelf/Learning/UnderstandingLensSheet.swift
++++ V24.2/Shelf/Learning/UnderstandingLensSheet.swift
+@@ -0,0 +1,77 @@
++import SwiftUI
++import ShelfCore
++
++@MainActor
++struct UnderstandingLensSheet: View {
++    let reader: ReaderModel
++    @Bindable var model: LearningModel
++    let source: LearningSource
++    @Environment(\.dismiss) private var dismiss
++
++    var body: some View {
++        ShelfSheet(title: "Understanding Lens") {
++            ScrollView {
++                VStack(alignment: .leading, spacing: 18) {
++                    Text(source.sourceText)
++                        .accessibilityIdentifier("lens-origin-passage")
++                        .font(.system(.body, design: .serif))
++                        .foregroundStyle(ShelfTheme.secondary)
++                        .padding(.leading, 12)
++                        .overlay(alignment: .leading) { Rectangle().fill(ShelfTheme.accent).frame(width: 2) }
++                    if facts.isEmpty {
++                        Text("Leu does not have a verified relationship for this passage yet.")
++                            .font(ShelfTheme.editorial(26))
++                            .accessibilityIdentifier("understanding-lens-empty")
++                        Text("Nothing is generated to fill the gap.")
++                            .font(.callout).foregroundStyle(ShelfTheme.secondary)
++                    } else {
++                        ForEach(facts, id: \.proposition.id) { item in
++                            Button {
++                                if reader.knowledge.queueLensNavigation(to: item.proposition.evidence.learningSource, from: source) {
++                                    dismiss()
++                                }
++                            } label: {
++                                VStack(alignment: .leading, spacing: 5) {
++                                    Text(item.concept.canonicalName)
++                                        .font(.headline).foregroundStyle(ShelfTheme.text)
++                                    Text(item.proposition.relation.questionVerb + " " + item.proposition.objectText)
++                                        .font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.text)
++                                    Text("p. \(item.proposition.evidence.pageIndex + 1) · \(item.proposition.truthClass.rawValue)")
++                                        .font(.caption).foregroundStyle(ShelfTheme.secondary)
++                                }
++                                .frame(maxWidth: .infinity, alignment: .leading)
++                                .padding(.vertical, 9)
++                            }
++                            .buttonStyle(.plain)
++                            .accessibilityIdentifier("understanding-lens-fact-" + item.proposition.id)
++                            .accessibilityLabel(item.concept.canonicalName + ": " + item.proposition.relation.questionVerb + " " + item.proposition.objectText)
++                            .accessibilityValue("Page \(item.proposition.evidence.pageIndex + 1)")
++                        }
++                    }
++                }
++                .padding(ShelfTheme.gutter)
++            }
++            .background { UITestFrameProbe(identifier: "lens-scroll-frame") }
++        }
++        .background { UITestFrameProbe(identifier: "understanding-lens") }
++    }
++
++    private var facts: [(concept: SemanticConcept, proposition: SemanticProposition)] {
++        let selectedText = source.sourceText.lowercased()
++        let all = model.snapshot.semanticIndexes.values.flatMap { index in
++            index.propositions.compactMap { proposition -> (SemanticConcept, SemanticProposition)? in
++                guard proposition.isQuizTruth,
++                      let concept = index.concepts.first(where: { $0.id == proposition.subjectID }) else { return nil }
++                let sameConcept = selectedText.contains(concept.canonicalName.lowercased())
++                guard sameConcept else { return nil }
++                return (concept, proposition)
++            }
++        }
++        return Array(all.sorted {
++            let left = $0.1.evidence, right = $1.1.evidence
++            if left.documentID != right.documentID { return left.documentID.uuidString < right.documentID.uuidString }
++            if left.pageIndex != right.pageIndex { return left.pageIndex < right.pageIndex }
++            return $0.1.id < $1.1.id
++        }.prefix(24))
++    }
++}
+--- V24.1/Shelf/Voice/Engine/SupertonicSpeechEngine.swift
++++ V24.2/Shelf/Voice/Engine/SupertonicSpeechEngine.swift
+@@ -100,8 +100,13 @@
+         if had { onCancelled?() }; return had
+     }
+ 
+-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+-        self.player = nil; flag ? onFinished?() : onCancelled?()
++    nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
++        let finishedID = ObjectIdentifier(player)
++        Task { @MainActor [weak self] in
++            guard let self, let active = self.player, ObjectIdentifier(active) == finishedID else { return }
++            self.player = nil
++            flag ? self.onFinished?() : self.onCancelled?()
++        }
+     }
+ 
+     private struct Resources { let modelRoot: URL; let voiceStyle: URL }
+--- V24.1/Shelf.xcodeproj/project.pbxproj
++++ V24.2/Shelf.xcodeproj/project.pbxproj
+@@ -5,6 +5,46 @@
+     };
+     "objectVersion" = "56";
+     "objects" = {
++        "BBE41D184D01324C486FD33A" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "LearningModel+Recovery.swift";
++            "sourceTree" = "<group>";
++        };
++        "2BB2EE39D170FCD8FF890D27" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "BBE41D184D01324C486FD33A";
++        };
++        "A3A7CADF2B28C72682BB6FCB" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "UnderstandingLensSheet.swift";
++            "sourceTree" = "<group>";
++        };
++        "A2E20E0B96D1736897C3E5CE" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "A3A7CADF2B28C72682BB6FCB";
++        };
++        "E3C06995353F3B52F6A6F404" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "ReaderModel+Lens.swift";
++            "sourceTree" = "<group>";
++        };
++        "F448B74661E8D64649D09DB0" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "E3C06995353F3B52F6A6F404";
++        };
++        "5603FB0A18A98331A9F68E7D" = {
++            "isa" = "PBXFileReference";
++            "lastKnownFileType" = "sourcecode.swift";
++            "path" = "V24InteractionSupport.swift";
++            "sourceTree" = "<group>";
++        };
++        "17B001FA8873F842178C2DBB" = {
++            "isa" = "PBXBuildFile";
++            "fileRef" = "5603FB0A18A98331A9F68E7D";
++        };
+         "A24000000000000000000001" = {
+             "isa" = "PBXFileReference";
+             "lastKnownFileType" = "sourcecode.swift";
+@@ -800,6 +840,8 @@
+                 "AD161F57B86CE38EE5F2AAC9",
+                 "B4170A0C85D147FC0940C9C8",
+                 "BC362872806FC2CF7641CBFD",
++                "BBE41D184D01324C486FD33A",
++                "A3A7CADF2B28C72682BB6FCB",
+             );
+             "path" = "Learning";
+             "sourceTree" = "<group>";
+@@ -1392,6 +1434,7 @@
+                 "934336D0F00BA1D7899E15FD",
+                 "FFD8E7B9724AA2AE4413D064",
+                 "51C45B40AFCFB7DC3D5EFFF2",
++                "E3C06995353F3B52F6A6F404",
+             );
+             "path" = "Reader";
+             "sourceTree" = "<group>";
+@@ -1704,6 +1747,7 @@
+                 "68134D5C4065D4EA5B1E17E8",
+                 "6C41DAE2DD1EEA89F3D830C0",
+                 "834E9DB078954EA102700669",
++                "5603FB0A18A98331A9F68E7D",
+             );
+             "path" = "ShelfUITests";
+             "sourceTree" = "<group>";
+@@ -2531,6 +2575,9 @@
+                 "9B7AD90A6AC59EEB2712B70C",
+                 "497B7385AC8AB50524B4F913",
+                 "377956517ADE8474E424F3C3",
++                "2BB2EE39D170FCD8FF890D27",
++                "A2E20E0B96D1736897C3E5CE",
++                "F448B74661E8D64649D09DB0",
+             );
+             "runOnlyForDeploymentPostprocessing" = "0";
+         };
+@@ -2653,6 +2700,7 @@
+                 "36411FAF005515911643A0E5",
+                 "5446771B4EB0B46F6747F6FE",
+                 "8B08457D057140DF346EA029",
++                "17B001FA8873F842178C2DBB",
+             );
+             "runOnlyForDeploymentPostprocessing" = "0";
+         };
+@@ -2774,7 +2822,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "24.1";
++                "MARKETING_VERSION" = "24.2";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+@@ -2797,7 +2845,7 @@
+                     "$(inherited)",
+                     "@executable_path/Frameworks",
+                 );
+-                "MARKETING_VERSION" = "24.1";
++                "MARKETING_VERSION" = "24.2";
+                 "PRODUCT_BUNDLE_IDENTIFIER" = "dev.shelf.personal";
+                 "PRODUCT_NAME" = "$(TARGET_NAME)";
+                 "SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+--- V24.1/ShelfUITests/ShelfWorldClassUITests.swift
++++ V24.2/ShelfUITests/ShelfWorldClassUITests.swift
+@@ -81,49 +81,83 @@
+ 
+     func test51UnderstandingLensUsesVerifiedSourceFacts() {
+         openReactNotes()
++        let originPage = pageControl().label
+         readerTool(identifier: "reader-tool-learn", label: "Study").tap()
+         XCTAssertTrue(element("learning-object-actions").waitForExistence(timeout: 6))
+-        let understand = identifiedControl("learning-action-understand", label: "Understand")
++        let understand = app.buttons["learning-action-understand"]
+         XCTAssertTrue(understand.waitForExistence(timeout: 5)); understand.tap()
+         XCTAssertTrue(element("understanding-lens").waitForExistence(timeout: 8))
+-        let fact = app.descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH %@", "understanding-lens-fact-")).firstMatch
+-        XCTAssertTrue(fact.waitForExistence(timeout: 20),
+-                      "The indexed React sample must expose at least one verified semantic fact in Understanding Lens.")
+-        XCTAssertFalse(element("understanding-lens-empty").exists,
+-                       "A source with verified facts must not fall back to generated or empty explanation copy.")
+-        capture("51-understanding-lens")
+-        fact.tap()
+-        XCTAssertTrue(element("reader-screen").waitForExistence(timeout: 10),
+-                      "A Lens fact must return to its exact source document/page.")
+-        XCTAssertTrue(identifiedControl("reader-context-return").waitForExistence(timeout: 5),
+-                      "Source navigation from Lens must preserve a visible return path.")
++        let origin = app.staticTexts["lens-origin-passage"]
++        XCTAssertTrue(origin.waitForExistence(timeout: 5))
++        let originalPassage = origin.label
++        let fact = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "understanding-lens-fact-")).firstMatch
++        XCTAssertTrue(fact.waitForExistence(timeout: 20))
++        XCTAssertFalse(element("understanding-lens-empty").exists)
++        let targetPage = fact.value as? String
++        tapLensFact(fact.identifier)
++        let back = app.buttons["reader-context-return"]
++        XCTAssertTrue(back.waitForExistence(timeout: 12), "Source inspection must expose a real return Button.")
++        XCTAssertEqual(app.buttons.matching(identifier: "reader-context-return").count, 1)
++        XCTAssertEqual(back.label, "Back to Understanding Lens")
++        if let targetPage { XCTAssertTrue(pageControl().label.hasPrefix(targetPage + " of ")) }
++        capture("51-lens-source-with-return")
++        XCTAssertTrue(back.isHittable); back.tap()
++        XCTAssertTrue(app.staticTexts["lens-origin-passage"].waitForExistence(timeout: 12))
++        XCTAssertEqual(app.staticTexts["lens-origin-passage"].label, originalPassage,
++                       "Return must restore the selected passage in Lens, not drop the learner into Library.")
++        capture("51-restored-lens")
++        let done = app.navigationBars["Understanding Lens"].buttons["Done"]
++        XCTAssertTrue(done.waitForExistence(timeout: 5)); done.tap()
++        expectPage(originPage, on: pageControl())
+     }
+ 
+     func test52V24PrivacyAndNeuralVoiceControlsAreExposed() {
+         openLibrarySettings()
+-        XCTAssertTrue(app.staticTexts["Emotional check-ins"].waitForExistence(timeout: 8))
+-        XCTAssertTrue(app.buttons["Delete emotional check-in history"].exists)
+-        XCTAssertTrue(app.staticTexts["Voice"].exists)
+-        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", "Apple fallback")).firstMatch.exists ||
+-                      app.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", "Supertonic 3")).firstMatch.exists)
+-        XCTAssertTrue(app.buttons["Install neural voice (~400 MB)"].exists || app.buttons["Neural voice installed"].exists)
+-        capture("52-v24-privacy-voice-settings")
++        let picker = revealV24SettingsControl("settings-check-ins")
++        XCTAssertTrue(picker.isEnabled); picker.tap()
++        XCTAssertTrue(app.buttons["Off"].waitForExistence(timeout: 5)); app.buttons["Off"].tap()
++        expectControlText("settings-check-ins", contains: "Off")
++        let delete = revealV24SettingsControl("settings-delete-check-ins")
++        XCTAssertEqual(delete.label, "Delete emotional check-in history")
++        XCTAssertFalse(delete.isEnabled, "A reset library has no emotional history to delete.")
++        let install = revealV24SettingsControl("settings-install-voice")
++        XCTAssertTrue(["Install neural voice (~400 MB)", "Neural voice installed"].contains(install.label))
++        let voice = element("settings-voice-status")
++        XCTAssertTrue(voice.exists)
++        XCTAssertTrue(voice.label.contains("Supertonic 3") || voice.label.contains("Apple fallback"))
++        capture("52-voice-controls")
++        app.navigationBars.buttons["Library"].tap()
++        openLibrarySettings()
++        _ = revealV24SettingsControl("settings-check-ins")
++        expectControlText("settings-check-ins", contains: "Off")
++        capture("52-check-in-preference-restored")
+     }
+ 
+     func test53ActiveStudyContextSurvivesInterruption() {
+         openStudyAndStart(minutes: "10 minutes")
+-        XCTAssertTrue(element("study-session-screen").waitForExistence(timeout: 8))
+-        let before = app.staticTexts.matching(NSPredicate(format: "label MATCHES %@", "[0-9]+ of [0-9]+")).firstMatch
+-        XCTAssertTrue(before.waitForExistence(timeout: 5))
+-        let progress = before.label
+-        app.terminate()
+-        app.launchArguments = ["--uitesting"]
+-        app.launch()
+-        XCTAssertTrue(element("study-session-screen").waitForExistence(timeout: 20),
+-                      "An unfinished V24 study session must restore directly after interruption.")
+-        XCTAssertTrue(app.staticTexts[progress].waitForExistence(timeout: 5),
+-                      "Interruption recovery must restore the same activity index, not restart the session.")
+-        capture("53-interruption-recovery")
++        XCTAssertTrue(app.staticTexts["question-prompt"].waitForExistence(timeout: 12))
++        let prompt = app.staticTexts["question-prompt"].label
++        let progress = app.staticTexts["study-progress"].label
++        tapStudyButton("question-confidence-certain", scrollID: "study-activity")
++        tapStudyButton("question-option-0", scrollID: "study-activity")
++        let answer = app.buttons["question-option-0"].label
++        waitForStudySave()
++        relaunchWithoutReset()
++        XCTAssertTrue(app.staticTexts["question-prompt"].waitForExistence(timeout: 25),
++                      "An unfinished session must open directly, without tapping Study.")
++        XCTAssertEqual(app.staticTexts["study-progress"].label, progress)
++        XCTAssertEqual(app.staticTexts["question-prompt"].label, prompt)
++        XCTAssertEqual(app.buttons["question-option-0"].label, answer)
++        XCTAssertEqual(app.buttons["question-option-0"].value as? String, "Selected")
++        XCTAssertEqual(app.buttons["question-confidence-certain"].value as? String, "Selected")
++        tapStudyButton("commit-answer", scrollID: "study-activity")
++        XCTAssertTrue(app.buttons["view-question-source"].waitForExistence(timeout: 6))
++        waitForStudySave()
++        relaunchWithoutReset()
++        XCTAssertTrue(app.buttons["view-question-source"].waitForExistence(timeout: 25))
++        XCTAssertEqual(app.staticTexts["question-prompt"].label, prompt)
++        XCTAssertFalse(app.buttons["commit-answer"].exists, "A committed answer must not revert to an uncommitted question.")
++        capture("53-restored-answer-and-confidence")
+     }
+ 
+     func test54IrritatedCheckInOffersOptionalRelease() {
+@@ -135,17 +169,15 @@
+         completeStudySessionForEmotionalAcceptance()
+         XCTAssertTrue(element("session-complete-screen").waitForExistence(timeout: 10))
+         XCTAssertTrue(element("emotional-check-in").waitForExistence(timeout: 5))
+-        let irritated = app.buttons["feeling-irritated"]
+-        XCTAssertTrue(irritated.waitForExistence(timeout: 5)); irritated.tap()
+-        XCTAssertTrue(app.staticTexts["Get it out?"].waitForExistence(timeout: 5))
++        tapStudyButton("feeling-irritated", scrollID: "session-summary")
++        XCTAssertTrue(app.staticTexts["Get it out?"].waitForExistence(timeout: 6))
+         XCTAssertTrue(app.buttons["Release"].exists)
+         XCTAssertTrue(app.buttons["Continue"].exists)
+         XCTAssertTrue(app.buttons["I'm done"].exists)
+-        app.buttons["Release"].tap()
++        tapStudyButton("check-in-open-release", scrollID: "session-summary")
+         XCTAssertTrue(element("release-surface").waitForExistence(timeout: 5))
+-        XCTAssertTrue(app.buttons["release-accessible-action"].exists,
+-                      "The tactile release must have a simple non-gesture accessibility alternative.")
+-        capture("54-irritated-release")
++        tapStudyButton("release-accessible-action", scrollID: "session-summary")
++        capture("54-irritated-release-accessible")
+     }
+ 
+     private func openStudyAndStart(minutes: String) {
+@@ -165,36 +197,4 @@
+         return XCTWaiter.wait(for: [expectation], timeout: timeout) == .completed
+     }
+ 
+-    private func completeStudySessionForEmotionalAcceptance() {
+-        for _ in 0..<20 {
+-            if element("session-complete-screen").exists { return }
+-            if element("question-card").exists {
+-                if app.buttons["Certain"].exists { app.buttons["Certain"].tap() }
+-                let option = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "question-option-")).firstMatch
+-                XCTAssertTrue(option.waitForExistence(timeout: 4)); option.tap()
+-                let commit = identifiedControl("commit-answer", label: "Commit answer")
+-                XCTAssertTrue(waitUntilEnabled(commit, timeout: 4)); commit.tap()
+-                let forgot = app.buttons["recall-rating-forgot"]
+-                XCTAssertTrue(forgot.waitForExistence(timeout: 4)); forgot.tap()
+-            } else if element("recall-card").exists {
+-                if app.buttons["Reveal source"].exists { app.buttons["Reveal source"].tap() }
+-                let forgot = app.buttons["recall-rating-forgot"]
+-                XCTAssertTrue(forgot.waitForExistence(timeout: 4)); forgot.tap()
+-            } else if app.buttons["Reveal masks"].exists {
+-                app.buttons["Reveal masks"].tap()
+-                XCTAssertTrue(app.buttons["Forgot"].waitForExistence(timeout: 4)); app.buttons["Forgot"].tap()
+-            } else if app.buttons["Continue"].exists {
+-                app.buttons["Continue"].tap()
+-            } else if app.buttons["Finish session"].exists {
+-                app.buttons["Finish session"].tap()
+-            } else {
+-                attachAccessibilityTree(name: "v24-emotion-unhandled-activity")
+-                XCTFail("V24 emotional acceptance encountered an unhandled study activity.")
+-                return
+-            }
+-            RunLoop.current.run(until: Date().addingTimeInterval(0.35))
+-        }
+-        XCTFail("The short V24 study session did not reach completion within the bounded activity count.")
+-    }
+-
+ }
+--- V24.1/ShelfUITests/V24InteractionSupport.swift
++++ V24.2/ShelfUITests/V24InteractionSupport.swift
+@@ -0,0 +1,109 @@
++import XCTest
++
++extension ShelfUITestCase {
++    /// Form virtualizes rows: scroll before asserting controls in later sections.
++    @discardableResult
++    func revealV24SettingsControl(_ identifier: String) -> XCUIElement {
++        let button = app.buttons.matching(identifier: identifier).firstMatch
++        let form = element("settings-form-frame")
++        XCTAssertTrue(form.waitForExistence(timeout: 5))
++        for _ in 0..<14 {
++            let heading = app.staticTexts["Leu"]
++            let viewport = settingsViewport(form)
++            if heading.exists && viewport.contains(heading.frame) { break }
++            dragStudyViewport(viewport, upward: false)
++        }
++        for _ in 0..<14 {
++            let viewport = settingsViewport(form)
++            if button.exists, viewport.contains(button.frame), button.isHittable || !button.isEnabled {
++                XCTAssertEqual(app.buttons.matching(identifier: identifier).count, 1)
++                return button
++            }
++            dragStudyViewport(viewport, upward: !button.exists || button.frame.midY >= viewport.midY)
++        }
++        attachAccessibilityTree(name: "settings-unreachable-" + identifier)
++        XCTFail("Expected a real Settings control in the visible Form viewport: " + identifier)
++        return button
++    }
++
++    private func settingsViewport(_ form: XCUIElement) -> CGRect {
++        let viewport = studyViewport(form)
++        let top = max(viewport.minY, (app.navigationBars.firstMatch.frame.maxY) + 8)
++        return CGRect(x: viewport.minX, y: top, width: viewport.width, height: max(0, viewport.maxY - top))
++    }
++
++    func tapLensFact(_ identifier: String) {
++        let button = app.buttons[identifier]
++        let scroll = element("lens-scroll-frame")
++        XCTAssertTrue(scroll.waitForExistence(timeout: 6))
++        for _ in 0..<10 {
++            let viewport = scroll.frame.intersection(app.frame).insetBy(dx: 2, dy: 8)
++            if button.exists && button.isHittable && viewport.contains(button.frame) {
++                XCTAssertEqual(app.buttons.matching(identifier: identifier).count, 1)
++                XCTAssertTrue(button.isEnabled)
++                capture("51-before-lens-fact")
++                button.tap()
++                return
++            }
++            dragStudyViewport(viewport, upward: !button.exists || button.frame.midY >= viewport.midY)
++        }
++        attachAccessibilityTree(name: "lens-fact-unreachable")
++        XCTFail("A verified fact must be a real Button inside the visible Lens viewport.")
++    }
++
++    func expectControlText(_ identifier: String, contains expected: String) {
++        let control = app.buttons[identifier]
++        let check = NSPredicate { _, _ in
++            control.exists && (control.label.contains(expected) || (control.value as? String)?.contains(expected) == true)
++        }
++        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: check, object: nil)], timeout: 6), .completed)
++    }
++
++    func waitForStudySave() {
++        let saved = app.staticTexts["study-save-status"]
++        XCTAssertTrue(saved.waitForExistence(timeout: 5))
++        let check = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "Saved"), object: saved)
++        XCTAssertEqual(XCTWaiter.wait(for: [check], timeout: 8), .completed, "Study state must be durable before acknowledging recovery.")
++    }
++
++    func relaunchWithoutReset() {
++        app.terminate()
++        app.launchArguments = ["--uitesting"]
++        app.launch()
++    }
++
++    func completeStudySessionForEmotionalAcceptance() {
++        for _ in 0..<20 {
++            if element("session-complete-screen").exists { return }
++            let progress = app.staticTexts["study-progress"].label
++            if element("question-card").exists {
++                if app.buttons["question-confidence-certain"].exists {
++                    tapStudyButton("question-confidence-certain", scrollID: "study-activity")
++                }
++                tapStudyButton("question-option-0", scrollID: "study-activity")
++                XCTAssertEqual(app.buttons["question-option-0"].value as? String, "Selected")
++                tapStudyButton("commit-answer", scrollID: "study-activity")
++                tapStudyButton("recall-rating-forgot", scrollID: "study-activity")
++            } else if element("recall-card").exists {
++                if app.buttons["Reveal source"].exists { app.buttons["Reveal source"].tap() }
++                tapStudyButton("recall-rating-forgot", scrollID: "study-activity")
++            } else if app.buttons["Reveal masks"].exists {
++                app.buttons["Reveal masks"].tap()
++                XCTAssertTrue(app.buttons["Forgot"].waitForExistence(timeout: 4)); app.buttons["Forgot"].tap()
++            } else if app.buttons["Continue"].exists {
++                app.buttons["Continue"].tap()
++            } else if app.buttons["Finish session"].exists {
++                app.buttons["Finish session"].tap()
++            } else {
++                attachAccessibilityTree(name: "v24-emotion-unhandled-activity")
++                XCTFail("Unhandled study activity in the real emotional journey.")
++                return
++            }
++            let advanced = NSPredicate { _, _ in
++                self.element("session-complete-screen").exists || self.app.staticTexts["study-progress"].label != progress
++            }
++            XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: advanced, object: nil)], timeout: 8), .completed)
++        }
++        XCTFail("The short study session did not complete within its bounded activity count.")
++    }
++}
+--- V24.1/scripts/check-gallery-minimalism.py
++++ V24.2/scripts/check-gallery-minimalism.py
+@@ -39,7 +39,7 @@
+ plist=plistlib.loads((ROOT/'Shelf/Resources/Info.plist').read_bytes())
+ require(plist.get('CFBundleDisplayName')=='Leu', 'installed app name must be Leu')
+ project=(ROOT/'Shelf.xcodeproj/project.pbxproj').read_text()
+-require('"MARKETING_VERSION" = "24.1";' in project, 'V24.1 marketing version missing')
++require('"MARKETING_VERSION" = "24.2";' in project, 'V24.2 marketing version missing')
+ 
+ if problems:
+     print('FAIL: Leu Gallery Minimalism release contract')
+--- V24.1/scripts/check-ui-test-contract.py
++++ V24.2/scripts/check-ui-test-contract.py
+@@ -13,8 +13,6 @@
+         'app.buttons["Zoom"].tap()': "visual Zoom label differs from accessibility label; use readerTextControl()",
+         'element("readable-surface").swipe': "gesture QA must drive the hit-tested reader viewport by coordinate",
+         'element("pdf-surface").swipe': "gesture QA must drive the hit-tested reader viewport by coordinate",
+-        'app.buttons["commit-answer"]': "styled Learning OS controls must use identifiedControl so XCUI semantic export type does not become a false failure",
+-        'app.buttons["view-question-source"]': "styled Learning OS controls must use identifiedControl so XCUI semantic export type does not become a false failure",
+         'app.buttons["tab-favorites"]': "V23 uses Library filters, not a second navigation tier",
+         'app.buttons["tab-recents"]': "V23 uses Library filters, not a second navigation tier",
+         'app.buttons["tab-settings"]': "Settings lives in Library options, not a second navigation tier",
+@@ -53,7 +51,7 @@
+     ],
+     root / "Shelf/Learning/LearningObjectActionSheet.swift": [
+         "learning-object-actions", "learning-action-remember", "learning-action-test",
+-        "learning-action-connect", "learning-action-mask", "learning-action-explain", "learning-action-understand", "understanding-lens"
++        "learning-action-connect", "learning-action-mask", "learning-action-explain", "learning-action-understand", "reader.requestLens(source)"
+     ],
+     root / "Shelf/Learning/Components/PrimaryTabBar.swift": ['accessibilityIdentifier("primary-" + area.rawValue)'],
+     root / "Shelf/Features/Library/Components/LibraryHeader.swift": ["library-filter-all", "library-filter-favorites", "library-filter-recents", "library-filter-tags"],
+--- V24.1/scripts/check-v24-contract.py
++++ V24.2/scripts/check-v24-contract.py
+@@ -14,7 +14,7 @@
+ snapshot=read('Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/LearningSnapshot.swift')
+ repo=read('Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift')
+ indexer=read('Shelf/Learning/Services/PDFLearningIndexer.swift')
+-lens=read('Shelf/Learning/LearningObjectActionSheet.swift')
++lens=read('Shelf/Learning/LearningObjectActionSheet.swift') + read('Shelf/Learning/UnderstandingLensSheet.swift')
+ confidence=read('Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/MemoryModels.swift')
+ emotion=read('Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/EmotionalModels.swift')
+ complete=read('Shelf/Learning/SessionCompleteView.swift')
+@@ -40,20 +40,20 @@
+     need(token in confidence, f'four-level confidence/migration contract missing: {token}')
+ # Lens/source return/cross-source.
+ need('learning-action-understand' in lens and 'understanding-lens' in lens, 'Understanding Lens entry/surface missing')
+-need('semanticIndexes.values' in lens and 'evidence.learningSource' in lens and 'model.openSource' in lens, 'Lens must use persisted graph and exact source return')
++need('semanticIndexes.values' in lens and 'evidence.learningSource' in lens and 'queueLensNavigation' in lens, 'Lens must use persisted graph and exact source return')
+ need('Nothing is generated to fill the gap.' in lens, 'Lens honesty fallback missing')
+ # Emotional privacy and response behavior.
+ for token in ['amazing','accomplished','irritated','drained','EmotionalCheckInPolicy']:
+     need(token in emotion, f'emotional domain missing: {token}')
+ for token in ['How did that one feel?','Get it out?','Release','Save my place','Finish here','release-surface']:
+     need(token in complete, f'emotional response UI missing: {token}')
+-need('saveResumeStudyContext' in sessions and 'resumeStudyContext' in read('Shelf/Learning/LearningModel.swift'), 'interruption recovery persistence missing')
++need('persistStudyState' in sessions and 'resumeStudyContext' in read('Shelf/Learning/LearningModel.swift'), 'interruption recovery persistence missing')
+ # Voice is isolated from learning truth.
+ for token in ['SupertonicAssets','SupertonicSpeechEngine','LeuSpeechEngine','URLSession.shared.download']:
+     need(token in voice, f'neural voice integration missing: {token}')
+ need('OnnxRuntimeBindings' in runtime and 'ORTSession' in runtime, 'local ONNX inference runtime missing')
+ need('aafc6e32416a594460b32413efc49d7fe4ce6d46' in voice, 'Supertonic model revision is not pinned')
+-need('onnxruntime-swift-package-manager' in pbx and '"MARKETING_VERSION" = "24.1";' in pbx, 'V24 project/version/dependency contract incomplete')
++need('onnxruntime-swift-package-manager' in pbx and '"MARKETING_VERSION" = "24.2";' in pbx, 'V24 project/version/dependency contract incomplete')
+ # Design invariant.
+ hero=read('Shelf/Features/Library/Components/LibraryHeader.swift')
+ for forbidden in ['tree','foliage','leaf.fill','leaf.circle']:
+--- V24.1/scripts/check-v242-interactions.py
++++ V24.2/scripts/check-v242-interactions.py
+@@ -0,0 +1,55 @@
++#!/usr/bin/env python3
++"""Regression source policies, not a substitute for Xcode or accessibility runtime tests."""
++from pathlib import Path
++import sys
++ROOT=Path(__file__).resolve().parents[1]
++SURFACES={
++ 'Shelf/Features/Reader/ReaderScreen.swift':['reader-screen'],
++ 'Shelf/Learning/StudySessionScreen.swift':['study-session-screen'],
++ 'Shelf/Learning/QuestionCardView.swift':['question-card'],
++ 'Shelf/Learning/RecallCardView.swift':['recall-card'],
++ 'Shelf/Learning/SessionCompleteView.swift':['session-complete-screen','emotional-check-in','release-surface'],
++ 'Shelf/Learning/UnderstandingLensSheet.swift':['understanding-lens']}
++
++def violations(root=ROOT, overrides=None):
++    overrides=overrides or {}
++    def read(name): return overrides.get(name,(root/name).read_text())
++    issues=[]
++    for path, identifiers in SURFACES.items():
++        text=read(path)
++        for identifier in identifiers:
++            if f'.accessibilityIdentifier("{identifier}")' in text:
++                issues.append(f'{path}: inherited container identifier returned: {identifier}')
++            if f'UITestFrameProbe(identifier: "{identifier}")' not in text:
++                issues.append(f'{path}: missing isolated geometry marker: {identifier}')
++    top=read('Shelf/Features/Reader/Components/ReaderTopBar.swift')
++    if '.accessibilityElement(children: .ignore)' in top:
++        issues.append('Reader return must preserve native Button semantics')
++    lens=read('Shelf/Learning/UnderstandingLensSheet.swift')
++    if 'model.openSource(' in lens or 'queueLensNavigation' not in lens:
++        issues.append('Lens must preserve its origin, not use the Study question-source route')
++    route=read('Shelf/App/RootView.swift')
++    for token in ['didRestoreStudyOnLaunch', 'primaryArea = .learn', 'route.study.restored', 'restoreLens: destination.restoreLens']:
++        if token not in route: issues.append('Root restore contract missing: '+token)
++    recovery=read('Shelf/Learning/LearningModel+Recovery.swift')
++    for token in ['await previous?.value','saveStudyCheckpoint(session: session, context: context)',
++                  'studySaveRevision == revision','studySaveError = error.localizedDescription','context.questionID == question.id']:
++        if token not in recovery: issues.append('Durable ordered recovery contract missing: '+token)
++    sessions=read('Shelf/Learning/LearningModel+Sessions.swift')
++    for token in ['try? await repository.saveSession', 'Task { try? await repository.saveResumeStudyContext']:
++        if token in sessions: issues.append('Unordered/silent study checkpoint write returned')
++    ui=read('ShelfUITests/V24InteractionSupport.swift')
++    for token in ['settingsViewport(form)', 'upward: false','viewport.contains(button.frame)',
++                  'tapStudyButton("question-option-0"', 'tapStudyButton("commit-answer"',
++                  'XCTNSPredicateExpectation(predicate: advanced', 'waitForStudySave']:
++        if token not in ui: issues.append('UI journey must navigate/verify actual controls: '+token)
++    if 'RunLoop.current.run' in ui: issues.append('Fixed sleeps must not replace transition assertions')
++    return issues
++
++def main():
++    issues=violations()
++    if issues:
++        print('FAIL: V24.2 interaction/recovery source policy');print('\n'.join(' - '+x for x in issues));return 1
++    print('PASS: isolated identifiers, Lens round-trip, launch restoration, ordered checkpoints and visible native-control journeys')
++    return 0
++if __name__=='__main__': raise SystemExit(main())
+--- V24.1/scripts/qa-and-copy.sh
++++ V24.2/scripts/qa-and-copy.sh
+@@ -3,9 +3,9 @@
+ set -uo pipefail
+ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ cd "$ROOT" || exit 1
+-LOG="${SHELF_QA_LOG:-qa-v24-1.log}"
++LOG="${SHELF_QA_LOG:-qa-v24-2.log}"
+ SUMMARY="${LOG%.log}-summary.txt"
+-export SHELF_QA_RUN_DIR="$ROOT/.build/qa-runs/v24-1-$(date '+%Y%m%d-%H%M%S')-$$"
++export SHELF_QA_RUN_DIR="$ROOT/.build/qa-runs/v24-2-$(date '+%Y%m%d-%H%M%S')-$$"
+ mkdir -p "$SHELF_QA_RUN_DIR" || exit 1
+ date +%s > "$SHELF_QA_RUN_DIR/start-epoch.txt"
+ printf 'QA workspace: %s\nQA run: %s\n' "$ROOT" "$SHELF_QA_RUN_DIR"
+@@ -29,7 +29,7 @@
+     printf '\nDiagnostics export failed; originals remain in .build/results.\n' >> "$SUMMARY"
+ fi
+ printf '\nQA process exit code: %s\n' "$STATUS" >> "$SUMMARY"
+-printf '\n=== Leu V24.1 QA result ===\n'
++printf '\n=== Leu V24.2 QA result ===\n'
+ cat "$SUMMARY"
+ if command -v pbcopy >/dev/null 2>&1 && pbcopy < "$SUMMARY"; then
+     printf '\nSummary copied. Full log: %s\n' "$LOG"
+--- V24.1/scripts/qa-native.sh
++++ V24.2/scripts/qa-native.sh
+@@ -2,7 +2,7 @@
+ set -euo pipefail
+ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ cd "$ROOT"
+-printf '\n=== Leu V24.1 structural validation ===\n'; python3 scripts/validate.py
++printf '\n=== Leu V24.2 structural validation ===\n'; python3 scripts/validate.py
+ printf '\n=== Leu file-scoped import audit ===\n'; python3 scripts/check-shelfcore-imports.py
+ printf '\n=== Leu Learning OS offline/no-model audit ===\n'; python3 scripts/check-learning-offline.py
+ printf '\n=== Leu Learning OS architecture audit ===\n'; python3 scripts/check-learning-architecture.py
+@@ -13,6 +13,7 @@
+ printf '\n=== Leu native UI test contract audit ===\n'; python3 scripts/check-ui-test-contract.py; python3 scripts/check-study-interactions.py; python3 scripts/test-study-repair-tools.py
+ printf '\n=== Leu SwiftUI compile-contract audit ===\n'; python3 scripts/check-swiftui-compile-contract.py; python3 scripts/test-settings-compile-repair.py
+ printf '\n=== Leu Gallery Minimalism release contract ===\n'; python3 scripts/check-gallery-minimalism.py
++printf '\n=== Leu V24.2 interaction and recovery source contracts ===\n'; python3 scripts/check-v242-interactions.py; python3 scripts/test-v242-interactions.py
+ printf '\n=== Leu native compile gate ===\n'; ./run.sh --build
+ printf '\n=== Leu portable core tests ===\n'; ./scripts/test-core.sh
+ printf '\n=== Leu Apple PDF integration and viewport geometry tests ===\n'; ./scripts/test-ios.sh -only-testing:ShelfTests
+--- V24.1/scripts/summarize-qa.py
++++ V24.2/scripts/summarize-qa.py
+@@ -20,7 +20,7 @@
+ outcome = re.compile(r"^Test Case .* (passed|failed|skipped) \(")
+ lines = [re.sub(r"\x1b\[[0-?]*[ -/]*[@-~]", "", line).strip()
+          for line in Path(sys.argv[1]).read_text(errors="replace").splitlines()]
+-diagnostic = re.compile(r"(?:^|\s)(?:error:|fatal error:|note:)")
++diagnostic = re.compile(r"(?:^|\s)(?:error:|fatal error:)")
+ context_lines: set[int] = set()
+ for index, line in enumerate(lines):
+     if diagnostic.search(line):
+@@ -66,3 +66,13 @@
+     re.search(r"(?:^|\s)(?:error:|fatal error:)", line) for line in lines
+ ):
+     print("FAIL: Build failed without a captured compiler error diagnostic. Share the complete log; a tail alone is insufficient.")
++
++warning_counts: dict[str, int] = {}
++for line in lines:
++    if ": warning:" in line:
++        warning = line.split(": warning:", 1)[1].strip()
++        warning_counts[warning] = warning_counts.get(warning, 0) + 1
++if warning_counts:
++    print("=== Distinct compiler warnings (full context in log) ===")
++    for warning, count in warning_counts.items():
++        print(f"WARNING ({count} occurrence(s)): {warning}")
+--- V24.1/scripts/sync-xcode-sources.py
++++ V24.2/scripts/sync-xcode-sources.py
+@@ -26,6 +26,14 @@
+ 
+ 
+ def stable_id(kind: str, path: str) -> str:
++    # V24 initially registered these with explicit IDs; reuse them instead of
++    # adding duplicate file references/build inputs during a later synchronization.
++    adopted = {
++        'Shelf/Voice/Engine/SupertonicRuntime.swift': ('A24000000000000000000001', 'A24000000000000000000002'),
++        'Shelf/Voice/Engine/SupertonicSpeechEngine.swift': ('A24000000000000000000003', 'A24000000000000000000004'),
++    }
++    if path in adopted:
++        return adopted[path][0 if kind == 'ref' else 1]
+     return hashlib.sha1(f'shelf-v20|{kind}|{path}'.encode()).hexdigest().upper()[:24]
+ 
+ 
+@@ -90,12 +98,12 @@
+         text = remove_simple_object(text, obj)
+ 
+     learning_paths = sorted(str(p.relative_to(ROOT / 'Shelf/Learning')) for p in (ROOT / 'Shelf/Learning').rglob('*.swift'))
+-    reader_paths = ['ReaderModel+BlindPage.swift', 'ReaderModel+Learning.swift']
++    reader_paths = ['ReaderModel+BlindPage.swift', 'ReaderModel+Learning.swift', 'ReaderModel+Lens.swift']
+     knowledge_paths = sorted(str(p.relative_to(ROOT / 'Shelf/Knowledge')) for p in (ROOT / 'Shelf/Knowledge').rglob('*.swift'))
+     voice_paths = sorted(str(p.relative_to(ROOT / 'Shelf/Voice')) for p in (ROOT / 'Shelf/Voice').rglob('*.swift'))
+     unit_paths = ['LearningIndexIntegrationTests.swift', 'KnowledgeIntegrationTests.swift', 'VoiceCatalogTests.swift']
+     ui_paths = ['ShelfLearningOSUITests.swift', 'ShelfWorldClassUITests.swift',
+-                'StudyInteractionSupport.swift', 'ShelfStudyInteractionUITests.swift']
++                'StudyInteractionSupport.swift', 'ShelfStudyInteractionUITests.swift', 'V24InteractionSupport.swift']
+ 
+     new_objects = []
+     learning_refs = []
+--- V24.1/scripts/test-v24-recovery-model.sh
++++ V24.2/scripts/test-v24-recovery-model.sh
+@@ -0,0 +1,32 @@
++#!/bin/bash
++# Typecheck the real annotated app model. Then execute its unchanged method bodies
++# with Observation/PDF/UI adapters excluded. Neither check certifies SwiftUI rendering.
++set -euo pipefail
++ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
++PACKAGE="$ROOT/Packages/ShelfCore"
++swift build --package-path "$PACKAGE" --jobs 4 >/dev/null
++BIN="$(swift build --package-path "$PACKAGE" --show-bin-path)"
++OUT="$ROOT/.build/v24-model-checks"
++mkdir -p "$OUT/logic"
++SOURCES=("$ROOT/Shelf/Learning/LearningModel.swift"
++    "$ROOT/Shelf/Learning/LearningModel+Sessions.swift"
++    "$ROOT/Shelf/Learning/LearningModel+Recovery.swift"
++    "$ROOT/validation/v24-2/RecoveryDependencies.swift"
++    "$ROOT/validation/v24-2/RecoveryHarness.swift")
++swiftc -swift-version 5 -strict-concurrency=complete -parse-as-library -typecheck \
++    -I "$BIN/Modules" "${SOURCES[@]}"
++printf 'PASS: actual Observation-annotated LearningModel typechecked with complete concurrency checking\n'
++# This environment's libswiftObservation.so has an unresolved runtime symbol.
++# Do not patch the runtime or fake that framework. Test pure state/persistence logic
++# separately, leaving method bodies, MainActor isolation and production source intact.
++python3 - "$OUT/logic" "${SOURCES[@]}" <<'PY'
++from pathlib import Path
++import sys
++out=Path(sys.argv[1])
++for source in map(Path,sys.argv[2:]):
++    text=source.read_text().replace('import Observation\n','').replace('@Observable','').replace('@ObservationIgnored','')
++    (out/source.name).write_text(text)
++PY
++swiftc -swift-version 5 -strict-concurrency=complete -parse-as-library \
++    -I "$BIN/Modules" "$BIN"/ShelfCore.build/*.swift.o "$OUT"/logic/*.swift -o "$OUT/recovery-check"
++"$OUT/recovery-check"
+--- V24.1/scripts/test-v242-interactions.py
++++ V24.2/scripts/test-v242-interactions.py
+@@ -0,0 +1,59 @@
++#!/usr/bin/env python3
++import importlib.util
++from pathlib import Path
++import subprocess
++import sys
++import tempfile
++import unittest
++ROOT=Path(__file__).resolve().parents[1]
++spec=importlib.util.spec_from_file_location('policy',ROOT/'scripts/check-v242-interactions.py')
++policy=importlib.util.module_from_spec(spec);spec.loader.exec_module(policy)
++
++class PolicyTests(unittest.TestCase):
++    def mutate(self,path,old,new):
++        text=(ROOT/path).read_text();self.assertIn(old,text)
++        self.assertTrue(policy.violations(overrides={path:text.replace(old,new)}))
++    def testCurrentSource(self): self.assertEqual(policy.violations(),[])
++    def testReaderContainerRegression(self):
++        self.mutate('Shelf/Features/Reader/ReaderScreen.swift','UITestFrameProbe(identifier: "reader-screen")','Color.clear.accessibilityIdentifier("reader-screen")')
++    def testQuestionContainerRegression(self):
++        self.mutate('Shelf/Learning/QuestionCardView.swift','UITestFrameProbe(identifier: "question-card")','Color.clear.accessibilityIdentifier("question-card")')
++    def testFeelingContainerRegression(self):
++        self.mutate('Shelf/Learning/SessionCompleteView.swift','UITestFrameProbe(identifier: "emotional-check-in")','Color.clear.accessibilityIdentifier("emotional-check-in")')
++    def testReturnMustStayAButton(self):
++        self.mutate('Shelf/Features/Reader/Components/ReaderTopBar.swift','.accessibilityIdentifier("reader-context-return")','.accessibilityElement(children: .ignore).accessibilityIdentifier("reader-context-return")')
++    def testLensCannotMasqueradeAsQuestion(self):
++        self.mutate('Shelf/Learning/UnderstandingLensSheet.swift','queueLensNavigation','openSource')
++    def testMissingLaunchHandoff(self):
++        self.mutate('Shelf/App/RootView.swift','primaryArea = .learn','primaryArea = .shelf')
++    def testMissingReturnContext(self):
++        self.mutate('Shelf/App/RootView.swift','restoreLens: destination.restoreLens','restoreLens: nil')
++    def testUnorderedWrites(self):
++        self.mutate('Shelf/Learning/LearningModel+Recovery.swift','await previous?.value','await Task.yield()')
++    def testSwallowedErrors(self):
++        self.mutate('Shelf/Learning/LearningModel+Recovery.swift','studySaveError = error.localizedDescription','studySaveError = nil')
++    def testStaleQuestionContext(self):
++        self.mutate('Shelf/Learning/LearningModel+Recovery.swift','context.questionID == question.id','true')
++    def testSettingsMustAccountForRecycledRows(self):
++        self.mutate('ShelfUITests/V24InteractionSupport.swift','upward: false','upward: true')
++    def testEmotionMustUseRealOption(self):
++        self.mutate('ShelfUITests/V24InteractionSupport.swift','tapStudyButton("question-option-0"','identifiedControl("question-option-0"')
++    def testWaitsForTransitions(self):
++        self.mutate('ShelfUITests/V24InteractionSupport.swift','XCTNSPredicateExpectation(predicate: advanced','XCTNSPredicateExpectation(predicate: NSPredicate(value: true)')
++
++class SummaryTests(unittest.TestCase):
++    def summary(self,text):
++        with tempfile.NamedTemporaryFile(mode='w',suffix='.log') as f:
++            f.write(text);f.flush()
++            return subprocess.check_output([sys.executable,str(ROOT/'scripts/summarize-qa.py'),f.name],text=True)
++    def testRoutineBuildNotesDoNotFloodClipboard(self):
++        text='\n'.join('note: ordinary build dependency '+str(i) for i in range(1500))+'\n** BUILD SUCCEEDED **\n'
++        output=self.summary(text);self.assertLess(len(output.splitlines()),10);self.assertIn('BUILD SUCCEEDED',output)
++    def testWarningsRemainVisibleOnce(self):
++        text=('file.swift:1: warning: concurrency warning\nnote: Swift 6 explanation\n'*300)+'** BUILD SUCCEEDED **\n'
++        output=self.summary(text);self.assertIn('300 occurrence(s)',output);self.assertEqual(output.count('concurrency warning'),1)
++    def testRealErrorSurvivesNotesAndWarnings(self):
++        text='file.swift:1: error: broken type\nlet result = broken\n^\nnote: use the correct type\n'+('note: ordinary build\n'*1500)+'** BUILD FAILED **\n'
++        output=self.summary(text);self.assertIn('error: broken type',output);self.assertIn('let result = broken',output);self.assertIn('use the correct type',output)
++
++if __name__=='__main__': unittest.main(verbosity=2)
+--- V24.1/scripts/validate.py
++++ V24.2/scripts/validate.py
+@@ -62,11 +62,15 @@
+     for obj in objects.values():
+         if obj["isa"] != "PBXSourcesBuildPhase":
+             continue
++        phase_sources: set[str] = set()
+         for build_id in obj["files"]:
+             reference = objects[build_id]["fileRef"]
+             path = path_for(reference)
+             require(path.is_file(), f"Source reference not found: {path}")
+-            actual_sources.add(str(path.relative_to(ROOT)))
++            relative = str(path.relative_to(ROOT))
++            require(relative not in phase_sources, f"Duplicate source input in one target: {relative}")
++            phase_sources.add(relative)
++            actual_sources.add(relative)
+     expected = set(manifest["appSources"] + manifest["unitTestSources"] + manifest["uiTestSources"])
+     require(actual_sources == expected, "Native source build phase membership differs from manifest.")
+     for obj in objects.values():
+--- V24.1/validation/v24-2/RecoveryDependencies.swift
++++ V24.2/validation/v24-2/RecoveryDependencies.swift
+@@ -0,0 +1,36 @@
++import Foundation
++import Observation
++import ShelfCore
++
++// Only platform adapters are substituted. The compiled LearningModel, its session
++// commands, recovery extension, repository, checkpoint schema and disk store are real.
++@MainActor @Observable final class LibraryModel {
++    var snapshot = LibrarySnapshot()
++    func originalURL(_ book: Book) -> URL { URL(fileURLWithPath: "/unused-in-this-harness") }
++}
++struct LearningIndexBundle: Sendable {
++    let analysis: DocumentAnalysis
++    let topics: [TopicClassification]
++    let questions: [LearningQuestion]
++    let semanticIndex: SemanticIndex
++    let hasUsableText: Bool
++}
++actor PDFLearningIndexer {
++    func progressValue() -> Double { 0 }
++    func commitCompleted(documentID: UUID) {}
++    func index(book: Book, url: URL) throws -> LearningIndexBundle { throw CancellationError() }
++}
++@MainActor final class ShelfHaptics {
++    static let shared = ShelfHaptics()
++    func play(_ event: HapticEvent) {}
++}
++enum StudyInteractionTrace {
++    static func record(_ message: String) {}
++}
++
++enum HapticEvent: String, CaseIterable {
++    case selectionChanged, controlPressed, objectCaptured, objectConnected, snapToTarget
++    case answerCommitted, answerCorrect, answerIncorrect, sourceRevealed, memoryStrengthened
++    case studySessionStarted, studySessionCompleted, recordingStarted, recordingStopped
++    case destructiveWarning, connectionRemoved, pageTurn, chapterBoundary, mark, bookFinished
++}
+--- V24.1/validation/v24-2/RecoveryHarness.swift
++++ V24.2/validation/v24-2/RecoveryHarness.swift
+@@ -0,0 +1,70 @@
++import Foundation
++import ShelfCore
++
++@main struct RecoveryHarness {
++    @MainActor static func main() async throws {
++        let root = FileManager.default.temporaryDirectory.appendingPathComponent("leu-model-" + UUID().uuidString)
++        defer { try? FileManager.default.removeItem(at: root) }
++        let a = QuestionOption(text: "A"), b = QuestionOption(text: "B")
++        let question = LearningQuestion(stableKey: "recovery-fixture", kind: .semanticRelationship,
++            prompt: "What does the source establish?", options: [a, b], correctOptionID: b.id,
++            source: LearningSource(documentID: UUID(), pageIndex: 2, sourceText: "Explicit source."), qualityScore: 1)
++        let activities = [0, 1].map { _ in StudyActivity(kind: .question, questionID: question.id, title: "Q", estimatedSeconds: 60) }
++        let session = StudySession(requestedMinutes: 5, activities: activities)
++        var seed = LearningSnapshot()
++        seed.questions = [question]; seed.sessions = [session]
++        seed.resumeStudyContext = ResumeStudyContext(sessionID: session.id, questionID: question.id,
++            selectedAnswerID: a.id, selectedConfidence: .certain, answerCommitted: true, revealedHintCount: 1)
++        try FileLearningSnapshotStore(root: root).save(seed)
++        let model = LearningModel(repository: LearningRepository(persistence: FileLearningSnapshotStore(root: root)),
++            library: LibraryModel(), recordingsDirectory: root)
++        await model.bootstrap()
++        try require(model.activeSession?.id == session.id, "bootstrap restores the exact session")
++        try require(model.selectedAnswerID == a.id && model.answerCommitted && model.selectedConfidence == .certain,
++                    "bootstrap restores answer, confidence and committed state")
++        model.selectAnswer(b.id)
++        try require(model.selectedAnswerID == a.id, "committed answers cannot be silently changed")
++        model.resetActivityState()
++        model.selectAnswer(a.id); model.selectConfidence(.unsure)
++        model.selectAnswer(b.id); model.selectConfidence(.certain); model.commitAnswer()
++        await model.studySaveTask?.value
++        let restored = try FileLearningSnapshotStore(root: root).load()
++        try require(restored.resumeStudyContext?.selectedAnswerID == b.id && restored.resumeStudyContext?.selectedConfidence == .certain,
++                    "rapid ordered writes persist the latest values")
++        try require(restored.resumeStudyContext?.answerCommitted == true && !model.isSavingStudyState && model.studySaveError == nil,
++                    "Saved is acknowledged after the complete checkpoint")
++        model.advance()
++        await model.studySaveTask?.value
++        let advanced = try FileLearningSnapshotStore(root: root).load()
++        try require(advanced.resumeStudyContext?.activityIndex == 1 && advanced.resumeStudyContext?.selectedAnswerID == nil,
++                    "next activity persists a reset answer state")
++        model.completeSession()
++        await model.studySaveTask?.value
++        try require(model.snapshot.sessions.first?.completedAt != nil && model.snapshot.timeline.filter { $0.kind == .session }.count == 1,
++                    "completion updates the observable history as well as disk")
++        model.selectAnswer(a.id); model.endSession()
++        await model.studySaveTask?.value
++        let ended = try FileLearningSnapshotStore(root: root).load()
++        try require(ended.resumeStudyContext == nil && ended.sessions.count == 1,
++                    "end after a queued edit clears resume without deleting history")
++        let failure = LearningModel(repository: LearningRepository(persistence: RejectWrites()),
++            library: LibraryModel(), recordingsDirectory: root)
++        await failure.bootstrap()
++        failure.snapshot.questions = [question]; failure.activeSession = session
++        failure.selectAnswer(a.id)
++        await failure.studySaveTask?.value
++        try require(failure.studySaveError != nil && failure.notice != nil && !failure.isSavingStudyState,
++                    "failed writes surface a real error instead of claiming Saved")
++        print("PASS: 9 LearningModel recovery-logic checks (Observation/PDF/UI adapters excluded; not iOS certification)")
++    }
++
++    static func require(_ condition: Bool, _ message: String) throws {
++        guard condition else { throw HarnessError.failed(message) }
++        print("PASS: " + message)
++    }
++}
++private enum HarnessError: Error { case failed(String) }
++private struct RejectWrites: LearningSnapshotPersistence {
++    func load() throws -> LearningSnapshot { LearningSnapshot() }
++    func save(_ snapshot: LearningSnapshot) throws { throw HarnessError.failed("Injected disk error") }
++}

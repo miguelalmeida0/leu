@@ -1,0 +1,82 @@
+[
+  {
+    "number": "01",
+    "view": "Study empty collapsed",
+    "variant": "default",
+    "attachmentPrefix": "01-study-empty-collapsed",
+    "path": null,
+    "status": "PENDING NEW NATIVE RUN"
+  },
+  {
+    "number": "02",
+    "view": "Study populated collapsed",
+    "variant": "default",
+    "attachmentPrefix": "02-study-populated-collapsed",
+    "path": null,
+    "status": "PENDING NEW NATIVE RUN"
+  },
+  {
+    "number": "03",
+    "view": "Builder expanded",
+    "variant": "default",
+    "attachmentPrefix": "03-builder-expanded",
+    "path": null,
+    "status": "PENDING NEW NATIVE RUN"
+  },
+  {
+    "number": "04",
+    "view": "Fading and Blind Spots",
+    "variant": "default",
+    "attachmentPrefix": "04-fading-blind-spots",
+    "path": null,
+    "status": "PENDING NEW NATIVE RUN"
+  },
+  {
+    "number": "05",
+    "view": "Labs last row above nav",
+    "variant": "default",
+    "attachmentPrefix": "05-labs-last-row",
+    "path": null,
+    "status": "PENDING NEW NATIVE RUN"
+  },
+  {
+    "number": "06",
+    "view": "Progress last row above nav",
+    "variant": "default",
+    "attachmentPrefix": "06-progress-last-row",
+    "path": null,
+    "status": "PENDING NEW NATIVE RUN"
+  },
+  {
+    "number": "07",
+    "view": "AX1 top",
+    "variant": "AX1",
+    "attachmentPrefix": "07-study-top",
+    "path": null,
+    "status": "PENDING NEW NATIVE RUN"
+  },
+  {
+    "number": "08",
+    "view": "AX1 builder subjects",
+    "variant": "AX1",
+    "attachmentPrefix": "08-builder-subjects",
+    "path": null,
+    "status": "PENDING NEW NATIVE RUN"
+  },
+  {
+    "number": "09",
+    "view": "AX1 time and Start",
+    "variant": "AX1",
+    "attachmentPrefix": "09-builder-time-and-start",
+    "path": null,
+    "status": "PENDING NEW NATIVE RUN"
+  },
+  {
+    "number": "10",
+    "view": "AX1 Labs last row",
+    "variant": "AX1",
+    "attachmentPrefix": "10-labs-last-row",
+    "path": null,
+    "status": "PENDING NEW NATIVE RUN"
+  }
+]

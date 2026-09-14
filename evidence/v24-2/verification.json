@@ -1,0 +1,33 @@
+{
+  "version": "24.2",
+  "status": "native-test-candidate",
+  "base_archive_sha256": "61c04d368eddf77b8d242c508f0f8b7c2e1a98257371cd5acabd31b6123da916",
+  "core_tests": {
+    "passed": 204,
+    "failed": 0
+  },
+  "recovery_logic_checks": {
+    "passed": 9,
+    "observation_and_platform_adapters_excluded": true
+  },
+  "annotated_model_typecheck": "passed_with_platform_stubs",
+  "swift_parse_files": 286,
+  "tooling": {
+    "existing_repair": 27,
+    "settings_summary": 14,
+    "new_interaction_and_summary": 17,
+    "existing_tools": 15
+  },
+  "xcode_project_objects": 450,
+  "xcode_build": "not_run_here",
+  "apple_pdf_tests": "not_run_here",
+  "native_ui_tests": "not_run_here",
+  "ui_inventory": 55,
+  "unchanged_byte_comparisons": {
+    "Shelf/Resources/": true,
+    "Shelf/DesignSystem/": true,
+    "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/": true
+  },
+  "voice_listening": "not_performed",
+  "created_utc": "2026-09-11T20:11:11.539524+00:00"
+}
