@@ -1,0 +1,132 @@
+{
+  "checks" : [
+    {
+      "name" : "All 43 existing Teach presentations remain correct",
+      "passed" : true
+    },
+    {
+      "name" : "Supported subset and missing detail stay separate",
+      "passed" : true
+    },
+    {
+      "name" : "Definition head is supported but incomplete",
+      "passed" : true
+    },
+    {
+      "name" : "Right-topic invention receives no support",
+      "passed" : true
+    },
+    {
+      "name" : "Mixed response flags only the unsupported clause",
+      "passed" : true
+    },
+    {
+      "name" : "Exact source navigation remains bound",
+      "passed" : true
+    },
+    {
+      "name" : "Mixed draft survives reopening without learned claims",
+      "passed" : true
+    },
+    {
+      "name" : "Edit reuses the same attempt identity",
+      "passed" : true
+    },
+    {
+      "name" : "Stale source cannot award support",
+      "passed" : true
+    },
+    {
+      "name" : "Canonical admission rejects the old malformed segmentation",
+      "passed" : true
+    },
+    {
+      "name" : "Repaired extraction preserves exact original source span",
+      "passed" : true
+    }
+  ],
+  "concise" : {
+    "captured" : [
+      "Effect cleanup prevents duplicate listeners."
+    ],
+    "check" : [
+
+    ],
+    "fullySupported" : true,
+    "notEstablished" : [
+
+    ],
+    "worthAdding" : [
+      "The function returned from an effect to undo the\nprevious subscription\/resource before rerun or\nunmount. It prevents duplicate listeners, stale\nsubscriptions, and leaks."
+    ]
+  },
+  "http" : {
+    "captured" : [
+      "HTTP is a protocol."
+    ],
+    "check" : [
+
+    ],
+    "fullySupported" : true,
+    "notEstablished" : [
+
+    ],
+    "worthAdding" : [
+      "The request-response protocol used by browsers,\napps, and servers to exchange web data. It is the basic\nlanguage behind APIs, pages, images, and most web\ntraffic."
+    ]
+  },
+  "mixed" : {
+    "captured" : [
+      "Effect cleanup prevents duplicate listeners."
+    ],
+    "check" : [
+
+    ],
+    "fullySupported" : false,
+    "notEstablished" : [
+      "Effect cleanup creates encrypted backups."
+    ],
+    "worthAdding" : [
+      "The function returned from an effect to undo the\nprevious subscription\/resource before rerun or\nunmount. It prevents duplicate listeners, stale\nsubscriptions, and leaks."
+    ]
+  },
+  "nativeUIExecuted" : false,
+  "reopenMs" : 17.328977584838867,
+  "submitMs" : [
+    13.823032379150391,
+    13.588070869445801,
+    13.640999794006348,
+    13.751029968261719,
+    13.701915740966797,
+    13.968944549560547,
+    14.600038528442383,
+    13.865947723388672,
+    13.909101486206055,
+    13.964056968688965,
+    13.704061508178711,
+    13.864994049072266,
+    13.670921325683594,
+    13.628959655761719,
+    13.83507251739502,
+    13.686060905456543,
+    13.440966606140137,
+    13.633012771606445,
+    13.775944709777832,
+    13.499021530151367
+  ],
+  "webhook" : {
+    "captured" : [
+
+    ],
+    "check" : [
+
+    ],
+    "fullySupported" : false,
+    "notEstablished" : [
+      "A webhook prevents server outages."
+    ],
+    "worthAdding" : [
+      "An HTTP callback one system sends to another when\nan event occurs. It replaces wasteful polling for\nexternal service events."
+    ]
+  }
+}

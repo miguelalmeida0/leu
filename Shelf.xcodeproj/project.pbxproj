@@ -241,6 +241,8 @@
 		BFEE712CF81D0443BA0DD56D /* Intelligence/TryItSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C695A1E4F70A7026028385 /* Intelligence/TryItSheet.swift */; };
 		CED51A2C2A5582537A13D823 /* ShelfV27IntelligenceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381610A2A69E7BA7D34553E1 /* ShelfV27IntelligenceUITests.swift */; };
 		7642ECD2937C4883B5422D44 /* Intelligence/KnowledgeCollisionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCBA7A431D2A8C2986AFC91 /* Intelligence/KnowledgeCollisionSheet.swift */; };
+		B29100000000000000000001 /* TeachReasoningAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29100000000000000000002; };
+		B29100000000000000000003 /* LeuReasoningCore in Frameworks */ = {isa = PBXBuildFile; productRef = B29100000000000000000004; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -529,6 +531,7 @@
 		87C695A1E4F70A7026028385 /* Intelligence/TryItSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/TryItSheet.swift"; sourceTree = "<group>"; };
 		381610A2A69E7BA7D34553E1 /* ShelfV27IntelligenceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShelfV27IntelligenceUITests.swift"; sourceTree = "<group>"; };
 		0DCBA7A431D2A8C2986AFC91 /* Intelligence/KnowledgeCollisionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/KnowledgeCollisionSheet.swift"; sourceTree = "<group>"; };
+		B29100000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/TeachReasoningAdapter.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -545,6 +548,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC5ED8C73170225CD599E55A /* ShelfCore in Frameworks */,
+				B29100000000000000000003 /* LeuReasoningCore in Frameworks */,
 				A24000000000000000000007 /* onnxruntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -875,6 +879,7 @@
 				8A500822D214529254566D20 /* Intelligence/PassageQuestionSheet.swift */,
 				94A22C349D18F867A2CBAC70 /* Intelligence/RabbitHoleSheet.swift */,
 				071E2625F127C9860F9C3D28 /* Intelligence/ReaderIntelligenceModel.swift */,
+				B29100000000000000000002 /* TeachReasoningAdapter.swift */,
 				4D8DA7DE6C8C0912FA6AB322 /* Intelligence/TeachLeuSheet.swift */,
 				F6D012131F5329E5FD2E8F22 /* Intelligence/ThoughtContinuationView.swift */,
 				87C695A1E4F70A7026028385 /* Intelligence/TryItSheet.swift */,
@@ -1187,6 +1192,7 @@
 			name = ShelfTests;
 			packageProductDependencies = (
 				11E8CF7E9A1027F44C558C73 /* ShelfCore */,
+				B29100000000000000000004 /* LeuReasoningCore */,
 			);
 			productName = ShelfTests;
 			productReference = 525DE6171E2BE40995D7DE83 /* ShelfTests.xctest */;
@@ -1225,6 +1231,7 @@
 			name = Shelf;
 			packageProductDependencies = (
 				11E8CF7E9A1027F44C558C73 /* ShelfCore */,
+				B29100000000000000000004 /* LeuReasoningCore */,
 				A24000000000000000000006 /* onnxruntime */,
 			);
 			productName = Shelf;
@@ -1264,6 +1271,7 @@
 			);
 			mainGroup = ADCF10F76EBF2A74473E9DC4;
 			packageReferences = (
+				B29100000000000000000005 /* LeuReasoningCore */,
 				E1823BFFAEB4E505466451C6 /* XCLocalSwiftPackageReference "Packages/ShelfCore" */,
 				A24000000000000000000005 /* XCRemoteSwiftPackageReference "onnxruntime-swift-package-manager" */,
 			);
@@ -1501,6 +1509,7 @@
 				C97014B27E29B08688C5C759 /* Intelligence/PassageQuestionSheet.swift in Sources */,
 				12FF06EF5E98AFCB1030CA62 /* Intelligence/RabbitHoleSheet.swift in Sources */,
 				9350D442C46E652C6F150DF8 /* Intelligence/ReaderIntelligenceModel.swift in Sources */,
+				B29100000000000000000001 /* TeachReasoningAdapter.swift in Sources */,
 				9B682A364ACA24BC702E0640 /* Intelligence/TeachLeuSheet.swift in Sources */,
 				714A21080AE4C326B3AD568B /* Intelligence/ThoughtContinuationView.swift in Sources */,
 				BFEE712CF81D0443BA0DD56D /* Intelligence/TryItSheet.swift in Sources */,
@@ -1797,6 +1806,7 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/ShelfCore;
 		};
+		B29100000000000000000005 = {isa = XCLocalSwiftPackageReference; relativePath = Packages/LeuReasoningCore; };
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -1821,6 +1831,7 @@
 			package = A24000000000000000000005 /* XCRemoteSwiftPackageReference "onnxruntime-swift-package-manager" */;
 			productName = onnxruntime;
 		};
+		B29100000000000000000004 = {isa = XCSwiftPackageProductDependency; package = B29100000000000000000005; productName = LeuReasoningCore; };
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 98F54143AB4E86B28C3AFEE0 /* Project object */;

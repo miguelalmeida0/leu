@@ -1,0 +1,17 @@
+{
+  "LeuClaudeSuper": {
+    "head": "fca850a321b408a84ef105eecdf496a06354b8e9",
+    "status": " M evidence/super-intelligence/structural-audit.json\n?? evidence/super-intelligence/evaluation-report.json\n",
+    "hashes": {
+      "evidence/super-intelligence/evaluation-report.json": "5c680d8768849a3f6011466ae636ffc230785a0392587e0097d3c559eb319f23",
+      "evidence/super-intelligence/structural-audit.json": "f62bc40e5b972fade94b7db19dcfb2087b317264fd6a539167c72d8ddb0cf10d"
+    },
+    "unchanged": true
+  },
+  "LeuCodexV28": {
+    "head": "d178a129e3c07fca3e6b00dc0b32cb730e4bf22d",
+    "status": "",
+    "hashes": {},
+    "unchanged": true
+  }
+}

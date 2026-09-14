@@ -1,0 +1,12 @@
+TEACH 43 presentation matches: 43/43
+PASS All 43 existing Teach presentations remain correct
+PASS Supported subset and missing detail stay separate
+PASS Definition head is supported but incomplete
+PASS Right-topic invention receives no support
+PASS Mixed response flags only the unsupported clause
+PASS Exact source navigation remains bound
+PASS Mixed draft survives reopening without learned claims
+PASS Edit reuses the same attempt identity
+PASS Stale source cannot award support
+PASS Canonical admission rejects the old malformed segmentation
+PASS Repaired extraction preserves exact original source span

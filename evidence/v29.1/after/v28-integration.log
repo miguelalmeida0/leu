@@ -1,0 +1,8 @@
+BANK BUILT 90 in 1.9858840703964233s
+PASS Study uses persisted V4 with clean copy: bank=90; reloaded=90; planned V4=1
+PASS Teach presentation consumes V2 states: Natural paraphrase, missing condition, contradiction and unsupported effect routed separately
+PASS Connections retain both exact source routes: 2 forward; 1 reverse; both document/page/ranges rebind
+PASS Collision ranks a real two-source bridge: React Notes p.3 + Reconciliation p.113
+PASS Teach Connection requires both sources: linked=true; supported sources=2; unknown clauses=[]
+PASS What Changes If predicts before deterministic transition: stable state=[0, 7, 0]; index state=[7, 0, 0]; same row order=["C", "A", "B"]
+PASS Library explanation retains provenance: CLEAREST EXPLANATION: javascript_midlevel_interview_mobile_mastery p.114; A USEFUL EXAMPLE: javascript_midlevel_interview_mobile_mastery p.113; RELATED IDEA: javascript_midlevel_interview_mobile_mastery p.113

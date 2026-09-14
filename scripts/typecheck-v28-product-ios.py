@@ -25,6 +25,7 @@ base = [str(dev / 'Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc'),
 onnx = ['-Xcc', '-fmodule-map-file=' + str(modulemap)]
 onnx += ['-Xcc', '-I' + str(cache / 'SourcePackages/checkouts/onnxruntime-swift-package-manager/objectivec/include')]
 for module, files, extra in [
+    ("LeuReasoningCore", sorted((root / "Packages/LeuReasoningCore/Sources/LeuReasoningCore").rglob("*.swift")), []),
     ('ShelfCore', sorted((root / 'Packages/ShelfCore/Sources/ShelfCore').rglob('*.swift')), []),
     ('VoiceBugfix', sorted((root / 'Shelf/Voice/Engine').glob('*.swift')) +
      [root / 'Shelf/Learning/StudyInteractionTrace.swift'], onnx),

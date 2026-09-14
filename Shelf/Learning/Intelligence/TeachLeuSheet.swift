@@ -58,27 +58,33 @@ import ShelfCore
             Button("View in PDF") { model.viewSource(returningTo: "Teach Leu") }.accessibilityIdentifier("teach-leu-view-source")
         }
     }
-    @ViewBuilder private func comparison(_ result: TeachSourceFeedback) -> some View {
+    @ViewBuilder private func comparison(_ result: ReasonedTeachFeedback) -> some View {
         VStack(alignment: .leading, spacing: 18) {
             if !result.captured.isEmpty {
                 Text("YOU CAPTURED").font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
-                ForEach(Array(result.captured.enumerated()), id: \.offset) { _, point in Text(point.assessment.explanation) }
+                ForEach(Array(result.captured.enumerated()), id: \.offset) { _, point in
+                    Text("“\(point.learner)”")
+                    Text(point.explanation).foregroundStyle(ShelfTheme.secondary)
+                }
             }
             if !result.worthAdding.isEmpty {
                 Text("WORTH ADDING").font(.caption.weight(.semibold))
                 ForEach(Array(result.worthAdding.enumerated()), id: \.offset) { _, point in
-                    Text(point.assessment.missingConditions.joined(separator: "; "))
-                    Text(point.assessment.explanation).foregroundStyle(ShelfTheme.secondary)
+                    Text(point.explanation).foregroundStyle(ShelfTheme.secondary)
+                    Text(point.source.quote.text)
+                    Button("Read this passage") { model.viewFact(point.source, returningTo: "Teach Leu") }
                 }
             }
             if !result.check.isEmpty {
                 Text("CHECK THIS").font(.caption.weight(.semibold))
                 ForEach(Array(result.check.enumerated()), id: \.offset) { _, point in
-                    Text("“\(point.learner)”"); Text(point.assessment.explanation)
+                    Text("“\(point.learner)”"); Text(point.explanation)
+                    Text(point.source.quote.text).foregroundStyle(ShelfTheme.secondary)
+                    Button("Check the passage") { model.viewFact(point.source, returningTo: "Teach Leu") }
                 }
             }
             if !result.unsettled.isEmpty {
-                Text("YOUR SOURCE DOESN'T SETTLE THIS").font(.caption.weight(.semibold))
+                Text("NOT ESTABLISHED HERE").font(.caption.weight(.semibold))
                 ForEach(Array(result.unsettled.enumerated()), id: \.offset) { _, text in Text("“\(text)”") }
                 Text("No conclusion has been drawn about these statements.").foregroundStyle(ShelfTheme.secondary)
             }

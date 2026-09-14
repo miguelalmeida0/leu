@@ -15,7 +15,7 @@ final class ReaderIntelligenceModel {
     var attempt: UnderstandingAttempt
     var connections: [GroundedConnectionV2] = []
     var semanticSources: [RelationalSourceFact] = []
-    var feedback: TeachSourceFeedback?
+    var feedback: ReasonedTeachFeedback?
     var libraryExplanations: [LibraryExplanationItem] = []
     var canTeach = false
     var activity: ActivityDefinition?
@@ -27,6 +27,7 @@ final class ReaderIntelligenceModel {
     @ObservationIgnored private var saveTask: Task<Void, Never>?
     @ObservationIgnored private var pendingSave: UnderstandingAttempt?
     @ObservationIgnored private var revision = UUID()
+    @ObservationIgnored private var teachAdapter: TeachReasoningAdapter?
 
     init(learning: LearningModel, source: IntelligenceSource, attempt: UnderstandingAttempt? = nil) {
         self.learning = learning; self.source = source
@@ -46,15 +47,16 @@ final class ReaderIntelligenceModel {
             let anchors = try await cache.sources(for: source, analyses: analyses, titles: titles)
             guard !Task.isCancelled, source.isCurrent(in: learning.snapshot.analyses) else { return }
             semanticSources = anchors
-            let canTeach = await Task.detached(priority: .userInitiated) {
-                anchors.contains { TeachLeuV2.evaluate("", source: $0, analyses: analyses).family != nil }
+            let adapter = await Task.detached(priority: .userInitiated) {
+                TeachReasoningAdapter(sources: anchors, analyses: analyses)
             }.value
-            self.canTeach = canTeach
+            guard !Task.isCancelled, source.isCurrent(in: learning.snapshot.analyses) else { return }
+            teachAdapter = adapter; self.canTeach = adapter.canTeach
             let found = try await cache.retrieve(source: source, analyses: analyses, titles: titles)
             guard !Task.isCancelled, source.isCurrent(in: learning.snapshot.analyses),
                   Set(learning.library.snapshot.activeBooks.map(\.id)) == ids else { return }
             connections = found.connections; semanticSources = found.sources
-            libraryExplanations = found.explanations; activity = found.activity; self.canTeach = found.canTeach
+            libraryExplanations = found.explanations; activity = found.activity
         } catch { message = "These source tools are temporarily unavailable." }
     }
     func edit(_ text: String) {
@@ -79,19 +81,21 @@ final class ReaderIntelligenceModel {
         }
     }
     func assess() {
-        guard request == nil, canTeach, !attempt.learnerExplanation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        guard request == nil, canTeach, let adapter = teachAdapter, !attempt.learnerExplanation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         let token = UUID(); revision = token; inferring = true
-        let text = attempt.learnerExplanation, sources = semanticSources, analyses = learning.snapshot.analyses
+        let text = attempt.learnerExplanation, analyses = learning.snapshot.analyses
         request = Task { [weak self] in
             guard let self else { return }
             defer { if revision == token { request = nil; inferring = false } }
             let result = await Task.detached(priority: .userInitiated) {
-                V28TeachPresentation.compare(text, sources: sources, analyses: analyses)
+                adapter.compare(text, analyses: analyses)
             }.value
             guard !Task.isCancelled, revision == token, source.isCurrent(in: learning.snapshot.analyses) else { return }
             feedback = result
             persistDraft()
-            await record(.taughtConcept)
+            // Drafts are retained verbatim. An unsupported or mixed response
+            // is not recorded as a taught concept or a learned source claim.
+            if result.fullySupported { await record(.taughtConcept) }
         }
     }
     func viewFact(_ fact: RelationalSourceFact, returningTo title: String) {

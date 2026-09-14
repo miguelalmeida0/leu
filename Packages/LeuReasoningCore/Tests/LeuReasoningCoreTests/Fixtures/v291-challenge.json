@@ -1,0 +1,14 @@
+[
+ {"id":"subset","source":"Cleanup prevents stale subscriptions, duplicate listeners, and leaks.","learner":"Cleanup prevents leaks.","support":["supported"],"coverage":"incomplete","why":"One member of a stated prevention list is entailed; two effects are omitted."},
+ {"id":"definition","source":"HTTP is a request-response protocol used for web data.","learner":"HTTP is a protocol.","support":["supported"],"coverage":"incomplete","why":"The head noun is entailed; mechanism and purpose are omitted."},
+ {"id":"synonym","source":"Cleanup prevents stale subscriptions, duplicate listeners, and leaks.","learner":"Cleanup avoids leaks.","support":["supported"],"coverage":"incomplete","why":"Avoids expresses prevention; the other effects remain missing."},
+ {"id":"fronted-condition","source":"Memoization can reduce repeated work when inputs are unchanged.","learner":"When inputs are unchanged, memoization can reduce repeated work.","support":["supported"],"coverage":"complete","why":"Fronting the same condition retains the whole claim."},
+ {"id":"condition-omitted","source":"Memoization can reduce repeated work when inputs are unchanged.","learner":"Memoization can reduce repeated work.","support":["notAddressed"],"coverage":"incomplete","why":"Unconditional benefit is not established; the condition must be restored."},
+ {"id":"universal","source":"Memoization can reduce repeated work when inputs are unchanged.","learner":"Memoization always reduces repeated work.","support":["notAddressed"],"coverage":"incomplete","why":"Broader scope is not established, but the source does not prove the universal false."},
+ {"id":"negation","source":"Cleanup prevents leaks.","learner":"Cleanup does not prevent leaks.","support":["contradicted"],"coverage":"incomplete","why":"Explicit opposite polarity for the same assertion."},
+ {"id":"direction","source":"Overload causes delays.","learner":"Delays cause overload.","support":["notAddressed"],"coverage":"incomplete","why":"A forward cause does not establish or disprove the reverse direction."},
+ {"id":"mixed","source":"Cleanup prevents leaks.","learner":"Cleanup prevents leaks and creates encrypted backups.","support":["supported","notAddressed"],"coverage":"complete","why":"Stated effect is captured; the independent backup assertion is unsupported."},
+ {"id":"same-topic","source":"A webhook replaces polling.","learner":"A webhook prevents outages.","support":["notAddressed"],"coverage":"incomplete","why":"Shared subject supplies no evidence for the new effect."},
+ {"id":"ambiguous","source":"Cleanup prevents leaks.","learner":"It helps with that.","support":["notAddressed"],"coverage":"incomplete","why":"Neither argument can be resolved from this response."},
+ {"id":"unrelated","source":"Cleanup prevents leaks.","learner":"Rain reduces visibility.","support":["notAddressed"],"coverage":"incomplete","why":"No source about rain or visibility."}
+]

@@ -8,7 +8,7 @@ out.mkdir(parents=True, exist_ok=True)
 checks = {
  'Study plans immediately while preparation continues': ('Shelf/Learning/LearningModel+Sessions.swift', ['prepareIntelligence()', 'begin(planner.plan']),
  'Background indexing persists the actual bank': ('Shelf/Learning/LearningModel+Intelligence.swift', ['V4GenerationSession(analysis', 'repository.storeV4Batch(batch)', 'completedV4Pages(documentID:']),
- 'Teach UI consumes V2 presentation': ('Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift', ['V28TeachPresentation.compare(text', 'feedback = result']),
+ 'Teach UI consumes the source-bound reasoning adapter': ('Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift', ['adapter.compare(text', 'feedback = result']),
  'Reader retrieval uses admitted V28 connections': ('Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift', ['learning.libraryIntelligenceCache', 'cache.retrieve(source: source']),
  'Collision uses both bound sources': ('Shelf/Learning/Intelligence/KnowledgeCollisionSheet.swift', ['ConnectionAdmissionV2.validate(connection', 'sources: [connection.sourceA, connection.sourceB]', 'model.viewFact(connection.sourceA', 'model.viewFact(connection.sourceB']),
  'Prediction UI uses tested state machine': ('Shelf/Learning/Intelligence/TryItSheet.swift', ['keyExperiment.predict(choice)', 'keyExperiment.reveal(definition:', 'keyExperiment.state']),

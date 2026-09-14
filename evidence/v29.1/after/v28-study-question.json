@@ -1,0 +1,200 @@
+{
+  "correctOptionID" : "164DDA93-D6F1-5963-85BB-0DF725CEDE0A",
+  "generatedAt" : "2026-09-14T21:16:31Z",
+  "id" : "DF08F1FD-EBDE-55FD-A4A7-93B5B30DAB18",
+  "kind" : "semanticRelationship",
+  "options" : [
+    {
+      "id" : "E7566FA2-6D81-5BB0-A085-D086B53D6BF5",
+      "text" : "Keep state as close as possible to the components that actually need it."
+    },
+    {
+      "id" : "164DDA93-D6F1-5963-85BB-0DF725CEDE0A",
+      "text" : "A browser API used to cancel fetches and other abortable operations."
+    },
+    {
+      "id" : "0B4E2E0B-5108-5E73-B66D-23626CB785AA",
+      "text" : "Move shared state to the nearest common owner of components that need it."
+    }
+  ],
+  "prompt" : "How does AbortController prevent unnecessary work and stale responses from winning races?",
+  "propositionID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|228|66|fact|103",
+  "qualityScore" : 0.9,
+  "semanticFingerprint" : "6711979522824531651",
+  "semanticOperator" : "mechanism",
+  "source" : {
+    "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+    "pageIndex" : 228,
+    "range" : {
+      "length" : 137,
+      "location" : 103
+    },
+    "sectionTitle" : "AbortController",
+    "sourceText" : "A browser API used to cancel fetches and other\nabortable operations. It prevents unnecessary work\nand stale responses from winning races."
+  },
+  "stableKey" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|228|66|fact|103",
+  "topicIDs" : [
+
+  ],
+  "v4" : {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|222|66|fact|104",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 223,
+        "sourceTitle" : "State colocation",
+        "span" : {
+          "range" : {
+            "length" : 72,
+            "location" : 104
+          },
+          "text" : "Keep state as close as possible to the components\nthat actually need it."
+        },
+        "text" : "Keep state as close as possible to the components that actually need it."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|228|66|fact|103",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 229,
+        "sourceTitle" : "AbortController",
+        "span" : {
+          "range" : {
+            "length" : 68,
+            "location" : 103
+          },
+          "text" : "A browser API used to cancel fetches and other\nabortable operations."
+        },
+        "text" : "A browser API used to cancel fetches and other abortable operations."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|223|66|fact|104",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 224,
+        "sourceTitle" : "Lifting state up",
+        "span" : {
+          "range" : {
+            "length" : 73,
+            "location" : 104
+          },
+          "text" : "Move shared state to the nearest common owner of\ncomponents that need it."
+        },
+        "text" : "Move shared state to the nearest common owner of components that need it."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 83,
+              "location" : 366
+            },
+            "text" : "const c=new AbortController(); fetch(url,\n{signal:c.signal}); return ()=>c.abort();"
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 104,
+              "location" : 640
+            },
+            "text" : "Cancellation is different from merely ignoring a late result.\nExplain it aloud before swiping. 212 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 123,
+              "location" : 491
+            },
+            "text" : "I abort obsolete requests during cleanup when user\nnavigation or rapidly changing inputs can make previous\nwork irrelevant."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 80,
+              "location" : 263
+            },
+            "text" : "You cancel the pizza order after realizing you\nordered it to your old apartment."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 137,
+              "location" : 103
+            },
+            "text" : "A browser API used to cancel fetches and other\nabortable operations. It prevents unnecessary work\nand stale responses from winning races."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 228,
+        "section" : "212 R E AC T: S TAT E , I D E N T I T Y & A R C H I T E C T U R E",
+        "title" : "AbortController",
+        "titleSpan" : {
+          "range" : {
+            "length" : 15,
+            "location" : 66
+          },
+          "text" : "AbortController"
+        }
+      },
+      "composedStatement" : "AbortController: A browser API used to cancel fetches and other abortable operations. It prevents unnecessary work and stale responses from winning races.",
+      "families" : [
+        "definition",
+        "consequence",
+        "failureMode"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 137,
+          "location" : 103
+        },
+        "text" : "A browser API used to cancel fetches and other\nabortable operations. It prevents unnecessary work\nand stale responses from winning races."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "AbortController"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 68,
+            "location" : 103
+          },
+          "text" : "A browser API used to cancel fetches and other\nabortable operations."
+        },
+        {
+          "range" : {
+            "length" : 68,
+            "location" : 172
+          },
+          "text" : "It prevents unnecessary work\nand stale responses from winning races."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "AbortController: A browser API used to cancel fetches and other abortable operations. It prevents unnecessary work and stale responses from winning races.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|228|66|fact|103",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does AbortController prevent unnecessary work and stale responses from winning races?"
+  }
+}

@@ -36,6 +36,47 @@ final class ShelfV27IntelligenceUITests: ShelfUITestCase {
             "Keys tell React which item is which when a list changes.")
         capture("v27-resumed-thought")
     }
+    func testV291TeachSupportedSubsetMixedClauseEditAndReopen() {
+        pageThree("React Notes"); tapReady("learning-action-teach-leu")
+        let concise = "Keys tell React which item is which when a list changes."
+        let unsupported = "A stable key prevents server outages."
+        func replaceDraft(_ text: String) {
+            for _ in 0..<8 {
+                let editor = app.textViews["teach-leu-explanation"]
+                if editor.exists && editor.isHittable {
+                    editor.tap()
+                    if let old = editor.value as? String, !old.isEmpty {
+                        editor.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: old.count))
+                    }
+                    editor.typeText(text); app.swipeUp(); return
+                }
+                app.scrollViews.firstMatch.swipeDown()
+            }
+            XCTFail("The editable thought must remain reachable.")
+        }
+        replaceDraft(concise); tapReady("teach-leu-compare")
+        XCTAssertTrue(element("teach-leu-result").waitForExistence(timeout: 15))
+        XCTAssertTrue(app.staticTexts["YOU CAPTURED"].exists)
+        XCTAssertTrue(app.staticTexts["WORTH ADDING"].exists)
+        XCTAssertFalse(app.staticTexts["NOT ESTABLISHED HERE"].exists)
+        capture("v291-teach-supported-subset")
+        replaceDraft(concise + " " + unsupported); tapReady("teach-leu-compare")
+        XCTAssertTrue(app.staticTexts["NOT ESTABLISHED HERE"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.staticTexts["YOU CAPTURED"].exists)
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label == %@", "“" + unsupported + "”")).firstMatch.exists)
+        capture("v291-teach-mixed-clauses")
+        tapReady("teach-leu-view-source"); expectPage("Page 3 of 4", on: pageControl())
+        capture("v291-teach-exact-source"); tapReady("reader-context-return")
+        XCTAssertTrue(element("teach-leu-screen").waitForExistence(timeout: 10))
+        replaceDraft(concise); tapReady("teach-leu-compare")
+        XCTAssertTrue(element("teach-leu-result").waitForExistence(timeout: 15))
+        XCTAssertFalse(app.staticTexts["NOT ESTABLISHED HERE"].exists)
+        app.navigationBars["Teach Leu"].buttons["Done"].tap()
+        app.navigationBars["Learn from this"].buttons["Done"].tap()
+        tapReady("resume-understanding-thought")
+        XCTAssertEqual(app.textViews["teach-leu-explanation"].value as? String, concise)
+        capture("v291-teach-reopened-edited-draft")
+    }
     func testReactKeysLabChangesIdentityWithExactSourceReturn() {
         pageThree("React Notes"); tapReady("learning-action-try-it")
         tapReady("try-it-reorder")

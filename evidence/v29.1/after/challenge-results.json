@@ -1,0 +1,1135 @@
+[
+  {
+    "coverage" : "incomplete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "subset",
+    "report" : {
+      "alignments" : [
+        {
+          "feedback" : {
+            "admissibility" : "sourceSupported",
+            "atomIDs" : [
+              {
+                "rawValue" : "atom.e7e8120778903617"
+              }
+            ],
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "Cleanup prevents stale subscriptions, duplicate listeners, and leaks.",
+                  "characterOffset" : 0,
+                  "documentID" : "challenge",
+                  "extractionVersion" : "leu.extract.1",
+                  "page" : 1,
+                  "sourceRole" : "explanation"
+                }
+              ]
+            },
+            "text" : "Cleanup prevents stale subscriptions, duplicate listeners, and leaks"
+          },
+          "findings" : [
+
+          ],
+          "matchScore" : 1,
+          "matchedAtomID" : {
+            "rawValue" : "atom.e7e8120778903617"
+          },
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.07ef613d4aef5da0"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "leaks",
+            "qualifiers" : [
+
+            ],
+            "quantifier" : "unmarked",
+            "relation" : "prevents",
+            "subject" : "Cleanup",
+            "text" : "Cleanup prevents leaks."
+          },
+          "verdict" : "supported"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+        {
+          "rawValue" : "atom.e7e8120778903617"
+        }
+      ]
+    },
+    "supportCorrect" : true
+  },
+  {
+    "coverage" : "incomplete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "definition",
+    "report" : {
+      "alignments" : [
+        {
+          "feedback" : {
+            "admissibility" : "sourceSupported",
+            "atomIDs" : [
+              {
+                "rawValue" : "atom.65c3793d6b87291f"
+              }
+            ],
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "HTTP is a request-response protocol used for web data.",
+                  "characterOffset" : 0,
+                  "documentID" : "challenge",
+                  "extractionVersion" : "leu.extract.1",
+                  "page" : 1,
+                  "sourceRole" : "explanation"
+                }
+              ]
+            },
+            "text" : "HTTP explains a request-response protocol used for web data"
+          },
+          "findings" : [
+
+          ],
+          "matchScore" : 1,
+          "matchedAtomID" : {
+            "rawValue" : "atom.65c3793d6b87291f"
+          },
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.cdf3e38110ad8f98"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "protocol",
+            "qualifiers" : [
+
+            ],
+            "quantifier" : "unmarked",
+            "relation" : "explains",
+            "subject" : "HTTP",
+            "text" : "HTTP is a protocol."
+          },
+          "verdict" : "supported"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+        {
+          "rawValue" : "atom.65c3793d6b87291f"
+        }
+      ]
+    },
+    "supportCorrect" : true
+  },
+  {
+    "coverage" : "incomplete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "synonym",
+    "report" : {
+      "alignments" : [
+        {
+          "feedback" : {
+            "admissibility" : "sourceSupported",
+            "atomIDs" : [
+              {
+                "rawValue" : "atom.e7e8120778903617"
+              }
+            ],
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "Cleanup prevents stale subscriptions, duplicate listeners, and leaks.",
+                  "characterOffset" : 0,
+                  "documentID" : "challenge",
+                  "extractionVersion" : "leu.extract.1",
+                  "page" : 1,
+                  "sourceRole" : "explanation"
+                }
+              ]
+            },
+            "text" : "Cleanup prevents stale subscriptions, duplicate listeners, and leaks"
+          },
+          "findings" : [
+
+          ],
+          "matchScore" : 1,
+          "matchedAtomID" : {
+            "rawValue" : "atom.e7e8120778903617"
+          },
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.c16e39b6a359de71"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "leaks",
+            "qualifiers" : [
+
+            ],
+            "quantifier" : "unmarked",
+            "relation" : "prevents",
+            "subject" : "Cleanup",
+            "text" : "Cleanup avoids leaks."
+          },
+          "verdict" : "supported"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+        {
+          "rawValue" : "atom.e7e8120778903617"
+        }
+      ]
+    },
+    "supportCorrect" : true
+  },
+  {
+    "coverage" : "complete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "fronted-condition",
+    "report" : {
+      "alignments" : [
+        {
+          "feedback" : {
+            "admissibility" : "sourceSupported",
+            "atomIDs" : [
+              {
+                "rawValue" : "atom.6033dfdf00940e67"
+              }
+            ],
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "Memoization can reduce repeated work when inputs are unchanged.",
+                  "characterOffset" : 0,
+                  "documentID" : "challenge",
+                  "extractionVersion" : "leu.extract.1",
+                  "page" : 1,
+                  "sourceRole" : "explanation"
+                }
+              ]
+            },
+            "text" : "if inputs are unchanged, Memoization reduces repeated work"
+          },
+          "findings" : [
+
+          ],
+          "matchScore" : 1,
+          "matchedAtomID" : {
+            "rawValue" : "atom.6033dfdf00940e67"
+          },
+          "proposition" : {
+            "conditions" : [
+              {
+                "concepts" : [
+                  "input-unchang"
+                ],
+                "isPositive" : true,
+                "text" : "inputs are unchanged"
+              }
+            ],
+            "id" : {
+              "rawValue" : "prop.d70b106792fb7cf7"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "repeated work",
+            "qualifiers" : [
+              {
+                "kind" : "modality",
+                "text" : "can"
+              }
+            ],
+            "quantifier" : "existential",
+            "relation" : "causes",
+            "subject" : "memoization",
+            "text" : "When inputs are unchanged, memoization can reduce repeated work."
+          },
+          "verdict" : "supported"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+
+      ]
+    },
+    "supportCorrect" : true
+  },
+  {
+    "coverage" : "incomplete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "condition-omitted",
+    "report" : {
+      "alignments" : [
+        {
+          "feedback" : {
+            "admissibility" : "sourceSupported",
+            "atomIDs" : [
+              {
+                "rawValue" : "atom.6033dfdf00940e67"
+              }
+            ],
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "Memoization can reduce repeated work when inputs are unchanged.",
+                  "characterOffset" : 0,
+                  "documentID" : "challenge",
+                  "extractionVersion" : "leu.extract.1",
+                  "page" : 1,
+                  "sourceRole" : "explanation"
+                }
+              ]
+            },
+            "text" : "if inputs are unchanged, Memoization reduces repeated work"
+          },
+          "findings" : [
+            {
+              "atomID" : {
+                "rawValue" : "atom.6033dfdf00940e67"
+              },
+              "detail" : "The source restricts this claim: when inputs are unchanged.",
+              "feedback" : "The source restricts this claim: when inputs are unchanged.",
+              "propositionID" : {
+                "rawValue" : "prop.7d71d5aa07b4f743"
+              },
+              "provenance" : {
+                "admissibility" : "sourceSupported",
+                "confidenceInParsing" : 1,
+                "derivedFrom" : [
+
+                ],
+                "rule" : "none",
+                "spans" : [
+                  {
+                    "canonicalSpan" : "Memoization can reduce repeated work when inputs are unchanged.",
+                    "characterOffset" : 0,
+                    "documentID" : "challenge",
+                    "extractionVersion" : "leu.extract.1",
+                    "page" : 1,
+                    "sourceRole" : "explanation"
+                  }
+                ]
+              },
+              "type" : "missingCondition"
+            }
+          ],
+          "matchScore" : 1,
+          "matchedAtomID" : {
+            "rawValue" : "atom.6033dfdf00940e67"
+          },
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.7d71d5aa07b4f743"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "repeated work",
+            "qualifiers" : [
+              {
+                "kind" : "modality",
+                "text" : "can"
+              }
+            ],
+            "quantifier" : "existential",
+            "relation" : "causes",
+            "subject" : "Memoization",
+            "text" : "Memoization can reduce repeated work."
+          },
+          "verdict" : "notAddressed"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+        {
+          "rawValue" : "atom.6033dfdf00940e67"
+        }
+      ]
+    },
+    "supportCorrect" : true
+  },
+  {
+    "coverage" : "incomplete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "universal",
+    "report" : {
+      "alignments" : [
+        {
+          "feedback" : {
+            "admissibility" : "sourceSupported",
+            "atomIDs" : [
+              {
+                "rawValue" : "atom.6033dfdf00940e67"
+              }
+            ],
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "Memoization can reduce repeated work when inputs are unchanged.",
+                  "characterOffset" : 0,
+                  "documentID" : "challenge",
+                  "extractionVersion" : "leu.extract.1",
+                  "page" : 1,
+                  "sourceRole" : "explanation"
+                }
+              ]
+            },
+            "text" : "if inputs are unchanged, Memoization reduces repeated work"
+          },
+          "findings" : [
+            {
+              "atomID" : {
+                "rawValue" : "atom.6033dfdf00940e67"
+              },
+              "detail" : "The source restricts this claim: when inputs are unchanged.",
+              "feedback" : "The source restricts this claim: when inputs are unchanged.",
+              "propositionID" : {
+                "rawValue" : "prop.9029bd58d0f88891"
+              },
+              "provenance" : {
+                "admissibility" : "sourceSupported",
+                "confidenceInParsing" : 1,
+                "derivedFrom" : [
+
+                ],
+                "rule" : "none",
+                "spans" : [
+                  {
+                    "canonicalSpan" : "Memoization can reduce repeated work when inputs are unchanged.",
+                    "characterOffset" : 0,
+                    "documentID" : "challenge",
+                    "extractionVersion" : "leu.extract.1",
+                    "page" : 1,
+                    "sourceRole" : "explanation"
+                  }
+                ]
+              },
+              "type" : "missingCondition"
+            },
+            {
+              "atomID" : {
+                "rawValue" : "atom.6033dfdf00940e67"
+              },
+              "detail" : "The universal claim exceeds the source's modality or condition.",
+              "feedback" : "The universal claim exceeds the source's modality or condition.",
+              "propositionID" : {
+                "rawValue" : "prop.9029bd58d0f88891"
+              },
+              "provenance" : {
+                "admissibility" : "sourceSupported",
+                "confidenceInParsing" : 1,
+                "derivedFrom" : [
+
+                ],
+                "rule" : "none",
+                "spans" : [
+                  {
+                    "canonicalSpan" : "Memoization can reduce repeated work when inputs are unchanged.",
+                    "characterOffset" : 0,
+                    "documentID" : "challenge",
+                    "extractionVersion" : "leu.extract.1",
+                    "page" : 1,
+                    "sourceRole" : "explanation"
+                  }
+                ]
+              },
+              "type" : "scopeTooBroad"
+            }
+          ],
+          "matchScore" : 1,
+          "matchedAtomID" : {
+            "rawValue" : "atom.6033dfdf00940e67"
+          },
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.9029bd58d0f88891"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "repeated work",
+            "qualifiers" : [
+              {
+                "kind" : "frequency",
+                "text" : "always"
+              }
+            ],
+            "quantifier" : "universal",
+            "relation" : "causes",
+            "subject" : "Memoization",
+            "text" : "Memoization always reduces repeated work."
+          },
+          "verdict" : "notAddressed"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+        {
+          "rawValue" : "atom.6033dfdf00940e67"
+        }
+      ]
+    },
+    "supportCorrect" : true
+  },
+  {
+    "coverage" : "incomplete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "negation",
+    "report" : {
+      "alignments" : [
+        {
+          "feedback" : {
+            "admissibility" : "sourceSupported",
+            "atomIDs" : [
+              {
+                "rawValue" : "atom.2d5619357a465b4b"
+              }
+            ],
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "Cleanup prevents leaks.",
+                  "characterOffset" : 0,
+                  "documentID" : "challenge",
+                  "extractionVersion" : "leu.extract.1",
+                  "page" : 1,
+                  "sourceRole" : "explanation"
+                }
+              ]
+            },
+            "text" : "Cleanup prevents leaks"
+          },
+          "findings" : [
+            {
+              "atomID" : {
+                "rawValue" : "atom.2d5619357a465b4b"
+              },
+              "detail" : "The learner reversed the source's stated polarity.",
+              "feedback" : "The learner reversed the source's stated polarity.",
+              "propositionID" : {
+                "rawValue" : "prop.30f12d4ea068fe4d"
+              },
+              "provenance" : {
+                "admissibility" : "sourceSupported",
+                "confidenceInParsing" : 1,
+                "derivedFrom" : [
+
+                ],
+                "rule" : "none",
+                "spans" : [
+                  {
+                    "canonicalSpan" : "Cleanup prevents leaks.",
+                    "characterOffset" : 0,
+                    "documentID" : "challenge",
+                    "extractionVersion" : "leu.extract.1",
+                    "page" : 1,
+                    "sourceRole" : "explanation"
+                  }
+                ]
+              },
+              "type" : "incorrectNegation"
+            }
+          ],
+          "matchScore" : 1,
+          "matchedAtomID" : {
+            "rawValue" : "atom.2d5619357a465b4b"
+          },
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.30f12d4ea068fe4d"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : true,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "leaks",
+            "qualifiers" : [
+
+            ],
+            "quantifier" : "unmarked",
+            "relation" : "prevents",
+            "subject" : "Cleanup does",
+            "text" : "Cleanup does not prevent leaks."
+          },
+          "verdict" : "contradicted"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+        {
+          "rawValue" : "atom.2d5619357a465b4b"
+        }
+      ]
+    },
+    "supportCorrect" : true
+  },
+  {
+    "coverage" : "incomplete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "direction",
+    "report" : {
+      "alignments" : [
+        {
+          "feedback" : {
+            "admissibility" : "sourceSupported",
+            "atomIDs" : [
+              {
+                "rawValue" : "atom.0e4dd33e97fcab6b"
+              }
+            ],
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "Overload causes delays.",
+                  "characterOffset" : 0,
+                  "documentID" : "challenge",
+                  "extractionVersion" : "leu.extract.1",
+                  "page" : 1,
+                  "sourceRole" : "explanation"
+                }
+              ]
+            },
+            "text" : "Overload causes delays"
+          },
+          "findings" : [
+            {
+              "atomID" : {
+                "rawValue" : "atom.0e4dd33e97fcab6b"
+              },
+              "detail" : "The source states this relationship in the opposite direction.",
+              "feedback" : "The source states this relationship in the opposite direction.",
+              "propositionID" : {
+                "rawValue" : "prop.c506411865a4feff"
+              },
+              "provenance" : {
+                "admissibility" : "sourceSupported",
+                "confidenceInParsing" : 1,
+                "derivedFrom" : [
+
+                ],
+                "rule" : "none",
+                "spans" : [
+                  {
+                    "canonicalSpan" : "Overload causes delays.",
+                    "characterOffset" : 0,
+                    "documentID" : "challenge",
+                    "extractionVersion" : "leu.extract.1",
+                    "page" : 1,
+                    "sourceRole" : "explanation"
+                  }
+                ]
+              },
+              "type" : "reversedCauseEffect"
+            }
+          ],
+          "matchScore" : 0,
+          "matchedAtomID" : {
+            "rawValue" : "atom.0e4dd33e97fcab6b"
+          },
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.c506411865a4feff"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "overload",
+            "qualifiers" : [
+
+            ],
+            "quantifier" : "unmarked",
+            "relation" : "causes",
+            "subject" : "Delays",
+            "text" : "Delays cause overload."
+          },
+          "verdict" : "notAddressed"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+        {
+          "rawValue" : "atom.0e4dd33e97fcab6b"
+        }
+      ]
+    },
+    "supportCorrect" : true
+  },
+  {
+    "coverage" : "complete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "mixed",
+    "report" : {
+      "alignments" : [
+        {
+          "feedback" : {
+            "admissibility" : "sourceSupported",
+            "atomIDs" : [
+              {
+                "rawValue" : "atom.2d5619357a465b4b"
+              }
+            ],
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "Cleanup prevents leaks.",
+                  "characterOffset" : 0,
+                  "documentID" : "challenge",
+                  "extractionVersion" : "leu.extract.1",
+                  "page" : 1,
+                  "sourceRole" : "explanation"
+                }
+              ]
+            },
+            "text" : "Cleanup prevents leaks"
+          },
+          "findings" : [
+
+          ],
+          "matchScore" : 1,
+          "matchedAtomID" : {
+            "rawValue" : "atom.2d5619357a465b4b"
+          },
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.aadf19170c498dd3"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "leaks and creates encrypted backups",
+            "qualifiers" : [
+
+            ],
+            "quantifier" : "unmarked",
+            "relation" : "prevents",
+            "subject" : "Cleanup",
+            "text" : "Cleanup prevents leaks."
+          },
+          "verdict" : "supported"
+        },
+        {
+          "feedback" : {
+            "admissibility" : "sourceSupported",
+            "atomIDs" : [
+              {
+                "rawValue" : "atom.2d5619357a465b4b"
+              }
+            ],
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "Cleanup prevents leaks.",
+                  "characterOffset" : 0,
+                  "documentID" : "challenge",
+                  "extractionVersion" : "leu.extract.1",
+                  "page" : 1,
+                  "sourceRole" : "explanation"
+                }
+              ]
+            },
+            "text" : "Cleanup prevents leaks"
+          },
+          "findings" : [
+            {
+              "atomID" : {
+                "rawValue" : "atom.2d5619357a465b4b"
+              },
+              "detail" : "The source does not establish this predicate and object for Cleanup.",
+              "feedback" : "The source does not establish this predicate and object for Cleanup.",
+              "propositionID" : {
+                "rawValue" : "prop.b14d7466fd2e1404"
+              },
+              "provenance" : {
+                "admissibility" : "sourceSupported",
+                "confidenceInParsing" : 1,
+                "derivedFrom" : [
+
+                ],
+                "rule" : "none",
+                "spans" : [
+                  {
+                    "canonicalSpan" : "Cleanup prevents leaks.",
+                    "characterOffset" : 0,
+                    "documentID" : "challenge",
+                    "extractionVersion" : "leu.extract.1",
+                    "page" : 1,
+                    "sourceRole" : "explanation"
+                  }
+                ]
+              },
+              "type" : "unsupportedAddition"
+            }
+          ],
+          "matchScore" : 0,
+          "matchedAtomID" : {
+            "rawValue" : "atom.2d5619357a465b4b"
+          },
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.b14d7466fd2e1404"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "leaks and creates encrypted backups",
+            "qualifiers" : [
+
+            ],
+            "quantifier" : "unmarked",
+            "relation" : "prevents",
+            "subject" : "Cleanup",
+            "text" : "Cleanup creates encrypted backups."
+          },
+          "verdict" : "notAddressed"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+
+      ]
+    },
+    "supportCorrect" : true
+  },
+  {
+    "coverage" : "incomplete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "same-topic",
+    "report" : {
+      "alignments" : [
+        {
+          "feedback" : {
+            "admissibility" : "sourceSupported",
+            "atomIDs" : [
+              {
+                "rawValue" : "atom.12402ef61dedbb2d"
+              }
+            ],
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "A webhook replaces polling.",
+                  "characterOffset" : 0,
+                  "documentID" : "challenge",
+                  "extractionVersion" : "leu.extract.1",
+                  "page" : 1,
+                  "sourceRole" : "explanation"
+                }
+              ]
+            },
+            "text" : "A webhook replaces polling"
+          },
+          "findings" : [
+            {
+              "atomID" : {
+                "rawValue" : "atom.12402ef61dedbb2d"
+              },
+              "detail" : "The source does not establish this predicate and object for A webhook.",
+              "feedback" : "The source does not establish this predicate and object for A webhook.",
+              "propositionID" : {
+                "rawValue" : "prop.7b89a3f95384c7a0"
+              },
+              "provenance" : {
+                "admissibility" : "sourceSupported",
+                "confidenceInParsing" : 1,
+                "derivedFrom" : [
+
+                ],
+                "rule" : "none",
+                "spans" : [
+                  {
+                    "canonicalSpan" : "A webhook replaces polling.",
+                    "characterOffset" : 0,
+                    "documentID" : "challenge",
+                    "extractionVersion" : "leu.extract.1",
+                    "page" : 1,
+                    "sourceRole" : "explanation"
+                  }
+                ]
+              },
+              "type" : "unsupportedAddition"
+            }
+          ],
+          "matchScore" : 0,
+          "matchedAtomID" : {
+            "rawValue" : "atom.12402ef61dedbb2d"
+          },
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.7b89a3f95384c7a0"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "outages",
+            "qualifiers" : [
+
+            ],
+            "quantifier" : "unmarked",
+            "relation" : "prevents",
+            "subject" : "webhook",
+            "text" : "A webhook prevents outages."
+          },
+          "verdict" : "notAddressed"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+        {
+          "rawValue" : "atom.12402ef61dedbb2d"
+        }
+      ]
+    },
+    "supportCorrect" : true
+  },
+  {
+    "coverage" : "incomplete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "ambiguous",
+    "report" : {
+      "alignments" : [
+        {
+          "findings" : [
+
+          ],
+          "matchScore" : 0,
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.77a35b6fffa6f4ed"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "with that",
+            "qualifiers" : [
+
+            ],
+            "quantifier" : "unmarked",
+            "relation" : "enables",
+            "subject" : "",
+            "text" : "It helps with that."
+          },
+          "verdict" : "notAddressed"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+        {
+          "rawValue" : "atom.2d5619357a465b4b"
+        }
+      ]
+    },
+    "supportCorrect" : true
+  },
+  {
+    "coverage" : "incomplete",
+    "coverageCorrect" : true,
+    "falseApprovals" : 0,
+    "id" : "unrelated",
+    "report" : {
+      "alignments" : [
+        {
+          "findings" : [
+
+          ],
+          "matchScore" : 0,
+          "proposition" : {
+            "conditions" : [
+
+            ],
+            "id" : {
+              "rawValue" : "prop.77296db3ddcba652"
+            },
+            "identifiers" : [
+
+            ],
+            "isNegated" : false,
+            "isUnparsed" : false,
+            "numbers" : [
+
+            ],
+            "object" : "visibility",
+            "qualifiers" : [
+
+            ],
+            "quantifier" : "unmarked",
+            "relation" : "causes",
+            "subject" : "Rain",
+            "text" : "Rain reduces visibility."
+          },
+          "verdict" : "notAddressed"
+        }
+      ],
+      "unaddressedAtomIDs" : [
+        {
+          "rawValue" : "atom.2d5619357a465b4b"
+        }
+      ]
+    },
+    "supportCorrect" : true
+  }
+]
