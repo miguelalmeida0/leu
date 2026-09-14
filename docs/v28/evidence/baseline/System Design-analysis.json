@@ -1,0 +1,197 @@
+{
+  "algorithmVersion" : 2,
+  "createdAt" : "2026-09-14T14:06:32Z",
+  "documentID" : "7E2FD82E-603E-515B-BC50-E8FE899259DA",
+  "extractionVersion" : 5,
+  "fingerprint" : "2488035189470745999",
+  "pages" : [
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 01\nSystem Design\nStart with the job\nBefore drawing components, establish who uses the\nsystem, what they need to do, and what failure would\nmean. An architecture solves a particular set of\nconstraints.\nNeed Constraint Decision\nFor a personal PDF reader, local access, data integrity\nand fast navigation may matter more than\nmulti-region availability. Do not pay for complexity\nthat the task does not require.\nA useful question: what must still work when the\ninternet does not?\nSHELF \/ ORIGINAL SAMPLE NOTES 1",
+      "normalizedText" : "\nSystem Design\n\nStart with the job\n\nBefore drawing components, establish who uses the system, what they need to do, and what failure would mean. An architecture solves a particular set of constraints.\n\nNeed Constraint Decision\n\nFor a personal PDF reader, local access, data integrity and fast navigation may matter more than multi-region availability. Do not pay for complexity that the task does not require.\n\nA useful question: what must still work when the internet does not?\n",
+      "pageIndex" : 0,
+      "segments" : [
+        {
+          "id" : "3D8EFD59-28F2-5EBD-ADE1-1B309E2F2666",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "System Design"
+        },
+        {
+          "id" : "26D04372-A6F8-5640-93F7-9D80402831D9",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "Start with the job"
+        },
+        {
+          "id" : "96F53A2A-6FA9-5532-B778-C4A443A03AC7",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "Before drawing components, establish who uses the system, what they need to do, and what failure would mean. An architecture solves a particular set of constraints."
+        },
+        {
+          "id" : "FEFB12B7-8E3B-5B33-80C4-6A54CB04663E",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "Need Constraint Decision"
+        },
+        {
+          "id" : "F5D903E4-37A3-5692-8340-63B86E2396E1",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "For a personal PDF reader, local access, data integrity and fast navigation may matter more than multi-region availability. Do not pay for complexity that the task does not require."
+        },
+        {
+          "id" : "A7EEC67B-72B6-57D0-AF3D-797B92993FDF",
+          "importance" : 0.59,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "A useful question: what must still work when the internet does not?"
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    },
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 02\nMake data ownership clear\nGive each responsibility an owner. The interface\npresents state. An application service coordinates a\nworkflow. Persistence commits durable changes.\nView Use case Storage\nPassing a database object through every screen makes\nboundaries difficult to change. Passing an immutable\ndocument summary keeps rendering separate from\nstorage details.\nIdentify which layer should know about file paths, and\nwhich should only know about a document identifier.\nSHELF \/ ORIGINAL SAMPLE NOTES 2",
+      "normalizedText" : "\nMake data ownership clear\n\nGive each responsibility an owner. The interface presents state. An application service coordinates a workflow. Persistence commits durable changes.\n\nView Use case Storage\n\nPassing a database object through every screen makes boundaries difficult to change. Passing an immutable document summary keeps rendering separate from storage details.\n\nIdentify which layer should know about file paths, and which should only know about a document identifier.\n",
+      "pageIndex" : 1,
+      "segments" : [
+        {
+          "id" : "8D1072CB-9246-53A5-B622-4343B245BF32",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "Make data ownership clear"
+        },
+        {
+          "id" : "18E0A28C-F198-533C-8992-02190FC2CD15",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "Give each responsibility an owner. The interface presents state. An application service coordinates a workflow. Persistence commits durable changes."
+        },
+        {
+          "id" : "C0657CFA-38F7-5D54-AF74-A16DE5E87553",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "View Use case Storage"
+        },
+        {
+          "id" : "E1545C55-9DC0-5960-AE55-B4A79ECCE3AB",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "Passing a database object through every screen makes boundaries difficult to change. Passing an immutable document summary keeps rendering separate from storage details."
+        },
+        {
+          "id" : "9924398E-0642-534A-A3EB-A25CE5BC9D3B",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "Identify which layer should know about file paths, and which should only know about a document identifier."
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    },
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 03\nCaching is a tradeoff\nA cache avoids repeating work, but introduces a\nsecond representation that can become stale. Decide\nwhat is authoritative, how entries are invalidated and\nhow much memory the cache may use.\nPDF thumbnails are derived data. If a thumbnail\ndisappears, recreate it. Original documents and\nprivate annotations are not disposable caches.\nOriginal Thumbnail Display\nAsk: can this information be recreated without asking\nthe user to do the work again?\nSHELF \/ ORIGINAL SAMPLE NOTES 3",
+      "normalizedText" : "\nCaching is a tradeoff\n\nA cache avoids repeating work, but introduces a second representation that can become stale. Decide what is authoritative, how entries are invalidated and how much memory the cache may use.\n\nPDF thumbnails are derived data. If a thumbnail disappears, recreate it. Original documents and private annotations are not disposable caches.\n\nOriginal Thumbnail Display\n\nAsk: can this information be recreated without asking the user to do the work again?\n",
+      "pageIndex" : 2,
+      "segments" : [
+        {
+          "id" : "B1DB0243-B3CA-5151-9475-BE8413E5F2FA",
+          "importance" : 0.82,
+          "kind" : "definition",
+          "pageIndex" : 2,
+          "text" : "Caching is a tradeoff"
+        },
+        {
+          "id" : "D870060C-E435-58AB-A360-6F1B62AA28F8",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "A cache avoids repeating work, but introduces a second representation that can become stale. Decide what is authoritative, how entries are invalidated and how much memory the cache may use."
+        },
+        {
+          "id" : "B558B194-F235-5BFD-8C70-E9C7582D7F64",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "PDF thumbnails are derived data. If a thumbnail disappears, recreate it. Original documents and private annotations are not disposable caches."
+        },
+        {
+          "id" : "2FFB7EFF-F35C-523F-84BC-BB5FB9758AA2",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "Original Thumbnail Display"
+        },
+        {
+          "id" : "575B1086-962A-588D-B177-EA07C0F02ED8",
+          "importance" : 0.59,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "Ask: can this information be recreated without asking the user to do the work again?"
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    },
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 04\nDesign the failure path\nAn import is not complete when a preview appears. It\nis complete when the required data has been safely\nstored and the operation has been acknowledged.\nA recoverable design considers full storage,\ninterrupted writes, duplicate requests and corrupted\ninput. Error messages must tell the user what\nhappened without claiming that missing work was\nsaved.\nThis is original sample material illustrating general engineering reasoning.\nThe architecture and recovery semantics of this app are documented in the\nsource package.\nReview exercise: sketch a save operation that can fail at\nany step without overwriting the original.\nSHELF \/ ORIGINAL SAMPLE NOTES 4",
+      "normalizedText" : "\nDesign the failure path\n\nAn import is not complete when a preview appears. It is complete when the required data has been safely stored and the operation has been acknowledged.\n\nA recoverable design considers full storage, interrupted writes, duplicate requests and corrupted input. Error messages must tell the user what happened without claiming that missing work was saved.\n\nThis is original sample material illustrating general engineering reasoning. The architecture and recovery semantics of this app are documented in the source package.\n\nReview exercise: sketch a save operation that can fail at any step without overwriting the original.\n",
+      "pageIndex" : 3,
+      "segments" : [
+        {
+          "id" : "9856A9B2-7AEA-5ADB-82EF-B7B59D6D6D6C",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : "Design the failure path"
+        },
+        {
+          "id" : "DC7262FD-B2C3-5C42-8819-CACA3B6B4785",
+          "importance" : 0.8999999999999999,
+          "kind" : "definition",
+          "pageIndex" : 3,
+          "text" : "An import is not complete when a preview appears. It is complete when the required data has been safely stored and the operation has been acknowledged."
+        },
+        {
+          "id" : "DDB2745D-2A13-5C29-98DD-B9C264095FC0",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : "A recoverable design considers full storage, interrupted writes, duplicate requests and corrupted input. Error messages must tell the user what happened without claiming that missing work was saved."
+        },
+        {
+          "id" : "9AFF8C5B-5D96-50C8-AC07-7BC11F600091",
+          "importance" : 0.8999999999999999,
+          "kind" : "definition",
+          "pageIndex" : 3,
+          "text" : "This is original sample material illustrating general engineering reasoning. The architecture and recovery semantics of this app are documented in the source package."
+        },
+        {
+          "id" : "22A7E326-CAF2-5906-BE8A-3BE927609557",
+          "importance" : 0.59,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : "Review exercise: sketch a save operation that can fail at any step without overwriting the original."
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    }
+  ],
+  "repeatedFooters" : [
+    "shelf \/ original sample notes #"
+  ],
+  "repeatedHeaders" : [
+    "shelf samples \/ #"
+  ],
+  "topicScores" : [
+
+  ]
+}

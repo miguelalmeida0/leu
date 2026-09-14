@@ -1,0 +1,177 @@
+[
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|15|48|fact|82",
+    "page": 16,
+    "decision": "ACCEPT",
+    "review": "Operation verbs explain request intent; neither the response nor request payload supplies that method contract.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|48|49|fact|84",
+    "page": 49,
+    "decision": "ACCEPT",
+    "review": "Renewing access credentials explains the stated balance; neither an attack mechanism nor generic session state is refresh-token renewal.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|73|46|fact|75",
+    "page": 74,
+    "decision": "ACCEPT",
+    "review": "The event-triggered system-to-system callback is the webhook mechanism; persistent browser push and bidirectional sockets are distinct protocols.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|82|52|fact|85",
+    "page": 83,
+    "decision": "ACCEPT",
+    "review": "Exception handling, including awaited rejection, explains recovery; destructuring and async syntax alone do not catch exceptions.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|90|52|fact|86",
+    "page": 91,
+    "decision": "ACCEPT",
+    "review": "Preserving existing data and producing new values supplies the identity distinction; primitive classification and in-place mutation do not. Removed map/filter/spread/copy alternatives that could implement the correct mechanism.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|98|52|fact|86",
+    "page": 99,
+    "decision": "ACCEPT",
+    "review": "Accumulation explains totals and aggregates; universal predicate testing and per-element mapping perform different operations.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|107|55|fact|82",
+    "page": 108,
+    "decision": "ACCEPT",
+    "review": "Parent-to-child inputs explain explicit prop flow; effect synchronization and subsequent rendering do not define that flow.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|115|55|fact|91",
+    "page": 116,
+    "decision": "ACCEPT",
+    "review": "Undoing a previous subscription before rerun/unmount addresses duplication and leaks; composing hooks and caching a function reference do not dispose resources.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|123|55|fact|87",
+    "page": 124,
+    "decision": "ACCEPT",
+    "review": "Skipping on shallowly equal props explains the conditional reduction; component description and effect synchronization do not establish memoization.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|132|65|fact|99",
+    "page": 133,
+    "decision": "ACCEPT",
+    "review": "Static elimination of unused exports reduces shipped code; rendering location and view/history changes do not remove exports.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|140|65|fact|106",
+    "page": 141,
+    "decision": "ACCEPT",
+    "review": "Updating views and history without another full HTML request explains the stated navigation behavior; DOM structure and chunking do not supply that routing mechanism.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|148|65|fact|101",
+    "page": 149,
+    "decision": "ACCEPT",
+    "review": "Upward propagation connects descendants to parent handlers; app routing and deferred resource loading do not propagate events.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|157|68|fact|103",
+    "page": 158,
+    "decision": "ACCEPT",
+    "review": "Enqueue-now/process-later separates request work from consumption; environment configuration and service decomposition do not establish that buffering.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|165|68|fact|99",
+    "page": 166,
+    "decision": "ACCEPT",
+    "review": "Focused behavior with controlled dependencies explains unit-test feedback; observing and logging application outputs are different activities. Excluded neighboring testing techniques that could also supply fast feedback.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|172|68|fact|96",
+    "page": 173,
+    "decision": "ACCEPT",
+    "review": "Container images explain reproducible packaging; repeated attempts and delay strategies address transient failures instead.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|206|55|fact|87",
+    "page": 207,
+    "decision": "ACCEPT",
+    "review": "A runtime check with type refinement supplies the guard mechanism; declarations alone have no runtime validation, and any disables checking.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|223|66|fact|104",
+    "page": 224,
+    "decision": "ACCEPT",
+    "review": "A common owner explains one source of shared state; next-state calculation and exposing accessibility state do not choose ownership.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|231|66|fact|106",
+    "page": 232,
+    "decision": "ACCEPT",
+    "review": "Reusable behavior without prescribed styling explains the separation; moving or colocating state addresses ownership rather than appearance.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|239|66|fact|101",
+    "page": 240,
+    "decision": "ACCEPT",
+    "review": "Explicit allowed states and transitions constrain combinations; state location alone does not specify allowed transitions.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|256|55|fact|108",
+    "page": 257,
+    "decision": "ACCEPT",
+    "review": "One coherent reason to change supplies the named principle; generic refactoring and hiding implementation do not impose that responsibility boundary.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|265|42|fact|79",
+    "page": 266,
+    "decision": "ACCEPT",
+    "review": "Duplication/precomputation supplies the stated storage/write versus read tradeoff; migrations and locks do not establish that read optimization. Removed indexing/materialized-view alternatives.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|281|63|fact|104",
+    "page": 282,
+    "decision": "ACCEPT",
+    "review": "Updating both stores on the write path establishes write-through freshness; eviction policy and shared placement do not synchronize writes.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|289|63|fact|102",
+    "page": 290,
+    "decision": "ACCEPT",
+    "review": "Shared networked storage supplies a common cache; miss-population and write synchronization policies do not by themselves share storage across servers.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|306|52|fact|83",
+    "page": 307,
+    "decision": "ACCEPT",
+    "review": "Authoritative evidence/tools/state supplies grounding; plausible unsupported output and machine-readable formatting do not supply factual evidence.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  },
+  {
+    "questionID": "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|323|78|fact|113",
+    "page": 324,
+    "decision": "ACCEPT",
+    "review": "Agreement between integrating components establishes a contract test; privilege restriction and test nondeterminism are unrelated mechanisms.",
+    "scope": "Reviewed this emitted question; does not certify every possible future distractor."
+  }
+]

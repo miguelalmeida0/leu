@@ -1,0 +1,221 @@
+{
+  "connections" : [
+    {
+      "quoteA" : "Find selects the first matching value. Filter creates an\narray containing matching values. Some asks whether\na match exists; every asks whether all visited items\npass.",
+      "quoteB" : "A stable identity hint for items among siblings in a\nrendered list. Correct keys let React match items\nacross insertions, deletions, and reordering.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.1",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.114"
+    },
+    {
+      "quoteA" : "Find selects the first matching value. Filter creates an\narray containing matching values. Some asks whether\na match exists; every asks whether all visited items\npass.",
+      "quoteB" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.1",
+      "sourceB" : "React Notes p.3"
+    },
+    {
+      "quoteA" : "Find selects the first matching value. Filter creates an\narray containing matching values. Some asks whether\na match exists; every asks whether all visited items\npass.",
+      "quoteB" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.1",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.91"
+    },
+    {
+      "quoteA" : "Find selects the first matching value. Filter creates an\narray containing matching values. Some asks whether\na match exists; every asks whether all visited items\npass.",
+      "quoteB" : "A function plus access to the lexical variables from\nthe scope where it was created. Closures power\nencapsulation, callbacks, hooks, and private state\npatterns.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.1",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.84"
+    },
+    {
+      "quoteA" : "Find selects the first matching value. Filter creates an\narray containing matching values. Some asks whether\na match exists; every asks whether all visited items\npass.",
+      "quoteB" : "A copy where the top-level container is new but\nnested object references are reused. It is the hidden\nreason spread can still allow nested mutation.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.1",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.100"
+    },
+    {
+      "quoteA" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned.",
+      "quoteB" : "A faster storage layer that keeps reusable results so\nexpensive work can be avoided. It can reduce latency,\ndatabase load, API cost, and computation.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.3",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.31"
+    },
+    {
+      "quoteA" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned.",
+      "quoteB" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.3",
+      "sourceB" : "React Notes p.3"
+    },
+    {
+      "quoteA" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned.",
+      "quoteB" : "A cache avoids repeating work, but introduces a\nsecond representation that can become stale.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.3",
+      "sourceB" : "System Design p.3"
+    },
+    {
+      "quoteA" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned.",
+      "quoteB" : "A copy where the top-level container is new but\nnested object references are reused. It is the hidden\nreason spread can still allow nested mutation.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.3",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.100"
+    },
+    {
+      "quoteA" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned.",
+      "quoteB" : "An array method that returns whether all elements\npass a predicate. It expresses validation across a\ncollection and stops at the first failure.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.3",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.98"
+    },
+    {
+      "quoteA" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned.",
+      "quoteB" : "An array method that returns the first element\nmatching a predicate, or undefined. It avoids scanning\nmanually when only one match is needed.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.3",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.96"
+    },
+    {
+      "quoteA" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned.",
+      "quoteB" : "An array method that creates a new array containing\nonly elements that pass a predicate. It expresses\nselection without manual loops and mutation.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.3",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.95"
+    },
+    {
+      "quoteA" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned.",
+      "quoteB" : "An array method that returns whether at least one\nelement passes a predicate. It expresses existential\nchecks clearly and short-circuits once true.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.3",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.97"
+    },
+    {
+      "quoteA" : "To update an item without mutating the source array,\ncreate a new array and a new object for the item that\nchanges.",
+      "quoteB" : "An array method that creates a new array containing\nonly elements that pass a predicate. It expresses\nselection without manual loops and mutation.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.4",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.95"
+    },
+    {
+      "quoteA" : "To update an item without mutating the source array,\ncreate a new array and a new object for the item that\nchanges.",
+      "quoteB" : "A copy where the top-level container is new but\nnested object references are reused. It is the hidden\nreason spread can still allow nested mutation.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.4",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.100"
+    },
+    {
+      "quoteA" : "To update an item without mutating the source array,\ncreate a new array and a new object for the item that\nchanges.",
+      "quoteB" : "React's process for comparing previous and next\nelement trees and deciding how to update mounted UI.\nIt preserves or replaces component instances based on\nelement type and keys.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.4",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.113"
+    },
+    {
+      "quoteA" : "To update an item without mutating the source array,\ncreate a new array and a new object for the item that\nchanges.",
+      "quoteB" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.4",
+      "sourceB" : "React Notes p.3"
+    },
+    {
+      "quoteA" : "To update an item without mutating the source array,\ncreate a new array and a new object for the item that\nchanges.",
+      "quoteB" : "An array method that returns whether all elements\npass a predicate. It expresses validation across a\ncollection and stops at the first failure.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.4",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.98"
+    },
+    {
+      "quoteA" : "To update an item without mutating the source array,\ncreate a new array and a new object for the item that\nchanges.",
+      "quoteB" : "An array method that returns the first element\nmatching a predicate, or undefined. It avoids scanning\nmanually when only one match is needed.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.4",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.96"
+    },
+    {
+      "quoteA" : "To update an item without mutating the source array,\ncreate a new array and a new object for the item that\nchanges.",
+      "quoteB" : "An array method that returns whether at least one\nelement passes a predicate. It expresses existential\nchecks clearly and short-circuits once true.",
+      "reason" : "no_shared_proved_relation_or_two_source_bridge",
+      "sourceA" : "JavaScript Deep Dive p.4",
+      "sourceB" : "javascript_midlevel_interview_mobile_mastery p.97"
+    }
+  ],
+  "questions" : [
+    {
+      "page" : 8,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "HTTP"
+    },
+    {
+      "page" : 24,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "JSON"
+    },
+    {
+      "page" : 32,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "Cache hit"
+    },
+    {
+      "page" : 41,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "Stateful system"
+    },
+    {
+      "page" : 58,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "Relational database"
+    },
+    {
+      "page" : 65,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "Race condition"
+    },
+    {
+      "page" : 181,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "Latency"
+    },
+    {
+      "page" : 190,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "Queue"
+    },
+    {
+      "page" : 198,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "KISS"
+    },
+    {
+      "page" : 215,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "Utility types"
+    },
+    {
+      "page" : 249,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "Module"
+    },
+    {
+      "page" : 274,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "Deadlock"
+    },
+    {
+      "page" : 299,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "Tokenizer"
+    },
+    {
+      "page" : 315,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "Inference"
+    },
+    {
+      "page" : 332,
+      "reason" : "no_supported_adjacent_cognitive_transform_or_balanced_options",
+      "title" : "SLO \/ error budget"
+    }
+  ]
+}

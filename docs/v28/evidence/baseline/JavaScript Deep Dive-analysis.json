@@ -1,0 +1,267 @@
+{
+  "algorithmVersion" : 2,
+  "createdAt" : "2026-09-14T14:06:33Z",
+  "documentID" : "BF2C611F-3DC5-5B95-A5C7-337947DB52D6",
+  "extractionVersion" : 5,
+  "fingerprint" : "3607943151800017266",
+  "pages" : [
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 01\nJavaScript Deep Dive\nKnow the return shape\nChoosing an array method starts with the shape you\nneed back. One item, a new array and a yes-or-no\nanswer are different results.\nitems.find(test); \/\/ item or undefined\nitems.filter(test); \/\/ array\nitems.some(test); \/\/ boolean\nitems.every(test); \/\/ boolean\nFind selects the first matching value. Filter creates an\narray containing matching values. Some asks whether\na match exists; every asks whether all visited items\npass.\nA boolean cannot be followed by .map(). Check the\nreturn value before chaining methods.\nSHELF \/ ORIGINAL SAMPLE NOTES 1",
+      "normalizedText" : "\nJavaScript Deep Dive\n\nKnow the return shape\n\nChoosing an array method starts with the shape you need back. One item, a new array and a yes-or-no answer are different results.\n\nitems.find(test); \/\/ item or undefined\nitems.filter(test); \/\/ array\nitems.some(test); \/\/ boolean\nitems.every(test); \/\/ boolean\n\nFind selects the first matching value. Filter creates an array containing matching values. Some asks whether a match exists; every asks whether all visited items pass.\n\nA boolean cannot be followed by .map(). Check the return value before chaining methods.\n",
+      "pageIndex" : 0,
+      "segments" : [
+        {
+          "id" : "1401D497-5AEA-51DF-A177-31BC8066F32A",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "JavaScript Deep Dive"
+        },
+        {
+          "id" : "6B4A7410-EAE8-5F83-A36E-F32B02835C34",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "Know the return shape"
+        },
+        {
+          "id" : "265E8A6F-25AE-5157-A92A-F625E6781C44",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "Choosing an array method starts with the shape you need back. One item, a new array and a yes-or-no answer are different results."
+        },
+        {
+          "id" : "903D9972-A7FE-54E5-B30B-1E768083DA84",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "items.find(test); \/\/ item or undefined items.filter(test); \/\/ array items.some(test); \/\/ boolean items.every(test); \/\/ boolean"
+        },
+        {
+          "id" : "DAAC3318-631D-5D1F-AC24-571ABE0DADE0",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "Find selects the first matching value. Filter creates an array containing matching values. Some asks whether a match exists; every asks whether all visited items pass."
+        },
+        {
+          "id" : "3245B8CF-9C4A-50C5-8C73-94AD77BAD0A6",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "A boolean cannot be followed by .map(). Check the return value before chaining methods."
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    },
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 02\nReturn is not decoration\nWith an arrow function, an expression body returns its\nexpression. A block body needs an explicit return\nstatement.\nconst a = [1, 2].map(n => n * 2);\n\/\/ [2, 4]\nconst b = [1, 2].map(n => { n * 2; });\n\/\/ [undefined, undefined]\nThe multiplication in the second example happens,\nbut its value is not returned by the callback. Map\ncollects the callback results.\nClose the document and explain this bug out loud\nbefore checking the code again.\nSHELF \/ ORIGINAL SAMPLE NOTES 2",
+      "normalizedText" : "\nReturn is not decoration\n\nWith an arrow function, an expression body returns its expression. A block body needs an explicit return statement.\n\nconst a = [1, 2].map(n => n * 2);\n\/\/ [2, 4]\n\nconst b = [1, 2].map(n => { n * 2; });\n\/\/ [undefined, undefined]\n\nThe multiplication in the second example happens, but its value is not returned by the callback. Map collects the callback results.\n\nClose the document and explain this bug out loud before checking the code again.\n",
+      "pageIndex" : 1,
+      "segments" : [
+        {
+          "id" : "930A8188-67B9-56EE-83B6-E9B5D2B38593",
+          "importance" : 0.82,
+          "kind" : "definition",
+          "pageIndex" : 1,
+          "text" : "Return is not decoration"
+        },
+        {
+          "id" : "ED49B04F-7AE8-52F8-A008-ED6B74DB3E2F",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "With an arrow function, an expression body returns its expression. A block body needs an explicit return statement."
+        },
+        {
+          "id" : "6EB7BF61-4F33-507C-B98E-EF7E2B7BFCD3",
+          "importance" : 0.48,
+          "kind" : "code",
+          "pageIndex" : 1,
+          "text" : "const a = [1, 2].map(n => n * 2);"
+        },
+        {
+          "id" : "2672BE51-D35E-5DDB-935C-4548AB69ECCC",
+          "importance" : 0.48,
+          "kind" : "code",
+          "pageIndex" : 1,
+          "text" : "\/\/ [2, 4]"
+        },
+        {
+          "id" : "B379A866-6374-51E6-9F11-28ED62974F9B",
+          "importance" : 0.48,
+          "kind" : "code",
+          "pageIndex" : 1,
+          "text" : "const b = [1, 2].map(n => { n * 2; });"
+        },
+        {
+          "id" : "79FAD43E-F07C-5EBD-93DD-0B54A35AF872",
+          "importance" : 0.48,
+          "kind" : "code",
+          "pageIndex" : 1,
+          "text" : "\/\/ [undefined, undefined]"
+        },
+        {
+          "id" : "C841560A-E57C-5B87-88D5-56E1E870320C",
+          "importance" : 0.8999999999999999,
+          "kind" : "definition",
+          "pageIndex" : 1,
+          "text" : "The multiplication in the second example happens, but its value is not returned by the callback. Map collects the callback results."
+        },
+        {
+          "id" : "302FB2A4-F8F6-56EA-AC0E-0BE8C05EB1CF",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "Close the document and explain this bug out loud before checking the code again."
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    },
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 03\nA closure keeps access\nA closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned.\nfunction counter() {\nlet value = 0;\nreturn () => {\nvalue += 1;\nreturn value;\n};\n}\nconst next = counter();\nnext(); \/\/ 1\nnext(); \/\/ 2\nTwo separate calls to counter() create two independent\nenvironments.\nSHELF \/ ORIGINAL SAMPLE NOTES 3",
+      "normalizedText" : "\nA closure keeps access\n\nA closure is a function together with access to its surrounding lexical environment. The function can keep accessing that environment after the outer call has returned.\n\nfunction counter() {\nlet value = 0;\nreturn () => {\nvalue += 1;\nreturn value;\n};\n}\nconst next = counter();\nnext(); \/\/ 1\nnext(); \/\/ 2\n\nTwo separate calls to counter() create two independent environments.\n",
+      "pageIndex" : 2,
+      "segments" : [
+        {
+          "id" : "84FD5692-CE3E-574C-A19D-D7ABE8E1DBB5",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "A closure keeps access"
+        },
+        {
+          "id" : "B7C0628C-A4CA-578E-9199-301A78026EE3",
+          "importance" : 0.8999999999999999,
+          "kind" : "definition",
+          "pageIndex" : 2,
+          "text" : "A closure is a function together with access to its surrounding lexical environment. The function can keep accessing that environment after the outer call has returned."
+        },
+        {
+          "id" : "243B296D-6AD7-52C0-AE83-43C55A308EDD",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "function counter() {"
+        },
+        {
+          "id" : "39DF5F63-CEAF-554E-94F9-EB50044756A7",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "let value = 0;"
+        },
+        {
+          "id" : "21F3A37B-1E38-56B3-BEF7-ECCA8E5E3176",
+          "importance" : 0.48,
+          "kind" : "code",
+          "pageIndex" : 2,
+          "text" : "return () => {"
+        },
+        {
+          "id" : "01454ADB-109F-538B-9800-B037FF84AC64",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "value += 1;"
+        },
+        {
+          "id" : "D980401D-1F26-57F6-936D-551DFFEF6BA1",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "return value;"
+        },
+        {
+          "id" : "F4424EFE-5DCE-5816-AC24-96CC22C2B323",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "};"
+        },
+        {
+          "id" : "53721BC4-167C-5837-9B3A-382DBD67FF9C",
+          "importance" : 0.48,
+          "kind" : "code",
+          "pageIndex" : 2,
+          "text" : "const next = counter();"
+        },
+        {
+          "id" : "C32129B8-4631-508F-A979-F6B337A04798",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "next(); \/\/ 1 next(); \/\/ 2"
+        },
+        {
+          "id" : "CDBDA6B5-2242-534A-A0D1-48E7CFC0E20F",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "Two separate calls to counter() create two independent environments."
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    },
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 04\nChange a value, keep the original\nTo update an item without mutating the source array,\ncreate a new array and a new object for the item that\nchanges.\nconst updated = games.map(game =>\ngame.title === \"Eclipse\"\n? { ...game, favorite: true }\n: game\n);\nUnchanged objects are reused here. This is a shallow\nupdate, not a deep clone of every nested object.\nPrimary reading: developer.mozilla.org\/en-US\/docs\/Web\/JavaScript\/Referen\nce\/Global_Objects\/Array\ndeveloper.mozilla.org\/en-US\/docs\/Web\/JavaScript\/Guide\/Closures\nSHELF \/ ORIGINAL SAMPLE NOTES 4",
+      "normalizedText" : "\nChange a value, keep the original\n\nTo update an item without mutating the source array, create a new array and a new object for the item that changes.\n\nconst updated = games.map(game =>\ngame.title === \"Eclipse\"\n? { ...game, favorite: true }\n: game\n);\n\nUnchanged objects are reused here. This is a shallow update, not a deep clone of every nested object.\n\nPrimary reading: developer.mozilla.org\/en-US\/docs\/Web\/JavaScript\/Referen ce\/Global_Objects\/Array developer.mozilla.org\/en-US\/docs\/Web\/JavaScript\/Guide\/Closures\n",
+      "pageIndex" : 3,
+      "segments" : [
+        {
+          "id" : "AB741ED4-27A2-5BC6-985A-3859ADAE9DE5",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : "Change a value, keep the original"
+        },
+        {
+          "id" : "68199586-7FEB-514F-B078-030BD11AF514",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : "To update an item without mutating the source array, create a new array and a new object for the item that changes."
+        },
+        {
+          "id" : "6951AD8E-14D9-5AE7-9357-D811F14AE95C",
+          "importance" : 0.59,
+          "kind" : "code",
+          "pageIndex" : 3,
+          "text" : "const updated = games.map(game => game.title === \"Eclipse\" ? { ...game, favorite: true } : game"
+        },
+        {
+          "id" : "0F337D04-B59C-5ABB-8F80-68C5C9832BFE",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : ");"
+        },
+        {
+          "id" : "F9ABEF6C-08A4-58B5-B431-6763708F0E92",
+          "importance" : 0.8999999999999999,
+          "kind" : "definition",
+          "pageIndex" : 3,
+          "text" : "Unchanged objects are reused here. This is a shallow update, not a deep clone of every nested object."
+        },
+        {
+          "id" : "6236D961-A28E-5F80-A67B-DCFB7ECCB473",
+          "importance" : 0.59,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : "Primary reading: developer.mozilla.org\/en-US\/docs\/Web\/JavaScript\/Referen ce\/Global_Objects\/Array developer.mozilla.org\/en-US\/docs\/Web\/JavaScript\/Guide\/Closures"
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    }
+  ],
+  "repeatedFooters" : [
+    "shelf \/ original sample notes #"
+  ],
+  "repeatedHeaders" : [
+    "shelf samples \/ #"
+  ],
+  "topicScores" : [
+
+  ]
+}

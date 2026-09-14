@@ -1,0 +1,186 @@
+[
+  {
+    "page": 8,
+    "title": "HTTP",
+    "factualBlock": [
+      "The request-response protocol used by browsers,\napps, and servers to exchange web data. It is the basic\nlanguage behind APIs, pages, images, and most web\ntraffic.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 16,
+    "title": "HTTP methods",
+    "factualBlock": [
+      "Standard verbs that express what operation a request\nintends to perform. They make API contracts\npredictable and communicate semantics to clients,\ncaches, and infrastructure.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 24,
+    "title": "JSON",
+    "factualBlock": [
+      "A lightweight text format for structured data using\nobjects, arrays, strings, numbers, booleans, and null.\nIt is easy for humans to read and common across web\nAPIs.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 41,
+    "title": "Stateful system",
+    "factualBlock": [
+      "A system whose behavior depends on state\nremembered across interactions. Many real systems\nneed durable or connection-specific state; the\nchallenge is managing it safely.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 58,
+    "title": "Relational database",
+    "factualBlock": [
+      "A database model built around tables, rows, columns,\nrelationships, and constraints. It is excellent when data\nrelationships and transactional consistency matter.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 91,
+    "title": "Immutability",
+    "factualBlock": [
+      "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 108,
+    "title": "Props",
+    "factualBlock": [
+      "Inputs passed from a parent component to a child.\nThey create explicit data flow and reusable\ncomponents.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 116,
+    "title": "Effect cleanup",
+    "factualBlock": [
+      "The function returned from an effect to undo the\nprevious subscription/resource before rerun or\nunmount. It prevents duplicate listeners, stale\nsubscriptions, and leaks.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 124,
+    "title": "React.memo",
+    "factualBlock": [
+      "A wrapper that can skip rerendering a component\nwhen its props are shallowly equal. It can reduce\nexpensive child renders when props are stable.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 133,
+    "title": "Tree shaking",
+    "factualBlock": [
+      "Build-time elimination of unused module exports\nwhen static analysis allows it. It reduces shipped\nJavaScript without manual deletion.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 141,
+    "title": "Client-side routing",
+    "factualBlock": [
+      "Changing views and history in JavaScript without\nrequesting a full new HTML document each time. It\nmakes SPA navigation fast while preserving URLs.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 166,
+    "title": "Unit test",
+    "factualBlock": [
+      "A focused test of a small behavior, usually with\ncontrolled dependencies. It gives fast feedback on\nlogic and edge cases.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 173,
+    "title": "Docker",
+    "factualBlock": [
+      "A platform for packaging and running applications in\nisolated containers based on images. It makes\ndependencies and runtime environment reproducible\nacross machines.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 181,
+    "title": "Latency",
+    "factualBlock": [
+      "The time required for an operation or request to\ncomplete. Users feel delay directly, and tail latency\noften dominates perceived quality.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 198,
+    "title": "KISS",
+    "factualBlock": [
+      "Keep It Simple: prefer the simplest design that\ncorrectly satisfies current requirements. Simple\nsystems are easier to understand, test, operate, and\nchange.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 215,
+    "title": "Utility types",
+    "factualBlock": [
+      "Built-in helpers such as Partial, Pick, Omit, Record,\nRequired, and Readonly. They derive related types\nwithout duplicating interfaces.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 232,
+    "title": "Headless component",
+    "factualBlock": [
+      "Reusable behavior and accessibility without\nprescribing final visual styling. It separates interaction\nlogic from product-specific appearance.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 249,
+    "title": "Module",
+    "factualBlock": [
+      "A cohesive unit that exposes a public interface while\nhiding internal implementation details. Modules\nreduce the amount of code a developer must\nunderstand at once.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 266,
+    "title": "Denormalization",
+    "factualBlock": [
+      "Intentionally duplicate or precompute data to make\nreads simpler or faster. It trades write complexity/\nstorage for read performance.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 274,
+    "title": "Deadlock",
+    "factualBlock": [
+      "Two transactions each hold resources the other\nneeds, so neither can proceed. Concurrent locking can\ncreate circular waits.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 307,
+    "title": "Grounding",
+    "factualBlock": [
+      "Constrain or support model output with authoritative\nevidence, tools, or state. It reduces unsupported\ninvention and makes outputs verifiable.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 315,
+    "title": "Inference",
+    "factualBlock": [
+      "Running a trained model on input to produce\npredictions/tokens. This is the production-time\ncompute path users experience.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  },
+  {
+    "page": 324,
+    "title": "Contract test",
+    "factualBlock": [
+      "Verifies that two services/components agree on their\nintegration contract. It catches breaking API changes\nwithout requiring a full end-to-end environment.\n"
+    ],
+    "reason": "Title repeats elsewhere on the page; whole-page unique-span resolution rejected it. Fixed by exact unique title resolution inside the pre-factual card header only."
+  }
+]

@@ -1,0 +1,232 @@
+{
+  "algorithmVersion" : 2,
+  "createdAt" : "2026-09-14T14:06:32Z",
+  "documentID" : "028DDE79-065F-5838-9E18-9B2EA72A5D0D",
+  "extractionVersion" : 5,
+  "fingerprint" : "12391381683832827782",
+  "pages" : [
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 01\nReact Notes\nA clearer model for React\nA component describes the interface for a particular\nset of props, state and context. Rendering calculates\nthat description; committing applies the necessary\nchanges to the screen.\nInputs Render Commit\nKeep rendering pure: do not change unrelated objects,\nstart requests or subscribe to events while calculating\nthe interface.\nReading question: what belongs in rendering, and what\nbelongs in an event handler?\nSHELF \/ ORIGINAL SAMPLE NOTES 1",
+      "normalizedText" : "\nReact Notes\n\nA clearer model for React\n\nA component describes the interface for a particular set of props, state and context. Rendering calculates that description; committing applies the necessary changes to the screen.\n\nInputs Render Commit\n\nKeep rendering pure: do not change unrelated objects, start requests or subscribe to events while calculating the interface.\n\nReading question: what belongs in rendering, and what belongs in an event handler?\n",
+      "pageIndex" : 0,
+      "segments" : [
+        {
+          "id" : "2A43748A-6481-5918-ADA3-70B3B6167E8F",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "React Notes"
+        },
+        {
+          "id" : "8BE92157-F6DA-5A22-96F8-F2B6980295B1",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "A clearer model for React"
+        },
+        {
+          "id" : "EFFBC74F-E99B-5C7A-9DF4-868FE02CB5CF",
+          "importance" : 0.8999999999999999,
+          "kind" : "definition",
+          "pageIndex" : 0,
+          "text" : "A component describes the interface for a particular set of props, state and context. Rendering calculates that description; committing applies the necessary changes to the screen."
+        },
+        {
+          "id" : "79D48C04-7493-5E22-99AB-AB7D666E650F",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "Inputs Render Commit"
+        },
+        {
+          "id" : "D2EE3298-FE39-5E8A-93C1-652DEF9F62CF",
+          "importance" : 0.59,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "Keep rendering pure: do not change unrelated objects, start requests or subscribe to events while calculating the interface."
+        },
+        {
+          "id" : "2EAFD543-35F9-51BF-AEE8-937AAFFB8302",
+          "importance" : 0.59,
+          "kind" : "paragraph",
+          "pageIndex" : 0,
+          "text" : "Reading question: what belongs in rendering, and what belongs in an event handler?"
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    },
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 02\nState is a snapshot\nSetting state requests another render. It does not\nchange the state variable inside the event handler that\nis already running.\nsetCount(count + 1);\nconsole.log(count);\n\/\/ Still the current render's value.\nWhen the next value depends on the previous queued\nvalue, use a functional updater.\nsetCount(previous => previous + 1);\nsetCount(previous => previous + 1);\nThe updater receives the previous pending value, not a\nmagically mutated local variable.\nSHELF \/ ORIGINAL SAMPLE NOTES 2",
+      "normalizedText" : "\nState is a snapshot\n\nSetting state requests another render. It does not change the state variable inside the event handler that is already running.\n\nsetCount(count + 1);\nconsole.log(count);\n\/\/ Still the current render's value.\n\nWhen the next value depends on the previous queued value, use a functional updater.\n\nsetCount(previous => previous + 1);\nsetCount(previous => previous + 1);\n\nThe updater receives the previous pending value, not a magically mutated local variable.\n",
+      "pageIndex" : 1,
+      "segments" : [
+        {
+          "id" : "981F0E4B-A60C-5259-81CF-28673E8B2E32",
+          "importance" : 0.82,
+          "kind" : "definition",
+          "pageIndex" : 1,
+          "text" : "State is a snapshot"
+        },
+        {
+          "id" : "17587484-4DF7-5051-B034-782F56310F94",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "Setting state requests another render. It does not change the state variable inside the event handler that is already running."
+        },
+        {
+          "id" : "92069E41-6AD0-5C91-80C3-EAE6D8DCCA9C",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "setCount(count + 1);"
+        },
+        {
+          "id" : "6A2A5896-480B-53EF-A17E-F91F4D7501D4",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "console.log(count);"
+        },
+        {
+          "id" : "8F92915A-5D46-5F16-8C19-E6868B82BBD3",
+          "importance" : 0.48,
+          "kind" : "code",
+          "pageIndex" : 1,
+          "text" : "\/\/ Still the current render's value."
+        },
+        {
+          "id" : "DA567338-6E25-5CD6-B065-441C95F8CDD1",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "When the next value depends on the previous queued value, use a functional updater."
+        },
+        {
+          "id" : "93668337-35D4-54FF-BA9F-E8468C6315F8",
+          "importance" : 0.48,
+          "kind" : "code",
+          "pageIndex" : 1,
+          "text" : "setCount(previous => previous + 1);"
+        },
+        {
+          "id" : "93668337-35D4-54FF-BA9F-E8468C6315F8",
+          "importance" : 0.48,
+          "kind" : "code",
+          "pageIndex" : 1,
+          "text" : "setCount(previous => previous + 1);"
+        },
+        {
+          "id" : "202C1EAD-3FDD-53AD-808D-F6CE44C470D8",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 1,
+          "text" : "The updater receives the previous pending value, not a magically mutated local variable."
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    },
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 03\nKeys describe identity\nA stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another.\nitems.map(item => (\n<Row key={item.id} item={item} \/>\n));\nAn array index can be a poor key when items move,\nare inserted or removed. A freshly generated random\nkey also destroys continuity between renders.\nPractice: explain why editing a row can reveal a bad key\nchoice.\nSHELF \/ ORIGINAL SAMPLE NOTES 3",
+      "normalizedText" : "\nKeys describe identity\n\nA stable key helps React match an item to its previous instance within a list of siblings. Reordering should not make one item inherit the local state of another.\n\nitems.map(item => (\n<Row key={item.id} item={item} \/>\n));\n\nAn array index can be a poor key when items move, are inserted or removed. A freshly generated random key also destroys continuity between renders.\n\nPractice: explain why editing a row can reveal a bad key choice.\n",
+      "pageIndex" : 2,
+      "segments" : [
+        {
+          "id" : "70F45CED-F3F8-55BD-8AC6-E53DA614C9A0",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "Keys describe identity"
+        },
+        {
+          "id" : "FD509B23-BA5C-5560-A376-471DC107A1F1",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "A stable key helps React match an item to its previous instance within a list of siblings. Reordering should not make one item inherit the local state of another."
+        },
+        {
+          "id" : "508CAE7B-9538-55E8-A152-B8705AB06687",
+          "importance" : 0.5599999999999999,
+          "kind" : "code",
+          "pageIndex" : 2,
+          "text" : "items.map(item => ( <Row key={item.id} item={item} \/>"
+        },
+        {
+          "id" : "13E0835B-5AC6-5F9B-9917-1FCF57D38C48",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "));"
+        },
+        {
+          "id" : "0D48BA1F-F795-5493-B66C-F427D2E85AF4",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "An array index can be a poor key when items move, are inserted or removed. A freshly generated random key also destroys continuity between renders."
+        },
+        {
+          "id" : "08F79AA2-FDB9-5696-97B4-4F1447458ECB",
+          "importance" : 0.59,
+          "kind" : "paragraph",
+          "pageIndex" : 2,
+          "text" : "Practice: explain why editing a row can reveal a bad key choice."
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    },
+    {
+      "canonicalText" : "SHELF SAMPLES \/ 04\nReturn to the source\nThese are original, short sample notes, included so\nyou can try Shelf without importing anything. They\nare not a complete React course.\nUse a bookmark to keep this page. Select a useful\nsentence and highlight it, or add a note describing it in\nyour own words.\nPrimary reading: react.dev\/learn\/render-and-commit\nreact.dev\/learn\/state-as-a-snapshot\nreact.dev\/learn\/queueing-a-series-of-state-updates\nreact.dev\/learn\/rendering-lists\nYour highlights belong to you. Shelf keeps them\nseparate from the original PDF.\nSHELF \/ ORIGINAL SAMPLE NOTES 4",
+      "normalizedText" : "\nReturn to the source\n\nThese are original, short sample notes, included so you can try Shelf without importing anything. They are not a complete React course.\n\nUse a bookmark to keep this page. Select a useful sentence and highlight it, or add a note describing it in your own words.\n\nPrimary reading: react.dev\/learn\/render-and-commit react.dev\/learn\/state-as-a-snapshot react.dev\/learn\/queueing-a-series-of-state-updates react.dev\/learn\/rendering-lists\n\nYour highlights belong to you. Shelf keeps them separate from the original PDF.\n",
+      "pageIndex" : 3,
+      "segments" : [
+        {
+          "id" : "5CC34C9E-8C21-5988-A05B-96237D59FFA9",
+          "importance" : 0.48,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : "Return to the source"
+        },
+        {
+          "id" : "4DAD8DEE-CFC7-5196-8CB5-5160F72B7B21",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : "These are original, short sample notes, included so you can try Shelf without importing anything. They are not a complete React course."
+        },
+        {
+          "id" : "727FBCC9-D691-5137-9170-D8AD68FCF1E8",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : "Use a bookmark to keep this page. Select a useful sentence and highlight it, or add a note describing it in your own words."
+        },
+        {
+          "id" : "DC924170-62B7-57EE-A2C8-1CA3D1C2F4ED",
+          "importance" : 0.59,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : "Primary reading: react.dev\/learn\/render-and-commit react.dev\/learn\/state-as-a-snapshot react.dev\/learn\/queueing-a-series-of-state-updates react.dev\/learn\/rendering-lists"
+        },
+        {
+          "id" : "709EEC09-BB27-5893-9C99-744A0DF12F28",
+          "importance" : 0.5599999999999999,
+          "kind" : "paragraph",
+          "pageIndex" : 3,
+          "text" : "Your highlights belong to you. Shelf keeps them separate from the original PDF."
+        }
+      ],
+      "spatialIntegrityPassed" : true
+    }
+  ],
+  "repeatedFooters" : [
+    "shelf \/ original sample notes #"
+  ],
+  "repeatedHeaders" : [
+    "shelf samples \/ #"
+  ],
+  "topicScores" : [
+
+  ]
+}

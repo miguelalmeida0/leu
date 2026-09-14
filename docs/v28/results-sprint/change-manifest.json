@@ -1,0 +1,60 @@
+{
+  "scope": "Emergency results sprint only; no claim of a clean Git baseline.",
+  "code": [
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/ContextualClaimComposer.swift",
+      "sha256": "5e32e9ccf139f9ede2ed8345514c1761efee41ab41506aa41fc92d70209e17f3"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/QuestionV4.swift",
+      "sha256": "4e51cf9e416dbe457b6e7cb83fac73994cdf3f46fd84d0179ee4f9cc8fe711b6"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/TechnicalConceptCatalog.swift",
+      "sha256": "15f4edd8485d5a10efcbca66967c9f4803d5185ee5b66244003183c8931b63f9"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/NormalizedConceptRelation.swift",
+      "sha256": "6393229603dcc271c602a9a340279a5fe0dffa8d4b6679a0002ff03a509cf499"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/TeachLeu/TeachLeuV2.swift",
+      "sha256": "fd11580a1ca9a731add89207cfe2d9a1ef1f68fc45dbbd2a04ef1274e71d98a7"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/TeachLeu/TeachLeu.swift",
+      "sha256": "29f247938e823fbc175cee14bed7c03651d37aba73457226660b2600103641f2"
+    },
+    {
+      "path": "scripts/run-v28-results.py",
+      "sha256": "a9bab9aab066c9ae537354a2f8a345f14d088ca99ca088b9f96a59db76cea5d6"
+    },
+    {
+      "path": "scripts/v28-results.swift",
+      "sha256": "44ea4dfd1fa9d467f3112d4f87cbb60dfb69a473614c329b1072f621b79ab40e"
+    },
+    {
+      "path": "scripts/write-v28-results-report.py",
+      "sha256": "7c9fdbbf751a4802054128b324ee325ee705c4c93c74673e58a3f792a1ddc9ef"
+    }
+  ],
+  "evidenceDirectory": "docs/v28/results-sprint",
+  "evidence": [
+    "RESULTS.md",
+    "admission-protections-before.json",
+    "admission-protections.json",
+    "claim-rejection-diagnosis.json",
+    "claim-yield-initial17.json",
+    "claim-yield.json",
+    "connections.json",
+    "core-build.log",
+    "question-review.json",
+    "questions-initial26.json",
+    "questions.json",
+    "rejections.json",
+    "results-build.log",
+    "results.log",
+    "teach-fixtures.json",
+    "teach-paraphrase.json"
+  ]
+}

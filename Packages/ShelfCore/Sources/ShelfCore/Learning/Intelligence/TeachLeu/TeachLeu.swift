@@ -41,8 +41,8 @@ public struct TeachLeuResult: Codable, Equatable, Sendable {
 }
 
 /// The model only suggests pairs. No free-form model judgement is displayed.
-/// Exact assertions, a literal polarity reversal, and a narrow audited identity
-/// paraphrase are the supported proofs. Other language remains unadjudicated.
+/// Exact assertions, literal polarity reversal and bounded source-verified
+/// semantic contracts are supported. Other language remains unadjudicated.
 public enum TeachLeuValidator {
     public static func evaluate(_ explanation: String, source: IntelligenceSource,
                                 proposals: [ClaimAlignment] = [], backend: String = "local source comparison") -> TeachLeuResult {
@@ -66,11 +66,16 @@ public enum TeachLeuValidator {
                         explanation: "Your wording reverses this source statement: " + claim.evidence.text))
                     matched = true; break
                 }
-                if identityParaphrase(expressed, claim: claim) {
+                let semantic = TeachLeuV2.compare(learner.text, sourceText: claim.evidence.text, topic: claim.concept)
+                if semantic.status == .supported {
                     captured.append(.init(claimID: claim.id, learnerText: learner.text,
-                        description: "You connected keys with recognizing the same list item.", complete: false))
-                    // Does not prove stability or sibling scope: the full source
-                    // claim remains in Worth adding rather than marking it covered.
+                        description: semantic.explanation, complete: false))
+                    // A matched core relation does not prove every clause of a
+                    // multi-sentence source packet. Keep that packet worth adding.
+                    matched = true; break
+                }
+                if semantic.status == .contradicted || semantic.status == .overgeneralized || semantic.status == .incomplete {
+                    challenged.append(.init(learnerText: learner.text, sourceClaimID: claim.id, explanation: semantic.explanation))
                     matched = true; break
                 }
             }
@@ -92,11 +97,6 @@ public enum TeachLeuValidator {
         // differs and every other character must agree with the canonical claim.
         guard source.components(separatedBy: " not ").count == 2 else { return false }
         return learner == source.replacingOccurrences(of: " not ", with: " ")
-    }
-    private static func identityParaphrase(_ learner: String, claim: GroundedQuestionClaim) -> Bool {
-        guard claim.concept == "stable key", !claim.negated,
-              normalize(claim.evidence.text).contains("helps react match an item to its previous instance within a list of siblings") else { return false }
-        return learner.range(of: #"^(?:stable )?keys (?:tell|help) react (?:which item is which|recognize the same item)(?: when a list changes)?$"#, options: .regularExpression) != nil
     }
 }
 

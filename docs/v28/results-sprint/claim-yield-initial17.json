@@ -1,0 +1,3230 @@
+{
+  "claimPages" : 17,
+  "pages" : [
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 8,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 16,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 24,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "A cache lookup that finds a usable stored value. Hits\nare where the latency and load savings come from."
+      ],
+      "page" : 32,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 63,
+                "location" : 297
+              },
+              "text" : "Redis GET user:42 returns data, so no database\nquery is needed."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 140,
+                "location" : 541
+              },
+              "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 025 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 113,
+                "location" : 402
+              },
+              "text" : "A cache hit means the requested item is available and\nvalid in cache, so the slower backing store can be\nskipped."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 69,
+                "location" : 205
+              },
+              "text" : "You check the snack drawer and the cookie is\nactually there. Victory."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 103,
+                "location" : 79
+              },
+              "text" : "A cache lookup that finds a usable stored value. Hits\nare where the latency and load savings come from."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 31,
+          "section" : "025 W E B , N E T WO R K I N G & D E L I V E RY",
+          "title" : "Cache hit",
+          "titleSpan" : {
+            "range" : {
+              "length" : 9,
+              "location" : 48
+            },
+            "text" : "Cache hit"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 63,
+                    "location" : 297
+                  },
+                  "text" : "Redis GET user:42 returns data, so no database\nquery is needed."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 140,
+                    "location" : 541
+                  },
+                  "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 025 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 113,
+                    "location" : 402
+                  },
+                  "text" : "A cache hit means the requested item is available and\nvalid in cache, so the slower backing store can be\nskipped."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 69,
+                    "location" : 205
+                  },
+                  "text" : "You check the snack drawer and the cookie is\nactually there. Victory."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 103,
+                    "location" : 79
+                  },
+                  "text" : "A cache lookup that finds a usable stored value. Hits\nare where the latency and load savings come from."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 31,
+              "section" : "025 W E B , N E T WO R K I N G & D E L I V E RY",
+              "title" : "Cache hit",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 9,
+                  "location" : 48
+                },
+                "text" : "Cache hit"
+              }
+            },
+            "composedStatement" : "Cache hit: A cache lookup that finds a usable stored value. Hits are where the latency and load savings come from.",
+            "families" : [
+              "definition"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 103,
+                "location" : 79
+              },
+              "text" : "A cache lookup that finds a usable stored value. Hits\nare where the latency and load savings come from."
+            },
+            "references" : [
+
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 48,
+                  "location" : 79
+                },
+                "text" : "A cache lookup that finds a usable stored value."
+              },
+              {
+                "range" : {
+                  "length" : 54,
+                  "location" : 128
+                },
+                "text" : "Hits\nare where the latency and load savings come from."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Cache hit"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 41,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again. It\nbalances user convenience with short-lived access\ncredentials."
+      ],
+      "page" : 49,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 92,
+                "location" : 403
+              },
+              "text" : "When access token expires, client sends refresh\ntoken to auth server for a new access token."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 140,
+                "location" : 733
+              },
+              "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 041 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 170,
+                "location" : 537
+              },
+              "text" : "A refresh token is higher-value and longer-lived than an\naccess token, so I protect it carefully, rotate it where\nappropriate, and restrict its use to the token endpoint."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 107,
+                "location" : 273
+              },
+              "text" : "Your train season pass lets you print today's ticket;\nyou do not wave the season pass at every ticket\ngate."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 166,
+                "location" : 84
+              },
+              "text" : "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again. It\nbalances user convenience with short-lived access\ncredentials."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 48,
+          "section" : "041 S E C U R I T Y, I D E N T I T Y & T R U S T",
+          "title" : "Refresh token",
+          "titleSpan" : {
+            "range" : {
+              "length" : 13,
+              "location" : 49
+            },
+            "text" : "Refresh token"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 92,
+                    "location" : 403
+                  },
+                  "text" : "When access token expires, client sends refresh\ntoken to auth server for a new access token."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 140,
+                    "location" : 733
+                  },
+                  "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 041 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 170,
+                    "location" : 537
+                  },
+                  "text" : "A refresh token is higher-value and longer-lived than an\naccess token, so I protect it carefully, rotate it where\nappropriate, and restrict its use to the token endpoint."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 107,
+                    "location" : 273
+                  },
+                  "text" : "Your train season pass lets you print today's ticket;\nyou do not wave the season pass at every ticket\ngate."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 166,
+                    "location" : 84
+                  },
+                  "text" : "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again. It\nbalances user convenience with short-lived access\ncredentials."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 48,
+              "section" : "041 S E C U R I T Y, I D E N T I T Y & T R U S T",
+              "title" : "Refresh token",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 13,
+                  "location" : 49
+                },
+                "text" : "Refresh token"
+              }
+            },
+            "composedStatement" : "Refresh token: A longer-lived credential used to obtain new access tokens without asking the user to sign in again. It balances user convenience with short-lived access credentials.",
+            "families" : [
+              "definition",
+              "constraint"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 166,
+                "location" : 84
+              },
+              "text" : "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again. It\nbalances user convenience with short-lived access\ncredentials."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "Refresh token"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 100,
+                  "location" : 84
+                },
+                "text" : "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again."
+              },
+              {
+                "range" : {
+                  "length" : 65,
+                  "location" : 185
+                },
+                "text" : "It\nbalances user convenience with short-lived access\ncredentials."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Refresh token"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 58,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "A bug where correctness depends on the\nunpredictable timing\/interleaving of concurrent\noperations. Concurrent requests can both make\ndecisions from stale state."
+      ],
+      "page" : 65,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 103,
+                "location" : 379
+              },
+              "text" : "Stock=1; requests A and B both read 1 before\neither decrements. Use transaction\/locking\/\natomic update."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 140,
+                "location" : 702
+              },
+              "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 056 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 152,
+                "location" : 524
+              },
+              "text" : "A race condition occurs when concurrent operations\naccess shared state without sufficient coordination. I fix\nthe invariant, not just add random delays."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 94,
+                "location" : 262
+              },
+              "text" : "Two people see the last donut, both shout \"mine\",\nand both somehow leave with a donut receipt."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 160,
+                "location" : 79
+              },
+              "text" : "A bug where correctness depends on the\nunpredictable timing\/interleaving of concurrent\noperations. Concurrent requests can both make\ndecisions from stale state."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 64,
+          "section" : "056 DATA B AS E S & DATA I N T E G R I T Y",
+          "title" : "Race condition",
+          "titleSpan" : {
+            "range" : {
+              "length" : 14,
+              "location" : 43
+            },
+            "text" : "Race condition"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 103,
+                    "location" : 379
+                  },
+                  "text" : "Stock=1; requests A and B both read 1 before\neither decrements. Use transaction\/locking\/\natomic update."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 140,
+                    "location" : 702
+                  },
+                  "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 056 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 152,
+                    "location" : 524
+                  },
+                  "text" : "A race condition occurs when concurrent operations\naccess shared state without sufficient coordination. I fix\nthe invariant, not just add random delays."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 94,
+                    "location" : 262
+                  },
+                  "text" : "Two people see the last donut, both shout \"mine\",\nand both somehow leave with a donut receipt."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 160,
+                    "location" : 79
+                  },
+                  "text" : "A bug where correctness depends on the\nunpredictable timing\/interleaving of concurrent\noperations. Concurrent requests can both make\ndecisions from stale state."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 64,
+              "section" : "056 DATA B AS E S & DATA I N T E G R I T Y",
+              "title" : "Race condition",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 14,
+                  "location" : 43
+                },
+                "text" : "Race condition"
+              }
+            },
+            "composedStatement" : "Race condition: A bug where correctness depends on the unpredictable timing\/interleaving of concurrent operations. Concurrent requests can both make decisions from stale state.",
+            "families" : [
+              "definition",
+              "failureMode"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 160,
+                "location" : 79
+              },
+              "text" : "A bug where correctness depends on the\nunpredictable timing\/interleaving of concurrent\noperations. Concurrent requests can both make\ndecisions from stale state."
+            },
+            "references" : [
+
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 98,
+                  "location" : 79
+                },
+                "text" : "A bug where correctness depends on the\nunpredictable timing\/interleaving of concurrent\noperations."
+              },
+              {
+                "range" : {
+                  "length" : 61,
+                  "location" : 178
+                },
+                "text" : "Concurrent requests can both make\ndecisions from stale state."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Race condition"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "An HTTP callback one system sends to another when\nan event occurs. It replaces wasteful polling for\nexternal service events."
+      ],
+      "page" : 74,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 52,
+                "location" : 338
+              },
+              "text" : "Stripe POSTs payment_succeeded to \/webhooks\/\nstripe."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 140,
+                "location" : 577
+              },
+              "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 064 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 119,
+                "location" : 432
+              },
+              "text" : "A webhook is event-driven server-to-server delivery. I\nverify signatures, handle retries, and make handlers\nidempotent."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 93,
+                "location" : 222
+              },
+              "text" : "Instead of calling the pizza shop every minute, they\ntext you when the pizza leaves the oven."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 124,
+                "location" : 75
+              },
+              "text" : "An HTTP callback one system sends to another when\nan event occurs. It replaces wasteful polling for\nexternal service events."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 73,
+          "section" : "064 R E A LT I M E & AS Y N C JAVAS C R I P T",
+          "title" : "Webhook",
+          "titleSpan" : {
+            "range" : {
+              "length" : 7,
+              "location" : 46
+            },
+            "text" : "Webhook"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 52,
+                    "location" : 338
+                  },
+                  "text" : "Stripe POSTs payment_succeeded to \/webhooks\/\nstripe."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 140,
+                    "location" : 577
+                  },
+                  "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 064 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 119,
+                    "location" : 432
+                  },
+                  "text" : "A webhook is event-driven server-to-server delivery. I\nverify signatures, handle retries, and make handlers\nidempotent."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 93,
+                    "location" : 222
+                  },
+                  "text" : "Instead of calling the pizza shop every minute, they\ntext you when the pizza leaves the oven."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 124,
+                    "location" : 75
+                  },
+                  "text" : "An HTTP callback one system sends to another when\nan event occurs. It replaces wasteful polling for\nexternal service events."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 73,
+              "section" : "064 R E A LT I M E & AS Y N C JAVAS C R I P T",
+              "title" : "Webhook",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 7,
+                  "location" : 46
+                },
+                "text" : "Webhook"
+              }
+            },
+            "composedStatement" : "Webhook: An HTTP callback one system sends to another when an event occurs. It replaces wasteful polling for external service events.",
+            "families" : [
+              "definition",
+              "consequence",
+              "constraint"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 124,
+                "location" : 75
+              },
+              "text" : "An HTTP callback one system sends to another when\nan event occurs. It replaces wasteful polling for\nexternal service events."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "Webhook"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 66,
+                  "location" : 75
+                },
+                "text" : "An HTTP callback one system sends to another when\nan event occurs."
+              },
+              {
+                "range" : {
+                  "length" : 57,
+                  "location" : 142
+                },
+                "text" : "It replaces wasteful polling for\nexternal service events."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Webhook"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "Language syntax for handling exceptions thrown\nduring execution, including rejected promises when\nawaited. It lets code recover, translate, log, or surface\nerrors deliberately."
+      ],
+      "page" : 83,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 53,
+                "location" : 399
+              },
+              "text" : "try { await save(); } catch (err)\n{ showError(err); }"
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 140,
+                "location" : 651
+              },
+              "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 072 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 131,
+                "location" : 494
+              },
+              "text" : "try\/catch handles exceptions. With async\/await it\ncatches rejected awaited Promises, and I avoid\nswallowing errors without context."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 92,
+                "location" : 284
+              },
+              "text" : "Put a trampoline under the risky acrobat so a fall\nbecomes a handled event instead of chaos."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 176,
+                "location" : 85
+              },
+              "text" : "Language syntax for handling exceptions thrown\nduring execution, including rejected promises when\nawaited. It lets code recover, translate, log, or surface\nerrors deliberately."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 82,
+          "section" : "072 J AVAS C R I P T C O R E M E N TA L M O D E L S",
+          "title" : "try \/ catch",
+          "titleSpan" : {
+            "range" : {
+              "length" : 11,
+              "location" : 52
+            },
+            "text" : "try \/ catch"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 53,
+                    "location" : 399
+                  },
+                  "text" : "try { await save(); } catch (err)\n{ showError(err); }"
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 140,
+                    "location" : 651
+                  },
+                  "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 072 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 131,
+                    "location" : 494
+                  },
+                  "text" : "try\/catch handles exceptions. With async\/await it\ncatches rejected awaited Promises, and I avoid\nswallowing errors without context."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 92,
+                    "location" : 284
+                  },
+                  "text" : "Put a trampoline under the risky acrobat so a fall\nbecomes a handled event instead of chaos."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 176,
+                    "location" : 85
+                  },
+                  "text" : "Language syntax for handling exceptions thrown\nduring execution, including rejected promises when\nawaited. It lets code recover, translate, log, or surface\nerrors deliberately."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 82,
+              "section" : "072 J AVAS C R I P T C O R E M E N TA L M O D E L S",
+              "title" : "try \/ catch",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 11,
+                  "location" : 52
+                },
+                "text" : "try \/ catch"
+              }
+            },
+            "composedStatement" : "try \/ catch: Language syntax for handling exceptions thrown during execution, including rejected promises when awaited. It lets code recover, translate, log, or surface errors deliberately.",
+            "families" : [
+              "definition",
+              "mechanism",
+              "constraint"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 176,
+                "location" : 85
+              },
+              "text" : "Language syntax for handling exceptions thrown\nduring execution, including rejected promises when\nawaited. It lets code recover, translate, log, or surface\nerrors deliberately."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "try \/ catch"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 106,
+                  "location" : 85
+                },
+                "text" : "Language syntax for handling exceptions thrown\nduring execution, including rejected promises when\nawaited."
+              },
+              {
+                "range" : {
+                  "length" : 69,
+                  "location" : 192
+                },
+                "text" : "It lets code recover, translate, log, or surface\nerrors deliberately."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "try \/ catch"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 91,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "An array method that accumulates many elements\ninto a single result. It can compute totals, groups,\nmaps, and other aggregates."
+      ],
+      "page" : 99,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 32,
+                "location" : 323
+              },
+              "text" : "prices.reduce((sum,p)=>sum+p,0)."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 140,
+                "location" : 550
+              },
+              "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 088 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 127,
+                "location" : 397
+              },
+              "text" : "reduce folds a collection into one accumulator. I use it\nwhen that improves clarity, but I do not force every loop\ninto reduce."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 64,
+                "location" : 236
+              },
+              "text" : "Everyone empties coins into one jar; the jar is the\naccumulator."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 127,
+                "location" : 86
+              },
+              "text" : "An array method that accumulates many elements\ninto a single result. It can compute totals, groups,\nmaps, and other aggregates."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 98,
+          "section" : "088 J AVAS C R I P T C O R E M E N TA L M O D E L S",
+          "title" : "Array.reduce",
+          "titleSpan" : {
+            "range" : {
+              "length" : 12,
+              "location" : 52
+            },
+            "text" : "Array.reduce"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 32,
+                    "location" : 323
+                  },
+                  "text" : "prices.reduce((sum,p)=>sum+p,0)."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 140,
+                    "location" : 550
+                  },
+                  "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 088 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 127,
+                    "location" : 397
+                  },
+                  "text" : "reduce folds a collection into one accumulator. I use it\nwhen that improves clarity, but I do not force every loop\ninto reduce."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 64,
+                    "location" : 236
+                  },
+                  "text" : "Everyone empties coins into one jar; the jar is the\naccumulator."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 127,
+                    "location" : 86
+                  },
+                  "text" : "An array method that accumulates many elements\ninto a single result. It can compute totals, groups,\nmaps, and other aggregates."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 98,
+              "section" : "088 J AVAS C R I P T C O R E M E N TA L M O D E L S",
+              "title" : "Array.reduce",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 12,
+                  "location" : 52
+                },
+                "text" : "Array.reduce"
+              }
+            },
+            "composedStatement" : "Array.reduce: An array method that accumulates many elements into a single result. It can compute totals, groups, maps, and other aggregates.",
+            "families" : [
+              "definition"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 127,
+                "location" : 86
+              },
+              "text" : "An array method that accumulates many elements\ninto a single result. It can compute totals, groups,\nmaps, and other aggregates."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "Array.reduce"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 68,
+                  "location" : 86
+                },
+                "text" : "An array method that accumulates many elements\ninto a single result."
+              },
+              {
+                "range" : {
+                  "length" : 58,
+                  "location" : 155
+                },
+                "text" : "It can compute totals, groups,\nmaps, and other aggregates."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Array.reduce"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 108,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 116,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 124,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 133,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 141,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "The phase where an event triggered on a descendant\npropagates upward through its ancestors. It enables\nparent handlers and event delegation."
+      ],
+      "page" : 149,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 94,
+                "location" : 356
+              },
+              "text" : "Click button inside <li>; click can be observed\nby li, ul, body unless propagation is stopped."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 140,
+                "location" : 648
+              },
+              "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 136 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 130,
+                "location" : 492
+              },
+              "text" : "Most DOM events bubble from the target through\nancestors. I use that behavior intentionally and avoid\nunnecessary stopPropagation."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 69,
+                "location" : 264
+              },
+              "text" : "Drop a marble on the bottom stair and the news\ntravels up every step."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 140,
+                "location" : 101
+              },
+              "text" : "The phase where an event triggered on a descendant\npropagates upward through its ancestors. It enables\nparent handlers and event delegation."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 148,
+          "section" : "136 F R O N T E N D P L AT F O R M , U X & P E R F O R M A N C E",
+          "title" : "Event bubbling",
+          "titleSpan" : {
+            "range" : {
+              "length" : 14,
+              "location" : 65
+            },
+            "text" : "Event bubbling"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 94,
+                    "location" : 356
+                  },
+                  "text" : "Click button inside <li>; click can be observed\nby li, ul, body unless propagation is stopped."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 140,
+                    "location" : 648
+                  },
+                  "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 136 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 130,
+                    "location" : 492
+                  },
+                  "text" : "Most DOM events bubble from the target through\nancestors. I use that behavior intentionally and avoid\nunnecessary stopPropagation."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 69,
+                    "location" : 264
+                  },
+                  "text" : "Drop a marble on the bottom stair and the news\ntravels up every step."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 140,
+                    "location" : 101
+                  },
+                  "text" : "The phase where an event triggered on a descendant\npropagates upward through its ancestors. It enables\nparent handlers and event delegation."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 148,
+              "section" : "136 F R O N T E N D P L AT F O R M , U X & P E R F O R M A N C E",
+              "title" : "Event bubbling",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 14,
+                  "location" : 65
+                },
+                "text" : "Event bubbling"
+              }
+            },
+            "composedStatement" : "Event bubbling: The phase where an event triggered on a descendant propagates upward through its ancestors. It enables parent handlers and event delegation.",
+            "families" : [
+              "definition",
+              "mechanism"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 140,
+                "location" : 101
+              },
+              "text" : "The phase where an event triggered on a descendant\npropagates upward through its ancestors. It enables\nparent handlers and event delegation."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "Event bubbling"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 91,
+                  "location" : 101
+                },
+                "text" : "The phase where an event triggered on a descendant\npropagates upward through its ancestors."
+              },
+              {
+                "range" : {
+                  "length" : 48,
+                  "location" : 193
+                },
+                "text" : "It enables\nparent handlers and event delegation."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Event bubbling"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "A durable or buffered channel where producers\nenqueue messages\/jobs and consumers process\nthem later. It decouples request latency from\nbackground work and smooths bursts."
+      ],
+      "page" : 158,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 69,
+                "location" : 395
+              },
+              "text" : "API enqueues \"send welcome email\"; worker\nconsumes it asynchronously."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 140,
+                "location" : 674
+              },
+              "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 144 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 142,
+                "location" : 506
+              },
+              "text" : "Queues decouple producers and consumers, buffer\nload, and support retries; I design for at-least-once\ndelivery by making consumers idempotent."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 75,
+                "location" : 297
+              },
+              "text" : "Leave laundry tickets in a basket; workers take the\nnext ticket when ready."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 171,
+                "location" : 103
+              },
+              "text" : "A durable or buffered channel where producers\nenqueue messages\/jobs and consumers process\nthem later. It decouples request latency from\nbackground work and smooths bursts."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 157,
+          "section" : "144 R E L I A B I L I T Y, A R C H I T E C T U R E & D E L I V E RY",
+          "title" : "Message queue",
+          "titleSpan" : {
+            "range" : {
+              "length" : 13,
+              "location" : 68
+            },
+            "text" : "Message queue"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 69,
+                    "location" : 395
+                  },
+                  "text" : "API enqueues \"send welcome email\"; worker\nconsumes it asynchronously."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 140,
+                    "location" : 674
+                  },
+                  "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 144 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 142,
+                    "location" : 506
+                  },
+                  "text" : "Queues decouple producers and consumers, buffer\nload, and support retries; I design for at-least-once\ndelivery by making consumers idempotent."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 75,
+                    "location" : 297
+                  },
+                  "text" : "Leave laundry tickets in a basket; workers take the\nnext ticket when ready."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 171,
+                    "location" : 103
+                  },
+                  "text" : "A durable or buffered channel where producers\nenqueue messages\/jobs and consumers process\nthem later. It decouples request latency from\nbackground work and smooths bursts."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 157,
+              "section" : "144 R E L I A B I L I T Y, A R C H I T E C T U R E & D E L I V E RY",
+              "title" : "Message queue",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 13,
+                  "location" : 68
+                },
+                "text" : "Message queue"
+              }
+            },
+            "composedStatement" : "Message queue: A durable or buffered channel where producers enqueue messages\/jobs and consumers process them later. It decouples request latency from background work and smooths bursts.",
+            "families" : [
+              "definition"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 171,
+                "location" : 103
+              },
+              "text" : "A durable or buffered channel where producers\nenqueue messages\/jobs and consumers process\nthem later. It decouples request latency from\nbackground work and smooths bursts."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "Message queue"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 101,
+                  "location" : 103
+                },
+                "text" : "A durable or buffered channel where producers\nenqueue messages\/jobs and consumers process\nthem later."
+              },
+              {
+                "range" : {
+                  "length" : 69,
+                  "location" : 205
+                },
+                "text" : "It decouples request latency from\nbackground work and smooths bursts."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Message queue"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 166,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 173,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 181,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "A First-In-First-Out data structure. It models ordered\nwork waiting to be processed."
+      ],
+      "page" : 190,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 40,
+                "location" : 314
+              },
+              "text" : "Job queue, BFS frontier, request buffer."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 140,
+                "location" : 546
+              },
+              "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 175 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 124,
+                "location" : 396
+              },
+              "text" : "A queue is FIFO: enqueue at the back, dequeue from the\nfront. It is foundational for scheduling and breadth-first\ntraversal."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 83,
+                "location" : 208
+              },
+              "text" : "Supermarket line: first person in line should be\nserved first unless chaos has won."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 84,
+                "location" : 101
+              },
+              "text" : "A First-In-First-Out data structure. It models ordered\nwork waiting to be processed."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 189,
+          "section" : "175 C O M P U T E R S C I E N C E & E N G I N E E R I N G J U D G M E N T",
+          "title" : "Queue",
+          "titleSpan" : {
+            "range" : {
+              "length" : 5,
+              "location" : 74
+            },
+            "text" : "Queue"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 40,
+                    "location" : 314
+                  },
+                  "text" : "Job queue, BFS frontier, request buffer."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 140,
+                    "location" : 546
+                  },
+                  "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 175 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 124,
+                    "location" : 396
+                  },
+                  "text" : "A queue is FIFO: enqueue at the back, dequeue from the\nfront. It is foundational for scheduling and breadth-first\ntraversal."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 83,
+                    "location" : 208
+                  },
+                  "text" : "Supermarket line: first person in line should be\nserved first unless chaos has won."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 84,
+                    "location" : 101
+                  },
+                  "text" : "A First-In-First-Out data structure. It models ordered\nwork waiting to be processed."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 189,
+              "section" : "175 C O M P U T E R S C I E N C E & E N G I N E E R I N G J U D G M E N T",
+              "title" : "Queue",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 5,
+                  "location" : 74
+                },
+                "text" : "Queue"
+              }
+            },
+            "composedStatement" : "Queue: A First-In-First-Out data structure. It models ordered work waiting to be processed.",
+            "families" : [
+              "definition",
+              "sequence"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 84,
+                "location" : 101
+              },
+              "text" : "A First-In-First-Out data structure. It models ordered\nwork waiting to be processed."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "Queue"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 36,
+                  "location" : 101
+                },
+                "text" : "A First-In-First-Out data structure."
+              },
+              {
+                "range" : {
+                  "length" : 47,
+                  "location" : 138
+                },
+                "text" : "It models ordered\nwork waiting to be processed."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Queue"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 198,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "A runtime check that also teaches TypeScript a more\nspecific type. It centralizes validation and improves\ndownstream ergonomics."
+      ],
+      "page" : 207,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 92,
+                "location" : 336
+              },
+              "text" : "function isUser(x: unknown): x is User\n{ return !!x && typeof x === \"object\" && \"id\" in\nx; }"
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 118,
+                "location" : 600
+              },
+              "text" : "A guard is only trustworthy if the runtime check is actually\nstrong enough.\nExplain it aloud before swiping. 191 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 104,
+                "location" : 470
+              },
+              "text" : "A type guard combines runtime validation with a type\npredicate so the compiler can narrow values safely."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 75,
+                "location" : 238
+              },
+              "text" : "A bouncer checks the wristband and announces\n“yes, this is definitely VIP.”"
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 128,
+                "location" : 87
+              },
+              "text" : "A runtime check that also teaches TypeScript a more\nspecific type. It centralizes validation and improves\ndownstream ergonomics."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 206,
+          "section" : "191 T Y P E S C R I P T: T H I N K I N G I N T Y P E S",
+          "title" : "Type guard",
+          "titleSpan" : {
+            "range" : {
+              "length" : 10,
+              "location" : 55
+            },
+            "text" : "Type guard"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 92,
+                    "location" : 336
+                  },
+                  "text" : "function isUser(x: unknown): x is User\n{ return !!x && typeof x === \"object\" && \"id\" in\nx; }"
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 118,
+                    "location" : 600
+                  },
+                  "text" : "A guard is only trustworthy if the runtime check is actually\nstrong enough.\nExplain it aloud before swiping. 191 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 104,
+                    "location" : 470
+                  },
+                  "text" : "A type guard combines runtime validation with a type\npredicate so the compiler can narrow values safely."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 75,
+                    "location" : 238
+                  },
+                  "text" : "A bouncer checks the wristband and announces\n“yes, this is definitely VIP.”"
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 128,
+                    "location" : 87
+                  },
+                  "text" : "A runtime check that also teaches TypeScript a more\nspecific type. It centralizes validation and improves\ndownstream ergonomics."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 206,
+              "section" : "191 T Y P E S C R I P T: T H I N K I N G I N T Y P E S",
+              "title" : "Type guard",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 10,
+                  "location" : 55
+                },
+                "text" : "Type guard"
+              }
+            },
+            "composedStatement" : "Type guard: A runtime check that also teaches TypeScript a more specific type. It centralizes validation and improves downstream ergonomics.",
+            "families" : [
+              "definition",
+              "consequence"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 128,
+                "location" : 87
+              },
+              "text" : "A runtime check that also teaches TypeScript a more\nspecific type. It centralizes validation and improves\ndownstream ergonomics."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "Type guard"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 66,
+                  "location" : 87
+                },
+                "text" : "A runtime check that also teaches TypeScript a more\nspecific type."
+              },
+              {
+                "range" : {
+                  "length" : 61,
+                  "location" : 154
+                },
+                "text" : "It centralizes validation and improves\ndownstream ergonomics."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Type guard"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 215,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "Move shared state to the nearest common owner of\ncomponents that need it. It creates one source of truth\nfor coordinated UI."
+      ],
+      "page" : 224,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 70,
+                "location" : 358
+              },
+              "text" : "Parent owns selectedId; sibling list sets it and\ndetail pane reads it."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 78,
+                "location" : 577
+              },
+              "text" : "Do not lift farther than necessary.\nExplain it aloud before swiping. 207 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 81,
+                "location" : 470
+              },
+              "text" : "I lift state to the lowest common ancestor when siblings\nneed coordinated access."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 84,
+                "location" : 251
+              },
+              "text" : "Two kids fighting over the thermostat need one\nthermostat, not two fake thermostats."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 124,
+                "location" : 104
+              },
+              "text" : "Move shared state to the nearest common owner of\ncomponents that need it. It creates one source of truth\nfor coordinated UI."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 223,
+          "section" : "207 R E AC T: S TAT E , I D E N T I T Y & A R C H I T E C T U R E",
+          "title" : "Lifting state up",
+          "titleSpan" : {
+            "range" : {
+              "length" : 16,
+              "location" : 66
+            },
+            "text" : "Lifting state up"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 70,
+                    "location" : 358
+                  },
+                  "text" : "Parent owns selectedId; sibling list sets it and\ndetail pane reads it."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 78,
+                    "location" : 577
+                  },
+                  "text" : "Do not lift farther than necessary.\nExplain it aloud before swiping. 207 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 81,
+                    "location" : 470
+                  },
+                  "text" : "I lift state to the lowest common ancestor when siblings\nneed coordinated access."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 84,
+                    "location" : 251
+                  },
+                  "text" : "Two kids fighting over the thermostat need one\nthermostat, not two fake thermostats."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 124,
+                    "location" : 104
+                  },
+                  "text" : "Move shared state to the nearest common owner of\ncomponents that need it. It creates one source of truth\nfor coordinated UI."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 223,
+              "section" : "207 R E AC T: S TAT E , I D E N T I T Y & A R C H I T E C T U R E",
+              "title" : "Lifting state up",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 16,
+                  "location" : 66
+                },
+                "text" : "Lifting state up"
+              }
+            },
+            "composedStatement" : "Lifting state up moves shared state to the nearest common owner of components that need it. It creates one source of truth for coordinated UI.",
+            "families" : [
+              "definition",
+              "consequence"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 124,
+                "location" : 104
+              },
+              "text" : "Move shared state to the nearest common owner of\ncomponents that need it. It creates one source of truth\nfor coordinated UI."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "Lifting state up"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 73,
+                  "location" : 104
+                },
+                "text" : "Move shared state to the nearest common owner of\ncomponents that need it."
+              },
+              {
+                "range" : {
+                  "length" : 50,
+                  "location" : 178
+                },
+                "text" : "It creates one source of truth\nfor coordinated UI."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Lifting state up"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 232,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "An explicit model of allowed states and transitions. It\nprevents impossible UI combinations in complex flows."
+      ],
+      "page" : 240,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 37,
+                "location" : 322
+              },
+              "text" : "idle -> submitting -> success | error"
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 121,
+                "location" : 555
+              },
+              "text" : "A full state-machine library is optional; the mental model itself\nis valuable.\nExplain it aloud before swiping. 223 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 128,
+                "location" : 401
+              },
+              "text" : "For complex flows I model explicit states and transitions\ninstead of independent booleans whose combinations\ncan become invalid."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 66,
+                "location" : 233
+              },
+              "text" : "An elevator can be MOVING or DOOR_OPEN, but it\nshould not be both."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 109,
+                "location" : 101
+              },
+              "text" : "An explicit model of allowed states and transitions. It\nprevents impossible UI combinations in complex flows."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 239,
+          "section" : "223 R E AC T: S TAT E , I D E N T I T Y & A R C H I T E C T U R E",
+          "title" : "State machine",
+          "titleSpan" : {
+            "range" : {
+              "length" : 13,
+              "location" : 66
+            },
+            "text" : "State machine"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 37,
+                    "location" : 322
+                  },
+                  "text" : "idle -> submitting -> success | error"
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 121,
+                    "location" : 555
+                  },
+                  "text" : "A full state-machine library is optional; the mental model itself\nis valuable.\nExplain it aloud before swiping. 223 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 128,
+                    "location" : 401
+                  },
+                  "text" : "For complex flows I model explicit states and transitions\ninstead of independent booleans whose combinations\ncan become invalid."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 66,
+                    "location" : 233
+                  },
+                  "text" : "An elevator can be MOVING or DOOR_OPEN, but it\nshould not be both."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 109,
+                    "location" : 101
+                  },
+                  "text" : "An explicit model of allowed states and transitions. It\nprevents impossible UI combinations in complex flows."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 239,
+              "section" : "223 R E AC T: S TAT E , I D E N T I T Y & A R C H I T E C T U R E",
+              "title" : "State machine",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 13,
+                  "location" : 66
+                },
+                "text" : "State machine"
+              }
+            },
+            "composedStatement" : "State machine: An explicit model of allowed states and transitions. It prevents impossible UI combinations in complex flows.",
+            "families" : [
+              "definition",
+              "consequence"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 109,
+                "location" : 101
+              },
+              "text" : "An explicit model of allowed states and transitions. It\nprevents impossible UI combinations in complex flows."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "State machine"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 52,
+                  "location" : 101
+                },
+                "text" : "An explicit model of allowed states and transitions."
+              },
+              {
+                "range" : {
+                  "length" : 56,
+                  "location" : 154
+                },
+                "text" : "It\nprevents impossible UI combinations in complex flows."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "State machine"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 249,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "A module should have one coherent reason to change.\nIt prevents unrelated concerns from becoming\nentangled."
+      ],
+      "page" : 257,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 64,
+                "location" : 347
+              },
+              "text" : "InvoiceCalculator calculates totals; EmailSender\nsends invoices."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 111,
+                "location" : 549
+              },
+              "text" : "Over-splitting can create navigation overhead and weak\nabstractions.\nExplain it aloud before swiping. 239 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 70,
+                "location" : 453
+              },
+              "text" : "SRP is about reasons to change, not making every\nfunction microscopic."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 86,
+                "location" : 238
+              },
+              "text" : "A Swiss Army knife is useful; a Swiss Army\nrefrigerator-toaster-tax-accountant is not."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 107,
+                "location" : 108
+              },
+              "text" : "A module should have one coherent reason to change.\nIt prevents unrelated concerns from becoming\nentangled."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 256,
+          "section" : "239 M O D U L A R I T Y & M A I N TA I N A B I L I T Y",
+          "title" : "Single Responsibility Principle",
+          "titleSpan" : {
+            "range" : {
+              "length" : 31,
+              "location" : 55
+            },
+            "text" : "Single Responsibility\nPrinciple"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 64,
+                    "location" : 347
+                  },
+                  "text" : "InvoiceCalculator calculates totals; EmailSender\nsends invoices."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 111,
+                    "location" : 549
+                  },
+                  "text" : "Over-splitting can create navigation overhead and weak\nabstractions.\nExplain it aloud before swiping. 239 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 70,
+                    "location" : 453
+                  },
+                  "text" : "SRP is about reasons to change, not making every\nfunction microscopic."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 86,
+                    "location" : 238
+                  },
+                  "text" : "A Swiss Army knife is useful; a Swiss Army\nrefrigerator-toaster-tax-accountant is not."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 107,
+                    "location" : 108
+                  },
+                  "text" : "A module should have one coherent reason to change.\nIt prevents unrelated concerns from becoming\nentangled."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 256,
+              "section" : "239 M O D U L A R I T Y & M A I N TA I N A B I L I T Y",
+              "title" : "Single Responsibility Principle",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 31,
+                  "location" : 55
+                },
+                "text" : "Single Responsibility\nPrinciple"
+              }
+            },
+            "composedStatement" : "Single Responsibility Principle: A module should have one coherent reason to change. It prevents unrelated concerns from becoming entangled.",
+            "families" : [
+              "definition",
+              "consequence",
+              "constraint"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 107,
+                "location" : 108
+              },
+              "text" : "A module should have one coherent reason to change.\nIt prevents unrelated concerns from becoming\nentangled."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "Single Responsibility Principle"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 51,
+                  "location" : 108
+                },
+                "text" : "A module should have one coherent reason to change."
+              },
+              {
+                "range" : {
+                  "length" : 55,
+                  "location" : 160
+                },
+                "text" : "It prevents unrelated concerns from becoming\nentangled."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Single Responsibility Principle"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 266,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 274,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "Writes update the cache and backing store as part of\nthe write path. It keeps cached values fresh for\nsubsequent reads."
+      ],
+      "page" : 282,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 45,
+                "location" : 381
+              },
+              "text" : "save user -> DB + cache before acknowledging."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 96,
+                "location" : 633
+              },
+              "text" : "Failure ordering matters: which write succeeds first?\nExplain it aloud before swiping. 262 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 139,
+                "location" : 468
+              },
+              "text" : "Write-through improves cache freshness but increases\nwrite-path latency and couples availability to both\nsystems unless carefully designed."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 112,
+                "location" : 246
+              },
+              "text" : "Every time the restaurant changes the menu, both\nthe kitchen board and website are updated before\nsaying “done.”"
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 119,
+                "location" : 104
+              },
+              "text" : "Writes update the cache and backing store as part of\nthe write path. It keeps cached values fresh for\nsubsequent reads."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 281,
+          "section" : "262 CAC H I N G , P E R F O R M A N C E & S CA L A B I L I T Y",
+          "title" : "Write-through cache",
+          "titleSpan" : {
+            "range" : {
+              "length" : 19,
+              "location" : 63
+            },
+            "text" : "Write-through cache"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 45,
+                    "location" : 381
+                  },
+                  "text" : "save user -> DB + cache before acknowledging."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 96,
+                    "location" : 633
+                  },
+                  "text" : "Failure ordering matters: which write succeeds first?\nExplain it aloud before swiping. 262 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 139,
+                    "location" : 468
+                  },
+                  "text" : "Write-through improves cache freshness but increases\nwrite-path latency and couples availability to both\nsystems unless carefully designed."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 112,
+                    "location" : 246
+                  },
+                  "text" : "Every time the restaurant changes the menu, both\nthe kitchen board and website are updated before\nsaying “done.”"
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 119,
+                    "location" : 104
+                  },
+                  "text" : "Writes update the cache and backing store as part of\nthe write path. It keeps cached values fresh for\nsubsequent reads."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 281,
+              "section" : "262 CAC H I N G , P E R F O R M A N C E & S CA L A B I L I T Y",
+              "title" : "Write-through cache",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 19,
+                  "location" : 63
+                },
+                "text" : "Write-through cache"
+              }
+            },
+            "composedStatement" : "Write-through cache: Writes update the cache and backing store as part of the write path. It keeps cached values fresh for subsequent reads.",
+            "families" : [
+              "definition",
+              "consequence"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 119,
+                "location" : 104
+              },
+              "text" : "Writes update the cache and backing store as part of\nthe write path. It keeps cached values fresh for\nsubsequent reads."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "Write-through cache"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 68,
+                  "location" : 104
+                },
+                "text" : "Writes update the cache and backing store as part of\nthe write path."
+              },
+              {
+                "range" : {
+                  "length" : 50,
+                  "location" : 173
+                },
+                "text" : "It keeps cached values fresh for\nsubsequent reads."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Write-through cache"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "A cache shared across application instances,\ncommonly over the network. It gives multiple servers a\ncommon cache instead of isolated in-process copies."
+      ],
+      "page" : 290,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 30,
+                "location" : 400
+              },
+              "text" : "Redis used by 20 API replicas."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 137,
+                "location" : 629
+              },
+              "text" : "Do not put every read behind Redis by reflex; local caching can\nbe much cheaper for some data.\nExplain it aloud before swiping. 270 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 131,
+                "location" : 472
+              },
+              "text" : "A distributed cache improves sharing and capacity but\nadds network latency, serialization, failure modes, and\nconsistency concerns."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 101,
+                "location" : 276
+              },
+              "text" : "All restaurant branches share one giant pantry\ninventory system instead of each guessing what\nexists."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 151,
+                "location" : 102
+              },
+              "text" : "A cache shared across application instances,\ncommonly over the network. It gives multiple servers a\ncommon cache instead of isolated in-process copies."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 289,
+          "section" : "270 CAC H I N G , P E R F O R M A N C E & S CA L A B I L I T Y",
+          "title" : "Distributed cache",
+          "titleSpan" : {
+            "range" : {
+              "length" : 17,
+              "location" : 63
+            },
+            "text" : "Distributed cache"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 30,
+                    "location" : 400
+                  },
+                  "text" : "Redis used by 20 API replicas."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 137,
+                    "location" : 629
+                  },
+                  "text" : "Do not put every read behind Redis by reflex; local caching can\nbe much cheaper for some data.\nExplain it aloud before swiping. 270 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 131,
+                    "location" : 472
+                  },
+                  "text" : "A distributed cache improves sharing and capacity but\nadds network latency, serialization, failure modes, and\nconsistency concerns."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 101,
+                    "location" : 276
+                  },
+                  "text" : "All restaurant branches share one giant pantry\ninventory system instead of each guessing what\nexists."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 151,
+                    "location" : 102
+                  },
+                  "text" : "A cache shared across application instances,\ncommonly over the network. It gives multiple servers a\ncommon cache instead of isolated in-process copies."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 289,
+              "section" : "270 CAC H I N G , P E R F O R M A N C E & S CA L A B I L I T Y",
+              "title" : "Distributed cache",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 17,
+                  "location" : 63
+                },
+                "text" : "Distributed cache"
+              }
+            },
+            "composedStatement" : "Distributed cache: A cache shared across application instances, commonly over the network. It gives multiple servers a common cache instead of isolated in-process copies.",
+            "families" : [
+              "definition",
+              "mechanism",
+              "constraint"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 151,
+                "location" : 102
+              },
+              "text" : "A cache shared across application instances,\ncommonly over the network. It gives multiple servers a\ncommon cache instead of isolated in-process copies."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "Distributed cache"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 71,
+                  "location" : 102
+                },
+                "text" : "A cache shared across application instances,\ncommonly over the network."
+              },
+              {
+                "range" : {
+                  "length" : 79,
+                  "location" : 174
+                },
+                "text" : "It gives multiple servers a\ncommon cache instead of isolated in-process copies."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Distributed cache"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "The algorithm mapping text to token IDs and back.\nModels operate on numerical token sequences."
+      ],
+      "page" : 299,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 51,
+                "location" : 289
+              },
+              "text" : "text -> BPE\/subword tokenizer -> [15496,\n995, ...]."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 117,
+                "location" : 527
+              },
+              "text" : "Token counts must use the target model's tokenizer for\naccurate budgeting.\nExplain it aloud before swiping. 278 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 119,
+                "location" : 382
+              },
+              "text" : "The tokenizer defines the model's vocabulary and\nsegmentation; different models can tokenize the same\ntext differently."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 66,
+                "location" : 200
+              },
+              "text" : "A chef chops vegetables into the exact shapes the\nblender accepts."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 94,
+                "location" : 83
+              },
+              "text" : "The algorithm mapping text to token IDs and back.\nModels operate on numerical token sequences."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 298,
+          "section" : "278 A I E N G I N E E R I N G & L L M S Y S T E M S",
+          "title" : "Tokenizer",
+          "titleSpan" : {
+            "range" : {
+              "length" : 9,
+              "location" : 52
+            },
+            "text" : "Tokenizer"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 51,
+                    "location" : 289
+                  },
+                  "text" : "text -> BPE\/subword tokenizer -> [15496,\n995, ...]."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 117,
+                    "location" : 527
+                  },
+                  "text" : "Token counts must use the target model's tokenizer for\naccurate budgeting.\nExplain it aloud before swiping. 278 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 119,
+                    "location" : 382
+                  },
+                  "text" : "The tokenizer defines the model's vocabulary and\nsegmentation; different models can tokenize the same\ntext differently."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 66,
+                    "location" : 200
+                  },
+                  "text" : "A chef chops vegetables into the exact shapes the\nblender accepts."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 94,
+                    "location" : 83
+                  },
+                  "text" : "The algorithm mapping text to token IDs and back.\nModels operate on numerical token sequences."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 298,
+              "section" : "278 A I E N G I N E E R I N G & L L M S Y S T E M S",
+              "title" : "Tokenizer",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 9,
+                  "location" : 52
+                },
+                "text" : "Tokenizer"
+              }
+            },
+            "composedStatement" : "Tokenizer: The algorithm mapping text to token IDs and back. Models operate on numerical token sequences.",
+            "families" : [
+              "definition"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 94,
+                "location" : 83
+              },
+              "text" : "The algorithm mapping text to token IDs and back.\nModels operate on numerical token sequences."
+            },
+            "references" : [
+
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 49,
+                  "location" : 83
+                },
+                "text" : "The algorithm mapping text to token IDs and back."
+              },
+              {
+                "range" : {
+                  "length" : 44,
+                  "location" : 133
+                },
+                "text" : "Models operate on numerical token sequences."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "Tokenizer"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 307,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 315,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 0,
+      "factualBlock" : [
+
+      ],
+      "page" : 324,
+      "rejection" : "missing_or_unverified_single_card_context",
+      "result" : {
+        "claims" : [
+
+        ],
+        "rejection" : "missing_or_unverified_single_card_context"
+      },
+      "title" : "unresolved"
+    },
+    {
+      "claimCount" : 1,
+      "factualBlock" : [
+        "An SLO defines a reliability target; the error budget is\nthe allowed unreliability within that target. It creates a\nquantitative trade-off between shipping speed and\nreliability work."
+      ],
+      "page" : 332,
+      "rejection" : "none",
+      "result" : {
+        "card" : {
+          "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+          "exampleBlocks" : [
+            {
+              "range" : {
+                "length" : 64,
+                "location" : 462
+              },
+              "text" : "SLO 99.9% successful requests over 30 days ->\n0.1% error budget."
+            }
+          ],
+          "excludedAdviceBlocks" : [
+            {
+              "range" : {
+                "length" : 102,
+                "location" : 726
+              },
+              "text" : "Choose user-relevant indicators, not vanity uptime metrics.\nExplain it aloud before swiping. 310 \/ 310"
+            }
+          ],
+          "excludedInterviewBlocks" : [
+            {
+              "range" : {
+                "length" : 132,
+                "location" : 568
+              },
+              "text" : "SLOs turn reliability into an explicit product target; error\nbudgets help decide when to prioritize stability over\nfeature velocity."
+            }
+          ],
+          "excludedMnemonicBlocks" : [
+            {
+              "range" : {
+                "length" : 115,
+                "location" : 324
+              },
+              "text" : "If the train promises 99.9% on-time service, the\nsmall allowed delay budget cannot be spent\ncarelessly in week one."
+            }
+          ],
+          "extractionVersion" : 5,
+          "factualBlocks" : [
+            {
+              "range" : {
+                "length" : 183,
+                "location" : 118
+              },
+              "text" : "An SLO defines a reliability target; the error budget is\nthe allowed unreliability within that target. It creates a\nquantitative trade-off between shipping speed and\nreliability work."
+            }
+          ],
+          "fingerprint" : "6711979522824531651",
+          "pageIndex" : 331,
+          "section" : "310 T E S T I N G , S E C U R I T Y & O P E R AT I O N A L E XC E L L E N C E",
+          "title" : "SLO \/ error budget",
+          "titleSpan" : {
+            "range" : {
+              "length" : 18,
+              "location" : 78
+            },
+            "text" : "SLO \/ error budget"
+          }
+        },
+        "claims" : [
+          {
+            "card" : {
+              "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+              "exampleBlocks" : [
+                {
+                  "range" : {
+                    "length" : 64,
+                    "location" : 462
+                  },
+                  "text" : "SLO 99.9% successful requests over 30 days ->\n0.1% error budget."
+                }
+              ],
+              "excludedAdviceBlocks" : [
+                {
+                  "range" : {
+                    "length" : 102,
+                    "location" : 726
+                  },
+                  "text" : "Choose user-relevant indicators, not vanity uptime metrics.\nExplain it aloud before swiping. 310 \/ 310"
+                }
+              ],
+              "excludedInterviewBlocks" : [
+                {
+                  "range" : {
+                    "length" : 132,
+                    "location" : 568
+                  },
+                  "text" : "SLOs turn reliability into an explicit product target; error\nbudgets help decide when to prioritize stability over\nfeature velocity."
+                }
+              ],
+              "excludedMnemonicBlocks" : [
+                {
+                  "range" : {
+                    "length" : 115,
+                    "location" : 324
+                  },
+                  "text" : "If the train promises 99.9% on-time service, the\nsmall allowed delay budget cannot be spent\ncarelessly in week one."
+                }
+              ],
+              "extractionVersion" : 5,
+              "factualBlocks" : [
+                {
+                  "range" : {
+                    "length" : 183,
+                    "location" : 118
+                  },
+                  "text" : "An SLO defines a reliability target; the error budget is\nthe allowed unreliability within that target. It creates a\nquantitative trade-off between shipping speed and\nreliability work."
+                }
+              ],
+              "fingerprint" : "6711979522824531651",
+              "pageIndex" : 331,
+              "section" : "310 T E S T I N G , S E C U R I T Y & O P E R AT I O N A L E XC E L L E N C E",
+              "title" : "SLO \/ error budget",
+              "titleSpan" : {
+                "range" : {
+                  "length" : 18,
+                  "location" : 78
+                },
+                "text" : "SLO \/ error budget"
+              }
+            },
+            "composedStatement" : "SLO \/ error budget: An SLO defines a reliability target; the error budget is the allowed unreliability within that target. It creates a quantitative trade-off between shipping speed and reliability work.",
+            "families" : [
+              "definition",
+              "consequence",
+              "tradeoff"
+            ],
+            "original" : {
+              "range" : {
+                "length" : 183,
+                "location" : 118
+              },
+              "text" : "An SLO defines a reliability target; the error budget is\nthe allowed unreliability within that target. It creates a\nquantitative trade-off between shipping speed and\nreliability work."
+            },
+            "references" : [
+              {
+                "basis" : "current_card_topic; original adjacent factual sentences retained",
+                "expression" : "it",
+                "resolvedTo" : "SLO \/ error budget"
+              }
+            ],
+            "sentences" : [
+              {
+                "range" : {
+                  "length" : 102,
+                  "location" : 118
+                },
+                "text" : "An SLO defines a reliability target; the error budget is\nthe allowed unreliability within that target."
+              },
+              {
+                "range" : {
+                  "length" : 80,
+                  "location" : 221
+                },
+                "text" : "It creates a\nquantitative trade-off between shipping speed and\nreliability work."
+              }
+            ]
+          }
+        ]
+      },
+      "title" : "SLO \/ error budget"
+    }
+  ],
+  "samplePages" : 40
+}

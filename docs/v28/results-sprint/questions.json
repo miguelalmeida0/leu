@@ -1,0 +1,4009 @@
+[
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|14|48|fact|78",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 15,
+        "sourceTitle" : "Response",
+        "span" : {
+          "range" : {
+            "length" : 56,
+            "location" : 78
+          },
+          "text" : "The server message that reports the result of a\nrequest."
+        },
+        "text" : "The server message that reports the result of a request."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|15|48|fact|82",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 16,
+        "sourceTitle" : "HTTP methods",
+        "span" : {
+          "range" : {
+            "length" : 72,
+            "location" : 82
+          },
+          "text" : "Standard verbs that express what operation a request\nintends to perform."
+        },
+        "text" : "Standard verbs that express what operation a request intends to perform."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|18|48|fact|82",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 19,
+        "sourceTitle" : "Request body",
+        "span" : {
+          "range" : {
+            "length" : 69,
+            "location" : 82
+          },
+          "text" : "The payload sent inside a request, commonly with\nPOST, PUT, or PATCH."
+        },
+        "text" : "The payload sent inside a request, commonly with POST, PUT, or PATCH."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 85,
+              "location" : 368
+            },
+            "text" : "GET \/users reads; POST \/users creates; PATCH \/\nusers\/42 updates part; DELETE removes."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 683
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 009 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 162,
+              "location" : 495
+            },
+            "text" : "I use HTTP methods according to their semantics: GET\nfor retrieval, POST for creation\/actions, PUT for\nreplacement, PATCH for partial updates, DELETE for\nremoval."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 66,
+              "location" : 279
+            },
+            "text" : "GET looks, POST creates, PATCH edits, DELETE\nthrows it in the bin."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 174,
+              "location" : 82
+            },
+            "text" : "Standard verbs that express what operation a request\nintends to perform. They make API contracts\npredictable and communicate semantics to clients,\ncaches, and infrastructure."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 15,
+        "section" : "009 W E B , N E T WO R K I N G & D E L I V E RY",
+        "title" : "HTTP methods",
+        "titleSpan" : {
+          "range" : {
+            "length" : 12,
+            "location" : 48
+          },
+          "text" : "HTTP methods"
+        }
+      },
+      "composedStatement" : "HTTP methods: Standard verbs that express what operation a request intends to perform. They make API contracts predictable and communicate semantics to clients, caches, and infrastructure.",
+      "families" : [
+        "definition"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 174,
+          "location" : 82
+        },
+        "text" : "Standard verbs that express what operation a request\nintends to perform. They make API contracts\npredictable and communicate semantics to clients,\ncaches, and infrastructure."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "they",
+          "resolvedTo" : "HTTP methods"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 72,
+            "location" : 82
+          },
+          "text" : "Standard verbs that express what operation a request\nintends to perform."
+        },
+        {
+          "range" : {
+            "length" : 101,
+            "location" : 155
+          },
+          "text" : "They make API contracts\npredictable and communicate semantics to clients,\ncaches, and infrastructure."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "HTTP methods: Standard verbs that express what operation a request intends to perform. They make API contracts predictable and communicate semantics to clients, caches, and infrastructure.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|15|48|fact|82",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how do HTTP methods make API contracts predictable and communicate semantics to clients, caches, and infrastructure?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|51|49|fact|74",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 52,
+        "sourceTitle" : "XSS",
+        "span" : {
+          "range" : {
+            "length" : 133,
+            "location" : 74
+          },
+          "text" : "Cross-Site Scripting: untrusted content causes\nattacker-controlled script or dangerous markup to\nexecute in a user's browser context."
+        },
+        "text" : "Cross-Site Scripting: untrusted content causes attacker-controlled script or dangerous markup to execute in a user's browser context."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|48|49|fact|84",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 49,
+        "sourceTitle" : "Refresh token",
+        "span" : {
+          "range" : {
+            "length" : 100,
+            "location" : 84
+          },
+          "text" : "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again."
+        },
+        "text" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|43|49|fact|78",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 44,
+        "sourceTitle" : "Session",
+        "span" : {
+          "range" : {
+            "length" : 97,
+            "location" : 78
+          },
+          "text" : "Server-recognized state that ties a sequence of\nrequests to an authenticated user or interaction."
+        },
+        "text" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 92,
+              "location" : 403
+            },
+            "text" : "When access token expires, client sends refresh\ntoken to auth server for a new access token."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 733
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 041 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 170,
+              "location" : 537
+            },
+            "text" : "A refresh token is higher-value and longer-lived than an\naccess token, so I protect it carefully, rotate it where\nappropriate, and restrict its use to the token endpoint."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 107,
+              "location" : 273
+            },
+            "text" : "Your train season pass lets you print today's ticket;\nyou do not wave the season pass at every ticket\ngate."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 166,
+              "location" : 84
+            },
+            "text" : "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again. It\nbalances user convenience with short-lived access\ncredentials."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 48,
+        "section" : "041 S E C U R I T Y, I D E N T I T Y & T R U S T",
+        "title" : "Refresh token",
+        "titleSpan" : {
+          "range" : {
+            "length" : 13,
+            "location" : 49
+          },
+          "text" : "Refresh token"
+        }
+      },
+      "composedStatement" : "Refresh token: A longer-lived credential used to obtain new access tokens without asking the user to sign in again. It balances user convenience with short-lived access credentials.",
+      "families" : [
+        "definition",
+        "constraint"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 166,
+          "location" : 84
+        },
+        "text" : "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again. It\nbalances user convenience with short-lived access\ncredentials."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Refresh token"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 100,
+            "location" : 84
+          },
+          "text" : "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again."
+        },
+        {
+          "range" : {
+            "length" : 65,
+            "location" : 185
+          },
+          "text" : "It\nbalances user convenience with short-lived access\ncredentials."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "Refresh token: A longer-lived credential used to obtain new access tokens without asking the user to sign in again. It balances user convenience with short-lived access credentials.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|48|49|fact|84",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does a refresh token balance user convenience with short-lived access credentials?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|73|46|fact|75",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 74,
+        "sourceTitle" : "Webhook",
+        "span" : {
+          "range" : {
+            "length" : 66,
+            "location" : 75
+          },
+          "text" : "An HTTP callback one system sends to another when\nan event occurs."
+        },
+        "text" : "An HTTP callback one system sends to another when an event occurs."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|72|46|fact|86",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 73,
+        "sourceTitle" : "Server-Sent Events",
+        "span" : {
+          "range" : {
+            "length" : 110,
+            "location" : 86
+          },
+          "text" : "A long-lived HTTP connection where the server\ncontinuously pushes text events to the browser in one\ndirection."
+        },
+        "text" : "A long-lived HTTP connection where the server continuously pushes text events to the browser in one direction."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|70|46|fact|77",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 71,
+        "sourceTitle" : "WebSocket",
+        "span" : {
+          "range" : {
+            "length" : 97,
+            "location" : 77
+          },
+          "text" : "A long-lived full-duplex connection that lets client and\nserver send messages in both directions."
+        },
+        "text" : "A long-lived full-duplex connection that lets client and server send messages in both directions."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 52,
+              "location" : 338
+            },
+            "text" : "Stripe POSTs payment_succeeded to \/webhooks\/\nstripe."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 577
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 064 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 119,
+              "location" : 432
+            },
+            "text" : "A webhook is event-driven server-to-server delivery. I\nverify signatures, handle retries, and make handlers\nidempotent."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 93,
+              "location" : 222
+            },
+            "text" : "Instead of calling the pizza shop every minute, they\ntext you when the pizza leaves the oven."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 124,
+              "location" : 75
+            },
+            "text" : "An HTTP callback one system sends to another when\nan event occurs. It replaces wasteful polling for\nexternal service events."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 73,
+        "section" : "064 R E A LT I M E & AS Y N C JAVAS C R I P T",
+        "title" : "Webhook",
+        "titleSpan" : {
+          "range" : {
+            "length" : 7,
+            "location" : 46
+          },
+          "text" : "Webhook"
+        }
+      },
+      "composedStatement" : "Webhook: An HTTP callback one system sends to another when an event occurs. It replaces wasteful polling for external service events.",
+      "families" : [
+        "definition",
+        "consequence",
+        "constraint"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 124,
+          "location" : 75
+        },
+        "text" : "An HTTP callback one system sends to another when\nan event occurs. It replaces wasteful polling for\nexternal service events."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Webhook"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 66,
+            "location" : 75
+          },
+          "text" : "An HTTP callback one system sends to another when\nan event occurs."
+        },
+        {
+          "range" : {
+            "length" : 57,
+            "location" : 142
+          },
+          "text" : "It replaces wasteful polling for\nexternal service events."
+        }
+      ]
+    },
+    "correctChoice" : 0,
+    "explanation" : "Webhook: An HTTP callback one system sends to another when an event occurs. It replaces wasteful polling for external service events.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|73|46|fact|75",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does a webhook replace wasteful polling for external service events?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|92|52|fact|87",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 93,
+        "sourceTitle" : "Destructuring",
+        "span" : {
+          "range" : {
+            "length" : 59,
+            "location" : 87
+          },
+          "text" : "Syntax that extracts properties or elements into\nvariables."
+        },
+        "text" : "Syntax that extracts properties or elements into variables."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|81|52|fact|87",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 82,
+        "sourceTitle" : "async \/ await",
+        "span" : {
+          "range" : {
+            "length" : 81,
+            "location" : 87
+          },
+          "text" : "Syntax for writing Promise-based asynchronous code\nin a sequential-looking style."
+        },
+        "text" : "Syntax for writing Promise-based asynchronous code in a sequential-looking style."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|82|52|fact|85",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 83,
+        "sourceTitle" : "try \/ catch",
+        "span" : {
+          "range" : {
+            "length" : 106,
+            "location" : 85
+          },
+          "text" : "Language syntax for handling exceptions thrown\nduring execution, including rejected promises when\nawaited."
+        },
+        "text" : "Language syntax for handling exceptions thrown during execution, including rejected promises when awaited."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 53,
+              "location" : 399
+            },
+            "text" : "try { await save(); } catch (err)\n{ showError(err); }"
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 651
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 072 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 131,
+              "location" : 494
+            },
+            "text" : "try\/catch handles exceptions. With async\/await it\ncatches rejected awaited Promises, and I avoid\nswallowing errors without context."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 92,
+              "location" : 284
+            },
+            "text" : "Put a trampoline under the risky acrobat so a fall\nbecomes a handled event instead of chaos."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 176,
+              "location" : 85
+            },
+            "text" : "Language syntax for handling exceptions thrown\nduring execution, including rejected promises when\nawaited. It lets code recover, translate, log, or surface\nerrors deliberately."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 82,
+        "section" : "072 J AVAS C R I P T C O R E M E N TA L M O D E L S",
+        "title" : "try \/ catch",
+        "titleSpan" : {
+          "range" : {
+            "length" : 11,
+            "location" : 52
+          },
+          "text" : "try \/ catch"
+        }
+      },
+      "composedStatement" : "try \/ catch: Language syntax for handling exceptions thrown during execution, including rejected promises when awaited. It lets code recover, translate, log, or surface errors deliberately.",
+      "families" : [
+        "definition",
+        "mechanism",
+        "constraint"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 176,
+          "location" : 85
+        },
+        "text" : "Language syntax for handling exceptions thrown\nduring execution, including rejected promises when\nawaited. It lets code recover, translate, log, or surface\nerrors deliberately."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "try \/ catch"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 106,
+            "location" : 85
+          },
+          "text" : "Language syntax for handling exceptions thrown\nduring execution, including rejected promises when\nawaited."
+        },
+        {
+          "range" : {
+            "length" : 69,
+            "location" : 192
+          },
+          "text" : "It lets code recover, translate, log, or surface\nerrors deliberately."
+        }
+      ]
+    },
+    "correctChoice" : 2,
+    "explanation" : "try \/ catch: Language syntax for handling exceptions thrown during execution, including rejected promises when awaited. It lets code recover, translate, log, or surface errors deliberately.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|82|52|fact|85",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does try \/ catch let code recover, translate, log, or surface errors deliberately?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|87|52|fact|90",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 88,
+        "sourceTitle" : "Primitive values",
+        "span" : {
+          "range" : {
+            "length" : 101,
+            "location" : 90
+          },
+          "text" : "JavaScript values that are not objects: string, number,\nboolean, undefined, null, bigint, and symbol."
+        },
+        "text" : "JavaScript values that are not objects: string, number, boolean, undefined, null, bigint, and symbol."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|89|52|fact|82",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 90,
+        "sourceTitle" : "Mutation",
+        "span" : {
+          "range" : {
+            "length" : 72,
+            "location" : 82
+          },
+          "text" : "Changing an existing object, array, or other mutable\nstructure in place."
+        },
+        "text" : "Changing an existing object, array, or other mutable structure in place."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|90|52|fact|86",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 91,
+        "sourceTitle" : "Immutability",
+        "span" : {
+          "range" : {
+            "length" : 72,
+            "location" : 86
+          },
+          "text" : "Treating existing data as unchanged and creating new\nvalues for updates."
+        },
+        "text" : "Treating existing data as unchanged and creating new values for updates."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 41,
+              "location" : 374
+            },
+            "text" : "setUser(prev => ({...prev, name:\"Ada\"}))."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 628
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 080 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 145,
+              "location" : 457
+            },
+            "text" : "Immutability means producing a new value rather than\nmutating existing state. It is especially useful in UI state\nmanagement and concurrent code."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 77,
+              "location" : 274
+            },
+            "text" : "Do not scribble on yesterday's menu; print a new\nmenu with the changed price."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 165,
+              "location" : 86
+            },
+            "text" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 90,
+        "section" : "080 J AVAS C R I P T C O R E M E N TA L M O D E L S",
+        "title" : "Immutability",
+        "titleSpan" : {
+          "range" : {
+            "length" : 12,
+            "location" : 52
+          },
+          "text" : "Immutability"
+        }
+      },
+      "composedStatement" : "Immutability: Treating existing data as unchanged and creating new values for updates. It makes state transitions easier to reason about and supports change detection by identity.",
+      "families" : [
+        "definition",
+        "mechanism"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 165,
+          "location" : 86
+        },
+        "text" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Immutability"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 72,
+            "location" : 86
+          },
+          "text" : "Treating existing data as unchanged and creating new\nvalues for updates."
+        },
+        {
+          "range" : {
+            "length" : 92,
+            "location" : 159
+          },
+          "text" : "It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+        }
+      ]
+    },
+    "correctChoice" : 2,
+    "explanation" : "Immutability: Treating existing data as unchanged and creating new values for updates. It makes state transitions easier to reason about and supports change detection by identity.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|90|52|fact|86",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does immutability make state transitions easier to reason about and support change detection by identity?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|97|52|fact|85",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 98,
+        "sourceTitle" : "Array.every",
+        "span" : {
+          "range" : {
+            "length" : 67,
+            "location" : 85
+          },
+          "text" : "An array method that returns whether all elements\npass a predicate."
+        },
+        "text" : "An array method that returns whether all elements pass a predicate."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|93|52|fact|83",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 94,
+        "sourceTitle" : "Array.map",
+        "span" : {
+          "range" : {
+            "length" : 70,
+            "location" : 83
+          },
+          "text" : "An array method that creates a new array by\ntransforming each element."
+        },
+        "text" : "An array method that creates a new array by transforming each element."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|98|52|fact|86",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 99,
+        "sourceTitle" : "Array.reduce",
+        "span" : {
+          "range" : {
+            "length" : 68,
+            "location" : 86
+          },
+          "text" : "An array method that accumulates many elements\ninto a single result."
+        },
+        "text" : "An array method that accumulates many elements into a single result."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 32,
+              "location" : 323
+            },
+            "text" : "prices.reduce((sum,p)=>sum+p,0)."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 550
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 088 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 127,
+              "location" : 397
+            },
+            "text" : "reduce folds a collection into one accumulator. I use it\nwhen that improves clarity, but I do not force every loop\ninto reduce."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 64,
+              "location" : 236
+            },
+            "text" : "Everyone empties coins into one jar; the jar is the\naccumulator."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 127,
+              "location" : 86
+            },
+            "text" : "An array method that accumulates many elements\ninto a single result. It can compute totals, groups,\nmaps, and other aggregates."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 98,
+        "section" : "088 J AVAS C R I P T C O R E M E N TA L M O D E L S",
+        "title" : "Array.reduce",
+        "titleSpan" : {
+          "range" : {
+            "length" : 12,
+            "location" : 52
+          },
+          "text" : "Array.reduce"
+        }
+      },
+      "composedStatement" : "Array.reduce: An array method that accumulates many elements into a single result. It can compute totals, groups, maps, and other aggregates.",
+      "families" : [
+        "definition"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 127,
+          "location" : 86
+        },
+        "text" : "An array method that accumulates many elements\ninto a single result. It can compute totals, groups,\nmaps, and other aggregates."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Array.reduce"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 68,
+            "location" : 86
+          },
+          "text" : "An array method that accumulates many elements\ninto a single result."
+        },
+        {
+          "range" : {
+            "length" : 58,
+            "location" : 155
+          },
+          "text" : "It can compute totals, groups,\nmaps, and other aggregates."
+        }
+      ]
+    },
+    "correctChoice" : 2,
+    "explanation" : "Array.reduce: An array method that accumulates many elements into a single result. It can compute totals, groups, maps, and other aggregates.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|98|52|fact|86",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how can Array.reduce compute totals, groups, maps, and other aggregates?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|107|55|fact|82",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 108,
+        "sourceTitle" : "Props",
+        "span" : {
+          "range" : {
+            "length" : 49,
+            "location" : 82
+          },
+          "text" : "Inputs passed from a parent component to a child."
+        },
+        "text" : "Inputs passed from a parent component to a child."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|110|55|fact|86",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 111,
+        "sourceTitle" : "Re-render",
+        "span" : {
+          "range" : {
+            "length" : 86,
+            "location" : 86
+          },
+          "text" : "A subsequent render of a component due to state,\nparent rendering, or context changes."
+        },
+        "text" : "A subsequent render of a component due to state, parent rendering, or context changes."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|114|55|fact|86",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 115,
+        "sourceTitle" : "useEffect",
+        "span" : {
+          "range" : {
+            "length" : 86,
+            "location" : 86
+          },
+          "text" : "A React hook for synchronizing a component with\nsystems outside React after rendering."
+        },
+        "text" : "A React hook for synchronizing a component with systems outside React after rendering."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 33,
+              "location" : 328
+            },
+            "text" : "<UserCard user={user} compact \/>."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 540
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 096 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 111,
+              "location" : 403
+            },
+            "text" : "Props are read-only inputs to a component. Parent-to-\nchild props are a core part of React's one-way data flow."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 95,
+              "location" : 210
+            },
+            "text" : "Props are ingredients handed to a chef; the chef\nshould not secretly rewrite your grocery list."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 105,
+              "location" : 82
+            },
+            "text" : "Inputs passed from a parent component to a child.\nThey create explicit data flow and reusable\ncomponents."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 107,
+        "section" : "096 T Y P E S C R I P T & R E AC T F O U N DAT I O N S",
+        "title" : "Props",
+        "titleSpan" : {
+          "range" : {
+            "length" : 5,
+            "location" : 55
+          },
+          "text" : "Props"
+        }
+      },
+      "composedStatement" : "Props: Inputs passed from a parent component to a child. They create explicit data flow and reusable components.",
+      "families" : [
+        "definition"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 105,
+          "location" : 82
+        },
+        "text" : "Inputs passed from a parent component to a child.\nThey create explicit data flow and reusable\ncomponents."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "they",
+          "resolvedTo" : "Props"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 49,
+            "location" : 82
+          },
+          "text" : "Inputs passed from a parent component to a child."
+        },
+        {
+          "range" : {
+            "length" : 55,
+            "location" : 132
+          },
+          "text" : "They create explicit data flow and reusable\ncomponents."
+        }
+      ]
+    },
+    "correctChoice" : 0,
+    "explanation" : "Props: Inputs passed from a parent component to a child. They create explicit data flow and reusable components.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|107|55|fact|82",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how do props create explicit data flow and reusable components?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|126|55|fact|88",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 127,
+        "sourceTitle" : "Custom hook",
+        "span" : {
+          "range" : {
+            "length" : 85,
+            "location" : 88
+          },
+          "text" : "A function beginning with use that composes React\nhooks into reusable stateful logic."
+        },
+        "text" : "A function beginning with use that composes React hooks into reusable stateful logic."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|122|55|fact|88",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 123,
+        "sourceTitle" : "useCallback",
+        "span" : {
+          "range" : {
+            "length" : 72,
+            "location" : 88
+          },
+          "text" : "A React hook that caches a function reference until\ndependencies change."
+        },
+        "text" : "A React hook that caches a function reference until dependencies change."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|115|55|fact|91",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 116,
+        "sourceTitle" : "Effect cleanup",
+        "span" : {
+          "range" : {
+            "length" : 104,
+            "location" : 91
+          },
+          "text" : "The function returned from an effect to undo the\nprevious subscription\/resource before rerun or\nunmount."
+        },
+        "text" : "The function returned from an effect to undo the previous subscription\/resource before rerun or unmount."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 48,
+              "location" : 411
+            },
+            "text" : "return () => clearInterval(id) or unsubscribe()."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 652
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 104 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 125,
+              "location" : 501
+            },
+            "text" : "Effect cleanup reverses the previous effect. React runs it\nbefore the effect re-synchronizes and when the\ncomponent unmounts."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 105,
+              "location" : 283
+            },
+            "text" : "If you rent a karaoke machine, cleanup is returning it\ninstead of quietly collecting 40 karaoke machines."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 169,
+              "location" : 91
+            },
+            "text" : "The function returned from an effect to undo the\nprevious subscription\/resource before rerun or\nunmount. It prevents duplicate listeners, stale\nsubscriptions, and leaks."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 115,
+        "section" : "104 T Y P E S C R I P T & R E AC T F O U N DAT I O N S",
+        "title" : "Effect cleanup",
+        "titleSpan" : {
+          "range" : {
+            "length" : 14,
+            "location" : 55
+          },
+          "text" : "Effect cleanup"
+        }
+      },
+      "composedStatement" : "Effect cleanup: The function returned from an effect to undo the previous subscription\/resource before rerun or unmount. It prevents duplicate listeners, stale subscriptions, and leaks.",
+      "families" : [
+        "definition",
+        "consequence",
+        "constraint",
+        "sequence"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 169,
+          "location" : 91
+        },
+        "text" : "The function returned from an effect to undo the\nprevious subscription\/resource before rerun or\nunmount. It prevents duplicate listeners, stale\nsubscriptions, and leaks."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Effect cleanup"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 104,
+            "location" : 91
+          },
+          "text" : "The function returned from an effect to undo the\nprevious subscription\/resource before rerun or\nunmount."
+        },
+        {
+          "range" : {
+            "length" : 64,
+            "location" : 196
+          },
+          "text" : "It prevents duplicate listeners, stale\nsubscriptions, and leaks."
+        }
+      ]
+    },
+    "correctChoice" : 2,
+    "explanation" : "Effect cleanup: The function returned from an effect to undo the previous subscription\/resource before rerun or unmount. It prevents duplicate listeners, stale subscriptions, and leaks.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|115|55|fact|91",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does effect cleanup prevent duplicate listeners, stale subscriptions, and leaks?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|106|55|fact|92",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 107,
+        "sourceTitle" : "React component",
+        "span" : {
+          "range" : {
+            "length" : 65,
+            "location" : 92
+          },
+          "text" : "A reusable unit that describes UI from props, state,\nand context."
+        },
+        "text" : "A reusable unit that describes UI from props, state, and context."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|114|55|fact|86",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 115,
+        "sourceTitle" : "useEffect",
+        "span" : {
+          "range" : {
+            "length" : 86,
+            "location" : 86
+          },
+          "text" : "A React hook for synchronizing a component with\nsystems outside React after rendering."
+        },
+        "text" : "A React hook for synchronizing a component with systems outside React after rendering."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|123|55|fact|87",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 124,
+        "sourceTitle" : "React.memo",
+        "span" : {
+          "range" : {
+            "length" : 83,
+            "location" : 87
+          },
+          "text" : "A wrapper that can skip rerendering a component\nwhen its props are shallowly equal."
+        },
+        "text" : "A wrapper that can skip rerendering a component when its props are shallowly equal."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 47,
+              "location" : 343
+            },
+            "text" : "const Row = memo(function Row({item}) { ... })."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 580
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 112 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 122,
+              "location" : 432
+            },
+            "text" : "React.memo is a targeted optimization. It only helps\nwhen rerender cost and prop stability make the\ncomparison worthwhile."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 66,
+              "location" : 254
+            },
+            "text" : "The guard says \"same delivery as last time? do not\nwake the chef.\""
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 144,
+              "location" : 87
+            },
+            "text" : "A wrapper that can skip rerendering a component\nwhen its props are shallowly equal. It can reduce\nexpensive child renders when props are stable."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 123,
+        "section" : "112 T Y P E S C R I P T & R E AC T F O U N DAT I O N S",
+        "title" : "React.memo",
+        "titleSpan" : {
+          "range" : {
+            "length" : 10,
+            "location" : 55
+          },
+          "text" : "React.memo"
+        }
+      },
+      "composedStatement" : "React.memo: A wrapper that can skip rerendering a component when its props are shallowly equal. It can reduce expensive child renders when props are stable.",
+      "families" : [
+        "definition",
+        "constraint"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 144,
+          "location" : 87
+        },
+        "text" : "A wrapper that can skip rerendering a component\nwhen its props are shallowly equal. It can reduce\nexpensive child renders when props are stable."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "React.memo"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 83,
+            "location" : 87
+          },
+          "text" : "A wrapper that can skip rerendering a component\nwhen its props are shallowly equal."
+        },
+        {
+          "range" : {
+            "length" : 60,
+            "location" : 171
+          },
+          "text" : "It can reduce\nexpensive child renders when props are stable."
+        }
+      ]
+    },
+    "correctChoice" : 2,
+    "explanation" : "React.memo: A wrapper that can skip rerendering a component when its props are shallowly equal. It can reduce expensive child renders when props are stable.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|123|55|fact|87",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how can React.memo reduce expensive child renders when props are stable?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|136|65|fact|90",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 137,
+        "sourceTitle" : "CSR",
+        "span" : {
+          "range" : {
+            "length" : 112,
+            "location" : 90
+          },
+          "text" : "Client-Side Rendering: the browser executes\nJavaScript to build most of the UI after loading the app\nshell\/data."
+        },
+        "text" : "Client-Side Rendering: the browser executes JavaScript to build most of the UI after loading the app shell\/data."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|140|65|fact|106",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 141,
+        "sourceTitle" : "Client-side routing",
+        "span" : {
+          "range" : {
+            "length" : 95,
+            "location" : 106
+          },
+          "text" : "Changing views and history in JavaScript without\nrequesting a full new HTML document each time."
+        },
+        "text" : "Changing views and history in JavaScript without requesting a full new HTML document each time."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|132|65|fact|99",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 133,
+        "sourceTitle" : "Tree shaking",
+        "span" : {
+          "range" : {
+            "length" : 79,
+            "location" : 99
+          },
+          "text" : "Build-time elimination of unused module exports\nwhen static analysis allows it."
+        },
+        "text" : "Build-time elimination of unused module exports when static analysis allows it."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 77,
+              "location" : 359
+            },
+            "text" : "Import one ESM export; bundler can omit unused\nexports from the final bundle."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 634
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 120 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 130,
+              "location" : 478
+            },
+            "text" : "Tree shaking removes unused code during bundling,\nespecially with statically analyzable ES modules and\nside-effect-aware packages."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 80,
+              "location" : 256
+            },
+            "text" : "Pack only the tools you actually selected, not every\ntool in the hardware store."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 134,
+              "location" : 99
+            },
+            "text" : "Build-time elimination of unused module exports\nwhen static analysis allows it. It reduces shipped\nJavaScript without manual deletion."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 132,
+        "section" : "120 F R O N T E N D P L AT F O R M , U X & P E R F O R M A N C E",
+        "title" : "Tree shaking",
+        "titleSpan" : {
+          "range" : {
+            "length" : 12,
+            "location" : 65
+          },
+          "text" : "Tree shaking"
+        }
+      },
+      "composedStatement" : "Tree shaking: Build-time elimination of unused module exports when static analysis allows it. It reduces shipped JavaScript without manual deletion.",
+      "families" : [
+        "definition",
+        "mechanism",
+        "consequence",
+        "constraint"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 134,
+          "location" : 99
+        },
+        "text" : "Build-time elimination of unused module exports\nwhen static analysis allows it. It reduces shipped\nJavaScript without manual deletion."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Tree shaking"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 79,
+            "location" : 99
+          },
+          "text" : "Build-time elimination of unused module exports\nwhen static analysis allows it."
+        },
+        {
+          "range" : {
+            "length" : 54,
+            "location" : 179
+          },
+          "text" : "It reduces shipped\nJavaScript without manual deletion."
+        }
+      ]
+    },
+    "correctChoice" : 2,
+    "explanation" : "Tree shaking: Build-time elimination of unused module exports when static analysis allows it. It reduces shipped JavaScript without manual deletion.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|132|65|fact|99",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does tree shaking reduce shipped JavaScript without manual deletion?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|140|65|fact|106",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 141,
+        "sourceTitle" : "Client-side routing",
+        "span" : {
+          "range" : {
+            "length" : 95,
+            "location" : 106
+          },
+          "text" : "Changing views and history in JavaScript without\nrequesting a full new HTML document each time."
+        },
+        "text" : "Changing views and history in JavaScript without requesting a full new HTML document each time."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|147|65|fact|90",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 148,
+        "sourceTitle" : "DOM",
+        "span" : {
+          "range" : {
+            "length" : 81,
+            "location" : 90
+          },
+          "text" : "The browser's tree of objects representing the current\ndocument and its elements."
+        },
+        "text" : "The browser's tree of objects representing the current document and its elements."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|131|65|fact|101",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 132,
+        "sourceTitle" : "Code splitting",
+        "span" : {
+          "range" : {
+            "length" : 86,
+            "location" : 101
+          },
+          "text" : "Dividing application JavaScript into multiple chunks\nthat can be loaded independently."
+        },
+        "text" : "Dividing application JavaScript into multiple chunks that can be loaded independently."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 62,
+              "location" : 363
+            },
+            "text" : "router.push(\"\/settings\") updates history and\nrenders Settings."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 634
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 128 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 141,
+              "location" : 467
+            },
+            "text" : "Client-side routing intercepts navigation and updates\nhistory\/UI locally; servers still need fallback\/deep-link\nsupport for direct URL loads."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 64,
+              "location" : 276
+            },
+            "text" : "Change rooms inside the same house without\nrebuilding the house."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 147,
+              "location" : 106
+            },
+            "text" : "Changing views and history in JavaScript without\nrequesting a full new HTML document each time. It\nmakes SPA navigation fast while preserving URLs."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 140,
+        "section" : "128 F R O N T E N D P L AT F O R M , U X & P E R F O R M A N C E",
+        "title" : "Client-side routing",
+        "titleSpan" : {
+          "range" : {
+            "length" : 19,
+            "location" : 65
+          },
+          "text" : "Client-side routing"
+        }
+      },
+      "composedStatement" : "Client-side routing: Changing views and history in JavaScript without requesting a full new HTML document each time. It makes SPA navigation fast while preserving URLs.",
+      "families" : [
+        "definition",
+        "mechanism",
+        "constraint"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 147,
+          "location" : 106
+        },
+        "text" : "Changing views and history in JavaScript without\nrequesting a full new HTML document each time. It\nmakes SPA navigation fast while preserving URLs."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Client-side routing"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 95,
+            "location" : 106
+          },
+          "text" : "Changing views and history in JavaScript without\nrequesting a full new HTML document each time."
+        },
+        {
+          "range" : {
+            "length" : 51,
+            "location" : 202
+          },
+          "text" : "It\nmakes SPA navigation fast while preserving URLs."
+        }
+      ]
+    },
+    "correctChoice" : 0,
+    "explanation" : "Client-side routing: Changing views and history in JavaScript without requesting a full new HTML document each time. It makes SPA navigation fast while preserving URLs.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|140|65|fact|106",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does client-side routing make SPA navigation fast while preserving URLs?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|138|65|fact|90",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 139,
+        "sourceTitle" : "SPA",
+        "span" : {
+          "range" : {
+            "length" : 124,
+            "location" : 90
+          },
+          "text" : "Single Page Application: a web app where client-side\nnavigation updates views without full document\nreloads for most routes."
+        },
+        "text" : "Single Page Application: a web app where client-side navigation updates views without full document reloads for most routes."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|130|65|fact|99",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 131,
+        "sourceTitle" : "Lazy loading",
+        "span" : {
+          "range" : {
+            "length" : 72,
+            "location" : 99
+          },
+          "text" : "Deferring loading or initialization until a resource is\nactually needed."
+        },
+        "text" : "Deferring loading or initialization until a resource is actually needed."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|148|65|fact|101",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 149,
+        "sourceTitle" : "Event bubbling",
+        "span" : {
+          "range" : {
+            "length" : 91,
+            "location" : 101
+          },
+          "text" : "The phase where an event triggered on a descendant\npropagates upward through its ancestors."
+        },
+        "text" : "The phase where an event triggered on a descendant propagates upward through its ancestors."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 94,
+              "location" : 356
+            },
+            "text" : "Click button inside <li>; click can be observed\nby li, ul, body unless propagation is stopped."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 648
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 136 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 130,
+              "location" : 492
+            },
+            "text" : "Most DOM events bubble from the target through\nancestors. I use that behavior intentionally and avoid\nunnecessary stopPropagation."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 69,
+              "location" : 264
+            },
+            "text" : "Drop a marble on the bottom stair and the news\ntravels up every step."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 101
+            },
+            "text" : "The phase where an event triggered on a descendant\npropagates upward through its ancestors. It enables\nparent handlers and event delegation."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 148,
+        "section" : "136 F R O N T E N D P L AT F O R M , U X & P E R F O R M A N C E",
+        "title" : "Event bubbling",
+        "titleSpan" : {
+          "range" : {
+            "length" : 14,
+            "location" : 65
+          },
+          "text" : "Event bubbling"
+        }
+      },
+      "composedStatement" : "Event bubbling: The phase where an event triggered on a descendant propagates upward through its ancestors. It enables parent handlers and event delegation.",
+      "families" : [
+        "definition",
+        "mechanism"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 140,
+          "location" : 101
+        },
+        "text" : "The phase where an event triggered on a descendant\npropagates upward through its ancestors. It enables\nparent handlers and event delegation."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Event bubbling"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 91,
+            "location" : 101
+          },
+          "text" : "The phase where an event triggered on a descendant\npropagates upward through its ancestors."
+        },
+        {
+          "range" : {
+            "length" : 48,
+            "location" : 193
+          },
+          "text" : "It enables\nparent handlers and event delegation."
+        }
+      ]
+    },
+    "correctChoice" : 2,
+    "explanation" : "Event bubbling: The phase where an event triggered on a descendant propagates upward through its ancestors. It enables parent handlers and event delegation.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|148|65|fact|101",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does event bubbling enable parent handlers and event delegation?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|157|68|fact|103",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 158,
+        "sourceTitle" : "Message queue",
+        "span" : {
+          "range" : {
+            "length" : 101,
+            "location" : 103
+          },
+          "text" : "A durable or buffered channel where producers\nenqueue messages\/jobs and consumers process\nthem later."
+        },
+        "text" : "A durable or buffered channel where producers enqueue messages\/jobs and consumers process them later."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|175|68|fact|110",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 176,
+        "sourceTitle" : "Environment variable",
+        "span" : {
+          "range" : {
+            "length" : 68,
+            "location" : 110
+          },
+          "text" : "A key-value configuration value provided by the\nprocess environment."
+        },
+        "text" : "A key-value configuration value provided by the process environment."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|160|68|fact|103",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 161,
+        "sourceTitle" : "Microservices",
+        "span" : {
+          "range" : {
+            "length" : 103,
+            "location" : 103
+          },
+          "text" : "An architecture where business capabilities are split\ninto independently deployable networked services."
+        },
+        "text" : "An architecture where business capabilities are split into independently deployable networked services."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 69,
+              "location" : 395
+            },
+            "text" : "API enqueues \"send welcome email\"; worker\nconsumes it asynchronously."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 674
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 144 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 142,
+              "location" : 506
+            },
+            "text" : "Queues decouple producers and consumers, buffer\nload, and support retries; I design for at-least-once\ndelivery by making consumers idempotent."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 75,
+              "location" : 297
+            },
+            "text" : "Leave laundry tickets in a basket; workers take the\nnext ticket when ready."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 171,
+              "location" : 103
+            },
+            "text" : "A durable or buffered channel where producers\nenqueue messages\/jobs and consumers process\nthem later. It decouples request latency from\nbackground work and smooths bursts."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 157,
+        "section" : "144 R E L I A B I L I T Y, A R C H I T E C T U R E & D E L I V E RY",
+        "title" : "Message queue",
+        "titleSpan" : {
+          "range" : {
+            "length" : 13,
+            "location" : 68
+          },
+          "text" : "Message queue"
+        }
+      },
+      "composedStatement" : "Message queue: A durable or buffered channel where producers enqueue messages\/jobs and consumers process them later. It decouples request latency from background work and smooths bursts.",
+      "families" : [
+        "definition"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 171,
+          "location" : 103
+        },
+        "text" : "A durable or buffered channel where producers\nenqueue messages\/jobs and consumers process\nthem later. It decouples request latency from\nbackground work and smooths bursts."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Message queue"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 101,
+            "location" : 103
+          },
+          "text" : "A durable or buffered channel where producers\nenqueue messages\/jobs and consumers process\nthem later."
+        },
+        {
+          "range" : {
+            "length" : 69,
+            "location" : 205
+          },
+          "text" : "It decouples request latency from\nbackground work and smooths bursts."
+        }
+      ]
+    },
+    "correctChoice" : 0,
+    "explanation" : "Message queue: A durable or buffered channel where producers enqueue messages\/jobs and consumers process them later. It decouples request latency from background work and smooths bursts.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|157|68|fact|103",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does a message queue decouple request latency from background work and smooth bursts?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|179|68|fact|103",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 180,
+        "sourceTitle" : "Observability",
+        "span" : {
+          "range" : {
+            "length" : 108,
+            "location" : 103
+          },
+          "text" : "The ability to understand internal system behavior\nfrom outputs such as logs, metrics, traces, and\nprofiles."
+        },
+        "text" : "The ability to understand internal system behavior from outputs such as logs, metrics, traces, and profiles."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|165|68|fact|99",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 166,
+        "sourceTitle" : "Unit test",
+        "span" : {
+          "range" : {
+            "length" : 73,
+            "location" : 99
+          },
+          "text" : "A focused test of a small behavior, usually with\ncontrolled dependencies."
+        },
+        "text" : "A focused test of a small behavior, usually with controlled dependencies."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|177|68|fact|97",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 178,
+        "sourceTitle" : "Logging",
+        "span" : {
+          "range" : {
+            "length" : 92,
+            "location" : 97
+          },
+          "text" : "Recording structured events about application\nbehavior for debugging, audit, and operations."
+        },
+        "text" : "Recording structured events about application behavior for debugging, audit, and operations."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 40,
+              "location" : 333
+            },
+            "text" : "expect(calculateTotal([10,5])).toBe(15)."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 564
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 152 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 123,
+              "location" : 415
+            },
+            "text" : "Unit tests are fast and focused. I use them for\ndeterministic business logic and avoid over-mocking\nimplementation details."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 67,
+              "location" : 243
+            },
+            "text" : "Test one Lego brick's connector before testing the\nwhole spaceship."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 121,
+              "location" : 99
+            },
+            "text" : "A focused test of a small behavior, usually with\ncontrolled dependencies. It gives fast feedback on\nlogic and edge cases."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 165,
+        "section" : "152 R E L I A B I L I T Y, A R C H I T E C T U R E & D E L I V E RY",
+        "title" : "Unit test",
+        "titleSpan" : {
+          "range" : {
+            "length" : 9,
+            "location" : 68
+          },
+          "text" : "Unit test"
+        }
+      },
+      "composedStatement" : "Unit test: A focused test of a small behavior, usually with controlled dependencies. It gives fast feedback on logic and edge cases.",
+      "families" : [
+        "definition",
+        "mechanism"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 121,
+          "location" : 99
+        },
+        "text" : "A focused test of a small behavior, usually with\ncontrolled dependencies. It gives fast feedback on\nlogic and edge cases."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Unit test"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 73,
+            "location" : 99
+          },
+          "text" : "A focused test of a small behavior, usually with\ncontrolled dependencies."
+        },
+        {
+          "range" : {
+            "length" : 47,
+            "location" : 173
+          },
+          "text" : "It gives fast feedback on\nlogic and edge cases."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "Unit test: A focused test of a small behavior, usually with controlled dependencies. It gives fast feedback on logic and edge cases.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|165|68|fact|99",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does a unit test give fast feedback on logic and edge cases?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|154|68|fact|95",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 155,
+        "sourceTitle" : "Retry",
+        "span" : {
+          "range" : {
+            "length" : 70,
+            "location" : 95
+          },
+          "text" : "Attempting a failed operation again when the failure\nmay be temporary."
+        },
+        "text" : "Attempting a failed operation again when the failure may be temporary."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|172|68|fact|96",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 173,
+        "sourceTitle" : "Docker",
+        "span" : {
+          "range" : {
+            "length" : 89,
+            "location" : 96
+          },
+          "text" : "A platform for packaging and running applications in\nisolated containers based on images."
+        },
+        "text" : "A platform for packaging and running applications in isolated containers based on images."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|155|68|fact|109",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 156,
+        "sourceTitle" : "Exponential backoff",
+        "span" : {
+          "range" : {
+            "length" : 88,
+            "location" : 109
+          },
+          "text" : "A retry strategy where delays grow after consecutive\nfailures, often with random jitter."
+        },
+        "text" : "A retry strategy where delays grow after consecutive failures, often with random jitter."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 81,
+              "location" : 395
+            },
+            "text" : "docker build creates image; docker run starts\nAPI with the packaged dependencies."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 730
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 159 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 186,
+              "location" : 518
+            },
+            "text" : "Docker packages application filesystem\/runtime\ndependencies into images and runs containers with\nisolation; it improves consistency but is not a virtual\nmachine in the traditional sense."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 88,
+              "location" : 284
+            },
+            "text" : "Put your app, Node version, and system libraries in\nthe same labeled shipping container."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 165,
+              "location" : 96
+            },
+            "text" : "A platform for packaging and running applications in\nisolated containers based on images. It makes\ndependencies and runtime environment reproducible\nacross machines."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 172,
+        "section" : "159 R E L I A B I L I T Y, A R C H I T E C T U R E & D E L I V E RY",
+        "title" : "Docker",
+        "titleSpan" : {
+          "range" : {
+            "length" : 6,
+            "location" : 68
+          },
+          "text" : "Docker"
+        }
+      },
+      "composedStatement" : "Docker: A platform for packaging and running applications in isolated containers based on images. It makes dependencies and runtime environment reproducible across machines.",
+      "families" : [
+        "definition",
+        "mechanism"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 165,
+          "location" : 96
+        },
+        "text" : "A platform for packaging and running applications in\nisolated containers based on images. It makes\ndependencies and runtime environment reproducible\nacross machines."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Docker"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 89,
+            "location" : 96
+          },
+          "text" : "A platform for packaging and running applications in\nisolated containers based on images."
+        },
+        {
+          "range" : {
+            "length" : 75,
+            "location" : 186
+          },
+          "text" : "It makes\ndependencies and runtime environment reproducible\nacross machines."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "Docker: A platform for packaging and running applications in isolated containers based on images. It makes dependencies and runtime environment reproducible across machines.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|172|68|fact|96",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does Docker make dependencies and runtime environment reproducible across machines?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|219|55|fact|101",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 220,
+        "sourceTitle" : "Declaration file (.d.ts)",
+        "span" : {
+          "range" : {
+            "length" : 78,
+            "location" : 101
+          },
+          "text" : "A file containing TypeScript type declarations without\nruntime implementation."
+        },
+        "text" : "A file containing TypeScript type declarations without runtime implementation."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|206|55|fact|87",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 207,
+        "sourceTitle" : "Type guard",
+        "span" : {
+          "range" : {
+            "length" : 66,
+            "location" : 87
+          },
+          "text" : "A runtime check that also teaches TypeScript a more\nspecific type."
+        },
+        "text" : "A runtime check that also teaches TypeScript a more specific type."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|202|55|fact|80",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 203,
+        "sourceTitle" : "any",
+        "span" : {
+          "range" : {
+            "length" : 68,
+            "location" : 80
+          },
+          "text" : "A type that effectively disables TypeScript checking\nfor that value."
+        },
+        "text" : "A type that effectively disables TypeScript checking for that value."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 92,
+              "location" : 336
+            },
+            "text" : "function isUser(x: unknown): x is User\n{ return !!x && typeof x === \"object\" && \"id\" in\nx; }"
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 118,
+              "location" : 600
+            },
+            "text" : "A guard is only trustworthy if the runtime check is actually\nstrong enough.\nExplain it aloud before swiping. 191 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 104,
+              "location" : 470
+            },
+            "text" : "A type guard combines runtime validation with a type\npredicate so the compiler can narrow values safely."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 75,
+              "location" : 238
+            },
+            "text" : "A bouncer checks the wristband and announces\n“yes, this is definitely VIP.”"
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 128,
+              "location" : 87
+            },
+            "text" : "A runtime check that also teaches TypeScript a more\nspecific type. It centralizes validation and improves\ndownstream ergonomics."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 206,
+        "section" : "191 T Y P E S C R I P T: T H I N K I N G I N T Y P E S",
+        "title" : "Type guard",
+        "titleSpan" : {
+          "range" : {
+            "length" : 10,
+            "location" : 55
+          },
+          "text" : "Type guard"
+        }
+      },
+      "composedStatement" : "Type guard: A runtime check that also teaches TypeScript a more specific type. It centralizes validation and improves downstream ergonomics.",
+      "families" : [
+        "definition",
+        "consequence"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 128,
+          "location" : 87
+        },
+        "text" : "A runtime check that also teaches TypeScript a more\nspecific type. It centralizes validation and improves\ndownstream ergonomics."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Type guard"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 66,
+            "location" : 87
+          },
+          "text" : "A runtime check that also teaches TypeScript a more\nspecific type."
+        },
+        {
+          "range" : {
+            "length" : 61,
+            "location" : 154
+          },
+          "text" : "It centralizes validation and improves\ndownstream ergonomics."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "Type guard: A runtime check that also teaches TypeScript a more specific type. It centralizes validation and improves downstream ergonomics.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|206|55|fact|87",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does a type guard centralize validation and improve downstream ergonomics?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|226|66|fact|95",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 227,
+        "sourceTitle" : "Reducer",
+        "span" : {
+          "range" : {
+            "length" : 74,
+            "location" : 95
+          },
+          "text" : "A pure function that computes next state from current\nstate and an action."
+        },
+        "text" : "A pure function that computes next state from current state and an action."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|223|66|fact|104",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 224,
+        "sourceTitle" : "Lifting state up",
+        "span" : {
+          "range" : {
+            "length" : 73,
+            "location" : 104
+          },
+          "text" : "Move shared state to the nearest common owner of\ncomponents that need it."
+        },
+        "text" : "Move shared state to the nearest common owner of components that need it."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|246|66|fact|107",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 247,
+        "sourceTitle" : "Accessibility state",
+        "span" : {
+          "range" : {
+            "length" : 100,
+            "location" : 107
+          },
+          "text" : "Interactive components must expose their current\nstate to assistive technologies, not only visually."
+        },
+        "text" : "Interactive components must expose their current state to assistive technologies, not only visually."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 70,
+              "location" : 358
+            },
+            "text" : "Parent owns selectedId; sibling list sets it and\ndetail pane reads it."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 78,
+              "location" : 577
+            },
+            "text" : "Do not lift farther than necessary.\nExplain it aloud before swiping. 207 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 81,
+              "location" : 470
+            },
+            "text" : "I lift state to the lowest common ancestor when siblings\nneed coordinated access."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 84,
+              "location" : 251
+            },
+            "text" : "Two kids fighting over the thermostat need one\nthermostat, not two fake thermostats."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 124,
+              "location" : 104
+            },
+            "text" : "Move shared state to the nearest common owner of\ncomponents that need it. It creates one source of truth\nfor coordinated UI."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 223,
+        "section" : "207 R E AC T: S TAT E , I D E N T I T Y & A R C H I T E C T U R E",
+        "title" : "Lifting state up",
+        "titleSpan" : {
+          "range" : {
+            "length" : 16,
+            "location" : 66
+          },
+          "text" : "Lifting state up"
+        }
+      },
+      "composedStatement" : "Lifting state up moves shared state to the nearest common owner of components that need it. It creates one source of truth for coordinated UI.",
+      "families" : [
+        "definition",
+        "consequence"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 124,
+          "location" : 104
+        },
+        "text" : "Move shared state to the nearest common owner of\ncomponents that need it. It creates one source of truth\nfor coordinated UI."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Lifting state up"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 73,
+            "location" : 104
+          },
+          "text" : "Move shared state to the nearest common owner of\ncomponents that need it."
+        },
+        {
+          "range" : {
+            "length" : 50,
+            "location" : 178
+          },
+          "text" : "It creates one source of truth\nfor coordinated UI."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "Lifting state up: Move shared state to the nearest common owner of components that need it. It creates one source of truth for coordinated UI.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|223|66|fact|104",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does lifting state up create one source of truth for coordinated UI?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|223|66|fact|104",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 224,
+        "sourceTitle" : "Lifting state up",
+        "span" : {
+          "range" : {
+            "length" : 73,
+            "location" : 104
+          },
+          "text" : "Move shared state to the nearest common owner of\ncomponents that need it."
+        },
+        "text" : "Move shared state to the nearest common owner of components that need it."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|231|66|fact|106",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 232,
+        "sourceTitle" : "Headless component",
+        "span" : {
+          "range" : {
+            "length" : 77,
+            "location" : 106
+          },
+          "text" : "Reusable behavior and accessibility without\nprescribing final visual styling."
+        },
+        "text" : "Reusable behavior and accessibility without prescribing final visual styling."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|222|66|fact|104",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 223,
+        "sourceTitle" : "State colocation",
+        "span" : {
+          "range" : {
+            "length" : 72,
+            "location" : 104
+          },
+          "text" : "Keep state as close as possible to the components\nthat actually need it."
+        },
+        "text" : "Keep state as close as possible to the components that actually need it."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 90,
+              "location" : 364
+            },
+            "text" : "A headless combobox provides keyboard\/focus\nbehavior; your design system supplies visuals."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 123,
+              "location" : 628
+            },
+            "text" : "They shift styling responsibility to the consumer, so the API\nmust be excellent.\nExplain it aloud before swiping. 215 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 106,
+              "location" : 496
+            },
+            "text" : "Headless components are useful when teams need\nrobust behavior and accessibility with custom\npresentation."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 70,
+              "location" : 271
+            },
+            "text" : "You buy the engine and steering system, then design\nyour own car body."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 142,
+              "location" : 106
+            },
+            "text" : "Reusable behavior and accessibility without\nprescribing final visual styling. It separates interaction\nlogic from product-specific appearance."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 231,
+        "section" : "215 R E AC T: S TAT E , I D E N T I T Y & A R C H I T E C T U R E",
+        "title" : "Headless component",
+        "titleSpan" : {
+          "range" : {
+            "length" : 18,
+            "location" : 66
+          },
+          "text" : "Headless component"
+        }
+      },
+      "composedStatement" : "Headless component: Reusable behavior and accessibility without prescribing final visual styling. It separates interaction logic from product-specific appearance.",
+      "families" : [
+        "definition",
+        "constraint"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 142,
+          "location" : 106
+        },
+        "text" : "Reusable behavior and accessibility without\nprescribing final visual styling. It separates interaction\nlogic from product-specific appearance."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Headless component"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 77,
+            "location" : 106
+          },
+          "text" : "Reusable behavior and accessibility without\nprescribing final visual styling."
+        },
+        {
+          "range" : {
+            "length" : 64,
+            "location" : 184
+          },
+          "text" : "It separates interaction\nlogic from product-specific appearance."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "Headless component: Reusable behavior and accessibility without prescribing final visual styling. It separates interaction logic from product-specific appearance.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|231|66|fact|106",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does a headless component separate interaction logic from product-specific appearance?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|222|66|fact|104",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 223,
+        "sourceTitle" : "State colocation",
+        "span" : {
+          "range" : {
+            "length" : 72,
+            "location" : 104
+          },
+          "text" : "Keep state as close as possible to the components\nthat actually need it."
+        },
+        "text" : "Keep state as close as possible to the components that actually need it."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|239|66|fact|101",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 240,
+        "sourceTitle" : "State machine",
+        "span" : {
+          "range" : {
+            "length" : 52,
+            "location" : 101
+          },
+          "text" : "An explicit model of allowed states and transitions."
+        },
+        "text" : "An explicit model of allowed states and transitions."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|223|66|fact|104",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 224,
+        "sourceTitle" : "Lifting state up",
+        "span" : {
+          "range" : {
+            "length" : 73,
+            "location" : 104
+          },
+          "text" : "Move shared state to the nearest common owner of\ncomponents that need it."
+        },
+        "text" : "Move shared state to the nearest common owner of components that need it."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 37,
+              "location" : 322
+            },
+            "text" : "idle -> submitting -> success | error"
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 121,
+              "location" : 555
+            },
+            "text" : "A full state-machine library is optional; the mental model itself\nis valuable.\nExplain it aloud before swiping. 223 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 128,
+              "location" : 401
+            },
+            "text" : "For complex flows I model explicit states and transitions\ninstead of independent booleans whose combinations\ncan become invalid."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 66,
+              "location" : 233
+            },
+            "text" : "An elevator can be MOVING or DOOR_OPEN, but it\nshould not be both."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 109,
+              "location" : 101
+            },
+            "text" : "An explicit model of allowed states and transitions. It\nprevents impossible UI combinations in complex flows."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 239,
+        "section" : "223 R E AC T: S TAT E , I D E N T I T Y & A R C H I T E C T U R E",
+        "title" : "State machine",
+        "titleSpan" : {
+          "range" : {
+            "length" : 13,
+            "location" : 66
+          },
+          "text" : "State machine"
+        }
+      },
+      "composedStatement" : "State machine: An explicit model of allowed states and transitions. It prevents impossible UI combinations in complex flows.",
+      "families" : [
+        "definition",
+        "consequence"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 109,
+          "location" : 101
+        },
+        "text" : "An explicit model of allowed states and transitions. It\nprevents impossible UI combinations in complex flows."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "State machine"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 52,
+            "location" : 101
+          },
+          "text" : "An explicit model of allowed states and transitions."
+        },
+        {
+          "range" : {
+            "length" : 56,
+            "location" : 154
+          },
+          "text" : "It\nprevents impossible UI combinations in complex flows."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "State machine: An explicit model of allowed states and transitions. It prevents impossible UI combinations in complex flows.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|239|66|fact|101",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does a state machine prevent impossible UI combinations in complex flows?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|261|55|fact|88",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 262,
+        "sourceTitle" : "Refactoring",
+        "span" : {
+          "range" : {
+            "length" : 74,
+            "location" : 88
+          },
+          "text" : "Change internal structure while preserving externally\nobservable behavior."
+        },
+        "text" : "Change internal structure while preserving externally observable behavior."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|249|55|fact|90",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 250,
+        "sourceTitle" : "Encapsulation",
+        "span" : {
+          "range" : {
+            "length" : 81,
+            "location" : 90
+          },
+          "text" : "Hide internal state\/implementation and expose only\nthe operations consumers need."
+        },
+        "text" : "Hide internal state\/implementation and expose only the operations consumers need."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|256|55|fact|108",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 257,
+        "sourceTitle" : "Single Responsibility Principle",
+        "span" : {
+          "range" : {
+            "length" : 51,
+            "location" : 108
+          },
+          "text" : "A module should have one coherent reason to change."
+        },
+        "text" : "A module should have one coherent reason to change."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 64,
+              "location" : 347
+            },
+            "text" : "InvoiceCalculator calculates totals; EmailSender\nsends invoices."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 111,
+              "location" : 549
+            },
+            "text" : "Over-splitting can create navigation overhead and weak\nabstractions.\nExplain it aloud before swiping. 239 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 70,
+              "location" : 453
+            },
+            "text" : "SRP is about reasons to change, not making every\nfunction microscopic."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 86,
+              "location" : 238
+            },
+            "text" : "A Swiss Army knife is useful; a Swiss Army\nrefrigerator-toaster-tax-accountant is not."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 107,
+              "location" : 108
+            },
+            "text" : "A module should have one coherent reason to change.\nIt prevents unrelated concerns from becoming\nentangled."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 256,
+        "section" : "239 M O D U L A R I T Y & M A I N TA I N A B I L I T Y",
+        "title" : "Single Responsibility Principle",
+        "titleSpan" : {
+          "range" : {
+            "length" : 31,
+            "location" : 55
+          },
+          "text" : "Single Responsibility\nPrinciple"
+        }
+      },
+      "composedStatement" : "Single Responsibility Principle: A module should have one coherent reason to change. It prevents unrelated concerns from becoming entangled.",
+      "families" : [
+        "definition",
+        "consequence",
+        "constraint"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 107,
+          "location" : 108
+        },
+        "text" : "A module should have one coherent reason to change.\nIt prevents unrelated concerns from becoming\nentangled."
+      },
+      "references" : [
+        {
+          "basis" : "explicit_subject_in_previous_factual_sentence; original scope retained",
+          "expression" : "it",
+          "resolvedTo" : "A module"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 51,
+            "location" : 108
+          },
+          "text" : "A module should have one coherent reason to change."
+        },
+        {
+          "range" : {
+            "length" : 55,
+            "location" : 160
+          },
+          "text" : "It prevents unrelated concerns from becoming\nentangled."
+        }
+      ]
+    },
+    "correctChoice" : 2,
+    "explanation" : "Single Responsibility Principle: A module should have one coherent reason to change. It prevents unrelated concerns from becoming entangled.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|256|55|fact|108",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does the Single Responsibility Principle prevent unrelated concerns from becoming entangled?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|265|42|fact|79",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 266,
+        "sourceTitle" : "Denormalization",
+        "span" : {
+          "range" : {
+            "length" : 75,
+            "location" : 79
+          },
+          "text" : "Intentionally duplicate or precompute data to make\nreads simpler or faster."
+        },
+        "text" : "Intentionally duplicate or precompute data to make reads simpler or faster."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|270|42|fact|80",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 271,
+        "sourceTitle" : "Schema migration",
+        "span" : {
+          "range" : {
+            "length" : 77,
+            "location" : 80
+          },
+          "text" : "A controlled change to database structure or data as\nthe application evolves."
+        },
+        "text" : "A controlled change to database structure or data as the application evolves."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|274|42|fact|83",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 275,
+        "sourceTitle" : "Pessimistic locking",
+        "span" : {
+          "range" : {
+            "length" : 55,
+            "location" : 83
+          },
+          "text" : "Lock data before modifying it so competitors must\nwait."
+        },
+        "text" : "Lock data before modifying it so competitors must wait."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 88,
+              "location" : 356
+            },
+            "text" : "Store order_total on order instead of\nrecalculating from line items for every list\nview."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 127,
+              "location" : 613
+            },
+            "text" : "If you cannot explain the synchronization rule, the duplicate\nmay become corruption.\nExplain it aloud before swiping. 247 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 101,
+              "location" : 486
+            },
+            "text" : "Denormalization is a deliberate performance trade-off; I\ndefine how duplicated data stays consistent."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 98,
+              "location" : 235
+            },
+            "text" : "Keep a snack in every room so you do not walk to\nthe kitchen, but now every room needs restocking."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 133,
+              "location" : 79
+            },
+            "text" : "Intentionally duplicate or precompute data to make\nreads simpler or faster. It trades write complexity\/\nstorage for read performance."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 265,
+        "section" : "247 DATA B AS E S I N P R O D U C T I O N",
+        "title" : "Denormalization",
+        "titleSpan" : {
+          "range" : {
+            "length" : 15,
+            "location" : 42
+          },
+          "text" : "Denormalization"
+        }
+      },
+      "composedStatement" : "Denormalization intentionally duplicates or precompute data to make reads simpler or faster. It trades write complexity\/ storage for read performance.",
+      "families" : [
+        "definition",
+        "tradeoff"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 133,
+          "location" : 79
+        },
+        "text" : "Intentionally duplicate or precompute data to make\nreads simpler or faster. It trades write complexity\/\nstorage for read performance."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Denormalization"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 75,
+            "location" : 79
+          },
+          "text" : "Intentionally duplicate or precompute data to make\nreads simpler or faster."
+        },
+        {
+          "range" : {
+            "length" : 57,
+            "location" : 155
+          },
+          "text" : "It trades write complexity\/\nstorage for read performance."
+        }
+      ]
+    },
+    "correctChoice" : 0,
+    "explanation" : "Denormalization: Intentionally duplicate or precompute data to make reads simpler or faster. It trades write complexity\/ storage for read performance.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|265|42|fact|79",
+    "operation" : "tradeoff",
+    "prompt" : "According to the source, how does denormalization trade write complexity\/ storage for read performance?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|284|63|fact|94",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 285,
+        "sourceTitle" : "LRU cache",
+        "span" : {
+          "range" : {
+            "length" : 80,
+            "location" : 94
+          },
+          "text" : "A cache strategy that evicts the least recently used\nentry when space is needed."
+        },
+        "text" : "A cache strategy that evicts the least recently used entry when space is needed."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|281|63|fact|104",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 282,
+        "sourceTitle" : "Write-through cache",
+        "span" : {
+          "range" : {
+            "length" : 68,
+            "location" : 104
+          },
+          "text" : "Writes update the cache and backing store as part of\nthe write path."
+        },
+        "text" : "Writes update the cache and backing store as part of the write path."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|289|63|fact|102",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 290,
+        "sourceTitle" : "Distributed cache",
+        "span" : {
+          "range" : {
+            "length" : 71,
+            "location" : 102
+          },
+          "text" : "A cache shared across application instances,\ncommonly over the network."
+        },
+        "text" : "A cache shared across application instances, commonly over the network."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 45,
+              "location" : 381
+            },
+            "text" : "save user -> DB + cache before acknowledging."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 96,
+              "location" : 633
+            },
+            "text" : "Failure ordering matters: which write succeeds first?\nExplain it aloud before swiping. 262 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 139,
+              "location" : 468
+            },
+            "text" : "Write-through improves cache freshness but increases\nwrite-path latency and couples availability to both\nsystems unless carefully designed."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 112,
+              "location" : 246
+            },
+            "text" : "Every time the restaurant changes the menu, both\nthe kitchen board and website are updated before\nsaying “done.”"
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 119,
+              "location" : 104
+            },
+            "text" : "Writes update the cache and backing store as part of\nthe write path. It keeps cached values fresh for\nsubsequent reads."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 281,
+        "section" : "262 CAC H I N G , P E R F O R M A N C E & S CA L A B I L I T Y",
+        "title" : "Write-through cache",
+        "titleSpan" : {
+          "range" : {
+            "length" : 19,
+            "location" : 63
+          },
+          "text" : "Write-through cache"
+        }
+      },
+      "composedStatement" : "Write-through cache: Writes update the cache and backing store as part of the write path. It keeps cached values fresh for subsequent reads.",
+      "families" : [
+        "definition",
+        "consequence"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 119,
+          "location" : 104
+        },
+        "text" : "Writes update the cache and backing store as part of\nthe write path. It keeps cached values fresh for\nsubsequent reads."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Write-through cache"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 68,
+            "location" : 104
+          },
+          "text" : "Writes update the cache and backing store as part of\nthe write path."
+        },
+        {
+          "range" : {
+            "length" : 50,
+            "location" : 173
+          },
+          "text" : "It keeps cached values fresh for\nsubsequent reads."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "Write-through cache: Writes update the cache and backing store as part of the write path. It keeps cached values fresh for subsequent reads.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|281|63|fact|104",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does a write-through cache keep cached values fresh for subsequent reads?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|280|63|fact|96",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 281,
+        "sourceTitle" : "Cache-aside",
+        "span" : {
+          "range" : {
+            "length" : 88,
+            "location" : 96
+          },
+          "text" : "The application checks cache first, loads from source\non miss, then populates the cache."
+        },
+        "text" : "The application checks cache first, loads from source on miss, then populates the cache."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|281|63|fact|104",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 282,
+        "sourceTitle" : "Write-through cache",
+        "span" : {
+          "range" : {
+            "length" : 68,
+            "location" : 104
+          },
+          "text" : "Writes update the cache and backing store as part of\nthe write path."
+        },
+        "text" : "Writes update the cache and backing store as part of the write path."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|289|63|fact|102",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 290,
+        "sourceTitle" : "Distributed cache",
+        "span" : {
+          "range" : {
+            "length" : 71,
+            "location" : 102
+          },
+          "text" : "A cache shared across application instances,\ncommonly over the network."
+        },
+        "text" : "A cache shared across application instances, commonly over the network."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 30,
+              "location" : 400
+            },
+            "text" : "Redis used by 20 API replicas."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 137,
+              "location" : 629
+            },
+            "text" : "Do not put every read behind Redis by reflex; local caching can\nbe much cheaper for some data.\nExplain it aloud before swiping. 270 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 131,
+              "location" : 472
+            },
+            "text" : "A distributed cache improves sharing and capacity but\nadds network latency, serialization, failure modes, and\nconsistency concerns."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 101,
+              "location" : 276
+            },
+            "text" : "All restaurant branches share one giant pantry\ninventory system instead of each guessing what\nexists."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 151,
+              "location" : 102
+            },
+            "text" : "A cache shared across application instances,\ncommonly over the network. It gives multiple servers a\ncommon cache instead of isolated in-process copies."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 289,
+        "section" : "270 CAC H I N G , P E R F O R M A N C E & S CA L A B I L I T Y",
+        "title" : "Distributed cache",
+        "titleSpan" : {
+          "range" : {
+            "length" : 17,
+            "location" : 63
+          },
+          "text" : "Distributed cache"
+        }
+      },
+      "composedStatement" : "Distributed cache: A cache shared across application instances, commonly over the network. It gives multiple servers a common cache instead of isolated in-process copies.",
+      "families" : [
+        "definition",
+        "mechanism",
+        "constraint"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 151,
+          "location" : 102
+        },
+        "text" : "A cache shared across application instances,\ncommonly over the network. It gives multiple servers a\ncommon cache instead of isolated in-process copies."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Distributed cache"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 71,
+            "location" : 102
+          },
+          "text" : "A cache shared across application instances,\ncommonly over the network."
+        },
+        {
+          "range" : {
+            "length" : 79,
+            "location" : 174
+          },
+          "text" : "It gives multiple servers a\ncommon cache instead of isolated in-process copies."
+        }
+      ]
+    },
+    "correctChoice" : 2,
+    "explanation" : "Distributed cache: A cache shared across application instances, commonly over the network. It gives multiple servers a common cache instead of isolated in-process copies.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|289|63|fact|102",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does a distributed cache give multiple servers a common cache instead of isolated in-process copies?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|307|52|fact|87",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 308,
+        "sourceTitle" : "Hallucination",
+        "span" : {
+          "range" : {
+            "length" : 75,
+            "location" : 87
+          },
+          "text" : "A model produces plausible-looking output that is\nunsupported or incorrect."
+        },
+        "text" : "A model produces plausible-looking output that is unsupported or incorrect."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|310|52|fact|91",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 311,
+        "sourceTitle" : "Structured output",
+        "span" : {
+          "range" : {
+            "length" : 81,
+            "location" : 91
+          },
+          "text" : "Constrain model responses to a machine-readable\nschema such as JSON fields\/enums."
+        },
+        "text" : "Constrain model responses to a machine-readable schema such as JSON fields\/enums."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|306|52|fact|83",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 307,
+        "sourceTitle" : "Grounding",
+        "span" : {
+          "range" : {
+            "length" : 79,
+            "location" : 83
+          },
+          "text" : "Constrain or support model output with authoritative\nevidence, tools, or state."
+        },
+        "text" : "Constrain or support model output with authoritative evidence, tools, or state."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 54,
+              "location" : 339
+            },
+            "text" : "answer only from retrieved policy + return\nsource IDs."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 106,
+              "location" : 577
+            },
+            "text" : "Grounding reduces hallucination risk; it does not eliminate it.\nExplain it aloud before swiping. 286 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 116,
+              "location" : 435
+            },
+            "text" : "Grounding ties generation to external truth sources; I\ndesign the UI and evals so unsupported claims are\ndetectable."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 68,
+              "location" : 248
+            },
+            "text" : "The model must answer while keeping one hand on\nthe source document."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 142,
+              "location" : 83
+            },
+            "text" : "Constrain or support model output with authoritative\nevidence, tools, or state. It reduces unsupported\ninvention and makes outputs verifiable."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 306,
+        "section" : "286 A I E N G I N E E R I N G & L L M S Y S T E M S",
+        "title" : "Grounding",
+        "titleSpan" : {
+          "range" : {
+            "length" : 9,
+            "location" : 52
+          },
+          "text" : "Grounding"
+        }
+      },
+      "composedStatement" : "Grounding constrains or supports model output with authoritative evidence, tools, or state. It reduces unsupported invention and makes outputs verifiable.",
+      "families" : [
+        "definition",
+        "mechanism",
+        "consequence"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 142,
+          "location" : 83
+        },
+        "text" : "Constrain or support model output with authoritative\nevidence, tools, or state. It reduces unsupported\ninvention and makes outputs verifiable."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Grounding"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 79,
+            "location" : 83
+          },
+          "text" : "Constrain or support model output with authoritative\nevidence, tools, or state."
+        },
+        {
+          "range" : {
+            "length" : 62,
+            "location" : 163
+          },
+          "text" : "It reduces unsupported\ninvention and makes outputs verifiable."
+        }
+      ]
+    },
+    "correctChoice" : 2,
+    "explanation" : "Grounding: Constrain or support model output with authoritative evidence, tools, or state. It reduces unsupported invention and makes outputs verifiable.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|306|52|fact|83",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does grounding reduce unsupported invention and make outputs verifiable?"
+  },
+  {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|328|78|fact|128",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 329,
+        "sourceTitle" : "Principle of least privilege",
+        "span" : {
+          "range" : {
+            "length" : 70,
+            "location" : 128
+          },
+          "text" : "Give users\/services only the permissions needed for\ntheir current job."
+        },
+        "text" : "Give users\/services only the permissions needed for their current job."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|323|78|fact|113",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 324,
+        "sourceTitle" : "Contract test",
+        "span" : {
+          "range" : {
+            "length" : 74,
+            "location" : 113
+          },
+          "text" : "Verifies that two services\/components agree on their\nintegration contract."
+        },
+        "text" : "Verifies that two services\/components agree on their integration contract."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|324|78|fact|110",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 325,
+        "sourceTitle" : "Flaky test",
+        "span" : {
+          "range" : {
+            "length" : 79,
+            "location" : 110
+          },
+          "text" : "A test that passes or fails nondeterministically without\nrelevant code changes."
+        },
+        "text" : "A test that passes or fails nondeterministically without relevant code changes."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 65,
+              "location" : 396
+            },
+            "text" : "consumer expects {id,name}; provider CI verifies\nschema\/behavior."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 134,
+              "location" : 629
+            },
+            "text" : "They do not prove the entire distributed system works together\nunder production conditions.\nExplain it aloud before swiping. 302 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 100,
+              "location" : 503
+            },
+            "text" : "Contract tests protect service boundaries and are\nespecially useful when teams deploy independently."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 82,
+              "location" : 291
+            },
+            "text" : "The plug manufacturer and socket manufacturer test\nthe shared standard separately."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 155,
+              "location" : 113
+            },
+            "text" : "Verifies that two services\/components agree on their\nintegration contract. It catches breaking API changes\nwithout requiring a full end-to-end environment."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 323,
+        "section" : "302 T E S T I N G , S E C U R I T Y & O P E R AT I O N A L E XC E L L E N C E",
+        "title" : "Contract test",
+        "titleSpan" : {
+          "range" : {
+            "length" : 13,
+            "location" : 78
+          },
+          "text" : "Contract test"
+        }
+      },
+      "composedStatement" : "Contract test verifies that two services\/components agree on their integration contract. It catches breaking API changes without requiring a full end-to-end environment.",
+      "families" : [
+        "definition",
+        "consequence",
+        "constraint"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 155,
+          "location" : 113
+        },
+        "text" : "Verifies that two services\/components agree on their\nintegration contract. It catches breaking API changes\nwithout requiring a full end-to-end environment."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Contract test"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 74,
+            "location" : 113
+          },
+          "text" : "Verifies that two services\/components agree on their\nintegration contract."
+        },
+        {
+          "range" : {
+            "length" : 80,
+            "location" : 188
+          },
+          "text" : "It catches breaking API changes\nwithout requiring a full end-to-end environment."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "Contract test: Verifies that two services\/components agree on their integration contract. It catches breaking API changes without requiring a full end-to-end environment.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|323|78|fact|113",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does a contract test catch breaking API changes without requiring a full end-to-end environment?"
+  }
+]

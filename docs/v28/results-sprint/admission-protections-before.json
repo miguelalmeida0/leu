@@ -1,0 +1,58 @@
+[
+  {
+    "check" : "wrong_answer_index",
+    "passed" : true
+  },
+  {
+    "check" : "unsupported_prompt",
+    "passed" : true
+  },
+  {
+    "check" : "unsupported_explanation",
+    "passed" : true
+  },
+  {
+    "check" : "altered_option",
+    "passed" : true
+  },
+  {
+    "check" : "mnemonic_option_role",
+    "passed" : true
+  },
+  {
+    "check" : "inferred_connection_cannot_claim_explicit",
+    "passed" : true
+  },
+  {
+    "check" : "unsupported_bridge_rejected",
+    "passed" : true
+  },
+  {
+    "check" : "stale_teach_source_rejected",
+    "passed" : true
+  },
+  {
+    "check" : "mnemonic_teach_source_rejected",
+    "passed" : true
+  },
+  {
+    "check" : "unsupported_addition: Keys help React recognize the same item and encrypt private documents.",
+    "passed" : true
+  },
+  {
+    "check" : "unsupported_addition: A stable key helps React recognize the same item in 900 lists.",
+    "passed" : true
+  },
+  {
+    "check" : "unsupported_addition: Keys help React recognize the same item using magicCache().",
+    "passed" : true
+  },
+  {
+    "check" : "unsupported_addition: Keys help React recognize the same item and download the whole database.",
+    "passed" : false
+  },
+  {
+    "check" : "unsupported_addition: A closure retains access to its lexical environment and deletes the source file.",
+    "passed" : false
+  }
+]

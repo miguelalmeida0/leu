@@ -1,0 +1,562 @@
+[
+  {
+    "proofLevel" : "INFERRED_VALIDATED",
+    "relationA" : {
+      "object" : "js.universal-predicate",
+      "relation" : "tests",
+      "rule" : "every-universal-predicate-scope-retained",
+      "subject" : "js.array.every"
+    },
+    "relationB" : {
+      "object" : "js.universal-predicate",
+      "relation" : "tests",
+      "rule" : "every-universal-predicate-scope-retained",
+      "subject" : "js.array.every"
+    },
+    "relationship" : "sameMechanism",
+    "sourceA" : {
+      "documentID" : "BF2C611F-3DC5-5B95-A5C7-337947DB52D6",
+      "documentTitle" : "JavaScript Deep Dive",
+      "extractionVersion" : 5,
+      "fingerprint" : "3607943151800017266",
+      "pageIndex" : 0,
+      "quote" : {
+        "range" : {
+          "length" : 167,
+          "location" : 319
+        },
+        "text" : "Find selects the first matching value. Filter creates an\narray containing matching values. Some asks whether\na match exists; every asks whether all visited items\npass."
+      },
+      "role" : "ordinary_factual_prose",
+      "title" : "JavaScript Deep Dive"
+    },
+    "sourceB" : {
+      "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+      "documentTitle" : "javascript_midlevel_interview_mobile_mastery",
+      "extractionVersion" : 5,
+      "fingerprint" : "6711979522824531651",
+      "pageIndex" : 97,
+      "quote" : {
+        "range" : {
+          "length" : 143,
+          "location" : 85
+        },
+        "text" : "An array method that returns whether all elements\npass a predicate. It expresses validation across a\ncollection and stops at the first failure."
+      },
+      "role" : "primary_factual",
+      "title" : "Array.every",
+      "titleSpan" : {
+        "range" : {
+          "length" : 11,
+          "location" : 52
+        },
+        "text" : "Array.every"
+      }
+    },
+    "whyValid" : "Both factual passages independently describe checking the predicate across all elements in the stated scope. The comparison is inferred from those two explicit assertions; their original conditions remain in the quotations."
+  },
+  {
+    "proofLevel" : "INFERRED_VALIDATED",
+    "relationA" : {
+      "object" : "js.collection-of-matches",
+      "relation" : "selects",
+      "rule" : "filter-matching-collection",
+      "subject" : "js.array.filter"
+    },
+    "relationB" : {
+      "object" : "js.collection-of-matches",
+      "relation" : "selects",
+      "rule" : "filter-matching-collection",
+      "subject" : "js.array.filter"
+    },
+    "relationship" : "sameMechanism",
+    "sourceA" : {
+      "documentID" : "BF2C611F-3DC5-5B95-A5C7-337947DB52D6",
+      "documentTitle" : "JavaScript Deep Dive",
+      "extractionVersion" : 5,
+      "fingerprint" : "3607943151800017266",
+      "pageIndex" : 0,
+      "quote" : {
+        "range" : {
+          "length" : 167,
+          "location" : 319
+        },
+        "text" : "Find selects the first matching value. Filter creates an\narray containing matching values. Some asks whether\na match exists; every asks whether all visited items\npass."
+      },
+      "role" : "ordinary_factual_prose",
+      "title" : "JavaScript Deep Dive"
+    },
+    "sourceB" : {
+      "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+      "documentTitle" : "javascript_midlevel_interview_mobile_mastery",
+      "extractionVersion" : 5,
+      "fingerprint" : "6711979522824531651",
+      "pageIndex" : 94,
+      "quote" : {
+        "range" : {
+          "length" : 146,
+          "location" : 86
+        },
+        "text" : "An array method that creates a new array containing\nonly elements that pass a predicate. It expresses\nselection without manual loops and mutation."
+      },
+      "role" : "primary_factual",
+      "title" : "Array.filter",
+      "titleSpan" : {
+        "range" : {
+          "length" : 12,
+          "location" : 52
+        },
+        "text" : "Array.filter"
+      }
+    },
+    "whyValid" : "Both factual passages independently describe forming an array of matching elements. The comparison is inferred from those two explicit assertions; their original conditions remain in the quotations."
+  },
+  {
+    "proofLevel" : "INFERRED_VALIDATED",
+    "relationA" : {
+      "object" : "js.first-matching-value",
+      "relation" : "selects",
+      "rule" : "find-first-matching",
+      "subject" : "js.array.find"
+    },
+    "relationB" : {
+      "object" : "js.first-matching-value",
+      "relation" : "selects",
+      "rule" : "find-first-matching",
+      "subject" : "js.array.find"
+    },
+    "relationship" : "sameMechanism",
+    "sourceA" : {
+      "documentID" : "BF2C611F-3DC5-5B95-A5C7-337947DB52D6",
+      "documentTitle" : "JavaScript Deep Dive",
+      "extractionVersion" : 5,
+      "fingerprint" : "3607943151800017266",
+      "pageIndex" : 0,
+      "quote" : {
+        "range" : {
+          "length" : 167,
+          "location" : 319
+        },
+        "text" : "Find selects the first matching value. Filter creates an\narray containing matching values. Some asks whether\na match exists; every asks whether all visited items\npass."
+      },
+      "role" : "ordinary_factual_prose",
+      "title" : "JavaScript Deep Dive"
+    },
+    "sourceB" : {
+      "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+      "documentTitle" : "javascript_midlevel_interview_mobile_mastery",
+      "extractionVersion" : 5,
+      "fingerprint" : "6711979522824531651",
+      "pageIndex" : 95,
+      "quote" : {
+        "range" : {
+          "length" : 141,
+          "location" : 84
+        },
+        "text" : "An array method that returns the first element\nmatching a predicate, or undefined. It avoids scanning\nmanually when only one match is needed."
+      },
+      "role" : "primary_factual",
+      "title" : "Array.find",
+      "titleSpan" : {
+        "range" : {
+          "length" : 10,
+          "location" : 52
+        },
+        "text" : "Array.find"
+      }
+    },
+    "whyValid" : "Both factual passages independently describe selecting the first matching value. The comparison is inferred from those two explicit assertions; their original conditions remain in the quotations."
+  },
+  {
+    "proofLevel" : "INFERRED_VALIDATED",
+    "relationA" : {
+      "object" : "js.predicate-existence",
+      "relation" : "tests",
+      "rule" : "some-existential-predicate",
+      "subject" : "js.array.some"
+    },
+    "relationB" : {
+      "object" : "js.predicate-existence",
+      "relation" : "tests",
+      "rule" : "some-existential-predicate",
+      "subject" : "js.array.some"
+    },
+    "relationship" : "sameMechanism",
+    "sourceA" : {
+      "documentID" : "BF2C611F-3DC5-5B95-A5C7-337947DB52D6",
+      "documentTitle" : "JavaScript Deep Dive",
+      "extractionVersion" : 5,
+      "fingerprint" : "3607943151800017266",
+      "pageIndex" : 0,
+      "quote" : {
+        "range" : {
+          "length" : 167,
+          "location" : 319
+        },
+        "text" : "Find selects the first matching value. Filter creates an\narray containing matching values. Some asks whether\na match exists; every asks whether all visited items\npass."
+      },
+      "role" : "ordinary_factual_prose",
+      "title" : "JavaScript Deep Dive"
+    },
+    "sourceB" : {
+      "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+      "documentTitle" : "javascript_midlevel_interview_mobile_mastery",
+      "extractionVersion" : 5,
+      "fingerprint" : "6711979522824531651",
+      "pageIndex" : 96,
+      "quote" : {
+        "range" : {
+          "length" : 147,
+          "location" : 84
+        },
+        "text" : "An array method that returns whether at least one\nelement passes a predicate. It expresses existential\nchecks clearly and short-circuits once true."
+      },
+      "role" : "primary_factual",
+      "title" : "Array.some",
+      "titleSpan" : {
+        "range" : {
+          "length" : 10,
+          "location" : 52
+        },
+        "text" : "Array.some"
+      }
+    },
+    "whyValid" : "Both factual passages independently describe checking whether a matching element exists. The comparison is inferred from those two explicit assertions; their original conditions remain in the quotations."
+  },
+  {
+    "proofLevel" : "INFERRED_VALIDATED",
+    "relationA" : {
+      "object" : "programming.lexical-environment",
+      "relation" : "retains-access",
+      "rule" : "closure-lexical-access",
+      "subject" : "programming.closure"
+    },
+    "relationB" : {
+      "object" : "programming.lexical-environment",
+      "relation" : "retains-access",
+      "rule" : "closure-lexical-access",
+      "subject" : "programming.closure"
+    },
+    "relationship" : "sameMechanism",
+    "sourceA" : {
+      "documentID" : "BF2C611F-3DC5-5B95-A5C7-337947DB52D6",
+      "documentTitle" : "JavaScript Deep Dive",
+      "extractionVersion" : 5,
+      "fingerprint" : "3607943151800017266",
+      "pageIndex" : 2,
+      "quote" : {
+        "range" : {
+          "length" : 168,
+          "location" : 42
+        },
+        "text" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+      },
+      "role" : "ordinary_factual_prose",
+      "title" : "JavaScript Deep Dive"
+    },
+    "sourceB" : {
+      "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+      "documentTitle" : "javascript_midlevel_interview_mobile_mastery",
+      "extractionVersion" : 5,
+      "fingerprint" : "6711979522824531651",
+      "pageIndex" : 83,
+      "quote" : {
+        "range" : {
+          "length" : 160,
+          "location" : 81
+        },
+        "text" : "A function plus access to the lexical variables from\nthe scope where it was created. Closures power\nencapsulation, callbacks, hooks, and private state\npatterns."
+      },
+      "role" : "primary_factual",
+      "title" : "Closure",
+      "titleSpan" : {
+        "range" : {
+          "length" : 7,
+          "location" : 52
+        },
+        "text" : "Closure"
+      }
+    },
+    "whyValid" : "Both factual passages independently describe a function's access to its lexical environment. The comparison is inferred from those two explicit assertions; their original conditions remain in the quotations."
+  },
+  {
+    "proofLevel" : "INFERRED_VALIDATED",
+    "relationA" : {
+      "object" : "programming.new-value-preserving-input",
+      "relation" : "creates",
+      "rule" : "immutable-update-preserves-input",
+      "subject" : "programming.immutable-update"
+    },
+    "relationB" : {
+      "object" : "programming.new-value-preserving-input",
+      "relation" : "creates",
+      "rule" : "immutable-update-preserves-input",
+      "subject" : "programming.immutable-update"
+    },
+    "relationship" : "sameMechanism",
+    "sourceA" : {
+      "documentID" : "BF2C611F-3DC5-5B95-A5C7-337947DB52D6",
+      "documentTitle" : "JavaScript Deep Dive",
+      "extractionVersion" : 5,
+      "fingerprint" : "3607943151800017266",
+      "pageIndex" : 3,
+      "quote" : {
+        "range" : {
+          "length" : 115,
+          "location" : 53
+        },
+        "text" : "To update an item without mutating the source array,\ncreate a new array and a new object for the item that\nchanges."
+      },
+      "role" : "ordinary_factual_prose",
+      "title" : "JavaScript Deep Dive"
+    },
+    "sourceB" : {
+      "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+      "documentTitle" : "javascript_midlevel_interview_mobile_mastery",
+      "extractionVersion" : 5,
+      "fingerprint" : "6711979522824531651",
+      "pageIndex" : 90,
+      "quote" : {
+        "range" : {
+          "length" : 165,
+          "location" : 86
+        },
+        "text" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+      },
+      "role" : "primary_factual",
+      "title" : "Immutability",
+      "titleSpan" : {
+        "range" : {
+          "length" : 12,
+          "location" : 52
+        },
+        "text" : "Immutability"
+      }
+    },
+    "whyValid" : "Both factual passages independently describe creating new values while preserving the input. The comparison is inferred from those two explicit assertions; their original conditions remain in the quotations."
+  },
+  {
+    "proofLevel" : "INFERRED_VALIDATED",
+    "relationA" : {
+      "object" : "programming.existing-object-references",
+      "relation" : "reuses",
+      "rule" : "shallow-reference-reuse-scope-retained",
+      "subject" : "programming.shallow-copy"
+    },
+    "relationB" : {
+      "object" : "programming.existing-object-references",
+      "relation" : "reuses",
+      "rule" : "shallow-reference-reuse-scope-retained",
+      "subject" : "programming.shallow-copy"
+    },
+    "relationship" : "sameMechanism",
+    "sourceA" : {
+      "documentID" : "BF2C611F-3DC5-5B95-A5C7-337947DB52D6",
+      "documentTitle" : "JavaScript Deep Dive",
+      "extractionVersion" : 5,
+      "fingerprint" : "3607943151800017266",
+      "pageIndex" : 3,
+      "quote" : {
+        "range" : {
+          "length" : 101,
+          "location" : 268
+        },
+        "text" : "Unchanged objects are reused here. This is a shallow\nupdate, not a deep clone of every nested object."
+      },
+      "role" : "ordinary_factual_prose",
+      "title" : "JavaScript Deep Dive"
+    },
+    "sourceB" : {
+      "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+      "documentTitle" : "javascript_midlevel_interview_mobile_mastery",
+      "extractionVersion" : 5,
+      "fingerprint" : "6711979522824531651",
+      "pageIndex" : 99,
+      "quote" : {
+        "range" : {
+          "length" : 148,
+          "location" : 86
+        },
+        "text" : "A copy where the top-level container is new but\nnested object references are reused. It is the hidden\nreason spread can still allow nested mutation."
+      },
+      "role" : "primary_factual",
+      "title" : "Shallow copy",
+      "titleSpan" : {
+        "range" : {
+          "length" : 12,
+          "location" : 52
+        },
+        "text" : "Shallow copy"
+      }
+    },
+    "whyValid" : "Both factual passages independently describe reusing existing object references in a shallow copy or update. The comparison is inferred from those two explicit assertions; their original conditions remain in the quotations."
+  },
+  {
+    "proofLevel" : "INFERRED_VALIDATED",
+    "relationA" : {
+      "object" : "react.item-correspondence",
+      "relation" : "enables",
+      "rule" : "react-key-positive-match",
+      "subject" : "react.stable-key"
+    },
+    "relationB" : {
+      "object" : "react.item-correspondence",
+      "relation" : "enables",
+      "rule" : "react-key-positive-match",
+      "subject" : "react.stable-key"
+    },
+    "relationship" : "sameMechanism",
+    "sourceA" : {
+      "documentID" : "028DDE79-065F-5838-9E18-9B2EA72A5D0D",
+      "documentTitle" : "React Notes",
+      "extractionVersion" : 5,
+      "fingerprint" : "12391381683832827782",
+      "pageIndex" : 2,
+      "quote" : {
+        "range" : {
+          "length" : 162,
+          "location" : 42
+        },
+        "text" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+      },
+      "role" : "ordinary_factual_prose",
+      "title" : "React Notes"
+    },
+    "sourceB" : {
+      "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+      "documentTitle" : "javascript_midlevel_interview_mobile_mastery",
+      "extractionVersion" : 5,
+      "fingerprint" : "6711979522824531651",
+      "pageIndex" : 113,
+      "quote" : {
+        "range" : {
+          "length" : 148,
+          "location" : 86
+        },
+        "text" : "A stable identity hint for items among siblings in a\nrendered list. Correct keys let React match items\nacross insertions, deletions, and reordering."
+      },
+      "role" : "primary_factual",
+      "title" : "React key",
+      "titleSpan" : {
+        "range" : {
+          "length" : 9,
+          "location" : 55
+        },
+        "text" : "React key"
+      }
+    },
+    "whyValid" : "Both factual passages independently describe matching list items across renders using keys. The comparison is inferred from those two explicit assertions; their original conditions remain in the quotations."
+  },
+  {
+    "proofLevel" : "INFERRED_VALIDATED",
+    "relationA" : {
+      "object" : "react.item-correspondence",
+      "relation" : "enables",
+      "rule" : "react-key-positive-match",
+      "subject" : "react.stable-key"
+    },
+    "relationB" : {
+      "object" : "react.instance-preservation-or-replacement",
+      "relation" : "governs-with-type-and-keys",
+      "rule" : "react-reconciliation-comparison-and-qualified-instance-rule",
+      "subject" : "react.item-correspondence"
+    },
+    "relationship" : "mechanism",
+    "sourceA" : {
+      "documentID" : "028DDE79-065F-5838-9E18-9B2EA72A5D0D",
+      "documentTitle" : "React Notes",
+      "extractionVersion" : 5,
+      "fingerprint" : "12391381683832827782",
+      "pageIndex" : 2,
+      "quote" : {
+        "range" : {
+          "length" : 162,
+          "location" : 42
+        },
+        "text" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+      },
+      "role" : "ordinary_factual_prose",
+      "title" : "React Notes"
+    },
+    "sourceB" : {
+      "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+      "documentTitle" : "javascript_midlevel_interview_mobile_mastery",
+      "extractionVersion" : 5,
+      "fingerprint" : "6711979522824531651",
+      "pageIndex" : 112,
+      "quote" : {
+        "range" : {
+          "length" : 177,
+          "location" : 91
+        },
+        "text" : "React's process for comparing previous and next\nelement trees and deciding how to update mounted UI.\nIt preserves or replaces component instances based on\nelement type and keys."
+      },
+      "role" : "primary_factual",
+      "title" : "Reconciliation",
+      "titleSpan" : {
+        "range" : {
+          "length" : 14,
+          "location" : 55
+        },
+        "text" : "Reconciliation"
+      }
+    },
+    "whyValid" : "A links stable keys to matching list items with earlier instances. B links render comparison, element type and keys to preserving or replacing component instances. The shared correspondence concept connects the passages; B's type-and-key condition is retained."
+  },
+  {
+    "proofLevel" : "INFERRED_VALIDATED",
+    "relationA" : {
+      "object" : "computation.repeated-work",
+      "relation" : "avoids",
+      "rule" : "cache-reuse-work-avoidance",
+      "subject" : "cache.reuse"
+    },
+    "relationB" : {
+      "object" : "computation.repeated-work",
+      "relation" : "avoids",
+      "rule" : "cache-reuse-work-avoidance",
+      "subject" : "cache.reuse"
+    },
+    "relationship" : "sameMechanism",
+    "sourceA" : {
+      "documentID" : "7E2FD82E-603E-515B-BC50-E8FE899259DA",
+      "documentTitle" : "System Design",
+      "extractionVersion" : 5,
+      "fingerprint" : "2488035189470745999",
+      "pageIndex" : 2,
+      "quote" : {
+        "range" : {
+          "length" : 92,
+          "location" : 41
+        },
+        "text" : "A cache avoids repeating work, but introduces a\nsecond representation that can become stale."
+      },
+      "role" : "ordinary_factual_prose",
+      "title" : "System Design"
+    },
+    "sourceB" : {
+      "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+      "documentTitle" : "javascript_midlevel_interview_mobile_mastery",
+      "extractionVersion" : 5,
+      "fingerprint" : "6711979522824531651",
+      "pageIndex" : 30,
+      "quote" : {
+        "range" : {
+          "length" : 149,
+          "location" : 75
+        },
+        "text" : "A faster storage layer that keeps reusable results so\nexpensive work can be avoided. It can reduce latency,\ndatabase load, API cost, and computation."
+      },
+      "role" : "primary_factual",
+      "title" : "Cache",
+      "titleSpan" : {
+        "range" : {
+          "length" : 5,
+          "location" : 48
+        },
+        "text" : "Cache"
+      }
+    },
+    "whyValid" : "Both factual passages independently describe avoiding repeated work through cached results. The comparison is inferred from those two explicit assertions; their original conditions remain in the quotations."
+  }
+]
