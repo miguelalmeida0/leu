@@ -11,9 +11,13 @@ import FoundationModels
 /// and object, so a hallucinated claim cannot enter the graph — it is counted
 /// as a rejection instead.
 ///
-/// The type compiles on every platform. Where Foundation Models is unavailable
-/// it reports `isAvailable == false` and returns no proposals, and the engine
-/// runs unchanged on the deterministic provider.
+/// The type compiles on every platform and carries no availability annotation
+/// of its own, so it never raises the package's deployment target. Every
+/// reference to a FoundationModels symbol sits inside both `#if canImport` and
+/// `if #available(iOS 26.0, macOS 26.0, *)`; the framework shipped in iOS 26 /
+/// macOS 26, and nothing here may be gated more loosely than that. Where the
+/// framework or the OS version is absent, `isAvailable` is false and every call
+/// degrades to the deterministic provider.
 public struct AppleFoundationReasoningProposalProvider: ReasoningProposalProvider {
     public var identifier: String { "apple-foundation" }
 
@@ -27,7 +31,7 @@ public struct AppleFoundationReasoningProposalProvider: ReasoningProposalProvide
 
     public var isAvailable: Bool {
         #if canImport(FoundationModels)
-        if #available(iOS 18.2, macOS 15.2, *) {
+        if #available(iOS 26.0, macOS 26.0, *) {
             return AppleFoundationAvailability.isModelAvailable
         }
         return false
@@ -39,7 +43,7 @@ public struct AppleFoundationReasoningProposalProvider: ReasoningProposalProvide
     public func proposeAtoms(for assignment: SourceRoleAssignment) async -> [AtomProposal] {
         guard isAvailable else { return await fallback.proposeAtoms(for: assignment) }
         #if canImport(FoundationModels)
-        if #available(iOS 18.2, macOS 15.2, *) {
+        if #available(iOS 26.0, macOS 26.0, *) {
             let proposals = await AppleFoundationAtomProposer().propose(for: assignment)
             // Deterministic proposals are always included: the model may add
             // structure, never remove it.
@@ -63,7 +67,7 @@ public struct AppleFoundationReasoningProposalProvider: ReasoningProposalProvide
 }
 
 #if canImport(FoundationModels)
-@available(iOS 18.2, macOS 15.2, *)
+@available(iOS 26.0, macOS 26.0, *)
 enum AppleFoundationAvailability {
     static var isModelAvailable: Bool {
         if case .available = SystemLanguageModel.default.availability { return true }
@@ -71,7 +75,7 @@ enum AppleFoundationAvailability {
     }
 }
 
-@available(iOS 18.2, macOS 15.2, *)
+@available(iOS 26.0, macOS 26.0, *)
 struct AppleFoundationAtomProposer {
     /// The prompt asks only for decomposition of text that is already present.
     /// It never asks the model for facts, explanations or judgements.
