@@ -2,784 +2,868 @@
   {
     "bytes" : 1459933,
     "cacheHit" : false,
-    "milliseconds" : 19.087583,
+    "milliseconds" : 14.506167,
     "stage" : "persistence",
     "workCount" : 1
   },
   {
     "bytes" : 1459933,
     "cacheHit" : false,
-    "milliseconds" : 18.988834,
+    "milliseconds" : 15.458625,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 0.046,
+    "milliseconds" : 0.119416,
     "stage" : "validated_snapshot_lookup",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 0.066667,
+    "milliseconds" : 0.149666,
     "stage" : "snapshot_validation",
     "workCount" : 0
   },
   {
     "bytes" : 1459933,
     "cacheHit" : false,
-    "milliseconds" : 16.779,
+    "milliseconds" : 14.09825,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 2920530,
     "cacheHit" : false,
-    "milliseconds" : 35.423583,
+    "milliseconds" : 28.586875,
     "stage" : "persistence",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 54.847667,
+    "milliseconds" : 44.319375,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 1460597,
     "cacheHit" : false,
-    "milliseconds" : 14.518417,
+    "milliseconds" : 15.227375,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 3483017,
     "cacheHit" : false,
-    "milliseconds" : 38.246292,
+    "milliseconds" : 40.254291,
     "stage" : "persistence",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 0.002,
+    "milliseconds" : 0.002875,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 2022420,
     "cacheHit" : false,
-    "milliseconds" : 21.2155,
+    "milliseconds" : 22.093083,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 4044840,
     "cacheHit" : false,
-    "milliseconds" : 44.835,
+    "milliseconds" : 45.970708,
     "stage" : "persistence",
     "workCount" : 1
   },
   {
     "bytes" : 2022420,
     "cacheHit" : false,
-    "milliseconds" : 22.463833,
+    "milliseconds" : 29.906875,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 2022420,
     "cacheHit" : false,
-    "milliseconds" : 20.897083,
+    "milliseconds" : 25.125,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 21.46225,
+    "milliseconds" : 22.4475,
     "stage" : "validated_snapshot_lookup",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 45.228667,
+    "milliseconds" : 48.279916,
     "stage" : "snapshot_validation",
     "workCount" : 90
   },
   {
     "bytes" : 2022420,
     "cacheHit" : false,
-    "milliseconds" : 22.130083,
+    "milliseconds" : 21.213875,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 4044861,
     "cacheHit" : false,
-    "milliseconds" : 45.814125,
+    "milliseconds" : 45.084083,
     "stage" : "persistence",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 112.016625,
+    "milliseconds" : 118.595375,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 24.108917,
+    "milliseconds" : 22.95375,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 22.989583,
+    "milliseconds" : 22.027667,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 22.082208,
+    "milliseconds" : 22.292375,
     "stage" : "validated_snapshot_lookup",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 43.825916,
+    "milliseconds" : 47.194875,
     "stage" : "snapshot_validation",
     "workCount" : 90
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 66.8895,
+    "milliseconds" : 69.310167,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 21.116375,
+    "milliseconds" : 23.289333,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.683333,
+    "milliseconds" : 23.842,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 21.590583,
+    "milliseconds" : 22.5385,
     "stage" : "validated_snapshot_lookup",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 43.211541,
+    "milliseconds" : 45.895792,
     "stage" : "snapshot_validation",
     "workCount" : 90
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 63.956584,
+    "milliseconds" : 69.807208,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.749833,
+    "milliseconds" : 22.166625,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.811666,
+    "milliseconds" : 22.092125,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 21.612875,
+    "milliseconds" : 21.641667,
     "stage" : "validated_snapshot_lookup",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 43.713292,
+    "milliseconds" : 43.1855,
     "stage" : "snapshot_validation",
     "workCount" : 90
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 64.575458,
+    "milliseconds" : 65.352625,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 21.19925,
+    "milliseconds" : 21.105208,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.944917,
+    "milliseconds" : 21.06975,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 21.482291,
+    "milliseconds" : 20.874375,
     "stage" : "validated_snapshot_lookup",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 43.370708,
+    "milliseconds" : 42.434042,
     "stage" : "snapshot_validation",
     "workCount" : 90
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 64.388167,
+    "milliseconds" : 63.568416,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.659417,
+    "milliseconds" : 20.894917,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.716708,
+    "milliseconds" : 20.630959,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 21.437292,
+    "milliseconds" : 20.515417,
     "stage" : "validated_snapshot_lookup",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 43.458292,
+    "milliseconds" : 41.947333,
     "stage" : "snapshot_validation",
     "workCount" : 90
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 64.23,
+    "milliseconds" : 62.648792,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.908291,
+    "milliseconds" : 20.896083,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.992417,
+    "milliseconds" : 20.888083,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 21.305459,
+    "milliseconds" : 20.58575,
     "stage" : "validated_snapshot_lookup",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 42.785167,
+    "milliseconds" : 42.06075,
     "stage" : "snapshot_validation",
     "workCount" : 90
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 63.831,
+    "milliseconds" : 63.004542,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.864875,
+    "milliseconds" : 20.764292,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.944917,
+    "milliseconds" : 20.908916,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 21.45825,
+    "milliseconds" : 20.480583,
     "stage" : "validated_snapshot_lookup",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 43.30825,
+    "milliseconds" : 42.174625,
     "stage" : "snapshot_validation",
     "workCount" : 90
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 64.320458,
+    "milliseconds" : 63.134291,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.930417,
+    "milliseconds" : 20.771375,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.799625,
+    "milliseconds" : 20.592417,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 21.485208,
+    "milliseconds" : 20.531042,
     "stage" : "validated_snapshot_lookup",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 43.196333,
+    "milliseconds" : 42.266209,
     "stage" : "snapshot_validation",
     "workCount" : 90
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 64.060458,
+    "milliseconds" : 62.910208,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 21.076625,
+    "milliseconds" : 20.985625,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 2022441,
     "cacheHit" : false,
-    "milliseconds" : 20.987375,
+    "milliseconds" : 20.819292,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 21.73625,
+    "milliseconds" : 20.625708,
     "stage" : "validated_snapshot_lookup",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 43.7285,
+    "milliseconds" : 43.43225,
     "stage" : "snapshot_validation",
     "workCount" : 90
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 64.7705,
+    "milliseconds" : 64.30925,
     "stage" : "document_open",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 113.398167,
+    "milliseconds" : 113.091,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.719917,
+    "milliseconds" : 6.801375,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 112.095792,
+    "milliseconds" : 113.438584,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.998125,
+    "milliseconds" : 5.939584,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 111.672541,
+    "milliseconds" : 113.081042,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.21275,
+    "milliseconds" : 6.10275,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 114.633083,
+    "milliseconds" : 113.458833,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.102417,
+    "milliseconds" : 6.151083,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 113.443042,
+    "milliseconds" : 112.474209,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.999208,
+    "milliseconds" : 6.050084,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 113.540083,
+    "milliseconds" : 111.8695,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.969208,
+    "milliseconds" : 6.252,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 113.011333,
+    "milliseconds" : 114.90075,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.953,
+    "milliseconds" : 6.078333,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 112.887541,
+    "milliseconds" : 112.378834,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.907666,
+    "milliseconds" : 6.003875,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 113.167583,
+    "milliseconds" : 112.477125,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.128,
+    "milliseconds" : 6.115916,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 112.602833,
+    "milliseconds" : 113.007167,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.994166,
+    "milliseconds" : 6.143917,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 113.997084,
+    "milliseconds" : 112.912666,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.9615,
+    "milliseconds" : 6.04725,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 113.134875,
+    "milliseconds" : 112.828708,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.352083,
+    "milliseconds" : 5.983,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 113.954584,
+    "milliseconds" : 116.813833,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.048791,
+    "milliseconds" : 6.515916,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 113.1135,
+    "milliseconds" : 119.81175,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.93025,
+    "milliseconds" : 6.307,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 112.891209,
+    "milliseconds" : 120.279291,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.105083,
+    "milliseconds" : 6.398958,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 112.674375,
+    "milliseconds" : 120.429167,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.087792,
+    "milliseconds" : 6.366833,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 113.526625,
+    "milliseconds" : 127.617875,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.145708,
+    "milliseconds" : 6.446875,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 114.847709,
+    "milliseconds" : 116.7565,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.14375,
+    "milliseconds" : 6.159791,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 116.869834,
+    "milliseconds" : 112.413167,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.092541,
+    "milliseconds" : 6.195584,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 114.71575,
+    "milliseconds" : 119.163041,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 6.90125,
+    "milliseconds" : 6.43625,
     "stage" : "teach_analysis",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 8.419375,
-    "stage" : "connection_snapshot",
-    "workCount" : 4
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 8.971708,
-    "stage" : "connection_snapshot",
-    "workCount" : 4
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 8.442542,
-    "stage" : "connection_snapshot",
-    "workCount" : 4
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 869.856333,
+    "milliseconds" : 988.871291,
     "stage" : "connection_snapshot",
     "workCount" : 345
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 113.250125,
+    "milliseconds" : 9.861625,
+    "stage" : "connection_snapshot",
+    "workCount" : 4
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 8.828541,
+    "stage" : "connection_snapshot",
+    "workCount" : 4
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 9.282333,
+    "stage" : "connection_snapshot",
+    "workCount" : 4
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 119.714791,
     "stage" : "connection_query",
     "workCount" : 314
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 168.66075,
+    "milliseconds" : 176.330167,
     "stage" : "reader_snapshot",
     "workCount" : 1
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 0.001083,
+    "milliseconds" : 0.001125,
     "stage" : "connection_query",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.3985,
+    "milliseconds" : 5.467667,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.000834,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.362042,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.000583,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.528,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.000708,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.4495,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.001042,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.353417,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.000833,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.48725,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.001417,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.476042,
     "stage" : "reader_availability",
     "workCount" : 0
   },
@@ -793,203 +877,7 @@
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.175791,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.000875,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.143125,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.0005,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.22075,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.000917,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.111458,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.0005,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.283125,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.001125,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.387791,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.001125,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.269667,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.000667,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.206458,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.000791,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.399333,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.000667,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.125792,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.000666,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.115459,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.0005,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.277459,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.0005,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.104541,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.000667,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.114167,
-    "stage" : "reader_availability",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.000375,
-    "stage" : "connection_query",
-    "workCount" : 0
-  },
-  {
-    "bytes" : 0,
-    "cacheHit" : false,
-    "milliseconds" : 5.242917,
+    "milliseconds" : 5.393292,
     "stage" : "reader_availability",
     "workCount" : 0
   },
@@ -1003,21 +891,21 @@
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.095167,
+    "milliseconds" : 5.491209,
     "stage" : "reader_availability",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 0.000458,
+    "milliseconds" : 0.000708,
     "stage" : "connection_query",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.144458,
+    "milliseconds" : 5.290208,
     "stage" : "reader_availability",
     "workCount" : 0
   },
@@ -1031,91 +919,245 @@
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.217167,
+    "milliseconds" : 5.225,
     "stage" : "reader_availability",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 0.000541,
+    "milliseconds" : 0.0005,
     "stage" : "connection_query",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 5.107167,
+    "milliseconds" : 5.384458,
     "stage" : "reader_availability",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 0.58325,
+    "milliseconds" : 0.000958,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.366334,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.000708,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.307833,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.000583,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.310375,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.000583,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.330917,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.000792,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.333666,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.000458,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.356458,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.000791,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.134583,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.000458,
+    "stage" : "connection_query",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : false,
+    "milliseconds" : 5.097541,
+    "stage" : "reader_availability",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 5.151334,
     "stage" : "connection_snapshot",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 0.344083,
+    "milliseconds" : 0.475542,
     "stage" : "connection_snapshot",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 0.346666,
+    "milliseconds" : 0.458875,
     "stage" : "connection_snapshot",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 4.878666,
+    "milliseconds" : 0.448083,
     "stage" : "connection_snapshot",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : true,
-    "milliseconds" : 0.818667,
+    "milliseconds" : 0.741792,
     "stage" : "reader_snapshot",
     "workCount" : 0
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 500.664875,
+    "milliseconds" : 445.687375,
     "stage" : "claim_generation",
     "workCount" : 308
   },
   {
     "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 2113.281166,
+    "milliseconds" : 1945.151709,
     "stage" : "question_generation",
     "workCount" : 345
   },
   {
-    "bytes" : 0,
-    "cacheHit" : true,
-    "milliseconds" : 0.006458,
-    "stage" : "document_open",
-    "workCount" : 0
+    "bytes" : 1459933,
+    "cacheHit" : false,
+    "milliseconds" : 13.716959,
+    "stage" : "persistence",
+    "workCount" : 1
   },
   {
-    "bytes" : 2022441,
+    "bytes" : 1459933,
     "cacheHit" : false,
-    "milliseconds" : 22.254875,
+    "milliseconds" : 16.550042,
     "stage" : "snapshot_decode",
     "workCount" : 0
   },
   {
-    "bytes" : 4046130,
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 0.0095,
+    "stage" : "validated_snapshot_lookup",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 0,
     "cacheHit" : false,
-    "milliseconds" : 49.042917,
+    "milliseconds" : 0.017375,
+    "stage" : "snapshot_validation",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 1459933,
+    "cacheHit" : false,
+    "milliseconds" : 14.437125,
+    "stage" : "snapshot_decode",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 2920530,
+    "cacheHit" : false,
+    "milliseconds" : 30.922541,
+    "stage" : "persistence",
+    "workCount" : 1
+  },
+  {
+    "bytes" : 0,
+    "cacheHit" : true,
+    "milliseconds" : 47.545625,
+    "stage" : "document_open",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 1460597,
+    "cacheHit" : false,
+    "milliseconds" : 15.076666,
+    "stage" : "snapshot_decode",
+    "workCount" : 0
+  },
+  {
+    "bytes" : 3484286,
+    "cacheHit" : false,
+    "milliseconds" : 39.395208,
     "stage" : "persistence",
     "workCount" : 1
   }

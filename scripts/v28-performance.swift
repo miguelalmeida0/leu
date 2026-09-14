@@ -60,8 +60,13 @@ import Foundation
         let generation = V4GenerationSession(analysis: primary)
         start = Date(); let batch = try await generation.batch(pages: primary.pages.map(\.pageIndex))
         record("production_validated_generation", start, batch.questions.count)
-        start = Date(); try await repo.storeV4Batch(batch)
-        record("production_validated_persistence", start, batch.questions.count, bytes)
+        let freshLocation = location.appendingPathComponent("fresh-batch-install")
+        let freshStore = FileLearningSnapshotStore(root: freshLocation)
+        try freshStore.save(initial)
+        let freshRepository = LearningRepository(persistence: freshStore)
+        start = Date(); try await freshRepository.storeV4Batch(batch)
+        let freshBytes = try Data(contentsOf: freshLocation.appendingPathComponent("Learning/learning.json")).count
+        record("production_validated_persistence", start, batch.questions.count, freshBytes)
         let samples = IntelligencePerformance.samples()
         let sampleEncoder = JSONEncoder(); sampleEncoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         try sampleEncoder.encode(samples).write(to: output.appendingPathComponent("production-metrics.json"))

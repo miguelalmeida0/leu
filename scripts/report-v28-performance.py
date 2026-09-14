@@ -42,7 +42,7 @@ Same Mac, same four real PDF analyses, same Swift 5 unoptimized host configurati
 {table}
 | Repository reopen p95 | {ms(baseline, 'document_open', .95)} | {ms(optimized, 'document_open', .95)} |
 
-The normal production path now carries an opaque, already-admitted batch from the generation actor to the repository. Its full validated generation takes {ms(optimized, 'production_validated_generation')}; durable installation takes {ms(optimized, 'production_validated_persistence')}. The public array API still performs independent admission and remains available for untrusted candidates. Those two storage paths are measured separately rather than attributing validation time to disk IO.
+The normal production path now carries an opaque, already-admitted batch from the generation actor to the repository. Its full validated generation takes {ms(optimized, 'production_validated_generation')}; durable first installation into a fresh repository takes {ms(optimized, 'production_validated_persistence')}, including creation of the associated study objects. The public array API still performs independent admission and remains available for untrusted candidates. Those two storage paths are measured separately rather than attributing validation time to disk IO.
 
 Fresh-actor current-page capability discovery from a persisted shard: {tests['reopenedReaderAvailabilityMs']:.2f} ms. Warm capability discovery: {ms(optimized, 'cached_reader_availability')}. The warm connection query includes cache identity checking and actor dispatch. First-ever connection indexing remains background work ({ms(optimized, 'reader_cache_miss')}); reopening its persisted results takes {ms(optimized, 'reopened_connection_snapshot')}. Question decoding does not decode connections.
 

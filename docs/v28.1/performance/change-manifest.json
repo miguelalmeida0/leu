@@ -83,7 +83,7 @@
     },
     {
       "path": "scripts/report-v28-performance.py",
-      "sha256": "0f76dfae2486a64273361541e62f685fb9f04a7682d45fefebc6229f6740e840"
+      "sha256": "0045c01fd1250f80fe3019cd8899bbe17dda74c1b2e251e3fd6f0f64ad1043f8"
     },
     {
       "path": "scripts/test-v28-instant.py",
@@ -95,7 +95,7 @@
     },
     {
       "path": "scripts/v28-performance.swift",
-      "sha256": "b9a7bafc740d8cc848fd2151c3d73a421b0460e05e2f6b4ed3012595958f000b"
+      "sha256": "0f5fc989b8af4e5a66c67b858592fbdd402f7b54f1d937aaa10df7f7cc1c8dd7"
     }
   ]
 }

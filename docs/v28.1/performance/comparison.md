@@ -8,18 +8,18 @@ Same Mac, same four real PDF analyses, same Swift 5 unoptimized host configurati
 
 | Work | Before | After |
 |---|---:|---:|
-| Full 90-question generation | 25903.60 ms | 1923.57 ms |
-| Admission plus persistence via public question-array API | 11359.31 ms | 1632.54 ms |
-| Raw durable JSON save | 47.00 ms | 44.84 ms |
-| Question bank / snapshot decode | 21.24 ms | 21.32 ms |
-| Repository reopen p50 | 10342.71 ms | 64.37 ms |
+| Full 90-question generation | 25903.60 ms | 2029.86 ms |
+| Admission plus persistence via public question-array API | 11359.31 ms | 1656.61 ms |
+| Raw durable JSON save | 47.00 ms | 45.98 ms |
+| Question bank / snapshot decode | 21.24 ms | 21.37 ms |
+| Repository reopen p50 | 10342.71 ms | 63.62 ms |
 | Connection query p50 | 113.14 ms | 0.12 ms |
-| Teach analysis p50 | 5.99 ms | 6.09 ms |
-| Repository reopen p95 | 10457.22 ms | 112.09 ms |
+| Teach analysis p50 | 5.99 ms | 6.15 ms |
+| Repository reopen p95 | 10457.22 ms | 118.67 ms |
 
-The normal production path now carries an opaque, already-admitted batch from the generation actor to the repository. Its full validated generation takes 2113.37 ms; durable installation takes 104.84 ms. The public array API still performs independent admission and remains available for untrusted candidates. Those two storage paths are measured separately rather than attributing validation time to disk IO.
+The normal production path now carries an opaque, already-admitted batch from the generation actor to the repository. Its full validated generation takes 1945.23 ms; durable first installation into a fresh repository takes 128.76 ms, including creation of the associated study objects. The public array API still performs independent admission and remains available for untrusted candidates. Those two storage paths are measured separately rather than attributing validation time to disk IO.
 
-Fresh-actor current-page capability discovery from a persisted shard: 6.63 ms. Warm capability discovery: 5.19 ms. The warm connection query includes cache identity checking and actor dispatch. First-ever connection indexing remains background work (1078.46 ms); reopening its persisted results takes 21.09 ms. Question decoding does not decode connections.
+Fresh-actor current-page capability discovery from a persisted shard: 6.63 ms. Warm capability discovery: 5.37 ms. The warm connection query includes cache identity checking and actor dispatch. First-ever connection indexing remains background work (1207.43 ms); reopening its persisted results takes 20.89 ms. Question decoding does not decode connections.
 
 ## What the profile proved
 
