@@ -5,10 +5,10 @@ import ShelfCore
 extension LearningModel {
     func startPassageQuestion(_ source: IntelligenceSource) -> Bool {
         guard activeSession == nil, source.isCurrent(in: snapshot.analyses),
-              let question = snapshot.questions.first(where: {
+              let question = ConceptImportanceModel().ranked(snapshot.questions, snapshot: snapshot).first(where: {
                   $0.source.documentID == source.packet.documentID && $0.source.pageIndex == source.packet.pageIndex &&
                   CanonicalWhitespaceResolver.normalize(source.passage.sourceText).contains(CanonicalWhitespaceResolver.normalize($0.source.sourceText)) &&
-                  $0.modelProvenance?.schemaVersion == 3
+                  ($0.v4 != nil || $0.modelProvenance?.schemaVersion == 3)
               }), let object = snapshot.studyObjects.first(where: { sourceKey($0.source) == sourceKey(question.source) }) else { return false }
         begin(StudySession(topicID: object.topicIDs.first, requestedMinutes: 1, mode: .learn,
             activities: [.init(kind: .question, learningObjectID: object.id, questionID: question.id,
@@ -80,7 +80,11 @@ extension LearningModel {
     }
 
     func startSession(topicID: UUID?, minutes: Int, mode: StudySessionMode = .learn) {
-        begin(planner.plan(snapshot: snapshot, topicID: topicID, minutes: minutes, mode: mode, now: Date()))
+        Task {
+            await prepareV4Questions()
+            guard activeSession == nil else { return }
+            begin(planner.plan(snapshot: snapshot, topicID: topicID, minutes: minutes, mode: mode, now: Date()))
+        }
     }
 
     func selectAnswer(_ id: UUID) {

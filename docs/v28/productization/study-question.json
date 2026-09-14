@@ -1,0 +1,199 @@
+{
+  "correctOptionID" : "2837910D-88D5-594F-95F2-5BE881F0771E",
+  "generatedAt" : "2026-09-14T16:38:55Z",
+  "id" : "6DEC460B-C78F-5529-A17C-171E371A8BB4",
+  "kind" : "semanticRelationship",
+  "options" : [
+    {
+      "id" : "2903B0F6-040A-58F3-8273-7B8F3EF7F0F4",
+      "text" : "A React hook that updates state by sending actions through a reducer function."
+    },
+    {
+      "id" : "B809C3A3-E004-57F4-B11D-17C6049E8A35",
+      "text" : "A UI boundary designed not just to show an error but to offer a meaningful recovery path."
+    },
+    {
+      "id" : "2837910D-88D5-594F-95F2-5BE881F0771E",
+      "text" : "A family of components designed to work together through shared context or structure."
+    }
+  ],
+  "prompt" : "How does a compound component create expressive APIs for complex widgets?",
+  "propositionID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|232|66|fact|106",
+  "qualityScore" : 0.9,
+  "semanticFingerprint" : "6711979522824531651",
+  "semanticOperator" : "mechanism",
+  "source" : {
+    "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+    "pageIndex" : 232,
+    "range" : {
+      "length" : 133,
+      "location" : 106
+    },
+    "sectionTitle" : "Compound component",
+    "sourceText" : "A family of components designed to work together\nthrough shared context or structure. It creates\nexpressive APIs for complex widgets."
+  },
+  "stableKey" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|232|66|fact|106",
+  "topicIDs" : [
+
+  ],
+  "v4" : {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|225|66|fact|98",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 226,
+        "sourceTitle" : "useReducer",
+        "span" : {
+          "range" : {
+            "length" : 78,
+            "location" : 98
+          },
+          "text" : "A React hook that updates state by sending actions\nthrough a reducer function."
+        },
+        "text" : "A React hook that updates state by sending actions through a reducer function."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|242|66|fact|111",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 243,
+        "sourceTitle" : "Error recovery boundary",
+        "span" : {
+          "range" : {
+            "length" : 89,
+            "location" : 111
+          },
+          "text" : "A UI boundary designed not just to show an error but\nto offer a meaningful recovery path."
+        },
+        "text" : "A UI boundary designed not just to show an error but to offer a meaningful recovery path."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|232|66|fact|106",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 233,
+        "sourceTitle" : "Compound component",
+        "span" : {
+          "range" : {
+            "length" : 85,
+            "location" : 106
+          },
+          "text" : "A family of components designed to work together\nthrough shared context or structure."
+        },
+        "text" : "A family of components designed to work together through shared context or structure."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 38,
+              "location" : 374
+            },
+            "text" : "<Tabs><Tabs.List\/><Tabs.Panel\/><\/Tabs>"
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 99,
+              "location" : 604
+            },
+            "text" : "Ensure hidden context does not make behavior mysterious.\nExplain it aloud before swiping. 216 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 124,
+              "location" : 454
+            },
+            "text" : "Compound components expose coordinated\nsubcomponents so consumers can compose structure\nwithout passing every prop manually."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 89,
+              "location" : 262
+            },
+            "text" : "A sandwich set gives you Bread, Filling, and Sauce\npieces that understand the same lunch."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 133,
+              "location" : 106
+            },
+            "text" : "A family of components designed to work together\nthrough shared context or structure. It creates\nexpressive APIs for complex widgets."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 232,
+        "section" : "216 R E AC T: S TAT E , I D E N T I T Y & A R C H I T E C T U R E",
+        "title" : "Compound component",
+        "titleSpan" : {
+          "range" : {
+            "length" : 18,
+            "location" : 66
+          },
+          "text" : "Compound component"
+        }
+      },
+      "composedStatement" : "Compound component: A family of components designed to work together through shared context or structure. It creates expressive APIs for complex widgets.",
+      "families" : [
+        "definition",
+        "consequence"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 133,
+          "location" : 106
+        },
+        "text" : "A family of components designed to work together\nthrough shared context or structure. It creates\nexpressive APIs for complex widgets."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Compound component"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 85,
+            "location" : 106
+          },
+          "text" : "A family of components designed to work together\nthrough shared context or structure."
+        },
+        {
+          "range" : {
+            "length" : 47,
+            "location" : 192
+          },
+          "text" : "It creates\nexpressive APIs for complex widgets."
+        }
+      ]
+    },
+    "correctChoice" : 2,
+    "explanation" : "Compound component: A family of components designed to work together through shared context or structure. It creates expressive APIs for complex widgets.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|232|66|fact|106",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does a compound component create expressive APIs for complex widgets?"
+  }
+}

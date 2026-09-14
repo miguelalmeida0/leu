@@ -203,7 +203,7 @@ struct LearnTodayScreen: View {
                 model.startSession(topicID: selectedTopicID, minutes: selectedMinutes, mode: .learn)
             } label: {
                 HStack {
-                    Text("Start study session").fixedSize(horizontal: false, vertical: true)
+                    Text(model.isPreparingV4Questions ? "Preparing source questions…" : "Start study session").fixedSize(horizontal: false, vertical: true)
                     Spacer()
                     if !dynamicTypeSize.isAccessibilitySize { Text("~\(selectedMinutes) min").font(.callout.monospacedDigit()) }
                     Image(systemName: "arrow.right")
@@ -212,7 +212,7 @@ struct LearnTodayScreen: View {
             }
             .buttonStyle(ShelfButtonStyle(filled: true))
             .accessibilityIdentifier("start-learning-session")
-            .disabled(!hasStudyMaterial)
+            .disabled(!hasStudyMaterial || model.isPreparingV4Questions)
 
             if !hasStudyMaterial {
                 Text(model.isIndexing ? "Preparing source-bound study material…" : "No reliable study material matches this subject yet.")

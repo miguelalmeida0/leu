@@ -1,0 +1,128 @@
+{
+  "preservationCommit": "850886ad9b4829fceb8f57d7d74e62eba6e73b6d",
+  "branch": "codex/v28-living-knowledge",
+  "files": [
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/Question.swift",
+      "sha256": "29f539a6bcbfcd710e24c93f563b68fd2a70f2873e702a2509e89807fb0e8c42"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/QuestionV4.swift",
+      "sha256": "f2bfc727c73265fbd82272242cd83d2f4f86e3325f229acdc424da79e96381a8"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/V28ReadingIntelligence.swift",
+      "sha256": "11b4d1a19cb7482bf1d222674367160ed58d4a8094b373082dc770c8577c60f7"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/V4StudyBank.swift",
+      "sha256": "2a1fd2036718dbf312889c703c1c932fa06ca03488f983b165b7fa8d74f61f4c"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/DerivedExtractionMigration.swift",
+      "sha256": "d749f37acfabdae915518babefd504a5eaccb4f69f9499afd70e1989e964a8de"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift",
+      "sha256": "04d73ab96648fbc6440f0bcbe3ef869fac2fab787e3d8b3cda8f37afcc1ac8c2"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/ConceptImportanceModel.swift",
+      "sha256": "d1943b9ec2fbfd1a3281bc2a4916dcf531d880706adfec9714e25aae52ded68f"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Semantic/FinalMCQAdmission.swift",
+      "sha256": "f1227eb6449b53af8497c45d909cd898c3c8681f147114c37c513bff85b2669d"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Sessions/StudySessionPlanner.swift",
+      "sha256": "bfbe246bc004696f7f0087c783c775b391e47b5f1843496a8ede779a6a1ea9c0"
+    },
+    {
+      "path": "Shelf.xcodeproj/project.pbxproj",
+      "sha256": "383b2531d3b1d41968ba070e9ddd195a8594b8939e89e4fe1961ca1072231436"
+    },
+    {
+      "path": "Shelf/Learning/Intelligence/KnowledgeCollisionSheet.swift",
+      "sha256": "48b5f870f221caeb2c93d857e090d959311a09b98e5a1ec9d421448257efcc20"
+    },
+    {
+      "path": "Shelf/Learning/Intelligence/RabbitHoleSheet.swift",
+      "sha256": "56768f55869f57acb1d57c22db55fc70270ce4b98b16690322e987e2e89dca9f"
+    },
+    {
+      "path": "Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift",
+      "sha256": "6410c59226dd8338e06bb3c5b9a816d97675842c049a557afe4db26b1559fb43"
+    },
+    {
+      "path": "Shelf/Learning/Intelligence/TeachLeuSheet.swift",
+      "sha256": "d71b37866ca6721b24a43302e130e7e1962d0f3f81537befd713aba1c85c4dff"
+    },
+    {
+      "path": "Shelf/Learning/Intelligence/TryItSheet.swift",
+      "sha256": "ef35a1bb545cea7db5e4b3940640362888e916eb3bcd9f4ad7c8e8951974f688"
+    },
+    {
+      "path": "Shelf/Learning/LearnTodayScreen.swift",
+      "sha256": "529b4d76d5dc09dc85d98efa00d9458b46506dfecdd7b13fb7006a294b747d27"
+    },
+    {
+      "path": "Shelf/Learning/LearningModel+Intelligence.swift",
+      "sha256": "b8e94f05c3acaa789268a069604d3c504c0cc22b7a575999f384d88e9088df96"
+    },
+    {
+      "path": "Shelf/Learning/LearningModel+Sessions.swift",
+      "sha256": "0375f566e18349ab27c34d915ce1e4d28be2a9765915918521378b160ea6de07"
+    },
+    {
+      "path": "Shelf/Learning/LearningModel.swift",
+      "sha256": "732c9ca841a60293589ee83319a890b44061cf7196127c3769cfa28b28bcf7b4"
+    },
+    {
+      "path": "Shelf/Learning/LearningObjectActionSheet.swift",
+      "sha256": "b4d1e81c0a455ac454652816fb52a61833edfe2efebfe762dd9a4a58ad993b16"
+    },
+    {
+      "path": "Shelf/Learning/QuestionFeedbackView.swift",
+      "sha256": "e9dbdd17a7699fec4868fab41a0abe24d367dd1a557c4c4502554bed3f4f1d37"
+    },
+    {
+      "path": "scripts/check-v28-product-wiring.py",
+      "sha256": "6fa7e80e34597cf8e6369327f0512944473ccea6dcd9a71bca0810efa2f41566"
+    },
+    {
+      "path": "scripts/test-v28-product.py",
+      "sha256": "277aed3c90d61dab2d7d539d60ab481c401e9244063d07610274cd96b962a1d0"
+    },
+    {
+      "path": "scripts/typecheck-v28-product-ios.py",
+      "sha256": "51278a123a70ea89c489f6500baf04b32ab2f02b0492404821e32ad1b205ee5d"
+    },
+    {
+      "path": "scripts/v28-product-integration.swift",
+      "sha256": "ca4d44620a88804e52c794cd033e7e6b71422b76333a572e24d83a3e0280a315"
+    },
+    {
+      "path": "scripts/write-v28-product-report.py",
+      "sha256": "6abd80e1caffb85080382583d20c0f39a5566e5e1805093b81ce68e92774aae9"
+    }
+  ],
+  "evidence": [
+    "README.md",
+    "app-syntax.log",
+    "collision.json",
+    "integration-before-batched-admission.json",
+    "integration-build.log",
+    "integration-results.json",
+    "integration.log",
+    "ios-module-Shelf.log",
+    "ios-module-ShelfCore.log",
+    "ios-module-VoiceBugfix.log",
+    "native-build-blocked.log",
+    "native-status.json",
+    "production-wiring.json",
+    "study-question.json",
+    "teach-connection.json",
+    "what-changes-if-source.json"
+  ]
+}

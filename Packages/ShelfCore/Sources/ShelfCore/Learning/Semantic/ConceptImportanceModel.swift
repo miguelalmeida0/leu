@@ -43,6 +43,7 @@ public struct ConceptImportanceModel: Sendable {
 
     public func ranked(_ questions: [LearningQuestion], snapshot: LearningSnapshot, annotations: [StudyAnnotation] = []) -> [LearningQuestion] {
         questions.sorted {
+            if ($0.v4 != nil) != ($1.v4 != nil) { return $0.v4 != nil }
             let a = score($0, snapshot: snapshot, annotations: annotations), b = score($1, snapshot: snapshot, annotations: annotations)
             return a == b ? $0.stableKey < $1.stableKey : a > b
         }

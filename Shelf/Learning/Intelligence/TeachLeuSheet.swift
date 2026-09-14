@@ -22,10 +22,10 @@ import ShelfCore
                         .disabled(model.attempt.learnerExplanation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || model.inferring)
                         .accessibilityIdentifier("teach-leu-compare")
                     if model.inferring { ProgressView("Comparing on this device…").accessibilityIdentifier("teach-leu-inference") }
-                    if let result = model.attempt.result { comparison(result) }
+                    if let result = model.feedback { comparison(result) }
                     if let message = model.message { Text(message).foregroundStyle(ShelfTheme.secondary) }
                     source
-                    if model.attempt.result != nil {
+                    if model.feedback != nil {
                         if !model.connections.isEmpty {
                             Button("Find connections") { connections = true }.accessibilityIdentifier("teach-leu-connections")
                         }
@@ -58,24 +58,27 @@ import ShelfCore
             Button("View in PDF") { model.viewSource(returningTo: "Teach Leu") }.accessibilityIdentifier("teach-leu-view-source")
         }
     }
-    @ViewBuilder private func comparison(_ result: TeachLeuResult) -> some View {
+    @ViewBuilder private func comparison(_ result: TeachSourceFeedback) -> some View {
         VStack(alignment: .leading, spacing: 18) {
-            if !result.supported.isEmpty {
+            if !result.captured.isEmpty {
                 Text("YOU CAPTURED").font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
-                ForEach(Array(result.supported.enumerated()), id: \.offset) { _, point in Text(point.description) }
+                ForEach(Array(result.captured.enumerated()), id: \.offset) { _, point in Text(point.assessment.explanation) }
             }
-            if !result.omitted.isEmpty {
+            if !result.worthAdding.isEmpty {
                 Text("WORTH ADDING").font(.caption.weight(.semibold))
-                ForEach(result.omitted, id: \.id) { claim in Text(claim.evidence.text).font(.system(.body, design: .serif)) }
+                ForEach(Array(result.worthAdding.enumerated()), id: \.offset) { _, point in
+                    Text(point.assessment.missingConditions.joined(separator: "; "))
+                    Text(point.assessment.explanation).foregroundStyle(ShelfTheme.secondary)
+                }
             }
-            if !result.challenged.isEmpty {
+            if !result.check.isEmpty {
                 Text("CHECK THIS").font(.caption.weight(.semibold))
-                ForEach(Array(result.challenged.enumerated()), id: \.offset) { _, point in
-                    Text("“\(point.learnerText)”"); Text(point.explanation)
+                ForEach(Array(result.check.enumerated()), id: \.offset) { _, point in
+                    Text("“\(point.learner)”"); Text(point.assessment.explanation)
                 }
             }
             if !result.unsettled.isEmpty {
-                Text("Your source doesn't settle this.").font(.headline)
+                Text("YOUR SOURCE DOESN'T SETTLE THIS").font(.caption.weight(.semibold))
                 ForEach(Array(result.unsettled.enumerated()), id: \.offset) { _, text in Text("“\(text)”") }
                 Text("No conclusion has been drawn about these statements.").foregroundStyle(ShelfTheme.secondary)
             }

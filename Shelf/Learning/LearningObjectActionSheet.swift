@@ -18,7 +18,7 @@ struct LearningObjectActionSheet: View {
     @State private var intelligence: ReaderIntelligenceModel?
     @State private var destination: IntelligenceDestination?
     private enum IntelligenceDestination: String, Identifiable {
-        case teach, connections, activity, question
+        case teach, connections, activity, question, libraryExplanation
         var id: String { rawValue }
     }
 
@@ -57,6 +57,7 @@ struct LearningObjectActionSheet: View {
                 case .teach: TeachLeuSheet(model: intelligence)
                 case .question: PassageQuestionSheet(model: intelligence)
                 case .connections: RabbitHoleSheet(model: intelligence)
+                case .libraryExplanation: ExplainFromLibrarySheet(model: ReaderIntelligenceModel(learning: learning, source: intelligence.source))
                 case .activity:
                     if let definition = intelligence.activity { TryItSheet(model: intelligence, definition: definition) }
                 }
@@ -79,23 +80,32 @@ struct LearningObjectActionSheet: View {
 
     private var actions: some View {
         VStack(spacing: 0) {
-            if let onExplainLikeTen {
+            if onExplainLikeTen != nil || intelligence?.libraryExplanations.isEmpty == false {
+                DisclosureGroup("Explain") {
+                if let onExplainLikeTen {
                 action("Explain like I'm 10", "text.book.closed", "Explain this passage in plain words.", id: "learning-action-explain-like-ten") {
                     if let source {
                         if let intelligence { Task { await intelligence.record(.askedExplanation) } }
                         onExplainLikeTen(source)
                     }
                 }
+                }
+                if intelligence?.libraryExplanations.isEmpty == false {
+                    action("Explain from my library", "books.vertical", "Read a grounded explanation and related source.", id: "learning-action-library-explain") { destination = .libraryExplanation }
+                }
+                }.padding(15).accessibilityIdentifier("learning-action-explain-menu")
             }
-            if let intelligence, intelligence.canTeach {
+            if let intelligence {
+                if intelligence.canTeach {
                 Divider().overlay(ShelfTheme.line)
                 action("Teach Leu", "text.bubble", "Compare your explanation with this source.", id: "learning-action-teach-leu") { destination = .teach }
+                }
                 if intelligence.activity != nil {
                     Divider().overlay(ShelfTheme.line)
                     action("Try it", "hand.draw", "Manipulate an idea from this passage.", id: "learning-action-try-it") { destination = .activity }
                 } else if learning.activeSession == nil && learning.snapshot.questions.contains(where: {
                     $0.source.documentID == source?.documentID && $0.source.pageIndex == source?.pageIndex &&
-                    $0.modelProvenance?.schemaVersion == 3 &&
+                    ($0.v4 != nil || $0.modelProvenance?.schemaVersion == 3) &&
                     CanonicalWhitespaceResolver.normalize(intelligence.source.passage.sourceText).contains(CanonicalWhitespaceResolver.normalize($0.source.sourceText))
                 }) {
                     Divider().overlay(ShelfTheme.line)

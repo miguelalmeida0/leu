@@ -1,0 +1,21 @@
+{
+  "captured" : [
+    {
+      "clause" : "Stable keys let React recognize the same item after reordering",
+      "document" : "React Notes",
+      "explanation" : "You connected an item's identifier with recognizing the same item across list changes.",
+      "page" : "3"
+    },
+    {
+      "clause" : "Reconciliation compares the previous and next trees, using element type and keys to keep or replace component instances.",
+      "document" : "javascript_midlevel_interview_mobile_mastery",
+      "explanation" : "You connected comparison with keeping or replacing component instances, retaining element type and keys.",
+      "page" : "113"
+    }
+  ],
+  "connected" : true,
+  "learner" : "Stable keys let React recognize the same item after reordering. Reconciliation compares the previous and next trees, using element type and keys to keep or replace component instances.",
+  "unsettled" : [
+
+  ]
+}

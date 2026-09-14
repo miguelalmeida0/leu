@@ -1,0 +1,14 @@
+{
+  "shelfCoreIOSSDKCompilation": "PASS",
+  "actualAppSourceSyntax": "PASS",
+  "shelfAppModuleCompilation": "BLOCKED",
+  "appModuleBlocker": "Observation macro process: sandbox-exec: sandbox_apply: Operation not permitted; macro server produced malformed response",
+  "packagedXcodeBuild": "BLOCKED",
+  "packageBlocker": "I/O permission error reading the temporary SwiftPM Package.resolved.lock; not proof of a malformed Package.resolved file",
+  "simulator": "BLOCKED",
+  "simulatorError": "NSPOSIXErrorDomain Code=61 Connection refused; CoreSimulatorService connection invalid",
+  "nativeUIExecution": "NOT_EXECUTED",
+  "physicalIPhoneJourney": "NOT_EXECUTED",
+  "modelInferenceRequired": false,
+  "old74TestUISuiteRun": false
+}

@@ -64,6 +64,26 @@ public actor LearningRepository {
         }
     }
 
+    public func storeV4Questions(_ questions: [LearningQuestion]) throws {
+        try transaction { snapshot in
+            let documents = Set(questions.map { $0.source.documentID })
+            let admission = snapshot.analyses.filter { documents.contains($0.key) }.mapValues { V4StudyAdmission(analysis: $0) }
+            for question in questions {
+                guard let gate = admission[question.source.documentID], gate.rejection(question) == nil else {
+                    throw LearningIntelligenceError.sourceIntegrityFailed
+                }
+                if !snapshot.questions.contains(where: { $0.id == question.id }) { snapshot.questions.append(question) }
+                if !snapshot.studyObjects.contains(where: { $0.source.documentID == question.source.documentID && $0.source.pageIndex == question.source.pageIndex }) {
+                    let object = LearningObject(id: StableIdentity.uuid("v4-object|" + question.stableKey), type: .passage,
+                        source: question.source, topicIDs: question.topicIDs, title: question.source.sectionTitle ?? "Source idea",
+                        importance: 0.7, origin: .documentAnalysis)
+                    snapshot.learningObjects.append(object)
+                    snapshot.reviewStates[object.id] = ReviewState(learningObjectID: object.id)
+                }
+            }
+        }
+    }
+
     public func upsertAnalysis(_ analysis: DocumentAnalysis, topics: [TopicClassification],
                                questions: [LearningQuestion], semanticIndex: SemanticIndex? = nil) throws {
         try transaction { snapshot in

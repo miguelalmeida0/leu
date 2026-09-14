@@ -2,6 +2,35 @@ import Foundation
 import ShelfCore
 
 @MainActor extension LearningModel {
+    func prepareV4Questions() async {
+        if let task = v4PreparationTask { await task.value; return }
+        isPreparingV4Questions = true
+        defer { isPreparingV4Questions = false }
+        let task = Task { [weak self] in
+            guard let self else { return }
+            for book in library.snapshot.activeBooks {
+                guard !Task.isCancelled, let analysis = snapshot.analyses[book.id] else { continue }
+                let version = "\(book.id)|\(analysis.fingerprint)|\(analysis.extractionVersion ?? 0)|v4"
+                guard !preparedV4Versions.contains(version) else { continue }
+                if snapshot.questions.contains(where: { $0.v4?.claim.card.documentID == book.id && $0.v4?.claim.card.fingerprint == analysis.fingerprint }) {
+                    preparedV4Versions.insert(version); continue
+                }
+                let topics = snapshot.manualDocumentTopics[book.id] ?? Set(analysis.topicScores.filter { $0.value >= 0.18 }.map(\.key))
+                let questions = await Task.detached(priority: .utility) { V4StudyBank.build(analysis, topicIDs: topics) }.value
+                guard !Task.isCancelled, library.snapshot.activeBooks.contains(where: { $0.id == book.id }),
+                      snapshot.analyses[book.id]?.fingerprint == analysis.fingerprint else { continue }
+                do {
+                    if !questions.isEmpty { try await repository.storeV4Questions(questions); snapshot = try await repository.snapshot() }
+                    preparedV4Versions.insert(version)
+                    StudyInteractionTrace.record("v4.bank document=\(book.id) accepted=\(questions.count) backend=deterministic-v4")
+                } catch { notice = "Source questions could not be saved. Your library is unchanged." }
+            }
+        }
+        v4PreparationTask = task
+        await task.value
+        v4PreparationTask = nil
+    }
+
     func prepareIntelligence(for source: LearningSource? = nil) {
         guard intelligenceTask == nil else {
             if let source { pendingIntelligenceSource = source }
@@ -16,6 +45,7 @@ import ShelfCore
                     prepareIntelligence(for: pending)
                 }
             }
+            await prepareV4Questions()
             modelAvailability = await intelligenceProvider.availability()
             modelState = modelAvailability
             intelligenceCapability = IntelligenceCapabilityReport(availability: modelAvailability)
@@ -31,6 +61,7 @@ import ShelfCore
             }
             var generatedThisRun = 0
             for packet in packets {
+                if snapshot.questions.contains(where: { $0.v4 != nil && $0.source.documentID == packet.documentID && $0.source.pageIndex == packet.pageIndex }) { continue }
                 guard !Task.isCancelled, generatedThisRun < 3 else { return }
                 guard ProcessInfo.processInfo.thermalState != .serious,
                       ProcessInfo.processInfo.thermalState != .critical,

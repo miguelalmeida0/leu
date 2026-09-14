@@ -9,8 +9,14 @@ public enum DerivedExtractionMigration {
         }.map(\.documentID))
         var changed = false
         let count = snapshot.questions.count
+        let v4Documents = Set(snapshot.questions.filter { $0.v4 != nil }.map { $0.source.documentID })
+        let v4Admission = snapshot.analyses.filter { v4Documents.contains($0.key) }.mapValues { V4StudyAdmission(analysis: $0) }
         snapshot.questions.removeAll { question in
-            outdated.contains(question.source.documentID) ||
+            if question.v4 != nil {
+                guard !outdated.contains(question.source.documentID), let gate = v4Admission[question.source.documentID] else { return true }
+                return gate.rejection(question) != nil
+            }
+            return outdated.contains(question.source.documentID) ||
                 FinalMCQAdmission.rejectionReason(question, analysis: snapshot.analyses[question.source.documentID]) != nil
         }
         changed = snapshot.questions.count != count

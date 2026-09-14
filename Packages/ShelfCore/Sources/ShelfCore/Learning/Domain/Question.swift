@@ -25,6 +25,7 @@ public struct LearningQuestion: Identifiable, Codable, Equatable, Sendable {
     public var propositionID: String?
     public var semanticOperator: String?
     public var modelProvenance: LearningGenerationProvenance? = nil
+    public var v4: QuestionV4? = nil
 
     public init(id: UUID = UUID(), stableKey: String, kind: QuestionKind, prompt: String,
                 options: [QuestionOption], correctOptionID: UUID, source: LearningSource,

@@ -31,7 +31,7 @@ public struct ShelfStudySessionPlanner: StudySessionPlanning, Sendable {
             let base = dueScore * 0.48 + weakness * 0.26 + object.importance * 0.16 + novelty * 0.10
             let rankedQuestions = ConceptImportanceModel().ranked(snapshot.questions.filter { $0.source.documentID == object.source.documentID && $0.source.pageIndex == object.source.pageIndex }, snapshot: snapshot)
             if let question = rankedQuestions.first {
-                candidates.append((base + question.qualityScore * 0.18,
+                candidates.append((base + question.qualityScore * 0.18 + (question.v4 == nil ? 0 : 0.3),
                                    StudyActivity(kind: .question, learningObjectID: object.id, questionID: question.id,
                                                  title: object.title, estimatedSeconds: mode == .interview ? 55 : 75)))
             }

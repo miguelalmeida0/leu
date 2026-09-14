@@ -58,7 +58,7 @@ struct QuestionFeedbackView: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.leading, 14)
                 .overlay(alignment: .leading) { Rectangle().fill(ShelfTheme.accent).frame(width: 2) }
-            if let explanation = question.modelProvenance?.explanation {
+            if let explanation = question.v4?.explanation ?? question.modelProvenance?.explanation {
                 // This is the explanation generated for the QUESTION, not an assessment
                 // of what the learner wrote. Leu does not evaluate open answers, so the
                 // label says where the sentence came from rather than implying a verdict.

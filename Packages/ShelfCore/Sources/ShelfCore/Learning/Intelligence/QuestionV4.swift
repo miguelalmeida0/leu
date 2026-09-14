@@ -110,6 +110,11 @@ public struct QuestionV4Compiler: Sendable {
         let originalVerb = part(3)
         guard let verb = verbs[originalVerb] else { return nil }
         var object = part(4)
+        // Mixed modal clauses cannot share one interrogative auxiliary without
+        // changing qualifier scope. Keep the claim, withhold that question form.
+        guard !object.contains(" and can "), !object.contains(" and may "), !object.contains(", but "),
+              !claim.card.title.contains(" vs "), !claim.card.title.contains(", "), !claim.card.title.contains(" and ") else { return nil }
+        object = object.replacingOccurrences(of: #"(?<=[a-z])-\s+(?=[a-z])"#, with: "-", options: .regularExpression)
         for (inflected, base) in verbs where inflected != base {
             object = object.replacingOccurrences(of: " and " + inflected + " ", with: " and " + base + " ")
         }
@@ -124,17 +129,21 @@ public struct QuestionV4Compiler: Sendable {
         "balance":"balance", "balances":"balance", "let":"let", "lets":"let", "compute":"compute", "computes":"compute",
         "decouple":"decouple", "decouples":"decouple", "smooth":"smooth", "smooths":"smooth", "model":"model", "models":"model",
         "centralize":"centralize", "centralizes":"centralize", "improve":"improve", "improves":"improve", "derive":"derive", "derives":"derive",
-        "separate":"separate", "separates":"separate", "trade":"trade", "trades":"trade", "catch":"catch", "catches":"catch"]
+        "separate":"separate", "separates":"separate", "trade":"trade", "trades":"trade", "catch":"catch", "catches":"catch",
+        "documents":"document", "avoids":"avoid", "allows":"allow", "standardizes":"standardize"]
     private static func subject(_ title: String, plural: Bool) -> String {
         if title.contains(".") || title == "Docker" || title == "try / catch" { return title }
         let first = title.split(separator: " ").first.map(String.init) ?? title
         let acronym = first == first.uppercased()
-        let lowered = acronym ? title : title.prefix(1).lowercased() + title.dropFirst()
+        let identifier = first.dropFirst().contains(where: \.isUppercase)
+        let lowered = acronym || identifier ? title : title.prefix(1).lowercased() + title.dropFirst()
         if plural { return lowered }
         if title.hasSuffix("Principle") { return "the " + title }
         let head = title.lowercased().split(separator: " ").last.map(String.init) ?? ""
-        let countNouns: Set<String> = ["token", "cache", "hit", "test", "guard", "component", "machine", "queue", "module", "system", "database", "constraint", "index", "request", "server", "function", "budget", "protocol", "webhook"]
+        let countNouns: Set<String> = ["token", "cache", "hit", "test", "guard", "component", "machine", "queue", "module", "system", "database", "constraint", "index", "request", "server", "function", "budget", "protocol", "webhook", "parameter", "api", "proxy", "cookie", "jwt", "transaction", "promise", "interface", "type", "spa", "variable", "union", "reducer", "boundary", "flag", "level", "breaker", "loop", "pyramid"]
         if countNouns.contains(head) {
+            if acronym { return "the " + lowered }
+            if first.hasPrefix("Http") { return "an " + lowered }
             let consonantU = ["unit", "unique", "user", "uniform", "universal"].contains { lowered.hasPrefix($0) }
             return (!consonantU && "aeiou".contains(lowered.prefix(1).lowercased()) ? "an " : "a ") + lowered
         }

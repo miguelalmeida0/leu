@@ -4,6 +4,11 @@ import Foundation
 /// Claim entailment remains the responsibility of the semantic/V2 realizer.
 public enum FinalMCQAdmission {
     public static func rejectionReason(_ question: LearningQuestion, analysis: DocumentAnalysis? = nil) -> String? {
+        if question.stableKey.hasPrefix("v4|"), question.v4 == nil { return "v4_missing_proof" }
+        if question.v4 != nil {
+            guard let analysis else { return "v4_missing_analysis" }
+            return V4StudyBank.rejection(question, analysis: analysis)
+        }
         if question.modelProvenance?.schemaVersion == 3 {
             guard let analysis else { return "v3_missing_analysis" }
             if let failure = QuestionV3Validator.persistedFailure(question, analysis: analysis) { return failure }

@@ -16,6 +16,7 @@ final class LearningModel {
     var snapshot = LearningSnapshot()
     var isReady = false
     var isIndexing = false
+    var isPreparingV4Questions = false
     var indexingLabel: String?
     var indexingProgress: Double = 0
     var notice: String?
@@ -48,10 +49,14 @@ final class LearningModel {
     @ObservationIgnored var studySaveRevision = UUID()
     @ObservationIgnored var indexingTask: Task<Void, Never>?
     @ObservationIgnored var intelligenceTask: Task<Void, Never>?
+    @ObservationIgnored var v4PreparationTask: Task<Void, Never>?
+    @ObservationIgnored var preparedV4Versions = Set<String>()
     @ObservationIgnored var pendingIntelligenceSource: LearningSource?
     let intelligenceProvider: any LearningIntelligenceProvider & LearningExplanationCapable & TeachLeuProposing = AppleLearningIntelligenceProvider()
     @ObservationIgnored var connectionIndex: GroundedConnectionIndex?
     @ObservationIgnored var connectionIndexVersion = ""
+    @ObservationIgnored var v28ConnectionIndex: V28ConnectionIndex?
+    @ObservationIgnored var v28ConnectionIndexVersion = ""
     @ObservationIgnored var makeIntelligenceReader: ((LearningSource, String) -> IntelligenceReaderRoute?)?
     let explanationCache: ExplanationCache
     var modelState: LearningModelState = .unavailable
