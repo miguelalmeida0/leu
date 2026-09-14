@@ -1,0 +1,2801 @@
+{
+ "schemaVersion": 1,
+ "extractionVersion": "leu.extract.1",
+ "documents": [
+  {
+   "id": "mobile-mastery",
+   "title": "JavaScript Mid-Level Interview Mobile Mastery",
+   "note": "primary study PDF"
+  },
+  {
+   "id": "react-notes",
+   "title": "React Rendering Notes",
+   "note": "second source, overlaps on identity/keys"
+  },
+  {
+   "id": "http-caching-guide",
+   "title": "HTTP Caching Guide",
+   "note": "second source, overlaps on caching"
+  },
+  {
+   "id": "reliability-handbook",
+   "title": "Reliability Handbook",
+   "note": "second source, overlaps on retries/idempotency"
+  },
+  {
+   "id": "db-performance",
+   "title": "Database Performance Primer",
+   "note": "indexes, queries, performance"
+  }
+ ],
+ "atoms": [
+  {
+   "key": "key.def",
+   "doc": "mobile-mastery",
+   "page": 12,
+   "role": "compactExplanation",
+   "claimType": "definition",
+   "subject": "a key",
+   "relation": "explains",
+   "object": "an identifier React uses for a list item",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A key is an identifier React uses for a list item."
+  },
+  {
+   "key": "key.enables.identity",
+   "doc": "mobile-mastery",
+   "page": 12,
+   "role": "compactExplanation",
+   "claimType": "mechanism",
+   "subject": "a stable key",
+   "relation": "enables",
+   "object": "identity matching across renders",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A stable key helps React match an item to its previous instance across renders."
+  },
+  {
+   "key": "identity.enables.state",
+   "doc": "mobile-mastery",
+   "page": 12,
+   "role": "compactExplanation",
+   "claimType": "mechanism",
+   "subject": "identity matching across renders",
+   "relation": "enables",
+   "object": "state preservation during reorder",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Matching an item to its previous instance preserves that item's state during a reorder."
+  },
+  {
+   "key": "state.requires.identity",
+   "doc": "react-notes",
+   "page": 3,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "state preservation during reorder",
+   "relation": "requires",
+   "object": "identity matching across renders",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Preserving state during a reorder requires matching each item to its previous instance."
+  },
+  {
+   "key": "identity.requires.key",
+   "doc": "react-notes",
+   "page": 3,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "identity matching across renders",
+   "relation": "requires",
+   "object": "a stable key",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Matching across renders requires a stable key."
+  },
+  {
+   "key": "indexkey.causes.wrongidentity",
+   "doc": "mobile-mastery",
+   "page": 13,
+   "role": "caution",
+   "claimType": "cause",
+   "subject": "an index key",
+   "relation": "causes",
+   "object": "wrong identity correspondence",
+   "conditions": [
+    {
+     "text": "the list is reordered",
+     "isPositive": true
+    }
+   ],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "If the list is reordered, an index key causes wrong identity correspondence."
+  },
+  {
+   "key": "wrongidentity.causes.association",
+   "doc": "mobile-mastery",
+   "page": 13,
+   "role": "caution",
+   "claimType": "cause",
+   "subject": "wrong identity correspondence",
+   "relation": "causes",
+   "object": "component instance association changes",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Wrong identity correspondence causes component instance association to change."
+  },
+  {
+   "key": "association.causes.statebleed",
+   "doc": "mobile-mastery",
+   "page": 13,
+   "role": "caution",
+   "claimType": "failureMode",
+   "subject": "component instance association changes",
+   "relation": "causes",
+   "object": "state appearing attached to another item",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "When the component instance association changes, state may appear attached to another item."
+  },
+  {
+   "key": "key.constraint.unique",
+   "doc": "react-notes",
+   "page": 4,
+   "role": "explanation",
+   "claimType": "constraint",
+   "subject": "a key",
+   "relation": "must be",
+   "object": "unique among siblings",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A key must be unique among siblings."
+  },
+  {
+   "key": "key.example.id",
+   "doc": "mobile-mastery",
+   "page": 13,
+   "role": "example",
+   "claimType": "example",
+   "subject": "a database id",
+   "relation": "is an example of",
+   "object": "a stable key",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A database id is an example of a stable key."
+  },
+  {
+   "key": "reconciliation.def",
+   "doc": "react-notes",
+   "page": 2,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "reconciliation",
+   "relation": "explains",
+   "object": "how React compares the new tree with the previous tree",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Reconciliation is how React compares the new tree with the previous tree."
+  },
+  {
+   "key": "reconciliation.requires.identity",
+   "doc": "react-notes",
+   "page": 2,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "reconciliation",
+   "relation": "requires",
+   "object": "identity matching across renders",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Reconciliation requires matching each element to its previous instance."
+  },
+  {
+   "key": "cache.def",
+   "doc": "mobile-mastery",
+   "page": 30,
+   "role": "compactExplanation",
+   "claimType": "definition",
+   "subject": "caching",
+   "relation": "explains",
+   "object": "reuse of previously fetched data",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Caching is the reuse of previously fetched data."
+  },
+  {
+   "key": "cache.enables.latency",
+   "doc": "mobile-mastery",
+   "page": 30,
+   "role": "compactExplanation",
+   "claimType": "mechanism",
+   "subject": "caching",
+   "relation": "enables",
+   "object": "lower latency on repeat requests",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Caching enables lower latency on repeat requests."
+  },
+  {
+   "key": "latency.enables.throughput",
+   "doc": "db-performance",
+   "page": 9,
+   "role": "explanation",
+   "claimType": "mechanism",
+   "subject": "lower latency on repeat requests",
+   "relation": "enables",
+   "object": "higher throughput under load",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Lower latency on repeat requests enables higher throughput under load."
+  },
+  {
+   "key": "cache.requires.lookup",
+   "doc": "http-caching-guide",
+   "page": 5,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "caching",
+   "relation": "requires",
+   "object": "a cache lookup before the request",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Caching requires a cache lookup before the request is made."
+  },
+  {
+   "key": "lookup.sequence",
+   "doc": "http-caching-guide",
+   "page": 5,
+   "role": "explanation",
+   "claimType": "sequence",
+   "subject": "a cache lookup",
+   "relation": "causes",
+   "object": "either a cached result or a fetch",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A cache lookup produces either a cached result or a fetch."
+  },
+  {
+   "key": "cache.failure.stale",
+   "doc": "mobile-mastery",
+   "page": 31,
+   "role": "caution",
+   "claimType": "failureMode",
+   "subject": "caching",
+   "relation": "causes",
+   "object": "stale data",
+   "conditions": [
+    {
+     "text": "the underlying data changes",
+     "isPositive": true
+    }
+   ],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "If the underlying data changes, caching causes stale data."
+  },
+  {
+   "key": "cache.tradeoff",
+   "doc": "mobile-mastery",
+   "page": 31,
+   "role": "explanation",
+   "claimType": "tradeoff",
+   "subject": "caching",
+   "relation": "trades off",
+   "object": "freshness against latency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Caching trades off freshness against latency."
+  },
+  {
+   "key": "ttl.prevents.stale",
+   "doc": "http-caching-guide",
+   "page": 6,
+   "role": "explanation",
+   "claimType": "consequence",
+   "subject": "a short time to live",
+   "relation": "prevents",
+   "object": "stale data",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A short time to live prevents stale data."
+  },
+  {
+   "key": "ttl.causes.misses",
+   "doc": "http-caching-guide",
+   "page": 6,
+   "role": "caution",
+   "claimType": "consequence",
+   "subject": "a short time to live",
+   "relation": "causes",
+   "object": "more cache misses",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A short time to live causes more cache misses."
+  },
+  {
+   "key": "maxage.def",
+   "doc": "http-caching-guide",
+   "page": 7,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "`Cache-Control`",
+   "relation": "explains",
+   "object": "how long a response may be reused",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "`Cache-Control` states how long a response may be reused."
+  },
+  {
+   "key": "maxage.number",
+   "doc": "http-caching-guide",
+   "page": 7,
+   "role": "explanation",
+   "claimType": "constraint",
+   "subject": "a max-age of 60 seconds",
+   "relation": "explains",
+   "object": "one minute of reuse",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A max-age of 60 seconds allows one minute of reuse."
+  },
+  {
+   "key": "memoization.sameprinciple",
+   "doc": "mobile-mastery",
+   "page": 32,
+   "role": "explanation",
+   "claimType": "example",
+   "subject": "memoization",
+   "relation": "is an example of",
+   "object": "caching",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Memoization is an example of caching."
+  },
+  {
+   "key": "etag.enables.revalidate",
+   "doc": "http-caching-guide",
+   "page": 8,
+   "role": "explanation",
+   "claimType": "mechanism",
+   "subject": "an `ETag`",
+   "relation": "enables",
+   "object": "revalidation without re-sending the body",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An `ETag` enables revalidation without re-sending the body."
+  },
+  {
+   "key": "retry.def",
+   "doc": "mobile-mastery",
+   "page": 44,
+   "role": "compactExplanation",
+   "claimType": "definition",
+   "subject": "a retry",
+   "relation": "explains",
+   "object": "another attempt at the same operation",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A retry is another attempt at the same operation."
+  },
+  {
+   "key": "retry.enables.success",
+   "doc": "mobile-mastery",
+   "page": 44,
+   "role": "compactExplanation",
+   "claimType": "mechanism",
+   "subject": "retrying",
+   "relation": "enables",
+   "object": "the operation to succeed",
+   "conditions": [
+    {
+     "text": "the failure is transient",
+     "isPositive": true
+    }
+   ],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "If the failure is transient, retrying enables the operation to succeed."
+  },
+  {
+   "key": "retry.permanent.failure",
+   "doc": "mobile-mastery",
+   "page": 45,
+   "role": "caution",
+   "claimType": "failureMode",
+   "subject": "retrying a permanent validation error",
+   "relation": "causes",
+   "object": "the same invalid request",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Retrying a permanent validation error causes the same invalid request."
+  },
+  {
+   "key": "invalidrequest.causes.repeatfailure",
+   "doc": "mobile-mastery",
+   "page": 45,
+   "role": "caution",
+   "claimType": "cause",
+   "subject": "the same invalid request",
+   "relation": "causes",
+   "object": "repeated failure",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "The same invalid request causes repeated failure."
+  },
+  {
+   "key": "retry.requires.idempotency",
+   "doc": "reliability-handbook",
+   "page": 11,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "safe retrying",
+   "relation": "requires",
+   "object": "an idempotent operation",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Safe retrying requires an idempotent operation."
+  },
+  {
+   "key": "retry.tradeoff",
+   "doc": "reliability-handbook",
+   "page": 11,
+   "role": "explanation",
+   "claimType": "tradeoff",
+   "subject": "retrying",
+   "relation": "trades off",
+   "object": "recovery against extra load",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Retrying trades off recovery against extra load."
+  },
+  {
+   "key": "backoff.prevents.overload",
+   "doc": "reliability-handbook",
+   "page": 12,
+   "role": "explanation",
+   "claimType": "consequence",
+   "subject": "exponential backoff",
+   "relation": "prevents",
+   "object": "retry storms",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Exponential backoff prevents retry storms."
+  },
+  {
+   "key": "retrystorm.causes.outage",
+   "doc": "reliability-handbook",
+   "page": 12,
+   "role": "caution",
+   "claimType": "cause",
+   "subject": "retry storms",
+   "relation": "causes",
+   "object": "sustained overload of the dependency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Retry storms cause sustained overload of the dependency."
+  },
+  {
+   "key": "retry.scope",
+   "doc": "reliability-handbook",
+   "page": 11,
+   "role": "explanation",
+   "claimType": "constraint",
+   "subject": "retrying",
+   "relation": "only applies to",
+   "object": "transient failures",
+   "conditions": [],
+   "qualifiers": [
+    {
+     "kind": "scope",
+     "text": "transient failures"
+    }
+   ],
+   "isNegated": false,
+   "span": "Retrying only applies to transient failures."
+  },
+  {
+   "key": "retry.limit.number",
+   "doc": "reliability-handbook",
+   "page": 13,
+   "role": "explanation",
+   "claimType": "constraint",
+   "subject": "a retry budget",
+   "relation": "must be",
+   "object": "at most 3 attempts",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A retry budget must be at most 3 attempts."
+  },
+  {
+   "key": "idempotent.def",
+   "doc": "reliability-handbook",
+   "page": 14,
+   "role": "compactExplanation",
+   "claimType": "definition",
+   "subject": "an idempotent operation",
+   "relation": "explains",
+   "object": "an operation with the same result when repeated",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An idempotent operation is one with the same result when repeated."
+  },
+  {
+   "key": "idempotent.enables.saferetry",
+   "doc": "reliability-handbook",
+   "page": 14,
+   "role": "compactExplanation",
+   "claimType": "mechanism",
+   "subject": "an idempotent operation",
+   "relation": "enables",
+   "object": "safe retrying",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An idempotent operation enables safe retrying."
+  },
+  {
+   "key": "idempotencykey.enables.dedup",
+   "doc": "reliability-handbook",
+   "page": 15,
+   "role": "explanation",
+   "claimType": "mechanism",
+   "subject": "an idempotency key",
+   "relation": "enables",
+   "object": "duplicate request detection",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An idempotency key enables duplicate request detection."
+  },
+  {
+   "key": "dedup.prevents.doublecharge",
+   "doc": "reliability-handbook",
+   "page": 15,
+   "role": "explanation",
+   "claimType": "consequence",
+   "subject": "duplicate request detection",
+   "relation": "prevents",
+   "object": "a double charge",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Duplicate request detection prevents a double charge."
+  },
+  {
+   "key": "put.example",
+   "doc": "reliability-handbook",
+   "page": 14,
+   "role": "example",
+   "claimType": "example",
+   "subject": "a PUT that sets a field to a fixed value",
+   "relation": "is an example of",
+   "object": "an idempotent operation",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A PUT that sets a field to a fixed value is an example of an idempotent operation."
+  },
+  {
+   "key": "post.notidempotent",
+   "doc": "reliability-handbook",
+   "page": 14,
+   "role": "caution",
+   "claimType": "constraint",
+   "subject": "a plain POST",
+   "relation": "is",
+   "object": "not idempotent",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": true,
+   "span": "A plain POST is not idempotent."
+  },
+  {
+   "key": "status409.def",
+   "doc": "http-caching-guide",
+   "page": 12,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "409",
+   "relation": "explains",
+   "object": "a conflict with the current state",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "409 means a conflict with the current state."
+  },
+  {
+   "key": "status503.def",
+   "doc": "reliability-handbook",
+   "page": 16,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "503",
+   "relation": "explains",
+   "object": "a temporarily unavailable dependency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "503 means a temporarily unavailable dependency."
+  },
+  {
+   "key": "status503.enables.retry",
+   "doc": "reliability-handbook",
+   "page": 16,
+   "role": "explanation",
+   "claimType": "mechanism",
+   "subject": "503",
+   "relation": "enables",
+   "object": "a retry with backoff",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A 503 enables a retry with backoff."
+  },
+  {
+   "key": "status400.prevents.retry",
+   "doc": "reliability-handbook",
+   "page": 16,
+   "role": "caution",
+   "claimType": "constraint",
+   "subject": "400",
+   "relation": "prevents",
+   "object": "a useful retry",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A 400 prevents a useful retry."
+  },
+  {
+   "key": "index.def",
+   "doc": "db-performance",
+   "page": 3,
+   "role": "compactExplanation",
+   "claimType": "definition",
+   "subject": "an index",
+   "relation": "explains",
+   "object": "a structure that finds rows without scanning",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An index is a structure that finds rows without scanning the table."
+  },
+  {
+   "key": "index.enables.lookup",
+   "doc": "db-performance",
+   "page": 3,
+   "role": "compactExplanation",
+   "claimType": "mechanism",
+   "subject": "an index",
+   "relation": "enables",
+   "object": "row lookup without a full scan",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An index enables row lookup without a full scan."
+  },
+  {
+   "key": "lookup.enables.latency",
+   "doc": "db-performance",
+   "page": 3,
+   "role": "explanation",
+   "claimType": "mechanism",
+   "subject": "row lookup without a full scan",
+   "relation": "enables",
+   "object": "lower query latency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Row lookup without a full scan enables lower query latency."
+  },
+  {
+   "key": "index.tradeoff",
+   "doc": "db-performance",
+   "page": 4,
+   "role": "explanation",
+   "claimType": "tradeoff",
+   "subject": "an index",
+   "relation": "trades off",
+   "object": "read speed against write cost",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An index trades off read speed against write cost."
+  },
+  {
+   "key": "index.causes.writecost",
+   "doc": "db-performance",
+   "page": 4,
+   "role": "caution",
+   "claimType": "cause",
+   "subject": "an index",
+   "relation": "causes",
+   "object": "extra work on every write",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An index causes extra work on every write."
+  },
+  {
+   "key": "index.requires.selectivity",
+   "doc": "db-performance",
+   "page": 5,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "a useful index",
+   "relation": "requires",
+   "object": "a selective column",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A useful index requires a selective column."
+  },
+  {
+   "key": "lowselectivity.failure",
+   "doc": "db-performance",
+   "page": 5,
+   "role": "caution",
+   "claimType": "failureMode",
+   "subject": "an index on a low selectivity column",
+   "relation": "causes",
+   "object": "the planner ignoring the index",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An index on a low selectivity column causes the planner to ignore the index."
+  },
+  {
+   "key": "composite.constraint",
+   "doc": "db-performance",
+   "page": 6,
+   "role": "explanation",
+   "claimType": "constraint",
+   "subject": "a composite index",
+   "relation": "only applies to",
+   "object": "queries that use its leading column",
+   "conditions": [],
+   "qualifiers": [
+    {
+     "kind": "scope",
+     "text": "queries that use its leading column"
+    }
+   ],
+   "isNegated": false,
+   "span": "A composite index only applies to queries that use its leading column."
+  },
+  {
+   "key": "nplusone.def",
+   "doc": "db-performance",
+   "page": 7,
+   "role": "caution",
+   "claimType": "failureMode",
+   "subject": "an n plus one query",
+   "relation": "causes",
+   "object": "one query per row",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An n plus one query causes one query per row."
+  },
+  {
+   "key": "nplusone.causes.latency",
+   "doc": "db-performance",
+   "page": 7,
+   "role": "caution",
+   "claimType": "cause",
+   "subject": "one query per row",
+   "relation": "causes",
+   "object": "high total query latency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "One query per row causes high total query latency."
+  },
+  {
+   "key": "batching.prevents.nplusone",
+   "doc": "db-performance",
+   "page": 7,
+   "role": "explanation",
+   "claimType": "consequence",
+   "subject": "batching the lookups",
+   "relation": "prevents",
+   "object": "one query per row",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Batching the lookups prevents one query per row."
+  },
+  {
+   "key": "closure.def",
+   "doc": "mobile-mastery",
+   "page": 4,
+   "role": "compactExplanation",
+   "claimType": "definition",
+   "subject": "a closure",
+   "relation": "explains",
+   "object": "a function together with the scope it captured",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A closure is a function together with the scope it captured."
+  },
+  {
+   "key": "closure.enables.privatestate",
+   "doc": "mobile-mastery",
+   "page": 4,
+   "role": "compactExplanation",
+   "claimType": "mechanism",
+   "subject": "a closure",
+   "relation": "enables",
+   "object": "private state without a class",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A closure enables private state without a class."
+  },
+  {
+   "key": "closure.causes.retention",
+   "doc": "mobile-mastery",
+   "page": 5,
+   "role": "caution",
+   "claimType": "failureMode",
+   "subject": "a closure over a large object",
+   "relation": "causes",
+   "object": "memory retention",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A closure over a large object causes memory retention."
+  },
+  {
+   "key": "js.def",
+   "doc": "mobile-mastery",
+   "page": 3,
+   "role": "compactExplanation",
+   "claimType": "definition",
+   "subject": "JavaScript",
+   "relation": "explains",
+   "object": "a single threaded language with an event loop",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "JavaScript is a single threaded language with an event loop."
+  },
+  {
+   "key": "http.def",
+   "doc": "http-caching-guide",
+   "page": 1,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "HTTP",
+   "relation": "explains",
+   "object": "a request response protocol",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "HTTP is a request response protocol."
+  },
+  {
+   "key": "eventloop.def",
+   "doc": "mobile-mastery",
+   "page": 6,
+   "role": "compactExplanation",
+   "claimType": "definition",
+   "subject": "the event loop",
+   "relation": "explains",
+   "object": "the order in which queued work runs",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "The event loop is the order in which queued work runs."
+  },
+  {
+   "key": "microtask.sequence",
+   "doc": "mobile-mastery",
+   "page": 6,
+   "role": "explanation",
+   "claimType": "sequence",
+   "subject": "a microtask",
+   "relation": "is required for",
+   "object": "running before the next macrotask",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A microtask is required for running before the next macrotask."
+  },
+  {
+   "key": "promise.enables.async",
+   "doc": "mobile-mastery",
+   "page": 7,
+   "role": "compactExplanation",
+   "claimType": "mechanism",
+   "subject": "a promise",
+   "relation": "enables",
+   "object": "sequencing asynchronous work",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A promise enables sequencing asynchronous work."
+  },
+  {
+   "key": "await.requires.async",
+   "doc": "mobile-mastery",
+   "page": 7,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "`await`",
+   "relation": "requires",
+   "object": "an async function",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "`await` requires an async function."
+  },
+  {
+   "key": "hoisting.def",
+   "doc": "mobile-mastery",
+   "page": 8,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "hoisting",
+   "relation": "explains",
+   "object": "declarations being processed before execution",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Hoisting is declarations being processed before execution."
+  },
+  {
+   "key": "letconst.contrast",
+   "doc": "mobile-mastery",
+   "page": 8,
+   "role": "explanation",
+   "claimType": "distinction",
+   "subject": "`let`",
+   "relation": "differs from",
+   "object": "`var` in block scoping",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "`let` differs from `var` in block scoping."
+  },
+  {
+   "key": "equality.contrast",
+   "doc": "mobile-mastery",
+   "page": 9,
+   "role": "explanation",
+   "claimType": "distinction",
+   "subject": "strict equality",
+   "relation": "differs from",
+   "object": "loose equality by skipping coercion",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Strict equality differs from loose equality by skipping coercion."
+  },
+  {
+   "key": "debounce.def",
+   "doc": "mobile-mastery",
+   "page": 10,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "debouncing",
+   "relation": "explains",
+   "object": "delaying work until input stops",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Debouncing is delaying work until input stops."
+  },
+  {
+   "key": "debounce.prevents.work",
+   "doc": "mobile-mastery",
+   "page": 10,
+   "role": "explanation",
+   "claimType": "consequence",
+   "subject": "debouncing",
+   "relation": "prevents",
+   "object": "repeated work on every keystroke",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Debouncing prevents repeated work on every keystroke."
+  },
+  {
+   "key": "memo.def",
+   "doc": "react-notes",
+   "page": 6,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "`useMemo`",
+   "relation": "explains",
+   "object": "caching a computed value between renders",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "`useMemo` is caching a computed value between renders."
+  },
+  {
+   "key": "memo.sameprinciple",
+   "doc": "react-notes",
+   "page": 6,
+   "role": "explanation",
+   "claimType": "example",
+   "subject": "`useMemo`",
+   "relation": "is an example of",
+   "object": "caching",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "`useMemo` is an example of caching."
+  },
+  {
+   "key": "memo.requires.stabledeps",
+   "doc": "react-notes",
+   "page": 6,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "`useMemo`",
+   "relation": "requires",
+   "object": "stable dependencies",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "`useMemo` requires stable dependencies."
+  },
+  {
+   "key": "unstabledeps.failure",
+   "doc": "react-notes",
+   "page": 7,
+   "role": "caution",
+   "claimType": "failureMode",
+   "subject": "unstable dependencies",
+   "relation": "causes",
+   "object": "recomputation on every render",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Unstable dependencies cause recomputation on every render."
+  },
+  {
+   "key": "recompute.causes.jank",
+   "doc": "react-notes",
+   "page": 7,
+   "role": "caution",
+   "claimType": "cause",
+   "subject": "recomputation on every render",
+   "relation": "causes",
+   "object": "dropped frames",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Recomputation on every render causes dropped frames."
+  },
+  {
+   "key": "rerender.requires.statechange",
+   "doc": "react-notes",
+   "page": 5,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "a re-render",
+   "relation": "requires",
+   "object": "a state or prop change",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A re-render requires a state or prop change."
+  },
+  {
+   "key": "virtualdom.def",
+   "doc": "react-notes",
+   "page": 2,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "the virtual tree",
+   "relation": "explains",
+   "object": "an in-memory description of the UI",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "The virtual tree is an in-memory description of the UI."
+  },
+  {
+   "key": "timeout.def",
+   "doc": "reliability-handbook",
+   "page": 20,
+   "role": "compactExplanation",
+   "claimType": "definition",
+   "subject": "a timeout",
+   "relation": "explains",
+   "object": "an upper bound on waiting",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A timeout is an upper bound on waiting."
+  },
+  {
+   "key": "timeout.prevents.threadexhaustion",
+   "doc": "reliability-handbook",
+   "page": 20,
+   "role": "explanation",
+   "claimType": "consequence",
+   "subject": "a timeout",
+   "relation": "prevents",
+   "object": "thread pool exhaustion",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A timeout prevents thread pool exhaustion."
+  },
+  {
+   "key": "nolimit.causes.exhaustion",
+   "doc": "reliability-handbook",
+   "page": 20,
+   "role": "caution",
+   "claimType": "cause",
+   "subject": "an unbounded wait",
+   "relation": "causes",
+   "object": "thread pool exhaustion",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An unbounded wait causes thread pool exhaustion."
+  },
+  {
+   "key": "exhaustion.causes.cascade",
+   "doc": "reliability-handbook",
+   "page": 21,
+   "role": "caution",
+   "claimType": "cause",
+   "subject": "thread pool exhaustion",
+   "relation": "causes",
+   "object": "a cascading failure",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Thread pool exhaustion causes a cascading failure."
+  },
+  {
+   "key": "breaker.def",
+   "doc": "reliability-handbook",
+   "page": 22,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "a circuit breaker",
+   "relation": "explains",
+   "object": "a switch that stops calls to a failing dependency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A circuit breaker is a switch that stops calls to a failing dependency."
+  },
+  {
+   "key": "breaker.prevents.cascade",
+   "doc": "reliability-handbook",
+   "page": 22,
+   "role": "explanation",
+   "claimType": "consequence",
+   "subject": "a circuit breaker",
+   "relation": "prevents",
+   "object": "a cascading failure",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A circuit breaker prevents a cascading failure."
+  },
+  {
+   "key": "breaker.requires.healthsignal",
+   "doc": "reliability-handbook",
+   "page": 22,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "a circuit breaker",
+   "relation": "requires",
+   "object": "a health signal",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A circuit breaker requires a health signal."
+  },
+  {
+   "key": "queue.enables.smoothing",
+   "doc": "reliability-handbook",
+   "page": 23,
+   "role": "explanation",
+   "claimType": "mechanism",
+   "subject": "a queue",
+   "relation": "enables",
+   "object": "smoothing of bursty load",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A queue enables smoothing of bursty load."
+  },
+  {
+   "key": "queue.causes.latency",
+   "doc": "reliability-handbook",
+   "page": 23,
+   "role": "caution",
+   "claimType": "consequence",
+   "subject": "a queue",
+   "relation": "causes",
+   "object": "added end to end latency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A queue causes added end to end latency."
+  },
+  {
+   "key": "atleastonce.requires.idempotency",
+   "doc": "reliability-handbook",
+   "page": 24,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "at least once delivery",
+   "relation": "requires",
+   "object": "an idempotent operation",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "At least once delivery requires an idempotent operation."
+  },
+  {
+   "key": "atleastonce.causes.duplicates",
+   "doc": "reliability-handbook",
+   "page": 24,
+   "role": "explanation",
+   "claimType": "cause",
+   "subject": "at least once delivery",
+   "relation": "causes",
+   "object": "duplicate messages",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "At least once delivery causes duplicate messages."
+  },
+  {
+   "key": "duplicates.causes.doublecharge",
+   "doc": "reliability-handbook",
+   "page": 24,
+   "role": "caution",
+   "claimType": "failureMode",
+   "subject": "duplicate messages",
+   "relation": "causes",
+   "object": "a double charge",
+   "conditions": [
+    {
+     "text": "the handler is not idempotent",
+     "isPositive": true
+    }
+   ],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "If the handler is not idempotent, duplicate messages cause a double charge."
+  },
+  {
+   "key": "profile.requires.measurement",
+   "doc": "db-performance",
+   "page": 10,
+   "role": "explanation",
+   "claimType": "prerequisite",
+   "subject": "useful optimisation",
+   "relation": "requires",
+   "object": "a measurement first",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Useful optimisation requires a measurement first."
+  },
+  {
+   "key": "guessing.failure",
+   "doc": "db-performance",
+   "page": 10,
+   "role": "caution",
+   "claimType": "failureMode",
+   "subject": "optimising without measurement",
+   "relation": "causes",
+   "object": "effort spent off the hot path",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Optimising without measurement causes effort spent off the hot path."
+  },
+  {
+   "key": "p99.def",
+   "doc": "db-performance",
+   "page": 11,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "the p99 latency",
+   "relation": "explains",
+   "object": "the slowest one percent of requests",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "The p99 latency is the slowest one percent of requests."
+  },
+  {
+   "key": "p99.contrast",
+   "doc": "db-performance",
+   "page": 11,
+   "role": "explanation",
+   "claimType": "distinction",
+   "subject": "the p99 latency",
+   "relation": "differs from",
+   "object": "the average latency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "The p99 latency differs from the average latency."
+  },
+  {
+   "key": "pagination.prevents.largepayload",
+   "doc": "db-performance",
+   "page": 12,
+   "role": "explanation",
+   "claimType": "consequence",
+   "subject": "pagination",
+   "relation": "prevents",
+   "object": "a very large payload",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Pagination prevents a very large payload."
+  },
+  {
+   "key": "largepayload.causes.latency",
+   "doc": "db-performance",
+   "page": 12,
+   "role": "caution",
+   "claimType": "cause",
+   "subject": "a very large payload",
+   "relation": "causes",
+   "object": "high total query latency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A very large payload causes high total query latency."
+  },
+  {
+   "key": "connectionpool.enables.reuse",
+   "doc": "db-performance",
+   "page": 13,
+   "role": "explanation",
+   "claimType": "mechanism",
+   "subject": "a connection pool",
+   "relation": "enables",
+   "object": "reuse of open connections",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A connection pool enables reuse of open connections."
+  },
+  {
+   "key": "reuse.enables.latency",
+   "doc": "db-performance",
+   "page": 13,
+   "role": "explanation",
+   "claimType": "mechanism",
+   "subject": "reuse of open connections",
+   "relation": "enables",
+   "object": "lower query latency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Reuse of open connections enables lower query latency."
+  },
+  {
+   "key": "mnemonic.keys",
+   "doc": "mobile-mastery",
+   "page": 12,
+   "role": "mnemonic",
+   "claimType": "definition",
+   "subject": "keys",
+   "relation": "explains",
+   "object": "keep your identity",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Keys keep your identity."
+  },
+  {
+   "key": "interview.retry",
+   "doc": "mobile-mastery",
+   "page": 45,
+   "role": "presentationAdvice",
+   "claimType": "definition",
+   "subject": "you",
+   "relation": "should be",
+   "object": "clear that retries need idempotency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Say that retries need idempotency."
+  },
+  {
+   "key": "footer",
+   "doc": "mobile-mastery",
+   "page": 45,
+   "role": "furniture",
+   "claimType": "definition",
+   "subject": "page",
+   "relation": "is",
+   "object": "45",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Page 45"
+  },
+  {
+   "key": "cache.def.alt",
+   "doc": "http-caching-guide",
+   "page": 2,
+   "role": "compactExplanation",
+   "claimType": "definition",
+   "subject": "caching",
+   "relation": "explains",
+   "object": "reuse of data fetched earlier",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Caching is the reuse of data fetched earlier."
+  },
+  {
+   "key": "retry.enables.success.alt",
+   "doc": "reliability-handbook",
+   "page": 10,
+   "role": "compactExplanation",
+   "claimType": "mechanism",
+   "subject": "retrying",
+   "relation": "enables",
+   "object": "the operation to succeed",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Retrying enables the operation to succeed."
+  },
+  {
+   "key": "index.enables.lookup.alt",
+   "doc": "mobile-mastery",
+   "page": 50,
+   "role": "explanation",
+   "claimType": "mechanism",
+   "subject": "an index",
+   "relation": "enables",
+   "object": "row lookup without a full scan",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An index enables row lookup without a full scan."
+  },
+  {
+   "key": "key.enables.identity.alt",
+   "doc": "react-notes",
+   "page": 3,
+   "role": "compactExplanation",
+   "claimType": "mechanism",
+   "subject": "a stable key",
+   "relation": "enables",
+   "object": "identity matching across renders",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A stable key enables identity matching across renders."
+  },
+  {
+   "key": "cache.stale.contra",
+   "doc": "http-caching-guide",
+   "page": 9,
+   "role": "explanation",
+   "claimType": "consequence",
+   "subject": "caching",
+   "relation": "prevents",
+   "object": "stale data",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "Caching prevents stale data."
+  },
+  {
+   "key": "idempotent.def.alt",
+   "doc": "mobile-mastery",
+   "page": 46,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "an idempotent operation",
+   "relation": "explains",
+   "object": "an operation with the same result when repeated",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "An idempotent operation is one with the same result when repeated."
+  },
+  {
+   "key": "timeout.def.alt",
+   "doc": "mobile-mastery",
+   "page": 47,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "a timeout",
+   "relation": "explains",
+   "object": "an upper bound on waiting",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A timeout is an upper bound on waiting."
+  },
+  {
+   "key": "breaker.def.alt",
+   "doc": "mobile-mastery",
+   "page": 48,
+   "role": "explanation",
+   "claimType": "definition",
+   "subject": "a circuit breaker",
+   "relation": "explains",
+   "object": "a switch that stops calls to a failing dependency",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A circuit breaker is a switch that stops calls to a failing dependency."
+  },
+  {
+   "key": "retry.limit.number.alt",
+   "doc": "mobile-mastery",
+   "page": 49,
+   "role": "explanation",
+   "claimType": "constraint",
+   "subject": "a retry budget",
+   "relation": "must be",
+   "object": "at most 5 attempts",
+   "conditions": [],
+   "qualifiers": [],
+   "isNegated": false,
+   "span": "A retry budget must be at most 5 attempts."
+  }
+ ],
+ "chains": [
+  {
+   "key": "chain.key.state",
+   "start": "a stable key",
+   "labels": [
+    "a stable key",
+    "identity matching across renders",
+    "state preservation during reorder"
+   ]
+  },
+  {
+   "key": "chain.indexkey.bleed",
+   "start": "an index key",
+   "labels": [
+    "an index key",
+    "wrong identity correspondence",
+    "component instance association changes",
+    "state appearing attached to another item"
+   ]
+  },
+  {
+   "key": "chain.cache.throughput",
+   "start": "caching",
+   "labels": [
+    "caching",
+    "lower latency on repeat requests",
+    "higher throughput under load"
+   ]
+  },
+  {
+   "key": "chain.retry.success",
+   "start": "retrying",
+   "labels": [
+    "retrying",
+    "the operation to succeed"
+   ]
+  },
+  {
+   "key": "chain.retry.permanent",
+   "start": "retrying a permanent validation error",
+   "labels": [
+    "retrying a permanent validation error",
+    "the same invalid request",
+    "repeated failure"
+   ]
+  },
+  {
+   "key": "chain.index.latency",
+   "start": "an index",
+   "labels": [
+    "an index",
+    "row lookup without a full scan",
+    "lower query latency"
+   ]
+  },
+  {
+   "key": "chain.nplusone",
+   "start": "an n plus one query",
+   "labels": [
+    "an n plus one query",
+    "one query per row",
+    "high total query latency"
+   ]
+  },
+  {
+   "key": "chain.unbounded.cascade",
+   "start": "an unbounded wait",
+   "labels": [
+    "an unbounded wait",
+    "thread pool exhaustion",
+    "a cascading failure"
+   ]
+  },
+  {
+   "key": "chain.atleastonce",
+   "start": "at least once delivery",
+   "labels": [
+    "at least once delivery",
+    "duplicate messages",
+    "a double charge"
+   ]
+  },
+  {
+   "key": "chain.unstabledeps",
+   "start": "unstable dependencies",
+   "labels": [
+    "unstable dependencies",
+    "recomputation on every render",
+    "dropped frames"
+   ]
+  },
+  {
+   "key": "chain.retrystorm",
+   "start": "retry storms",
+   "labels": [
+    "retry storms",
+    "sustained overload of the dependency"
+   ]
+  },
+  {
+   "key": "chain.idempotent.retry",
+   "start": "an idempotent operation",
+   "labels": [
+    "an idempotent operation",
+    "safe retrying"
+   ]
+  },
+  {
+   "key": "chain.idempotencykey",
+   "start": "an idempotency key",
+   "labels": [
+    "an idempotency key",
+    "duplicate request detection",
+    "a double charge"
+   ]
+  },
+  {
+   "key": "chain.connectionpool",
+   "start": "a connection pool",
+   "labels": [
+    "a connection pool",
+    "reuse of open connections",
+    "lower query latency"
+   ]
+  },
+  {
+   "key": "chain.closure.state",
+   "start": "a closure",
+   "labels": [
+    "a closure",
+    "private state without a class"
+   ]
+  },
+  {
+   "key": "chain.closure.retention",
+   "start": "a closure over a large object",
+   "labels": [
+    "a closure over a large object",
+    "memory retention"
+   ]
+  },
+  {
+   "key": "chain.promise",
+   "start": "a promise",
+   "labels": [
+    "a promise",
+    "sequencing asynchronous work"
+   ]
+  },
+  {
+   "key": "chain.debounce",
+   "start": "debouncing",
+   "labels": [
+    "debouncing",
+    "repeated work on every keystroke"
+   ]
+  },
+  {
+   "key": "chain.ttl.miss",
+   "start": "a short time to live",
+   "labels": [
+    "a short time to live",
+    "more cache misses"
+   ]
+  },
+  {
+   "key": "chain.ttl.stale",
+   "start": "a short time to live",
+   "labels": [
+    "a short time to live",
+    "stale data"
+   ]
+  },
+  {
+   "key": "chain.cache.stale",
+   "start": "caching",
+   "labels": [
+    "caching",
+    "stale data"
+   ]
+  },
+  {
+   "key": "chain.etag",
+   "start": "an `ETag`",
+   "labels": [
+    "an `ETag`",
+    "revalidation without re-sending the body"
+   ]
+  },
+  {
+   "key": "chain.lowselectivity",
+   "start": "an index on a low selectivity column",
+   "labels": [
+    "an index on a low selectivity column",
+    "the planner ignoring the index"
+   ]
+  },
+  {
+   "key": "chain.index.write",
+   "start": "an index",
+   "labels": [
+    "an index",
+    "extra work on every write"
+   ]
+  },
+  {
+   "key": "chain.breaker",
+   "start": "a circuit breaker",
+   "labels": [
+    "a circuit breaker",
+    "a cascading failure"
+   ]
+  },
+  {
+   "key": "chain.timeout",
+   "start": "a timeout",
+   "labels": [
+    "a timeout",
+    "thread pool exhaustion"
+   ]
+  },
+  {
+   "key": "chain.queue.smoothing",
+   "start": "a queue",
+   "labels": [
+    "a queue",
+    "smoothing of bursty load"
+   ]
+  },
+  {
+   "key": "chain.queue.latency",
+   "start": "a queue",
+   "labels": [
+    "a queue",
+    "added end to end latency"
+   ]
+  },
+  {
+   "key": "chain.largepayload",
+   "start": "a very large payload",
+   "labels": [
+    "a very large payload",
+    "high total query latency"
+   ]
+  },
+  {
+   "key": "chain.guessing",
+   "start": "optimising without measurement",
+   "labels": [
+    "optimising without measurement",
+    "effort spent off the hot path"
+   ]
+  },
+  {
+   "key": "chain.503.retry",
+   "start": "503",
+   "labels": [
+    "503",
+    "a retry with backoff"
+   ]
+  },
+  {
+   "key": "chain.memo.recompute",
+   "start": "unstable dependencies",
+   "labels": [
+    "unstable dependencies",
+    "recomputation on every render"
+   ]
+  }
+ ],
+ "learnerCases": [
+  {
+   "key": "para.cache",
+   "concept": "caching",
+   "text": "Caching means reusing data you fetched before.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.key",
+   "concept": "a stable key",
+   "text": "A stable key lets React match an item to its previous instance across renders.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.index",
+   "concept": "an index",
+   "text": "An index enables looking up rows without scanning the whole table.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.idempotent",
+   "concept": "an idempotent operation",
+   "text": "An idempotent operation gives the same result when it is repeated.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.timeout",
+   "concept": "a timeout",
+   "text": "A timeout is an upper bound on how long you wait.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.breaker",
+   "concept": "a circuit breaker",
+   "text": "A circuit breaker stops calls to a failing dependency.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.closure",
+   "concept": "a closure",
+   "text": "A closure is a function plus the scope it captured.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.promise",
+   "concept": "a promise",
+   "text": "A promise enables sequencing asynchronous work.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.debounce",
+   "concept": "debouncing",
+   "text": "Debouncing delays work until the input stops.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.etag",
+   "concept": "an `ETag`",
+   "text": "An `ETag` enables revalidation without re-sending the body.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.queue",
+   "concept": "a queue",
+   "text": "A queue enables smoothing of bursty load.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.pool",
+   "concept": "a connection pool",
+   "text": "A connection pool enables reuse of open connections.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.p99",
+   "concept": "the p99 latency",
+   "text": "The p99 latency is the slowest one percent of requests.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.nplusone",
+   "concept": "an n plus one query",
+   "text": "An n plus one query causes one query per row.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.backoff",
+   "concept": "exponential backoff",
+   "text": "Exponential backoff prevents retry storms.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.dedup",
+   "concept": "duplicate request detection",
+   "text": "Duplicate request detection prevents a double charge.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.memo",
+   "concept": "`useMemo`",
+   "text": "`useMemo` requires stable dependencies.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.rerender",
+   "concept": "a re-render",
+   "text": "A re-render requires a state or prop change.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.batching",
+   "concept": "batching the lookups",
+   "text": "Batching the lookups prevents one query per row.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "para.pagination",
+   "concept": "pagination",
+   "text": "Pagination prevents a very large payload.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "paraphrase of a source claim"
+  },
+  {
+   "key": "contra.retry.reverse",
+   "concept": "retrying",
+   "text": "The operation succeeding causes the retry.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "reversedCauseEffect"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.key.reverse",
+   "concept": "a stable key",
+   "text": "Identity matching across renders enables a stable key.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "reversedCauseEffect"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.cache.negation",
+   "concept": "caching",
+   "text": "Caching does not enable lower latency on repeat requests.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "incorrectNegation"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.index.negation",
+   "concept": "an index",
+   "text": "An index does not enable row lookup without a full scan.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "incorrectNegation"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.timeout.negation",
+   "concept": "a timeout",
+   "text": "A timeout does not prevent thread pool exhaustion.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "incorrectNegation"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.idempotent.dependency",
+   "concept": "safe retrying",
+   "text": "An idempotent operation requires safe retrying.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "reversedCauseEffect"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.memo.dependency",
+   "concept": "`useMemo`",
+   "text": "Stable dependencies require `useMemo`.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "reversedCauseEffect"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.breaker.negation",
+   "concept": "a circuit breaker",
+   "text": "A circuit breaker does not prevent a cascading failure.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "incorrectNegation"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.retrybudget.number",
+   "concept": "a retry budget",
+   "text": "A retry budget must be at most 10 attempts.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "numericalMismatch"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.maxage.number",
+   "concept": "a max-age of 60 seconds",
+   "text": "A max-age of 600 seconds allows one minute of reuse.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "numericalMismatch"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.nplusone.reverse",
+   "concept": "an n plus one query",
+   "text": "One query per row causes an n plus one query.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "reversedCauseEffect"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.exhaustion.reverse",
+   "concept": "thread pool exhaustion",
+   "text": "A cascading failure causes thread pool exhaustion.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "reversedCauseEffect"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.queue.negation",
+   "concept": "a queue",
+   "text": "A queue does not cause added end to end latency.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "incorrectNegation"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.index.write.negation",
+   "concept": "an index",
+   "text": "An index does not cause extra work on every write.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "incorrectNegation"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.closure.reverse",
+   "concept": "a closure",
+   "text": "Private state without a class enables a closure.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "reversedCauseEffect"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.duplicates.reverse",
+   "concept": "at least once delivery",
+   "text": "Duplicate messages cause at least once delivery.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "reversedCauseEffect"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.batching.negation",
+   "concept": "batching the lookups",
+   "text": "Batching the lookups does not prevent one query per row.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "incorrectNegation"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.ttl.negation",
+   "concept": "a short time to live",
+   "text": "A short time to live does not cause more cache misses.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "incorrectNegation"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.pool.reverse",
+   "concept": "a connection pool",
+   "text": "Reuse of open connections enables a connection pool.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "reversedCauseEffect"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "contra.pagination.negation",
+   "concept": "pagination",
+   "text": "Pagination does not prevent a very large payload.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "incorrectNegation"
+   ],
+   "note": "contradicts a source claim"
+  },
+  {
+   "key": "over.retry.every",
+   "concept": "retrying",
+   "text": "You should always retry every failed request.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.retry.all",
+   "concept": "retrying",
+   "text": "Retrying always enables the operation to succeed.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.cache.always",
+   "concept": "caching",
+   "text": "Caching always causes stale data.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.index.every",
+   "concept": "an index",
+   "text": "Every column should have an index.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.composite.any",
+   "concept": "a composite index",
+   "text": "A composite index applies to any query.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.idempotent.all",
+   "concept": "an idempotent operation",
+   "text": "All operations are idempotent.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.duplicates.always",
+   "concept": "duplicate messages",
+   "text": "Duplicate messages always cause a double charge.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.key.always",
+   "concept": "a key",
+   "text": "A key is always unique.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.timeout.every",
+   "concept": "a timeout",
+   "text": "Every wait must have a timeout, always.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.memo.always",
+   "concept": "`useMemo`",
+   "text": "You should always use `useMemo` for every value.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.backoff.always",
+   "concept": "exponential backoff",
+   "text": "Exponential backoff always prevents every outage.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.breaker.every",
+   "concept": "a circuit breaker",
+   "text": "Every dependency always needs a circuit breaker.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.queue.always",
+   "concept": "a queue",
+   "text": "A queue always enables smoothing of bursty load with no cost.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.ttl.always",
+   "concept": "a short time to live",
+   "text": "A short time to live always prevents stale data.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.indexkey.always",
+   "concept": "an index key",
+   "text": "An index key always causes wrong identity correspondence.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.closure.every",
+   "concept": "a closure",
+   "text": "Every closure causes memory retention.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.nplusone.always",
+   "concept": "an n plus one query",
+   "text": "Every query causes one query per row.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.profile.never",
+   "concept": "useful optimisation",
+   "text": "Optimisation never requires a measurement first.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.pagination.always",
+   "concept": "pagination",
+   "text": "Pagination always prevents high total query latency.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "over.503.always",
+   "concept": "503",
+   "text": "Every error code always enables a retry with backoff.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "scopeTooBroad"
+   ],
+   "note": "overgeneralisation of a restricted claim"
+  },
+  {
+   "key": "mix.retry.partial",
+   "concept": "retrying",
+   "text": "Retries fix failed requests.",
+   "expectedVerdict": "partiallySupported",
+   "expectedMisconceptions": [
+    "missingCondition"
+   ],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.cache.partial",
+   "concept": "caching",
+   "text": "Caching causes stale data.",
+   "expectedVerdict": "partiallySupported",
+   "expectedMisconceptions": [
+    "missingCondition"
+   ],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.duplicates.partial",
+   "concept": "duplicate messages",
+   "text": "Duplicate messages cause a double charge.",
+   "expectedVerdict": "partiallySupported",
+   "expectedMisconceptions": [
+    "missingCondition"
+   ],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.indexkey.partial",
+   "concept": "an index key",
+   "text": "An index key causes wrong identity correspondence.",
+   "expectedVerdict": "partiallySupported",
+   "expectedMisconceptions": [
+    "missingCondition"
+   ],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.retry.narrow",
+   "concept": "retrying",
+   "text": "If the request is a GET, retrying enables the operation to succeed.",
+   "expectedVerdict": "partiallySupported",
+   "expectedMisconceptions": [
+    "scopeTooNarrow"
+   ],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.cache.addition",
+   "concept": "caching",
+   "text": "Caching enables lower latency and guarantees correctness forever.",
+   "expectedVerdict": "partiallySupported",
+   "expectedMisconceptions": [
+    "unsupportedAddition"
+   ],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.index.addition",
+   "concept": "an index",
+   "text": "An index enables row lookup and rewrites the query planner.",
+   "expectedVerdict": "partiallySupported",
+   "expectedMisconceptions": [
+    "unsupportedAddition"
+   ],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.unknown.topic",
+   "concept": "caching",
+   "text": "Kubernetes pods schedule onto nodes by affinity.",
+   "expectedVerdict": "notAddressed",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.unknown.topic2",
+   "concept": "retrying",
+   "text": "Rust borrows have lifetimes.",
+   "expectedVerdict": "notAddressed",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.identifier",
+   "concept": "`useMemo`",
+   "text": "`useCallback` requires stable dependencies.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "identifierMismatch"
+   ],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.status",
+   "concept": "503",
+   "text": "504 means a temporarily unavailable dependency.",
+   "expectedVerdict": "contradicted",
+   "expectedMisconceptions": [
+    "identifierMismatch"
+   ],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.key.supported",
+   "concept": "a stable key",
+   "text": "A stable key enables identity matching across renders.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.state.supported",
+   "concept": "state preservation during reorder",
+   "text": "State preservation during reorder requires identity matching across renders.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.breaker.supported",
+   "concept": "a circuit breaker",
+   "text": "A circuit breaker requires a health signal.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.closure.supported",
+   "concept": "a closure over a large object",
+   "text": "A closure over a large object causes memory retention.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.await.supported",
+   "concept": "`await`",
+   "text": "`await` requires an async function.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.tradeoff.supported",
+   "concept": "caching",
+   "text": "Caching trades off freshness against latency.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.index.tradeoff",
+   "concept": "an index",
+   "text": "An index trades off read speed against write cost.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.selectivity.supported",
+   "concept": "a useful index",
+   "text": "A useful index requires a selective column.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.storm.supported",
+   "concept": "retry storms",
+   "text": "Retry storms cause sustained overload of the dependency.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.exhaustion.supported",
+   "concept": "an unbounded wait",
+   "text": "An unbounded wait causes thread pool exhaustion.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.cascade.supported",
+   "concept": "thread pool exhaustion",
+   "text": "Thread pool exhaustion causes a cascading failure.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.memo.recompute",
+   "concept": "unstable dependencies",
+   "text": "Unstable dependencies cause recomputation on every render.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.jank.supported",
+   "concept": "recomputation on every render",
+   "text": "Recomputation on every render causes dropped frames.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.lookup.supported",
+   "concept": "row lookup without a full scan",
+   "text": "Row lookup without a full scan enables lower query latency.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.throughput.supported",
+   "concept": "lower latency on repeat requests",
+   "text": "Lower latency on repeat requests enables higher throughput under load.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.atleastonce.supported",
+   "concept": "at least once delivery",
+   "text": "At least once delivery requires an idempotent operation.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.reuse.supported",
+   "concept": "reuse of open connections",
+   "text": "Reuse of open connections enables lower query latency.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.guessing.supported",
+   "concept": "optimising without measurement",
+   "text": "Optimising without measurement causes effort spent off the hot path.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  },
+  {
+   "key": "mix.largepayload.supported",
+   "concept": "a very large payload",
+   "text": "A very large payload causes high total query latency.",
+   "expectedVerdict": "supported",
+   "expectedMisconceptions": [],
+   "note": "mixed learner explanation"
+  }
+ ],
+ "crossSourceCandidates": [
+  {
+   "key": "cross.cache.def",
+   "first": "cache.def",
+   "second": "cache.def.alt",
+   "expected": "samePrincipleAs"
+  },
+  {
+   "key": "cross.retry.success",
+   "first": "retry.enables.success",
+   "second": "retry.enables.success.alt",
+   "expected": "refines"
+  },
+  {
+   "key": "cross.index.lookup",
+   "first": "index.enables.lookup",
+   "second": "index.enables.lookup.alt",
+   "expected": "samePrincipleAs"
+  },
+  {
+   "key": "cross.key.identity",
+   "first": "key.enables.identity",
+   "second": "key.enables.identity.alt",
+   "expected": "samePrincipleAs"
+  },
+  {
+   "key": "cross.idempotent.def",
+   "first": "idempotent.def",
+   "second": "idempotent.def.alt",
+   "expected": "samePrincipleAs"
+  },
+  {
+   "key": "cross.timeout.def",
+   "first": "timeout.def",
+   "second": "timeout.def.alt",
+   "expected": "samePrincipleAs"
+  },
+  {
+   "key": "cross.breaker.def",
+   "first": "breaker.def",
+   "second": "breaker.def.alt",
+   "expected": "samePrincipleAs"
+  },
+  {
+   "key": "cross.memo.caching",
+   "first": "memo.sameprinciple",
+   "second": "memoization.sameprinciple",
+   "expected": "samePrincipleAs"
+  },
+  {
+   "key": "cross.retrybudget",
+   "first": "retry.limit.number",
+   "second": "retry.limit.number.alt",
+   "expected": "numericConflict"
+  },
+  {
+   "key": "cross.cache.stale",
+   "first": "cache.failure.stale",
+   "second": "cache.stale.contra",
+   "expected": "directionConflict"
+  },
+  {
+   "key": "cross.retry.idempotency",
+   "first": "retry.requires.idempotency",
+   "second": "idempotent.def.alt",
+   "expected": "sharedConcept"
+  },
+  {
+   "key": "cross.atleastonce.idempotency",
+   "first": "atleastonce.requires.idempotency",
+   "second": "idempotent.def.alt",
+   "expected": "sharedConcept"
+  },
+  {
+   "key": "cross.timeout.exhaustion",
+   "first": "timeout.prevents.threadexhaustion",
+   "second": "timeout.def.alt",
+   "expected": "sharedConcept"
+  },
+  {
+   "key": "cross.latency.db.cache",
+   "first": "cache.enables.latency",
+   "second": "lookup.enables.latency",
+   "expected": "sharedConcept"
+  },
+  {
+   "key": "cross.identity.react",
+   "first": "identity.requires.key",
+   "second": "key.enables.identity",
+   "expected": "inverse"
+  },
+  {
+   "key": "cross.reconciliation",
+   "first": "reconciliation.requires.identity",
+   "second": "identity.enables.state",
+   "expected": "sharedConcept"
+  },
+  {
+   "key": "cross.ttl.stale",
+   "first": "ttl.prevents.stale",
+   "second": "cache.failure.stale",
+   "expected": "sharedConcept"
+  },
+  {
+   "key": "cross.backoff.storm",
+   "first": "backoff.prevents.overload",
+   "second": "retry.permanent.failure",
+   "expected": "sharedConcept"
+  },
+  {
+   "key": "cross.breaker.cascade",
+   "first": "breaker.prevents.cascade",
+   "second": "breaker.def.alt",
+   "expected": "sharedConcept"
+  },
+  {
+   "key": "cross.pool.cache",
+   "first": "connectionpool.enables.reuse",
+   "second": "cache.def",
+   "expected": "sharedConcept"
+  }
+ ]
+}

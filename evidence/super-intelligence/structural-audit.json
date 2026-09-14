@@ -1,0 +1,23 @@
+{
+ "corpus": {
+  "atoms": 109,
+  "documents": 5,
+  "edges": 97,
+  "nodes": 135,
+  "chains": 32,
+  "crossSourceCandidates": 20,
+  "learnerCases": 90,
+  "paraphrases": 20,
+  "contradictions": 20,
+  "overgeneralisations": 20
+ },
+ "package": {
+  "sourceFiles": 27,
+  "testFiles": 11,
+  "sourceLines": 5247,
+  "testLines": 797,
+  "declaredTypes": 93
+ },
+ "failures": [],
+ "warnings": []
+}
