@@ -1579,11 +1579,11 @@
    "claimType": "constraint",
    "subject": "a retry budget",
    "relation": "must be",
-   "object": "at most 5 attempts",
+   "object": "exactly 5 attempts",
    "conditions": [],
    "qualifiers": [],
    "isNegated": false,
-   "span": "A retry budget must be at most 5 attempts."
+   "span": "A retry budget must be exactly 5 attempts."
   }
  ],
  "chains": [

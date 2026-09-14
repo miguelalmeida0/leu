@@ -83,6 +83,12 @@ public struct ReasoningCore {
 
     // MARK: - The interactions this engine is meant to support
 
+    /// Canonical PDFKit bridge entry point. Uses bounded factual packets and
+    /// strict field/provenance admission; no proposal provider is required.
+    public func build(documents: [CanonicalDocument], sampledPages: [Int]) -> CertifiedReasoningIndex {
+        CertifiedReasoningIndex(documents: documents, sampledPages: sampledPages)
+    }
+
     public func why(_ subject: String, in graph: KnowledgeGraph) -> MechanismAnswer {
         MechanismEngine().answer(.why(subject), in: graph)
     }

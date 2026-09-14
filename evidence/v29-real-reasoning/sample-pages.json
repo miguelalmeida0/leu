@@ -1,0 +1,282 @@
+[
+  {
+    "atoms" : "2",
+    "page" : "8",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "HTTP"
+  },
+  {
+    "atoms" : "3",
+    "page" : "16",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "HTTP methods"
+  },
+  {
+    "atoms" : "2",
+    "page" : "24",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "JSON"
+  },
+  {
+    "atoms" : "2",
+    "page" : "32",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Cache hit"
+  },
+  {
+    "atoms" : "2",
+    "page" : "41",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Stateful system"
+  },
+  {
+    "atoms" : "2",
+    "page" : "49",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Refresh token"
+  },
+  {
+    "atoms" : "2",
+    "page" : "58",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Relational database"
+  },
+  {
+    "atoms" : "2",
+    "page" : "65",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Race condition"
+  },
+  {
+    "atoms" : "2",
+    "page" : "74",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Webhook"
+  },
+  {
+    "atoms" : "2",
+    "page" : "83",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "try / catch"
+  },
+  {
+    "atoms" : "3",
+    "page" : "91",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Immutability"
+  },
+  {
+    "atoms" : "2",
+    "page" : "99",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Array.reduce"
+  },
+  {
+    "atoms" : "2",
+    "page" : "108",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Props"
+  },
+  {
+    "atoms" : "2",
+    "page" : "116",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Effect cleanup"
+  },
+  {
+    "atoms" : "2",
+    "page" : "124",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "React.memo"
+  },
+  {
+    "atoms" : "2",
+    "page" : "133",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Tree shaking"
+  },
+  {
+    "atoms" : "2",
+    "page" : "141",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Client-side routing"
+  },
+  {
+    "atoms" : "2",
+    "page" : "149",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Event bubbling"
+  },
+  {
+    "atoms" : "3",
+    "page" : "158",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Message queue"
+  },
+  {
+    "atoms" : "2",
+    "page" : "166",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Unit test"
+  },
+  {
+    "atoms" : "2",
+    "page" : "173",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Docker"
+  },
+  {
+    "atoms" : "1",
+    "page" : "181",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Latency"
+  },
+  {
+    "atoms" : "2",
+    "page" : "190",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Queue"
+  },
+  {
+    "atoms" : "2",
+    "page" : "198",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "KISS"
+  },
+  {
+    "atoms" : "3",
+    "page" : "207",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Type guard"
+  },
+  {
+    "atoms" : "2",
+    "page" : "215",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Utility types"
+  },
+  {
+    "atoms" : "2",
+    "page" : "224",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Lifting state up"
+  },
+  {
+    "atoms" : "2",
+    "page" : "232",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Headless component"
+  },
+  {
+    "atoms" : "2",
+    "page" : "240",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "State machine"
+  },
+  {
+    "atoms" : "2",
+    "page" : "249",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Module"
+  },
+  {
+    "atoms" : "2",
+    "page" : "257",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Single Responsibility Principle"
+  },
+  {
+    "atoms" : "2",
+    "page" : "266",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Denormalization"
+  },
+  {
+    "atoms" : "1",
+    "page" : "274",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Deadlock"
+  },
+  {
+    "atoms" : "1",
+    "page" : "282",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Write-through cache"
+  },
+  {
+    "atoms" : "2",
+    "page" : "290",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Distributed cache"
+  },
+  {
+    "atoms" : "1",
+    "page" : "299",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Tokenizer"
+  },
+  {
+    "atoms" : "3",
+    "page" : "307",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Grounding"
+  },
+  {
+    "atoms" : "1",
+    "page" : "315",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Inference"
+  },
+  {
+    "atoms" : "2",
+    "page" : "324",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "Contract test"
+  },
+  {
+    "atoms" : "2",
+    "page" : "332",
+    "pdfSHA256" : "55fdadd218b92373dbacf9e32651586fcbec57953631603fabf9185511a4a0a6",
+    "sampling" : "rounded evenly spaced indices over all IN ONE BREATH concept cards",
+    "title" : "SLO / error budget"
+  }
+]

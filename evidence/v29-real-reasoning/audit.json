@@ -1,0 +1,17 @@
+{
+  "counterfactualScenarios" : 15,
+  "crossDocumentRelations" : 10,
+  "definitionSubstitutions" : 11,
+  "inventedConsequences" : 0,
+  "learnerCases" : 32,
+  "learnerFailures" : 0,
+  "manufacturedContrasts" : 0,
+  "mechanismAnswers" : 25,
+  "multiStepAnswers" : 7,
+  "sampleAtoms" : 80,
+  "samplePagesWithAtoms" : 40,
+  "sourceRelations" : 306,
+  "synthesisCases" : 15,
+  "unsupportedBridges" : 0,
+  "unsupportedSynthesis" : 0
+}

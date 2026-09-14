@@ -93,6 +93,9 @@ public enum InferenceRule: String, Codable, CaseIterable, Sendable {
     case conditionPropagation
     case sharedSubjectRefinement
     case crossSourceEquivalence
+    case definitionSubstitution
+    case definitionContext
+    case supportWithdrawal
     case none
 }
 
@@ -148,7 +151,7 @@ public struct Provenance: Codable, Equatable, Hashable, Sendable {
     /// Provenance is complete when it can be traced back to at least one real
     /// document span, and every inferred artifact names its parents.
     public var isComplete: Bool {
-        guard !spans.isEmpty else { return false }
+        guard !spans.isEmpty, spans.allSatisfy({ !$0.documentID.isEmpty && $0.page > 0 && !$0.canonicalSpan.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }) else { return false }
         if admissibility == .inferredValidated {
             return !derivedFrom.isEmpty && rule != .none
         }

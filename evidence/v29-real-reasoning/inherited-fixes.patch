@@ -1,0 +1,286 @@
+diff --git a/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Atoms/RelationLexicon.swift b/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Atoms/RelationLexicon.swift
+index 0569a4a..a91041d 100644
+--- a/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Atoms/RelationLexicon.swift
++++ b/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Atoms/RelationLexicon.swift
+@@ -23,9 +23,34 @@ public enum RelationLexicon {
+     }
+ 
+     /// Ordered longest-first at lookup time so that "is required by" wins over
+-    /// "is" and "depends on" wins over "depends".
+-    public static let cues: [Cue] = [
+-        // Enablement
++    /// "is" and "depends on" wins over "depends". `baseFormVariants` appends
++    /// the bare-verb conjugation of every single-word cue here, so the hand
++    /// authored list only needs the third-person-singular spelling.
++    public static let cues: [Cue] = cuesBase + baseFormVariants
++
++    /// Third-person-singular verb cues ("enables", "prevents") only match a
++    /// singular subject. A plural or "you"-subject sentence, or the bare verb
++    /// under "does not" negation ("does not enable"), uses the base form
++    /// instead — the same claim, different conjugation. Deriving that form
++    /// here (rather than hand-listing both spellings above) keeps the
++    /// authored list free of duplication and guarantees the two forms always
++    /// carry the same relation kind.
++    private static var baseFormVariants: [Cue] {
++        var seen = Set(cuesBase.map(\.phrase))
++        var derived: [Cue] = []
++        for cue in cuesBase {
++            guard !cue.phrase.contains(" "), cue.phrase.hasSuffix("s"), cue.phrase.count > 4 else { continue }
++            let base = String(cue.phrase.dropLast())
++            guard base.count >= 4, !seen.contains(base) else { continue }
++            seen.insert(base)
++            derived.append(Cue(base, cue.kind, cue.claimType, inverts: cue.inverts))
++        }
++        return derived
++    }
++
++    /// The hand-authored cues, kept separate from `cues` so `baseFormVariants`
++    /// can derive from them without recursing into its own output.
++    private static let cuesBase: [Cue] = [
+         Cue("makes it possible for", .enables, .mechanism),
+         Cue("makes it possible to", .enables, .mechanism),
+         Cue("allows for", .enables, .mechanism),
+diff --git a/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Atoms/TextScanning.swift b/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Atoms/TextScanning.swift
+index 715917b..d97e342 100644
+--- a/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Atoms/TextScanning.swift
++++ b/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Atoms/TextScanning.swift
+@@ -58,11 +58,18 @@ public enum TextScanning {
+ 
+     /// Content tokens: normalised, stop-worded and stemmed. Used wherever two
+     /// phrasings must match without requiring identical vocabulary.
++    ///
++    /// The trailing length filter drops leftover single letters (stray
++    /// fragments of stemming or punctuation splitting), but a single-digit
++    /// number is real content, not noise — "3 attempts" and "5 attempts"
++    /// must not collapse into the same token set, or every comparison built
++    /// on this function (equivalence, clustering, overlap scoring) goes
++    /// blind to the one thing that actually distinguishes them.
+     public static func contentTokens(_ text: String) -> [String] {
+         normalizedTokens(text)
+             .filter { !stopWords.contains($0) }
+             .map { SourceRoleClassifier.stem($0) }
+-            .filter { $0.count > 1 }
++            .filter { $0.count > 1 || $0.allSatisfy(\.isNumber) }
+     }
+ 
+     public static let stopWords: Set<String> = [
+diff --git a/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Learner/ExplanationAligner.swift b/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Learner/ExplanationAligner.swift
+index 1141114..73270c7 100644
+--- a/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Learner/ExplanationAligner.swift
++++ b/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Learner/ExplanationAligner.swift
+@@ -46,9 +46,14 @@ public struct ExplanationAlignmentReport: Codable, Equatable, Sendable {
+     }
+ 
+     public var verdict: AlignmentVerdict {
++        if alignments.isEmpty { return .notAddressed }
+         if alignments.contains(where: { $0.verdict == .contradicted }) { return .contradicted }
++        // An explanation whose every proposition missed the sources entirely
++        // has not been addressed — it must never be reported as partial
++        // credit, which would tell the learner they were partly right about
++        // something the sources never even cover.
++        if alignments.allSatisfy({ $0.verdict == .notAddressed }) { return .notAddressed }
+         if alignments.contains(where: { $0.verdict == .partiallySupported }) { return .partiallySupported }
+-        if alignments.isEmpty { return .notAddressed }
+         if alignments.allSatisfy({ $0.verdict == .supported }) { return .supported }
+         if alignments.contains(where: { $0.verdict == .ambiguous }) { return .ambiguous }
+         return .partiallySupported
+@@ -143,7 +148,12 @@ public struct ExplanationAligner: Sendable {
+                                     atom: atom,
+                                     detail: "learner has \(proposition.subject) → \(proposition.object); source has \(atom.subject) → \(atom.object)",
+                                     feedback: "Your source runs the other way: \(atom.subject) \(atom.relation) \(atom.object), not the reverse."))
+-        } else if !proposition.isUnparsed, proposition.isNegated != atom.isNegated {
++        } else if proposition.isNegated != atom.isNegated {
++            // Polarity is a property of the whole clause, not of the
++            // subject/object split, so this check applies even when the
++            // proposition never found a relation cue (e.g. "does not enable"
++            // uses the bare verb "enable", which is unparsed) — an unparsed
++            // negation is still a real, checkable negation.
+             findings.append(finding(.incorrectNegation,
+                                     proposition: proposition,
+                                     atom: atom,
+@@ -154,7 +164,13 @@ public struct ExplanationAligner: Sendable {
+         } else if !proposition.isUnparsed,
+                   let propositionKind = RelationKind(rawValue: proposition.relation),
+                   let atomKind = RelationKind(rawValue: atom.relation),
+-                  family(propositionKind) != family(atomKind) {
++                  family(propositionKind) != family(atomKind),
++                  family(atomKind) != .definition {
++            // A definition atom states what something *is*; a learner
++            // paraphrasing it with an active verb ("stops calls to a failing
++            // dependency" for a circuit breaker's definition) is not
++            // asserting a competing mechanism, so a relation-family mismatch
++            // against a definition is not grounds for "wrong dependency".
+             findings.append(finding(.wrongDependency,
+                                     proposition: proposition,
+                                     atom: atom,
+@@ -178,14 +194,28 @@ public struct ExplanationAligner: Sendable {
+         }
+ 
+         // Over- and under-generalisation.
+-        let restricting = restrictions(of: atom)
+-        if proposition.quantifier == .universal, !restricting.isEmpty {
+-            findings.append(finding(.scopeTooBroad,
+-                                    proposition: proposition,
+-                                    atom: atom,
+-                                    detail: "learner states it universally; source restricts it to \(restricting.joined(separator: ", "))",
+-                                    feedback: "Careful — your source does not state this for every case: it holds \(restricting.joined(separator: ", "))."))
+-        } else if let missing = missingCondition(proposition, atom) {
++        var raisedScopeTooBroad = false
++        if proposition.quantifier == .universal {
++            var restricting = restrictions(of: atom, in: graph)
++            if let dropped = droppedObjectSpecificity(proposition, atom) { restricting.append(dropped) }
++            if let dropped = droppedSubjectSpecificity(proposition, atom) { restricting.append(dropped) }
++            if let cost = knownCost(of: atom, in: graph) {
++                findings.append(finding(.scopeTooBroad,
++                                        proposition: proposition,
++                                        atom: atom,
++                                        detail: "learner states an unconditional benefit; source also states \(cost.relation) \(cost.object)",
++                                        feedback: "Careful — your source also documents a cost here: \(cost.statement)."))
++                raisedScopeTooBroad = true
++            } else if !restricting.isEmpty {
++                findings.append(finding(.scopeTooBroad,
++                                        proposition: proposition,
++                                        atom: atom,
++                                        detail: "learner states it universally; source restricts it to \(restricting.joined(separator: ", "))",
++                                        feedback: "Careful — your source does not state this for every case: it holds \(restricting.joined(separator: ", "))."))
++                raisedScopeTooBroad = true
++            }
++        }
++        if !raisedScopeTooBroad, let missing = missingCondition(proposition, atom) {
+             findings.append(finding(.missingCondition,
+                                     proposition: proposition,
+                                     atom: atom,
+@@ -232,8 +262,16 @@ public struct ExplanationAligner: Sendable {
+ 
+     func score(_ proposition: LearnerProposition, against atom: KnowledgeAtom) -> Double {
+         if proposition.isUnparsed {
+-            let combined = "\(atom.subject) \(atom.object)"
+-            return 0.85 * TextScanning.overlap(proposition.text, combined)
++            // No relation cue means subject/object were never split out, so
++            // score by how much of the atom's subject and object show up
++            // anywhere in the learner's text. Coverage (not symmetric
++            // overlap) so filler words in the learner's own phrasing
++            // ("you should", "let's say") don't dilute a real match — the
++            // same 0.55/0.45 subject-led weighting as the parsed case keeps
++            // the two formulas comparable.
++            let subjectCoverage = TextScanning.coverage(of: atom.subject, in: proposition.text)
++            let objectCoverage = TextScanning.coverage(of: atom.object, in: proposition.text)
++            return 0.55 * subjectCoverage + 0.45 * objectCoverage
+         }
+         let subject = TextScanning.overlap(proposition.subject, atom.subject)
+         let object = TextScanning.overlap(proposition.object, atom.object)
+@@ -279,14 +317,78 @@ public struct ExplanationAligner: Sendable {
+         return backward >= 0.6 && backward > forward + 0.2
+     }
+ 
+-    /// Everything the source uses to narrow the claim.
+-    func restrictions(of atom: KnowledgeAtom) -> [String] {
++    /// Everything the source uses to narrow the claim: conditions and scope
++    /// qualifiers carried directly on the atom, plus prerequisites the source
++    /// states as a *separate* claim about the same subject ("an idempotent
++    /// operation enables safe retrying" restricts "retrying" just as much as
++    /// an inline condition would, even though it lives on its own atom).
++    func restrictions(of atom: KnowledgeAtom, in graph: KnowledgeGraph) -> [String] {
+         var values = atom.conditions.map { $0.isPositive ? "when \($0.text)" : "unless \($0.text)" }
+         values.append(contentsOf: atom.qualifiers.filter { $0.kind == .scope }.map { "for \($0.text)" })
+         values.append(contentsOf: atom.qualifiers.filter { $0.kind == .frequency && $0.text != "always" }.map { "\($0.text)" })
++        for other in graph.atoms
++        where other.id != atom.id
++            && [RelationKind.requires, .prerequisiteOf].contains(RelationKind(rawValue: other.relation))
++            && sameTopic(other.subject, atom.subject) {
++            values.append("given \(other.object)")
++        }
+         return values
+     }
+ 
++    /// Whether two phrases are about the same thing even when one carries an
++    /// extra modifier the other doesn't ("an index" / "a useful index"):
++    /// asymmetric, so a short phrase fully contained in a longer one still
++    /// counts, which a plain Jaccard overlap would underscore.
++    func sameTopic(_ lhs: String, _ rhs: String) -> Bool {
++        max(TextScanning.coverage(of: lhs, in: rhs), TextScanning.coverage(of: rhs, in: lhs)) >= 0.6
++    }
++
++    /// A universal claim that also drops part of the source's own predicate
++    /// text is broadened twice over — not just to "every case" but past what
++    /// the predicate itself said ("A key is always unique" for a source that
++    /// says "unique among siblings"). Only checked under a universal
++    /// quantifier: ordinary paraphrases are allowed to compress the object
++    /// freely, since that is what `matchFloor`/`supportCeiling` already
++    /// govern.
++    func droppedObjectSpecificity(_ proposition: LearnerProposition, _ atom: KnowledgeAtom) -> String? {
++        guard !proposition.isUnparsed, !atom.object.isEmpty else { return nil }
++        let atomTokens = Set(TextScanning.contentTokens(atom.object))
++        guard atomTokens.count >= 2 else { return nil }
++        let coverage = TextScanning.coverage(of: atom.object, in: proposition.object)
++        guard coverage < 0.6 else { return nil }
++        return atom.object
++    }
++
++    /// The mirror of `droppedObjectSpecificity` on the subject side: the
++    /// source's claim is about a specific instance ("an n plus one query",
++    /// "503") and the learner generalised past it ("every query", "every
++    /// error code"). Same universal-quantifier-only scope, same reasoning.
++    func droppedSubjectSpecificity(_ proposition: LearnerProposition, _ atom: KnowledgeAtom) -> String? {
++        guard !proposition.isUnparsed, !atom.subject.isEmpty else { return nil }
++        let atomTokens = Set(TextScanning.contentTokens(atom.subject))
++        guard atomTokens.count >= 2 else { return nil }
++        let coverage = TextScanning.coverage(of: atom.subject, in: proposition.subject)
++        guard coverage < 0.6 else { return nil }
++        return atom.subject
++    }
++
++    /// A source that documents both a benefit (enables/prevents/supports) and
++    /// a cost (causes something else) for the same subject has already told
++    /// the learner this is a trade-off. Restating the benefit as universal
++    /// and unconditional ("always enables X, with no cost") contradicts that
++    /// documented cost, even though nothing on the benefit atom itself is
++    /// conditioned.
++    func knownCost(of atom: KnowledgeAtom, in graph: KnowledgeGraph) -> KnowledgeAtom? {
++        guard let atomKind = RelationKind(rawValue: atom.relation),
++              [RelationFamily.enablement, .prevention].contains(family(atomKind)) else { return nil }
++        return graph.atoms.first { other in
++            other.id != atom.id
++                && RelationKind(rawValue: other.relation) == .causes
++                && sameTopic(other.subject, atom.subject)
++                && TextScanning.overlap(other.object, atom.object) < 0.3
++        }
++    }
++
+     func missingCondition(_ proposition: LearnerProposition, _ atom: KnowledgeAtom) -> String? {
+         for condition in atom.conditions {
+             let covered = TextScanning.coverage(of: condition.text, in: proposition.text) >= 0.5
+diff --git a/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Provenance/SourceRole.swift b/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Provenance/SourceRole.swift
+index ec15827..3dadc9b 100644
+--- a/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Provenance/SourceRole.swift
++++ b/Packages/LeuReasoningCore/Sources/LeuReasoningCore/Provenance/SourceRole.swift
+@@ -302,6 +302,16 @@ public struct SourceRoleClassifier: Sendable {
+     }
+ 
+     static func stem(_ word: String) -> String {
++        // "-ies" plurals/verb forms of a consonant + y root ("retries",
++        // "studies") restore the "y" rather than dropping the whole suffix, so
++        // they land on the same stem as the "-ing" form of the same verb
++        // ("retrying", "studying") instead of diverging ("retr" vs "retry").
++        if word.hasSuffix("ies"), word.count > 4 {
++            let base = String(word.dropLast(3))
++            if let last = base.last, !"aeiou".contains(last) {
++                return base + "y"
++            }
++        }
+         var value = word
+         for suffix in ["ing", "ies", "es", "s", "ed"] where value.count > suffix.count + 2 && value.hasSuffix(suffix) {
+             value = String(value.dropLast(suffix.count))
+diff --git a/evidence/super-intelligence/structural-audit.json b/evidence/super-intelligence/structural-audit.json
+index e224e5b..8452663 100644
+--- a/evidence/super-intelligence/structural-audit.json
++++ b/evidence/super-intelligence/structural-audit.json
+@@ -14,7 +14,7 @@
+  "package": {
+   "sourceFiles": 27,
+   "testFiles": 11,
+-  "sourceLines": 5247,
++  "sourceLines": 5395,
+   "testLines": 797,
+   "declaredTypes": 93
+  },

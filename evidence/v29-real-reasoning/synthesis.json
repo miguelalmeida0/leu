@@ -1,0 +1,3345 @@
+[
+  {
+    "bridge" : {
+      "conditions" : [
+
+      ],
+      "id" : {
+        "rawValue" : "rel.3dd38a8f441aa885"
+      },
+      "kind" : "explains",
+      "object" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.bb282a07e5571af4"
+          }
+        }
+      },
+      "provenance" : {
+        "admissibility" : "inferredValidated",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+          {
+            "rawValue" : "atom.56d8eb6fcf4bd1c7"
+          },
+          {
+            "rawValue" : "atom.bb282a07e5571af4"
+          }
+        ],
+        "rule" : "definitionContext",
+        "spans" : [
+          {
+            "canonicalSpan" : "A faster storage layer that keeps reusable results so\nexpensive work can be avoided.",
+            "characterOffset" : 75,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Cache",
+            "characterOffset" : 48,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "structure"
+          },
+          {
+            "canonicalSpan" : "A cache avoids repeating work, but introduces a\nsecond representation that can become stale.",
+            "characterOffset" : 41,
+            "documentID" : "System Design",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "subject" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.56d8eb6fcf4bd1c7"
+          }
+        }
+      },
+      "supportingAtoms" : [
+        {
+          "rawValue" : "atom.56d8eb6fcf4bd1c7"
+        },
+        {
+          "rawValue" : "atom.bb282a07e5571af4"
+        }
+      ]
+    },
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "cache"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.56d8eb6fcf4bd1c7"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "A faster storage layer that keeps reusable results so expensive work can be avoided",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A faster storage layer that keeps reusable results so\nexpensive work can be avoided.",
+            "characterOffset" : 75,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Cache",
+            "characterOffset" : 48,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+        {
+          "kind" : "modality",
+          "text" : "can"
+        }
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "Cache"
+    },
+    "kind" : "definitionContext",
+    "openQuestions" : [
+
+    ],
+    "second" : {
+      "claimType" : "mechanism",
+      "concepts" : [
+        "cache"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.bb282a07e5571af4"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "repeating work",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A cache avoids repeating work, but introduces a\nsecond representation that can become stale.",
+            "characterOffset" : 41,
+            "documentID" : "System Design",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+        {
+          "kind" : "modality",
+          "text" : "can"
+        }
+      ],
+      "relation" : "prevents",
+      "sourceIntegrity" : "normalized",
+      "subject" : "A cache"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.56d8eb6fcf4bd1c7"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A faster storage layer that keeps reusable results so\nexpensive work can be avoided.",
+              "characterOffset" : 75,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 31,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Cache",
+              "characterOffset" : 48,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 31,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "A faster storage layer that keeps reusable results so expensive work can be avoided."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.bb282a07e5571af4"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A cache avoids repeating work, but introduces a\nsecond representation that can become stale.",
+              "characterOffset" : 41,
+              "documentID" : "System Design",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 3,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "A cache avoids repeating work, but introduces a second representation that can become stale."
+      }
+    ]
+  },
+  {
+    "bridge" : {
+      "conditions" : [
+
+      ],
+      "id" : {
+        "rawValue" : "rel.687cce57b9e28322"
+      },
+      "kind" : "explains",
+      "object" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.3977794371f02e96"
+          }
+        }
+      },
+      "provenance" : {
+        "admissibility" : "inferredValidated",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+          {
+            "rawValue" : "atom.56d8eb6fcf4bd1c7"
+          },
+          {
+            "rawValue" : "atom.3977794371f02e96"
+          }
+        ],
+        "rule" : "definitionContext",
+        "spans" : [
+          {
+            "canonicalSpan" : "A faster storage layer that keeps reusable results so\nexpensive work can be avoided.",
+            "characterOffset" : 75,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Cache",
+            "characterOffset" : 48,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "structure"
+          },
+          {
+            "canonicalSpan" : "A cache avoids repeating work, but introduces a\nsecond representation that can become stale.",
+            "characterOffset" : 41,
+            "documentID" : "System Design",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "subject" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.56d8eb6fcf4bd1c7"
+          }
+        }
+      },
+      "supportingAtoms" : [
+        {
+          "rawValue" : "atom.56d8eb6fcf4bd1c7"
+        },
+        {
+          "rawValue" : "atom.3977794371f02e96"
+        }
+      ]
+    },
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "cache"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.56d8eb6fcf4bd1c7"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "A faster storage layer that keeps reusable results so expensive work can be avoided",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A faster storage layer that keeps reusable results so\nexpensive work can be avoided.",
+            "characterOffset" : 75,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Cache",
+            "characterOffset" : 48,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+        {
+          "kind" : "modality",
+          "text" : "can"
+        }
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "Cache"
+    },
+    "kind" : "definitionContext",
+    "openQuestions" : [
+
+    ],
+    "second" : {
+      "claimType" : "consequence",
+      "concepts" : [
+        "cache"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.3977794371f02e96"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "a second representation that can become stale",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A cache avoids repeating work, but introduces a\nsecond representation that can become stale.",
+            "characterOffset" : 41,
+            "documentID" : "System Design",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+        {
+          "kind" : "modality",
+          "text" : "can"
+        }
+      ],
+      "relation" : "introduces",
+      "sourceIntegrity" : "normalized",
+      "subject" : "A cache"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.56d8eb6fcf4bd1c7"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A faster storage layer that keeps reusable results so\nexpensive work can be avoided.",
+              "characterOffset" : 75,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 31,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Cache",
+              "characterOffset" : 48,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 31,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "A faster storage layer that keeps reusable results so expensive work can be avoided."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.3977794371f02e96"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A cache avoids repeating work, but introduces a\nsecond representation that can become stale.",
+              "characterOffset" : 41,
+              "documentID" : "System Design",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 3,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "A cache avoids repeating work, but introduces a second representation that can become stale."
+      }
+    ]
+  },
+  {
+    "bridge" : {
+      "conditions" : [
+
+      ],
+      "id" : {
+        "rawValue" : "rel.28cfc60eb1737ea0"
+      },
+      "kind" : "explains",
+      "object" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.0698591b5c757206"
+          }
+        }
+      },
+      "provenance" : {
+        "admissibility" : "inferredValidated",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+          {
+            "rawValue" : "atom.56d8eb6fcf4bd1c7"
+          },
+          {
+            "rawValue" : "atom.0698591b5c757206"
+          }
+        ],
+        "rule" : "definitionContext",
+        "spans" : [
+          {
+            "canonicalSpan" : "A faster storage layer that keeps reusable results so\nexpensive work can be avoided.",
+            "characterOffset" : 75,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Cache",
+            "characterOffset" : 48,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "structure"
+          },
+          {
+            "canonicalSpan" : "Original documents and\nprivate annotations are not disposable caches.",
+            "characterOffset" : 304,
+            "documentID" : "System Design",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "subject" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.56d8eb6fcf4bd1c7"
+          }
+        }
+      },
+      "supportingAtoms" : [
+        {
+          "rawValue" : "atom.56d8eb6fcf4bd1c7"
+        },
+        {
+          "rawValue" : "atom.0698591b5c757206"
+        }
+      ]
+    },
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "cache"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.56d8eb6fcf4bd1c7"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "A faster storage layer that keeps reusable results so expensive work can be avoided",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A faster storage layer that keeps reusable results so\nexpensive work can be avoided.",
+            "characterOffset" : 75,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Cache",
+            "characterOffset" : 48,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 31,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+        {
+          "kind" : "modality",
+          "text" : "can"
+        }
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "Cache"
+    },
+    "kind" : "definitionContext",
+    "openQuestions" : [
+
+    ],
+    "second" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "original-document-private-annotation"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.0698591b5c757206"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : true,
+      "numbers" : [
+
+      ],
+      "object" : "not disposable caches",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "Original documents and\nprivate annotations are not disposable caches.",
+            "characterOffset" : 304,
+            "documentID" : "System Design",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "normalized",
+      "subject" : "Original documents and private annotations"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.56d8eb6fcf4bd1c7"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A faster storage layer that keeps reusable results so\nexpensive work can be avoided.",
+              "characterOffset" : 75,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 31,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Cache",
+              "characterOffset" : 48,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 31,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "A faster storage layer that keeps reusable results so expensive work can be avoided."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.0698591b5c757206"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "Original documents and\nprivate annotations are not disposable caches.",
+              "characterOffset" : 304,
+              "documentID" : "System Design",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 3,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "Original documents and private annotations are not disposable caches."
+      }
+    ]
+  },
+  {
+    "bridge" : {
+      "conditions" : [
+
+      ],
+      "id" : {
+        "rawValue" : "rel.719a547a2ac3e7d7"
+      },
+      "kind" : "explains",
+      "object" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.173f909e3bb92189"
+          }
+        }
+      },
+      "provenance" : {
+        "admissibility" : "inferredValidated",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+          {
+            "rawValue" : "atom.0d83ff0a7c0db165"
+          },
+          {
+            "rawValue" : "atom.173f909e3bb92189"
+          }
+        ],
+        "rule" : "definitionContext",
+        "spans" : [
+          {
+            "canonicalSpan" : "A system for persistently storing, querying, and\nupdating application data.",
+            "characterOffset" : 73,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 57,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Database",
+            "characterOffset" : 43,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 57,
+            "sourceRole" : "structure"
+          },
+          {
+            "canonicalSpan" : "Passing a database object through every screen makes\nboundaries difficult to change.",
+            "characterOffset" : 216,
+            "documentID" : "System Design",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 2,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "subject" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.0d83ff0a7c0db165"
+          }
+        }
+      },
+      "supportingAtoms" : [
+        {
+          "rawValue" : "atom.0d83ff0a7c0db165"
+        },
+        {
+          "rawValue" : "atom.173f909e3bb92189"
+        }
+      ]
+    },
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "database"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.0d83ff0a7c0db165"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "A system for persistently storing, querying, and updating application data",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A system for persistently storing, querying, and\nupdating application data.",
+            "characterOffset" : 73,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 57,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Database",
+            "characterOffset" : 43,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 57,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "Database"
+    },
+    "kind" : "definitionContext",
+    "openQuestions" : [
+
+    ],
+    "second" : {
+      "claimType" : "mechanism",
+      "concepts" : [
+        "pass-database-object-through"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.173f909e3bb92189"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "boundaries difficult to change",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "Passing a database object through every screen makes\nboundaries difficult to change.",
+            "characterOffset" : 216,
+            "documentID" : "System Design",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 2,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "makes",
+      "sourceIntegrity" : "normalized",
+      "subject" : "Passing a database object through every screen"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.0d83ff0a7c0db165"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A system for persistently storing, querying, and\nupdating application data.",
+              "characterOffset" : 73,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 57,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Database",
+              "characterOffset" : 43,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 57,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "A system for persistently storing, querying, and updating application data."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.173f909e3bb92189"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "Passing a database object through every screen makes\nboundaries difficult to change.",
+              "characterOffset" : 216,
+              "documentID" : "System Design",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 2,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "Passing a database object through every screen makes boundaries difficult to change."
+      }
+    ]
+  },
+  {
+    "bridge" : {
+      "conditions" : [
+
+      ],
+      "id" : {
+        "rawValue" : "rel.1560c93b213b966b"
+      },
+      "kind" : "explains",
+      "object" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.2bd1ac368d474db9"
+          }
+        }
+      },
+      "provenance" : {
+        "admissibility" : "inferredValidated",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+          {
+            "rawValue" : "atom.855909bc4628a29c"
+          },
+          {
+            "rawValue" : "atom.2bd1ac368d474db9"
+          }
+        ],
+        "rule" : "definitionContext",
+        "spans" : [
+          {
+            "canonicalSpan" : "A function plus access to the lexical variables from\nthe scope where it was created.",
+            "characterOffset" : 81,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 84,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Closure",
+            "characterOffset" : 52,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 84,
+            "sourceRole" : "structure"
+          },
+          {
+            "canonicalSpan" : "A closure is a function together with access to its\nsurrounding lexical environment.",
+            "characterOffset" : 42,
+            "documentID" : "JavaScript Deep Dive",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "subject" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.855909bc4628a29c"
+          }
+        }
+      },
+      "supportingAtoms" : [
+        {
+          "rawValue" : "atom.855909bc4628a29c"
+        },
+        {
+          "rawValue" : "atom.2bd1ac368d474db9"
+        }
+      ]
+    },
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "closure"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.855909bc4628a29c"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "A function plus access to the lexical variables from the scope where it was created",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A function plus access to the lexical variables from\nthe scope where it was created.",
+            "characterOffset" : 81,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 84,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Closure",
+            "characterOffset" : 52,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 84,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "Closure"
+    },
+    "kind" : "definitionContext",
+    "openQuestions" : [
+
+    ],
+    "second" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "closure"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.2bd1ac368d474db9"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "a function together with access to its surrounding lexical environment",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A closure is a function together with access to its\nsurrounding lexical environment.",
+            "characterOffset" : 42,
+            "documentID" : "JavaScript Deep Dive",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "normalized",
+      "subject" : "A closure"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.855909bc4628a29c"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A function plus access to the lexical variables from\nthe scope where it was created.",
+              "characterOffset" : 81,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 84,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Closure",
+              "characterOffset" : 52,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 84,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "A function plus access to the lexical variables from the scope where it was created."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.2bd1ac368d474db9"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A closure is a function together with access to its\nsurrounding lexical environment.",
+              "characterOffset" : 42,
+              "documentID" : "JavaScript Deep Dive",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 3,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "A closure is a function together with access to its surrounding lexical environment."
+      }
+    ]
+  },
+  {
+    "bridge" : {
+      "conditions" : [
+
+      ],
+      "id" : {
+        "rawValue" : "rel.48487b945a0b5267"
+      },
+      "kind" : "explains",
+      "object" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.286e9b9953c468ea"
+          }
+        }
+      },
+      "provenance" : {
+        "admissibility" : "inferredValidated",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+          {
+            "rawValue" : "atom.c628bf12611c0bdf"
+          },
+          {
+            "rawValue" : "atom.286e9b9953c468ea"
+          }
+        ],
+        "rule" : "definitionContext",
+        "spans" : [
+          {
+            "canonicalSpan" : "A reusable unit that describes UI from props, state,\nand context.",
+            "characterOffset" : 92,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 107,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "React component",
+            "characterOffset" : 55,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 107,
+            "sourceRole" : "structure"
+          },
+          {
+            "canonicalSpan" : "A component describes the interface for a particular\nset of props, state and context.",
+            "characterOffset" : 57,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 1,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "subject" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.c628bf12611c0bdf"
+          }
+        }
+      },
+      "supportingAtoms" : [
+        {
+          "rawValue" : "atom.c628bf12611c0bdf"
+        },
+        {
+          "rawValue" : "atom.286e9b9953c468ea"
+        }
+      ]
+    },
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "react-component"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.c628bf12611c0bdf"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "A reusable unit that describes UI from props, state, and context",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A reusable unit that describes UI from props, state,\nand context.",
+            "characterOffset" : 92,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 107,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "React component",
+            "characterOffset" : 55,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 107,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "React component"
+    },
+    "kind" : "definitionContext",
+    "openQuestions" : [
+
+    ],
+    "second" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "component"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.286e9b9953c468ea"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "the interface for a particular set of props, state and context",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A component describes the interface for a particular\nset of props, state and context.",
+            "characterOffset" : 57,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 1,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "normalized",
+      "subject" : "A component"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.c628bf12611c0bdf"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A reusable unit that describes UI from props, state,\nand context.",
+              "characterOffset" : 92,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 107,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "React component",
+              "characterOffset" : 55,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 107,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "A reusable unit that describes UI from props, state, and context."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.286e9b9953c468ea"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A component describes the interface for a particular\nset of props, state and context.",
+              "characterOffset" : 57,
+              "documentID" : "React Notes",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 1,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "A component describes the interface for a particular set of props, state and context."
+      }
+    ]
+  },
+  {
+    "bridge" : {
+      "conditions" : [
+
+      ],
+      "id" : {
+        "rawValue" : "rel.30bcadb334ade9be"
+      },
+      "kind" : "explains",
+      "object" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.286e9b9953c468ea"
+          }
+        }
+      },
+      "provenance" : {
+        "admissibility" : "inferredValidated",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+          {
+            "rawValue" : "atom.168b86145e9522e5"
+          },
+          {
+            "rawValue" : "atom.286e9b9953c468ea"
+          }
+        ],
+        "rule" : "definitionContext",
+        "spans" : [
+          {
+            "canonicalSpan" : "Inputs passed from a parent component to a child.",
+            "characterOffset" : 82,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 108,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Props",
+            "characterOffset" : 55,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 108,
+            "sourceRole" : "structure"
+          },
+          {
+            "canonicalSpan" : "A component describes the interface for a particular\nset of props, state and context.",
+            "characterOffset" : 57,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 1,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "subject" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.168b86145e9522e5"
+          }
+        }
+      },
+      "supportingAtoms" : [
+        {
+          "rawValue" : "atom.168b86145e9522e5"
+        },
+        {
+          "rawValue" : "atom.286e9b9953c468ea"
+        }
+      ]
+    },
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "prop"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.168b86145e9522e5"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "Inputs passed from a parent component to a child",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "Inputs passed from a parent component to a child.",
+            "characterOffset" : 82,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 108,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "Props",
+            "characterOffset" : 55,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 108,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "Props"
+    },
+    "kind" : "definitionContext",
+    "openQuestions" : [
+
+    ],
+    "second" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "component"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.286e9b9953c468ea"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "the interface for a particular set of props, state and context",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A component describes the interface for a particular\nset of props, state and context.",
+            "characterOffset" : 57,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 1,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "normalized",
+      "subject" : "A component"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.168b86145e9522e5"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "Inputs passed from a parent component to a child.",
+              "characterOffset" : 82,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 108,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Props",
+              "characterOffset" : 55,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 108,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "Inputs passed from a parent component to a child."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.286e9b9953c468ea"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A component describes the interface for a particular\nset of props, state and context.",
+              "characterOffset" : 57,
+              "documentID" : "React Notes",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 1,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "A component describes the interface for a particular set of props, state and context."
+      }
+    ]
+  },
+  {
+    "bridge" : {
+      "conditions" : [
+
+      ],
+      "id" : {
+        "rawValue" : "rel.79cc4b3ca50d3e89"
+      },
+      "kind" : "explains",
+      "object" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.b07e7b4fd9902480"
+          }
+        }
+      },
+      "provenance" : {
+        "admissibility" : "inferredValidated",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+          {
+            "rawValue" : "atom.26fabed90c72c66e"
+          },
+          {
+            "rawValue" : "atom.b07e7b4fd9902480"
+          }
+        ],
+        "rule" : "definitionContext",
+        "spans" : [
+          {
+            "canonicalSpan" : "A stable identity hint for items among siblings in a\nrendered list.",
+            "characterOffset" : 86,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "React key",
+            "characterOffset" : 55,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "structure"
+          },
+          {
+            "canonicalSpan" : "A stable key helps React match an item to its previous\ninstance within a list of siblings.",
+            "characterOffset" : 42,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "subject" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.26fabed90c72c66e"
+          }
+        }
+      },
+      "supportingAtoms" : [
+        {
+          "rawValue" : "atom.26fabed90c72c66e"
+        },
+        {
+          "rawValue" : "atom.b07e7b4fd9902480"
+        }
+      ]
+    },
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "react-key"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.26fabed90c72c66e"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "A stable identity hint for items among siblings in a rendered list",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A stable identity hint for items among siblings in a\nrendered list.",
+            "characterOffset" : 86,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "React key",
+            "characterOffset" : 55,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "React key"
+    },
+    "kind" : "definitionContext",
+    "openQuestions" : [
+
+    ],
+    "second" : {
+      "claimType" : "mechanism",
+      "concepts" : [
+        "stable-key"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.b07e7b4fd9902480"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "React match an item to its previous instance within a list of siblings",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A stable key helps React match an item to its previous\ninstance within a list of siblings.",
+            "characterOffset" : 42,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "supports",
+      "sourceIntegrity" : "normalized",
+      "subject" : "A stable key"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.26fabed90c72c66e"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A stable identity hint for items among siblings in a\nrendered list.",
+              "characterOffset" : 86,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 114,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "React key",
+              "characterOffset" : 55,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 114,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "A stable identity hint for items among siblings in a rendered list."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.b07e7b4fd9902480"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A stable key helps React match an item to its previous\ninstance within a list of siblings.",
+              "characterOffset" : 42,
+              "documentID" : "React Notes",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 3,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "A stable key helps React match an item to its previous instance within a list of siblings."
+      }
+    ]
+  },
+  {
+    "bridge" : {
+      "conditions" : [
+
+      ],
+      "id" : {
+        "rawValue" : "rel.f7a25b3febc2dd31"
+      },
+      "kind" : "explains",
+      "object" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.d4cc7671599f8f3b"
+          }
+        }
+      },
+      "provenance" : {
+        "admissibility" : "inferredValidated",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+          {
+            "rawValue" : "atom.26fabed90c72c66e"
+          },
+          {
+            "rawValue" : "atom.d4cc7671599f8f3b"
+          }
+        ],
+        "rule" : "definitionContext",
+        "spans" : [
+          {
+            "canonicalSpan" : "A stable identity hint for items among siblings in a\nrendered list.",
+            "characterOffset" : 86,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "React key",
+            "characterOffset" : 55,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "structure"
+          },
+          {
+            "canonicalSpan" : "An array index can be a poor key when items move,\nare inserted or removed.",
+            "characterOffset" : 263,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "subject" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.26fabed90c72c66e"
+          }
+        }
+      },
+      "supportingAtoms" : [
+        {
+          "rawValue" : "atom.26fabed90c72c66e"
+        },
+        {
+          "rawValue" : "atom.d4cc7671599f8f3b"
+        }
+      ]
+    },
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "react-key"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.26fabed90c72c66e"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "A stable identity hint for items among siblings in a rendered list",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A stable identity hint for items among siblings in a\nrendered list.",
+            "characterOffset" : 86,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "React key",
+            "characterOffset" : 55,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "React key"
+    },
+    "kind" : "definitionContext",
+    "openQuestions" : [
+
+    ],
+    "second" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "array-index"
+      ],
+      "conditions" : [
+        {
+          "concepts" : [
+            "item-move-insert-remov"
+          ],
+          "isPositive" : true,
+          "text" : "items move, are inserted or removed"
+        }
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.d4cc7671599f8f3b"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "a poor key",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "An array index can be a poor key when items move,\nare inserted or removed.",
+            "characterOffset" : 263,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+        {
+          "kind" : "modality",
+          "text" : "can"
+        }
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "normalized",
+      "subject" : "An array index"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.26fabed90c72c66e"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A stable identity hint for items among siblings in a\nrendered list.",
+              "characterOffset" : 86,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 114,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "React key",
+              "characterOffset" : 55,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 114,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "A stable identity hint for items among siblings in a rendered list."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.d4cc7671599f8f3b"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "An array index can be a poor key when items move,\nare inserted or removed.",
+              "characterOffset" : 263,
+              "documentID" : "React Notes",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 3,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "An array index can be a poor key when items move, are inserted or removed."
+      }
+    ]
+  },
+  {
+    "bridge" : {
+      "conditions" : [
+
+      ],
+      "id" : {
+        "rawValue" : "rel.125fe062effa6efd"
+      },
+      "kind" : "explains",
+      "object" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.bf208fa9d0760bbf"
+          }
+        }
+      },
+      "provenance" : {
+        "admissibility" : "inferredValidated",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+          {
+            "rawValue" : "atom.26fabed90c72c66e"
+          },
+          {
+            "rawValue" : "atom.bf208fa9d0760bbf"
+          }
+        ],
+        "rule" : "definitionContext",
+        "spans" : [
+          {
+            "canonicalSpan" : "A stable identity hint for items among siblings in a\nrendered list.",
+            "characterOffset" : 86,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "React key",
+            "characterOffset" : 55,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "structure"
+          },
+          {
+            "canonicalSpan" : "A freshly generated random\nkey also destroys continuity between renders.",
+            "characterOffset" : 338,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "subject" : {
+        "atom" : {
+          "_0" : {
+            "rawValue" : "atom.26fabed90c72c66e"
+          }
+        }
+      },
+      "supportingAtoms" : [
+        {
+          "rawValue" : "atom.26fabed90c72c66e"
+        },
+        {
+          "rawValue" : "atom.bf208fa9d0760bbf"
+        }
+      ]
+    },
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "react-key"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.26fabed90c72c66e"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "A stable identity hint for items among siblings in a rendered list",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A stable identity hint for items among siblings in a\nrendered list.",
+            "characterOffset" : 86,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "React key",
+            "characterOffset" : 55,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 114,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "React key"
+    },
+    "kind" : "definitionContext",
+    "openQuestions" : [
+
+    ],
+    "second" : {
+      "claimType" : "failureMode",
+      "concepts" : [
+        "freshly-generat-random-key"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.bf208fa9d0760bbf"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "continuity between renders",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "A freshly generated random\nkey also destroys continuity between renders.",
+            "characterOffset" : 338,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "destroys",
+      "sourceIntegrity" : "normalized",
+      "subject" : "A freshly generated random key"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.26fabed90c72c66e"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A stable identity hint for items among siblings in a\nrendered list.",
+              "characterOffset" : 86,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 114,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "React key",
+              "characterOffset" : 55,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 114,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "A stable identity hint for items among siblings in a rendered list."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.bf208fa9d0760bbf"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "A freshly generated random\nkey also destroys continuity between renders.",
+              "characterOffset" : 338,
+              "documentID" : "React Notes",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 3,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "A freshly generated random key also destroys continuity between renders."
+      }
+    ]
+  },
+  {
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "http"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.7be2a4d5990fda25"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "The request-response protocol used by browsers, apps, and servers to exchange web data",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "The request-response protocol used by browsers,\napps, and servers to exchange web data.",
+            "characterOffset" : 74,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 8,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "HTTP",
+            "characterOffset" : 48,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 8,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "HTTP"
+    },
+    "kind" : "unresolved",
+    "openQuestions" : [
+      "These sources do not establish equivalence, contradiction or a bridge between the claims."
+    ],
+    "second" : {
+      "claimType" : "mechanism",
+      "concepts" : [
+        "shelf"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.c64e278f5364f84d"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "them separate from the original PDF",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "Shelf keeps them\nseparate from the original PDF.",
+            "characterOffset" : 501,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 4,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "keeps",
+      "sourceIntegrity" : "normalized",
+      "subject" : "Shelf"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.7be2a4d5990fda25"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "The request-response protocol used by browsers,\napps, and servers to exchange web data.",
+              "characterOffset" : 74,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 8,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "HTTP",
+              "characterOffset" : 48,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 8,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "The request-response protocol used by browsers, apps, and servers to exchange web data."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.c64e278f5364f84d"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "Shelf keeps them\nseparate from the original PDF.",
+              "characterOffset" : 501,
+              "documentID" : "React Notes",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 4,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "Shelf keeps them separate from the original PDF."
+      }
+    ]
+  },
+  {
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "http"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.b68931aaf72ce808"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "the basic language behind APIs, pages, images, and most web traffic",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "It is the basic\nlanguage behind APIs, pages, images, and most web\ntraffic.",
+            "characterOffset" : 162,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 8,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "HTTP",
+            "characterOffset" : 48,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 8,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "HTTP"
+    },
+    "kind" : "unresolved",
+    "openQuestions" : [
+      "These sources do not establish equivalence, contradiction or a bridge between the claims."
+    ],
+    "second" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "array-index"
+      ],
+      "conditions" : [
+        {
+          "concepts" : [
+            "item-move-insert-remov"
+          ],
+          "isPositive" : true,
+          "text" : "items move, are inserted or removed"
+        }
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.d4cc7671599f8f3b"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "a poor key",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "An array index can be a poor key when items move,\nare inserted or removed.",
+            "characterOffset" : 263,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+        {
+          "kind" : "modality",
+          "text" : "can"
+        }
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "normalized",
+      "subject" : "An array index"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.b68931aaf72ce808"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It is the basic\nlanguage behind APIs, pages, images, and most web\ntraffic.",
+              "characterOffset" : 162,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 8,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "HTTP",
+              "characterOffset" : 48,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 8,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "It is the basic language behind APIs, pages, images, and most web traffic."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.d4cc7671599f8f3b"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "An array index can be a poor key when items move,\nare inserted or removed.",
+              "characterOffset" : 263,
+              "documentID" : "React Notes",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 3,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "An array index can be a poor key when items move, are inserted or removed."
+      }
+    ]
+  },
+  {
+    "first" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "http-method"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.cdc7302fe50e8f11"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "Standard verbs that express what operation a request intends to perform",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "Standard verbs that express what operation a request\nintends to perform.",
+            "characterOffset" : 82,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 16,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "HTTP methods",
+            "characterOffset" : 48,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 16,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "HTTP methods"
+    },
+    "kind" : "unresolved",
+    "openQuestions" : [
+      "These sources do not establish equivalence, contradiction or a bridge between the claims."
+    ],
+    "second" : {
+      "claimType" : "mechanism",
+      "concepts" : [
+        "sett-state"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.dade0e8289157427"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "another render",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "Setting state requests another render.",
+            "characterOffset" : 39,
+            "documentID" : "React Notes",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 2,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "requests",
+      "sourceIntegrity" : "normalized",
+      "subject" : "Setting state"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.cdc7302fe50e8f11"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "Standard verbs that express what operation a request\nintends to perform.",
+              "characterOffset" : 82,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 16,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "HTTP methods",
+              "characterOffset" : 48,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 16,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "Standard verbs that express what operation a request intends to perform."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.dade0e8289157427"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "Setting state requests another render.",
+              "characterOffset" : 39,
+              "documentID" : "React Notes",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 2,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "Setting state requests another render."
+      }
+    ]
+  },
+  {
+    "first" : {
+      "claimType" : "mechanism",
+      "concepts" : [
+        "http-method"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.a6d3aab29d1f828a"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "API contracts predictable",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "They make API contracts\npredictable and communicate semantics to clients,\ncaches, and infrastructure.",
+            "characterOffset" : 155,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 16,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "HTTP methods",
+            "characterOffset" : 48,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 16,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "makes",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "HTTP methods"
+    },
+    "kind" : "unresolved",
+    "openQuestions" : [
+      "These sources do not establish equivalence, contradiction or a bridge between the claims."
+    ],
+    "second" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "unchang-object"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.e14165fcf6fe82e6"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "reused here",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "Unchanged objects are reused here.",
+            "characterOffset" : 268,
+            "documentID" : "JavaScript Deep Dive",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 4,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "normalized",
+      "subject" : "Unchanged objects"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.a6d3aab29d1f828a"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "They make API contracts\npredictable and communicate semantics to clients,\ncaches, and infrastructure.",
+              "characterOffset" : 155,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 16,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "HTTP methods",
+              "characterOffset" : 48,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 16,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "They make API contracts predictable and communicate semantics to clients, caches, and infrastructure."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.e14165fcf6fe82e6"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "Unchanged objects are reused here.",
+              "characterOffset" : 268,
+              "documentID" : "JavaScript Deep Dive",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 4,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "Unchanged objects are reused here."
+      }
+    ]
+  },
+  {
+    "first" : {
+      "claimType" : "mechanism",
+      "concepts" : [
+        "http-method"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.3bd70ea85349d34a"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "semantics to clients, caches, and infrastructure",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "They make API contracts\npredictable and communicate semantics to clients,\ncaches, and infrastructure.",
+            "characterOffset" : 155,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 16,
+            "sourceRole" : "compactExplanation"
+          },
+          {
+            "canonicalSpan" : "HTTP methods",
+            "characterOffset" : 48,
+            "documentID" : "javascript_midlevel_interview_mobile_mastery",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 16,
+            "sourceRole" : "structure"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "communicates",
+      "sourceIntegrity" : "reconstructed",
+      "subject" : "HTTP methods"
+    },
+    "kind" : "unresolved",
+    "openQuestions" : [
+      "These sources do not establish equivalence, contradiction or a bridge between the claims."
+    ],
+    "second" : {
+      "claimType" : "definition",
+      "concepts" : [
+        "pdf-thumbnail"
+      ],
+      "conditions" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "id" : {
+        "rawValue" : "atom.fdfee0a574aaa91b"
+      },
+      "identifiers" : [
+
+      ],
+      "isNegated" : false,
+      "numbers" : [
+
+      ],
+      "object" : "derived data",
+      "provenance" : {
+        "admissibility" : "sourceSupported",
+        "confidenceInParsing" : 1,
+        "derivedFrom" : [
+
+        ],
+        "rule" : "none",
+        "spans" : [
+          {
+            "canonicalSpan" : "PDF thumbnails are derived data.",
+            "characterOffset" : 231,
+            "documentID" : "System Design",
+            "extractionVersion" : "leu.pdf-packet.1",
+            "page" : 3,
+            "sourceRole" : "explanation"
+          }
+        ]
+      },
+      "qualifiers" : [
+
+      ],
+      "relation" : "explains",
+      "sourceIntegrity" : "normalized",
+      "subject" : "PDF thumbnails"
+    },
+    "statements" : [
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.3bd70ea85349d34a"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "They make API contracts\npredictable and communicate semantics to clients,\ncaches, and infrastructure.",
+              "characterOffset" : 155,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 16,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "HTTP methods",
+              "characterOffset" : 48,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 16,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "text" : "They make API contracts predictable and communicate semantics to clients, caches, and infrastructure."
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "atomIDs" : [
+          {
+            "rawValue" : "atom.fdfee0a574aaa91b"
+          }
+        ],
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "PDF thumbnails are derived data.",
+              "characterOffset" : 231,
+              "documentID" : "System Design",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 3,
+              "sourceRole" : "explanation"
+            }
+          ]
+        },
+        "text" : "PDF thumbnails are derived data."
+      }
+    ]
+  }
+]

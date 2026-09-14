@@ -116,6 +116,13 @@ public struct CounterfactualEngine: Sendable {
                                         unansweredReason: "No source in this library describes \"\(change.focusText)\".")
         }
 
+        if case .propertyLost(_, let property) = change,
+           !Set(TextScanning.normalizedTokens(property)).isSubset(of: Set(TextScanning.normalizedTokens(focus.label))) {
+            return CounterfactualResult(change: change, focusLabel: focus.label, consequences: [], invalidatedRelations: [],
+                                        openQuestions: ["The source does not establish that the named property licenses these relationships."],
+                                        unansweredReason: "Unbound property: \(property)")
+        }
+
         var invalidated: [StableID] = []
         var consequences: [CounterfactualConsequence] = []
         var openQuestions: [String] = []
@@ -129,16 +136,19 @@ public struct CounterfactualEngine: Sendable {
             guard current.depth < maxDepth else { continue }
             // Forward: things this enables/causes lose their stated support.
             let forward = graph.outgoing(from: current.node)
-                .filter { $0.kind == .enables || $0.kind == .causes || $0.kind == .supports || $0.kind == .prevents }
+                .filter { [.enables, .causes, .supports, .prevents, .reduces, .increases, .creates, .makes,
+                           .keeps, .gives, .separates, .decouples, .replaces, .catches, .derives, .balances,
+                           .trades, .updates, .smooths, .communicates, .computes, .centralizes, .improves,
+                           .prerequisiteOf].contains($0.kind) }
                 .sorted { $0.id.rawValue < $1.id.rawValue }
             // Backward: things that require this break outright.
             let backward = graph.incoming(to: current.node)
-                .filter { $0.kind == .requires || $0.kind == .prerequisiteOf }
+                .filter { $0.kind == .requires }
                 .sorted { $0.id.rawValue < $1.id.rawValue }
 
             for relation in forward + backward {
                 let isRequirement = relation.kind == .requires || relation.kind == .prerequisiteOf
-                let nextID = isRequirement ? relation.subject.id : relation.object.id
+                let nextID = relation.kind == .requires ? relation.subject.id : relation.object.id
                 guard !seen.contains(nextID.rawValue), let next = graph.node(nextID) else { continue }
                 seen.insert(nextID.rawValue)
                 invalidated.append(relation.id)
@@ -151,18 +161,13 @@ public struct CounterfactualEngine: Sendable {
                 let links = current.chainLinks + [link]
                 let chainProvenance = Provenance.inferred(from: links.map(\.provenance),
                                                           ids: links.compactMap(\.viaRelation),
-                                                          rule: .contrapositiveOfRequirement)
+                                                          rule: isRequirement ? .contrapositiveOfRequirement : .supportWithdrawal)
                 let chain = CausalChain(links: links,
                                         admissibility: .inferredValidated,
                                         provenance: chainProvenance)
-                let alternativeSupport = hasAlternativeSupport(for: nextID, excluding: relation, in: graph)
                 let polarity: ConsequencePolarity
-                if alternativeSupport {
-                    polarity = .supportWeakenedButHolds
-                } else if isRequirement {
+                if isRequirement && relation.conditions.isEmpty && relation.qualifiers.isEmpty {
                     polarity = .noLongerHolds
-                } else if relation.kind == .prevents {
-                    polarity = .failureFollows
                 } else {
                     polarity = .ruleNoLongerApplies
                 }
@@ -177,16 +182,22 @@ public struct CounterfactualEngine: Sendable {
                                                               admissibility: .inferredValidated,
                                                               provenance: chainProvenance,
                                                               justification: justification))
-                frontier.append((nextID, links, current.depth + 1))
+                // Losing a sufficient cause, enabler or prevention is not proof
+                // that its outcome is false (or that a failure will occur).
+                // Only an unmet, unconditional necessary prerequisite propagates.
+                if polarity == .noLongerHolds { frontier.append((nextID, links, current.depth + 1)) }
             }
         }
 
         if consequences.isEmpty {
             openQuestions.append("Your sources describe \"\(focus.label)\" but never say what depends on it, so Leu cannot say what changes.")
         } else if let deepest = consequences.map({ $0.viaChain.length }).max(), deepest >= maxDepth {
-            openQuestions.append("The chain reaches Leu's depth limit at \(maxDepth) steps; anything beyond that is not stated in your sources.")
+            openQuestions.append("Traversal reaches the configured limit of \(maxDepth) steps; further edges were not evaluated.")
         }
 
+        if consequences.contains(where: { $0.polarity == .ruleNoLongerApplies }) {
+            openQuestions.append("The source does not establish what happens instead when this support is removed.")
+        }
         return CounterfactualResult(change: change,
                                     focusLabel: focus.label,
                                     consequences: consequences.sorted { $0.viaChain.length < $1.viaChain.length },
@@ -204,8 +215,8 @@ public struct CounterfactualEngine: Sendable {
         var openQuestions: [String] = []
 
         for relation in graph.relations.sorted(by: { $0.id.rawValue < $1.id.rawValue }) {
-            let matching = relation.conditions.filter { TextScanning.overlap($0.text, condition) >= 0.5 }
-            let scoped = relation.qualifiers.filter { $0.kind == .scope && TextScanning.overlap($0.text, condition) >= 0.5 }
+            let matching = relation.conditions.filter { $0.isPositive && SemanticIdentity.phrase($0.text) == SemanticIdentity.phrase(condition) }
+            let scoped = relation.qualifiers.filter { $0.kind == .scope && SemanticIdentity.phrase($0.text) == SemanticIdentity.phrase(condition) }
             guard !matching.isEmpty || !scoped.isEmpty else { continue }
             guard let subject = graph.node(relation.subject.id), let object = graph.node(relation.object.id) else { continue }
             invalidated.append(relation.id)

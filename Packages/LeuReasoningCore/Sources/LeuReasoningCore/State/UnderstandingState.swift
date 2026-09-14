@@ -7,6 +7,8 @@ public enum LearningEvent: Codable, Equatable, Sendable {
     case askedQuestion(text: String, concept: String?, at: Date)
     case savedQuestion(questionID: String, concept: String?, at: Date)
     case attemptedExplanation(concept: String, text: String, verdict: AlignmentVerdict, at: Date)
+    /// Recorded only after the learner explicitly submits an explanation.
+    case evaluatedExplanation(concept: String, text: String, alignment: ExplanationAlignmentReport, at: Date)
     case openedPrerequisite(concept: String, at: Date)
     case openedRelatedSource(documentID: String, concept: String?, at: Date)
     case changedExplanation(concept: String, previous: String, updated: String, at: Date)
@@ -17,7 +19,7 @@ public enum LearningEvent: Codable, Equatable, Sendable {
         case .requestedExplanation(_, let at), .askedQuestion(_, _, let at), .savedQuestion(_, _, let at),
              .attemptedExplanation(_, _, _, let at), .openedPrerequisite(_, let at),
              .openedRelatedSource(_, _, let at), .changedExplanation(_, _, _, let at),
-             .markedResolved(_, let at):
+             .markedResolved(_, let at), .evaluatedExplanation(_, _, _, let at):
             return at
         }
     }
@@ -26,7 +28,7 @@ public enum LearningEvent: Codable, Equatable, Sendable {
         switch self {
         case .requestedExplanation(let concept, _), .attemptedExplanation(let concept, _, _, _),
              .openedPrerequisite(let concept, _), .changedExplanation(let concept, _, _, _),
-             .markedResolved(let concept, _):
+             .markedResolved(let concept, _), .evaluatedExplanation(let concept, _, _, _):
             return concept
         case .askedQuestion(_, let concept, _), .savedQuestion(_, let concept, _),
              .openedRelatedSource(_, let concept, _):
@@ -55,13 +57,17 @@ public struct ExplanationAttempt: Codable, Equatable, Sendable {
     public var at: Date
     /// Set when the learner later edited this explanation.
     public var revisedTo: String?
+    /// Optional for compatibility with existing archives. Keeps the supported,
+    /// missing and contradicted propositions, not an inferred mastery score.
+    public var alignment: ExplanationAlignmentReport?
 
-    public init(concept: String, text: String, verdict: AlignmentVerdict, at: Date, revisedTo: String? = nil) {
+    public init(concept: String, text: String, verdict: AlignmentVerdict, at: Date, revisedTo: String? = nil, alignment: ExplanationAlignmentReport? = nil) {
         self.concept = concept
         self.text = text
         self.verdict = verdict
         self.at = at
         self.revisedTo = revisedTo
+        self.alignment = alignment
     }
 }
 
@@ -135,6 +141,8 @@ public struct UnderstandingStateProjector: Sendable {
                 }
             case .attemptedExplanation(let concept, let text, let verdict, let at):
                 state.attemptedExplanations.append(ExplanationAttempt(concept: concept, text: text, verdict: verdict, at: at))
+            case .evaluatedExplanation(let concept, let text, let alignment, let at):
+                state.attemptedExplanations.append(ExplanationAttempt(concept: concept, text: text, verdict: alignment.verdict, at: at, alignment: alignment))
             case .changedExplanation(let concept, let previous, let updated, let at):
                 if let index = state.attemptedExplanations.lastIndex(where: { $0.concept == concept && $0.text == previous }) {
                     state.attemptedExplanations[index].revisedTo = updated

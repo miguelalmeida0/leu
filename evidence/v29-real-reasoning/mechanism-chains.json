@@ -1,0 +1,3340 @@
+[
+  {
+    "focusLabel" : "HTTP",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "HTTP"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"HTTP\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "HTTP methods",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "They make API contracts\npredictable and communicate semantics to clients,\ncaches, and infrastructure.",
+              "characterOffset" : 155,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 16,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "HTTP methods",
+              "characterOffset" : 48,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 16,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "HTTP methods",
+            "kind" : "makes",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "They make API contracts\npredictable and communicate semantics to clients,\ncaches, and infrastructure.",
+                  "characterOffset" : 155,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 16,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "HTTP methods",
+                  "characterOffset" : 48,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 16,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.a14592a7a8706a2e"
+            },
+            "toLabel" : "API contracts predictable"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "HTTP methods"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "JSON",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "JSON"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"JSON\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Cache hit",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Cache hit"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"Cache hit\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Stateful system",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Stateful system"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"Stateful system\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Refresh token",
+    "paths" : [
+      {
+        "admissibility" : "inferredValidated",
+        "provenance" : {
+          "admissibility" : "inferredValidated",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+            {
+              "rawValue" : "rel.a1475eec78db6513"
+            },
+            {
+              "rawValue" : "rel.cb88d388f891d244"
+            }
+          ],
+          "rule" : "causalComposition",
+          "spans" : [
+            {
+              "canonicalSpan" : "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again.",
+              "characterOffset" : 84,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 49,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Refresh token",
+              "characterOffset" : 49,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 49,
+              "sourceRole" : "structure"
+            },
+            {
+              "canonicalSpan" : "It\nbalances user convenience with short-lived access\ncredentials.",
+              "characterOffset" : 185,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 49,
+              "sourceRole" : "compactExplanation"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Refresh token",
+            "kind" : "explains",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again.",
+                  "characterOffset" : 84,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 49,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Refresh token",
+                  "characterOffset" : 49,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 49,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.a1475eec78db6513"
+            },
+            "toLabel" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again"
+          },
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again",
+            "kind" : "balances",
+            "provenance" : {
+              "admissibility" : "inferredValidated",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+                {
+                  "rawValue" : "atom.a938031202faf0d4"
+                },
+                {
+                  "rawValue" : "atom.60444b58fa78c291"
+                }
+              ],
+              "rule" : "definitionSubstitution",
+              "spans" : [
+                {
+                  "canonicalSpan" : "A longer-lived credential used to obtain new access\ntokens without asking the user to sign in again.",
+                  "characterOffset" : 84,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 49,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Refresh token",
+                  "characterOffset" : 49,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 49,
+                  "sourceRole" : "structure"
+                },
+                {
+                  "canonicalSpan" : "It\nbalances user convenience with short-lived access\ncredentials.",
+                  "characterOffset" : 185,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 49,
+                  "sourceRole" : "compactExplanation"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.cb88d388f891d244"
+            },
+            "toLabel" : "user convenience with short-lived access credentials"
+          }
+        ]
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It\nbalances user convenience with short-lived access\ncredentials.",
+              "characterOffset" : 185,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 49,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Refresh token",
+              "characterOffset" : 49,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 49,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Refresh token",
+            "kind" : "balances",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It\nbalances user convenience with short-lived access\ncredentials.",
+                  "characterOffset" : 185,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 49,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Refresh token",
+                  "characterOffset" : 49,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 49,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.a7a938d1074be394"
+            },
+            "toLabel" : "user convenience with short-lived access credentials"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Refresh token"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Relational database",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Relational database"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"Relational database\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Race condition",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Race condition"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"Race condition\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Webhook",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It replaces wasteful polling for\nexternal service events.",
+              "characterOffset" : 142,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 74,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Webhook",
+              "characterOffset" : 46,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 74,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Webhook",
+            "kind" : "replaces",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It replaces wasteful polling for\nexternal service events.",
+                  "characterOffset" : 142,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 74,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Webhook",
+                  "characterOffset" : 46,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 74,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.f023f12512fa7ac7"
+            },
+            "toLabel" : "wasteful polling for external service events"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Webhook"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "try / catch",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It lets code recover, translate, log, or surface\nerrors deliberately.",
+              "characterOffset" : 192,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 83,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "try / catch",
+              "characterOffset" : 52,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 83,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "try / catch",
+            "kind" : "enables",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It lets code recover, translate, log, or surface\nerrors deliberately.",
+                  "characterOffset" : 192,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 83,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "try / catch",
+                  "characterOffset" : 52,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 83,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.a2b74c482a4e33e2"
+            },
+            "toLabel" : "code recover, translate, log, or surface errors deliberately"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "try / catch"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Immutability",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It makes state transitions easier to\nreason about and supports change detection by\nidentity.",
+              "characterOffset" : 159,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 91,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Immutability",
+              "characterOffset" : 52,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 91,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Immutability",
+            "kind" : "makes",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It makes state transitions easier to\nreason about and supports change detection by\nidentity.",
+                  "characterOffset" : 159,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 91,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Immutability",
+                  "characterOffset" : 52,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 91,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.a26c4bb253cc41da"
+            },
+            "toLabel" : "state transitions easier to reason about"
+          }
+        ]
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It makes state transitions easier to\nreason about and supports change detection by\nidentity.",
+              "characterOffset" : 159,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 91,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Immutability",
+              "characterOffset" : 52,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 91,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Immutability",
+            "kind" : "supports",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It makes state transitions easier to\nreason about and supports change detection by\nidentity.",
+                  "characterOffset" : 159,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 91,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Immutability",
+                  "characterOffset" : 52,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 91,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.aa88e2da179cc21b"
+            },
+            "toLabel" : "change detection by identity"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Immutability"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Array.reduce",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Array.reduce"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"Array.reduce\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Props",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "They create explicit data flow and reusable\ncomponents.",
+              "characterOffset" : 132,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 108,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Props",
+              "characterOffset" : 55,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 108,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Props",
+            "kind" : "creates",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "They create explicit data flow and reusable\ncomponents.",
+                  "characterOffset" : 132,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 108,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Props",
+                  "characterOffset" : 55,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 108,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.ba480f1023e13fc1"
+            },
+            "toLabel" : "explicit data flow and reusable components"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Props"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Effect cleanup",
+    "paths" : [
+      {
+        "admissibility" : "inferredValidated",
+        "provenance" : {
+          "admissibility" : "inferredValidated",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+            {
+              "rawValue" : "rel.8386675699fef114"
+            },
+            {
+              "rawValue" : "rel.bf1d07d07d2b96ae"
+            }
+          ],
+          "rule" : "causalComposition",
+          "spans" : [
+            {
+              "canonicalSpan" : "The function returned from an effect to undo the\nprevious subscription/resource before rerun or\nunmount.",
+              "characterOffset" : 91,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 116,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Effect cleanup",
+              "characterOffset" : 55,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 116,
+              "sourceRole" : "structure"
+            },
+            {
+              "canonicalSpan" : "It prevents duplicate listeners, stale\nsubscriptions, and leaks.",
+              "characterOffset" : 196,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 116,
+              "sourceRole" : "compactExplanation"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Effect cleanup",
+            "kind" : "explains",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "The function returned from an effect to undo the\nprevious subscription/resource before rerun or\nunmount.",
+                  "characterOffset" : 91,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 116,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Effect cleanup",
+                  "characterOffset" : 55,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 116,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.8386675699fef114"
+            },
+            "toLabel" : "The function returned from an effect to undo the previous subscription/resource before rerun or unmount"
+          },
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "The function returned from an effect to undo the previous subscription/resource before rerun or unmount",
+            "kind" : "prevents",
+            "provenance" : {
+              "admissibility" : "inferredValidated",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+                {
+                  "rawValue" : "atom.ef1f564e6efa85a0"
+                },
+                {
+                  "rawValue" : "atom.c95ec4109cb7f0af"
+                }
+              ],
+              "rule" : "definitionSubstitution",
+              "spans" : [
+                {
+                  "canonicalSpan" : "The function returned from an effect to undo the\nprevious subscription/resource before rerun or\nunmount.",
+                  "characterOffset" : 91,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 116,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Effect cleanup",
+                  "characterOffset" : 55,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 116,
+                  "sourceRole" : "structure"
+                },
+                {
+                  "canonicalSpan" : "It prevents duplicate listeners, stale\nsubscriptions, and leaks.",
+                  "characterOffset" : 196,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 116,
+                  "sourceRole" : "compactExplanation"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.bf1d07d07d2b96ae"
+            },
+            "toLabel" : "duplicate listeners, stale subscriptions, and leaks"
+          }
+        ]
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It prevents duplicate listeners, stale\nsubscriptions, and leaks.",
+              "characterOffset" : 196,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 116,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Effect cleanup",
+              "characterOffset" : 55,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 116,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Effect cleanup",
+            "kind" : "prevents",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It prevents duplicate listeners, stale\nsubscriptions, and leaks.",
+                  "characterOffset" : 196,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 116,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Effect cleanup",
+                  "characterOffset" : 55,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 116,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.9b8282a751af6dc5"
+            },
+            "toLabel" : "duplicate listeners, stale subscriptions, and leaks"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Effect cleanup"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "React.memo",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It can reduce\nexpensive child renders when props are stable.",
+              "characterOffset" : 171,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 124,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "React.memo",
+              "characterOffset" : 55,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 124,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+              {
+                "concepts" : [
+                  "prop-stable"
+                ],
+                "isPositive" : true,
+                "text" : "props are stable"
+              }
+            ],
+            "fromLabel" : "React.memo",
+            "kind" : "reduces",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It can reduce\nexpensive child renders when props are stable.",
+                  "characterOffset" : 171,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 124,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "React.memo",
+                  "characterOffset" : 55,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 124,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+              {
+                "kind" : "modality",
+                "text" : "can"
+              }
+            ],
+            "relationID" : {
+              "rawValue" : "rel.2d350ecffe60738d"
+            },
+            "toLabel" : "expensive child renders"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "React.memo"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Tree shaking",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It reduces shipped\nJavaScript without manual deletion.",
+              "characterOffset" : 179,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 133,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Tree shaking",
+              "characterOffset" : 65,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 133,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Tree shaking",
+            "kind" : "reduces",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It reduces shipped\nJavaScript without manual deletion.",
+                  "characterOffset" : 179,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 133,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Tree shaking",
+                  "characterOffset" : 65,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 133,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.54ab44c64352d97f"
+            },
+            "toLabel" : "shipped JavaScript without manual deletion"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Tree shaking"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Client-side routing",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It\nmakes SPA navigation fast while preserving URLs.",
+              "characterOffset" : 202,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 141,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Client-side routing",
+              "characterOffset" : 65,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 141,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Client-side routing",
+            "kind" : "makes",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It\nmakes SPA navigation fast while preserving URLs.",
+                  "characterOffset" : 202,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 141,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Client-side routing",
+                  "characterOffset" : 65,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 141,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.c1992597713d0962"
+            },
+            "toLabel" : "SPA navigation fast while preserving URLs"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Client-side routing"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Event bubbling",
+    "paths" : [
+      {
+        "admissibility" : "inferredValidated",
+        "provenance" : {
+          "admissibility" : "inferredValidated",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+            {
+              "rawValue" : "rel.01b06f50b96a42f1"
+            },
+            {
+              "rawValue" : "rel.6e10400d9e6c2111"
+            }
+          ],
+          "rule" : "causalComposition",
+          "spans" : [
+            {
+              "canonicalSpan" : "The phase where an event triggered on a descendant\npropagates upward through its ancestors.",
+              "characterOffset" : 101,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 149,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Event bubbling",
+              "characterOffset" : 65,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 149,
+              "sourceRole" : "structure"
+            },
+            {
+              "canonicalSpan" : "It enables\nparent handlers and event delegation.",
+              "characterOffset" : 193,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 149,
+              "sourceRole" : "compactExplanation"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Event bubbling",
+            "kind" : "explains",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "The phase where an event triggered on a descendant\npropagates upward through its ancestors.",
+                  "characterOffset" : 101,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 149,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Event bubbling",
+                  "characterOffset" : 65,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 149,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.01b06f50b96a42f1"
+            },
+            "toLabel" : "The phase where an event triggered on a descendant propagates upward through its ancestors"
+          },
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "The phase where an event triggered on a descendant propagates upward through its ancestors",
+            "kind" : "enables",
+            "provenance" : {
+              "admissibility" : "inferredValidated",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+                {
+                  "rawValue" : "atom.81032d79cf87598b"
+                },
+                {
+                  "rawValue" : "atom.c184ed63e90da64d"
+                }
+              ],
+              "rule" : "definitionSubstitution",
+              "spans" : [
+                {
+                  "canonicalSpan" : "The phase where an event triggered on a descendant\npropagates upward through its ancestors.",
+                  "characterOffset" : 101,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 149,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Event bubbling",
+                  "characterOffset" : 65,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 149,
+                  "sourceRole" : "structure"
+                },
+                {
+                  "canonicalSpan" : "It enables\nparent handlers and event delegation.",
+                  "characterOffset" : 193,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 149,
+                  "sourceRole" : "compactExplanation"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.6e10400d9e6c2111"
+            },
+            "toLabel" : "parent handlers and event delegation"
+          }
+        ]
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It enables\nparent handlers and event delegation.",
+              "characterOffset" : 193,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 149,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Event bubbling",
+              "characterOffset" : 65,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 149,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Event bubbling",
+            "kind" : "enables",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It enables\nparent handlers and event delegation.",
+                  "characterOffset" : 193,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 149,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Event bubbling",
+                  "characterOffset" : 65,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 149,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.5742feaa69b74a9b"
+            },
+            "toLabel" : "parent handlers and event delegation"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Event bubbling"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Message queue",
+    "paths" : [
+      {
+        "admissibility" : "inferredValidated",
+        "provenance" : {
+          "admissibility" : "inferredValidated",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+            {
+              "rawValue" : "rel.1c63fff68f3cf611"
+            },
+            {
+              "rawValue" : "rel.84a5d62fd5b91f8a"
+            }
+          ],
+          "rule" : "causalComposition",
+          "spans" : [
+            {
+              "canonicalSpan" : "A durable or buffered channel where producers\nenqueue messages/jobs and consumers process\nthem later.",
+              "characterOffset" : 103,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 158,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Message queue",
+              "characterOffset" : 68,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 158,
+              "sourceRole" : "structure"
+            },
+            {
+              "canonicalSpan" : "It decouples request latency from\nbackground work and smooths bursts.",
+              "characterOffset" : 205,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 158,
+              "sourceRole" : "compactExplanation"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Message queue",
+            "kind" : "explains",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "A durable or buffered channel where producers\nenqueue messages/jobs and consumers process\nthem later.",
+                  "characterOffset" : 103,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 158,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Message queue",
+                  "characterOffset" : 68,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 158,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.1c63fff68f3cf611"
+            },
+            "toLabel" : "A durable or buffered channel where producers enqueue messages/jobs and consumers process them later"
+          },
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "A durable or buffered channel where producers enqueue messages/jobs and consumers process them later",
+            "kind" : "decouples",
+            "provenance" : {
+              "admissibility" : "inferredValidated",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+                {
+                  "rawValue" : "atom.d4b1f504055d3f78"
+                },
+                {
+                  "rawValue" : "atom.67351f58aede343f"
+                }
+              ],
+              "rule" : "definitionSubstitution",
+              "spans" : [
+                {
+                  "canonicalSpan" : "A durable or buffered channel where producers\nenqueue messages/jobs and consumers process\nthem later.",
+                  "characterOffset" : 103,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 158,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Message queue",
+                  "characterOffset" : 68,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 158,
+                  "sourceRole" : "structure"
+                },
+                {
+                  "canonicalSpan" : "It decouples request latency from\nbackground work and smooths bursts.",
+                  "characterOffset" : 205,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 158,
+                  "sourceRole" : "compactExplanation"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.84a5d62fd5b91f8a"
+            },
+            "toLabel" : "request latency from background work"
+          }
+        ]
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It decouples request latency from\nbackground work and smooths bursts.",
+              "characterOffset" : 205,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 158,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Message queue",
+              "characterOffset" : 68,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 158,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Message queue",
+            "kind" : "decouples",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It decouples request latency from\nbackground work and smooths bursts.",
+                  "characterOffset" : 205,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 158,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Message queue",
+                  "characterOffset" : 68,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 158,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.6121d106082b34cc"
+            },
+            "toLabel" : "request latency from background work"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Message queue"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Unit test",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It gives fast feedback on\nlogic and edge cases.",
+              "characterOffset" : 173,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 166,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Unit test",
+              "characterOffset" : 68,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 166,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Unit test",
+            "kind" : "gives",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It gives fast feedback on\nlogic and edge cases.",
+                  "characterOffset" : 173,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 166,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Unit test",
+                  "characterOffset" : 68,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 166,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.ef6cd66f0f3a0d3a"
+            },
+            "toLabel" : "fast feedback on logic and edge cases"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Unit test"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Docker",
+    "paths" : [
+      {
+        "admissibility" : "inferredValidated",
+        "provenance" : {
+          "admissibility" : "inferredValidated",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+            {
+              "rawValue" : "rel.7e55a156c4b0b765"
+            },
+            {
+              "rawValue" : "rel.d8bb1e8d6054fcbc"
+            }
+          ],
+          "rule" : "causalComposition",
+          "spans" : [
+            {
+              "canonicalSpan" : "A platform for packaging and running applications in\nisolated containers based on images.",
+              "characterOffset" : 96,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 173,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Docker",
+              "characterOffset" : 68,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 173,
+              "sourceRole" : "structure"
+            },
+            {
+              "canonicalSpan" : "It makes\ndependencies and runtime environment reproducible\nacross machines.",
+              "characterOffset" : 186,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 173,
+              "sourceRole" : "compactExplanation"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Docker",
+            "kind" : "explains",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "A platform for packaging and running applications in\nisolated containers based on images.",
+                  "characterOffset" : 96,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 173,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Docker",
+                  "characterOffset" : 68,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 173,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.7e55a156c4b0b765"
+            },
+            "toLabel" : "A platform for packaging and running applications in isolated containers based on images"
+          },
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "A platform for packaging and running applications in isolated containers based on images",
+            "kind" : "makes",
+            "provenance" : {
+              "admissibility" : "inferredValidated",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+                {
+                  "rawValue" : "atom.c4604e44de3da5d6"
+                },
+                {
+                  "rawValue" : "atom.4401233f8762ada3"
+                }
+              ],
+              "rule" : "definitionSubstitution",
+              "spans" : [
+                {
+                  "canonicalSpan" : "A platform for packaging and running applications in\nisolated containers based on images.",
+                  "characterOffset" : 96,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 173,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Docker",
+                  "characterOffset" : 68,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 173,
+                  "sourceRole" : "structure"
+                },
+                {
+                  "canonicalSpan" : "It makes\ndependencies and runtime environment reproducible\nacross machines.",
+                  "characterOffset" : 186,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 173,
+                  "sourceRole" : "compactExplanation"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.d8bb1e8d6054fcbc"
+            },
+            "toLabel" : "dependencies and runtime environment reproducible across machines"
+          }
+        ]
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It makes\ndependencies and runtime environment reproducible\nacross machines.",
+              "characterOffset" : 186,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 173,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Docker",
+              "characterOffset" : 68,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 173,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Docker",
+            "kind" : "makes",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It makes\ndependencies and runtime environment reproducible\nacross machines.",
+                  "characterOffset" : 186,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 173,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Docker",
+                  "characterOffset" : 68,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 173,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.79b4c3b22f8a5306"
+            },
+            "toLabel" : "dependencies and runtime environment reproducible across machines"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Docker"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Latency",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Latency"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"Latency\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Queue",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It models ordered\nwork waiting to be processed.",
+              "characterOffset" : 138,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 190,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Queue",
+              "characterOffset" : 74,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 190,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Queue",
+            "kind" : "models",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It models ordered\nwork waiting to be processed.",
+                  "characterOffset" : 138,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 190,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Queue",
+                  "characterOffset" : 74,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 190,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.ffb29ea938005a56"
+            },
+            "toLabel" : "ordered work waiting to be processed"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Queue"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "KISS",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "KISS"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"KISS\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Type guard",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Type guard"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"Type guard\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Utility types",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "They derive related types\nwithout duplicating interfaces.",
+              "characterOffset" : 168,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 215,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Utility types",
+              "characterOffset" : 55,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 215,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Utility types",
+            "kind" : "derives",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "They derive related types\nwithout duplicating interfaces.",
+                  "characterOffset" : 168,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 215,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Utility types",
+                  "characterOffset" : 55,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 215,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.559c032c375b0e51"
+            },
+            "toLabel" : "related types without duplicating interfaces"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Utility types"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Lifting state up",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It creates one source of truth\nfor coordinated UI.",
+              "characterOffset" : 178,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 224,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Lifting state up",
+              "characterOffset" : 66,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 224,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Lifting state up",
+            "kind" : "creates",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It creates one source of truth\nfor coordinated UI.",
+                  "characterOffset" : 178,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 224,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Lifting state up",
+                  "characterOffset" : 66,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 224,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.a4ad617259391e20"
+            },
+            "toLabel" : "one source of truth for coordinated UI"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Lifting state up"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Headless component",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It separates interaction\nlogic from product-specific appearance.",
+              "characterOffset" : 184,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 232,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Headless component",
+              "characterOffset" : 66,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 232,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Headless component",
+            "kind" : "separates",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It separates interaction\nlogic from product-specific appearance.",
+                  "characterOffset" : 184,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 232,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Headless component",
+                  "characterOffset" : 66,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 232,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.281289e0c1d90839"
+            },
+            "toLabel" : "interaction logic from product-specific appearance"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Headless component"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "State machine",
+    "paths" : [
+      {
+        "admissibility" : "inferredValidated",
+        "provenance" : {
+          "admissibility" : "inferredValidated",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+            {
+              "rawValue" : "rel.f8a8cdfb578904ec"
+            },
+            {
+              "rawValue" : "rel.5f1a75079bd24291"
+            }
+          ],
+          "rule" : "causalComposition",
+          "spans" : [
+            {
+              "canonicalSpan" : "An explicit model of allowed states and transitions.",
+              "characterOffset" : 101,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 240,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "State machine",
+              "characterOffset" : 66,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 240,
+              "sourceRole" : "structure"
+            },
+            {
+              "canonicalSpan" : "It\nprevents impossible UI combinations in complex flows.",
+              "characterOffset" : 154,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 240,
+              "sourceRole" : "compactExplanation"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "State machine",
+            "kind" : "explains",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "An explicit model of allowed states and transitions.",
+                  "characterOffset" : 101,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 240,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "State machine",
+                  "characterOffset" : 66,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 240,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.f8a8cdfb578904ec"
+            },
+            "toLabel" : "An explicit model of allowed states and transitions"
+          },
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "An explicit model of allowed states and transitions",
+            "kind" : "prevents",
+            "provenance" : {
+              "admissibility" : "inferredValidated",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+                {
+                  "rawValue" : "atom.5cd5c9dec4898360"
+                },
+                {
+                  "rawValue" : "atom.b472ef504db379dd"
+                }
+              ],
+              "rule" : "definitionSubstitution",
+              "spans" : [
+                {
+                  "canonicalSpan" : "An explicit model of allowed states and transitions.",
+                  "characterOffset" : 101,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 240,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "State machine",
+                  "characterOffset" : 66,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 240,
+                  "sourceRole" : "structure"
+                },
+                {
+                  "canonicalSpan" : "It\nprevents impossible UI combinations in complex flows.",
+                  "characterOffset" : 154,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 240,
+                  "sourceRole" : "compactExplanation"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.5f1a75079bd24291"
+            },
+            "toLabel" : "impossible UI combinations in complex flows"
+          }
+        ]
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It\nprevents impossible UI combinations in complex flows.",
+              "characterOffset" : 154,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 240,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "State machine",
+              "characterOffset" : 66,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 240,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "State machine",
+            "kind" : "prevents",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It\nprevents impossible UI combinations in complex flows.",
+                  "characterOffset" : 154,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 240,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "State machine",
+                  "characterOffset" : 66,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 240,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.475112c87c5bd8b6"
+            },
+            "toLabel" : "impossible UI combinations in complex flows"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "State machine"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Module",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Module"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"Module\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Single Responsibility Principle",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It prevents unrelated concerns from becoming\nentangled.",
+              "characterOffset" : 160,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 257,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Single Responsibility\nPrinciple",
+              "characterOffset" : 55,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 257,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Single Responsibility Principle",
+            "kind" : "prevents",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It prevents unrelated concerns from becoming\nentangled.",
+                  "characterOffset" : 160,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 257,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Single Responsibility\nPrinciple",
+                  "characterOffset" : 55,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 257,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.783502ab75cf57ae"
+            },
+            "toLabel" : "unrelated concerns from becoming entangled"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Single Responsibility Principle"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Denormalization",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It trades write complexity/\nstorage for read performance.",
+              "characterOffset" : 155,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 266,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Denormalization",
+              "characterOffset" : 42,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 266,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Denormalization",
+            "kind" : "trades",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It trades write complexity/\nstorage for read performance.",
+                  "characterOffset" : 155,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 266,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Denormalization",
+                  "characterOffset" : 42,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 266,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.a8b4f1497f8a0921"
+            },
+            "toLabel" : "write complexity/ storage for read performance"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Denormalization"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Deadlock"
+      }
+    },
+    "unansweredReason" : "No source in this library talks about \"Deadlock\"."
+  },
+  {
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Write-through cache"
+      }
+    },
+    "unansweredReason" : "No source in this library talks about \"Write-through cache\"."
+  },
+  {
+    "focusLabel" : "Distributed cache",
+    "paths" : [
+      {
+        "admissibility" : "inferredValidated",
+        "provenance" : {
+          "admissibility" : "inferredValidated",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+            {
+              "rawValue" : "rel.27c7ff06a48d28c4"
+            },
+            {
+              "rawValue" : "rel.6830679788099a22"
+            }
+          ],
+          "rule" : "causalComposition",
+          "spans" : [
+            {
+              "canonicalSpan" : "A cache shared across application instances,\ncommonly over the network.",
+              "characterOffset" : 102,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 290,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Distributed cache",
+              "characterOffset" : 63,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 290,
+              "sourceRole" : "structure"
+            },
+            {
+              "canonicalSpan" : "It gives multiple servers a\ncommon cache instead of isolated in-process copies.",
+              "characterOffset" : 174,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 290,
+              "sourceRole" : "compactExplanation"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Distributed cache",
+            "kind" : "explains",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "A cache shared across application instances,\ncommonly over the network.",
+                  "characterOffset" : 102,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 290,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Distributed cache",
+                  "characterOffset" : 63,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 290,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.27c7ff06a48d28c4"
+            },
+            "toLabel" : "A cache shared across application instances, commonly over the network"
+          },
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "A cache shared across application instances, commonly over the network",
+            "kind" : "gives",
+            "provenance" : {
+              "admissibility" : "inferredValidated",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+                {
+                  "rawValue" : "atom.594e4720a1e608a7"
+                },
+                {
+                  "rawValue" : "atom.37c2bbca67d7c069"
+                }
+              ],
+              "rule" : "definitionSubstitution",
+              "spans" : [
+                {
+                  "canonicalSpan" : "A cache shared across application instances,\ncommonly over the network.",
+                  "characterOffset" : 102,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 290,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Distributed cache",
+                  "characterOffset" : 63,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 290,
+                  "sourceRole" : "structure"
+                },
+                {
+                  "canonicalSpan" : "It gives multiple servers a\ncommon cache instead of isolated in-process copies.",
+                  "characterOffset" : 174,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 290,
+                  "sourceRole" : "compactExplanation"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.6830679788099a22"
+            },
+            "toLabel" : "multiple servers a common cache instead of isolated in-process copies"
+          }
+        ]
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It gives multiple servers a\ncommon cache instead of isolated in-process copies.",
+              "characterOffset" : 174,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 290,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Distributed cache",
+              "characterOffset" : 63,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 290,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Distributed cache",
+            "kind" : "gives",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It gives multiple servers a\ncommon cache instead of isolated in-process copies.",
+                  "characterOffset" : 174,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 290,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Distributed cache",
+                  "characterOffset" : 63,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 290,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.db8e88db18255e49"
+            },
+            "toLabel" : "multiple servers a common cache instead of isolated in-process copies"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Distributed cache"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Tokenizer",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Tokenizer"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"Tokenizer\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Grounding",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It reduces unsupported\ninvention and makes outputs verifiable.",
+              "characterOffset" : 163,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 307,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Grounding",
+              "characterOffset" : 52,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 307,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Grounding",
+            "kind" : "makes",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It reduces unsupported\ninvention and makes outputs verifiable.",
+                  "characterOffset" : 163,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 307,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Grounding",
+                  "characterOffset" : 52,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 307,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.0ede10f22293e956"
+            },
+            "toLabel" : "outputs verifiable"
+          }
+        ]
+      },
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It reduces unsupported\ninvention and makes outputs verifiable.",
+              "characterOffset" : 163,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 307,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Grounding",
+              "characterOffset" : 52,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 307,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Grounding",
+            "kind" : "reduces",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It reduces unsupported\ninvention and makes outputs verifiable.",
+                  "characterOffset" : 163,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 307,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Grounding",
+                  "characterOffset" : 52,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 307,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.2e1862cd8f6e41ab"
+            },
+            "toLabel" : "unsupported invention"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Grounding"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "Inference",
+    "paths" : [
+
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Inference"
+      }
+    },
+    "unansweredReason" : "Your sources mention \"Inference\" but do not state why it matters."
+  },
+  {
+    "focusLabel" : "Contract test",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It catches breaking API changes\nwithout requiring a full end-to-end environment.",
+              "characterOffset" : 188,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 324,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "Contract test",
+              "characterOffset" : 78,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 324,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "Contract test",
+            "kind" : "catches",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It catches breaking API changes\nwithout requiring a full end-to-end environment.",
+                  "characterOffset" : 188,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 324,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "Contract test",
+                  "characterOffset" : 78,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 324,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.cd6174737d916eb8"
+            },
+            "toLabel" : "breaking API changes without requiring a full end-to-end environment"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "Contract test"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  },
+  {
+    "focusLabel" : "SLO / error budget",
+    "paths" : [
+      {
+        "admissibility" : "sourceSupported",
+        "provenance" : {
+          "admissibility" : "sourceSupported",
+          "confidenceInParsing" : 1,
+          "derivedFrom" : [
+
+          ],
+          "rule" : "none",
+          "spans" : [
+            {
+              "canonicalSpan" : "It creates a\nquantitative trade-off between shipping speed and\nreliability work.",
+              "characterOffset" : 221,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 332,
+              "sourceRole" : "compactExplanation"
+            },
+            {
+              "canonicalSpan" : "SLO / error budget",
+              "characterOffset" : 78,
+              "documentID" : "javascript_midlevel_interview_mobile_mastery",
+              "extractionVersion" : "leu.pdf-packet.1",
+              "page" : 332,
+              "sourceRole" : "structure"
+            }
+          ]
+        },
+        "steps" : [
+          {
+            "conditions" : [
+
+            ],
+            "fromLabel" : "SLO / error budget",
+            "kind" : "creates",
+            "provenance" : {
+              "admissibility" : "sourceSupported",
+              "confidenceInParsing" : 1,
+              "derivedFrom" : [
+
+              ],
+              "rule" : "none",
+              "spans" : [
+                {
+                  "canonicalSpan" : "It creates a\nquantitative trade-off between shipping speed and\nreliability work.",
+                  "characterOffset" : 221,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 332,
+                  "sourceRole" : "compactExplanation"
+                },
+                {
+                  "canonicalSpan" : "SLO / error budget",
+                  "characterOffset" : 78,
+                  "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                  "extractionVersion" : "leu.pdf-packet.1",
+                  "page" : 332,
+                  "sourceRole" : "structure"
+                }
+              ]
+            },
+            "qualifiers" : [
+
+            ],
+            "relationID" : {
+              "rawValue" : "rel.17b9d9362d991a8e"
+            },
+            "toLabel" : "a quantitative trade-off between shipping speed and reliability work"
+          }
+        ]
+      }
+    ],
+    "question" : {
+      "why" : {
+        "_0" : "SLO / error budget"
+      }
+    },
+    "unansweredReason" : "Source does not establish a further step beyond these admitted edges."
+  }
+]

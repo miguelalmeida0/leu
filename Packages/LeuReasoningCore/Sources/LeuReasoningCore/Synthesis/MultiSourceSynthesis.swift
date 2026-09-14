@@ -117,10 +117,13 @@ public struct GroundedSynthesis: Codable, Equatable, Sendable {
 
     public var concept: String
     public var sections: [Section]
+    /// Unresolved questions are not admitted statements or model inferences.
+    public var openQuestions: [String]
 
-    public init(concept: String, sections: [Section]) {
+    public init(concept: String, sections: [Section], openQuestions: [String] = []) {
         self.concept = concept
         self.sections = sections
+        self.openQuestions = openQuestions
     }
 
     public var allLines: [GroundedLine] { sections.flatMap(\.lines) }
@@ -132,6 +135,35 @@ public struct MultiSourceSynthesizer: Sendable {
 
     public init(equivalenceThreshold: Double = 0.6) {
         self.equivalenceThreshold = equivalenceThreshold
+    }
+
+    public struct Comparison: Codable, Sendable {
+        public enum Kind: String, Codable, Sendable {
+            case sameIdea, refinement, differentCondition, disagreement, definitionContext, relatedDistinctClaims, unresolved
+        }
+        public var first: KnowledgeAtom
+        public var second: KnowledgeAtom
+        public var kind: Kind
+        public var statements: [GroundedLine]
+        public var bridge: KnowledgeRelation?
+        public var openQuestions: [String]
+    }
+
+    public func compare(_ first: KnowledgeAtom, _ second: KnowledgeAtom, in index: CertifiedReasoningIndex) -> Comparison {
+        let bridge = index.crossDocument.first { Set($0.supportingAtoms) == Set([first.id, second.id]) }
+        let clusters = [ClaimCluster(representative: first, members: [first.id], documentIDs: [first.sourceDocumentID ?? ""]),
+                        ClaimCluster(representative: second, members: [second.id], documentIDs: [second.sourceDocumentID ?? ""])]
+        let kind: Comparison.Kind
+        if equivalent(first, second) { kind = .sameIdea }
+        else if !detectDisagreements(in: clusters).isEmpty { kind = .disagreement }
+        else if sameCore(first, second) {
+            kind = !detectRefinements(in: clusters).isEmpty ? .refinement : .differentCondition
+        } else if bridge != nil { kind = .definitionContext }
+        else if SemanticIdentity.phrase(first.subject) == SemanticIdentity.phrase(second.subject) { kind = .relatedDistinctClaims }
+        else { kind = .unresolved }
+        return Comparison(first: first, second: second, kind: kind,
+                          statements: [GroundedLine.fromAtom(first), GroundedLine.fromAtom(second)], bridge: bridge,
+                          openQuestions: kind == .unresolved ? ["These sources do not establish equivalence, contradiction or a bridge between the claims."] : [])
     }
 
     public func plan(concept: String, in graph: KnowledgeGraph) -> SynthesisPlan {
@@ -224,20 +256,7 @@ public struct MultiSourceSynthesizer: Sendable {
         if !plan.examples.isEmpty {
             sections.append(.init(title: "EXAMPLES", lines: plan.examples))
         }
-        if !plan.openQuestions.isEmpty {
-            sections.append(.init(title: "OPEN QUESTION",
-                                  lines: plan.openQuestions.map { question in
-                                      GroundedLine(text: question,
-                                                   atomIDs: [],
-                                                   admissibility: .inferredValidated,
-                                                   provenance: Provenance(admissibility: .inferredValidated,
-                                                                          spans: [],
-                                                                          derivedFrom: [],
-                                                                          rule: .none,
-                                                                          confidenceInParsing: 1.0))
-                                  }))
-        }
-        return GroundedSynthesis(concept: plan.concept, sections: sections)
+        return GroundedSynthesis(concept: plan.concept, sections: sections, openQuestions: plan.openQuestions)
     }
 
     // MARK: - Clustering
@@ -270,9 +289,10 @@ public struct MultiSourceSynthesizer: Sendable {
     /// same things, with the same polarity. Wording may differ freely.
     func equivalent(_ lhs: KnowledgeAtom, _ rhs: KnowledgeAtom) -> Bool {
         guard lhs.isNegated == rhs.isNegated else { return false }
-        guard lhs.relation == rhs.relation || lhs.claimType == rhs.claimType else { return false }
-        return TextScanning.overlap(lhs.subject, rhs.subject) >= equivalenceThreshold
-            && TextScanning.overlap(lhs.object, rhs.object) >= equivalenceThreshold
+        guard lhs.relation == rhs.relation, lhs.conditions == rhs.conditions,
+              lhs.qualifiers == rhs.qualifiers, lhs.numbers == rhs.numbers, lhs.identifiers == rhs.identifiers else { return false }
+        return SemanticIdentity.phrase(lhs.subject) == SemanticIdentity.phrase(rhs.subject)
+            && SemanticIdentity.phrase(lhs.object) == SemanticIdentity.phrase(rhs.object)
     }
 
     func structureScore(_ atom: KnowledgeAtom) -> Int {
@@ -294,7 +314,7 @@ public struct MultiSourceSynthesizer: Sendable {
                 let broader = lhsRestrictions < rhsRestrictions ? lhs : rhs
                 let narrower = lhsRestrictions < rhsRestrictions ? rhs : lhs
                 let addedConditions = narrower.conditions.filter { condition in
-                    !broader.conditions.contains(where: { TextScanning.overlap($0.text, condition.text) >= 0.6 })
+                    !broader.conditions.contains(condition)
                 }
                 let addedQualifiers = narrower.qualifiers.filter { qualifier in
                     qualifier.kind == .scope && !broader.qualifiers.contains(qualifier)
@@ -316,8 +336,9 @@ public struct MultiSourceSynthesizer: Sendable {
     func sameCore(_ lhs: KnowledgeAtom, _ rhs: KnowledgeAtom) -> Bool {
         lhs.relation == rhs.relation
             && lhs.isNegated == rhs.isNegated
-            && TextScanning.overlap(lhs.subject, rhs.subject) >= equivalenceThreshold
-            && TextScanning.overlap(lhs.object, rhs.object) >= equivalenceThreshold
+            && SemanticIdentity.phrase(lhs.subject) == SemanticIdentity.phrase(rhs.subject)
+            && SemanticIdentity.phrase(lhs.object) == SemanticIdentity.phrase(rhs.object)
+            && lhs.numbers == rhs.numbers && lhs.identifiers == rhs.identifiers
     }
 
     func detectDisagreements(in clusters: [ClaimCluster]) -> [Disagreement] {
@@ -326,8 +347,10 @@ public struct MultiSourceSynthesizer: Sendable {
         for (index, lhs) in atoms.enumerated() {
             for rhs in atoms.dropFirst(index + 1) {
                 guard lhs.sourceDocumentID != rhs.sourceDocumentID else { continue }
-                let sameSubject = TextScanning.overlap(lhs.subject, rhs.subject) >= equivalenceThreshold
-                let sameObject = TextScanning.overlap(lhs.object, rhs.object) >= equivalenceThreshold
+                guard (lhs.conditions == rhs.conditions || lhs.conditions.isEmpty || rhs.conditions.isEmpty),
+                      lhs.qualifiers == rhs.qualifiers else { continue }
+                let sameSubject = SemanticIdentity.phrase(lhs.subject) == SemanticIdentity.phrase(rhs.subject)
+                let sameObject = SemanticIdentity.phrase(lhs.object) == SemanticIdentity.phrase(rhs.object)
                 let provenance = Provenance.inferred(from: [lhs.provenance, rhs.provenance],
                                                      ids: [lhs.id, rhs.id],
                                                      rule: .crossSourceEquivalence)
@@ -371,9 +394,25 @@ public struct MultiSourceSynthesizer: Sendable {
     }
 
     func numericConflict(_ lhs: KnowledgeAtom, _ rhs: KnowledgeAtom) -> String? {
+        func shape(_ atom: KnowledgeAtom) -> String {
+            var text = atom.object
+            for n in atom.numbers { text = text.replacingOccurrences(of: n.rawText, with: "NUMBER") }
+            for marker in ["at most ", "at least ", "exactly "] { text = text.replacingOccurrences(of: marker, with: "") }
+            return SemanticIdentity.phrase(text)
+        }
+        guard shape(lhs) == shape(rhs) else { return nil }
+        func bounds(_ n: NumericFact) -> (Double, Double)? {
+            switch n.comparator {
+            case .exactly: return (n.value, n.value)
+            case .atLeast: return (n.value, .infinity)
+            case .atMost: return (-.infinity, n.value)
+            case .range: return n.upperValue.map { (n.value, $0) }
+            case .approximately: return nil
+            }
+        }
         for left in lhs.numbers {
             for right in rhs.numbers where left.unit == right.unit {
-                if left.comparator == right.comparator && left.value != right.value {
+                if let a = bounds(left), let b = bounds(right), a.1 < b.0 || b.1 < a.0 {
                     return "\(lhs.sourceDocumentID ?? "one source") gives \(left.rawText)\(left.unit.map { " \($0)" } ?? ""), \(rhs.sourceDocumentID ?? "another") gives \(right.rawText)\(right.unit.map { " \($0)" } ?? "")."
                 }
             }

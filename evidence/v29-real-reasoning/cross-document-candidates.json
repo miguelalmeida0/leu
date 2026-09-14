@@ -1,0 +1,114 @@
+[
+  {
+    "definitionAtom" : "atom.0d83ff0a7c0db165",
+    "reason" : "The source definition supplies bounded context for the explicitly referenced technical term; no whole-claim equivalence is inferred.",
+    "rule" : "definitionContext",
+    "status" : "INFERRED_VALIDATED",
+    "term" : "Database",
+    "useAtom" : "atom.173f909e3bb92189"
+  },
+  {
+    "definitionAtom" : "atom.168b86145e9522e5",
+    "reason" : "The source definition supplies bounded context for the explicitly referenced technical term; no whole-claim equivalence is inferred.",
+    "rule" : "definitionContext",
+    "status" : "INFERRED_VALIDATED",
+    "term" : "Props",
+    "useAtom" : "atom.286e9b9953c468ea"
+  },
+  {
+    "definitionAtom" : "atom.26fabed90c72c66e",
+    "reason" : "The source definition supplies bounded context for the explicitly referenced technical term; no whole-claim equivalence is inferred.",
+    "rule" : "definitionContext",
+    "status" : "INFERRED_VALIDATED",
+    "term" : "React key",
+    "useAtom" : "atom.b07e7b4fd9902480"
+  },
+  {
+    "definitionAtom" : "atom.26fabed90c72c66e",
+    "reason" : "The source definition supplies bounded context for the explicitly referenced technical term; no whole-claim equivalence is inferred.",
+    "rule" : "definitionContext",
+    "status" : "INFERRED_VALIDATED",
+    "term" : "React key",
+    "useAtom" : "atom.bf208fa9d0760bbf"
+  },
+  {
+    "definitionAtom" : "atom.26fabed90c72c66e",
+    "reason" : "The source definition supplies bounded context for the explicitly referenced technical term; no whole-claim equivalence is inferred.",
+    "rule" : "definitionContext",
+    "status" : "INFERRED_VALIDATED",
+    "term" : "React key",
+    "useAtom" : "atom.d4cc7671599f8f3b"
+  },
+  {
+    "definitionAtom" : "atom.2f10d0d343e665be",
+    "reason" : "A lexical reference alone does not establish a unique technical sense.",
+    "rule" : "none",
+    "status" : "UNRESOLVED",
+    "term" : "Context",
+    "useAtom" : "atom.286e9b9953c468ea"
+  },
+  {
+    "definitionAtom" : "atom.56d8eb6fcf4bd1c7",
+    "reason" : "The source definition supplies bounded context for the explicitly referenced technical term; no whole-claim equivalence is inferred.",
+    "rule" : "definitionContext",
+    "status" : "INFERRED_VALIDATED",
+    "term" : "Cache",
+    "useAtom" : "atom.0698591b5c757206"
+  },
+  {
+    "definitionAtom" : "atom.56d8eb6fcf4bd1c7",
+    "reason" : "The source definition supplies bounded context for the explicitly referenced technical term; no whole-claim equivalence is inferred.",
+    "rule" : "definitionContext",
+    "status" : "INFERRED_VALIDATED",
+    "term" : "Cache",
+    "useAtom" : "atom.3977794371f02e96"
+  },
+  {
+    "definitionAtom" : "atom.56d8eb6fcf4bd1c7",
+    "reason" : "The source definition supplies bounded context for the explicitly referenced technical term; no whole-claim equivalence is inferred.",
+    "rule" : "definitionContext",
+    "status" : "INFERRED_VALIDATED",
+    "term" : "Cache",
+    "useAtom" : "atom.bb282a07e5571af4"
+  },
+  {
+    "definitionAtom" : "atom.651ace03ee49d61b",
+    "reason" : "A lexical reference alone does not establish a unique technical sense.",
+    "rule" : "none",
+    "status" : "UNRESOLVED",
+    "term" : "Request",
+    "useAtom" : "atom.dade0e8289157427"
+  },
+  {
+    "definitionAtom" : "atom.855909bc4628a29c",
+    "reason" : "The source definition supplies bounded context for the explicitly referenced technical term; no whole-claim equivalence is inferred.",
+    "rule" : "definitionContext",
+    "status" : "INFERRED_VALIDATED",
+    "term" : "Closure",
+    "useAtom" : "atom.2bd1ac368d474db9"
+  },
+  {
+    "definitionAtom" : "atom.a0b98bff610a2b55",
+    "reason" : "A lexical reference alone does not establish a unique technical sense.",
+    "rule" : "none",
+    "status" : "UNRESOLVED",
+    "term" : "Interface",
+    "useAtom" : "atom.286e9b9953c468ea"
+  },
+  {
+    "definitionAtom" : "atom.a0b98bff610a2b55",
+    "reason" : "A lexical reference alone does not establish a unique technical sense.",
+    "rule" : "none",
+    "status" : "UNRESOLVED",
+    "term" : "Interface",
+    "useAtom" : "atom.35d043dd97e8f12a"
+  },
+  {
+    "definitionAtom" : "atom.c628bf12611c0bdf",
+    "reason" : "The source definition supplies bounded context for the explicitly referenced technical term; no whole-claim equivalence is inferred.",
+    "rule" : "definitionContext",
+    "status" : "INFERRED_VALIDATED",
+    "term" : "React component",
+    "useAtom" : "atom.286e9b9953c468ea"
+  }
+]

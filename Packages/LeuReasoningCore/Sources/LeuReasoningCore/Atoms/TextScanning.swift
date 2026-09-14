@@ -58,11 +58,18 @@ public enum TextScanning {
 
     /// Content tokens: normalised, stop-worded and stemmed. Used wherever two
     /// phrasings must match without requiring identical vocabulary.
+    ///
+    /// The trailing length filter drops leftover single letters (stray
+    /// fragments of stemming or punctuation splitting), but a single-digit
+    /// number is real content, not noise — "3 attempts" and "5 attempts"
+    /// must not collapse into the same token set, or every comparison built
+    /// on this function (equivalence, clustering, overlap scoring) goes
+    /// blind to the one thing that actually distinguishes them.
     public static func contentTokens(_ text: String) -> [String] {
         normalizedTokens(text)
             .filter { !stopWords.contains($0) }
             .map { SourceRoleClassifier.stem($0) }
-            .filter { $0.count > 1 }
+            .filter { $0.count > 1 || $0.allSatisfy(\.isNumber) }
     }
 
     public static let stopWords: Set<String> = [

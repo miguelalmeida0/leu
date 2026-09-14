@@ -89,14 +89,9 @@ public struct KnowledgeGraph: Codable, Equatable, Sendable {
     public func resolveNode(_ text: String, minimumSimilarity: Double = 0.6) -> KnowledgeNode? {
         let key = KnowledgeNode.key(for: text)
         if let id = nodesByKey[key], let node = nodesByID[id] { return node }
-        var best: (node: KnowledgeNode, score: Double)?
-        for node in nodes {
-            let score = TextScanning.overlap(node.label, text)
-            if score >= minimumSimilarity, best == nil || score > best!.score {
-                best = (node, score)
-            }
-        }
-        return best?.node
+        // Similarity may retrieve suggestions, but cannot silently choose the
+        // subject of a reasoning or counterfactual claim.
+        return nil
     }
 
     /// Concepts present anywhere in the graph, sorted for stable iteration.
@@ -149,7 +144,8 @@ public struct KnowledgeGraphBuilder: Sendable {
             let key = [kind.rawValue,
                        subjectNode.id.rawValue,
                        objectNode.id.rawValue,
-                       atom.conditions.map(\.text).sorted().joined(separator: "|")].joined(separator: "/")
+                       atom.conditions.map { "\($0.isPositive):\($0.text)" }.sorted().joined(separator: "|"),
+                       atom.qualifiers.map { "\($0.kind.rawValue):\($0.text)" }.sorted().joined(separator: "|")].joined(separator: "/")
             if var existing = relationsByKey[key] {
                 if !existing.supportingAtoms.contains(atom.id) {
                     existing.supportingAtoms.append(atom.id)

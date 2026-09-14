@@ -23,9 +23,34 @@ public enum RelationLexicon {
     }
 
     /// Ordered longest-first at lookup time so that "is required by" wins over
-    /// "is" and "depends on" wins over "depends".
-    public static let cues: [Cue] = [
-        // Enablement
+    /// "is" and "depends on" wins over "depends". `baseFormVariants` appends
+    /// the bare-verb conjugation of every single-word cue here, so the hand
+    /// authored list only needs the third-person-singular spelling.
+    public static let cues: [Cue] = cuesBase + baseFormVariants
+
+    /// Third-person-singular verb cues ("enables", "prevents") only match a
+    /// singular subject. A plural or "you"-subject sentence, or the bare verb
+    /// under "does not" negation ("does not enable"), uses the base form
+    /// instead — the same claim, different conjugation. Deriving that form
+    /// here (rather than hand-listing both spellings above) keeps the
+    /// authored list free of duplication and guarantees the two forms always
+    /// carry the same relation kind.
+    private static var baseFormVariants: [Cue] {
+        var seen = Set(cuesBase.map(\.phrase))
+        var derived: [Cue] = []
+        for cue in cuesBase {
+            guard !cue.phrase.contains(" "), cue.phrase.hasSuffix("s"), cue.phrase.count > 4 else { continue }
+            let base = String(cue.phrase.dropLast())
+            guard base.count >= 4, !seen.contains(base) else { continue }
+            seen.insert(base)
+            derived.append(Cue(base, cue.kind, cue.claimType, inverts: cue.inverts))
+        }
+        return derived
+    }
+
+    /// The hand-authored cues, kept separate from `cues` so `baseFormVariants`
+    /// can derive from them without recursing into its own output.
+    private static let cuesBase: [Cue] = [
         Cue("makes it possible for", .enables, .mechanism),
         Cue("makes it possible to", .enables, .mechanism),
         Cue("allows for", .enables, .mechanism),

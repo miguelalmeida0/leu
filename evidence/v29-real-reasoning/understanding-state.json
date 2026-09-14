@@ -1,0 +1,553 @@
+{
+  "activeConcepts" : [
+    "React.memo"
+  ],
+  "attemptedExplanations" : [
+    {
+      "alignment" : {
+        "alignments" : [
+          {
+            "feedback" : {
+              "admissibility" : "sourceSupported",
+              "atomIDs" : [
+                {
+                  "rawValue" : "atom.addc11e93198996f"
+                }
+              ],
+              "provenance" : {
+                "admissibility" : "sourceSupported",
+                "confidenceInParsing" : 1,
+                "derivedFrom" : [
+
+                ],
+                "rule" : "none",
+                "spans" : [
+                  {
+                    "canonicalSpan" : "It can reduce\nexpensive child renders when props are stable.",
+                    "characterOffset" : 171,
+                    "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                    "extractionVersion" : "leu.pdf-packet.1",
+                    "page" : 124,
+                    "sourceRole" : "compactExplanation"
+                  },
+                  {
+                    "canonicalSpan" : "React.memo",
+                    "characterOffset" : 55,
+                    "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                    "extractionVersion" : "leu.pdf-packet.1",
+                    "page" : 124,
+                    "sourceRole" : "structure"
+                  }
+                ]
+              },
+              "text" : "It can reduce expensive child renders when props are stable."
+            },
+            "findings" : [
+              {
+                "atomID" : {
+                  "rawValue" : "atom.addc11e93198996f"
+                },
+                "detail" : "The source restricts this claim: when props are stable.",
+                "feedback" : "The source restricts this claim: when props are stable.",
+                "propositionID" : {
+                  "rawValue" : "prop.25261a4d64d4f97d"
+                },
+                "provenance" : {
+                  "admissibility" : "sourceSupported",
+                  "confidenceInParsing" : 1,
+                  "derivedFrom" : [
+
+                  ],
+                  "rule" : "none",
+                  "spans" : [
+                    {
+                      "canonicalSpan" : "It can reduce\nexpensive child renders when props are stable.",
+                      "characterOffset" : 171,
+                      "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                      "extractionVersion" : "leu.pdf-packet.1",
+                      "page" : 124,
+                      "sourceRole" : "compactExplanation"
+                    },
+                    {
+                      "canonicalSpan" : "React.memo",
+                      "characterOffset" : 55,
+                      "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                      "extractionVersion" : "leu.pdf-packet.1",
+                      "page" : 124,
+                      "sourceRole" : "structure"
+                    }
+                  ]
+                },
+                "type" : "missingCondition"
+              }
+            ],
+            "matchScore" : 1,
+            "matchedAtomID" : {
+              "rawValue" : "atom.addc11e93198996f"
+            },
+            "proposition" : {
+              "conditions" : [
+
+              ],
+              "id" : {
+                "rawValue" : "prop.25261a4d64d4f97d"
+              },
+              "identifiers" : [
+
+              ],
+              "isNegated" : false,
+              "isUnparsed" : false,
+              "numbers" : [
+
+              ],
+              "object" : "expensive child renders",
+              "qualifiers" : [
+                {
+                  "kind" : "modality",
+                  "text" : "can"
+                }
+              ],
+              "quantifier" : "existential",
+              "relation" : "causes",
+              "subject" : "React.memo",
+              "text" : "React.memo can reduce expensive child renders."
+            },
+            "verdict" : "partiallySupported"
+          }
+        ],
+        "concept" : "React.memo",
+        "unaddressedAtomIDs" : [
+          {
+            "rawValue" : "atom.0adb5091b75c188a"
+          },
+          {
+            "rawValue" : "atom.11a98f88f3876c58"
+          },
+          {
+            "rawValue" : "atom.1424b15fac5d349b"
+          },
+          {
+            "rawValue" : "atom.148e8b75deb812de"
+          },
+          {
+            "rawValue" : "atom.173f909e3bb92189"
+          },
+          {
+            "rawValue" : "atom.17dbfbec449ab903"
+          },
+          {
+            "rawValue" : "atom.28bca540b68373b1"
+          },
+          {
+            "rawValue" : "atom.290ae51e72a446d9"
+          },
+          {
+            "rawValue" : "atom.2a2297b1ecbe3a9a"
+          },
+          {
+            "rawValue" : "atom.3590a66a0ff5a5c4"
+          },
+          {
+            "rawValue" : "atom.35d043dd97e8f12a"
+          },
+          {
+            "rawValue" : "atom.37c2bbca67d7c069"
+          },
+          {
+            "rawValue" : "atom.3977794371f02e96"
+          },
+          {
+            "rawValue" : "atom.39f247de6088a36c"
+          },
+          {
+            "rawValue" : "atom.3bd70ea85349d34a"
+          },
+          {
+            "rawValue" : "atom.4401233f8762ada3"
+          },
+          {
+            "rawValue" : "atom.446f8590d0ed50cb"
+          },
+          {
+            "rawValue" : "atom.44bcf326ef7b3658"
+          },
+          {
+            "rawValue" : "atom.501090a8a0bc4797"
+          },
+          {
+            "rawValue" : "atom.54e11a7e9557c7aa"
+          },
+          {
+            "rawValue" : "atom.67351f58aede343f"
+          },
+          {
+            "rawValue" : "atom.6981ae101427e260"
+          },
+          {
+            "rawValue" : "atom.7324e9eef70fc68a"
+          },
+          {
+            "rawValue" : "atom.77f97321eb097f23"
+          },
+          {
+            "rawValue" : "atom.835249aae793f94e"
+          },
+          {
+            "rawValue" : "atom.83f3f8b2ca6d30e7"
+          },
+          {
+            "rawValue" : "atom.848899b264825634"
+          },
+          {
+            "rawValue" : "atom.84ac1a112c545943"
+          },
+          {
+            "rawValue" : "atom.8ad1fe0e13a51f23"
+          },
+          {
+            "rawValue" : "atom.8e32ef437bf9a6c1"
+          },
+          {
+            "rawValue" : "atom.9809217e357e16d1"
+          },
+          {
+            "rawValue" : "atom.9db1970236f3bd35"
+          },
+          {
+            "rawValue" : "atom.9ea0a774abf9b7f6"
+          },
+          {
+            "rawValue" : "atom.a6d3aab29d1f828a"
+          },
+          {
+            "rawValue" : "atom.a7dbeb28db0f6a34"
+          },
+          {
+            "rawValue" : "atom.a8bb2ca67947d61e"
+          },
+          {
+            "rawValue" : "atom.ae27a7ff0e63057d"
+          },
+          {
+            "rawValue" : "atom.b07e7b4fd9902480"
+          },
+          {
+            "rawValue" : "atom.b472ef504db379dd"
+          },
+          {
+            "rawValue" : "atom.bb282a07e5571af4"
+          },
+          {
+            "rawValue" : "atom.bb3764bde64eb5f7"
+          },
+          {
+            "rawValue" : "atom.bc82c5887eddf55f"
+          },
+          {
+            "rawValue" : "atom.bf208fa9d0760bbf"
+          },
+          {
+            "rawValue" : "atom.c100c7ee4804db41"
+          },
+          {
+            "rawValue" : "atom.c184ed63e90da64d"
+          },
+          {
+            "rawValue" : "atom.c393f8e00108b339"
+          },
+          {
+            "rawValue" : "atom.c64e278f5364f84d"
+          },
+          {
+            "rawValue" : "atom.c95ec4109cb7f0af"
+          },
+          {
+            "rawValue" : "atom.cda87ceddc93c5eb"
+          },
+          {
+            "rawValue" : "atom.dade0e8289157427"
+          },
+          {
+            "rawValue" : "atom.e52a9982e16aaebd"
+          },
+          {
+            "rawValue" : "atom.eef9c94f36e93e5c"
+          },
+          {
+            "rawValue" : "atom.fa592351bbcb3c55"
+          }
+        ]
+      },
+      "at" : -978306199,
+      "concept" : "React.memo",
+      "revisedTo" : "React.memo can reduce expensive child renders when props are stable.",
+      "text" : "React.memo can reduce expensive child renders.",
+      "verdict" : "partiallySupported"
+    },
+    {
+      "alignment" : {
+        "alignments" : [
+          {
+            "feedback" : {
+              "admissibility" : "sourceSupported",
+              "atomIDs" : [
+                {
+                  "rawValue" : "atom.addc11e93198996f"
+                }
+              ],
+              "provenance" : {
+                "admissibility" : "sourceSupported",
+                "confidenceInParsing" : 1,
+                "derivedFrom" : [
+
+                ],
+                "rule" : "none",
+                "spans" : [
+                  {
+                    "canonicalSpan" : "It can reduce\nexpensive child renders when props are stable.",
+                    "characterOffset" : 171,
+                    "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                    "extractionVersion" : "leu.pdf-packet.1",
+                    "page" : 124,
+                    "sourceRole" : "compactExplanation"
+                  },
+                  {
+                    "canonicalSpan" : "React.memo",
+                    "characterOffset" : 55,
+                    "documentID" : "javascript_midlevel_interview_mobile_mastery",
+                    "extractionVersion" : "leu.pdf-packet.1",
+                    "page" : 124,
+                    "sourceRole" : "structure"
+                  }
+                ]
+              },
+              "text" : "It can reduce expensive child renders when props are stable."
+            },
+            "findings" : [
+
+            ],
+            "matchScore" : 1,
+            "matchedAtomID" : {
+              "rawValue" : "atom.addc11e93198996f"
+            },
+            "proposition" : {
+              "conditions" : [
+                {
+                  "concepts" : [
+                    "prop-stable"
+                  ],
+                  "isPositive" : true,
+                  "text" : "props are stable"
+                }
+              ],
+              "id" : {
+                "rawValue" : "prop.c0f9b0674dd7281e"
+              },
+              "identifiers" : [
+
+              ],
+              "isNegated" : false,
+              "isUnparsed" : false,
+              "numbers" : [
+
+              ],
+              "object" : "expensive child renders",
+              "qualifiers" : [
+                {
+                  "kind" : "modality",
+                  "text" : "can"
+                }
+              ],
+              "quantifier" : "existential",
+              "relation" : "causes",
+              "subject" : "React.memo",
+              "text" : "React.memo can reduce expensive child renders when props are stable."
+            },
+            "verdict" : "supported"
+          }
+        ],
+        "concept" : "React.memo",
+        "unaddressedAtomIDs" : [
+          {
+            "rawValue" : "atom.0adb5091b75c188a"
+          },
+          {
+            "rawValue" : "atom.11a98f88f3876c58"
+          },
+          {
+            "rawValue" : "atom.1424b15fac5d349b"
+          },
+          {
+            "rawValue" : "atom.148e8b75deb812de"
+          },
+          {
+            "rawValue" : "atom.173f909e3bb92189"
+          },
+          {
+            "rawValue" : "atom.17dbfbec449ab903"
+          },
+          {
+            "rawValue" : "atom.28bca540b68373b1"
+          },
+          {
+            "rawValue" : "atom.290ae51e72a446d9"
+          },
+          {
+            "rawValue" : "atom.2a2297b1ecbe3a9a"
+          },
+          {
+            "rawValue" : "atom.3590a66a0ff5a5c4"
+          },
+          {
+            "rawValue" : "atom.35d043dd97e8f12a"
+          },
+          {
+            "rawValue" : "atom.37c2bbca67d7c069"
+          },
+          {
+            "rawValue" : "atom.3977794371f02e96"
+          },
+          {
+            "rawValue" : "atom.39f247de6088a36c"
+          },
+          {
+            "rawValue" : "atom.3bd70ea85349d34a"
+          },
+          {
+            "rawValue" : "atom.4401233f8762ada3"
+          },
+          {
+            "rawValue" : "atom.446f8590d0ed50cb"
+          },
+          {
+            "rawValue" : "atom.44bcf326ef7b3658"
+          },
+          {
+            "rawValue" : "atom.501090a8a0bc4797"
+          },
+          {
+            "rawValue" : "atom.54e11a7e9557c7aa"
+          },
+          {
+            "rawValue" : "atom.67351f58aede343f"
+          },
+          {
+            "rawValue" : "atom.6981ae101427e260"
+          },
+          {
+            "rawValue" : "atom.7324e9eef70fc68a"
+          },
+          {
+            "rawValue" : "atom.77f97321eb097f23"
+          },
+          {
+            "rawValue" : "atom.835249aae793f94e"
+          },
+          {
+            "rawValue" : "atom.83f3f8b2ca6d30e7"
+          },
+          {
+            "rawValue" : "atom.848899b264825634"
+          },
+          {
+            "rawValue" : "atom.84ac1a112c545943"
+          },
+          {
+            "rawValue" : "atom.8ad1fe0e13a51f23"
+          },
+          {
+            "rawValue" : "atom.8e32ef437bf9a6c1"
+          },
+          {
+            "rawValue" : "atom.9809217e357e16d1"
+          },
+          {
+            "rawValue" : "atom.9db1970236f3bd35"
+          },
+          {
+            "rawValue" : "atom.9ea0a774abf9b7f6"
+          },
+          {
+            "rawValue" : "atom.a6d3aab29d1f828a"
+          },
+          {
+            "rawValue" : "atom.a7dbeb28db0f6a34"
+          },
+          {
+            "rawValue" : "atom.a8bb2ca67947d61e"
+          },
+          {
+            "rawValue" : "atom.ae27a7ff0e63057d"
+          },
+          {
+            "rawValue" : "atom.b07e7b4fd9902480"
+          },
+          {
+            "rawValue" : "atom.b472ef504db379dd"
+          },
+          {
+            "rawValue" : "atom.bb282a07e5571af4"
+          },
+          {
+            "rawValue" : "atom.bb3764bde64eb5f7"
+          },
+          {
+            "rawValue" : "atom.bc82c5887eddf55f"
+          },
+          {
+            "rawValue" : "atom.bf208fa9d0760bbf"
+          },
+          {
+            "rawValue" : "atom.c100c7ee4804db41"
+          },
+          {
+            "rawValue" : "atom.c184ed63e90da64d"
+          },
+          {
+            "rawValue" : "atom.c393f8e00108b339"
+          },
+          {
+            "rawValue" : "atom.c64e278f5364f84d"
+          },
+          {
+            "rawValue" : "atom.c95ec4109cb7f0af"
+          },
+          {
+            "rawValue" : "atom.cda87ceddc93c5eb"
+          },
+          {
+            "rawValue" : "atom.dade0e8289157427"
+          },
+          {
+            "rawValue" : "atom.e52a9982e16aaebd"
+          },
+          {
+            "rawValue" : "atom.eef9c94f36e93e5c"
+          },
+          {
+            "rawValue" : "atom.fa592351bbcb3c55"
+          }
+        ]
+      },
+      "at" : -978306197,
+      "concept" : "React.memo",
+      "text" : "React.memo can reduce expensive child renders when props are stable.",
+      "verdict" : "supported"
+    }
+  ],
+  "extractionVersion" : "leu.pdf-packet.1",
+  "lastEventAt" : -978306197,
+  "relatedSourcesSeen" : [
+    "javascript_midlevel_interview_mobile_mastery"
+  ],
+  "resolvedByUser" : [
+
+  ],
+  "unresolvedQuestions" : [
+
+  ],
+  "version" : 1,
+  "visitedDependencies" : [
+
+  ]
+}

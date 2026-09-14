@@ -19,6 +19,13 @@ public enum RelationKind: String, Codable, CaseIterable, Sendable {
     case refines
     case scopes
     case qualifies
+    // Source predicates whose direction must not be collapsed into causation.
+    case reduces, increases, creates, makes, keeps, gives, separates, decouples
+    case replaces, catches, derives, balances, trades, models
+    case selects, collects, returns, requests, presents, coordinates, commits, destroys, solves
+    case introduces
+    case updates
+    case smooths, communicates, computes, centralizes, improves, verifies
 
     /// Relations that move forward along a mechanism ("what does this enable?").
     public var isForwardMechanism: Bool {
@@ -116,7 +123,8 @@ public struct KnowledgeRelation: Codable, Equatable, Hashable, Sendable, Identif
                 supportingAtoms: [StableID] = [],
                 provenance: Provenance) {
         let components = [kind.rawValue, subject.id.rawValue, object.id.rawValue,
-                          conditions.map(\.text).joined(separator: "|"),
+                          conditions.map { "\($0.isPositive):\($0.text)" }.joined(separator: "|"),
+                          qualifiers.map { "\($0.kind.rawValue):\($0.text)" }.joined(separator: "|"),
                           provenance.admissibility.rawValue]
         self.init(id: StableID(namespace: "rel", components: components),
                   kind: kind,
@@ -153,7 +161,6 @@ public struct KnowledgeNode: Codable, Equatable, Hashable, Sendable, Identifiabl
     /// Merging key: stemmed content tokens, order preserved. This is what makes
     /// "a stable key" and "stable keys" the same node without a synonym table.
     public static func key(for label: String) -> String {
-        let tokens = TextScanning.contentTokens(label)
-        return tokens.isEmpty ? TextScanning.normalizedTokens(label).joined(separator: "-") : tokens.joined(separator: "-")
+        SemanticIdentity.phrase(label)
     }
 }

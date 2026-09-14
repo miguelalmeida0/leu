@@ -21,7 +21,9 @@ public enum MechanismQuestion: Codable, Equatable, Sendable {
     var traversal: (kinds: [RelationKind], forward: Bool, maxDepth: Int) {
         switch self {
         case .why:
-            return ([.enables, .causes, .supports, .prevents], true, 4)
+            return ([.enables, .causes, .supports, .prevents, .explains, .reduces, .increases,
+                     .creates, .makes, .keeps, .gives, .separates, .decouples, .replaces,
+                     .catches, .derives, .balances, .trades, .models], true, 4)
         case .whatDoesThisEnable:
             return ([.enables, .supports], true, 2)
         case .whatHappensNext:
@@ -44,22 +46,28 @@ public struct MechanismStep: Codable, Equatable, Sendable {
     public var toLabel: String
     public var conditions: [ClaimCondition]
     public var provenance: Provenance
+    public var qualifiers: [Qualifier]
 
     public init(relationID: StableID,
                 kind: RelationKind,
                 fromLabel: String,
                 toLabel: String,
                 conditions: [ClaimCondition],
-                provenance: Provenance) {
+                provenance: Provenance, qualifiers: [Qualifier] = []) {
         self.relationID = relationID
         self.kind = kind
         self.fromLabel = fromLabel
         self.toLabel = toLabel
         self.conditions = conditions
         self.provenance = provenance
+        self.qualifiers = qualifiers
     }
 
-    public var arrow: String { "\(fromLabel) —\(kind.rawValue)→ \(toLabel)" }
+    public var arrow: String { "\(fromLabel) —\(qualifiedRelation)→ \(toLabel)" }
+    public var qualifiedRelation: String {
+        let guards = qualifiers.map(\.text) + conditions.map { "\($0.isPositive ? "when" : "unless") \($0.text)" }
+        return kind.rawValue + (guards.isEmpty ? "" : " [" + guards.joined(separator: "; ") + "]")
+    }
 }
 
 /// A full path through the mechanism, plus its rendered narrative.
@@ -78,7 +86,7 @@ public struct MechanismPath: Codable, Equatable, Sendable {
     public var narrative: String {
         guard let first = steps.first else { return "" }
         var line = first.fromLabel
-        for step in steps { line += "\n  → \(step.kind.rawValue): \(step.toLabel)" }
+        for step in steps { line += "\n  → \(step.qualifiedRelation): \(step.toLabel)" }
         return line
     }
 
@@ -144,6 +152,10 @@ public struct MechanismEngine: Sendable {
         if case .whatBreaksWithoutThis = question {
             paths = extendWithFailureModes(paths, focus: focus, in: graph)
         }
+        if case .why = question {
+            // A definition alone answers "what is it", not "why it matters".
+            paths = paths.filter { $0.steps.contains { $0.kind != .explains } }
+        }
 
         paths = Array(paths.prefix(maxPaths))
         if paths.isEmpty {
@@ -152,7 +164,10 @@ public struct MechanismEngine: Sendable {
                                    paths: [],
                                    unansweredReason: "Your sources mention \"\(focus.label)\" but do not state \(explanationNoun(question)).")
         }
-        return MechanismAnswer(question: question, focusLabel: focus.label, paths: paths)
+        return MechanismAnswer(question: question, focusLabel: focus.label, paths: paths,
+                               unansweredReason: paths.contains { $0.steps.count >= depth }
+                                 ? "Traversal stopped at its configured depth; further steps were not evaluated."
+                                 : "Source does not establish a further step beyond these admitted edges.")
     }
 
     func explanationNoun(_ question: MechanismQuestion) -> String {
@@ -201,7 +216,7 @@ public struct MechanismEngine: Sendable {
                                          fromLabel: forward ? fromNode.label : toNode.label,
                                          toLabel: forward ? toNode.label : fromNode.label,
                                          conditions: edge.conditions,
-                                         provenance: edge.provenance)
+                                         provenance: edge.provenance, qualifiers: edge.qualifiers)
                 var visited = current.visited
                 visited.insert(nextID.rawValue)
                 stack.append((nextID, current.steps + [step], visited))

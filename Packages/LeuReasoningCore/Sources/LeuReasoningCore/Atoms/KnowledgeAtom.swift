@@ -190,7 +190,9 @@ public struct KnowledgeAtom: Codable, Equatable, Hashable, Sendable, Identifiabl
             relation.lowercased(),
             object.lowercased(),
             isNegated ? "neg" : "pos",
-            conditions.map(\.text).joined(separator: "|")
+            conditions.map { "\($0.isPositive):\($0.text)" }.joined(separator: "|"),
+            qualifiers.map { "\($0.kind.rawValue):\($0.text)" }.joined(separator: "|"),
+            provenance.spans.map { "\($0.extractionVersion):\($0.characterOffset ?? -1):\($0.canonicalSpan)" }.joined(separator: "|")
         ]
         self.init(id: StableID(namespace: "atom", components: components),
                   claimType: claimType,

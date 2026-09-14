@@ -302,6 +302,16 @@ public struct SourceRoleClassifier: Sendable {
     }
 
     static func stem(_ word: String) -> String {
+        // "-ies" plurals/verb forms of a consonant + y root ("retries",
+        // "studies") restore the "y" rather than dropping the whole suffix, so
+        // they land on the same stem as the "-ing" form of the same verb
+        // ("retrying", "studying") instead of diverging ("retr" vs "retry").
+        if word.hasSuffix("ies"), word.count > 4 {
+            let base = String(word.dropLast(3))
+            if let last = base.last, !"aeiou".contains(last) {
+                return base + "y"
+            }
+        }
         var value = word
         for suffix in ["ing", "ies", "es", "s", "ed"] where value.count > suffix.count + 2 && value.hasSuffix(suffix) {
             value = String(value.dropLast(suffix.count))

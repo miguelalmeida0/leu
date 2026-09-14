@@ -1,0 +1,252 @@
+Test Suite 'All tests' started at 2026-09-14 21:55:28.350.
+Test Suite 'ReasoningTests.xctest' started at 2026-09-14 21:55:28.359.
+Test Suite 'AtomExtractionTests' started at 2026-09-14 21:55:28.359.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testCapturesModalityQualifier]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testCapturesModalityQualifier]' passed (0.003 seconds).
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testExtractionIsIdempotent]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testExtractionIsIdempotent]' passed (0.001 seconds).
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testKeepsConditionOutOfTheClaim]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testKeepsConditionOutOfTheClaim]' passed (0.001 seconds).
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testMnemonicBlocksProduceNoAtoms]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testMnemonicBlocksProduceNoAtoms]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testParsingConfidenceIsNotSourceConfidence]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testParsingConfidenceIsNotSourceConfidence]' passed (0.001 seconds).
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testPreservesHttpStatusIdentifiers]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testPreservesHttpStatusIdentifiers]' passed (0.001 seconds).
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testPreservesIdentifiers]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testPreservesIdentifiers]' passed (0.001 seconds).
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testPreservesNegation]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testPreservesNegation]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testPreservesNumbersWithComparator]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testPreservesNumbersWithComparator]' passed (0.001 seconds).
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testSecondAtomForBecauseClause]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testSecondAtomForBecauseClause]' passed (0.001 seconds).
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testSentenceSplitterDoesNotBreakOnDecimalsOrAbbreviations]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testSentenceSplitterDoesNotBreakOnDecimalsOrAbbreviations]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testSkipsSentencesWithNoRelationCue]' started.
+Test Case '-[LeuReasoningCoreTests.AtomExtractionTests testSkipsSentencesWithNoRelationCue]' passed (0.000 seconds).
+Test Suite 'AtomExtractionTests' passed at 2026-09-14 21:55:28.368.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.009 (0.009) seconds
+Test Suite 'ConceptAndSynthesisTests' started at 2026-09-14 21:55:28.368.
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testCachingCompressesToFiveGroundedLevels]' started.
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testCachingCompressesToFiveGroundedLevels]' passed (0.032 seconds).
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testEveryRenderedSynthesisLineIsGrounded]' started.
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testEveryRenderedSynthesisLineIsGrounded]' passed (0.027 seconds).
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testMissingLevelsAreReportedAsGapsNotInvented]' started.
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testMissingLevelsAreReportedAsGapsNotInvented]' passed (0.039 seconds).
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testNumericDisagreementIsDetected]' started.
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testNumericDisagreementIsDetected]' passed (0.039 seconds).
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testSynthesisFindsTheCommonThreadAcrossDocuments]' started.
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testSynthesisFindsTheCommonThreadAcrossDocuments]' passed (0.024 seconds).
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testSynthesisReportsOnlyRealDisagreement]' started.
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testSynthesisReportsOnlyRealDisagreement]' passed (0.039 seconds).
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testUnknownConceptProducesGapsOnly]' started.
+Test Case '-[LeuReasoningCoreTests.ConceptAndSynthesisTests testUnknownConceptProducesGapsOnly]' passed (0.038 seconds).
+Test Suite 'ConceptAndSynthesisTests' passed at 2026-09-14 21:55:28.607.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.238 (0.239) seconds
+Test Suite 'CounterfactualTests' started at 2026-09-14 21:55:28.607.
+Test Case '-[LeuReasoningCoreTests.CounterfactualTests testDepthIsBoundedAndDeclared]' started.
+Test Case '-[LeuReasoningCoreTests.CounterfactualTests testDepthIsBoundedAndDeclared]' passed (0.022 seconds).
+Test Case '-[LeuReasoningCoreTests.CounterfactualTests testEveryConsequenceIsBackedByAnExistingEdge]' started.
+Test Case '-[LeuReasoningCoreTests.CounterfactualTests testEveryConsequenceIsBackedByAnExistingEdge]' passed (0.022 seconds).
+Test Case '-[LeuReasoningCoreTests.CounterfactualTests testFalsifyingAConditionOnlyRetractsConditionedClaims]' started.
+Test Case '-[LeuReasoningCoreTests.CounterfactualTests testFalsifyingAConditionOnlyRetractsConditionedClaims]' passed (0.023 seconds).
+Test Case '-[LeuReasoningCoreTests.CounterfactualTests testLosingKeyStabilityPropagatesOnlyStatedConsequences]' started.
+Test Case '-[LeuReasoningCoreTests.CounterfactualTests testLosingKeyStabilityPropagatesOnlyStatedConsequences]' passed (0.022 seconds).
+Test Case '-[LeuReasoningCoreTests.CounterfactualTests testUnknownSubjectProducesNoSpeculation]' started.
+Test Case '-[LeuReasoningCoreTests.CounterfactualTests testUnknownSubjectProducesNoSpeculation]' passed (0.022 seconds).
+Test Suite 'CounterfactualTests' passed at 2026-09-14 21:55:28.719.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.112 (0.113) seconds
+Test Suite 'EvaluationReportTests' started at 2026-09-14 21:55:28.719.
+Test Case '-[LeuReasoningCoreTests.EvaluationReportTests testEmitEvaluationReport]' started.
+Test Case '-[LeuReasoningCoreTests.EvaluationReportTests testEmitEvaluationReport]' passed (1.165 seconds).
+Test Suite 'EvaluationReportTests' passed at 2026-09-14 21:55:29.884.
+	 Executed 1 test, with 0 failures (0 unexpected) in 1.165 (1.165) seconds
+Test Suite 'GroundingInvariantTests' started at 2026-09-14 21:55:29.884.
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testAttributionTextDistinguishesQuotingFromConnecting]' started.
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testAttributionTextDistinguishesQuotingFromConnecting]' passed (0.023 seconds).
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testIdsAreStableAcrossProcessRuns]' started.
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testIdsAreStableAcrossProcessRuns]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testPersistedStructuresAreVersionedAndBoundToExtraction]' started.
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testPersistedStructuresAreVersionedAndBoundToExtraction]' passed (0.023 seconds).
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testProposalGateRejectsAClaimThatIsNotInTheSource]' started.
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testProposalGateRejectsAClaimThatIsNotInTheSource]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testProposalGateRejectsAnObjectThatIsNotInTheSpan]' started.
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testProposalGateRejectsAnObjectThatIsNotInTheSpan]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testSourceSupportedAndInferredAreNeverFlattened]' started.
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testSourceSupportedAndInferredAreNeverFlattened]' passed (0.030 seconds).
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testValidatorRejectsUngroundedArtifacts]' started.
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testValidatorRejectsUngroundedArtifacts]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testZeroUnsupportedStatementsAcrossTheCorpus]' started.
+Test Case '-[LeuReasoningCoreTests.GroundingInvariantTests testZeroUnsupportedStatementsAcrossTheCorpus]' passed (1.292 seconds).
+Test Suite 'GroundingInvariantTests' passed at 2026-09-14 21:55:31.253.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 1.369 (1.369) seconds
+Test Suite 'LearnerAlignmentTests' started at 2026-09-14 21:55:31.253.
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testCorpusAlignmentGates]' started.
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testCorpusAlignmentGates]' passed (1.411 seconds).
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testDroppedConditionIsPartialNotWrong]' started.
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testDroppedConditionIsPartialNotWrong]' passed (0.024 seconds).
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testExplanationDeltaReportsWhatTheLearnerFixed]' started.
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testExplanationDeltaReportsWhatTheLearnerFixed]' passed (0.029 seconds).
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testLearnerPropositionsNeverEnterTheGraph]' started.
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testLearnerPropositionsNeverEnterTheGraph]' passed (0.023 seconds).
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testParaphraseWithDifferentVocabularyIsAccepted]' started.
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testParaphraseWithDifferentVocabularyIsAccepted]' passed (0.025 seconds).
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testReversedCausalityIsDetected]' started.
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testReversedCausalityIsDetected]' passed (0.025 seconds).
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testUniversalClaimOverASourceConditionIsRejected]' started.
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testUniversalClaimOverASourceConditionIsRejected]' passed (0.025 seconds).
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testUnrelatedClaimIsNotAddressedRatherThanWrong]' started.
+Test Case '-[LeuReasoningCoreTests.LearnerAlignmentTests testUnrelatedClaimIsNotAddressedRatherThanWrong]' passed (0.024 seconds).
+Test Suite 'LearnerAlignmentTests' passed at 2026-09-14 21:55:32.842.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 1.587 (1.588) seconds
+Test Suite 'MechanismTests' started at 2026-09-14 21:55:32.842.
+Test Case '-[LeuReasoningCoreTests.MechanismTests testChainProvenanceIsAlwaysComplete]' started.
+Test Case '-[LeuReasoningCoreTests.MechanismTests testChainProvenanceIsAlwaysComplete]' passed (0.022 seconds).
+Test Case '-[LeuReasoningCoreTests.MechanismTests testEveryGoldenChainIsReproducedWithoutUnsupportedBridges]' started.
+Test Case '-[LeuReasoningCoreTests.MechanismTests testEveryGoldenChainIsReproducedWithoutUnsupportedBridges]' passed (0.029 seconds).
+Test Case '-[LeuReasoningCoreTests.MechanismTests testMultiStepPathsAreMarkedInferredNotSourceStated]' started.
+Test Case '-[LeuReasoningCoreTests.MechanismTests testMultiStepPathsAreMarkedInferredNotSourceStated]' passed (0.022 seconds).
+Test Case '-[LeuReasoningCoreTests.MechanismTests testNegatedClaimsNeverBecomeTraversableEdges]' started.
+Test Case '-[LeuReasoningCoreTests.MechanismTests testNegatedClaimsNeverBecomeTraversableEdges]' passed (0.023 seconds).
+Test Case '-[LeuReasoningCoreTests.MechanismTests testUnknownSubjectIsAnsweredHonestly]' started.
+Test Case '-[LeuReasoningCoreTests.MechanismTests testUnknownSubjectIsAnsweredHonestly]' passed (0.022 seconds).
+Test Case '-[LeuReasoningCoreTests.MechanismTests testWhatDependsOnThisUsesStatedRequirements]' started.
+Test Case '-[LeuReasoningCoreTests.MechanismTests testWhatDependsOnThisUsesStatedRequirements]' passed (0.022 seconds).
+Test Case '-[LeuReasoningCoreTests.MechanismTests testWhyProducesTheStatedEnablementChain]' started.
+Test Case '-[LeuReasoningCoreTests.MechanismTests testWhyProducesTheStatedEnablementChain]' passed (0.022 seconds).
+Test Suite 'MechanismTests' passed at 2026-09-14 21:55:33.006.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.163 (0.164) seconds
+Test Suite 'PlanningAndStateTests' started at 2026-09-14 21:55:33.006.
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testAnalogyIsOnlyOfferedWhenASourceDrawsIt]' started.
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testAnalogyIsOnlyOfferedWhenASourceDrawsIt]' passed (0.054 seconds).
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testEverySuggestionCarriesAReason]' started.
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testEverySuggestionCarriesAReason]' passed (0.025 seconds).
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testPlannerNeverWritesQuestionText]' started.
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testPlannerNeverWritesQuestionText]' passed (0.024 seconds).
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testPlannerTargetsTheConditionTheLearnerDropped]' started.
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testPlannerTargetsTheConditionTheLearnerDropped]' passed (0.025 seconds).
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testPlansCarryAGroundedAnswerRequirement]' started.
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testPlansCarryAGroundedAnswerRequirement]' passed (0.024 seconds).
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testProjectionIsDeterministicRegardlessOfEventOrder]' started.
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testProjectionIsDeterministicRegardlessOfEventOrder]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testStrategiesAreNotRepeated]' started.
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testStrategiesAreNotRepeated]' passed (0.026 seconds).
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testStrategySelectorPrefersMechanismAfterAReversal]' started.
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testStrategySelectorPrefersMechanismAfterAReversal]' passed (0.026 seconds).
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testUnderstandingStateIsBuiltFromExplicitEventsOnly]' started.
+Test Case '-[LeuReasoningCoreTests.PlanningAndStateTests testUnderstandingStateIsBuiltFromExplicitEventsOnly]' passed (0.000 seconds).
+Test Suite 'PlanningAndStateTests' passed at 2026-09-14 21:55:33.212.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.205 (0.206) seconds
+Test Suite 'ProviderTests' started at 2026-09-14 21:55:33.212.
+Test Case '-[LeuReasoningCoreTests.ProviderTests testAppleProviderCompilesAndDegradesToDeterministic]' started.
+Test Case '-[LeuReasoningCoreTests.ProviderTests testAppleProviderCompilesAndDegradesToDeterministic]' passed (0.053 seconds).
+Test Case '-[LeuReasoningCoreTests.ProviderTests testBuildIsDeterministicAcrossRuns]' started.
+Test Case '-[LeuReasoningCoreTests.ProviderTests testBuildIsDeterministicAcrossRuns]' passed (0.006 seconds).
+Test Case '-[LeuReasoningCoreTests.ProviderTests testCrossSourceProposalsAreOnlyMadeAcrossDocuments]' started.
+Test Case '-[LeuReasoningCoreTests.ProviderTests testCrossSourceProposalsAreOnlyMadeAcrossDocuments]' passed (0.375 seconds).
+Test Case '-[LeuReasoningCoreTests.ProviderTests testEngineRunsEndToEndWithNoModelAtAll]' started.
+Test Case '-[LeuReasoningCoreTests.ProviderTests testEngineRunsEndToEndWithNoModelAtAll]' passed (0.004 seconds).
+Test Suite 'ProviderTests' passed at 2026-09-14 21:55:33.650.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.438 (0.439) seconds
+Test Suite 'SourceRoleTests' started at 2026-09-14 21:55:33.650.
+Test Case '-[LeuReasoningCoreTests.SourceRoleTests testClassifiesMasteryLayoutWithoutLiteralHeadingMatches]' started.
+Test Case '-[LeuReasoningCoreTests.SourceRoleTests testClassifiesMasteryLayoutWithoutLiteralHeadingMatches]' passed (0.002 seconds).
+Test Case '-[LeuReasoningCoreTests.SourceRoleTests testGeneralisesToUnseenHeadingWording]' started.
+Test Case '-[LeuReasoningCoreTests.SourceRoleTests testGeneralisesToUnseenHeadingWording]' passed (0.001 seconds).
+Test Case '-[LeuReasoningCoreTests.SourceRoleTests testMnemonicAndAdviceNeverYieldFactualClaims]' started.
+Test Case '-[LeuReasoningCoreTests.SourceRoleTests testMnemonicAndAdviceNeverYieldFactualClaims]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.SourceRoleTests testRepeatedTextAcrossPagesBecomesFurniture]' started.
+Test Case '-[LeuReasoningCoreTests.SourceRoleTests testRepeatedTextAcrossPagesBecomesFurniture]' passed (0.000 seconds).
+Test Suite 'SourceRoleTests' passed at 2026-09-14 21:55:33.653.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'V29GroundingTests' started at 2026-09-14 21:55:33.653.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testCanonicalAdmissionRejectsChangedObjectAndLocator]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testCanonicalAdmissionRejectsChangedObjectAndLocator]' passed (0.002 seconds).
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testCardRolesAndExactUnicodeOffsets]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testCardRolesAndExactUnicodeOffsets]' passed (0.002 seconds).
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testCompatibleNumericLimitsAreNotDisagreement]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testCompatibleNumericLimitsAreNotDisagreement]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testCoordinatedUnsupportedClauseCannotHideBehindSupportedFirstClause]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testCoordinatedUnsupportedClauseCannotHideBehindSupportedFirstClause]' passed (0.005 seconds).
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testCounterfactualDoesNotAffirmFailureOrPropagateLostSupport]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testCounterfactualDoesNotAffirmFailureOrPropagateLostSupport]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testNoCrossCardOrAmbiguousPronounResolution]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testNoCrossCardOrAmbiguousPronounResolution]' passed (0.002 seconds).
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testNodeIdentityRetainsNegationAndScope]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testNodeIdentityRetainsNegationAndScope]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testNoEquivalenceFromSameVocabularyOrMissingCondition]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testNoEquivalenceFromSameVocabularyOrMissingCondition]' passed (0.001 seconds).
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testOpeningContentDoesNotCreateAnExplanationAttemptOrMastery]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testOpeningContentDoesNotCreateAnExplanationAttemptOrMastery]' passed (0.000 seconds).
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testReductionNeverBecomesCausationAndGuardsRemain]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testReductionNeverBecomesCausationAndGuardsRemain]' passed (0.001 seconds).
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testRelationAdmissionChecksPredicateDirectionAndParents]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testRelationAdmissionChecksPredicateDirectionAndParents]' passed (0.002 seconds).
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testUnresolvedSynthesisIsNotAnAdmittedStatement]' started.
+Test Case '-[LeuReasoningCoreTests.V29GroundingTests testUnresolvedSynthesisIsNotAnAdmittedStatement]' passed (0.000 seconds).
+Test Suite 'V29GroundingTests' passed at 2026-09-14 21:55:33.670.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.016 (0.017) seconds
+Test Suite 'ReasoningTests.xctest' passed at 2026-09-14 21:55:33.670.
+	 Executed 77 tests, with 0 failures (0 unexpected) in 5.305 (5.311) seconds
+Test Suite 'All tests' passed at 2026-09-14 21:55:33.670.
+	 Executed 77 tests, with 0 failures (0 unexpected) in 5.305 (5.319) seconds
+{
+  "atomExtraction" : {
+    "extracted" : 102,
+    "identifierPreserved" : 102,
+    "negationPreserved" : 102,
+    "numberPreserved" : 102,
+    "qualifierPreserved" : 100,
+    "sentences" : 106,
+    "skipped" : 4,
+    "subjectPreserved" : 101
+  },
+  "chains" : {
+    "expected" : 32,
+    "incompleteProvenance" : 0,
+    "reproduced" : 32,
+    "unsupportedBridges" : 0
+  },
+  "counterfactuals" : {
+    "groundedConsequences" : 14,
+    "inventedConsequences" : 0,
+    "openQuestionsRaised" : 11,
+    "queries" : 10
+  },
+  "learnerAlignment" : {
+    "contradictionCases" : 20,
+    "contradictionRejected" : 19,
+    "failures" : [
+      "para.idempotent: expected supported, got partiallySupported",
+      "para.debounce: expected supported, got ambiguous",
+      "contra.duplicates.reverse: expected contradicted, got partiallySupported",
+      "over.503.always: expected contradicted, got ambiguous",
+      "mix.cache.partial: expected partiallySupported, got contradicted",
+      "mix.cache.addition: expected partiallySupported, got supported",
+      "mix.index.addition: expected partiallySupported, got supported",
+      "mix.atleastonce.supported: expected supported, got partiallySupported"
+    ],
+    "misconceptionTypeMatches" : 41,
+    "mixedCases" : 30,
+    "mixedCorrect" : 26,
+    "overgeneralisationCases" : 20,
+    "overgeneralisationDetected" : 19,
+    "paraphraseAccepted" : 18,
+    "paraphraseCases" : 20
+  },
+  "providerIdentifier" : "deterministic",
+  "relationships" : {
+    "admitted" : 99,
+    "falsePositives" : 0,
+    "inferred" : 0,
+    "rejected" : 3,
+    "sourceSupported" : 99
+  },
+  "synthesis" : {
+    "concepts" : 10,
+    "lines" : 40,
+    "manufacturedContrasts" : 0,
+    "unsupportedStatements" : 0
+  }
+}

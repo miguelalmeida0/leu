@@ -1,0 +1,59 @@
+{
+  "atomExtraction" : {
+    "extracted" : 102,
+    "identifierPreserved" : 102,
+    "negationPreserved" : 102,
+    "numberPreserved" : 102,
+    "qualifierPreserved" : 100,
+    "sentences" : 106,
+    "skipped" : 4,
+    "subjectPreserved" : 101
+  },
+  "chains" : {
+    "expected" : 32,
+    "incompleteProvenance" : 0,
+    "reproduced" : 32,
+    "unsupportedBridges" : 0
+  },
+  "counterfactuals" : {
+    "groundedConsequences" : 14,
+    "inventedConsequences" : 0,
+    "openQuestionsRaised" : 11,
+    "queries" : 10
+  },
+  "learnerAlignment" : {
+    "contradictionCases" : 20,
+    "contradictionRejected" : 19,
+    "failures" : [
+      "para.idempotent: expected supported, got partiallySupported",
+      "para.debounce: expected supported, got ambiguous",
+      "contra.duplicates.reverse: expected contradicted, got partiallySupported",
+      "over.503.always: expected contradicted, got ambiguous",
+      "mix.cache.partial: expected partiallySupported, got contradicted",
+      "mix.cache.addition: expected partiallySupported, got supported",
+      "mix.index.addition: expected partiallySupported, got supported",
+      "mix.atleastonce.supported: expected supported, got partiallySupported"
+    ],
+    "misconceptionTypeMatches" : 41,
+    "mixedCases" : 30,
+    "mixedCorrect" : 26,
+    "overgeneralisationCases" : 20,
+    "overgeneralisationDetected" : 19,
+    "paraphraseAccepted" : 18,
+    "paraphraseCases" : 20
+  },
+  "providerIdentifier" : "deterministic",
+  "relationships" : {
+    "admitted" : 99,
+    "falsePositives" : 0,
+    "inferred" : 0,
+    "rejected" : 3,
+    "sourceSupported" : 99
+  },
+  "synthesis" : {
+    "concepts" : 10,
+    "lines" : 40,
+    "manufacturedContrasts" : 0,
+    "unsupportedStatements" : 0
+  }
+}

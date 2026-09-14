@@ -11,6 +11,7 @@ public struct AdmissionRejection: Codable, Equatable, Sendable {
         case inferredWithoutParents
         case negatedEdge
         case selfLoop
+        case unsupportedBridge
     }
 
     public var artifactID: StableID
@@ -67,6 +68,9 @@ public struct GraphValidator: Sendable {
             atomIDs.insert(atom.id.rawValue)
         }
 
+        let expectedStated = KnowledgeGraphBuilder().build(atoms: admittedAtoms).relations
+        let expectedInferred = CertifiedReasoningIndex.definitionSubstitutions(admittedAtoms)
+            + CertifiedReasoningIndex.definitionConnections(admittedAtoms)
         var admittedRelations: [KnowledgeRelation] = []
         for relation in relations.sorted(by: { $0.id.rawValue < $1.id.rawValue }) {
             if relation.subject.id == relation.object.id {
@@ -90,11 +94,21 @@ public struct GraphValidator: Sendable {
                                                          detail: "source-supported relation must cite admitted atoms"))
                     continue
                 }
+                guard expectedStated.contains(relation) else {
+                    rejections.append(AdmissionRejection(artifactID: relation.id, reason: .unsupportedBridge,
+                                                         detail: "edge endpoints, predicate, guards or provenance differ from the supporting atoms"))
+                    continue
+                }
             case .inferredValidated:
                 guard !relation.provenance.derivedFrom.isEmpty, relation.provenance.rule != .none else {
                     rejections.append(AdmissionRejection(artifactID: relation.id,
                                                          reason: .inferredWithoutParents,
                                                          detail: "inferred relation must name its parents and rule"))
+                    continue
+                }
+                guard expectedInferred.contains(relation) else {
+                    rejections.append(AdmissionRejection(artifactID: relation.id, reason: .unsupportedBridge,
+                                                         detail: "named rule and parents do not establish this edge"))
                     continue
                 }
             }

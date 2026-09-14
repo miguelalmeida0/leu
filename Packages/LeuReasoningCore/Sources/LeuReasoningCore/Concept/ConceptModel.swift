@@ -20,7 +20,7 @@ public struct GroundedLine: Codable, Equatable, Sendable {
     }
 
     public static func fromAtom(_ atom: KnowledgeAtom, text: String? = nil) -> GroundedLine {
-        GroundedLine(text: text ?? atom.statement,
+        GroundedLine(text: text ?? (atom.provenance.spans.first?.extractionVersion == "leu.pdf-packet.1" ? CanonicalSource.normalized(atom.canonicalSpan ?? atom.statement) : atom.statement),
                      atomIDs: [atom.id],
                      admissibility: .sourceSupported,
                      provenance: atom.provenance)
