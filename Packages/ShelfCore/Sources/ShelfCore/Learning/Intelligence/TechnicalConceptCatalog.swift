@@ -10,6 +10,10 @@ public enum TechnicalConceptCatalog {
         let a = titleKey(a), b = titleKey(b)
         return a == b || ambiguousAlternativeFamilies.contains { $0.contains(a) && $0.contains(b) }
     }
+    static func questionExclusions(_ title: String) -> Set<String> {
+        let key = titleKey(title)
+        return ambiguousAlternativeFamilies.filter { $0.contains(key) }.reduce(into: Set([key])) { $0.formUnion($1) }
+    }
     private static let ambiguousAlternativeFamilies: [Set<String>] = [
         ["client-side routing", "routing", "spa", "history api", "single page application"],
         ["message queue", "queue", "worker", "background job", "backpressure", "task queue"],

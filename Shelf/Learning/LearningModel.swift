@@ -50,13 +50,12 @@ final class LearningModel {
     @ObservationIgnored var indexingTask: Task<Void, Never>?
     @ObservationIgnored var intelligenceTask: Task<Void, Never>?
     @ObservationIgnored var v4PreparationTask: Task<Void, Never>?
-    @ObservationIgnored var preparedV4Versions = Set<String>()
+    @ObservationIgnored var v4PrioritySource: LearningSource?
     @ObservationIgnored var pendingIntelligenceSource: LearningSource?
     let intelligenceProvider: any LearningIntelligenceProvider & LearningExplanationCapable & TeachLeuProposing = AppleLearningIntelligenceProvider()
     @ObservationIgnored var connectionIndex: GroundedConnectionIndex?
     @ObservationIgnored var connectionIndexVersion = ""
-    @ObservationIgnored var v28ConnectionIndex: V28ConnectionIndex?
-    @ObservationIgnored var v28ConnectionIndexVersion = ""
+    @ObservationIgnored lazy var libraryIntelligenceCache = LibraryIntelligenceCache(root: recordingsDirectory.deletingLastPathComponent())
     @ObservationIgnored var makeIntelligenceReader: ((LearningSource, String) -> IntelligenceReaderRoute?)?
     let explanationCache: ExplanationCache
     var modelState: LearningModelState = .unavailable

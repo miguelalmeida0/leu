@@ -1,0 +1,200 @@
+{
+  "correctOptionID" : "EB1CA759-118A-5E75-AF85-5EDEEFE67AC8",
+  "generatedAt" : "2026-09-14T18:57:40Z",
+  "id" : "09D6739B-DF46-54A4-B598-C7379556BA37",
+  "kind" : "semanticRelationship",
+  "options" : [
+    {
+      "id" : "0EC526B9-1E97-50AE-9D01-68A88A6FA9E3",
+      "text" : "Client-Side Rendering: the browser executes JavaScript to build most of the UI after loading the app shell\/data."
+    },
+    {
+      "id" : "EB1CA759-118A-5E75-AF85-5EDEEFE67AC8",
+      "text" : "Server-Side Rendering: generating HTML for a route on the server before sending it to the browser."
+    },
+    {
+      "id" : "1C7F21F8-B54D-5709-8139-C83481A9F650",
+      "text" : "Attaching client-side React behavior to HTML that was rendered on the server."
+    }
+  ],
+  "prompt" : "How can SSR improve first content delivery, SEO, and social previews for suitable pages?",
+  "propositionID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|135|65|fact|90",
+  "qualityScore" : 0.9,
+  "semanticFingerprint" : "6711979522824531651",
+  "semanticOperator" : "mechanism",
+  "source" : {
+    "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+    "pageIndex" : 135,
+    "range" : {
+      "length" : 182,
+      "location" : 90
+    },
+    "sectionTitle" : "SSR",
+    "sourceText" : "Server-Side Rendering: generating HTML for a route\non the server before sending it to the browser. It can\nimprove first content delivery, SEO, and social previews\nfor suitable pages."
+  },
+  "stableKey" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|135|65|fact|90",
+  "topicIDs" : [
+
+  ],
+  "v4" : {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|136|65|fact|90",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 137,
+        "sourceTitle" : "CSR",
+        "span" : {
+          "range" : {
+            "length" : 112,
+            "location" : 90
+          },
+          "text" : "Client-Side Rendering: the browser executes\nJavaScript to build most of the UI after loading the app\nshell\/data."
+        },
+        "text" : "Client-Side Rendering: the browser executes JavaScript to build most of the UI after loading the app shell\/data."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|135|65|fact|90",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 136,
+        "sourceTitle" : "SSR",
+        "span" : {
+          "range" : {
+            "length" : 98,
+            "location" : 90
+          },
+          "text" : "Server-Side Rendering: generating HTML for a route\non the server before sending it to the browser."
+        },
+        "text" : "Server-Side Rendering: generating HTML for a route on the server before sending it to the browser."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|137|65|fact|96",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 138,
+        "sourceTitle" : "Hydration",
+        "span" : {
+          "range" : {
+            "length" : 77,
+            "location" : 96
+          },
+          "text" : "Attaching client-side React behavior to HTML that was\nrendered on the server."
+        },
+        "text" : "Attaching client-side React behavior to HTML that was rendered on the server."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 86,
+              "location" : 429
+            },
+            "text" : "Next.js server renders product page HTML, then\nthe browser hydrates interactive parts."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 731
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 123 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 148,
+              "location" : 557
+            },
+            "text" : "SSR generates HTML on the server. It can improve initial\nrendering and crawlability but adds server\/runtime\ncomplexity and hydration considerations."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 111,
+              "location" : 295
+            },
+            "text" : "The restaurant plates the meal before it reaches your\ntable instead of sending raw ingredients for you to\ncook."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 182,
+              "location" : 90
+            },
+            "text" : "Server-Side Rendering: generating HTML for a route\non the server before sending it to the browser. It can\nimprove first content delivery, SEO, and social previews\nfor suitable pages."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 135,
+        "section" : "123 F R O N T E N D P L AT F O R M , U X & P E R F O R M A N C E",
+        "title" : "SSR",
+        "titleSpan" : {
+          "range" : {
+            "length" : 3,
+            "location" : 65
+          },
+          "text" : "SSR"
+        }
+      },
+      "composedStatement" : "SSR: Server-Side Rendering: generating HTML for a route on the server before sending it to the browser. It can improve first content delivery, SEO, and social previews for suitable pages.",
+      "families" : [
+        "definition",
+        "constraint",
+        "sequence"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 182,
+          "location" : 90
+        },
+        "text" : "Server-Side Rendering: generating HTML for a route\non the server before sending it to the browser. It can\nimprove first content delivery, SEO, and social previews\nfor suitable pages."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "SSR"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 98,
+            "location" : 90
+          },
+          "text" : "Server-Side Rendering: generating HTML for a route\non the server before sending it to the browser."
+        },
+        {
+          "range" : {
+            "length" : 83,
+            "location" : 189
+          },
+          "text" : "It can\nimprove first content delivery, SEO, and social previews\nfor suitable pages."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "SSR: Server-Side Rendering: generating HTML for a route on the server before sending it to the browser. It can improve first content delivery, SEO, and social previews for suitable pages.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|135|65|fact|90",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how can SSR improve first content delivery, SEO, and social previews for suitable pages?"
+  }
+}

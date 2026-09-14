@@ -6,10 +6,10 @@ root = Path(__file__).resolve().parent.parent
 out = root / 'docs/v28/productization'
 out.mkdir(parents=True, exist_ok=True)
 checks = {
- 'Study prepares V4 before planning': ('Shelf/Learning/LearningModel+Sessions.swift', ['await prepareV4Questions()', 'begin(planner.plan']),
- 'Background indexing persists the actual bank': ('Shelf/Learning/LearningModel+Intelligence.swift', ['V4StudyBank.build(analysis', 'repository.storeV4Questions(questions)']),
+ 'Study plans immediately while preparation continues': ('Shelf/Learning/LearningModel+Sessions.swift', ['prepareIntelligence()', 'begin(planner.plan']),
+ 'Background indexing persists the actual bank': ('Shelf/Learning/LearningModel+Intelligence.swift', ['V4GenerationSession(analysis', 'repository.storeV4Batch(batch)', 'completedV4Pages(documentID:']),
  'Teach UI consumes V2 presentation': ('Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift', ['V28TeachPresentation.compare(text', 'feedback = result']),
- 'Reader retrieval uses admitted V28 connections': ('Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift', ['V28ConnectionIndex(analyses:', 'index.connections(from: source']),
+ 'Reader retrieval uses admitted V28 connections': ('Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift', ['learning.libraryIntelligenceCache', 'cache.retrieve(source: source']),
  'Collision uses both bound sources': ('Shelf/Learning/Intelligence/KnowledgeCollisionSheet.swift', ['ConnectionAdmissionV2.validate(connection', 'sources: [connection.sourceA, connection.sourceB]', 'model.viewFact(connection.sourceA', 'model.viewFact(connection.sourceB']),
  'Prediction UI uses tested state machine': ('Shelf/Learning/Intelligence/TryItSheet.swift', ['keyExperiment.predict(choice)', 'keyExperiment.reveal(definition:', 'keyExperiment.state']),
  'Library result opens its validated excerpt': ('Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift', ['item.isCurrent(in:', 'IntelligenceSource(source: item.passage']),

@@ -12,6 +12,8 @@ public actor LearningRepository {
 
     @discardableResult
     public func open() throws -> LearningSnapshot {
+        let started = DispatchTime.now().uptimeNanoseconds
+        defer { IntelligencePerformance.record("document_open", since: started, cacheHit: state != nil) }
         if let state { return state }
         var loaded = try persistence.load()
         let seeded = loaded.topics.isEmpty
@@ -65,21 +67,39 @@ public actor LearningRepository {
     }
 
     public func storeV4Questions(_ questions: [LearningQuestion]) throws {
+        try installV4(questions, batch: nil)
+    }
+
+    public func storeV4Batch(_ batch: V4QuestionBatch) throws {
+        try installV4(batch.questions, batch: batch)
+    }
+
+    private func installV4(_ questions: [LearningQuestion], batch: V4QuestionBatch?) throws {
         try transaction { snapshot in
-            let documents = Set(questions.map { $0.source.documentID })
-            let admission = snapshot.analyses.filter { documents.contains($0.key) }.mapValues { V4StudyAdmission(analysis: $0) }
+            let documents = Set(questions.map { $0.source.documentID }).union(batch.map { [$0.documentID] } ?? [])
+            if let batch {
+                guard let analysis = snapshot.analyses[batch.documentID], try ValidatedIntelligenceReceipt.source(analysis) == batch.sourceDigest else { throw LearningIntelligenceError.sourceIntegrityFailed }
+            }
+            let admission = snapshot.analyses.filter { documents.contains($0.key) && batch == nil }.mapValues { V4StudyAdmission(analysis: $0) }
+            var eligiblePages = Set(snapshot.studyObjects.map { "\($0.source.documentID)|\($0.source.pageIndex)" })
             for question in questions {
-                guard let gate = admission[question.source.documentID], gate.rejection(question) == nil else {
+                guard batch != nil || admission[question.source.documentID]?.rejection(question) == nil && admission[question.source.documentID] != nil else {
                     throw LearningIntelligenceError.sourceIntegrityFailed
                 }
                 if !snapshot.questions.contains(where: { $0.id == question.id }) { snapshot.questions.append(question) }
-                if !snapshot.studyObjects.contains(where: { $0.source.documentID == question.source.documentID && $0.source.pageIndex == question.source.pageIndex }) {
+                if eligiblePages.insert("\(question.source.documentID)|\(question.source.pageIndex)").inserted {
                     let object = LearningObject(id: StableIdentity.uuid("v4-object|" + question.stableKey), type: .passage,
                         source: question.source, topicIDs: question.topicIDs, title: question.source.sectionTitle ?? "Source idea",
                         importance: 0.7, origin: .documentAnalysis)
                     snapshot.learningObjects.append(object)
                     snapshot.reviewStates[object.id] = ReviewState(learningObjectID: object.id)
                 }
+            }
+            for id in documents {
+                guard let analysis = snapshot.analyses[id] else { throw LearningIntelligenceError.sourceIntegrityFailed }
+                let completed = (snapshot.v4Receipts[id]?.completedPages ?? []).union(batch?.pages ?? [])
+                snapshot.v4Receipts[id] = try ValidatedIntelligenceReceipt(analysis: analysis,
+                    questions: snapshot.questions.filter { $0.v4 != nil && $0.source.documentID == id }, completedPages: completed)
             }
         }
     }
@@ -88,6 +108,7 @@ public actor LearningRepository {
                                questions: [LearningQuestion], semanticIndex: SemanticIndex? = nil) throws {
         try transaction { snapshot in
             let old = snapshot.analyses[analysis.documentID]
+            if old != analysis { snapshot.v4Receipts.removeValue(forKey: analysis.documentID) }
             if old?.extractionVersion != analysis.extractionVersion || old?.fingerprint != analysis.fingerprint {
                 for index in snapshot.learningObjects.indices where
                     snapshot.learningObjects[index].source.documentID == analysis.documentID &&
@@ -113,6 +134,10 @@ public actor LearningRepository {
 
     public func setManualTopics(documentID: UUID, topicIDs: Set<UUID>) throws {
         try transaction { snapshot in
+            let analysis = snapshot.analyses[documentID]
+            let receipt = snapshot.v4Receipts[documentID]
+            let wasValidated = analysis.map { receipt?.matches(analysis: $0,
+                questions: snapshot.questions.filter { $0.v4 != nil && $0.source.documentID == documentID }) == true } ?? false
             snapshot.manualDocumentTopics[documentID] = topicIDs
             for index in snapshot.learningObjects.indices
             where snapshot.learningObjects[index].source.documentID == documentID {
@@ -121,6 +146,13 @@ public actor LearningRepository {
             for index in snapshot.questions.indices
             where snapshot.questions[index].source.documentID == documentID {
                 snapshot.questions[index].topicIDs = topicIDs
+            }
+            // Topic assignment changes learner metadata, not question admission.
+            // Renew only a previously verified receipt; never bless unknown data.
+            if wasValidated, let analysis, let receipt {
+                snapshot.v4Receipts[documentID] = try ValidatedIntelligenceReceipt(analysis: analysis,
+                    questions: snapshot.questions.filter { $0.v4 != nil && $0.source.documentID == documentID },
+                    completedPages: receipt.completedPages)
             }
         }
     }

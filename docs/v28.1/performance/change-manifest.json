@@ -1,0 +1,101 @@
+{
+  "baseline": "300d22c4f9c180c5e23627ee4b7809d88fd43e54",
+  "files": [
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Domain/LearningSnapshot.swift",
+      "sha256": "e52698c50506184617dd5690ea56e50826d216be2ddc09a52cdfbfe7f0361050"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/IntelligencePerformance.swift",
+      "sha256": "fdf91750dc68c6d8acc9a1e9a628f8cf588c5310cfefa4bd37b067d1b8656e7d"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/LibraryIntelligenceCache.swift",
+      "sha256": "de4018d94e60709323db568609a446b3b29b3b6f40ab53eb84a2fcaad3ec61db"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/QuestionV4.swift",
+      "sha256": "10d7608358e1b2a44f15f700fdb58a0a5a252c42cc37a352bb4c1109b41cc752"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/TechnicalConceptCatalog.swift",
+      "sha256": "b2ef23994e5deb7d9f4b0a9cd5efce7eeb4e1d3a66cbdecd1f578218acd74c87"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/V28ReadingIntelligence.swift",
+      "sha256": "17886a99124058403720ba0de9fb600eea7770bb54a5ba6811ce1510e2b131a8"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/V4GenerationSession.swift",
+      "sha256": "c21950443f40d24f996fe78535f8f7efb1a2c65c1048398426459fbdc4e0c44f"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/V4StudyBank.swift",
+      "sha256": "c061f51f4d236d5f0725d69397b312edad0744b854ac58c5a9cef4f3dd6453b6"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/ValidatedIntelligenceReceipt.swift",
+      "sha256": "3f016089baf15fd4fd34112ac03d793f26fbab15928a6b4330af984141ba993b"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/DerivedExtractionMigration.swift",
+      "sha256": "988580a3808b3d20e380db2ebef172d27c3a1e6d1a0e98beb3e29d61c573529e"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository.swift",
+      "sha256": "c7d7c74cfee6c9cd8351cca5042b88abef6e04f74623d69695687cabc85d5570"
+    },
+    {
+      "path": "Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningSnapshotPersistence.swift",
+      "sha256": "bfa549743d0e641f09b256ff1e2e0ae20e2343d92991d9ce0174528c875a4a23"
+    },
+    {
+      "path": "Shelf/Features/Reader/ReaderScreen.swift",
+      "sha256": "8ee22a4413c1f84d90ef24649b44fc41c266dfb25eececc5d77389f6790fb8e0"
+    },
+    {
+      "path": "Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift",
+      "sha256": "8dd9b5aba944f9e773b604c2b679b017d8bbe2ecb955f1ddc5f06efedd970849"
+    },
+    {
+      "path": "Shelf/Learning/LearnTodayScreen.swift",
+      "sha256": "369902f61ac980d9f0a2468e25c7667c953072bb60f75dbd17ba07e58cc22467"
+    },
+    {
+      "path": "Shelf/Learning/LearningModel+Intelligence.swift",
+      "sha256": "04651f7fcf88d493e1ab424e47872bf1aecd2f5a8e5f2a4f7883a862eb40b99d"
+    },
+    {
+      "path": "Shelf/Learning/LearningModel+Sessions.swift",
+      "sha256": "11b61dcb8c2125200bbc10b0667d247b8bba58ff37031a6fc7e6a47ed01f30fc"
+    },
+    {
+      "path": "Shelf/Learning/LearningModel.swift",
+      "sha256": "0f5a10fa8d6ab6caac9b4d8c0650aad6ada5199e5b50834642957cea8867abe9"
+    },
+    {
+      "path": "scripts/check-v28-product-wiring.py",
+      "sha256": "fb1f2302d57900551b99584b0765a816de45d1f94dd59e8886aff72270d46740"
+    },
+    {
+      "path": "scripts/profile-v28.py",
+      "sha256": "0956c5f1abb419ee350d5961316d4040479458b3a3d5a6bf55e5c3c40ee37d8c"
+    },
+    {
+      "path": "scripts/report-v28-performance.py",
+      "sha256": "0f76dfae2486a64273361541e62f685fb9f04a7682d45fefebc6229f6740e840"
+    },
+    {
+      "path": "scripts/test-v28-instant.py",
+      "sha256": "2dfa5c31966c44963a5feada71f7120391dc6224069c58d551fdbbca93413c1a"
+    },
+    {
+      "path": "scripts/v28-instant-tests.swift",
+      "sha256": "9ad652cc56a149724dab936f86991f95a2085263343e585310d743077520e443"
+    },
+    {
+      "path": "scripts/v28-performance.swift",
+      "sha256": "b9a7bafc740d8cc848fd2151c3d73a421b0460e05e2f6b4ed3012595958f000b"
+    }
+  ]
+}

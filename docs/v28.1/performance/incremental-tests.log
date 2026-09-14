@@ -1,0 +1,24 @@
+PASS Current page then nearby pages
+PASS Useful questions durably visible before all pages finish
+PASS Resumed bank has 90 questions and all pages checkpointed
+PASS All 90 full proofs match baseline including choices and order
+PASS Reopen needs zero generation pages
+PASS Warm migration uses receipt without reconstructed claims
+PASS Learner topic changes preserve generation completion
+PASS Edited question invalidates receipt and is rejected
+PASS Extraction downgrade invalidates questions and completion
+PASS Fingerprint change invalidates questions
+PASS Same-fingerprint source edit cannot reuse admission
+PASS Changed question contract requires fresh admission
+PASS Legacy snapshot revalidates once without losing accepted questions
+PASS Migration preserves learner records exactly
+PASS Stale in-flight batch cannot install
+PASS Derived cache writes actually persist
+PASS Reopened reader tools load current shard under 100ms
+PASS Reopened capability snapshot performs no source-role work
+PASS Fresh actor reads persisted facts without role reconstruction
+PASS Persistent connections preserve exact admitted pair orientation
+PASS Corrupt cached payload is recomputed rather than accepted
+PASS Removed document disappears from cached results
+PASS Warm connection p50 below 150ms
+PASS Warm reader capability availability below 100ms

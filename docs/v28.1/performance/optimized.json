@@ -1,0 +1,910 @@
+{
+  "bankCount" : 90,
+  "configuration" : "Swift 5 unoptimized host; same compiler and corpus for before\/after",
+  "library" : "\/Users\/malmeida\/Documents\/ChatGPT\/Leu\/LeuCodexV28\/.build\/v28-performance-916706BC-7D9F-4B19-8F95-17A2395651AC",
+  "metrics" : [
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 1923.5659837722778,
+      "stage" : "question_generation",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 19.117951393127441,
+      "stage" : "initial_raw_persistence",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 1632.5399875640869,
+      "stage" : "admission_and_persistence",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : false,
+      "milliseconds" : 44.836997985839844,
+      "stage" : "raw_persistence",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 22.81796932220459,
+      "stage" : "snapshot_decode",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 112.09297180175781,
+      "stage" : "document_open",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 24.513959884643555,
+      "stage" : "snapshot_decode",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 66.941022872924805,
+      "stage" : "document_open",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 21.577000617980957,
+      "stage" : "snapshot_decode",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 64.006924629211426,
+      "stage" : "document_open",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 21.124005317687988,
+      "stage" : "snapshot_decode",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 64.625024795532227,
+      "stage" : "document_open",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 21.618962287902832,
+      "stage" : "snapshot_decode",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 64.444065093994141,
+      "stage" : "document_open",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 21.036028861999512,
+      "stage" : "snapshot_decode",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 64.285039901733398,
+      "stage" : "document_open",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 21.28899097442627,
+      "stage" : "snapshot_decode",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 63.880085945129395,
+      "stage" : "document_open",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 21.28899097442627,
+      "stage" : "snapshot_decode",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 64.365983009338379,
+      "stage" : "document_open",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 21.321892738342285,
+      "stage" : "snapshot_decode",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 64.108967781066895,
+      "stage" : "document_open",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 21.468043327331543,
+      "stage" : "snapshot_decode",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : true,
+      "milliseconds" : 64.821004867553711,
+      "stage" : "document_open",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 898.58496189117432,
+      "stage" : "connection_index",
+      "workCount" : 314
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 113.4040355682373,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.728053092956543,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.055909156799316406,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 112.0990514755249,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.0009956359863281,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.054955482482910156,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 111.67597770690918,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.2170028686523438,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.066995620727539062,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 114.63701725006104,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.1049461364746094,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.056028366088867188,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 113.44599723815918,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.0009956359863281,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.055909156799316406,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 113.54410648345947,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 5.971074104309082,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.059962272644042969,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 113.01505565643311,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 5.9540271759033203,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.055074691772460938,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 112.88988590240479,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 5.908966064453125,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.056028366088867188,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 113.17002773284912,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.1309337615966797,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.056982040405273438,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 112.60592937469482,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 5.9970617294311523,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.056028366088867188,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 113.99996280670166,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 5.9649944305419922,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.06008148193359375,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 113.13807964324951,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.3549280166625977,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.069022178649902344,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 113.95704746246338,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.0509443283081055,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.057101249694824219,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 113.11602592468262,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 5.9319734573364258,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.054955482482910156,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 112.89393901824951,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.1069726943969727,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.059962272644042969,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 112.67709732055664,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.0900449752807617,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.057101249694824219,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 113.53003978729248,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.1490535736083984,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.058054924011230469,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 114.85099792480469,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.1459541320800781,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.057101249694824219,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 116.87493324279785,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.0960054397583008,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.057935714721679688,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 114.72010612487793,
+      "stage" : "connection_query",
+      "workCount" : 2
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 6.9060325622558594,
+      "stage" : "teach_analysis",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.054001808166503906,
+      "stage" : "reader_availability",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 1078.4610509872437,
+      "stage" : "reader_cache_miss",
+      "workCount" : 1
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.59497356414794922,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.4180622100830078,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.13101100921630859,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.18798828125,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.13899803161621094,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.1569938659667969,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.11396408081054688,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.2359104156494141,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.13804435729980469,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.1239728927612305,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.11408329010009766,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.3019523620605469,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.14495849609375,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.4030418395996094,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.15103816986083984,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.2911043167114258,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.12290477752685547,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.2200555801391602,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.11599063873291016,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.4160356521606445,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.13101100921630859,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.1379203796386719,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.11897087097167969,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.128026008605957,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.11098384857177734,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.2919387817382812,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.12099742889404297,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.1170587539672852,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.11694431304931641,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.128026008605957,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.11098384857177734,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.2560567855834961,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.12493133544921875,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.1069259643554688,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.11110305786132812,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.1569938659667969,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.11193752288818359,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.231022834777832,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 0.13399124145507812,
+      "stage" : "cached_connection_query",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 5.1200389862060547,
+      "stage" : "cached_reader_availability",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : true,
+      "milliseconds" : 21.093010902404785,
+      "stage" : "reopened_connection_snapshot",
+      "workCount" : 0
+    },
+    {
+      "bytes" : 0,
+      "cacheHit" : false,
+      "milliseconds" : 2113.3660078048706,
+      "stage" : "production_validated_generation",
+      "workCount" : 90
+    },
+    {
+      "bytes" : 2022420,
+      "cacheHit" : false,
+      "milliseconds" : 104.83598709106445,
+      "stage" : "production_validated_persistence",
+      "workCount" : 90
+    }
+  ]
+}

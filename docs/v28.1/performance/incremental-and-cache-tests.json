@@ -1,0 +1,225 @@
+{
+  "checkpoints" : [
+    {
+      "generationToVisibleMs" : 656.50105476379395,
+      "pages" : 12,
+      "questions" : 3,
+      "saveMs" : 111.74297332763672
+    },
+    {
+      "pages" : 24,
+      "questions" : 4,
+      "saveMs" : 61.535954475402832
+    },
+    {
+      "pages" : 24,
+      "questions" : 5,
+      "saveMs" : 63.315987586975098
+    },
+    {
+      "pages" : 24,
+      "questions" : 3,
+      "saveMs" : 62.541961669921875
+    },
+    {
+      "pages" : 24,
+      "questions" : 9,
+      "saveMs" : 70.517897605895996
+    },
+    {
+      "pages" : 24,
+      "questions" : 6,
+      "saveMs" : 68.819999694824219
+    },
+    {
+      "pages" : 24,
+      "questions" : 9,
+      "saveMs" : 72.05498218536377
+    },
+    {
+      "pages" : 24,
+      "questions" : 9,
+      "saveMs" : 79.612016677856445
+    },
+    {
+      "pages" : 24,
+      "questions" : 2,
+      "saveMs" : 76.225996017456055
+    },
+    {
+      "pages" : 24,
+      "questions" : 10,
+      "saveMs" : 79.448938369750977
+    },
+    {
+      "pages" : 24,
+      "questions" : 10,
+      "saveMs" : 84.786891937255859
+    },
+    {
+      "pages" : 24,
+      "questions" : 9,
+      "saveMs" : 89.45310115814209
+    },
+    {
+      "pages" : 24,
+      "questions" : 4,
+      "saveMs" : 96.282958984375
+    },
+    {
+      "pages" : 24,
+      "questions" : 7,
+      "saveMs" : 98.595976829528809
+    },
+    {
+      "pages" : 21,
+      "questions" : 0,
+      "saveMs" : 107.99801349639893
+    }
+  ],
+  "passed" : 24,
+  "readerAvailabilityMs" : [
+    6.1550140380859375,
+    5.5940151214599609,
+    6.0150623321533203,
+    5.6799650192260742,
+    5.5550336837768555,
+    5.3809881210327148,
+    5.6750774383544922,
+    5.5159330368041992,
+    5.3459405899047852,
+    5.7150125503540039,
+    5.4450035095214844,
+    5.3429603576660156,
+    5.4409503936767578,
+    5.4249763488769531,
+    5.3850412368774414,
+    5.2990913391113281,
+    5.4879188537597656,
+    5.576014518737793,
+    5.581974983215332,
+    5.5820941925048828
+  ],
+  "reopenedReaderAvailabilityMs" : 6.6349506378173828,
+  "tests" : [
+    {
+      "name" : "Current page then nearby pages",
+      "pass" : true
+    },
+    {
+      "name" : "Useful questions durably visible before all pages finish",
+      "pass" : true
+    },
+    {
+      "name" : "Resumed bank has 90 questions and all pages checkpointed",
+      "pass" : true
+    },
+    {
+      "name" : "All 90 full proofs match baseline including choices and order",
+      "pass" : true
+    },
+    {
+      "name" : "Reopen needs zero generation pages",
+      "pass" : true
+    },
+    {
+      "name" : "Warm migration uses receipt without reconstructed claims",
+      "pass" : true
+    },
+    {
+      "name" : "Learner topic changes preserve generation completion",
+      "pass" : true
+    },
+    {
+      "name" : "Edited question invalidates receipt and is rejected",
+      "pass" : true
+    },
+    {
+      "name" : "Extraction downgrade invalidates questions and completion",
+      "pass" : true
+    },
+    {
+      "name" : "Fingerprint change invalidates questions",
+      "pass" : true
+    },
+    {
+      "name" : "Same-fingerprint source edit cannot reuse admission",
+      "pass" : true
+    },
+    {
+      "name" : "Changed question contract requires fresh admission",
+      "pass" : true
+    },
+    {
+      "name" : "Legacy snapshot revalidates once without losing accepted questions",
+      "pass" : true
+    },
+    {
+      "name" : "Migration preserves learner records exactly",
+      "pass" : true
+    },
+    {
+      "name" : "Stale in-flight batch cannot install",
+      "pass" : true
+    },
+    {
+      "name" : "Derived cache writes actually persist",
+      "pass" : true
+    },
+    {
+      "name" : "Reopened reader tools load current shard under 100ms",
+      "pass" : true
+    },
+    {
+      "name" : "Reopened capability snapshot performs no source-role work",
+      "pass" : true
+    },
+    {
+      "name" : "Fresh actor reads persisted facts without role reconstruction",
+      "pass" : true
+    },
+    {
+      "name" : "Persistent connections preserve exact admitted pair orientation",
+      "pass" : true
+    },
+    {
+      "name" : "Corrupt cached payload is recomputed rather than accepted",
+      "pass" : true
+    },
+    {
+      "name" : "Removed document disappears from cached results",
+      "pass" : true
+    },
+    {
+      "name" : "Warm connection p50 below 150ms",
+      "pass" : true
+    },
+    {
+      "name" : "Warm reader capability availability below 100ms",
+      "pass" : true
+    }
+  ],
+  "total" : 24,
+  "warmConnectionMs" : [
+    1.5369653701782227,
+    0.22399425506591797,
+    0.16903877258300781,
+    0.16701221466064453,
+    0.16903877258300781,
+    0.15997886657714844,
+    0.14293193817138672,
+    0.23198127746582031,
+    0.16999244689941406,
+    0.14197826385498047,
+    0.14603137969970703,
+    0.13601779937744141,
+    0.14901161193847656,
+    0.15604496002197266,
+    0.13589859008789062,
+    0.14793872833251953,
+    0.12493133544921875,
+    0.15103816986083984,
+    0.16105175018310547,
+    0.13792514801025391
+  ]
+}

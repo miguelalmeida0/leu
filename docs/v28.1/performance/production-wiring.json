@@ -1,0 +1,54 @@
+[
+  {
+    "check": "Study plans immediately while preparation continues",
+    "file": "Shelf/Learning/LearningModel+Sessions.swift",
+    "passed": true
+  },
+  {
+    "check": "Background indexing persists the actual bank",
+    "file": "Shelf/Learning/LearningModel+Intelligence.swift",
+    "passed": true
+  },
+  {
+    "check": "Teach UI consumes V2 presentation",
+    "file": "Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift",
+    "passed": true
+  },
+  {
+    "check": "Reader retrieval uses admitted V28 connections",
+    "file": "Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift",
+    "passed": true
+  },
+  {
+    "check": "Collision uses both bound sources",
+    "file": "Shelf/Learning/Intelligence/KnowledgeCollisionSheet.swift",
+    "passed": true
+  },
+  {
+    "check": "Prediction UI uses tested state machine",
+    "file": "Shelf/Learning/Intelligence/TryItSheet.swift",
+    "passed": true
+  },
+  {
+    "check": "Library result opens its validated excerpt",
+    "file": "Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift",
+    "passed": true
+  },
+  {
+    "check": "PDF route retains document, page and exact quote",
+    "file": "Shelf/App/AppContainer.swift",
+    "passed": true
+  },
+  {
+    "check": "Teach has no Foundation Models dependency",
+    "passed": true
+  },
+  {
+    "check": "New sheet belongs to Xcode Sources phase",
+    "passed": true
+  },
+  {
+    "check": "Swift syntax parse of all actual app sources",
+    "passed": true
+  }
+]

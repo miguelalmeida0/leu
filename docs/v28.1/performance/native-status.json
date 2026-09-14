@@ -1,0 +1,9 @@
+{
+  "iosShelfCore": "PASS",
+  "hostShelfCore": "PASS",
+  "fullAppModule": "BLOCKED",
+  "reason": "Observation macro sandbox_apply Operation not permitted; cascading Observable conformance errors",
+  "simulator": "NOT RETRIED",
+  "physicalIPhone": "NOT EXECUTED",
+  "fullAppAttemptLog": "ios-module-Shelf.log"
+}

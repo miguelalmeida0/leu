@@ -2,28 +2,35 @@ import Foundation
 import ShelfCore
 
 @MainActor extension LearningModel {
-    func prepareV4Questions() async {
+    func prepareV4Questions(prioritizing source: LearningSource? = nil) async {
+        if let source { v4PrioritySource = source }
         if let task = v4PreparationTask { await task.value; return }
         isPreparingV4Questions = true
         defer { isPreparingV4Questions = false }
         let task = Task { [weak self] in
             guard let self else { return }
-            for book in library.snapshot.activeBooks {
+            let books = library.snapshot.activeBooks.sorted { $0.id == v4PrioritySource?.documentID && $1.id != v4PrioritySource?.documentID }
+            for book in books {
                 guard !Task.isCancelled, let analysis = snapshot.analyses[book.id] else { continue }
-                let version = "\(book.id)|\(analysis.fingerprint)|\(analysis.extractionVersion ?? 0)|v4"
-                guard !preparedV4Versions.contains(version) else { continue }
-                if snapshot.questions.contains(where: { $0.v4?.claim.card.documentID == book.id && $0.v4?.claim.card.fingerprint == analysis.fingerprint }) {
-                    preparedV4Versions.insert(version); continue
-                }
+                var remaining = Set(analysis.pages.map(\.pageIndex)).subtracting(snapshot.completedV4Pages(documentID: book.id))
+                guard !remaining.isEmpty else { continue }
                 let topics = snapshot.manualDocumentTopics[book.id] ?? Set(analysis.topicScores.filter { $0.value >= 0.18 }.map(\.key))
-                let questions = await Task.detached(priority: .utility) { V4StudyBank.build(analysis, topicIDs: topics) }.value
-                guard !Task.isCancelled, library.snapshot.activeBooks.contains(where: { $0.id == book.id }),
-                      snapshot.analyses[book.id]?.fingerprint == analysis.fingerprint else { continue }
-                do {
-                    if !questions.isEmpty { try await repository.storeV4Questions(questions); snapshot = try await repository.snapshot() }
-                    preparedV4Versions.insert(version)
-                    StudyInteractionTrace.record("v4.bank document=\(book.id) accepted=\(questions.count) backend=deterministic-v4")
-                } catch { notice = "Source questions could not be saved. Your library is unchanged." }
+                let session = V4GenerationSession(analysis: analysis, topicIDs: topics)
+                while !remaining.isEmpty {
+                    guard !Task.isCancelled, library.snapshot.activeBooks.contains(where: { $0.id == book.id }),
+                          snapshot.analyses[book.id] == analysis else { break }
+                    let current = v4PrioritySource.flatMap { $0.documentID == book.id ? $0.pageIndex : nil }
+                    let pages = Array(V4GenerationSession.priorityPages(analysis, current: current).filter { remaining.contains($0) }.prefix(12))
+                    do {
+                        let batch = try await session.batch(pages: pages)
+                        try Task.checkCancellation()
+                        try await repository.storeV4Batch(batch)
+                        snapshot = try await repository.snapshot()
+                        remaining.subtract(batch.pages)
+                        StudyInteractionTrace.record("v4.checkpoint document=\(book.id) pages=\(batch.pages.count) accepted=\(batch.questions.count)")
+                    } catch is CancellationError { return }
+                    catch { notice = "Source questions could not be saved. Your library is unchanged."; break }
+                }
             }
         }
         v4PreparationTask = task
@@ -32,6 +39,7 @@ import ShelfCore
     }
 
     func prepareIntelligence(for source: LearningSource? = nil) {
+        if let source { v4PrioritySource = source }
         guard intelligenceTask == nil else {
             if let source { pendingIntelligenceSource = source }
             return
@@ -54,11 +62,12 @@ import ShelfCore
             let analyses = library.snapshot.activeBooks.sorted {
                 ($0.lastOpenedAt ?? $0.importedAt) > ($1.lastOpenedAt ?? $1.importedAt)
             }.compactMap { self.snapshot.analyses[$0.id] }
-            let packets = analyses.flatMap { analysis in
+            let packets = await Task.detached(priority: .utility) { analyses.flatMap { analysis in
                 analysis.pages.compactMap { LearningSourcePacket(analysis: analysis, page: $0) }
             }.filter { packet in
                 source.map { packet.documentID == $0.documentID && packet.pageIndex == $0.pageIndex } ?? true
             }
+            }.value
             var generatedThisRun = 0
             for packet in packets {
                 if snapshot.questions.contains(where: { $0.v4 != nil && $0.source.documentID == packet.documentID && $0.source.pageIndex == packet.pageIndex }) { continue }
@@ -66,7 +75,7 @@ import ShelfCore
                 guard ProcessInfo.processInfo.thermalState != .serious,
                       ProcessInfo.processInfo.thermalState != .critical,
                       !ProcessInfo.processInfo.isLowPowerModeEnabled else { return }
-                let preflight = QuestionV3Contract().compile(packet)
+                let preflight = await Task.detached(priority: .utility) { QuestionV3Contract().compile(packet) }.value
                 guard preflight.status == .representable else {
                     lastModelError = "noRepresentableQuestion: " + preflight.status.rawValue
                     StudyInteractionTrace.record("model.preflight noRepresentableQuestion document=\(packet.documentID) page=\(packet.pageIndex) claims=\(preflight.meaningfulClaims.count) inferenceCalled=false")

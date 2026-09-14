@@ -41,22 +41,21 @@ final class ReaderIntelligenceModel {
         let ids = Set(learning.library.snapshot.activeBooks.map(\.id))
         let analyses = learning.snapshot.analyses.filter { ids.contains($0.key) }
         let titles = Dictionary(uniqueKeysWithValues: learning.library.snapshot.activeBooks.map { ($0.id, $0.title) })
-        let version = analyses.values.map { "\($0.documentID)|\($0.fingerprint)|\($0.extractionVersion ?? 0)" }.sorted().joined()
-        if learning.v28ConnectionIndexVersion != version {
-            let index = await Task.detached(priority: .userInitiated) { V28ConnectionIndex(analyses: analyses, titles: titles) }.value
-            guard !Task.isCancelled else { return }
-            learning.v28ConnectionIndex = index; learning.v28ConnectionIndexVersion = version
-        }
-        guard let index = learning.v28ConnectionIndex, !Task.isCancelled, source.isCurrent(in: analyses) else { return }
-        let source = source
-        let found = await Task.detached(priority: .userInitiated) {
-            (index.connections(from: source, analyses: analyses), index.anchors(for: source),
-             ExplainFromLibrary.results(source: source, index: index, analyses: analyses), index.activity(from: source, analyses: analyses))
-        }.value
-        guard !Task.isCancelled else { return }
-        connections = found.0; semanticSources = found.1; libraryExplanations = found.2
-        activity = found.3
-        canTeach = semanticSources.contains { TeachLeuV2.evaluate("", source: $0, analyses: analyses).family != nil }
+        do {
+            let cache = learning.libraryIntelligenceCache
+            let anchors = try await cache.sources(for: source, analyses: analyses, titles: titles)
+            guard !Task.isCancelled, source.isCurrent(in: learning.snapshot.analyses) else { return }
+            semanticSources = anchors
+            let canTeach = await Task.detached(priority: .userInitiated) {
+                anchors.contains { TeachLeuV2.evaluate("", source: $0, analyses: analyses).family != nil }
+            }.value
+            self.canTeach = canTeach
+            let found = try await cache.retrieve(source: source, analyses: analyses, titles: titles)
+            guard !Task.isCancelled, source.isCurrent(in: learning.snapshot.analyses),
+                  Set(learning.library.snapshot.activeBooks.map(\.id)) == ids else { return }
+            connections = found.connections; semanticSources = found.sources
+            libraryExplanations = found.explanations; activity = found.activity; self.canTeach = found.canTeach
+        } catch { message = "These source tools are temporarily unavailable." }
     }
     func edit(_ text: String) {
         request?.cancel(); request = nil; inferring = false; revision = UUID()

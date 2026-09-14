@@ -24,6 +24,7 @@ public struct V28ConnectionIndex: Sendable {
     public init(analyses: [UUID: DocumentAnalysis], titles: [UUID: String]) {
         facts = analyses.values.flatMap { RelationalSourceFact.extract(analysis: $0, documentTitle: titles[$0.documentID] ?? "Source") }
     }
+    init(facts: [RelationalSourceFact]) { self.facts = facts }
     public func anchors(for source: IntelligenceSource) -> [RelationalSourceFact] {
         guard let range = source.passage.range else { return [] }
         return facts.filter {
@@ -33,6 +34,8 @@ public struct V28ConnectionIndex: Sendable {
         }
     }
     public func connections(from source: IntelligenceSource, analyses: [UUID: DocumentAnalysis]) -> [GroundedConnectionV2] {
+        let started = DispatchTime.now().uptimeNanoseconds
+        defer { IntelligencePerformance.record("connection_query", since: started, workCount: facts.count) }
         guard source.isCurrent(in: analyses) else { return [] }
         var found: [GroundedConnectionV2] = [], seen = Set<String>()
         for a in anchors(for: source) {
@@ -53,8 +56,11 @@ public struct V28ConnectionIndex: Sendable {
         c.relationship == "mechanism" ? 100 : 50
     }
     public func activity(from source: IntelligenceSource, analyses: [UUID: DocumentAnalysis]) -> ActivityDefinition? {
+        activity(from: source, analyses: analyses, connections: connections(from: source, analyses: analyses))
+    }
+    func activity(from source: IntelligenceSource, analyses: [UUID: DocumentAnalysis], connections: [GroundedConnectionV2]) -> ActivityDefinition? {
         guard source.isCurrent(in: analyses), !anchors(for: source).isEmpty else { return nil }
-        let sources = [source] + connections(from: source, analyses: analyses).compactMap { $0.related(to: source).citation(in: analyses) }
+        let sources = [source] + connections.compactMap { $0.related(to: source).citation(in: analyses) }
         for citation in sources {
             guard let analysis = analyses[citation.packet.documentID],
                   let full = IntelligenceSource(source: .init(documentID: citation.packet.documentID,
@@ -83,6 +89,8 @@ public struct TeachSourceFeedback: Equatable, Sendable {
 public enum V28TeachPresentation {
     public static func compare(_ text: String, sources: [RelationalSourceFact], analyses: [UUID: DocumentAnalysis],
                                connection: GroundedConnectionV2? = nil) -> TeachSourceFeedback {
+        let started = DispatchTime.now().uptimeNanoseconds
+        defer { IntelligencePerformance.record("teach_analysis", since: started, workCount: sources.count) }
         let current = sources.filter { $0.isCurrent(in: analyses) }
         var result = TeachSourceFeedback(), used = Set<String>()
         for clause in LearnerClaim.split(text) {
@@ -136,8 +144,8 @@ public enum V28TeachPresentation {
     }
 }
 
-public struct LibraryExplanationItem: Identifiable, Equatable, Sendable {
-    public enum Kind: String, Sendable { case explanation = "CLEAREST EXPLANATION", example = "A USEFUL EXAMPLE", related = "RELATED IDEA" }
+public struct LibraryExplanationItem: Identifiable, Equatable, Codable, Sendable {
+    public enum Kind: String, Codable, Sendable { case explanation = "CLEAREST EXPLANATION", example = "A USEFUL EXAMPLE", related = "RELATED IDEA" }
     public let kind: Kind
     public let source: RelationalSourceFact
     public let passage: LearningSource
@@ -154,9 +162,11 @@ public struct LibraryExplanationItem: Identifiable, Equatable, Sendable {
 }
 public enum ExplainFromLibrary {
     public static func results(source: IntelligenceSource, index: V28ConnectionIndex, analyses: [UUID: DocumentAnalysis]) -> [LibraryExplanationItem] {
+        results(source: source, index: index, analyses: analyses, connections: index.connections(from: source, analyses: analyses))
+    }
+    static func results(source: IntelligenceSource, index: V28ConnectionIndex, analyses: [UUID: DocumentAnalysis], connections: [GroundedConnectionV2]) -> [LibraryExplanationItem] {
         guard source.isCurrent(in: analyses) else { return [] }
         let anchors = index.anchors(for: source).filter { $0.isCurrent(in: analyses) }
-        let connections = index.connections(from: source, analyses: analyses)
         let explanations = anchors + connections.filter { $0.relationship == "sameMechanism" }.map { $0.related(to: source) }
         guard let clearest = explanations.min(by: { $0.quote.text.count < $1.quote.text.count }) else { return [] }
         var output = [LibraryExplanationItem(kind: .explanation, source: clearest, passage: clearest.passage)]

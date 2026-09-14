@@ -81,7 +81,7 @@ extension LearningModel {
 
     func startSession(topicID: UUID?, minutes: Int, mode: StudySessionMode = .learn) {
         Task {
-            await prepareV4Questions()
+            prepareIntelligence()
             guard activeSession == nil else { return }
             begin(planner.plan(snapshot: snapshot, topicID: topicID, minutes: minutes, mode: mode, now: Date()))
         }

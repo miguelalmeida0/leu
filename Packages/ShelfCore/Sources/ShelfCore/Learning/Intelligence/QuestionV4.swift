@@ -24,32 +24,54 @@ public struct QuestionV4: Codable, Equatable, Sendable, Identifiable {
 /// No inference and no invented distractor facts. Each alternative remains a
 /// complete statement from a different verified card, with its own citation.
 public struct QuestionV4Compiler: Sendable {
-    public init() {}
+    private struct Prepared: Sendable {
+        let choice: QuestionV4.Choice
+        let words: Int
+        let tokens: Set<String>
+        let title: String
+        let exclusions: Set<String>
+        let section: String
+    }
+    private let prepared: [String: Prepared]
+    public init() { prepared = [:] }
+    init(claims: [ContextualFactualClaim]) {
+        prepared = Dictionary(uniqueKeysWithValues: claims.compactMap { claim in
+            guard let first = claim.sentences.first else { return nil }
+            return (claim.id, Self.prepare(first, claim: claim))
+        })
+    }
+    private static func prepare(_ span: CanonicalWhitespaceResolver.Span, claim: ContextualFactualClaim) -> Prepared {
+        let choice = option(span, claim: claim)
+        return Prepared(choice: choice, words: words(choice.text).count, tokens: tokens(choice.text),
+            title: TechnicalConceptCatalog.titleKey(claim.card.title),
+            exclusions: TechnicalConceptCatalog.questionExclusions(claim.card.title), section: sectionKey(claim.card.section))
+    }
+    private func item(_ claim: ContextualFactualClaim) -> Prepared? {
+        prepared[claim.id] ?? claim.sentences.first.map { Self.prepare($0, claim: claim) }
+    }
     public func compile(_ claim: ContextualFactualClaim, neighbors: [ContextualFactualClaim]) -> QuestionV4? {
         guard claim.sentences.count >= 2, let first = claim.sentences.first,
               let question = Self.realize(claim) else { return nil }
         // A list of helper names does not explain how the transformation works.
         guard !first.text.hasPrefix("Built-in helpers such as") else { return nil }
-        let answer = Self.option(first, claim: claim)
-        guard (7...38).contains(Self.words(answer.text).count) else { return nil }
-        let candidates = neighbors.filter { $0.card.id != claim.card.id && !TechnicalConceptCatalog.overlapsForQuestion($0.card.title, claim.card.title) }
-            .compactMap { other -> (ContextualFactualClaim, QuestionV4.Choice)? in
-                guard let sentence = other.sentences.first else { return nil }
-                let choice = Self.option(sentence, claim: other)
-                let a = Self.words(answer.text).count, b = Self.words(choice.text).count
-                guard b >= 7, b <= 38, Double(max(a, b)) / Double(min(a, b)) <= 1.65,
-                      Self.similarity(answer.text, choice.text) < 0.40,
-                      !choice.text.lowercased().contains(claim.card.title.lowercased()),
-                      !answer.text.lowercased().contains(other.card.title.lowercased()),
-                      !choice.text.hasPrefix("It "), !choice.text.hasPrefix("They ") else { return nil }
-                return (other, choice)
-            }.sorted {
-                let left = Self.sectionKey($0.0.card.section) == Self.sectionKey(claim.card.section) ? 1 : 0
-                let right = Self.sectionKey($1.0.card.section) == Self.sectionKey(claim.card.section) ? 1 : 0
-                if left != right { return left > right }
-                let l = Self.similarity(answer.text, $0.1.text), r = Self.similarity(answer.text, $1.1.text)
-                return l == r ? $0.0.id < $1.0.id : l > r
-            }
+        guard let answerItem = item(claim) else { return nil }
+        let answer = answerItem.choice
+        guard (7...38).contains(answerItem.words) else { return nil }
+        let candidates = neighbors.compactMap { other -> (ContextualFactualClaim, QuestionV4.Choice, Double, Int)? in
+            guard other.card.id != claim.card.id, let entry = item(other),
+                  !answerItem.exclusions.contains(entry.title) else { return nil }
+            let choice = entry.choice, a = answerItem.words, b = entry.words
+            let similarity = Self.similarity(answerItem.tokens, entry.tokens)
+            guard b >= 7, b <= 38, Double(max(a, b)) / Double(min(a, b)) <= 1.65,
+                  similarity < 0.40,
+                  !choice.text.lowercased().contains(claim.card.title.lowercased()),
+                  !answer.text.lowercased().contains(other.card.title.lowercased()),
+                  !choice.text.hasPrefix("It "), !choice.text.hasPrefix("They ") else { return nil }
+            return (other, choice, similarity, entry.section == answerItem.section ? 1 : 0)
+        }.sorted {
+            if $0.3 != $1.3 { return $0.3 > $1.3 }
+            return $0.2 == $1.2 ? $0.0.id < $1.0.id : $0.2 > $1.2
+        }
         guard let firstOther = candidates.first,
               let secondOther = candidates.dropFirst().first(where: { Self.similarity(firstOther.1.text, $0.1.text) < 0.40 }) else { return nil }
         let choices = [answer, firstOther.1, secondOther.1].sorted {
@@ -152,9 +174,13 @@ public struct QuestionV4Compiler: Sendable {
     static func words(_ text: String) -> [String] { text.split(whereSeparator: \.isWhitespace).map(String.init) }
     private static func sectionKey(_ value: String?) -> String { (value ?? "").uppercased().filter(\.isLetter) }
     static func similarity(_ a: String, _ b: String) -> Double {
+        similarity(tokens(a), tokens(b))
+    }
+    private static func tokens(_ value: String) -> Set<String> {
         let stop: Set<String> = ["the","and","that","for","with","from","into","when","before","after","its","can","are","has","have","this","not","without"]
-        func tokens(_ value: String) -> Set<String> { Set(HybridLocalIndex.tokens(value)).subtracting(stop) }
-        let x = tokens(a), y = tokens(b)
-        return Double(x.intersection(y).count) / Double(max(1, x.union(y).count))
+        return Set(HybridLocalIndex.tokens(value)).subtracting(stop)
+    }
+    private static func similarity(_ x: Set<String>, _ y: Set<String>) -> Double {
+        Double(x.intersection(y).count) / Double(max(1, x.union(y).count))
     }
 }

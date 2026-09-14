@@ -1,4 +1,5 @@
 import SwiftUI
+import ShelfCore
 @MainActor
 struct ReaderScreen: View {
     @State private var model: ReaderModel
@@ -38,9 +39,15 @@ struct ReaderScreen: View {
             if model.isLoaded { MemoryMarginMarkers(reader: model, learning: model.learning) }
         }
         .animation(reduceMotion ? nil : ShelfMotion.gentle, value: model.showStudyDrawer)
-        .task { await model.load(); model.restoreInitialLens(); explanation.runHarnessIfRequested() }
+        .task {
+            await model.load()
+            model.learning.v4PrioritySource = LearningSource(documentID: model.book.id, pageIndex: model.pageIndex, sourceText: "")
+            model.restoreInitialLens(); explanation.runHarnessIfRequested()
+        }
         .onAppear { StudyInteractionTrace.record("reader.appeared document=\(model.book.id)") }
         .onChange(of: model.pageIndex) { before, after in
+            // Scheduling hint only; admission always uses the verified analysis.
+            model.learning.v4PrioritySource = LearningSource(documentID: model.book.id, pageIndex: after, sourceText: "")
             StudyInteractionTrace.record("reader.pageState mode=\(model.displayMode) before=\(before) after=\(after) label=Page \(after + 1) of \(model.book.pageCount)")
         }
         .onChange(of: scenePhase) { _, phase in

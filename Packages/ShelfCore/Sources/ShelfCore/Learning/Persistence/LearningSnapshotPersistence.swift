@@ -57,15 +57,21 @@ public final class FileLearningSnapshotStore: LearningSnapshotPersistence, @unch
     }
 
     public func save(_ snapshot: LearningSnapshot) throws {
+        let started = DispatchTime.now().uptimeNanoseconds
+        var byteCount = 0
+        defer { IntelligencePerformance.record("persistence", since: started, workCount: 1, bytes: byteCount) }
         lock.lock(); defer { lock.unlock() }
         try fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
         let current = directory.appendingPathComponent("learning.json")
         let previous = directory.appendingPathComponent("learning.previous.json")
         let data = try encoder.encode(snapshot)
+        byteCount = data.count
         if fileManager.fileExists(atPath: current.path) {
             // Never replace a recoverable backup with an unreadable current file.
             _ = try decode(current)
-            try durableReplace(Data(contentsOf: current), at: previous)
+            let backup = try Data(contentsOf: current)
+            byteCount += backup.count
+            try durableReplace(backup, at: previous)
         }
         try durableReplace(data, at: current)
     }
@@ -109,7 +115,10 @@ public final class FileLearningSnapshotStore: LearningSnapshotPersistence, @unch
     }
 
     private func decode(_ url: URL) throws -> LearningSnapshot {
-        let snapshot = try decoder.decode(LearningSnapshot.self, from: Data(contentsOf: url))
+        let started = DispatchTime.now().uptimeNanoseconds
+        let data = try Data(contentsOf: url)
+        defer { IntelligencePerformance.record("snapshot_decode", since: started, bytes: data.count) }
+        let snapshot = try decoder.decode(LearningSnapshot.self, from: data)
         guard snapshot.schemaVersion <= 1 else { throw ShelfError.unsupportedVersion(snapshot.schemaVersion) }
         return snapshot
     }

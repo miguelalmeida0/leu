@@ -1,6 +1,8 @@
 import Foundation
 
 public struct LearningSnapshot: Codable, Equatable, Sendable {
+    var v4Receipts: [UUID: ValidatedIntelligenceReceipt] = [:]
+    public func completedV4Pages(documentID: UUID) -> Set<Int> { v4Receipts[documentID]?.completedPages ?? [] }
     public var schemaVersion: Int
     public var analyses: [UUID: DocumentAnalysis]
     public var semanticIndexes: [UUID: SemanticIndex]
@@ -58,6 +60,7 @@ public struct LearningSnapshot: Codable, Equatable, Sendable {
     }
 
     private enum CodingKeys: String, CodingKey {
+        case v4Receipts
         case schemaVersion, analyses, semanticIndexes, topics, manualDocumentTopics, learningObjects, questions
         case reviewStates, attempts, confidenceRecords, relationships, trails, masks, recordings, sessions, timeline
         case emotionalCheckIns, emotionalCheckInPreference, resumeStudyContext, lensUsage
@@ -66,6 +69,7 @@ public struct LearningSnapshot: Codable, Equatable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
+        v4Receipts = try c.decodeIfPresent([UUID: ValidatedIntelligenceReceipt].self, forKey: .v4Receipts) ?? [:]
         schemaVersion = try c.decodeIfPresent(Int.self, forKey: .schemaVersion) ?? 1
         analyses = try c.decodeIfPresent([UUID: DocumentAnalysis].self, forKey: .analyses) ?? [:]
         semanticIndexes = try c.decodeIfPresent([UUID: SemanticIndex].self, forKey: .semanticIndexes) ?? [:]

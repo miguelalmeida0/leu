@@ -5,7 +5,7 @@ import Foundation
 public enum V4StudyBank {
     public static func build(_ analysis: DocumentAnalysis, topicIDs: Set<UUID> = []) -> [LearningQuestion] {
         let claims = analysis.pages.flatMap { ContextualClaimComposer().compose(analysis: analysis, page: $0).claims }
-        let compiler = QuestionV4Compiler()
+        let compiler = QuestionV4Compiler(claims: claims)
         return claims.compactMap { claim in
             guard let q = compiler.compile(claim, neighbors: claims),
                   compiler.validate(q, claims: claims, analyses: [analysis.documentID: analysis]) == nil else { return nil }
@@ -39,13 +39,15 @@ public enum V4StudyBank {
 struct V4StudyAdmission {
     private let analysis: DocumentAnalysis
     private let claims: [ContextualFactualClaim]
+    private let compiler: QuestionV4Compiler
     init(analysis: DocumentAnalysis) {
         self.analysis = analysis
         claims = analysis.pages.flatMap { ContextualClaimComposer().compose(analysis: analysis, page: $0).claims }
+        compiler = QuestionV4Compiler(claims: claims)
     }
     func rejection(_ question: LearningQuestion) -> String? {
         guard let q = question.v4 else { return "missing_v4_proof" }
-        if let failure = QuestionV4Compiler().validate(q, claims: claims, analyses: [analysis.documentID: analysis]) { return failure }
+        if let failure = compiler.validate(q, claims: claims, analyses: [analysis.documentID: analysis]) { return failure }
         guard question == V4StudyBank.adapt(q, topicIDs: question.topicIDs, generatedAt: question.generatedAt) else { return "v4_study_adapter_mismatch" }
         return nil
     }
