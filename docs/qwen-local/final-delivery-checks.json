@@ -1,0 +1,63 @@
+{
+  "recorded_at_utc": "2026-09-15T09:15:17.547623+00:00",
+  "checks": {
+    "frozen_sources": true,
+    "frozen_benchmark": true,
+    "0.8b_dev_complete_unique_accounting": true,
+    "0.8b_challenge_complete_unique_accounting": true,
+    "0.8b_all_native_outputs_reviewed_once": true,
+    "2b_dev_complete_unique_accounting": true,
+    "2b_challenge_complete_unique_accounting": true,
+    "2b_all_native_outputs_reviewed_once": true,
+    "4b_dev_complete_unique_accounting": true,
+    "4b_challenge_complete_unique_accounting": true,
+    "4b_all_native_outputs_reviewed_once": true,
+    "continuation_66_successful_process_exits_no_watchdog": true,
+    "nine_source_range_checks": true,
+    "three_final_ios_modules": true
+  },
+  "primary_counts": {
+    "0.8b": {
+      "attempts": 100,
+      "native_responses": 100,
+      "retries": 0
+    },
+    "2b": {
+      "attempts": 100,
+      "native_responses": 100,
+      "retries": 0
+    },
+    "4b": {
+      "attempts": 100,
+      "native_responses": 99,
+      "retries": 0
+    }
+  },
+  "separately_executed": {
+    "eight_app_files_syntax_parse_exit": 0,
+    "pbxproj_lint_exit": 0,
+    "full_staged_whitespace_check_exit": 2,
+    "tracked_worktree_whitespace_check_before_staging_exit": 0,
+    "staged_source_and_reports_whitespace_check_exit": 0
+  },
+  "limits": [
+    "Full app build blocked; syntax and package modules are narrower checks.",
+    "Physical iPhone and rendered UI remain PENDING.",
+    "Native lifecycle is 6/7, with the original failed semantic check preserved.",
+    "Raw compiler logs, upstream license and chat templates retain original whitespace; full staged whitespace check reports those evidence files."
+  ],
+  "raw_evidence_whitespace_files": [
+    "docs/qwen-local/app-build.txt",
+    "docs/qwen-local/configure.txt",
+    "docs/qwen-local/installer-typecheck.txt",
+    "docs/qwen-local/licenses/Qwen-Apache-2.0.txt",
+    "docs/qwen-local/native-configure.txt",
+    "docs/qwen-local/prepare-native-final.txt",
+    "docs/qwen-local/prepare-native.txt",
+    "docs/qwen-local/reasoning-host-final-progress.txt",
+    "docs/qwen-local/reasoning-host-progress.txt",
+    "docs/qwen-local/reasoning-host-v2-progress.txt",
+    "docs/qwen-local/smoke-2b-cpu-2048.stderr.txt",
+    "docs/qwen-local/smoke-2b-cpu-2048.stdout.txt"
+  ]
+}

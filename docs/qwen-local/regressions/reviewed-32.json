@@ -1,0 +1,520 @@
+[
+  {
+    "after" : "supported",
+    "before" : "supported",
+    "findings" : [
+
+    ],
+    "learner" : "Wasteful polling for external service events is replaced by a webhook.",
+    "missingDetails" : 1,
+    "source" : [
+      "An HTTP callback one system sends to another when\nan event occurs.",
+      "It replaces wasteful polling for\nexternal service events."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "supported",
+    "before" : "supported",
+    "findings" : [
+
+    ],
+    "learner" : "Event bubbling allows parent handlers and event delegation.",
+    "missingDetails" : 1,
+    "source" : [
+      "The phase where an event triggered on a descendant\npropagates upward through its ancestors.",
+      "It enables\nparent handlers and event delegation."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "supported",
+    "before" : "supported",
+    "findings" : [
+
+    ],
+    "learner" : "Effect cleanup avoids duplicate listeners, stale subscriptions, and leaks.",
+    "missingDetails" : 1,
+    "source" : [
+      "The function returned from an effect to undo the\nprevious subscription\/resource before rerun or\nunmount.",
+      "It prevents duplicate listeners, stale\nsubscriptions, and leaks."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "supported",
+    "before" : "supported",
+    "findings" : [
+
+    ],
+    "learner" : "Explicit data flow and reusable components are created by props.",
+    "missingDetails" : 1,
+    "source" : [
+      "Inputs passed from a parent component to a child.",
+      "They create explicit data flow and reusable\ncomponents."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "supported",
+    "before" : "supported",
+    "findings" : [
+
+    ],
+    "learner" : "Shipped JavaScript without manual deletion is reduced by tree shaking.",
+    "missingDetails" : 1,
+    "source" : [
+      "Build-time elimination of unused module exports\nwhen static analysis allows it.",
+      "It reduces shipped\nJavaScript without manual deletion."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "supported",
+    "before" : "supported",
+    "findings" : [
+
+    ],
+    "learner" : "Impossible UI combinations in complex flows are prevented by a state machine.",
+    "missingDetails" : 1,
+    "source" : [
+      "An explicit model of allowed states and transitions.",
+      "It\nprevents impossible UI combinations in complex flows."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "supported",
+    "before" : "supported",
+    "findings" : [
+
+    ],
+    "learner" : "One source of truth for coordinated UI is created by lifting state up.",
+    "missingDetails" : 1,
+    "source" : [
+      "Move shared state to the nearest common owner of\ncomponents that need it.",
+      "It creates one source of truth\nfor coordinated UI."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "supported",
+    "before" : "supported",
+    "findings" : [
+
+    ],
+    "learner" : "React.memo can reduce expensive child renders when props are stable.",
+    "missingDetails" : 1,
+    "source" : [
+      "A wrapper that can skip rerendering a component\nwhen its props are shallowly equal.",
+      "It can reduce\nexpensive child renders when props are stable."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "supported",
+    "before" : "supported",
+    "findings" : [
+
+    ],
+    "learner" : "HTTP is the request-response protocol used by browsers, apps, and servers to exchange web data.",
+    "missingDetails" : 1,
+    "source" : [
+      "The request-response protocol used by browsers,\napps, and servers to exchange web data.",
+      "It is the basic\nlanguage behind APIs, pages, images, and most web\ntraffic."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "supported",
+    "before" : "supported",
+    "findings" : [
+
+    ],
+    "learner" : "JSON is a lightweight text format for structured data using objects, arrays, strings, numbers, booleans, and null.",
+    "missingDetails" : 1,
+    "source" : [
+      "A lightweight text format for structured data using\nobjects, arrays, strings, numbers, booleans, and null.",
+      "It is easy for humans to read and common across web\nAPIs."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "partiallySupported",
+    "findings" : [
+      "missingCondition"
+    ],
+    "learner" : "React.memo can reduce expensive child renders.",
+    "missingDetails" : 2,
+    "source" : [
+      "A wrapper that can skip rerendering a component\nwhen its props are shallowly equal.",
+      "It can reduce\nexpensive child renders when props are stable."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "partiallySupported",
+    "findings" : [
+      "missingCondition"
+    ],
+    "learner" : "A relational database is excellent.",
+    "missingDetails" : 2,
+    "source" : [
+      "A database model built around tables, rows, columns,\nrelationships, and constraints.",
+      "It is excellent when data\nrelationships and transactional consistency matter."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "supported",
+    "before" : "partiallySupported",
+    "findings" : [
+
+    ],
+    "learner" : "Effect cleanup prevents duplicate listeners.",
+    "missingDetails" : 2,
+    "source" : [
+      "The function returned from an effect to undo the\nprevious subscription\/resource before rerun or\nunmount.",
+      "It prevents duplicate listeners, stale\nsubscriptions, and leaks."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "supported",
+    "before" : "partiallySupported",
+    "findings" : [
+
+    ],
+    "learner" : "HTTP is a protocol.",
+    "missingDetails" : 2,
+    "source" : [
+      "The request-response protocol used by browsers,\napps, and servers to exchange web data.",
+      "It is the basic\nlanguage behind APIs, pages, images, and most web\ntraffic."
+    ],
+    "support" : [
+      "supported"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "contradicted",
+    "findings" : [
+      "missingCondition",
+      "scopeTooBroad"
+    ],
+    "learner" : "React.memo always reduces expensive child renders.",
+    "missingDetails" : 2,
+    "source" : [
+      "A wrapper that can skip rerendering a component\nwhen its props are shallowly equal.",
+      "It can reduce\nexpensive child renders when props are stable."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "contradicted",
+    "findings" : [
+      "scopeTooBroad",
+      "unsupportedAddition"
+    ],
+    "learner" : "React.memo always prevents every rerender.",
+    "missingDetails" : 2,
+    "source" : [
+      "A wrapper that can skip rerendering a component\nwhen its props are shallowly equal.",
+      "It can reduce\nexpensive child renders when props are stable."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "contradicted",
+    "findings" : [
+      "scopeTooBroad",
+      "unsupportedAddition"
+    ],
+    "learner" : "A relational database is always excellent.",
+    "missingDetails" : 2,
+    "source" : [
+      "A database model built around tables, rows, columns,\nrelationships, and constraints.",
+      "It is excellent when data\nrelationships and transactional consistency matter."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "contradicted",
+    "before" : "contradicted",
+    "findings" : [
+      "incorrectNegation"
+    ],
+    "learner" : "Effect cleanup does not prevent duplicate listeners, stale subscriptions, and leaks.",
+    "missingDetails" : 2,
+    "source" : [
+      "The function returned from an effect to undo the\nprevious subscription\/resource before rerun or\nunmount.",
+      "It prevents duplicate listeners, stale\nsubscriptions, and leaks."
+    ],
+    "support" : [
+      "contradicted"
+    ]
+  },
+  {
+    "after" : "contradicted",
+    "before" : "contradicted",
+    "findings" : [
+      "incorrectNegation"
+    ],
+    "learner" : "A state machine does not prevent impossible UI combinations in complex flows.",
+    "missingDetails" : 2,
+    "source" : [
+      "An explicit model of allowed states and transitions.",
+      "It\nprevents impossible UI combinations in complex flows."
+    ],
+    "support" : [
+      "contradicted"
+    ]
+  },
+  {
+    "after" : "contradicted",
+    "before" : "contradicted",
+    "findings" : [
+      "incorrectNegation"
+    ],
+    "learner" : "Event bubbling does not enable parent handlers and event delegation.",
+    "missingDetails" : 2,
+    "source" : [
+      "The phase where an event triggered on a descendant\npropagates upward through its ancestors.",
+      "It enables\nparent handlers and event delegation."
+    ],
+    "support" : [
+      "contradicted"
+    ]
+  },
+  {
+    "after" : "contradicted",
+    "before" : "contradicted",
+    "findings" : [
+      "incorrectNegation"
+    ],
+    "learner" : "A webhook does not replace wasteful polling for external service events.",
+    "missingDetails" : 2,
+    "source" : [
+      "An HTTP callback one system sends to another when\nan event occurs.",
+      "It replaces wasteful polling for\nexternal service events."
+    ],
+    "support" : [
+      "contradicted"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "contradicted",
+    "findings" : [
+      "reversedCauseEffect"
+    ],
+    "learner" : "Parent handlers and event delegation enable event bubbling.",
+    "missingDetails" : 2,
+    "source" : [
+      "The phase where an event triggered on a descendant\npropagates upward through its ancestors.",
+      "It enables\nparent handlers and event delegation."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "contradicted",
+    "findings" : [
+      "reversedCauseEffect"
+    ],
+    "learner" : "Impossible UI combinations in complex flows prevent a state machine.",
+    "missingDetails" : 2,
+    "source" : [
+      "An explicit model of allowed states and transitions.",
+      "It\nprevents impossible UI combinations in complex flows."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "partiallySupported",
+    "findings" : [
+      "unsupportedAddition"
+    ],
+    "learner" : "A webhook prevents server outages.",
+    "missingDetails" : 2,
+    "source" : [
+      "An HTTP callback one system sends to another when\nan event occurs.",
+      "It replaces wasteful polling for\nexternal service events."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "partiallySupported",
+    "findings" : [
+      "unsupportedAddition"
+    ],
+    "learner" : "A state machine creates encrypted backups.",
+    "missingDetails" : 2,
+    "source" : [
+      "An explicit model of allowed states and transitions.",
+      "It\nprevents impossible UI combinations in complex flows."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "notAddressed",
+    "findings" : [
+
+    ],
+    "learner" : "Penguins inhabit the southern hemisphere.",
+    "missingDetails" : 2,
+    "source" : [
+      "An HTTP callback one system sends to another when\nan event occurs.",
+      "It replaces wasteful polling for\nexternal service events."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "notAddressed",
+    "findings" : [
+
+    ],
+    "learner" : "The moon orbits Earth.",
+    "missingDetails" : 2,
+    "source" : [
+      "A wrapper that can skip rerendering a component\nwhen its props are shallowly equal.",
+      "It can reduce\nexpensive child renders when props are stable."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "notAddressed",
+    "findings" : [
+
+    ],
+    "learner" : "My lunch contains tomatoes.",
+    "missingDetails" : 2,
+    "source" : [
+      "The function returned from an effect to undo the\nprevious subscription\/resource before rerun or\nunmount.",
+      "It prevents duplicate listeners, stale\nsubscriptions, and leaks."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "notAddressed",
+    "before" : "notAddressed",
+    "findings" : [
+
+    ],
+    "learner" : "A triangle has three sides.",
+    "missingDetails" : 2,
+    "source" : [
+      "The request-response protocol used by browsers,\napps, and servers to exchange web data.",
+      "It is the basic\nlanguage behind APIs, pages, images, and most web\ntraffic."
+    ],
+    "support" : [
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "partiallySupported",
+    "before" : "partiallySupported",
+    "findings" : [
+      "unsupportedAddition"
+    ],
+    "learner" : "A state machine prevents impossible UI combinations in complex flows. A state machine creates encrypted backups.",
+    "missingDetails" : 1,
+    "source" : [
+      "An explicit model of allowed states and transitions.",
+      "It\nprevents impossible UI combinations in complex flows."
+    ],
+    "support" : [
+      "supported",
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "partiallySupported",
+    "before" : "partiallySupported",
+    "findings" : [
+      "unsupportedAddition"
+    ],
+    "learner" : "A webhook replaces wasteful polling for external service events. A webhook prevents server outages.",
+    "missingDetails" : 1,
+    "source" : [
+      "An HTTP callback one system sends to another when\nan event occurs.",
+      "It replaces wasteful polling for\nexternal service events."
+    ],
+    "support" : [
+      "supported",
+      "notAddressed"
+    ]
+  },
+  {
+    "after" : "partiallySupported",
+    "before" : "partiallySupported",
+    "findings" : [
+      "unsupportedAddition"
+    ],
+    "learner" : "Event bubbling allows parent handlers and event delegation. Event bubbling creates encrypted backups.",
+    "missingDetails" : 1,
+    "source" : [
+      "The phase where an event triggered on a descendant\npropagates upward through its ancestors.",
+      "It enables\nparent handlers and event delegation."
+    ],
+    "support" : [
+      "supported",
+      "notAddressed"
+    ]
+  }
+]

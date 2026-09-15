@@ -1,0 +1,351 @@
+sandbox-exec: sandbox_apply: Operation not permitted
+Shelf/Learning/Intelligence/OfflineModelStore.swift:6:13: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+  4 | 
+  5 | @MainActor @Observable
+  6 | final class OfflineModelStore {
+    |             `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+  7 |     static let shared = OfflineModelStore()
+  8 |     nonisolated static let bytes: Int64 = 1_280_835_840
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:7:16: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+  5 | @MainActor @Observable
+  6 | final class OfflineModelStore {
+  7 |     static let shared = OfflineModelStore()
+    |                `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+  8 |     nonisolated static let bytes: Int64 = 1_280_835_840
+  9 |     nonisolated static let checksum = "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223"
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:8:28: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+  6 | final class OfflineModelStore {
+  7 |     static let shared = OfflineModelStore()
+  8 |     nonisolated static let bytes: Int64 = 1_280_835_840
+    |                            `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+  9 |     nonisolated static let checksum = "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223"
+ 10 |     nonisolated static let remote = URL(string: "https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/f6d5376be1edb4d416d56da11e5397a961aca8ae/Qwen3.5-2B-Q4_K_M.gguf")!
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:9:28: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+  7 |     static let shared = OfflineModelStore()
+  8 |     nonisolated static let bytes: Int64 = 1_280_835_840
+  9 |     nonisolated static let checksum = "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223"
+    |                            `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 10 |     nonisolated static let remote = URL(string: "https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/f6d5376be1edb4d416d56da11e5397a961aca8ae/Qwen3.5-2B-Q4_K_M.gguf")!
+ 11 |     var installed = false
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:10:28: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+  8 |     nonisolated static let bytes: Int64 = 1_280_835_840
+  9 |     nonisolated static let checksum = "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223"
+ 10 |     nonisolated static let remote = URL(string: "https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/f6d5376be1edb4d416d56da11e5397a961aca8ae/Qwen3.5-2B-Q4_K_M.gguf")!
+    |                            `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 11 |     var installed = false
+ 12 |     var busy = false
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:11:9: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+  9 |     nonisolated static let checksum = "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223"
+ 10 |     nonisolated static let remote = URL(string: "https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/f6d5376be1edb4d416d56da11e5397a961aca8ae/Qwen3.5-2B-Q4_K_M.gguf")!
+ 11 |     var installed = false
+    |         `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 12 |     var busy = false
+ 13 |     var progress: Double = 0
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:12:9: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 10 |     nonisolated static let remote = URL(string: "https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/f6d5376be1edb4d416d56da11e5397a961aca8ae/Qwen3.5-2B-Q4_K_M.gguf")!
+ 11 |     var installed = false
+ 12 |     var busy = false
+    |         `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 13 |     var progress: Double = 0
+ 14 |     var message: String?
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:13:9: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 11 |     var installed = false
+ 12 |     var busy = false
+ 13 |     var progress: Double = 0
+    |         `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 14 |     var message: String?
+ 15 |     var wifiOnly = true
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:14:9: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 12 |     var busy = false
+ 13 |     var progress: Double = 0
+ 14 |     var message: String?
+    |         `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 15 |     var wifiOnly = true
+ 16 |     // Never persisted as enabled: every new app session starts with the
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:15:9: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 13 |     var progress: Double = 0
+ 14 |     var message: String?
+ 15 |     var wifiOnly = true
+    |         `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 16 |     // Never persisted as enabled: every new app session starts with the
+ 17 |     // established provider, including after termination on untested hardware.
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:18:9: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 16 |     // Never persisted as enabled: every new app session starts with the
+ 17 |     // established provider, including after termination on untested hardware.
+ 18 |     var enabled = false
+    |         `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 19 |     @ObservationIgnored private var operation: Task<Void, Never>?
+ 20 |     @ObservationIgnored private var transfer: ModelTransfer?
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:19:37: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 17 |     // established provider, including after termination on untested hardware.
+ 18 |     var enabled = false
+ 19 |     @ObservationIgnored private var operation: Task<Void, Never>?
+    |                                     `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 20 |     @ObservationIgnored private var transfer: ModelTransfer?
+ 21 |     nonisolated static var directory: URL {
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:20:37: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 18 |     var enabled = false
+ 19 |     @ObservationIgnored private var operation: Task<Void, Never>?
+ 20 |     @ObservationIgnored private var transfer: ModelTransfer?
+    |                                     `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 21 |     nonisolated static var directory: URL {
+ 22 |         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:21:28: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 19 |     @ObservationIgnored private var operation: Task<Void, Never>?
+ 20 |     @ObservationIgnored private var transfer: ModelTransfer?
+ 21 |     nonisolated static var directory: URL {
+    |                            `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 22 |         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+ 23 |             .appendingPathComponent("Leu/OfflineQwen", isDirectory: true)
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:25:28: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 23 |             .appendingPathComponent("Leu/OfflineQwen", isDirectory: true)
+ 24 |     }
+ 25 |     nonisolated static var modelURL: URL { directory.appendingPathComponent("Qwen3.5-2B-Q4_K_M.gguf") }
+    |                            `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 26 |     nonisolated static var resumeURL: URL { directory.appendingPathComponent("download.resume") }
+ 27 |     init() { installed = FileManager.default.fileExists(atPath: Self.modelURL.path) }
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:26:28: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 24 |     }
+ 25 |     nonisolated static var modelURL: URL { directory.appendingPathComponent("Qwen3.5-2B-Q4_K_M.gguf") }
+ 26 |     nonisolated static var resumeURL: URL { directory.appendingPathComponent("download.resume") }
+    |                            `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 27 |     init() { installed = FileManager.default.fileExists(atPath: Self.modelURL.path) }
+ 28 |     func cancel() { operation?.cancel(); transfer?.cancel() }
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:27:5: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 25 |     nonisolated static var modelURL: URL { directory.appendingPathComponent("Qwen3.5-2B-Q4_K_M.gguf") }
+ 26 |     nonisolated static var resumeURL: URL { directory.appendingPathComponent("download.resume") }
+ 27 |     init() { installed = FileManager.default.fileExists(atPath: Self.modelURL.path) }
+    |     `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 28 |     func cancel() { operation?.cancel(); transfer?.cancel() }
+ 29 | 
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:28:10: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 26 |     nonisolated static var resumeURL: URL { directory.appendingPathComponent("download.resume") }
+ 27 |     init() { installed = FileManager.default.fileExists(atPath: Self.modelURL.path) }
+ 28 |     func cancel() { operation?.cancel(); transfer?.cancel() }
+    |          `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 29 | 
+ 30 |     func download() {
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:30:10: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 28 |     func cancel() { operation?.cancel(); transfer?.cancel() }
+ 29 | 
+ 30 |     func download() {
+    |          `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 31 |         guard !busy else { return }
+ 32 |         busy = true; message = nil; progress = 0
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:60:10: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 58 |     }
+ 59 | 
+ 60 |     func importFile(_ url: URL) {
+    |          `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 61 |         guard !busy else { return }
+ 62 |         busy = true; message = nil; progress = 0
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:83:10: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 81 |     }
+ 82 | 
+ 83 |     func remove() {
+    |          `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 84 |         guard !busy else { return }
+ 85 |         enabled = false
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:95:18: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 93 |     }
+ 94 | 
+ 95 |     private func prepareSpace() throws {
+    |                  `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 96 |         var root = Self.directory
+ 97 |         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:110:18: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+108 |     }
+109 | 
+110 |     private func verifyAndPromote(_ staging: URL) async throws {
+    |                  `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+111 |         try await Self.verify(staging)
+112 |         try Task.checkCancellation()
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:120:29: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+118 |         progress = 1
+119 |     }
+120 |     nonisolated static func verify(_ url: URL) async throws {
+    |                             `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+121 |         // Hashing runs away from UI. Parent cancellation is checked after the
+122 |         // bounded hash task; no unverified file can be promoted or loaded.
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:6:13: error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+  4 | 
+  5 | @MainActor @Observable
+  6 | final class OfflineModelStore {
+    |             `- error: external macro implementation type 'ObservationMacros.ObservableMacro' could not be found for macro 'Observable()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+  7 |     static let shared = OfflineModelStore()
+  8 |     nonisolated static let bytes: Int64 = 1_280_835_840
+
+Observation.Observable:2:210: note: 'Observable()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(member, names: named(_$observationRegistrar), named(access), named(withMutation), named(shouldNotifyObservers)) @attached(memberAttribute) @attached(extension, conformances: Observable) public macro Observable() = #externalMacro(module: "ObservationMacros", type: "ObservableMacro")
+  |                                                                                                                                                                                                                  `- note: 'Observable()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:19:37: error: external macro implementation type 'ObservationMacros.ObservationIgnoredMacro' could not be found for macro 'ObservationIgnored()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 17 |     // established provider, including after termination on untested hardware.
+ 18 |     var enabled = false
+ 19 |     @ObservationIgnored private var operation: Task<Void, Never>?
+    |                                     `- error: external macro implementation type 'ObservationMacros.ObservationIgnoredMacro' could not be found for macro 'ObservationIgnored()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 20 |     @ObservationIgnored private var transfer: ModelTransfer?
+ 21 |     nonisolated static var directory: URL {
+
+Observation.ObservationIgnored:2:34: note: 'ObservationIgnored()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(accessor) public macro ObservationIgnored() = #externalMacro(module: "ObservationMacros", type: "ObservationIgnoredMacro")
+  |                                  `- note: 'ObservationIgnored()' declared here
+
+Shelf/Learning/Intelligence/OfflineModelStore.swift:20:37: error: external macro implementation type 'ObservationMacros.ObservationIgnoredMacro' could not be found for macro 'ObservationIgnored()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 18 |     var enabled = false
+ 19 |     @ObservationIgnored private var operation: Task<Void, Never>?
+ 20 |     @ObservationIgnored private var transfer: ModelTransfer?
+    |                                     `- error: external macro implementation type 'ObservationMacros.ObservationIgnoredMacro' could not be found for macro 'ObservationIgnored()'; '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server' produced malformed response
+ 21 |     nonisolated static var directory: URL {
+ 22 |         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+
+Observation.ObservationIgnored:2:34: note: 'ObservationIgnored()' declared here
+1 | @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
+2 | @attached(accessor) public macro ObservationIgnored() = #externalMacro(module: "ObservationMacros", type: "ObservationIgnoredMacro")
+  |                                  `- note: 'ObservationIgnored()' declared here

@@ -1,0 +1,978 @@
+[
+  {
+    "actual" : {
+      "captured" : [
+        "React needs a consistent ID so it knows it's still the same item after the list moves."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+      ]
+    },
+    "id" : 1,
+    "learner" : "React needs a consistent ID so it knows it's still the same item after the list moves.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "Persistent identifiers let React recognize an item again when the order changes."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+      ]
+    },
+    "id" : 2,
+    "learner" : "Persistent identifiers let React recognize an item again when the order changes.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "A stable key is how React keeps track of the same element across list reorders."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+      ]
+    },
+    "id" : 3,
+    "learner" : "A stable key is how React keeps track of the same element across list reorders.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "The key tells React which previous item this new position belongs to."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+      ]
+    },
+    "id" : 4,
+    "learner" : "The key tells React which previous item this new position belongs to.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "Give the request another attempt if its failure might be short-lived."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 5,
+    "learner" : "Give the request another attempt if its failure might be short-lived.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "Try again when the problem is temporary, because it may work later."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 6,
+    "learner" : "Try again when the problem is temporary, because it may work later.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "Retries make sense for errors that can go away."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 7,
+    "learner" : "Retries make sense for errors that can go away.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "A transient failure is a reason to attempt the operation again."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 8,
+    "learner" : "A transient failure is a reason to attempt the operation again.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "The database constraint rejects repeated values, including when inserts race."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 9,
+    "learner" : "The database constraint rejects repeated values, including when inserts race.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "A UNIQUE rule stops two clients from inserting the same constrained value at the same time."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 10,
+    "learner" : "A UNIQUE rule stops two clients from inserting the same constrained value at the same time.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "Checking in the app alone is unsafe; the uniqueness constraint is the protection against duplicates."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 11,
+    "learner" : "Checking in the app alone is unsafe; the uniqueness constraint is the protection against duplicates.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "The constraint keeps the selected value or combination unique even with concurrent writes."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 12,
+    "learner" : "The constraint keeps the selected value or combination unique even with concurrent writes.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "The returned function still reaches the variables from the place where it was made."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 13,
+    "learner" : "The returned function still reaches the variables from the place where it was made.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "Even after the outer call ends, the function keeps its enclosing scope."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 14,
+    "learner" : "Even after the outer call ends, the function keeps its enclosing scope.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "A closure retains access to surrounding bindings when it outlives its outer invocation."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 15,
+    "learner" : "A closure retains access to surrounding bindings when it outlives its outer invocation.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "The function brings access to the lexical environment where it was created."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 16,
+    "learner" : "The function brings access to the lexical environment where it was created.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "Create a fresh value and leave the previous input alone."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 17,
+    "learner" : "Create a fresh value and leave the previous input alone.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "An update produces new data rather than editing the original."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 18,
+    "learner" : "An update produces new data rather than editing the original.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "Keep the existing data untouched; represent the change with a new value."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 19,
+    "learner" : "Keep the existing data untouched; represent the change with a new value.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+  },
+  {
+    "actual" : {
+      "captured" : [
+        "Make an updated copy instead of changing the value other code already holds."
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : true,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 20,
+    "learner" : "Make an updated copy instead of changing the value other code already holds.",
+    "matchesPresentation" : true,
+    "previous" : "SUPPORTED",
+    "source" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+        "Keys identify items globally across every unrelated list."
+      ],
+      "worthAdding" : [
+        "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+      ]
+    },
+    "id" : 21,
+    "learner" : "Keys identify items globally across every unrelated list.",
+    "matchesPresentation" : true,
+    "previous" : "OVERGENERALIZED",
+    "source" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+        "The same key guarantees React will always preserve state even if component type changes."
+      ],
+      "worthAdding" : [
+        "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+      ]
+    },
+    "id" : 22,
+    "learner" : "The same key guarantees React will always preserve state even if component type changes.",
+    "matchesPresentation" : true,
+    "previous" : "OVERGENERALIZED",
+    "source" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+        "Retry every failed request."
+      ],
+      "worthAdding" : [
+        "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+      ]
+    },
+    "id" : 23,
+    "learner" : "Retry every failed request.",
+    "matchesPresentation" : true,
+    "previous" : "OVERGENERALIZED",
+    "source" : "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+        "A retry guarantees the next attempt will succeed."
+      ],
+      "worthAdding" : [
+        "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+      ]
+    },
+    "id" : 24,
+    "learner" : "A retry guarantees the next attempt will succeed.",
+    "matchesPresentation" : true,
+    "previous" : "OVERGENERALIZED",
+    "source" : "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+      ]
+    },
+    "id" : 25,
+    "learner" : "I can just check first in application code.",
+    "matchesPresentation" : true,
+    "previous" : "INCOMPLETE",
+    "source" : "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+      ]
+    },
+    "id" : 26,
+    "learner" : "A check before inserting in my app is enough.",
+    "matchesPresentation" : true,
+    "previous" : "INCOMPLETE",
+    "source" : "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+        "Every function can access every variable in the program."
+      ],
+      "worthAdding" : [
+        "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+      ]
+    },
+    "id" : 27,
+    "learner" : "Every function can access every variable in the program.",
+    "matchesPresentation" : true,
+    "previous" : "OVERGENERALIZED",
+    "source" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+        "A closure can read locals from any unrelated function."
+      ],
+      "worthAdding" : [
+        "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+      ]
+    },
+    "id" : 28,
+    "learner" : "A closure can read locals from any unrelated function.",
+    "matchesPresentation" : true,
+    "previous" : "OVERGENERALIZED",
+    "source" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+        "Immutability requires deep cloning every nested object on every update."
+      ],
+      "worthAdding" : [
+        "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+      ]
+    },
+    "id" : 29,
+    "learner" : "Immutability requires deep cloning every nested object on every update.",
+    "matchesPresentation" : true,
+    "previous" : "OVERGENERALIZED",
+    "source" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+        "Immutability means no values can ever change."
+      ],
+      "worthAdding" : [
+        "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+      ]
+    },
+    "id" : 30,
+    "learner" : "Immutability means no values can ever change.",
+    "matchesPresentation" : true,
+    "previous" : "OVERGENERALIZED",
+    "source" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+        {
+          "learner" : "Stable keys prevent React from recognizing the same item after reordering.",
+          "source" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+        }
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+      ]
+    },
+    "id" : 31,
+    "learner" : "Stable keys prevent React from recognizing the same item after reordering.",
+    "matchesPresentation" : true,
+    "previous" : "CONTRADICTED",
+    "source" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+        {
+          "learner" : "Keys do not help React match an item to its earlier instance.",
+          "source" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+        }
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+      ]
+    },
+    "id" : 32,
+    "learner" : "Keys do not help React match an item to its earlier instance.",
+    "matchesPresentation" : true,
+    "previous" : "CONTRADICTED",
+    "source" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+        {
+          "learner" : "You should never retry temporary failures.",
+          "source" : "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+        }
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+      ]
+    },
+    "id" : 33,
+    "learner" : "You should never retry temporary failures.",
+    "matchesPresentation" : true,
+    "previous" : "CONTRADICTED",
+    "source" : "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+        {
+          "learner" : "Retry is for permanent failures rather than temporary ones.",
+          "source" : "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+        }
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+      ]
+    },
+    "id" : 34,
+    "learner" : "Retry is for permanent failures rather than temporary ones.",
+    "matchesPresentation" : true,
+    "previous" : "CONTRADICTED",
+    "source" : "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+        {
+          "learner" : "Unique constraints allow duplicate values in the constrained columns.",
+          "source" : "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+        }
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 35,
+    "learner" : "Unique constraints allow duplicate values in the constrained columns.",
+    "matchesPresentation" : true,
+    "previous" : "CONTRADICTED",
+    "source" : "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+        {
+          "learner" : "Two concurrent inserts of the same constrained value are both permitted by a unique constraint.",
+          "source" : "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+        }
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+
+      ]
+    },
+    "id" : 36,
+    "learner" : "Two concurrent inserts of the same constrained value are both permitted by a unique constraint.",
+    "matchesPresentation" : true,
+    "previous" : "CONTRADICTED",
+    "source" : "Guarantees that a value or combination of values\ncannot appear more than once. It closes race\nconditions that “check then insert” application logic\ncannot safely prevent alone."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+        {
+          "learner" : "A closure loses access to its lexical environment after the outer call returns.",
+          "source" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+        }
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+      ]
+    },
+    "id" : 37,
+    "learner" : "A closure loses access to its lexical environment after the outer call returns.",
+    "matchesPresentation" : true,
+    "previous" : "CONTRADICTED",
+    "source" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+        {
+          "learner" : "Once the outer function finishes, a closure cannot access those variables.",
+          "source" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+        }
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+      ]
+    },
+    "id" : 38,
+    "learner" : "Once the outer function finishes, a closure cannot access those variables.",
+    "matchesPresentation" : true,
+    "previous" : "CONTRADICTED",
+    "source" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+        {
+          "learner" : "An immutable update edits the original value in place.",
+          "source" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+        }
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+      ]
+    },
+    "id" : 39,
+    "learner" : "An immutable update edits the original value in place.",
+    "matchesPresentation" : true,
+    "previous" : "CONTRADICTED",
+    "source" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+        {
+          "learner" : "Immutability means mutating the existing input instead of creating a new value.",
+          "source" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+        }
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+
+      ],
+      "worthAdding" : [
+        "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+      ]
+    },
+    "id" : 40,
+    "learner" : "Immutability means mutating the existing input instead of creating a new value.",
+    "matchesPresentation" : true,
+    "previous" : "CONTRADICTED",
+    "source" : "Treating existing data as unchanged and creating new\nvalues for updates. It makes state transitions easier to\nreason about and supports change detection by\nidentity."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+        "Keys make rendering faster."
+      ],
+      "worthAdding" : [
+        "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+      ]
+    },
+    "id" : 41,
+    "learner" : "Keys make rendering faster.",
+    "matchesPresentation" : true,
+    "previous" : "SOURCE_DOES_NOT_SUPPORT",
+    "source" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+        "A closure gives access to all variables in any scope."
+      ],
+      "worthAdding" : [
+        "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+      ]
+    },
+    "id" : 42,
+    "learner" : "A closure gives access to all variables in any scope.",
+    "matchesPresentation" : true,
+    "previous" : "OVERGENERALIZED",
+    "source" : "A closure is a function together with access to its\nsurrounding lexical environment. The function can\nkeep accessing that environment after the outer call\nhas returned."
+  },
+  {
+    "actual" : {
+      "captured" : [
+
+      ],
+      "check" : [
+
+      ],
+      "fullySupported" : false,
+      "notEstablished" : [
+        "Retries work for all failed requests regardless of the cause."
+      ],
+      "worthAdding" : [
+        "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+      ]
+    },
+    "id" : 43,
+    "learner" : "Retries work for all failed requests regardless of the cause.",
+    "matchesPresentation" : true,
+    "previous" : "OVERGENERALIZED",
+    "source" : "Attempting a failed operation again when the failure\nmay be temporary. Transient network\/service errors\noften succeed later."
+  }
+]

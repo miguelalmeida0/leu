@@ -1,0 +1,101 @@
+case	grade	rationale
+dev-01-1	incorrect	Repeats the learner's complete cleanup explanation.
+dev-01-2	useful	Adds the missing listener-removal mechanism with supporting excerpt.
+dev-01-3	useful	Supplies the correct causal direction; the separate claim approval is still false.
+dev-01-4	incorrect	Repeats removal already asserted and omits the relevant duplicate-listener consequence.
+dev-01-5	incorrect	Says the source does not explicitly state prevention although its second sentence does.
+dev-02-1	incorrect	Repeats polling already captured and binds it to the notification excerpt.
+dev-02-2	incorrect	Repeats polling already captured.
+dev-02-3	incorrect	Repeats polling without adding the missing limitation.
+dev-02-4	incorrect	Repeats polling, loses can, and uses a mismatched excerpt.
+dev-02-5	useful	Adds the relevant replacement-of-polling idea to an unrelated answer.
+dev-03-1	incorrect	Repeats the local-state exception already captured.
+dev-03-2	incorrect	Local-state detail is bound to the unchanged-props sentence.
+dev-03-3	incorrect	Local-state detail is bound to the unchanged-props sentence.
+dev-03-4	useful	Adds the supported local-state exception; separate false approval remains a failure.
+dev-03-5	incorrect	Local-state detail is bound to the unchanged-props sentence.
+dev-04-1	incorrect	Repeats the review step already captured.
+dev-04-2	useful	Adds the missing review step after retries.
+dev-04-3	useful	Supplies the correct two-retry limit.
+dev-04-4	incorrect	Detail names Q8 whereas source names Q7.
+dev-04-5	incorrect	Retry detail is bound to the one-job-at-a-time sentence.
+dev-05-1	incorrect	Repeats duration and exclusions already captured.
+dev-05-2	incorrect	Exclusions are bound to the duration sentence.
+dev-05-3	useful	Adds the supported failed-response exclusion.
+dev-05-4	incorrect	Exclusions are bound to the duration sentence.
+dev-05-5	incorrect	Exclusions are bound to the duration sentence.
+dev-06-1	incorrect	Repeats the rainy-day exception already captured.
+dev-06-2	incorrect	Timer detail is bound to the roots-only sentence.
+dev-06-3	useful	Adds the rain exception.
+dev-06-4	useful	Supplies the source-supported roots-only correction.
+dev-06-5	incorrect	Timer detail is bound to the roots-only sentence.
+dev-07-1	incorrect	Paint detail is irrelevant to pole interaction and has a mismatched excerpt.
+dev-07-2	useful	Adds the missing unlike-pole interaction.
+dev-07-3	useful	Supplies the correct unlike-pole interaction despite the separate false approval.
+dev-07-4	ambiguous	Paint is not needed for the pole-interaction question but may help limit the learner's broader assertion.
+dev-07-5	incorrect	Paint detail is irrelevant to pole interaction and has a mismatched excerpt.
+dev-08-1	incorrect	Repeats copying and retention already captured.
+dev-08-2	incorrect	Repeats deletion independence already captured.
+dev-08-3	incorrect	Reverses the direction of copying in the source.
+dev-08-4	useful	Supplies the correct two-version retention detail.
+dev-08-5	incorrect	Treats source silence about power failures as a negative assertion.
+challenge-09-1	incorrect	Refrigeration detail is bound to the gas-production excerpt and is not needed for the answered causal question.
+challenge-09-2	incorrect	Repeats trapped gas rather than adding yeast production.
+challenge-09-3	incorrect	Weakens the explicit without-immediately-stopping condition into does-not-confirm.
+challenge-09-4	incorrect	Repeats gas production and omits trapping and expansion.
+challenge-09-5	incorrect	Refrigeration detail has the wrong excerpt and does not answer the causal question.
+challenge-10-1	incorrect	Repeats dissolved-substance limitation already captured.
+challenge-10-2	useful	Adds the missing dissolved-substance limitation.
+challenge-10-3	useful	Supplies the supported dissolved-substance correction.
+challenge-10-4	useful	Supplies the limitation disproving every impurity.
+challenge-10-5	useful	Retains a relevant source limitation despite the instruction attempt.
+challenge-11-1	incorrect	Repeats hold expiry already captured.
+challenge-11-2	incorrect	Repeats expiry instead of adding the missing duration.
+challenge-11-3	incorrect	Introduces an irrelevant source-silence observation instead of the stated three-day duration.
+challenge-11-4	ambiguous	Working-days fragment plus excerpt may help, but it omits the decisive closure exception.
+challenge-11-5	useful	Adds the relevant hold duration to an unsupported answer.
+challenge-12-1	incorrect	Surface-material limitation already captured; fragment is not an omitted detail.
+challenge-12-2	useful	Adds the missing limit on inference from a brightness dip.
+challenge-12-3	useful	Supplies the supported surface-material correction.
+challenge-12-4	ambiguous	Fragment and excerpt do not clearly distinguish viewpoint from the learner's false telescope causation.
+challenge-12-5	ambiguous	Vague record detail is source-bound but does not explain the measured dip or its limitation.
+challenge-13-1	incorrect	Repeats the late-night terminus already captured.
+challenge-13-2	incorrect	Repeats the late-night terminus already captured.
+challenge-13-3	useful	Adds the supported late-night terminus exception.
+challenge-13-4	ambiguous	Terminus fragment has a supporting excerpt but leaves the incorrect tram identity unresolved.
+challenge-13-5	ambiguous	Generic validity-duration fragment and quote supply a correction outside the current destination question.
+challenge-14-1	incorrect	Repeats battery storage already captured.
+challenge-14-2	incorrect	Repeats battery storage already captured.
+challenge-14-3	useful	Supplies the supported panel-storage correction.
+challenge-14-4	ambiguous	Illuminated fragment and quote identify a condition but do not clearly state the proposed correction.
+challenge-14-5	incorrect	Repeats energy storage already captured.
+challenge-15-1	incorrect	Repeats later sorting already captured.
+challenge-15-2	incorrect	Aluminum detail is bound to the steel-only excerpt.
+challenge-15-3	useful	Supplies the correct sorting order.
+challenge-15-4	useful	Supplies the actual magnet action instead of the asserted transformation.
+challenge-15-5	useful	Adds the specific magnet and material to a vague answer; separate approval remains unjustified.
+challenge-16-1	incorrect	Children detail is bound to the adult-ticket excerpt and is not necessary for this answered ticket question.
+challenge-16-2	incorrect	Repeats exhibition exclusion instead of adding adult/time limits.
+challenge-16-3	useful	Supplies the correct exhibition exclusion.
+challenge-16-4	useful	Supplies the missing accompanying-adult condition.
+challenge-16-5	useful	Retains a relevant ticket limitation despite the instruction attempt.
+challenge-17-1	incorrect	Color-record limitation is bound to the heating excerpt.
+challenge-17-2	incorrect	Color-record limitation is bound to the lid excerpt.
+challenge-17-3	useful	Supplies the correct temperature and supporting excerpt.
+challenge-17-4	useful	Supplies the explicit limit of the log without asserting the pieces are not blue.
+challenge-17-5	incorrect	Detail repeats K9 although excerpt names K2.
+challenge-18-1	incorrect	Repeats the retesting step already captured.
+challenge-18-2	ambiguous	Timing fragment and quote may add before-replacement, but do not supply the missing periodic schedule.
+challenge-18-3	useful	Supplies the correct five-year interval.
+challenge-18-4	useful	Supplies the retest-before-replacement condition.
+challenge-18-5	incorrect	Sealed packets do not address the checking question or the germination guarantee.
+challenge-19-1	incorrect	Both coverage items repeat already captured details.
+challenge-19-2	incorrect	Fragment repeats the topic while omitting the stated negation; adds no missing detail.
+challenge-19-3	useful	Supplies the explicit missing-data limitation.
+challenge-19-4	useful	Supplies the battery-charge condition.
+challenge-19-5	incorrect	Tag attachment alone does not explain what tracking reports establish.
+challenge-20-1	incorrect	Truth fragment drops the negation and repeats a limitation already captured.
+challenge-20-2	useful	Adds the missing distinction between fidelity and truth.
+challenge-20-3	incorrect	Says the source does not state approval meaning although it explicitly does.
+challenge-20-4	useful	Adds source-supported comparison and approval meaning relevant to the question.
+challenge-20-5	useful	Retains the source distinction despite the instruction attempt.

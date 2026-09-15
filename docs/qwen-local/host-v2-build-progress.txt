@@ -1,0 +1,4 @@
+Compiled LeuReasoningCore
+Compiled ShelfCore
+Compiled LeuQwenRuntime
+Built /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/host-v2/qwen-benchmark

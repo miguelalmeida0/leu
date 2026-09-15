@@ -18,6 +18,7 @@ final class ReaderModel {
     let recorder: ReadingPositionRecorder
     let initialPage: Int?
     let initialSourceText: String?
+    let initialSourceRange: SourceTextRange?
     let sourceReturnLabel: String?
     let readableExtractor = PDFReadablePageExtractor()
     let speech: ReaderSpeechController
@@ -78,10 +79,11 @@ final class ReaderModel {
     init(book: Book, initialPage: Int?, repository: LibraryRepository, url: URL,
          loader: PDFDocumentLoader, search: PDFPageSearch, exporter: PDFExportService,
          preferences: AppPreferences, learning: LearningModel, knowledge: KnowledgeModel,
-         initialSourceText: String? = nil, initialKnowledgeTravel: Bool = false, initialLensSource: LearningSource? = nil, sourceReturnLabel: String? = nil) {
+         initialSourceText: String? = nil, initialSourceRange: SourceTextRange? = nil, initialKnowledgeTravel: Bool = false, initialLensSource: LearningSource? = nil, sourceReturnLabel: String? = nil) {
         self.book = book
         self.initialPage = initialPage
         self.initialSourceText = initialSourceText
+        self.initialSourceRange = initialSourceRange
         self.sourceReturnLabel = sourceReturnLabel
         self.repository = repository
         self.url = url

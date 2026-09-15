@@ -1,0 +1,29 @@
+host-build PASS
+host-tests-build PASS
+host-tests PASS
+nce.supported: expected supported, got partiallySupported"
+    ],
+    "misconceptionTypeMatches" : 41,
+    "mixedCases" : 30,
+    "mixedCorrect" : 26,
+    "overgeneralisationCases" : 20,
+    "overgeneralisationDetected" : 19,
+    "paraphraseAccepted" : 18,
+    "paraphraseCases" : 20
+  },
+  "providerIdentifier" : "deterministic",
+  "relationships" : {
+    "admitted" : 99,
+    "falsePositives" : 0,
+    "inferred" : 0,
+    "rejected" : 3,
+    "sourceSupported" : 99
+  },
+  "synthesis" : {
+    "concepts" : 10,
+    "lines" : 40,
+    "manufacturedContrasts" : 0,
+    "unsupportedStatements" : 0
+  }
+}
+

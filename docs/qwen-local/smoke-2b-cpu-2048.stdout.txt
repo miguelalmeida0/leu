@@ -1,0 +1,26 @@
+{
+  "claims": [
+    {
+      "learner_quote": "The cleanup gets rid of the old listener so they don't pile up.",
+      "span_id": "s1",
+      "source_quote": "Effect cleanup removes the previous event listener before the effect runs again. This prevents duplicate listeners.",
+      "support": "supported",
+      "feedback": "Learner correctly identifies that effect cleanup removes the previous event listener to prevent duplicate listeners."
+    },
+    {
+      "learner_quote": "It also stops the server from going down.",
+      "span_id": "s1",
+      "source_quote": "Effect cleanup removes the previous event listener before the effect runs again. This prevents duplicate listeners.",
+      "support": "unsupported",
+      "feedback": "Source does not mention server stability or downtime."
+    }
+  ],
+  "coverage": [
+    {
+      "source_quote": "Effect cleanup removes the previous event listener before the effect runs again. This prevents duplicate listeners.",
+      "detail": "Effect cleanup removes the previous event listener before the effect runs again. This prevents duplicate listeners."
+    }
+  ]
+} [end of text]
+
+

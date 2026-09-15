@@ -1,6 +1,9 @@
 import Foundation
 import Observation
 import ShelfCore
+import LeuReasoningCore
+import LeuQwenRuntime
+import os
 
 struct IntelligenceReaderRoute: Identifiable {
     let id = UUID()
@@ -16,6 +19,8 @@ final class ReaderIntelligenceModel {
     var connections: [GroundedConnectionV2] = []
     var semanticSources: [RelationalSourceFact] = []
     var feedback: ReasonedTeachFeedback?
+    var offlineFeedback: LocalExplanationAssessment?
+    var assessmentProvider: String?
     var libraryExplanations: [LibraryExplanationItem] = []
     var canTeach = false
     var activity: ActivityDefinition?
@@ -61,7 +66,8 @@ final class ReaderIntelligenceModel {
     }
     func edit(_ text: String) {
         request?.cancel(); request = nil; inferring = false; revision = UUID()
-        attempt.learnerExplanation = String(text.prefix(6000)); feedback = nil; attempt.result = nil; attempt.resolved = false
+        attempt.learnerExplanation = text; feedback = nil; offlineFeedback = nil; assessmentProvider = nil
+        attempt.result = nil; attempt.resolved = false
         persistDraft()
     }
     func persistDraft() {
@@ -81,8 +87,12 @@ final class ReaderIntelligenceModel {
         }
     }
     func assess() {
+        if OfflineModelStore.shared.enabled { assessOffline(); return }
+        guard attempt.learnerExplanation.count <= 6000 else {
+            message = "This explanation is too long for existing Teach Leu. Your text has not been shortened; shorten it to compare."; return
+        }
         guard request == nil, canTeach, let adapter = teachAdapter, !attempt.learnerExplanation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
-        let token = UUID(); revision = token; inferring = true
+        let token = UUID(); revision = token; inferring = true; message = nil
         let text = attempt.learnerExplanation, analyses = learning.snapshot.analyses
         request = Task { [weak self] in
             guard let self else { return }
@@ -92,10 +102,70 @@ final class ReaderIntelligenceModel {
             }.value
             guard !Task.isCancelled, revision == token, source.isCurrent(in: learning.snapshot.analyses) else { return }
             feedback = result
+            offlineFeedback = nil; assessmentProvider = "Existing Teach Leu"
             persistDraft()
             // Drafts are retained verbatim. An unsupported or mixed response
             // is not recorded as a taught concept or a learned source claim.
             if result.fullySupported { await record(.taughtConcept) }
+        }
+    }
+    private func assessOffline() {
+        guard request == nil, source.isCurrent(in: learning.snapshot.analyses) else { return }
+        guard EmbeddedQwen.available, OfflineModelStore.shared.installed, !OfflineModelStore.shared.busy else {
+            message = "Offline model is unavailable. Turn it off to use existing Teach Leu."; return
+        }
+        // Coexistence is unmeasured. Defer Qwen whenever neural voice resources
+        // are available; do not evict voice sessions or interrupt playback.
+        guard SupertonicAssets.resourceURLs() == nil else {
+            message = "Offline comparison is deferred while neural voice resources are available. Turn Offline model off to use existing Teach Leu."; return
+        }
+        guard ProcessInfo.processInfo.thermalState.rawValue < ProcessInfo.ThermalState.serious.rawValue else {
+            message = "This device needs to cool before an offline comparison. Your draft is kept."; return
+        }
+        let available = os_proc_available_memory()
+        // Provisional guard, not a certified device ceiling. Actual footprint
+        // is sampled by native code; physical-device acceptance remains required.
+        guard available > 3_000_000_000 else {
+            message = "There is not enough available memory for this offline model. Your draft is kept."; return
+        }
+        let token = UUID(); revision = token; inferring = true; feedback = nil; offlineFeedback = nil
+        assessmentProvider = nil; message = nil
+        let input = LocalExplanationInput(learner: attempt.learnerExplanation, question: nil, passages: [
+            .init(id: "s1", document: source.packet.documentID.uuidString,
+                page: source.packet.pageIndex + 1, version: source.packet.cacheKey,
+                title: source.passage.sectionTitle ?? sourceLabel, text: source.passage.sourceText)
+        ])
+        // This uses the full current selected passage even when no bounded atom
+        // extractor represents its sentences. No re-extraction or PDF request.
+        request = Task { [weak self] in
+            guard let self else { return }
+            defer { if revision == token { request = nil; inferring = false } }
+            do {
+                try await OfflineModelStore.verify(OfflineModelStore.modelURL)
+                let result = try await LocalQwenProvider().assess(input, model: OfflineModelStore.modelURL,
+                    maximumFootprint: 3_000_000_000)
+                guard !Task.isCancelled, revision == token, source.isCurrent(in: learning.snapshot.analyses) else { return }
+                offlineFeedback = result.assessment; assessmentProvider = "Offline model · Qwen 2B · model-assessed"
+                persistDraft() // No taughtConcept event or authoritative claim.
+            } catch {
+                guard revision == token, !Task.isCancelled else { return }
+                assessmentProvider = "Offline model did not complete"
+                if let failure = error as? QwenRuntimeError, case .inputTooLong = failure {
+                    message = "This passage and explanation exceed the offline context budget. Shorten the explanation or choose a smaller passage. No text was truncated."
+                } else {
+                    message = "The offline comparison could not be established. Your draft and source are kept. Turn Offline model off to use existing Teach Leu."
+                }
+            }
+        }
+    }
+    func dismissOfflineFeedback() { offlineFeedback = nil; assessmentProvider = nil }
+    func changeAssessmentProvider() {
+        cancel(); feedback = nil; offlineFeedback = nil; assessmentProvider = nil; message = nil
+    }
+    func checkOfflineResources() {
+        guard inferring, OfflineModelStore.shared.enabled else { return }
+        if ProcessInfo.processInfo.thermalState.rawValue >= ProcessInfo.ThermalState.serious.rawValue || os_proc_available_memory() < 300_000_000 || SupertonicAssets.resourceURLs() != nil {
+            cancel(); message = "Offline comparison stopped to preserve device resources. Your draft is kept."
         }
     }
     func viewFact(_ fact: RelationalSourceFact, returningTo title: String) {
@@ -115,10 +185,18 @@ final class ReaderIntelligenceModel {
             learning.snapshot = try await learning.repository.snapshot()
         } catch { message = "The learning event could not be saved." }
     }
-    func viewSource(_ citation: IntelligenceSource? = nil, returningTo title: String) {
+    func viewSource(_ citation: IntelligenceSource? = nil, exactQuote: String? = nil, returningTo title: String) {
+        if inferring, OfflineModelStore.shared.enabled { cancel() }
         let citation = citation ?? source
         guard citation.isCurrent(in: learning.snapshot.analyses) else { message = "This source changed. Reopen the passage to compare it again."; return }
-        readerRoute = learning.makeIntelligenceReader?(citation.passage, "Back to " + title)
+        let passage: LearningSource
+        if let exactQuote {
+            guard let bound = citation.exactExcerpt(exactQuote, in: learning.snapshot.analyses) else {
+                message = "This excerpt no longer matches the selected passage. Reopen the source to continue."; return
+            }
+            passage = bound
+        } else { passage = citation.passage }
+        readerRoute = learning.makeIntelligenceReader?(passage, "Back to " + title, exactQuote == nil ? nil : passage.range)
         Task { await record(.returnedToSource, citation: citation) }
     }
 }

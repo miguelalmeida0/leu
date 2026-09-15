@@ -243,6 +243,8 @@
 		7642ECD2937C4883B5422D44 /* Intelligence/KnowledgeCollisionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCBA7A431D2A8C2986AFC91 /* Intelligence/KnowledgeCollisionSheet.swift */; };
 		B29100000000000000000001 /* TeachReasoningAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29100000000000000000002; };
 		B29100000000000000000003 /* LeuReasoningCore in Frameworks */ = {isa = PBXBuildFile; productRef = B29100000000000000000004; };
+		B35000000000000000000001 = {isa = PBXBuildFile; fileRef = B35000000000000000000002; };
+		B35000000000000000000003 = {isa = PBXBuildFile; productRef = B35000000000000000000004; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -532,6 +534,7 @@
 		381610A2A69E7BA7D34553E1 /* ShelfV27IntelligenceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShelfV27IntelligenceUITests.swift"; sourceTree = "<group>"; };
 		0DCBA7A431D2A8C2986AFC91 /* Intelligence/KnowledgeCollisionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/KnowledgeCollisionSheet.swift"; sourceTree = "<group>"; };
 		B29100000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/TeachReasoningAdapter.swift"; sourceTree = "<group>"; };
+		B35000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/OfflineModelStore.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -549,6 +552,7 @@
 			files = (
 				FC5ED8C73170225CD599E55A /* ShelfCore in Frameworks */,
 				B29100000000000000000003 /* LeuReasoningCore in Frameworks */,
+				B35000000000000000000003 /* LeuQwenRuntime in Frameworks */,
 				A24000000000000000000007 /* onnxruntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -880,6 +884,7 @@
 				94A22C349D18F867A2CBAC70 /* Intelligence/RabbitHoleSheet.swift */,
 				071E2625F127C9860F9C3D28 /* Intelligence/ReaderIntelligenceModel.swift */,
 				B29100000000000000000002 /* TeachReasoningAdapter.swift */,
+				B35000000000000000000002 /* OfflineModelStore.swift */,
 				4D8DA7DE6C8C0912FA6AB322 /* Intelligence/TeachLeuSheet.swift */,
 				F6D012131F5329E5FD2E8F22 /* Intelligence/ThoughtContinuationView.swift */,
 				87C695A1E4F70A7026028385 /* Intelligence/TryItSheet.swift */,
@@ -1193,6 +1198,7 @@
 			packageProductDependencies = (
 				11E8CF7E9A1027F44C558C73 /* ShelfCore */,
 				B29100000000000000000004 /* LeuReasoningCore */,
+				B35000000000000000000004 /* LeuQwenRuntime */,
 			);
 			productName = ShelfTests;
 			productReference = 525DE6171E2BE40995D7DE83 /* ShelfTests.xctest */;
@@ -1232,6 +1238,7 @@
 			packageProductDependencies = (
 				11E8CF7E9A1027F44C558C73 /* ShelfCore */,
 				B29100000000000000000004 /* LeuReasoningCore */,
+				B35000000000000000000004 /* LeuQwenRuntime */,
 				A24000000000000000000006 /* onnxruntime */,
 			);
 			productName = Shelf;
@@ -1272,6 +1279,7 @@
 			mainGroup = ADCF10F76EBF2A74473E9DC4;
 			packageReferences = (
 				B29100000000000000000005 /* LeuReasoningCore */,
+				B35000000000000000000005 /* LeuQwenRuntime */,
 				E1823BFFAEB4E505466451C6 /* XCLocalSwiftPackageReference "Packages/ShelfCore" */,
 				A24000000000000000000005 /* XCRemoteSwiftPackageReference "onnxruntime-swift-package-manager" */,
 			);
@@ -1510,6 +1518,7 @@
 				12FF06EF5E98AFCB1030CA62 /* Intelligence/RabbitHoleSheet.swift in Sources */,
 				9350D442C46E652C6F150DF8 /* Intelligence/ReaderIntelligenceModel.swift in Sources */,
 				B29100000000000000000001 /* TeachReasoningAdapter.swift in Sources */,
+				B35000000000000000000001 /* OfflineModelStore.swift in Sources */,
 				9B682A364ACA24BC702E0640 /* Intelligence/TeachLeuSheet.swift in Sources */,
 				714A21080AE4C326B3AD568B /* Intelligence/ThoughtContinuationView.swift in Sources */,
 				BFEE712CF81D0443BA0DD56D /* Intelligence/TryItSheet.swift in Sources */,
@@ -1807,6 +1816,7 @@
 			relativePath = Packages/ShelfCore;
 		};
 		B29100000000000000000005 = {isa = XCLocalSwiftPackageReference; relativePath = Packages/LeuReasoningCore; };
+		B35000000000000000000005 = {isa = XCLocalSwiftPackageReference; relativePath = Packages/LeuQwenRuntime; };
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -1832,6 +1842,7 @@
 			productName = onnxruntime;
 		};
 		B29100000000000000000004 = {isa = XCSwiftPackageProductDependency; package = B29100000000000000000005; productName = LeuReasoningCore; };
+		B35000000000000000000004 = {isa = XCSwiftPackageProductDependency; package = B35000000000000000000005; productName = LeuQwenRuntime; };
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 98F54143AB4E86B28C3AFEE0 /* Project object */;

@@ -56,7 +56,7 @@ final class LearningModel {
     @ObservationIgnored var connectionIndex: GroundedConnectionIndex?
     @ObservationIgnored var connectionIndexVersion = ""
     @ObservationIgnored lazy var libraryIntelligenceCache = LibraryIntelligenceCache(root: recordingsDirectory.deletingLastPathComponent())
-    @ObservationIgnored var makeIntelligenceReader: ((LearningSource, String) -> IntelligenceReaderRoute?)?
+    @ObservationIgnored var makeIntelligenceReader: ((LearningSource, String, SourceTextRange?) -> IntelligenceReaderRoute?)?
     let explanationCache: ExplanationCache
     var modelState: LearningModelState = .unavailable
     var modelAvailability: LearningModelState = .unavailable

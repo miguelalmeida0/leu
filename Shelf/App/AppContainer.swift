@@ -51,12 +51,12 @@ final class AppContainer {
             indexer: learningIndexer)
         knowledgeRepository = KnowledgeRepository(persistence: FileKnowledgeSnapshotStore(root: paths.root))
         knowledge = KnowledgeModel(repository: knowledgeRepository, learning: learning, library: library)
-        learning.makeIntelligenceReader = { [weak self] source, returnLabel in
+        learning.makeIntelligenceReader = { [weak self] source, returnLabel, exactRange in
             guard let self, let book = library.snapshot.activeBooks.first(where: { $0.id == source.documentID }) else { return nil }
             let reader = ReaderModel(book: book, initialPage: source.pageIndex, repository: repository,
                 url: vault.originalURL(for: book.id), loader: loader, search: pageSearch,
                 exporter: exporter, preferences: preferences, learning: learning, knowledge: knowledge,
-                initialSourceText: source.sourceText, sourceReturnLabel: returnLabel)
+                initialSourceText: source.sourceText, initialSourceRange: exactRange, sourceReturnLabel: returnLabel)
             return IntelligenceReaderRoute(reader: reader, thumbnails: thumbnails)
         }
     }

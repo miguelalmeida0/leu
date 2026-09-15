@@ -1,0 +1,26 @@
+{
+  "checks" : [
+    {
+      "name" : "Oversized Unicode draft reopens byte-for-byte including the final clause",
+      "passed" : true
+    },
+    {
+      "name" : "Saving an unresolved draft creates no support or taught event",
+      "passed" : true
+    },
+    {
+      "name" : "Edit replaces only the same attempt",
+      "passed" : true
+    },
+    {
+      "name" : "Stale source remains rejected",
+      "passed" : true
+    },
+    {
+      "name" : "Rejected stale write preserves the saved attempt",
+      "passed" : true
+    }
+  ],
+  "draft_utf8_bytes" : 11410,
+  "scope" : "Actual file persistence and repository reopen; no rendered UI, termination signal, or phone test"
+}

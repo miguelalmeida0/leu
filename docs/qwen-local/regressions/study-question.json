@@ -1,0 +1,199 @@
+{
+  "correctOptionID" : "42000AB2-5F77-562B-BA56-1E65C20B23B2",
+  "generatedAt" : "2026-09-15T07:02:58Z",
+  "id" : "903BB56C-450C-54C8-9664-BEA6D0432289",
+  "kind" : "semanticRelationship",
+  "options" : [
+    {
+      "id" : "D79EFC78-36AD-5BBE-86FC-8C5EA4F0FB8B",
+      "text" : "An array method that accumulates many elements into a single result."
+    },
+    {
+      "id" : "42000AB2-5F77-562B-BA56-1E65C20B23B2",
+      "text" : "Syntax that extracts properties or elements into variables."
+    },
+    {
+      "id" : "801B969E-D549-5B30-9151-ADB019FEA075",
+      "text" : "An array method that returns whether all elements pass a predicate."
+    }
+  ],
+  "prompt" : "How does destructuring make data access concise and document which pieces a function uses?",
+  "propositionID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|92|52|fact|87",
+  "qualityScore" : 0.9,
+  "semanticFingerprint" : "6711979522824531651",
+  "semanticOperator" : "mechanism",
+  "source" : {
+    "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+    "pageIndex" : 92,
+    "range" : {
+      "length" : 132,
+      "location" : 87
+    },
+    "sectionTitle" : "Destructuring",
+    "sourceText" : "Syntax that extracts properties or elements into\nvariables. It makes data access concise and documents\nwhich pieces a function uses."
+  },
+  "stableKey" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|92|52|fact|87",
+  "topicIDs" : [
+
+  ],
+  "v4" : {
+    "admissionProof" : [
+      "title_and_rule_from_same_verified_card",
+      "outcome_from_adjacent_factual_sentence",
+      "answer_is_exact_primary_factual_sentence",
+      "each_distractor_has_independent_primary_factual_provenance",
+      "source_specific_question; different_card_mechanisms",
+      "roles_and_scope_preserved"
+    ],
+    "choices" : [
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|98|52|fact|86",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 99,
+        "sourceTitle" : "Array.reduce",
+        "span" : {
+          "range" : {
+            "length" : 68,
+            "location" : 86
+          },
+          "text" : "An array method that accumulates many elements\ninto a single result."
+        },
+        "text" : "An array method that accumulates many elements into a single result."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|92|52|fact|87",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 93,
+        "sourceTitle" : "Destructuring",
+        "span" : {
+          "range" : {
+            "length" : 59,
+            "location" : 87
+          },
+          "text" : "Syntax that extracts properties or elements into\nvariables."
+        },
+        "text" : "Syntax that extracts properties or elements into variables."
+      },
+      {
+        "role" : "primary_factual",
+        "sourceClaimID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|97|52|fact|85",
+        "sourceDocumentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "sourcePage" : 98,
+        "sourceTitle" : "Array.every",
+        "span" : {
+          "range" : {
+            "length" : 67,
+            "location" : 85
+          },
+          "text" : "An array method that returns whether all elements\npass a predicate."
+        },
+        "text" : "An array method that returns whether all elements pass a predicate."
+      }
+    ],
+    "claim" : {
+      "card" : {
+        "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+        "exampleBlocks" : [
+          {
+            "range" : {
+              "length" : 58,
+              "location" : 338
+            },
+            "text" : "const {name,age}=user; const\n[value,setValue]=useState(0)."
+          }
+        ],
+        "excludedAdviceBlocks" : [
+          {
+            "range" : {
+              "length" : 140,
+              "location" : 584
+            },
+            "text" : "Mid-level move: explain one trade-off, failure mode, or reason\nyou would choose a different tool.\nExplain it aloud before swiping. 082 \/ 310"
+          }
+        ],
+        "excludedInterviewBlocks" : [
+          {
+            "range" : {
+              "length" : 120,
+              "location" : 438
+            },
+            "text" : "Destructuring binds properties or array positions to local\nvariables and is heavily used in modern JavaScript and\nReact."
+          }
+        ],
+        "excludedMnemonicBlocks" : [
+          {
+            "range" : {
+              "length" : 73,
+              "location" : 242
+            },
+            "text" : "Open a lunchbox and immediately name the\ncompartments sandwich and apple."
+          }
+        ],
+        "extractionVersion" : 5,
+        "factualBlocks" : [
+          {
+            "range" : {
+              "length" : 132,
+              "location" : 87
+            },
+            "text" : "Syntax that extracts properties or elements into\nvariables. It makes data access concise and documents\nwhich pieces a function uses."
+          }
+        ],
+        "fingerprint" : "6711979522824531651",
+        "pageIndex" : 92,
+        "section" : "082 J AVAS C R I P T C O R E M E N TA L M O D E L S",
+        "title" : "Destructuring",
+        "titleSpan" : {
+          "range" : {
+            "length" : 13,
+            "location" : 52
+          },
+          "text" : "Destructuring"
+        }
+      },
+      "composedStatement" : "Destructuring: Syntax that extracts properties or elements into variables. It makes data access concise and documents which pieces a function uses.",
+      "families" : [
+        "definition",
+        "mechanism"
+      ],
+      "original" : {
+        "range" : {
+          "length" : 132,
+          "location" : 87
+        },
+        "text" : "Syntax that extracts properties or elements into\nvariables. It makes data access concise and documents\nwhich pieces a function uses."
+      },
+      "references" : [
+        {
+          "basis" : "current_card_title; original factual context retained",
+          "expression" : "it",
+          "resolvedTo" : "Destructuring"
+        }
+      ],
+      "sentences" : [
+        {
+          "range" : {
+            "length" : 59,
+            "location" : 87
+          },
+          "text" : "Syntax that extracts properties or elements into\nvariables."
+        },
+        {
+          "range" : {
+            "length" : 72,
+            "location" : 147
+          },
+          "text" : "It makes data access concise and documents\nwhich pieces a function uses."
+        }
+      ]
+    },
+    "correctChoice" : 1,
+    "explanation" : "Destructuring: Syntax that extracts properties or elements into variables. It makes data access concise and documents which pieces a function uses.",
+    "generation" : "deterministic-contextual-v4; no-model-inference",
+    "id" : "v4|14D62EC9-DBF8-57FF-AF54-91B8F467EC64|6711979522824531651|92|52|fact|87",
+    "operation" : "mechanism",
+    "prompt" : "According to the source, how does destructuring make data access concise and document which pieces a function uses?"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "contract": "qwen-teach-v3",
+  "hashes": {
+    "Native/Qwen/LeuQwenNative.cpp": "396ea73ccb48e318c0590014a03c25ec67a3e01b4f5c1c4910c1440048d8d0aa",
+    "Native/Qwen/include/LeuQwenNative.h": "d6ad735005ee2c79bfeecbe3d7902454291abf65aabfca928418e67b3f6ac073",
+    "Packages/LeuReasoningCore/Sources/LeuReasoningCore/LocalExplanationAssessment.swift": "ef920ac5cf8b50434b39ee0898bf5343c770ae723ddf0e90dbfab54b88953cab",
+    "Packages/LeuQwenRuntime/Sources/LeuQwenRuntime/EmbeddedQwen.swift": "855cb869210fa2470981f1a0aeb46b17fc9fcac65fb182895e649cd5e9a5e782",
+    "Packages/LeuQwenRuntime/Sources/LeuQwenRuntime/LocalQwenProvider.swift": "9697c7bec98fcfd43ce13f916449987a199c36ab82271db0ceef01803209b4c1",
+    "scripts/qwen-benchmark.swift": "efe49223c99f4d8dfe47050f71678c2ef20cc3a718eade680b06c383509b434e",
+    "docs/qwen-local/dev-cases.json": "ec5ec95d25f568bebbd144f05d4445379a7f5dc1b6ab9c131b442d266b4f564e",
+    "docs/qwen-local/challenge-cases.json": "e091c0a553285d6145344806f86918447ba426d6054c941c2f57e1303364ed1d"
+  },
+  "binary_sha256": "34e7187ab627452b608378b91c28cb880015be4e83a58a72ba8e2dd534c68269",
+  "context": 2048,
+  "output_tokens": 512,
+  "sampler": "grammar then greedy",
+  "seed": "not used by greedy sampling",
+  "thinking": false,
+  "backend": "Mac CPU, no offload",
+  "threads": 4,
+  "batch": 128,
+  "retains_model_between_requests": false,
+  "primary_verification_pass": false,
+  "independent_human_benchmark": false,
+  "challenge_tuned": false
+}

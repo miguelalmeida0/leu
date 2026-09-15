@@ -20,6 +20,10 @@ DerivedData/
 *.zip
 
 # Large locally-installed inference assets
+.qwen-local/
+Packages/LeuQwenRuntime/Artifacts/
+*.gguf
+*.gguf.partial
 *.onnx
 *.ort
 

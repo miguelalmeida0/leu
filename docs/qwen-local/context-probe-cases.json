@@ -1,0 +1,141 @@
+[
+  {
+    "id": "dev-01-1",
+    "split": "dev",
+    "concept": "Effect cleanup",
+    "title": "Effect cleanup",
+    "source": "Effect cleanup removes the previous event listener before the effect runs again. This prevents duplicate listeners.",
+    "question": "Why does cleanup matter?",
+    "learner": "It clears away the old listener before the effect starts over, so listeners don't stack up.",
+    "category": "informal_paraphrase",
+    "expected": [
+      "supported"
+    ],
+    "rationale": "Clearing the old listener before rerun paraphrases removal and duplicate prevention.",
+    "ambiguous": false,
+    "expected_coverage": "Question-relevant omitted source details only; manually review coverage text.",
+    "provenance": "Assistant-authored local fixture; not an independent human benchmark"
+  },
+  {
+    "id": "dev-01-3",
+    "split": "dev",
+    "concept": "Effect cleanup",
+    "title": "Effect cleanup",
+    "source": "Effect cleanup removes the previous event listener before the effect runs again. This prevents duplicate listeners.",
+    "question": "Why does cleanup matter?",
+    "learner": "Duplicate listeners prevent effect cleanup.",
+    "category": "causal_reversal",
+    "expected": [
+      "unsupported",
+      "uncertain"
+    ],
+    "rationale": "The source gives cleanup as the cause, not listeners as a cause of cleanup; reverse causation is not established.",
+    "ambiguous": false,
+    "expected_coverage": "Question-relevant omitted source details only; manually review coverage text.",
+    "provenance": "Assistant-authored local fixture; not an independent human benchmark"
+  },
+  {
+    "id": "dev-01-4",
+    "split": "dev",
+    "concept": "Effect cleanup",
+    "title": "Effect cleanup",
+    "source": "Effect cleanup removes the previous event listener before the effect runs again. This prevents duplicate listeners.",
+    "question": "Why does cleanup matter?",
+    "learner": "Cleanup removes old listeners. It also prevents server outages.",
+    "category": "mixed",
+    "expected": [
+      "supported",
+      "unsupported"
+    ],
+    "rationale": "Listener removal is explicit; outages are absent. Assess separately.",
+    "ambiguous": false,
+    "expected_coverage": "Question-relevant omitted source details only; manually review coverage text.",
+    "provenance": "Assistant-authored local fixture; not an independent human benchmark"
+  },
+  {
+    "id": "dev-02-3",
+    "split": "dev",
+    "concept": "Webhook",
+    "title": "Webhook",
+    "source": "A webhook sends an HTTP notification when an event occurs. It can replace repeated polling for that event.",
+    "question": "How can a webhook help?",
+    "learner": "Webhooks always eliminate every kind of polling.",
+    "category": "overgeneralization",
+    "expected": [
+      "overgeneralized",
+      "unsupported"
+    ],
+    "rationale": "Can and for that event do not entail always or every kind.",
+    "ambiguous": false,
+    "expected_coverage": "Question-relevant omitted source details only; manually review coverage text.",
+    "provenance": "Assistant-authored local fixture; not an independent human benchmark"
+  },
+  {
+    "id": "dev-03-1",
+    "split": "dev",
+    "concept": "Memo",
+    "title": "Memo",
+    "source": "React.memo can skip a component render when its props are unchanged. Local state changes can still cause the component to render.",
+    "question": "When can React.memo help?",
+    "learner": "If the props stay the same, memo may save a render, but changing local state can still make it render.",
+    "category": "informal_paraphrase",
+    "expected": [
+      "supported"
+    ],
+    "rationale": "Both conditional render skipping and the local-state exception are explicit.",
+    "ambiguous": false,
+    "expected_coverage": "Question-relevant omitted source details only; manually review coverage text.",
+    "provenance": "Assistant-authored local fixture; not an independent human benchmark"
+  },
+  {
+    "id": "dev-04-1",
+    "split": "dev",
+    "concept": "Queue",
+    "title": "Queue",
+    "source": "Queue Q7 processes one job at a time. A failed job is retried at most twice before being moved to the review list.",
+    "question": "How are failed jobs handled?",
+    "learner": "Q7 gives a failed job up to two more tries, then puts it aside for review.",
+    "category": "informal_paraphrase",
+    "expected": [
+      "supported"
+    ],
+    "rationale": "Up to two retries then review matches the stated policy.",
+    "ambiguous": false,
+    "expected_coverage": "Question-relevant omitted source details only; manually review coverage text.",
+    "provenance": "Assistant-authored local fixture; not an independent human benchmark"
+  },
+  {
+    "id": "dev-05-4",
+    "split": "dev",
+    "concept": "API cache",
+    "title": "API cache",
+    "source": "The response cache keeps successful GET responses for 60 seconds. Failed responses and POST responses are not cached.",
+    "question": "Which responses are cached?",
+    "learner": "Successful GET responses stay cached for 600 seconds.",
+    "category": "numbers",
+    "expected": [
+      "contradicted"
+    ],
+    "rationale": "600 contradicts the specified 60-second duration.",
+    "ambiguous": false,
+    "expected_coverage": "Question-relevant omitted source details only; manually review coverage text.",
+    "provenance": "Assistant-authored local fixture; not an independent human benchmark"
+  },
+  {
+    "id": "dev-06-1",
+    "split": "dev",
+    "concept": "Garden watering",
+    "title": "Garden watering",
+    "source": "In this garden, the drip line waters the roots directly. The timer runs it for ten minutes at dawn, except on rainy days.",
+    "question": "How is this garden watered?",
+    "learner": "Water goes straight to the roots, with a ten-minute run at daybreak unless it's raining.",
+    "category": "informal_paraphrase",
+    "expected": [
+      "supported"
+    ],
+    "rationale": "Roots, dawn duration and rain exception are preserved.",
+    "ambiguous": false,
+    "expected_coverage": "Question-relevant omitted source details only; manually review coverage text.",
+    "provenance": "Assistant-authored local fixture; not an independent human benchmark"
+  }
+]

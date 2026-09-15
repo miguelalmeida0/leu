@@ -1,0 +1,1594 @@
+{
+  "baseline": {
+    "totals": {
+      "cases": 60,
+      "supported_cases": 24,
+      "negative_or_mixed_cases": 36,
+      "abstention_cases": 60,
+      "correct_supported_recognition": 0,
+      "false_approval_cases": 0,
+      "false_accusation_of_supported_cases": 0,
+      "unjustified_contradiction_cases": 0,
+      "case_verdict_matches": 15
+    },
+    "categories": {
+      "informal_paraphrase": {
+        "cases": 12,
+        "abstentions": 12,
+        "supported_cases": 12,
+        "correct_supported_recognition": 0,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "concise_partial": {
+        "cases": 12,
+        "abstentions": 12,
+        "supported_cases": 12,
+        "correct_supported_recognition": 0,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "contradiction": {
+        "cases": 8,
+        "abstentions": 8,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "mixed": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "topic_only": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 3
+      },
+      "overgeneralization": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 1
+      },
+      "prompt_injection": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 3
+      },
+      "numbers": {
+        "cases": 4,
+        "abstentions": 4,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "omitted_condition": {
+        "cases": 5,
+        "abstentions": 5,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "unsupported_addition": {
+        "cases": 4,
+        "abstentions": 4,
+        "false_approvals": 0,
+        "case_verdict_matches": 3
+      },
+      "causal_reversal": {
+        "cases": 1,
+        "abstentions": 1,
+        "false_approvals": 0,
+        "case_verdict_matches": 1
+      },
+      "identifiers": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 3
+      },
+      "ambiguous": {
+        "cases": 1,
+        "abstentions": 1,
+        "false_approvals": 0,
+        "case_verdict_matches": 1
+      }
+    },
+    "failures": [
+      {
+        "id": "challenge-09-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-09-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-09-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-09-4",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "uncertain",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-10-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-10-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-10-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-10-4",
+        "expected": [
+          "contradicted",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-11-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-11-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-11-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-11-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-12-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-12-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-12-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-13-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-13-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-13-3",
+        "expected": [
+          "contradicted",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-13-5",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-14-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-14-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-14-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-14-5",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "uncertain",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-15-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-15-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-15-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-16-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-16-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-16-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-16-4",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-17-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-17-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-17-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-18-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-18-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-18-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-18-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-18-5",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-19-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-19-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-19-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-19-4",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-20-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-20-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-20-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      }
+    ]
+  },
+  "raw": {
+    "totals": {
+      "cases": 60,
+      "supported_cases": 24,
+      "negative_or_mixed_cases": 36,
+      "abstention_cases": 28,
+      "correct_supported_recognition": 24,
+      "false_approval_cases": 11,
+      "false_accusation_of_supported_cases": 0,
+      "unjustified_contradiction_cases": 0,
+      "case_verdict_matches": 31
+    },
+    "categories": {
+      "informal_paraphrase": {
+        "cases": 12,
+        "abstentions": 0,
+        "supported_cases": 12,
+        "correct_supported_recognition": 12,
+        "false_approvals": 0,
+        "case_verdict_matches": 12
+      },
+      "concise_partial": {
+        "cases": 12,
+        "abstentions": 0,
+        "supported_cases": 12,
+        "correct_supported_recognition": 12,
+        "false_approvals": 0,
+        "case_verdict_matches": 12
+      },
+      "contradiction": {
+        "cases": 8,
+        "abstentions": 7,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      },
+      "mixed": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "topic_only": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 3
+      },
+      "overgeneralization": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      },
+      "prompt_injection": {
+        "cases": 3,
+        "abstentions": 2,
+        "false_approvals": 1,
+        "case_verdict_matches": 2
+      },
+      "numbers": {
+        "cases": 4,
+        "abstentions": 3,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      },
+      "omitted_condition": {
+        "cases": 5,
+        "abstentions": 4,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      },
+      "unsupported_addition": {
+        "cases": 4,
+        "abstentions": 3,
+        "false_approvals": 1,
+        "case_verdict_matches": 2
+      },
+      "causal_reversal": {
+        "cases": 1,
+        "abstentions": 0,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      },
+      "identifiers": {
+        "cases": 3,
+        "abstentions": 2,
+        "false_approvals": 3,
+        "case_verdict_matches": 0
+      },
+      "ambiguous": {
+        "cases": 1,
+        "abstentions": 0,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      }
+    },
+    "failures": [
+      {
+        "id": "challenge-09-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-09-4",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "supported",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-10-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-10-4",
+        "expected": [
+          "contradicted",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-10-5",
+        "expected": [
+          "unsupported",
+          "contradicted",
+          "uncertain",
+          "overgeneralized"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-11-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-11-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-12-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-12-4",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [
+          "supported",
+          "supported",
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-13-3",
+        "expected": [
+          "contradicted",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-13-4",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-13-5",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-14-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-14-4",
+        "expected": [
+          "unsupported",
+          "overgeneralized",
+          "uncertain"
+        ],
+        "actual": [
+          "uncertain",
+          "supported",
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-14-5",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "supported",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-15-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "supported",
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-15-4",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-15-5",
+        "expected": [
+          "uncertain"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-16-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-16-4",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-17-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-17-5",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [
+          "uncertain",
+          "supported",
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-18-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-18-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-18-5",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-19-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-19-4",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-20-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-20-4",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [
+          "uncertain",
+          "supported",
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "guard_rejected"
+      }
+    ]
+  },
+  "guarded": {
+    "totals": {
+      "cases": 60,
+      "supported_cases": 24,
+      "negative_or_mixed_cases": 36,
+      "abstention_cases": 42,
+      "correct_supported_recognition": 13,
+      "false_approval_cases": 5,
+      "false_accusation_of_supported_cases": 0,
+      "unjustified_contradiction_cases": 0,
+      "case_verdict_matches": 20
+    },
+    "categories": {
+      "informal_paraphrase": {
+        "cases": 12,
+        "abstentions": 7,
+        "supported_cases": 12,
+        "correct_supported_recognition": 5,
+        "false_approvals": 0,
+        "case_verdict_matches": 5
+      },
+      "concise_partial": {
+        "cases": 12,
+        "abstentions": 4,
+        "supported_cases": 12,
+        "correct_supported_recognition": 8,
+        "false_approvals": 0,
+        "case_verdict_matches": 8
+      },
+      "contradiction": {
+        "cases": 8,
+        "abstentions": 8,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "mixed": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "topic_only": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 3
+      },
+      "overgeneralization": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "prompt_injection": {
+        "cases": 3,
+        "abstentions": 2,
+        "false_approvals": 1,
+        "case_verdict_matches": 1
+      },
+      "numbers": {
+        "cases": 4,
+        "abstentions": 3,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      },
+      "omitted_condition": {
+        "cases": 5,
+        "abstentions": 4,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      },
+      "unsupported_addition": {
+        "cases": 4,
+        "abstentions": 3,
+        "false_approvals": 1,
+        "case_verdict_matches": 2
+      },
+      "causal_reversal": {
+        "cases": 1,
+        "abstentions": 1,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "identifiers": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 1
+      },
+      "ambiguous": {
+        "cases": 1,
+        "abstentions": 0,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      }
+    },
+    "failures": [
+      {
+        "id": "challenge-09-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-09-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-09-4",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "supported",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-10-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-10-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-10-4",
+        "expected": [
+          "contradicted",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-10-5",
+        "expected": [
+          "unsupported",
+          "contradicted",
+          "uncertain",
+          "overgeneralized"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-11-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-11-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-12-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-12-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-12-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-12-4",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-13-3",
+        "expected": [
+          "contradicted",
+          "overgeneralized"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-13-5",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-14-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-14-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-14-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-14-4",
+        "expected": [
+          "unsupported",
+          "overgeneralized",
+          "uncertain"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-14-5",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "supported",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-15-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-15-4",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-15-5",
+        "expected": [
+          "uncertain"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-16-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-16-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-16-4",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-17-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-17-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-17-5",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-18-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-18-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-18-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-18-5",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-19-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-19-4",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-20-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-20-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-20-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "challenge-20-4",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "challenge-20-5",
+        "expected": [
+          "unsupported",
+          "contradicted",
+          "uncertain"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      }
+    ]
+  },
+  "execution": {
+    "statuses": {
+      "guard_rejected": 18,
+      "completed": 42,
+      "not_run": 0
+    },
+    "requests": 60,
+    "retries": 0,
+    "wall_ms_all_attempts_p50": 11722.882986068726,
+    "wall_ms_all_attempts_p95": 19165.740966796875,
+    "output_limit": 0,
+    "coverage_accuracy": "Requires separate source-bound review; not inferred from support verdicts"
+  },
+  "limitations": [
+    "Assistant-authored fixtures, not independent human validation.",
+    "Case-level denominators; mixed-clause approval checks use literal fixture anchors.",
+    "Raw semantic labels can match while exact-anchor validation fails; binding failures are reported separately.",
+    "Missing runs and rejected outputs remain abstentions in the full case denominator."
+  ]
+}

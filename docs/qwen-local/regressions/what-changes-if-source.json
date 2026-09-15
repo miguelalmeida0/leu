@@ -1,0 +1,112 @@
+{
+  "contract" : "stableKeys",
+  "source" : {
+    "claims" : [
+      {
+        "cognitiveOperation" : "consequence",
+        "concept" : "freshly generated random key",
+        "documentID" : "028DDE79-065F-5838-9E18-9B2EA72A5D0D",
+        "evidence" : {
+          "range" : {
+            "length" : 72,
+            "location" : 338
+          },
+          "text" : "A freshly generated random\nkey also destroys continuity between renders."
+        },
+        "id" : "0BC7C37A-CF6E-5A45-8AE3-872F82A79652",
+        "negated" : false,
+        "object" : "continuity between renders",
+        "pageIndex" : 2,
+        "predicate" : "also destroys",
+        "prompt" : "Which consequence follows from a freshly generated random key?",
+        "relation" : "consequence"
+      },
+      {
+        "cognitiveOperation" : "constraint",
+        "concept" : "Reordering",
+        "documentID" : "028DDE79-065F-5838-9E18-9B2EA72A5D0D",
+        "evidence" : {
+          "range" : {
+            "length" : 71,
+            "location" : 133
+          },
+          "text" : "Reordering should\nnot make one item inherit the local state of another."
+        },
+        "id" : "7B06A250-44AB-5006-8BAF-72E3D9B866DD",
+        "negated" : true,
+        "object" : "make one item inherit the local state of another",
+        "pageIndex" : 2,
+        "predicate" : "should not",
+        "prompt" : "Which restriction applies to Reordering?",
+        "relation" : "constraint"
+      },
+      {
+        "cognitiveOperation" : "mechanism",
+        "concept" : "stable key",
+        "documentID" : "028DDE79-065F-5838-9E18-9B2EA72A5D0D",
+        "evidence" : {
+          "range" : {
+            "length" : 90,
+            "location" : 42
+          },
+          "text" : "A stable key helps React match an item to its previous\ninstance within a list of siblings."
+        },
+        "id" : "87783DE7-DAB1-5021-9131-386320CC0020",
+        "negated" : false,
+        "object" : "React match an item to its previous instance within a list of siblings",
+        "pageIndex" : 2,
+        "predicate" : "helps",
+        "prompt" : "Which effect does a stable key help achieve?",
+        "relation" : "mechanism"
+      },
+      {
+        "cognitiveOperation" : "constraint",
+        "concept" : "array index",
+        "documentID" : "028DDE79-065F-5838-9E18-9B2EA72A5D0D",
+        "evidence" : {
+          "range" : {
+            "length" : 74,
+            "location" : 263
+          },
+          "text" : "An array index can be a poor key when items move,\nare inserted or removed."
+        },
+        "id" : "97E96BAB-7493-5673-A1B9-D629B777D226",
+        "negated" : false,
+        "object" : "a poor key",
+        "pageIndex" : 2,
+        "predicate" : "can be",
+        "prompt" : "Under what condition can an array index be a poor key?",
+        "qualifier" : "items move, are inserted or removed",
+        "relation" : "constraint"
+      }
+    ],
+    "packet" : {
+      "claimSegments" : [
+        "Keys describe identity",
+        "A stable key helps React match an item to its previous instance within a list of siblings. Reordering should not make one item inherit the local state of another.",
+        "));",
+        "An array index can be a poor key when items move, are inserted or removed. A freshly generated random key also destroys continuity between renders.",
+        "Practice: explain why editing a row can reveal a bad key choice."
+      ],
+      "documentID" : "028DDE79-065F-5838-9E18-9B2EA72A5D0D",
+      "extractionVersion" : 5,
+      "fingerprint" : "12391381683832827782",
+      "pageIndex" : 2,
+      "range" : {
+        "length" : 507,
+        "location" : 0
+      },
+      "sourceIntegrityPassed" : true,
+      "sourceText" : "SHELF SAMPLES \/ 03\nKeys describe identity\nA stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another.\nitems.map(item => (\n<Row key={item.id} item={item} \/>\n));\nAn array index can be a poor key when items move,\nare inserted or removed. A freshly generated random\nkey also destroys continuity between renders.\nPractice: explain why editing a row can reveal a bad key\nchoice.\nSHELF \/ ORIGINAL SAMPLE NOTES 3"
+    },
+    "passage" : {
+      "documentID" : "028DDE79-065F-5838-9E18-9B2EA72A5D0D",
+      "pageIndex" : 2,
+      "range" : {
+        "length" : 507,
+        "location" : 0
+      },
+      "sourceText" : "SHELF SAMPLES \/ 03\nKeys describe identity\nA stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another.\nitems.map(item => (\n<Row key={item.id} item={item} \/>\n));\nAn array index can be a poor key when items move,\nare inserted or removed. A freshly generated random\nkey also destroys continuity between renders.\nPractice: explain why editing a row can reveal a bad key\nchoice.\nSHELF \/ ORIGINAL SAMPLE NOTES 3"
+    }
+  }
+}

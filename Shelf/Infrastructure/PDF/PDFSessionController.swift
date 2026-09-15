@@ -190,12 +190,19 @@ final class PDFSessionController {
         speechAnnotations.removeAll()
     }
 
-    @discardableResult func showSourceHighlight(_ text: String, pageIndex: Int) -> Bool {
+    @discardableResult func showSourceHighlight(_ text: String, pageIndex: Int, exactRange: SourceTextRange? = nil) -> Bool {
         clearSourceHighlight()
         guard !text.isEmpty, let document = view.document, let page = document.page(at: pageIndex),
               let pageText = page.string else { return false }
-        guard let range = SourcePassageMatcher.range(of: text, in: pageText),
-              let selection = page.selection(for: range) else { return false }
+        let range: NSRange
+        if let exactRange {
+            guard let matched = exactRange.exactMatch(in: pageText, quote: text) else { return false }
+            range = matched
+        } else {
+            guard let matched = SourcePassageMatcher.range(of: text, in: pageText) else { return false }
+            range = matched
+        }
+        guard let selection = page.selection(for: range) else { return false }
         for line in selection.selectionsByLine() {
             let bounds = line.bounds(for: page).intersection(page.bounds(for: .cropBox))
             guard !bounds.isNull, bounds.width > 0, bounds.height > 0 else { continue }

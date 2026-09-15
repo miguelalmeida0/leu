@@ -1,0 +1,50 @@
+{
+  "backend" : "Mac CPU",
+  "cancellation_phase" : "Ongoing request after five seconds; no per-token callback used to identify exact internal phase",
+  "checks" : [
+    {
+      "name" : "memory budget rejects before load",
+      "passed" : true
+    },
+    {
+      "ms" : 0.025987625122070312,
+      "name" : "second request rejected rather than queued",
+      "passed" : true
+    },
+    {
+      "error" : "cancelled",
+      "ms" : 84.807991981506348,
+      "name" : "ongoing request cancelled",
+      "passed" : true
+    },
+    {
+      "name" : "host main actor serviced heartbeat during native work",
+      "note" : "Not a rendered-reader interaction test",
+      "passed" : true,
+      "ticks" : 175
+    },
+    {
+      "ms" : 11549.267083000001,
+      "name" : "new native request completes after cancellation teardown",
+      "output_tokens" : 144,
+      "passed" : true,
+      "prompt_tokens" : 366
+    },
+    {
+      "name" : "2048 budget refuses full long input",
+      "passed" : true
+    },
+    {
+      "ms" : 42986.323042000004,
+      "name" : "4096 preserves the final source condition",
+      "output_tokens" : 489,
+      "passed" : false,
+      "prompt_tokens" : 1921
+    }
+  ],
+  "device_certification" : false,
+  "footprint_after_cancel" : 65880736,
+  "footprint_after_completed_teardown" : 37028512,
+  "footprint_before" : 2359752,
+  "peak_observed_footprint" : 1595394736
+}

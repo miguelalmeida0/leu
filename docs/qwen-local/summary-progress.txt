@@ -1,0 +1,101 @@
+{
+  "runs": [
+    "final-dev-2b-2048",
+    "final-challenge-2b-2048",
+    "final-dev-0.8b-2048",
+    "final-challenge-0.8b-2048",
+    "final-dev-4b-2048",
+    "final-challenge-4b-2048",
+    "final-context-probe-2b-4096",
+    "final-context-probe-2b-2048-verify"
+  ],
+  "coverage": {
+    "2b_shared_20_challenge": {
+      "raw": {
+        "denominator": 20,
+        "incorrect": 10,
+        "useful": 7,
+        "ambiguous": 3
+      },
+      "guarded": {
+        "denominator": 20,
+        "abstention": 5,
+        "incorrect": 8,
+        "useful": 5,
+        "ambiguous": 2
+      }
+    },
+    "2b_100_case_accounting": {
+      "raw": {
+        "denominator": 100,
+        "incorrect": 56,
+        "useful": 36,
+        "ambiguous": 8
+      },
+      "guarded": {
+        "denominator": 100,
+        "abstention": 29,
+        "useful": 27,
+        "incorrect": 38,
+        "ambiguous": 6
+      }
+    },
+    "0.8b_shared_20_challenge": {
+      "raw": {
+        "denominator": 20,
+        "incorrect": 8,
+        "useful": 12
+      },
+      "guarded": {
+        "denominator": 20,
+        "incorrect": 3,
+        "useful": 3,
+        "abstention": 14
+      }
+    },
+    "0.8b_100_case_accounting": {
+      "raw": {
+        "denominator": 100,
+        "incorrect": 59,
+        "useful": 36,
+        "ambiguous": 5
+      },
+      "guarded": {
+        "denominator": 100,
+        "incorrect": 21,
+        "abstention": 69,
+        "useful": 9,
+        "ambiguous": 1
+      }
+    },
+    "4b_shared_20_challenge": {
+      "raw": {
+        "denominator": 20,
+        "incorrect": 10,
+        "useful": 10
+      },
+      "guarded": {
+        "denominator": 20,
+        "incorrect": 6,
+        "useful": 9,
+        "abstention": 5
+      }
+    },
+    "4b_100_case_accounting": {
+      "raw": {
+        "denominator": 100,
+        "incorrect": 35,
+        "useful": 58,
+        "ambiguous": 6,
+        "abstention": 1
+      },
+      "guarded": {
+        "denominator": 100,
+        "incorrect": 24,
+        "useful": 51,
+        "ambiguous": 4,
+        "abstention": 21
+      }
+    }
+  }
+}

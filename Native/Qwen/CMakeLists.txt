@@ -1,0 +1,26 @@
+cmake_minimum_required(VERSION 3.24)
+project(LeuQwenNative LANGUAGES C CXX ASM)
+if(NOT DEFINED LLAMA_SOURCE)
+  message(FATAL_ERROR "Use the pinned runtime preparation script")
+endif()
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_COMMON ON CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_TOOLS OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_MTMD OFF CACHE BOOL "" FORCE)
+set(LLAMA_OPENSSL OFF CACHE BOOL "" FORCE)
+set(LLAMA_SUBPROCESS OFF CACHE BOOL "" FORCE)
+set(GGML_METAL ON CACHE BOOL "" FORCE)
+set(GGML_METAL_EMBED_LIBRARY ON CACHE BOOL "" FORCE)
+add_subdirectory("${LLAMA_SOURCE}" llama)
+add_library(LeuQwenNative SHARED LeuQwenNative.cpp include/LeuQwenNative.h)
+target_include_directories(LeuQwenNative PUBLIC include)
+target_compile_features(LeuQwenNative PRIVATE cxx_std_17)
+target_link_libraries(LeuQwenNative PRIVATE llama llama-common)
+set_target_properties(LeuQwenNative PROPERTIES
+  FRAMEWORK TRUE FRAMEWORK_VERSION A
+  MACOSX_FRAMEWORK_IDENTIFIER dev.leu.qwen-native
+  PUBLIC_HEADER include/LeuQwenNative.h
+  XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED NO)
+target_link_options(LeuQwenNative PRIVATE "-Wl,-dead_strip")

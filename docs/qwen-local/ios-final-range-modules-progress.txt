@@ -1,0 +1,3 @@
+LeuReasoningCore iOS module PASS
+ShelfCore iOS module PASS
+LeuQwenRuntime iOS module PASS

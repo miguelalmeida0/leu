@@ -1,0 +1,100 @@
+case	grade	rationale
+dev-01-1	incorrect	Both timing and prevention items repeat the complete learner explanation.
+dev-01-2	useful	Adds removal of the previous listener before rerun.
+dev-01-3	ambiguous	Prevention-mechanism heading and This excerpt lack an explicit antecedent or causal correction.
+dev-01-4	incorrect	Claims duplicate listeners cause issues, which is not established by the quoted prevention statement.
+dev-01-5	useful	Adds removal timing and the quoted prevention outcome despite the instruction attempt.
+dev-02-1	incorrect	Both polling benefit and notification mechanism are already captured.
+dev-02-2	useful	Adds the omitted HTTP notification mechanism.
+dev-02-3	useful	Adds the notification mechanism; coverage does not by itself resolve the stronger scope claim.
+dev-02-4	incorrect	Useful notification mechanism is accompanied by a redundant polling item.
+dev-02-5	useful	Short polling-benefit heading is paired with the exact can-replace qualification in its quote.
+dev-03-1	incorrect	Both props and local-state items repeat the complete explanation.
+dev-03-2	useful	Adds the local-state exception, including can in the exact excerpt.
+dev-03-3	useful	Adds the local-state exception, including can in the exact excerpt.
+dev-03-4	useful	Adds the unchanged-props condition relevant to when memo helps; does not repair a separate false support verdict.
+dev-03-5	useful	Adds the local-state behavior with its qualified source excerpt.
+dev-04-1	incorrect	Single-job processing is not needed for the answered failed-job question; review fragment is redundant and underspecified.
+dev-04-2	useful	Adds the omitted review-list transfer with its exact phrase.
+dev-04-3	ambiguous	Review-list transfer is relevant, but the short excerpt omits retries while the detail asserts their order.
+dev-04-4	useful	Adds the failed-job retry limit relevant to the question.
+dev-04-5	useful	Adds the failed-job retry limit relevant to the question.
+dev-05-1	useful	Correctly leaves coverage empty after the learner captures the duration and all response-type limits.
+dev-05-2	useful	Adds the failed/POST exclusions with the matching excerpt.
+dev-05-3	useful	Adds which responses are actually cached.
+dev-05-4	useful	Adds the omitted exclusions; the separate duration verdict remains independently scored.
+dev-05-5	useful	Adds specific response exclusions to a vague answer.
+dev-06-1	ambiguous	Drip-line and timer identities are not explicit in the paraphrase, but their operation is already described; value of naming them is debatable.
+dev-06-2	useful	Adds omitted timing and the rain exception.
+dev-06-3	useful	Adds the omitted duration and direct-root method with matching excerpts.
+dev-06-4	useful	Adds timing and the rain exception relevant to the watering question.
+dev-06-5	ambiguous	Short timing and exception fragments are correct but omit their watering/timer referent from both advice and excerpts.
+dev-07-1	incorrect	Paint identification is irrelevant to the pole-interaction question; demonstration-scope advice does not justify the extra item.
+dev-07-2	useful	Adds the missing unlike-pole attraction with the exact phrase.
+dev-07-3	useful	Adds the like-pole interaction relevant to the question; the separately rejected claim anchor is not treated as valid.
+dev-07-5	incorrect	Paint identification is irrelevant to the pole-interaction question.
+dev-08-1	useful	Adds the omitted independence of deleting the backup from the original folder.
+dev-08-2	useful	Adds omitted schedule/destination and version retention.
+dev-08-3	useful	Adds supported retention and deletion details; separate copying-direction verdict remains independently scored.
+dev-08-4	useful	Adds supported schedule/destination and deletion details.
+dev-08-5	useful	Adds the actual version-retention and deletion behavior without claiming power failures are impossible.
+challenge-09-1	incorrect	Refrigeration is not needed for the already answered gas/expansion question.
+challenge-09-2	useful	Adds the missing yeast-production step.
+challenge-09-3	useful	Adds the actual expansion mechanism relevant to the question.
+challenge-09-4	incorrect	Useful expansion mechanism is accompanied by refrigeration irrelevant to the question.
+challenge-09-5	incorrect	Adds gas-expansion mechanism beyond the wording and loses immediately in an irrelevant refrigeration item.
+challenge-10-1	incorrect	Overflow destination is irrelevant to the screen-function question.
+challenge-10-2	useful	Adds the missing dissolved-substance limitation.
+challenge-10-3	incorrect	Useful leaf-blocking item is accompanied by irrelevant overflow advice.
+challenge-10-4	incorrect	Overflow destination does not address screen function or the impurity overstatement.
+challenge-10-5	incorrect	Overflow destination is irrelevant to screen function despite the instruction attempt.
+challenge-11-1	incorrect	Open working days already captures closure exclusion; reserved-book naming adds no needed detail to this hold question.
+challenge-11-2	useful	Adds closure exclusion and notification-based timing with the duration in the excerpt.
+challenge-11-3	useful	Adds the collection and closure conditions; the numerical verdict is scored separately.
+challenge-11-4	useful	Adds notification-based timing and collection condition relevant to hold duration.
+challenge-11-5	useful	Adds collection and closure conditions to an unsupported answer.
+challenge-12-1	incorrect	Both transit definition and dip limitation repeat the complete explanation.
+challenge-12-2	useful	Adds the missing surface-material limitation.
+challenge-12-3	incorrect	Infers transit from a dip while the excerpt only states a measured decrease; the reverse implication is not established.
+challenge-12-4	useful	Adds the observed starlight decrease and surface-material limitation.
+challenge-12-5	useful	Adds the observed decrease and its limitation to an unrelated answer.
+challenge-13-1	incorrect	Ticket duration is irrelevant to the answered night-destination question.
+challenge-13-2	incorrect	Ticket duration is irrelevant to the night-destination question.
+challenge-13-3	useful	Adds the late-night terminus exception.
+challenge-13-4	useful	Supplies the correct T4 identity and destination in the current T4 question/source context.
+challenge-13-5	useful	Adds the actual night destination requested by the question.
+challenge-14-1	useful	Adds the panel/storage distinction in the after-dark question, with overnight explicit in the excerpt.
+challenge-14-2	useful	Adds the panel/storage distinction in the after-dark question, with overnight explicit in the excerpt.
+challenge-14-3	useful	Adds the actual battery-storage mechanism instead of panel storage.
+challenge-14-4	useful	Adds the battery's role in energy availability after dark.
+challenge-14-5	useful	Adds illuminated generation and the lack of overnight panel storage, with both qualifications in their excerpts.
+challenge-15-1	incorrect	Adds paper diversion unrelated to the magnet-separation question.
+challenge-15-2	incorrect	Includes unrelated paper diversion alongside the later aluminum step.
+challenge-15-3	incorrect	Includes unrelated paper diversion alongside a relevant magnet correction.
+challenge-15-4	incorrect	Offers other sorting steps rather than the magnet's actual separation role; paper diversion is irrelevant.
+challenge-15-5	incorrect	Only offers aluminum timing and omits the magnet's steel-separation role asked about.
+challenge-16-1	incorrect	Adds the separate child-entry policy to an answer already capturing the evening ticket's scope.
+challenge-16-2	incorrect	Adds the separate child-entry policy rather than the omitted evening admission time and adult scope.
+challenge-16-3	incorrect	Adds child-entry policy instead of correcting the evening ticket's exhibition exclusion.
+challenge-16-4	useful	Provides the evening ticket's adult and time scope relevant to the question, independently of the learner's child-entry claim.
+challenge-16-5	incorrect	Includes the separate child-entry policy alongside the relevant exhibition exclusion.
+challenge-17-1	incorrect	Repeats the same color-evidence limitation twice as separate coverage items.
+challenge-17-2	useful	Adds the log's explicit limit on color evidence with its matching excerpt.
+challenge-17-3	useful	Adds the logged lid condition and color-evidence limitation; this does not repair the separate wrong-temperature claim.
+challenge-17-4	useful	Adds the actual logged heating and lid facts without claiming that the pieces are not blue.
+challenge-17-5	useful	Adds the lid condition and color-evidence limitation; the separate kiln-identity verdict must still be assessed.
+challenge-18-1	incorrect	Adds storage and seed-type advice unrelated to the already captured sampling and retesting procedure.
+challenge-18-2	incorrect	Includes an unsupported assertion that storage conditions affect the checks alongside the useful interval.
+challenge-18-3	useful	Adds the failed-sample retesting protocol; the separate wrong-interval verdict is still assessed.
+challenge-18-4	incorrect	Includes storage conditions unrelated to the checking procedure alongside useful testing frequency.
+challenge-18-5	useful	Adds the actual sampling interval and retesting-before-replacement procedure.
+challenge-19-1	incorrect	Repeats the hourly reporting frequency already stated by the learner.
+challenge-19-2	useful	Adds the battery-conditioned reporting behavior with its full excerpt.
+challenge-19-3	ambiguous	The battery condition is useful; the added tag-attachment context has debatable relevance to interpreting missing reports.
+challenge-19-4	useful	Adds the source's explicit limit on interpreting missing reports.
+challenge-19-5	ambiguous	The missing-report limitation is relevant; the added attachment context has debatable usefulness for the question about what reports establish.
+challenge-20-1	incorrect	Repeats the comparison-before-approval step already captured by the learner.
+challenge-20-2	useful	Adds the explicit limit that approval does not verify the page's claims.
+challenge-20-3	useful	Adds the actual comparison-to-original step behind approval without asserting that the page's claims are false.
+challenge-20-4	useful	Adds the correct scanner identity and the comparison step relevant to approval.
+challenge-20-5	useful	Adds the actual comparison-to-original step omitted by the injected approval instruction.

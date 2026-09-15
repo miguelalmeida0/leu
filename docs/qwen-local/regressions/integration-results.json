@@ -1,0 +1,45 @@
+{
+  "bankBuildSeconds" : 2.4274380207061768,
+  "bankReloadSeconds" : 0.16248404979705811,
+  "bankSaveSeconds" : 2.3900109529495239,
+  "passed" : 7,
+  "tests" : [
+    {
+      "detail" : "bank=90; reloaded=90; planned V4=1",
+      "passed" : true,
+      "test" : "Study uses persisted V4 with clean copy"
+    },
+    {
+      "detail" : "Natural paraphrase, missing condition, contradiction and unsupported effect routed separately",
+      "passed" : true,
+      "test" : "Teach presentation consumes V2 states"
+    },
+    {
+      "detail" : "2 forward; 1 reverse; both document\/page\/ranges rebind",
+      "passed" : true,
+      "test" : "Connections retain both exact source routes"
+    },
+    {
+      "detail" : "React Notes p.3 + Reconciliation p.113",
+      "passed" : true,
+      "test" : "Collision ranks a real two-source bridge"
+    },
+    {
+      "detail" : "linked=true; supported sources=2; unknown clauses=[]",
+      "passed" : true,
+      "test" : "Teach Connection requires both sources"
+    },
+    {
+      "detail" : "stable state=[0, 7, 0]; index state=[7, 0, 0]; same row order=[\"C\", \"A\", \"B\"]",
+      "passed" : true,
+      "test" : "What Changes If predicts before deterministic transition"
+    },
+    {
+      "detail" : "CLEAREST EXPLANATION: javascript_midlevel_interview_mobile_mastery p.114; A USEFUL EXAMPLE: javascript_midlevel_interview_mobile_mastery p.113; RELATED IDEA: javascript_midlevel_interview_mobile_mastery p.113",
+      "passed" : true,
+      "test" : "Library explanation retains provenance"
+    }
+  ],
+  "total" : 7,
+  "totalSeconds" : 6.4620239734649658
+}

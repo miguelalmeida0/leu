@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/scripts/qwen-runtime-checks.py", line 23, in <module>
+    subprocess.run([str(binary), str(root / ".qwen-local/Qwen3.5-2B-Q4_K_M.gguf"),
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        str(root / "docs/qwen-local/runtime-lifecycle.json")], env=env, check=True, timeout=180)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/host-final/qwen-runtime-checks', '/Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/Qwen3.5-2B-Q4_K_M.gguf', '/Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/docs/qwen-local/runtime-lifecycle.json']' returned non-zero exit status 1.

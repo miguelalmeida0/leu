@@ -29,7 +29,9 @@ public actor LearningRepository {
 
     public func storeUnderstandingAttempt(_ attempt: UnderstandingAttempt) throws {
         try transaction { snapshot in
-            guard attempt.source.isCurrent(in: snapshot.analyses), attempt.learnerExplanation.count <= 6000 else {
+            // A draft can exceed an inference budget. Keep the user's complete
+            // submission; providers enforce their own limits without truncation.
+            guard attempt.source.isCurrent(in: snapshot.analyses) else {
                 throw LearningIntelligenceError.sourceIntegrityFailed
             }
             if let result = attempt.result {

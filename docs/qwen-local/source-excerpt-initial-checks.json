@@ -1,0 +1,29 @@
+{
+  "checks" : [
+    {
+      "name" : "Repeated quote resolves within the selected second passage",
+      "passed" : true
+    },
+    {
+      "name" : "Unicode excerpt retains exact text, document and page",
+      "passed" : true
+    },
+    {
+      "name" : "Quote elsewhere on the page cannot escape the selected passage",
+      "passed" : true
+    },
+    {
+      "name" : "Empty quote cannot create a zero-length route",
+      "passed" : true
+    },
+    {
+      "name" : "Missing document cannot produce a route",
+      "passed" : true
+    },
+    {
+      "name" : "Stale source cannot produce a route",
+      "passed" : true
+    }
+  ],
+  "scope" : "Host source-range binding; rendered PDF highlight remains PENDING"
+}

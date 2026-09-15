@@ -1,0 +1,106 @@
+{
+  "after" : {
+    "claimType" : "mechanism",
+    "concepts" : [
+      "concurrent-request"
+    ],
+    "conditions" : [
+
+    ],
+    "dependencies" : [
+
+    ],
+    "id" : {
+      "rawValue" : "atom.09aa7af2cbc79cc5"
+    },
+    "identifiers" : [
+
+    ],
+    "isNegated" : false,
+    "numbers" : [
+
+    ],
+    "object" : "decisions from stale state",
+    "provenance" : {
+      "admissibility" : "sourceSupported",
+      "confidenceInParsing" : 1,
+      "derivedFrom" : [
+
+      ],
+      "rule" : "none",
+      "spans" : [
+        {
+          "canonicalSpan" : "Concurrent requests can both make\ndecisions from stale state.",
+          "characterOffset" : 178,
+          "documentID" : "javascript_midlevel_interview_mobile_mastery",
+          "extractionVersion" : "leu.pdf-packet.1",
+          "page" : 65,
+          "sourceRole" : "compactExplanation"
+        }
+      ]
+    },
+    "qualifiers" : [
+      {
+        "kind" : "modality",
+        "text" : "can"
+      },
+      {
+        "kind" : "scope",
+        "text" : "both"
+      }
+    ],
+    "relation" : "makes",
+    "sourceIntegrity" : "normalized",
+    "subject" : "Concurrent requests"
+  },
+  "before" : {
+    "claimType" : "mechanism",
+    "concepts" : [
+      "concurrent"
+    ],
+    "conditions" : [
+
+    ],
+    "dependencies" : [
+
+    ],
+    "id" : {
+      "rawValue" : "atom.2a2297b1ecbe3a9a"
+    },
+    "identifiers" : [
+
+    ],
+    "isNegated" : false,
+    "numbers" : [
+
+    ],
+    "object" : "can both make decisions from stale state",
+    "provenance" : {
+      "admissibility" : "sourceSupported",
+      "confidenceInParsing" : 1,
+      "derivedFrom" : [
+
+      ],
+      "rule" : "none",
+      "spans" : [
+        {
+          "canonicalSpan" : "Concurrent requests can both make\ndecisions from stale state.",
+          "characterOffset" : 178,
+          "documentID" : "javascript_midlevel_interview_mobile_mastery",
+          "extractionVersion" : "leu.pdf-packet.1",
+          "page" : 65,
+          "sourceRole" : "compactExplanation"
+        }
+      ]
+    },
+    "qualifiers" : [
+      {
+        "kind" : "modality",
+        "text" : "can"
+      }
+    ],
+    "relation" : "requests",
+    "sourceIntegrity" : "normalized",
+    "subject" : "Concurrent"
+  }
+}

@@ -1,0 +1,22 @@
+SKIP 4B dev by explicit --skip-4b; existing evidence preserved
+SKIP 4B challenge by explicit --skip-4b; existing evidence preserved
+START final-context-probe-2b-4096.jsonl
+dev-01-1 guard_rejected 570922.9890108109ms
+dev-01-3 completed 14482.127904891968ms
+dev-01-4 guard_rejected 14257.925033569336ms
+dev-02-3 completed 9143.843054771423ms
+dev-03-1 completed 11456.403017044067ms
+dev-04-1 guard_rejected 15191.370010375977ms
+dev-05-4 completed 10185.912013053894ms
+dev-06-1 completed 12634.410977363586ms
+DONE final-context-probe-2b-4096.jsonl
+START final-context-probe-2b-2048-verify.jsonl
+dev-01-1 guard_rejected 18712.942004203796ms
+dev-01-3 completed 26889.11199569702ms
+dev-01-4 guard_rejected 14420.174956321716ms
+dev-02-3 completed 9798.197984695435ms
+dev-03-1 completed 30456.60698413849ms
+dev-04-1 guard_rejected 19922.343969345093ms
+dev-05-4 completed 11925.534009933472ms
+dev-06-1 completed 32983.08491706848ms
+DONE final-context-probe-2b-2048-verify.jsonl

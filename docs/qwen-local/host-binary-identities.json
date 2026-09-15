@@ -1,0 +1,26 @@
+{
+  "recorded_at_utc": "2026-09-15T08:00:55.591386+00:00",
+  "scope": "Recorded during final comparison, after settings freeze; not falsely presented as pre-run binary attestation",
+  "files": {
+    ".qwen-local/host-final/qwen-benchmark": {
+      "sha256": "34e7187ab627452b608378b91c28cb880015be4e83a58a72ba8e2dd534c68269",
+      "mtime_utc": "2026-09-15T07:16:55.060690+00:00"
+    },
+    ".qwen-local/host-final/libShelfCore.dylib": {
+      "sha256": "070b8d6a386e2345be43a117d9fbe92185ef2eaa895b6a27d12d0dbf5d0cf890",
+      "mtime_utc": "2026-09-15T07:14:29.881215+00:00"
+    },
+    ".qwen-local/host-final/libLeuReasoningCore.dylib": {
+      "sha256": "d92f36cb7fe0104d58bbcf55fa193989107c98e2c23c919142cf67292ca5be47",
+      "mtime_utc": "2026-09-15T07:13:57.659186+00:00"
+    },
+    ".qwen-local/host-final/libLeuQwenRuntime.dylib": {
+      "sha256": "49421eb09fb9b6b5a9787b9a58954468cf65693ba0d159415753296017b82ecc",
+      "mtime_utc": "2026-09-15T07:14:30.887424+00:00"
+    },
+    ".qwen-local/native-mac/LeuQwenNative.framework/LeuQwenNative": {
+      "sha256": "ac8ee24f43a81c22dfe306f04567fe0d7432353afbe6da17b7efb725da29c334",
+      "mtime_utc": "2026-09-15T07:13:30.710621+00:00"
+    }
+  }
+}

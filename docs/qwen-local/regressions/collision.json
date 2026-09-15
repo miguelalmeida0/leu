@@ -1,0 +1,56 @@
+{
+  "proofLevel" : "INFERRED_VALIDATED",
+  "relationA" : {
+    "object" : "react.item-correspondence",
+    "relation" : "enables",
+    "rule" : "react-key-positive-match",
+    "subject" : "react.stable-key"
+  },
+  "relationB" : {
+    "object" : "react.instance-preservation-or-replacement",
+    "relation" : "governs-with-type-and-keys",
+    "rule" : "react-reconciliation-comparison-and-qualified-instance-rule",
+    "subject" : "react.item-correspondence"
+  },
+  "relationship" : "mechanism",
+  "sourceA" : {
+    "documentID" : "028DDE79-065F-5838-9E18-9B2EA72A5D0D",
+    "documentTitle" : "React Notes",
+    "extractionVersion" : 5,
+    "fingerprint" : "12391381683832827782",
+    "pageIndex" : 2,
+    "quote" : {
+      "range" : {
+        "length" : 162,
+        "location" : 42
+      },
+      "text" : "A stable key helps React match an item to its previous\ninstance within a list of siblings. Reordering should\nnot make one item inherit the local state of another."
+    },
+    "role" : "ordinary_factual_prose",
+    "title" : "React Notes"
+  },
+  "sourceB" : {
+    "documentID" : "14D62EC9-DBF8-57FF-AF54-91B8F467EC64",
+    "documentTitle" : "javascript_midlevel_interview_mobile_mastery",
+    "extractionVersion" : 5,
+    "fingerprint" : "6711979522824531651",
+    "pageIndex" : 112,
+    "quote" : {
+      "range" : {
+        "length" : 177,
+        "location" : 91
+      },
+      "text" : "React's process for comparing previous and next\nelement trees and deciding how to update mounted UI.\nIt preserves or replaces component instances based on\nelement type and keys."
+    },
+    "role" : "primary_factual",
+    "title" : "Reconciliation",
+    "titleSpan" : {
+      "range" : {
+        "length" : 14,
+        "location" : 55
+      },
+      "text" : "Reconciliation"
+    }
+  },
+  "whyValid" : "A links stable keys to matching list items with earlier instances. B links render comparison, element type and keys to preserving or replacing component instances. The shared correspondence concept connects the passages; B's type-and-key condition is retained."
+}

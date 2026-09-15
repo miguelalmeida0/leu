@@ -1,0 +1,11 @@
+{
+  "cases": 100,
+  "development": 40,
+  "challenge": 60,
+  "hashes": {
+    "dev-cases.json": "ec5ec95d25f568bebbd144f05d4445379a7f5dc1b6ab9c131b442d266b4f564e",
+    "challenge-cases.json": "e091c0a553285d6145344806f86918447ba426d6054c941c2f57e1303364ed1d"
+  },
+  "independent_human_benchmark": false,
+  "challenge_used_for_tuning": false
+}

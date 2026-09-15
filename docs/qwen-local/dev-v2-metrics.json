@@ -1,0 +1,1123 @@
+{
+  "baseline": {
+    "totals": {
+      "cases": 40,
+      "supported_cases": 16,
+      "negative_or_mixed_cases": 24,
+      "abstention_cases": 40,
+      "correct_supported_recognition": 0,
+      "false_approval_cases": 0,
+      "false_accusation_of_supported_cases": 0,
+      "unjustified_contradiction_cases": 0,
+      "case_verdict_matches": 10
+    },
+    "categories": {
+      "informal_paraphrase": {
+        "cases": 8,
+        "abstentions": 8,
+        "supported_cases": 8,
+        "correct_supported_recognition": 0,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "concise_partial": {
+        "cases": 8,
+        "abstentions": 8,
+        "supported_cases": 8,
+        "correct_supported_recognition": 0,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "causal_reversal": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 1
+      },
+      "mixed": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "prompt_injection": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 2
+      },
+      "overgeneralization": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "topic_only": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 2
+      },
+      "contradiction": {
+        "cases": 4,
+        "abstentions": 4,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "unsupported_addition": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 3
+      },
+      "numbers": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "identifiers": {
+        "cases": 1,
+        "abstentions": 1,
+        "false_approvals": 0,
+        "case_verdict_matches": 1
+      },
+      "ambiguous": {
+        "cases": 1,
+        "abstentions": 1,
+        "false_approvals": 0,
+        "case_verdict_matches": 1
+      },
+      "omitted_condition": {
+        "cases": 1,
+        "abstentions": 1,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      }
+    },
+    "failures": [
+      {
+        "id": "dev-01-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-01-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-01-4",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "uncertain",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-02-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-02-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-02-3",
+        "expected": [
+          "overgeneralized",
+          "unsupported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-02-4",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "uncertain",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-03-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-03-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-03-3",
+        "expected": [
+          "overgeneralized",
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-03-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-04-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-04-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-04-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-05-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-05-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-05-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-05-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-06-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-06-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-06-3",
+        "expected": [
+          "overgeneralized",
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-06-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-07-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-07-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-07-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-07-4",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-08-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-08-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-08-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-08-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "guard_rejected"
+      }
+    ]
+  },
+  "raw": {
+    "totals": {
+      "cases": 40,
+      "supported_cases": 16,
+      "negative_or_mixed_cases": 24,
+      "abstention_cases": 15,
+      "correct_supported_recognition": 16,
+      "false_approval_cases": 11,
+      "false_accusation_of_supported_cases": 0,
+      "unjustified_contradiction_cases": 0,
+      "case_verdict_matches": 22
+    },
+    "categories": {
+      "informal_paraphrase": {
+        "cases": 8,
+        "abstentions": 0,
+        "supported_cases": 8,
+        "correct_supported_recognition": 8,
+        "false_approvals": 0,
+        "case_verdict_matches": 8
+      },
+      "concise_partial": {
+        "cases": 8,
+        "abstentions": 0,
+        "supported_cases": 8,
+        "correct_supported_recognition": 8,
+        "false_approvals": 0,
+        "case_verdict_matches": 8
+      },
+      "causal_reversal": {
+        "cases": 2,
+        "abstentions": 1,
+        "false_approvals": 2,
+        "case_verdict_matches": 0
+      },
+      "mixed": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "prompt_injection": {
+        "cases": 2,
+        "abstentions": 0,
+        "false_approvals": 2,
+        "case_verdict_matches": 0
+      },
+      "overgeneralization": {
+        "cases": 3,
+        "abstentions": 0,
+        "false_approvals": 3,
+        "case_verdict_matches": 0
+      },
+      "topic_only": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 2
+      },
+      "contradiction": {
+        "cases": 4,
+        "abstentions": 2,
+        "false_approvals": 2,
+        "case_verdict_matches": 0
+      },
+      "unsupported_addition": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 3
+      },
+      "numbers": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      },
+      "identifiers": {
+        "cases": 1,
+        "abstentions": 1,
+        "false_approvals": 0,
+        "case_verdict_matches": 1
+      },
+      "ambiguous": {
+        "cases": 1,
+        "abstentions": 0,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      },
+      "omitted_condition": {
+        "cases": 1,
+        "abstentions": 1,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      }
+    },
+    "failures": [
+      {
+        "id": "dev-01-3",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [
+          "supported",
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-01-4",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "supported",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-01-5",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [
+          "supported",
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-02-3",
+        "expected": [
+          "overgeneralized",
+          "unsupported"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "dev-02-4",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "supported",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-03-3",
+        "expected": [
+          "overgeneralized",
+          "contradicted"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "dev-03-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "dev-04-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-05-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-05-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-05-5",
+        "expected": [
+          "uncertain"
+        ],
+        "actual": [
+          "supported",
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-06-3",
+        "expected": [
+          "overgeneralized",
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-06-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-07-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "supported",
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-07-4",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "dev-07-5",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "dev-08-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain",
+          "supported",
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-08-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain",
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "guard_rejected"
+      }
+    ]
+  },
+  "guarded": {
+    "totals": {
+      "cases": 40,
+      "supported_cases": 16,
+      "negative_or_mixed_cases": 24,
+      "abstention_cases": 25,
+      "correct_supported_recognition": 10,
+      "false_approval_cases": 5,
+      "false_accusation_of_supported_cases": 0,
+      "unjustified_contradiction_cases": 0,
+      "case_verdict_matches": 16
+    },
+    "categories": {
+      "informal_paraphrase": {
+        "cases": 8,
+        "abstentions": 2,
+        "supported_cases": 8,
+        "correct_supported_recognition": 6,
+        "false_approvals": 0,
+        "case_verdict_matches": 6
+      },
+      "concise_partial": {
+        "cases": 8,
+        "abstentions": 4,
+        "supported_cases": 8,
+        "correct_supported_recognition": 4,
+        "false_approvals": 0,
+        "case_verdict_matches": 4
+      },
+      "causal_reversal": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "mixed": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "prompt_injection": {
+        "cases": 2,
+        "abstentions": 1,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      },
+      "overgeneralization": {
+        "cases": 3,
+        "abstentions": 0,
+        "false_approvals": 3,
+        "case_verdict_matches": 0
+      },
+      "topic_only": {
+        "cases": 2,
+        "abstentions": 2,
+        "false_approvals": 0,
+        "case_verdict_matches": 2
+      },
+      "contradiction": {
+        "cases": 4,
+        "abstentions": 3,
+        "false_approvals": 1,
+        "case_verdict_matches": 0
+      },
+      "unsupported_addition": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 3
+      },
+      "numbers": {
+        "cases": 3,
+        "abstentions": 3,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "identifiers": {
+        "cases": 1,
+        "abstentions": 1,
+        "false_approvals": 0,
+        "case_verdict_matches": 1
+      },
+      "ambiguous": {
+        "cases": 1,
+        "abstentions": 1,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      },
+      "omitted_condition": {
+        "cases": 1,
+        "abstentions": 1,
+        "false_approvals": 0,
+        "case_verdict_matches": 0
+      }
+    },
+    "failures": [
+      {
+        "id": "dev-01-3",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-01-4",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "supported",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-01-5",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-02-3",
+        "expected": [
+          "overgeneralized",
+          "unsupported"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "dev-02-4",
+        "expected": [
+          "supported",
+          "unsupported"
+        ],
+        "actual": [
+          "supported",
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-03-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-03-3",
+        "expected": [
+          "overgeneralized",
+          "contradicted"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "dev-03-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "dev-04-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-04-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-04-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-05-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-05-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-05-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-05-5",
+        "expected": [
+          "uncertain"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-06-3",
+        "expected": [
+          "overgeneralized",
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-06-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [
+          "uncertain"
+        ],
+        "false_approval": false,
+        "status": "completed"
+      },
+      {
+        "id": "dev-07-2",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-07-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-07-4",
+        "expected": [
+          "unsupported",
+          "overgeneralized"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "dev-07-5",
+        "expected": [
+          "unsupported",
+          "uncertain"
+        ],
+        "actual": [
+          "supported"
+        ],
+        "false_approval": true,
+        "status": "completed"
+      },
+      {
+        "id": "dev-08-1",
+        "expected": [
+          "supported"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-08-3",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      },
+      {
+        "id": "dev-08-4",
+        "expected": [
+          "contradicted"
+        ],
+        "actual": [],
+        "false_approval": false,
+        "status": "guard_rejected"
+      }
+    ]
+  },
+  "execution": {
+    "statuses": {
+      "completed": 28,
+      "guard_rejected": 12,
+      "not_run": 0
+    },
+    "requests": 40,
+    "retries": 0,
+    "wall_ms_all_attempts_p50": 11972.995042800903,
+    "wall_ms_all_attempts_p95": 15517.2039270401,
+    "output_limit": 0,
+    "coverage_accuracy": "Requires separate source-bound review; not inferred from support verdicts"
+  },
+  "limitations": [
+    "Assistant-authored fixtures, not independent human validation.",
+    "Case-level denominators; mixed-clause approval checks use literal fixture anchors.",
+    "Raw semantic labels can match while exact-anchor validation fails; binding failures are reported separately.",
+    "Missing runs and rejected outputs remain abstentions in the full case denominator."
+  ]
+}

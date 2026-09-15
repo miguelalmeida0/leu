@@ -13,7 +13,7 @@ extension ReaderModel {
 
     func restoreSourceHighlight(_ source: String) {
         setDisplayMode(.original)
-        if !controller.showSourceHighlight(source, pageIndex: pageIndex) {
+        if !controller.showSourceHighlight(source, pageIndex: pageIndex, exactRange: initialSourceRange) {
             savedMessage = "Source page opened. This PDF's text layer could not uniquely locate the passage."
         }
     }

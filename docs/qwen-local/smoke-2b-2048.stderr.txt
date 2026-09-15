@@ -1,0 +1,12 @@
+0.00.367.064 E ggml_metal_init: error: failed to create command queue
+0.00.367.066 E ggml_backend_metal_device_init_backend: error: failed to allocate context
+0.00.367.136 E llama_init_from_model: failed to initialize the context: failed to initialize  backend
+0.00.390.752 E common_fit_params: encountered an error while trying to fit params to free device memory: failed to create llama_context from model
+0.01.922.925 E ggml_metal_init: error: failed to create command queue
+0.01.922.927 E ggml_backend_metal_device_init_backend: error: failed to allocate context
+0.01.922.959 E llama_init_from_model: failed to initialize the context: failed to initialize  backend
+0.01.922.963 E cmn  common_init_: failed to create context with model '.qwen-local/Qwen3.5-2B-Q4_K_M.gguf'
+0.01.922.964 E cmn  common_init_: failed to create context with model '.qwen-local/Qwen3.5-2B-Q4_K_M.gguf'
+0.01.922.965 E srv    load_model: failed to create_context with model '.qwen-local/Qwen3.5-2B-Q4_K_M.gguf'
+0.01.923.095 E srv  llama_server: exiting due to model loading error
+llama_server exited with code 1

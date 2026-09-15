@@ -1,0 +1,185 @@
+-- llama.cpp version: 0.4.1-dev
+CMAKE_BUILD_TYPE=Release
+fatal: not a git repository (or any of the parent directories): .git
+fatal: not a git repository (or any of the parent directories): .git
+-- Warning: ccache not found - consider installing it for faster compilation or disable this warning with GGML_CCACHE=OFF
+-- CMAKE_SYSTEM_PROCESSOR: arm64
+-- GGML_SYSTEM_ARCH: ARM
+-- Could NOT find OpenMP_C (missing: OpenMP_C_FLAGS OpenMP_C_LIB_NAMES) 
+-- Could NOT find OpenMP_CXX (missing: OpenMP_CXX_FLAGS OpenMP_CXX_LIB_NAMES) 
+-- Could NOT find OpenMP (missing: OpenMP_C_FOUND OpenMP_CXX_FOUND) 
+CMake Warning at /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/llama.cpp-4c9233c034fc450dcf34c7c0988aebe6da5cdf1a/ggml/src/CMakeLists.txt:347 (message):
+  OpenMP not found
+
+
+-- Including CPU backend
+-- Accelerate framework found
+-- ARM detected
+-- Checking for ARM features using flags:
+-- Adding CPU backend variant ggml-cpu:  
+-- BLAS found, Libraries: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework
+-- BLAS found, Includes: 
+-- Including BLAS backend
+-- Metal framework found
+-- Including METAL backend
+-- ggml version: 0.24.0
+-- ggml commit:  unknown
+CMake Warning at /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/llama.cpp-4c9233c034fc450dcf34c7c0988aebe6da5cdf1a/common/CMakeLists.txt:33 (message):
+  Git repository not found; to enable automatic generation of build info,
+  make sure Git is installed and the project is a Git repository.
+
+
+-- Configuring done (3.7s)
+-- Generating done (0.3s)
+-- Build files have been written to: /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/native-mac
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-d7KQCZHk' (errno=Operation not permitted)
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-QXOnXh97' (errno=Operation not permitted)
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-XGdoMTsH' (errno=Operation not permitted)
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-TF9vkYNP' (errno=Operation not permitted)
+[  0%] Building CXX object llama/common/CMakeFiles/llama-common-base.dir/build-info.cpp.o
+[  1%] Built target cpp-httplib
+[  2%] Building C object llama/ggml/src/CMakeFiles/ggml-base.dir/ggml.c.o
+[  3%] Linking CXX static library libllama-common-base.a
+[  3%] Built target llama-common-base
+[  4%] Linking CXX static library libggml-base.a
+[  8%] Built target ggml-base
+[  9%] Built target ggml-blas
+[ 36%] Built target ggml-metal
+[ 45%] Built target ggml-cpu
+[ 46%] Built target ggml
+[ 46%] Building CXX object llama/src/CMakeFiles/llama.dir/llama.cpp.o
+[ 46%] Linking CXX static library libllama.a
+[ 70%] Built target llama
+[ 98%] Built target llama-common
+[ 98%] Building CXX object CMakeFiles/LeuQwenNative.dir/LeuQwenNative.cpp.o
+[100%] Linking CXX shared library LeuQwenNative.framework/LeuQwenNative
+ld: warning: ignoring duplicate libraries: 'llama/src/libllama.a'
+[100%] Built target LeuQwenNative
+-- llama.cpp version: 0.4.1-dev
+CMAKE_BUILD_TYPE=Release
+fatal: not a git repository (or any of the parent directories): .git
+fatal: not a git repository (or any of the parent directories): .git
+-- Setting GGML_NATIVE_DEFAULT to OFF
+-- Warning: ccache not found - consider installing it for faster compilation or disable this warning with GGML_CCACHE=OFF
+-- CMAKE_SYSTEM_PROCESSOR: 
+-- GGML_SYSTEM_ARCH: ARM
+-- Could NOT find OpenMP_C (missing: OpenMP_C_FLAGS OpenMP_C_LIB_NAMES) 
+-- Could NOT find OpenMP_CXX (missing: OpenMP_CXX_FLAGS OpenMP_CXX_LIB_NAMES) 
+-- Could NOT find OpenMP (missing: OpenMP_C_FOUND OpenMP_CXX_FOUND) 
+CMake Warning at /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/llama.cpp-4c9233c034fc450dcf34c7c0988aebe6da5cdf1a/ggml/src/CMakeLists.txt:347 (message):
+  OpenMP not found
+
+
+-- Including CPU backend
+-- Accelerate framework found
+-- ARM detected
+-- Checking for ARM features using flags:
+-- Adding CPU backend variant ggml-cpu:  
+-- BLAS found, Libraries: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Accelerate.framework
+-- BLAS found, Includes: 
+-- Including BLAS backend
+-- Metal framework found
+-- Including METAL backend
+-- ggml version: 0.24.0
+-- ggml commit:  unknown
+CMake Warning at /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/llama.cpp-4c9233c034fc450dcf34c7c0988aebe6da5cdf1a/common/CMakeLists.txt:33 (message):
+  Git repository not found; to enable automatic generation of build info,
+  make sure Git is installed and the project is a Git repository.
+
+
+-- Configuring done (2.2s)
+-- Generating done (0.3s)
+-- Build files have been written to: /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/native-ios
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-LQzbqR7I' (errno=Operation not permitted)
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-86V1qBG7' (errno=Operation not permitted)
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-XEuHfAcm' (errno=Operation not permitted)
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-AEia5wSi' (errno=Operation not permitted)
+[  0%] Building CXX object llama/common/CMakeFiles/llama-common-base.dir/build-info.cpp.o
+[  1%] Built target cpp-httplib
+[  2%] Building C object llama/ggml/src/CMakeFiles/ggml-base.dir/ggml.c.o
+[  3%] Linking CXX static library libllama-common-base.a
+[  3%] Built target llama-common-base
+[  4%] Linking CXX static library libggml-base.a
+[  8%] Built target ggml-base
+[  9%] Built target ggml-blas
+[ 36%] Built target ggml-metal
+[ 45%] Built target ggml-cpu
+[ 46%] Built target ggml
+[ 46%] Building CXX object llama/src/CMakeFiles/llama.dir/llama.cpp.o
+[ 46%] Linking CXX static library libllama.a
+[ 70%] Built target llama
+[ 98%] Built target llama-common
+[ 98%] Building CXX object CMakeFiles/LeuQwenNative.dir/LeuQwenNative.cpp.o
+[100%] Linking CXX shared library LeuQwenNative.framework/LeuQwenNative
+ld: warning: ignoring duplicate libraries: 'llama/src/libllama.a'
+[100%] Built target LeuQwenNative
+-- llama.cpp version: 0.4.1-dev
+CMAKE_BUILD_TYPE=Release
+fatal: not a git repository (or any of the parent directories): .git
+fatal: not a git repository (or any of the parent directories): .git
+-- Setting GGML_NATIVE_DEFAULT to OFF
+-- Warning: ccache not found - consider installing it for faster compilation or disable this warning with GGML_CCACHE=OFF
+-- CMAKE_SYSTEM_PROCESSOR: 
+-- GGML_SYSTEM_ARCH: ARM
+-- Could NOT find OpenMP_C (missing: OpenMP_C_FLAGS OpenMP_C_LIB_NAMES) 
+-- Could NOT find OpenMP_CXX (missing: OpenMP_CXX_FLAGS OpenMP_CXX_LIB_NAMES) 
+-- Could NOT find OpenMP (missing: OpenMP_C_FOUND OpenMP_CXX_FOUND) 
+CMake Warning at /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/llama.cpp-4c9233c034fc450dcf34c7c0988aebe6da5cdf1a/ggml/src/CMakeLists.txt:347 (message):
+  OpenMP not found
+
+
+-- Including CPU backend
+-- Accelerate framework found
+-- ARM detected
+-- Checking for ARM features using flags:
+-- Adding CPU backend variant ggml-cpu:  
+-- BLAS found, Libraries: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/System/Library/Frameworks/Accelerate.framework
+-- BLAS found, Includes: 
+-- Including BLAS backend
+-- Metal framework found
+-- Including METAL backend
+-- ggml version: 0.24.0
+-- ggml commit:  unknown
+CMake Warning at /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/llama.cpp-4c9233c034fc450dcf34c7c0988aebe6da5cdf1a/common/CMakeLists.txt:33 (message):
+  Git repository not found; to enable automatic generation of build info,
+  make sure Git is installed and the project is a Git repository.
+
+
+-- Configuring done (2.2s)
+-- Generating done (0.3s)
+-- Build files have been written to: /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/native-simulator
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-z7HACIDN' (errno=Operation not permitted)
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-AMHMEPtw' (errno=Operation not permitted)
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-R81Y6rpJ' (errno=Operation not permitted)
+make: error: couldn't create cache file '/var/folders/x6/0d36h_s16kj9j6jgw2m775480000gn/T/xcrun_db-aAfgGiD2' (errno=Operation not permitted)
+[  0%] Building CXX object llama/common/CMakeFiles/llama-common-base.dir/build-info.cpp.o
+[  1%] Built target cpp-httplib
+[  2%] Building C object llama/ggml/src/CMakeFiles/ggml-base.dir/ggml.c.o
+[  3%] Linking CXX static library libllama-common-base.a
+[  3%] Built target llama-common-base
+[  4%] Linking CXX static library libggml-base.a
+[  8%] Built target ggml-base
+[  9%] Built target ggml-blas
+[ 36%] Built target ggml-metal
+[ 45%] Built target ggml-cpu
+[ 46%] Built target ggml
+[ 46%] Building CXX object llama/src/CMakeFiles/llama.dir/llama.cpp.o
+[ 46%] Linking CXX static library libllama.a
+[ 70%] Built target llama
+[ 98%] Built target llama-common
+[ 98%] Building CXX object CMakeFiles/LeuQwenNative.dir/LeuQwenNative.cpp.o
+[100%] Linking CXX shared library LeuQwenNative.framework/LeuQwenNative
+ld: warning: ignoring duplicate libraries: 'llama/src/libllama.a'
+[100%] Built target LeuQwenNative
+2026-09-15 09:13:45.641 xcodebuild[22115:182891]  DVTFilePathFSEvents: Failed to start fs event stream.
+2026-09-15 09:13:46.135 xcodebuild[22115:182892] CoreSimulatorService connection became invalid.  Simulator services will no longer be available.
+2026-09-15 09:13:46.140 xcodebuild[22115:182893] Logging connecton invalid: <OS_xpc_error: <dictionary: 0x1fc916120> { count = 1, transaction: 0, voucher = 0x0, contents =
+	"XPCErrorDescription" => <string: 0x1fc916260> { string cache = 0x0, length = 18, contents = "Connection invalid" }
+}>
+2026-09-15 09:13:46.142 xcodebuild[22115:182893] Error opening log file (/Users/malmeida/Library/Logs/CoreSimulator/CoreSimulator.com.apple.dt.xcodebuild.log): Operation not permitted
+[-[SimServiceContext sendRequest:]:1751] ERROR : Unable to deliver request ({
+    "developer_dir" = "/Applications/Xcode.app/Contents/Developer";
+    request = "set_developer_dir";
+}) because we are not connected to CoreSimulatorService.
+xcframework successfully written out to: /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/Packages/LeuQwenRuntime/Artifacts/LeuQwenNative.pending.xcframework
+Prepared /Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/Packages/LeuQwenRuntime/Artifacts/LeuQwenNative.xcframework
