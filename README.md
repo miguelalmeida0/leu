@@ -8,8 +8,9 @@ The app keeps the learning loop inside the reader: **read → understand → rec
 
 <table>
   <tr>
-    <td><img src="./docs/design/study-home-evidence/native-20260913-103833/captures/02-study-populated.png" alt="Leu Study populated state"></td>
-    <td><img src="./docs/design/study-home-evidence/native-20260913-103833/captures/04-blind-spots.png" alt="Leu blind-spots study state"></td>
+    <td width="36%"><img src="./docs/readme/current/00-current-simulator-home.png" alt="Leu current iPhone simulator home"></td>
+    <td width="32%"><img src="./docs/readme/current/02-study-populated.png" alt="Leu Study populated state"></td>
+    <td width="32%"><img src="./docs/readme/current/04-blind-spots.png" alt="Leu blind-spots study state"></td>
   </tr>
 </table>
 
@@ -33,9 +34,9 @@ Leu treats the document as the source of truth. Study tools are designed to rout
 
 <table>
   <tr>
-    <td width="33%"><img src="./docs/design/study-home-evidence/native-20260913-103833/captures/03-fading.png" alt="Leu fading knowledge state"></td>
-    <td width="33%"><img src="./docs/design/study-home-evidence/native-20260913-103833/captures/04-blind-spots.png" alt="Leu blind spots state"></td>
-    <td width="33%"><img src="./docs/design/study-home-evidence/native-20260913-103833/captures/05-reconstruction-labs.png" alt="Leu reconstruction labs state"></td>
+    <td width="33%"><img src="./docs/readme/current/03-fading.png" alt="Leu fading knowledge state"></td>
+    <td width="33%"><img src="./docs/readme/current/04-blind-spots.png" alt="Leu blind spots state"></td>
+    <td width="33%"><img src="./docs/readme/current/05-reconstruction-labs.png" alt="Leu reconstruction labs state"></td>
   </tr>
 </table>
 
