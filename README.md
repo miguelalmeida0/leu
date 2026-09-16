@@ -1,25 +1,107 @@
-# Leu Native V24.5 — Release Interaction & Complete Test Sweep
+# Leu
 
-An **Apple-test candidate**, based on the V24.4 build that passed native compilation, 204 core tests, 20 Apple/PDF tests, and native V24 journeys 50–53. Its remaining observed failure was the inaccessible Release action in test 54. V24.5 has not been run with Xcode/iOS Simulator here.
+**A native iPhone PDF study app that turns reading into active understanding — while staying local-first.**
 
-## Run the complete Mac QA
+Leu is designed for a very specific moment: you are studying a difficult PDF on your phone, a paragraph stops making sense, and leaving the document to hunt for an explanation breaks your concentration.
 
-```bash
-SHELF_QA_LOG=qa-v24-5.log ./scripts/qa-and-copy.sh
+The app keeps the learning loop inside the reader: **read → understand → recall → revisit**.
+
+<table>
+  <tr>
+    <td><img src="./docs/design/study-home-evidence/native-20260913-103833/captures/02-study-populated.png" alt="Leu Study populated state"></td>
+    <td><img src="./docs/design/study-home-evidence/native-20260913-103833/captures/04-blind-spots.png" alt="Leu blind-spots study state"></td>
+  </tr>
+</table>
+
+## The product flow
+
+```mermaid
+flowchart LR
+    A[Open PDF] --> B[Read + select]
+    B --> C{Need help?}
+    C -->|Explain| D[Simple explanation]
+    C -->|Study| E[Active recall]
+    D --> B
+    E --> F[Blind spots]
+    F --> G[Reconstruction]
+    G --> B
 ```
 
-After the Apple build succeeds, QA attempts all independent suites, even if a test fails. The first failure remains the exit status. Every native test runs **once**: 20 Apple/PDF tests, then test 54, six other V24/emotional journeys, five historically sensitive Study tests, and 45 remaining UI tests. Those non-overlapping batches constitute the complete **57-test UI inventory**; they are not 57 tests plus additional repeated gates. The original 55 test names are locked against accidental removal. There are no skip/retry flags.
+## Study is not a separate dashboard
 
-The portable core now contains 212 tests (the previous 204 plus eight normalization-cache regressions). The summary, actual exit code, and diagnostics path are copied automatically with `pbcopy`. Do not append `tail | pbcopy`. The run plan, stage results and coverage report are included in diagnostics. Previous workspaces and logs are not deleted.
+Leu treats the document as the source of truth. Study tools are designed to route the user back to the material rather than replacing it with an AI chat feed.
 
-## What changed
+<table>
+  <tr>
+    <td width="33%"><img src="./docs/design/study-home-evidence/native-20260913-103833/captures/03-fading.png" alt="Leu fading knowledge state"></td>
+    <td width="33%"><img src="./docs/design/study-home-evidence/native-20260913-103833/captures/04-blind-spots.png" alt="Leu blind spots state"></td>
+    <td width="33%"><img src="./docs/design/study-home-evidence/native-20260913-103833/captures/05-reconstruction-labs.png" alt="Leu reconstruction labs state"></td>
+  </tr>
+</table>
 
-Release is a focused, in-place surface, not a drawing canvas appended to the scrolling summary. Its action/continue/exit controls reserve their own safe-area space, outside the drawing gesture. Completing Release clears the ephemeral drawing and shows “Better?” with real Continue / I'm done actions. All exit controls remain available without drawing. Large text uses a vertical secondary-action layout. Summary exit waits for an acknowledged checkpoint.
+## Core ideas
 
-Speech compilation uses a bounded, compilation-local cache for repeated normalized text. It rebuilds every source mapping and segment independently, does not cross dictionary/code-mode changes, and does not change Supertonic or the technical-normalization rules. The original 3-second benchmark is unchanged.
+### Explain Like I’m 10
 
-Read `PATCH_V24_5.md`, `docs/V24_5_CODE_CHANGES.diff`, and `evidence/v24-5/` for scope and verification. Learning/semantic persistence, Reader, RootView, Lens, Knowledge, app-level speech backends, design tokens and bundled resources are unchanged from V24.4. The no-tree Resume invariant remains.
+A selected passage can be rewritten into a genuinely simpler explanation instead of merely being shortened. The feature is designed around source provenance: the explanation belongs to a specific passage and should remain visibly connected to it.
 
-## What is not certified
+### Active Recall
 
-Portable logic tests and syntax parsing do not certify SwiftUI layout, iOS gestures, Xcode compilation, physical haptics or listening quality. The native 57-test run must still execute on your Mac. Supertonic synthesis/listening acceptance remains separate; checking its Settings controls is not an audio-quality test. No model asset is bundled or downloaded by this QA workflow.
+Leu turns reading into retrieval practice. The goal is not to accumulate cards; it is to surface what the reader can no longer reconstruct confidently.
+
+### Blind Spots
+
+Weak or fading concepts become navigable learning objects. A user can move from “I think I know this” to the exact source context that needs another pass.
+
+### Reconstruction
+
+Instead of only showing an answer, Leu creates space for the reader to rebuild the idea from memory and compare that understanding against the source.
+
+## Native architecture
+
+```mermaid
+flowchart TB
+    PDF[PDFKit document] --> READ[Reader]
+    READ --> SEL[Selected source passage]
+    SEL --> REASON[Leu reasoning layer]
+    REASON --> EXPLAIN[Explanation]
+    REASON --> RECALL[Recall / question contracts]
+    RECALL --> LEARN[Learning state]
+    LEARN --> TRAIL[Trails + revisit]
+    EXPLAIN --> PROV[Source provenance]
+    PROV --> READ
+    TRAIL --> READ
+```
+
+Leu is built in **Swift / SwiftUI** with **PDFKit** and a local-first product model. On-device intelligence is preferred where platform support allows it; cloud inference is not a mandatory dependency for the core reading experience.
+
+## Design principles
+
+- **The PDF remains primary.** Learning surfaces support the document instead of swallowing it.
+- **Source provenance stays visible.** Model output should be traceable back to what the user was actually reading.
+- **Local-first by default.** Reading history and learning state should not require a mandatory account or backend.
+- **Phone-native interaction.** The product is designed around one-handed reading, sheets, touch targets, safe areas, Dynamic Type, and iOS conventions.
+- **AI earns its place.** Model features must make a passage easier to understand or a concept easier to retain; “chat with PDF” is not the product.
+
+## Repository shape
+
+```text
+Shelf/                         primary SwiftUI application
+Packages/LeuReasoningCore/     portable reasoning + learning contracts
+docs/                          design decisions, validation and captures
+scripts/                       QA / native verification tooling
+```
+
+## Verification philosophy
+
+Portable reasoning tests and native UI validation are deliberately separated. Passing pure logic tests does not certify SwiftUI layout, gestures, haptics, PDF interaction, or listening quality.
+
+The repository includes native journey evidence and deterministic reasoning fixtures, while explicitly retaining native-device validation as its own gate.
+
+## Current state
+
+Leu is actively evolving. The repository contains production-style native surfaces and deep QA infrastructure, but individual experimental learning/model paths may still have open native verification work. The README intentionally avoids presenting experimental gates as shipping certification.
+
+---
+
+Built by [Miguel Almeida](https://github.com/miguelalmeida0).
