@@ -61,9 +61,9 @@ Apple SDK compilation, PDFKit integration tests and XCUITest are intentionally l
 
 ## V23.1 convergence note
 
-The Apple PDF readable-text seam discovered during V23 native certification is fixed in `PATCH_V23_1.md`.
+The Apple PDF readable-text seam discovered during V23 native certification is fixed in `docs/history/patches/PATCH_V23_1.md`.
 
 
 ## V23.2 convergence note
 
-The remaining Apple XCUITest semantic selector failures discovered during V23.1 certification are repaired in `PATCH_V23_2.md`.
+The remaining Apple XCUITest semantic selector failures discovered during V23.1 certification are repaired in `docs/history/patches/PATCH_V23_2.md`.

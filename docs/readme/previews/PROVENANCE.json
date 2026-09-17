@@ -1,0 +1,19 @@
+{
+  "note": "Excerpts of retained captures; no recapture or pixel replacement.",
+  "images": [
+    {
+      "source": "docs/readme/current/02-study-populated.png",
+      "original": [
+        1260,
+        2736
+      ],
+      "excerpt": [
+        1260,
+        2727
+      ],
+      "operation": "top viewport crop; no replacement pixels",
+      "source_sha256": "954706506aab1a0ddea19fedbd5084f9d5153f6e418fbb219150506035090dd4",
+      "output": "docs/readme/previews/study.png"
+    }
+  ]
+}

@@ -2,17 +2,15 @@
 
 **A native iPhone PDF study app that turns reading into active understanding — while staying local-first.**
 
+<p align="center">
+  <img src="./docs/readme/previews/study.png" alt="Leu — retained native Study capture" width="360">
+</p>
+
+<p align="center"><sub>Native Study screen · retained capture</sub></p>
+
 Leu is designed for a very specific moment: you are studying a difficult PDF on your phone, a paragraph stops making sense, and leaving the document to hunt for an explanation breaks your concentration.
 
 The app keeps the learning loop inside the reader: **read → understand → recall → revisit**.
-
-<table>
-  <tr>
-    <td width="36%"><img src="./docs/readme/current/00-current-simulator-home.png" alt="Leu current iPhone simulator home"></td>
-    <td width="32%"><img src="./docs/readme/current/02-study-populated.png" alt="Leu Study populated state"></td>
-    <td width="32%"><img src="./docs/readme/current/04-blind-spots.png" alt="Leu blind-spots study state"></td>
-  </tr>
-</table>
 
 ## The product flow
 
@@ -31,14 +29,6 @@ flowchart LR
 ## Study is not a separate dashboard
 
 Leu treats the document as the source of truth. Study tools are designed to route the user back to the material rather than replacing it with an AI chat feed.
-
-<table>
-  <tr>
-    <td width="33%"><img src="./docs/readme/current/03-fading.png" alt="Leu fading knowledge state"></td>
-    <td width="33%"><img src="./docs/readme/current/04-blind-spots.png" alt="Leu blind spots state"></td>
-    <td width="33%"><img src="./docs/readme/current/05-reconstruction-labs.png" alt="Leu reconstruction labs state"></td>
-  </tr>
-</table>
 
 ## Core ideas
 
@@ -106,3 +96,23 @@ Leu is actively evolving. The repository contains production-style native surfac
 ---
 
 Built by [Miguel Almeida](https://github.com/miguelalmeida0).
+
+<details>
+<summary>Other retained native captures</summary>
+
+[Simulator capture](./docs/readme/current/00-current-simulator-home.png)
+
+[Study: fading section](./docs/readme/current/03-fading.png)
+
+[Study: blind-spots section](./docs/readme/current/04-blind-spots.png)
+
+[Study: reconstruction section](./docs/readme/current/05-reconstruction-labs.png)
+
+These are retained capture files, not a new device-validation run.
+
+</details>
+
+
+[Repository guide](./docs/START_HERE.md)
+
+<!-- repository-presentation-repair:1 -->

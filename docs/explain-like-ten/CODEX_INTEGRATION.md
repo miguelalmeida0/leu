@@ -7,7 +7,7 @@
 
 ## Baseline identity
 
-There is **no base SHA to report**. `GIT_INFO.txt` states the supplied archive is a source
+There is **no base SHA to report**. `docs/history/manifests/GIT_INFO.txt` states the supplied archive is a source
 archive with no repository and no commit, and the extracted tree contains no `.git`. The
 closest immutable identifier available is the source manifest:
 

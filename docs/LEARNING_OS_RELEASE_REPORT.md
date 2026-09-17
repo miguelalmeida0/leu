@@ -87,4 +87,4 @@ V20 XCUITests attach screenshots for Learn session, source round-trip, Active Re
 
 Release branch: `feature/shelf-learning-engine-mega-release`.
 
-The final commit hash and clean-status proof are written to `GIT_INFO.txt` in the downloadable package after the one release commit is created. The package itself omits `.git`.
+The final commit hash and clean-status proof are written to `docs/history/manifests/GIT_INFO.txt` in the downloadable package after the one release commit is created. The package itself omits `.git`.
