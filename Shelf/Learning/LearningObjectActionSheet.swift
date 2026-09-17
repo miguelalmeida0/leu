@@ -17,6 +17,7 @@ struct LearningObjectActionSheet: View {
     @State private var connectPresented = false
     @State private var intelligence: ReaderIntelligenceModel?
     @State private var destination: IntelligenceDestination?
+    @State private var teachRouteMessage: String?
     private enum IntelligenceDestination: String, Identifiable {
         case teach, connections, activity, question, libraryExplanation
         var id: String { rawValue }
@@ -81,7 +82,10 @@ struct LearningObjectActionSheet: View {
     private var actions: some View {
         VStack(spacing: 0) {
             if onExplainLikeTen != nil || intelligence?.libraryExplanations.isEmpty == false {
-                DisclosureGroup("Explain") {
+                // The identifier belongs on the label only: applying it to the whole
+                // DisclosureGroup makes every child row inherit this same identifier,
+                // shadowing each action's own id and making it unreachable by id.
+                DisclosureGroup {
                 if let onExplainLikeTen {
                 action("Explain like I'm 10", "text.book.closed", "Explain this passage in plain words.", id: "learning-action-explain-like-ten") {
                     if let source {
@@ -93,13 +97,10 @@ struct LearningObjectActionSheet: View {
                 if intelligence?.libraryExplanations.isEmpty == false {
                     action("Explain from my library", "books.vertical", "Read a grounded explanation and related source.", id: "learning-action-library-explain") { destination = .libraryExplanation }
                 }
-                }.padding(15).accessibilityIdentifier("learning-action-explain-menu")
+                } label: { Text("Explain").accessibilityIdentifier("learning-action-explain-menu") }
+                .padding(15)
             }
             if let intelligence {
-                if intelligence.canTeach {
-                Divider().overlay(ShelfTheme.line)
-                action("Teach Leu", "text.bubble", "Compare your explanation with this source.", id: "learning-action-teach-leu") { destination = .teach }
-                }
                 if intelligence.activity != nil {
                     Divider().overlay(ShelfTheme.line)
                     action("Try it", "hand.draw", "Manipulate an idea from this passage.", id: "learning-action-try-it") { destination = .activity }
@@ -118,13 +119,37 @@ struct LearningObjectActionSheet: View {
                     action("Find connections", "link", "A relationship verified against both passages.", id: "learning-action-find-connections") { destination = .connections }
                 }
             }
-            DisclosureGroup("Passage tools") {
+            DisclosureGroup {
                 action("Understand", "scope", "Inspect source-backed concepts.", id: "learning-action-understand") { if let source { reader.requestLens(source) } }
+                action("Teach Leu", "text.bubble", "Explain this in your own words.", id: "learning-action-teach-leu", perform: openTeach)
+                if let teachRouteMessage {
+                    Text(teachRouteMessage).font(.caption).foregroundStyle(ShelfTheme.secondary)
+                }
                 action("Remember", "bookmark", "Keep this passage for later.", id: "learning-action-remember") { capture(.passage) }
                 action("Mask", "rectangle.dashed", "Cover a region to recall later.", id: "learning-action-mask") { capture(.maskedRegion, follow: .mask) }
                 action("Record explanation", "waveform", "Record your own voice locally.", id: "learning-action-explain") { capture(.explanationRecording, follow: .explain) }
-            }.padding(15).accessibilityIdentifier("learning-passage-tools")
+            } label: { Text("Passage tools").accessibilityIdentifier("learning-passage-tools") }
+            .padding(15)
         }.background(ShelfTheme.surface, in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    private func openTeach() {
+        teachRouteMessage = nil
+        // Opening the existing sheet needs a current source, not facts admitted
+        // by the deterministic comparator. Qwen can assess ordinary prose too.
+        if let intelligence, intelligence.source.isCurrent(in: learning.snapshot.analyses) {
+            destination = .teach
+            return
+        }
+        guard let selected = reader.currentLearningSource(),
+              let analysis = learning.snapshot.analyses[selected.documentID],
+              let citation = IntelligenceSource(source: selected, analysis: analysis) else {
+            teachRouteMessage = "This passage is not ready yet. Reopen Learn from this when its source is available."
+            return
+        }
+        source = selected
+        intelligence = ReaderIntelligenceModel(learning: learning, source: citation)
+        destination = .teach
     }
 
     private func action(_ title: String, _ symbol: String, _ detail: String, id: String,
