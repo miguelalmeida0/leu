@@ -107,7 +107,7 @@ If the front gate fails, collect independent results with `SHELF_QA_RUN_DIR=reco
 
 Input SHA-256: `22056b577cae129ea244655a265994e9b4203c4ede22a16990c4eb2e3afa6b6b`. `V25_CHANGED_FILES.md` lists exact added/changed/deleted paths; `V25_ARCHIVE_COMPARISON.json` supplies hashes against archive bytes. This is an archive comparison, not a Git diff. The folder is untracked in the parent workspace; no commit was made.
 
-The checkpoint excludes caches, DerivedData, installed syntax tooling and executable build products. It includes source, tests, reports and execution logs. `SOURCE_SHA256SUMS.txt` binds packaged files excluding itself. Full question/Lens examples and the tuning matrix follow; their proof boundaries are explicit.
+The checkpoint excludes caches, DerivedData, installed syntax tooling and executable build products. It includes source, tests, reports and execution logs. `docs/integrity/SOURCE_SHA256SUMS.txt` binds packaged files excluding itself. Full question/Lens examples and the tuning matrix follow; their proof boundaries are explicit.
 
 
 ## V25 source-inspected examples
@@ -325,7 +325,7 @@ None.
 
 ## Generated outputs
 
-- `SOURCE_SHA256SUMS.txt`
+- `docs/integrity/SOURCE_SHA256SUMS.txt`
 - `docs/V25_ARCHIVE_COMPARISON.json`
 - `docs/V25_CHANGED_FILES.md`
 

@@ -188,7 +188,7 @@ check-worldclass-offline       PASS   (no network in runtime or voice paths)
 check-v244-lens-compile        PASS   (Lens contract preserved through the redesign)
 check-v245-release             PASS
 sync-xcode-sources.py          PASS   synced 155 app, 5 unit-test, 11 UI-test Swift files
-SOURCE_SHA256SUMS.txt          0 stale entries
+docs/integrity/SOURCE_SHA256SUMS.txt          0 stale entries
 ```
 
 ## Requires Xcode verification

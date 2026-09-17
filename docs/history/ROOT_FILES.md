@@ -58,4 +58,4 @@ The source hashes below identify the documents before relative-link adjustments.
 These files have code, build or configuration consumers and require a separate migration.
 
 - `docs/history/patches/PATCH_V24_1.md`: `docs/internal/evidence/v24-1/change-inventory.json`
-- `SOURCE_SHA256SUMS.txt`: `docs/V25_ARCHIVE_COMPARISON.json`, `scripts/collect-qa-diagnostics.py`
+- `docs/integrity/SOURCE_SHA256SUMS.txt`: `docs/V25_ARCHIVE_COMPARISON.json`, `scripts/collect-qa-diagnostics.py`

@@ -12,7 +12,7 @@ archive with no repository and no commit, and the extracted tree contains no `.g
 closest immutable identifier available is the source manifest:
 
 ```
-SOURCE_SHA256SUMS.txt  sha256 = b669102f3777d88a8faeec944e503704b7b8fc2a554b344d7096f68029dc73c4
+docs/integrity/SOURCE_SHA256SUMS.txt  sha256 = b669102f3777d88a8faeec944e503704b7b8fc2a554b344d7096f68029dc73c4
                        entries = 635
 ```
 
@@ -28,7 +28,7 @@ not an assumption:
 | Referenced | Present | Action taken |
 |---|---|---|
 | `CURRENT_STATE_AND_OWNERSHIP.md` | no | Ownership inferred from the prompt only. Collision map below. |
-| checkpoint manifest | no | Used `SOURCE_SHA256SUMS.txt` + `docs/internal/evidence/project-manifest.json` instead. |
+| checkpoint manifest | no | Used `docs/integrity/SOURCE_SHA256SUMS.txt` + `docs/internal/evidence/project-manifest.json` instead. |
 | `RUNTIME_EXPLANATION_PROMPT.txt` | no | Authored as `Shelf/Features/ExplainLikeTen/RUNTIME_EXPLANATION_PROMPT.txt`, version 1. |
 | `contracts/explanation-candidate.schema.json` | no | Authored at `contracts/explanation-candidate.schema.json`. |
 | `ACCEPTANCE_TESTS.md` | no | Authored at `docs/explain-like-ten/ACCEPTANCE_TESTS.md`. |

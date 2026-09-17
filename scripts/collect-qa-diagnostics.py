@@ -32,7 +32,7 @@ def collect(root: Path, run: Path, log: Path, qa_status: int) -> Path:
     started = float(epoch.read_text().strip()) if epoch.exists() else run.stat().st_ctime
     if log.is_file():
         shutil.copy2(log, output / 'qa-full.log')
-    manifest = root / 'SOURCE_SHA256SUMS.txt'
+    manifest = root / 'docs/integrity/SOURCE_SHA256SUMS.txt'
     metadata = {
         'version': '24.5', 'qaExitCode': qa_status, 'workspace': str(root),
         'sourceManifestSHA256': hashlib.sha256(manifest.read_bytes()).hexdigest() if manifest.exists() else None,

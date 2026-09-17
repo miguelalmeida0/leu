@@ -149,7 +149,7 @@ Line 50: `.onMove(perform: move).onDelete(perform: delete)` — standard `List` 
 | `Shelf/Learning/QuestionCardView.swift` | Issue 8, complete. |
 | `Shelf/Learning/Components/ReleaseSurface.swift` | Re-applied the V24.5.2 accessibility-frame fix, absent from this zip. |
 | `docs/V25_ROOT_CAUSE_MATRIX.md` | This report. |
-| `SOURCE_SHA256SUMS.txt` | Refreshed for the two changed sources. |
+| `docs/integrity/SOURCE_SHA256SUMS.txt` | Refreshed for the two changed sources. |
 
 ## Issue 8 — confidence control (fixed)
 

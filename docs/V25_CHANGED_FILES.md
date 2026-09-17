@@ -92,7 +92,7 @@ None.
 
 ## Generated outputs
 
-- `SOURCE_SHA256SUMS.txt`
+- `docs/integrity/SOURCE_SHA256SUMS.txt`
 - `docs/V25_ARCHIVE_COMPARISON.json`
 - `docs/V25_CHANGED_FILES.md`
 

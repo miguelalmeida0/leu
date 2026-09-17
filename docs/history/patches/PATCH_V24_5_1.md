@@ -50,7 +50,7 @@ Assertion count, assertion text, and the `PASS: 27 Release state/recorded-geomet
 
 - `ReleaseInteractionState.swift`, `ReleaseSurface.swift`, `SessionCompleteView.swift` and `ReleaseInteractionSupport.swift` are untouched. All eleven mutation policies in `check-v245-release.py` still reject their regressions.
 - No test was removed, renamed, skipped or retried; `baseline-test-inventory.json` and the 57-test UI inventory are unchanged.
-- `SOURCE_SHA256SUMS.txt` was regenerated for the one edited file. The other 568 entries were verified to still match byte for byte.
+- `docs/integrity/SOURCE_SHA256SUMS.txt` was regenerated for the one edited file. The other 568 entries were verified to still match byte for byte.
 
 ## Verified in this environment
 

@@ -33,7 +33,7 @@ with tempfile.TemporaryDirectory() as directory:
   r=run(base+[str(src),str(out)]);assert r.returncode!=0 and not out.exists(),(name,r.stdout,r.stderr)
   results.append('extractor: rejects '+name+' with no committed output')
  assert not list(p.glob('.shelf-extract-*'));results.append('extractor: failure staging cleaned up')
- for path in [R/'run.sh', *R.glob('scripts/*.sh'),R/'Start Leu.command']:
+ for path in [R/'run.sh', *R.glob('scripts/*.sh'),R/'scripts/dev/Start Leu.command']:
   assert run(['bash','-n',str(path)]).returncode==0,path
  results.append('launcher: shell syntax validated')
  r=run([str(R/'run.sh'),'--help']);assert r.returncode==0;results.append('launcher: help works without Xcode')
