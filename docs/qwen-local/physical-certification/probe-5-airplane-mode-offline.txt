@@ -1,0 +1,80 @@
+12:25:24  Acquired tunnel connection to device.
+12:25:24  Enabling developer disk image services.
+12:25:24  Acquired usage assertion.
+Launched application with dev.shelf.v27 bundle identifier.
+Waiting for the application to terminate…
+[qwen-probe] device_model=iPhone15,4 os=26.3.1
+[qwen-probe] embedded_available=true
+[qwen-probe] offline_installed=true model_path=/var/mobile/Containers/Data/Application/C582E046-694E-4336-9CBA-740A52229B96/Library/Application Support/Leu/OfflineQwen/Qwen3.5-2B-Q4_K_M.gguf
+[qwen-probe] checksum_verified=true
+[qwen-probe] cancel_test: cancelled after 2.1245659589767456s wall, error=cancelled
+[qwen-probe] cold: wall_s=29.82845401763916 load_ms=259.935917 prompt_ms=1097.235917 first_token_ms=1596.250542 total_ms=29781.145667 prompt_tokens=428 output_tokens=294 peak_bytes=279349272
+[qwen-probe] cold_claims=2 coverage=2
+[qwen-probe] cold_claim: [supported] Keys should be given to the elements inside an array to give the elements a stable identity. <- Keys should be given to the elements inside an array to give the elements a stable identity.
+[qwen-probe] cold_claim: [supported] A key only needs to be unique among its siblings, not globally. <- A key only needs to be unique among its siblings, not globally.
+[qwen-probe] cold_raw_json={
+  "claims": [
+    {
+      "learner_quote": "Keys should be given to the elements inside an array to give the elements a stable identity.",
+      "span_id": "probe-1",
+      "source_quote": "Keys should be given to the elements inside an array to give the elements a stable identity.",
+      "support": "supported",
+      "feedback": "Correctly identifies purpose of keys in arrays."
+    },
+    {
+      "learner_quote": "A key only needs to be unique among its siblings, not globally.",
+      "span_id": "probe-1",
+      "source_quote": "A key only needs to be unique among its siblings, not globally.",
+      "support": "supported",
+      "feedback": "Correctly states sibling uniqueness requirement."
+    }
+  ],
+  "coverage": [
+    {
+      "span_id": "probe-1",
+      "source_quote": "Keys should be given to the elements inside an array to give the elements a stable identity.",
+      "detail": "Purpose of keys in arrays"
+    },
+    {
+      "span_id": "probe-1",
+      "source_quote": "A key only needs to be unique among its siblings, not globally.",
+      "detail": "Scope of uniqueness requirement"
+    }
+  ]
+}
+[qwen-probe] warm: wall_s=30.7932630777359 load_ms=276.275834 prompt_ms=1486.639583 first_token_ms=2004.17525 total_ms=30749.80725 prompt_tokens=428 output_tokens=294 peak_bytes=254543896
+[qwen-probe] warm_claims=2 coverage=2
+[qwen-probe] warm_claim: [supported] Keys should be given to the elements inside an array to give the elements a stable identity. <- Keys should be given to the elements inside an array to give the elements a stable identity.
+[qwen-probe] warm_claim: [supported] A key only needs to be unique among its siblings, not globally. <- A key only needs to be unique among its siblings, not globally.
+[qwen-probe] warm_raw_json={
+  "claims": [
+    {
+      "learner_quote": "Keys should be given to the elements inside an array to give the elements a stable identity.",
+      "span_id": "probe-1",
+      "source_quote": "Keys should be given to the elements inside an array to give the elements a stable identity.",
+      "support": "supported",
+      "feedback": "Correctly identifies purpose of keys in arrays."
+    },
+    {
+      "learner_quote": "A key only needs to be unique among its siblings, not globally.",
+      "span_id": "probe-1",
+      "source_quote": "A key only needs to be unique among its siblings, not globally.",
+      "support": "supported",
+      "feedback": "Correctly states sibling uniqueness requirement."
+    }
+  ],
+  "coverage": [
+    {
+      "span_id": "probe-1",
+      "source_quote": "Keys should be given to the elements inside an array to give the elements a stable identity.",
+      "detail": "Purpose of keys in arrays"
+    },
+    {
+      "span_id": "probe-1",
+      "source_quote": "A key only needs to be unique among its siblings, not globally.",
+      "detail": "Scope of uniqueness requirement"
+    }
+  ]
+}
+[qwen-probe] PROBE_DONE
+App terminated due to signal 15.

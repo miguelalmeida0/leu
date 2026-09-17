@@ -124,7 +124,7 @@ extension ShelfUITestCase {
         XCTFail("The real mixed Study plan never exposed its admitted React p.3 MCQ.")
     }
 
-    private func completeCurrentStudyActivity() {
+    func completeCurrentStudyActivity() {
         let progress = app.staticTexts["study-progress"].label
         if element("question-card").exists {
             tapStudyButton("question-option-0", scrollID: "study-activity")

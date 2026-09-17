@@ -1,0 +1,11 @@
+12:09:08  Acquired tunnel connection to device.
+12:09:08  Enabling developer disk image services.
+12:09:08  Acquired usage assertion.
+Launched application with dev.shelf.v27 bundle identifier.
+Waiting for the application to terminate…
+[qwen-probe] device_model=iPhone15,4 os=26.3.1
+[qwen-probe] embedded_available=true
+[qwen-probe] offline_installed=true model_path=/var/mobile/Containers/Data/Application/E3375F2F-1B69-4475-B8F6-68312C44AFEA/Library/Application Support/Leu/OfflineQwen/Qwen3.5-2B-Q4_K_M.gguf
+[qwen-probe] checksum_verified=true
+[qwen-probe] cold_FAILED after 61.75386297702789s: QwenAssessmentRejection(run: LeuQwenRuntime.QwenRun(json: 1404 bytes, promptTokens: 420, outputTokens: 361, loadMilliseconds: 20120.2565, promptMilliseconds: 1859.336, firstTokenMilliseconds: 22240.067334, totalMilliseconds: 61683.301542, peakObservedFootprint: 1144489528))
+App terminated due to signal 15.

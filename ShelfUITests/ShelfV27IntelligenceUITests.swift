@@ -10,9 +10,22 @@ final class ShelfV27IntelligenceUITests: ShelfUITestCase {
         app.launch()
         XCTAssertTrue(app.buttons["book-React Notes"].waitForExistence(timeout: 25))
     }
+    /// Teach Leu lives inside the collapsed "Passage tools" DisclosureGroup,
+    /// so it must be expanded before its row becomes hittable.
+    private func openTeachLeu() {
+        let tools = identifiedControl("learning-passage-tools", label: "Passage tools")
+        XCTAssertTrue(tools.waitForExistence(timeout: 10) && tools.isHittable); tools.tap()
+        // The expanded row already fits on screen; tapReady's blind swipe-on-retry
+        // logic can scroll straight past it once the disclosure animation settles.
+        let teach = app.buttons["learning-action-teach-leu"]
+        XCTAssertTrue(teach.waitForExistence(timeout: 5), "Teach Leu row never appeared after expanding Passage tools")
+        let ready = XCTNSPredicateExpectation(predicate: NSPredicate(format: "isHittable == true"), object: teach)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 5), .completed, "Teach Leu row did not become hittable after expanding Passage tools")
+        teach.tap()
+    }
     func testTeachReactSourceRoundTripAndResumeActualThought() {
         pageThree("React Notes")
-        tapReady("learning-action-teach-leu")
+        openTeachLeu()
         let editor = app.textViews["teach-leu-explanation"]
         XCTAssertTrue(editor.waitForExistence(timeout: 10)); editor.tap()
         // Clear only the thought being edited in this isolated V27 test app.
@@ -37,7 +50,7 @@ final class ShelfV27IntelligenceUITests: ShelfUITestCase {
         capture("v27-resumed-thought")
     }
     func testV291TeachSupportedSubsetMixedClauseEditAndReopen() {
-        pageThree("React Notes"); tapReady("learning-action-teach-leu")
+        pageThree("React Notes"); openTeachLeu()
         let concise = "Keys tell React which item is which when a list changes."
         let unsupported = "A stable key prevents server outages."
         func replaceDraft(_ text: String) {
@@ -139,6 +152,40 @@ final class ShelfV27IntelligenceUITests: ShelfUITestCase {
         XCTAssertEqual(app.staticTexts["question-prompt"].label, prompt)
         XCTAssertEqual(app.staticTexts["question-supporting-quote"].label, quote)
         capture("v27-question-return"); app.buttons["End study session"].tap()
+    }
+    /// Physical-device acceptance probe for the embedded Qwen 2B runtime. Not part of
+    /// the standing regression suite: requires the offline model already staged in the
+    /// app container. Prints raw metrics for the certification report; asserts only
+    /// that a real on-device generation actually completed.
+    func testPhysicalDeviceOfflineQwenRealInference() {
+        pageThree("React Notes"); openTeachLeu()
+        let installedToggle = app.switches["Offline model"]
+        guard installedToggle.waitForExistence(timeout: 10) else {
+            capture("qwen-physical-no-toggle"); attachAccessibilityTree(name: "qwen-physical-no-toggle")
+            XCTFail("Offline model toggle not present — model file is not staged in the app container"); return
+        }
+        if let value = installedToggle.value as? String, value == "0" { installedToggle.tap() }
+        let editor = app.textViews["teach-leu-explanation"]
+        XCTAssertTrue(editor.waitForExistence(timeout: 10)); editor.tap()
+        if let value = editor.value as? String, !value.isEmpty {
+            editor.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: value.count))
+        }
+        editor.typeText("Keys tell React which item is which when a list changes.")
+        app.swipeUp()
+        let start = Date()
+        tapReady("teach-leu-compare")
+        let resultAppeared = element("teach-leu-offline-result").waitForExistence(timeout: 180)
+        let elapsed = Date().timeIntervalSince(start)
+        print("[qwen-physical] wall_seconds=\(elapsed)")
+        capture("qwen-physical-after-compare")
+        attachAccessibilityTree(name: "qwen-physical-after-compare")
+        if let provider = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Offline model")).firstMatch.label as String? {
+            print("[qwen-physical] provider_label=\(provider)")
+        }
+        if let message = app.staticTexts.allElementsBoundByIndex.map(\.label).first(where: { $0.contains("offline") || $0.contains("Offline") || $0.contains("memory") || $0.contains("cool") || $0.contains("budget") }) {
+            print("[qwen-physical] message=\(message)")
+        }
+        XCTAssertTrue(resultAppeared, "No real on-device Qwen generation was observed within 180s")
     }
     private func pageThree(_ book: String) {
         let tile = app.buttons["book-" + book]

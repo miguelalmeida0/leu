@@ -1,0 +1,77 @@
+12:11:10  Acquired tunnel connection to device.
+12:11:10  Enabling developer disk image services.
+12:11:11  Acquired usage assertion.
+Launched application with dev.shelf.v27 bundle identifier.
+Waiting for the application to terminate…
+[qwen-probe] device_model=iPhone15,4 os=26.3.1
+[qwen-probe] embedded_available=true
+[qwen-probe] offline_installed=true model_path=/var/mobile/Containers/Data/Application/F34866BE-2DCF-47C6-A0E0-A556915DFB79/Library/Application Support/Leu/OfflineQwen/Qwen3.5-2B-Q4_K_M.gguf
+[qwen-probe] checksum_verified=true
+[qwen-probe] cold_REJECTED after 41.349079966545105s: load_ms=467.5215 first_token_ms=1804.632125 total_ms=41294.828 prompt_tokens=420 output_tokens=361
+[qwen-probe] cold_rejected_raw_json={
+  "claims": [
+    {
+      "learner_quote": "Keys tell React which item is which when a list changes, so it does not confuse items when the list is reordered.",
+      "span_id": "probe-1",
+      "source_quote": "In React, the key prop helps React identify which items in a list have changed, been added, or been removed.",
+      "support": "supported",
+      "feedback": "Correctly identifies key prop's purpose in React."
+    },
+    {
+      "learner_quote": "Keys should be given to the elements inside an array to give the elements a stable identity.",
+      "span_id": "probe-1",
+      "source_quote": "Keys should be given to the elements inside an array to give the elements a stable identity.",
+      "support": "supported",
+      "feedback": "Correctly states requirement for array elements."
+    },
+    {
+      "learner_quote": "A key only needs to be unique among its siblings, not globally.",
+      "span_id": "probe-1",
+      "source_quote": "A key only needs to be unique among its siblings, not globally.",
+      "support": "supported",
+      "feedback": "Correctly specifies sibling uniqueness constraint."
+    }
+  ],
+  "coverage": [
+    {
+      "span_id": "probe-1",
+      "source_quote": "In React, the key prop helps React identify which items in a list have changed, been added, or been removed.",
+      "detail": "items in a list have changed, been added, or been removed"
+    }
+  ]
+}
+[qwen-probe] warm_REJECTED after 41.979743003845215s: load_ms=258.516 first_token_ms=1982.327958 total_ms=41932.211583 prompt_tokens=420 output_tokens=361
+[qwen-probe] warm_rejected_raw_json={
+  "claims": [
+    {
+      "learner_quote": "Keys tell React which item is which when a list changes, so it does not confuse items when the list is reordered.",
+      "span_id": "probe-1",
+      "source_quote": "In React, the key prop helps React identify which items in a list have changed, been added, or been removed.",
+      "support": "supported",
+      "feedback": "Correctly identifies key prop's purpose in React."
+    },
+    {
+      "learner_quote": "Keys should be given to the elements inside an array to give the elements a stable identity.",
+      "span_id": "probe-1",
+      "source_quote": "Keys should be given to the elements inside an array to give the elements a stable identity.",
+      "support": "supported",
+      "feedback": "Correctly states requirement for array elements."
+    },
+    {
+      "learner_quote": "A key only needs to be unique among its siblings, not globally.",
+      "span_id": "probe-1",
+      "source_quote": "A key only needs to be unique among its siblings, not globally.",
+      "support": "supported",
+      "feedback": "Correctly specifies sibling uniqueness constraint."
+    }
+  ],
+  "coverage": [
+    {
+      "span_id": "probe-1",
+      "source_quote": "In React, the key prop helps React identify which items in a list have changed, been added, or been removed.",
+      "detail": "items in a list have changed, been added, or been removed"
+    }
+  ]
+}
+[qwen-probe] PROBE_DONE
+App terminated due to signal 15.
