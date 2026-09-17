@@ -1,0 +1,110 @@
+[
+  {
+    "slice": {
+      "BinaryPath": "LeuQwenNative.framework/Versions/A/LeuQwenNative",
+      "LibraryIdentifier": "macos-arm64",
+      "LibraryPath": "LeuQwenNative.framework",
+      "SupportedArchitectures": [
+        "arm64"
+      ],
+      "SupportedPlatform": "macos"
+    },
+    "plist": {
+      "CFBundleExecutable": "LeuQwenNative",
+      "CFBundleIdentifier": "dev.leu.qwen-native",
+      "CFBundleInfoDictionaryVersion": "6.0",
+      "CFBundleName": "LeuQwenNative",
+      "CFBundlePackageType": "FMWK",
+      "CFBundleShortVersionString": "1.0.0",
+      "CFBundleSupportedPlatforms": [
+        "MacOSX"
+      ],
+      "CFBundleVersion": "1",
+      "DTPlatformName": "macosx",
+      "DTPlatformVersion": "26.5",
+      "DTSDKBuild": "25F70",
+      "DTSDKName": "macosx26.5",
+      "DTXcodeBuild": "17F113"
+    },
+    "root_entries": [
+      "Headers",
+      "LeuQwenNative",
+      "Modules",
+      "Resources",
+      "Versions"
+    ]
+  },
+  {
+    "slice": {
+      "BinaryPath": "LeuQwenNative.framework/LeuQwenNative",
+      "LibraryIdentifier": "ios-arm64",
+      "LibraryPath": "LeuQwenNative.framework",
+      "SupportedArchitectures": [
+        "arm64"
+      ],
+      "SupportedPlatform": "ios"
+    },
+    "plist": {
+      "CFBundleExecutable": "LeuQwenNative",
+      "CFBundleIdentifier": "dev.leu.qwen-native",
+      "CFBundleInfoDictionaryVersion": "6.0",
+      "CFBundleName": "LeuQwenNative",
+      "CFBundlePackageType": "FMWK",
+      "CFBundleShortVersionString": "1.0.0",
+      "CFBundleSupportedPlatforms": [
+        "iPhoneOS"
+      ],
+      "CFBundleVersion": "1",
+      "DTPlatformName": "iphoneos",
+      "DTPlatformVersion": "26.5",
+      "DTSDKBuild": "23F81a",
+      "DTSDKName": "iphoneos26.5",
+      "DTXcodeBuild": "17F113",
+      "MinimumOSVersion": "17.0"
+    },
+    "root_entries": [
+      "Headers",
+      "Info.plist",
+      "LeuQwenNative",
+      "Modules",
+      "ThirdPartyNotices.txt"
+    ]
+  },
+  {
+    "slice": {
+      "BinaryPath": "LeuQwenNative.framework/LeuQwenNative",
+      "LibraryIdentifier": "ios-arm64-simulator",
+      "LibraryPath": "LeuQwenNative.framework",
+      "SupportedArchitectures": [
+        "arm64"
+      ],
+      "SupportedPlatform": "ios",
+      "SupportedPlatformVariant": "simulator"
+    },
+    "plist": {
+      "CFBundleExecutable": "LeuQwenNative",
+      "CFBundleIdentifier": "dev.leu.qwen-native",
+      "CFBundleInfoDictionaryVersion": "6.0",
+      "CFBundleName": "LeuQwenNative",
+      "CFBundlePackageType": "FMWK",
+      "CFBundleShortVersionString": "1.0.0",
+      "CFBundleSupportedPlatforms": [
+        "iPhoneSimulator"
+      ],
+      "CFBundleVersion": "1",
+      "DTPlatformName": "iphonesimulator",
+      "DTPlatformVersion": "26.5",
+      "DTSDKBuild": "23F81a",
+      "DTSDKName": "iphonesimulator26.5",
+      "DTXcodeBuild": "17F113",
+      "MinimumOSVersion": "17.0"
+    },
+    "root_entries": [
+      "Headers",
+      "Info.plist",
+      "LeuQwenNative",
+      "Modules",
+      "ThirdPartyNotices.txt"
+    ]
+  }
+]

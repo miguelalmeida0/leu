@@ -1,0 +1,15 @@
+{
+  "base": "85da85aeab4893f9e796cb950f74f620e4a5f12a",
+  "branch": "codex/qwen-local-understanding",
+  "preexisting_project_sha256": "3ba2be84f010dba8c3221b5a43f01b7d3bf96561cf9579332f6268c2f8d1acbe",
+  "device_user_report": {
+    "product": "iPhone15,4",
+    "os": "26.3.1",
+    "architecture": "arm64",
+    "install": "FAIL",
+    "domain": "MIInstallerErrorDomain",
+    "code": 35,
+    "legacy": "PackageInspectionFailed"
+  },
+  "xcode_computer_use": "Computer Use was not approved to use Xcode"
+}

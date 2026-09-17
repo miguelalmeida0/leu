@@ -1,0 +1,46 @@
+[
+  {
+    "variant": "original",
+    "command": [
+      "codesign",
+      "--force",
+      "--sign",
+      "-",
+      ".qwen-local/packaging-probe/original/LeuQwenNative.framework"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "variant": "original",
+    "command": [
+      "codesign",
+      "-dvvv",
+      ".qwen-local/packaging-probe/original/LeuQwenNative.framework"
+    ],
+    "exit": 0,
+    "output": "Executable=/Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/packaging-probe/original/LeuQwenNative.framework/LeuQwenNative\nIdentifier=LeuQwenNative-555549445b0d084eff4b396a8c2a0ef47d078781\nFormat=bundle with Mach-O thin (arm64)\nCodeDirectory v=20400 size=18895 flags=0x2(adhoc) hashes=583+3 location=embedded\nHash type=sha256 size=32\nCandidateCDHash sha256=bef17861507ca8ee6127fea2851d7b3c53c31121\nCandidateCDHashFull sha256=bef17861507ca8ee6127fea2851d7b3c53c3112123dfee7fc206857514c17479\nHash choices=sha256\nCMSDigest=bef17861507ca8ee6127fea2851d7b3c53c3112123dfee7fc206857514c17479\nCMSDigestType=2\nCDHash=bef17861507ca8ee6127fea2851d7b3c53c31121\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources version=2 rules=13 files=3\nInternal requirements count=0 size=12\n"
+  },
+  {
+    "variant": "flat",
+    "command": [
+      "codesign",
+      "--force",
+      "--sign",
+      "-",
+      ".qwen-local/packaging-probe/flat/LeuQwenNative.framework"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "variant": "flat",
+    "command": [
+      "codesign",
+      "-dvvv",
+      ".qwen-local/packaging-probe/flat/LeuQwenNative.framework"
+    ],
+    "exit": 0,
+    "output": "Executable=/Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/packaging-probe/flat/LeuQwenNative.framework/LeuQwenNative\nIdentifier=dev.leu.qwen-native\nFormat=bundle with Mach-O thin (arm64)\nCodeDirectory v=20400 size=18860 flags=0x2(adhoc) hashes=583+3 location=embedded\nHash type=sha256 size=32\nCandidateCDHash sha256=b184adf173b57b1c384dd92e3f417c1827615395\nCandidateCDHashFull sha256=b184adf173b57b1c384dd92e3f417c182761539557f1f07bf0511b14e0a49403\nHash choices=sha256\nCMSDigest=b184adf173b57b1c384dd92e3f417c182761539557f1f07bf0511b14e0a49403\nCMSDigestType=2\nCDHash=b184adf173b57b1c384dd92e3f417c1827615395\nSignature=adhoc\nInfo.plist entries=11\nTeamIdentifier=not set\nSealed Resources version=2 rules=10 files=3\nInternal requirements count=0 size=12\n"
+  }
+]

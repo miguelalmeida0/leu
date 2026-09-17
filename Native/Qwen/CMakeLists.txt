@@ -21,6 +21,10 @@ target_link_libraries(LeuQwenNative PRIVATE llama llama-common)
 set_target_properties(LeuQwenNative PROPERTIES
   FRAMEWORK TRUE FRAMEWORK_VERSION A
   MACOSX_FRAMEWORK_IDENTIFIER dev.leu.qwen-native
+  MACOSX_FRAMEWORK_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/FrameworkInfo.plist.in"
+  MACOSX_FRAMEWORK_BUNDLE_NAME LeuQwenNative
+  MACOSX_FRAMEWORK_BUNDLE_VERSION 1
+  MACOSX_FRAMEWORK_SHORT_VERSION_STRING 1.0.0
   PUBLIC_HEADER include/LeuQwenNative.h
   XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED NO)
 target_link_options(LeuQwenNative PRIVATE "-Wl,-dead_strip")

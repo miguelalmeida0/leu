@@ -1,0 +1,36 @@
+{
+  "scope": "Ad-hoc signing of a copied rebuilt framework only; not the app development signature or installation",
+  "results": [
+    {
+      "command": [
+        "codesign",
+        "--force",
+        "--sign",
+        "-",
+        ".qwen-local/packaging-probe/rebuilt/LeuQwenNative.framework"
+      ],
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dvvv",
+        ".qwen-local/packaging-probe/rebuilt/LeuQwenNative.framework"
+      ],
+      "exit": 0,
+      "output": "Executable=/Users/malmeida/Documents/ChatGPT/Leu/LeuQwenLocal/.qwen-local/packaging-probe/rebuilt/LeuQwenNative.framework/LeuQwenNative\nIdentifier=dev.leu.qwen-native\nFormat=bundle with Mach-O thin (arm64)\nCodeDirectory v=20400 size=18860 flags=0x2(adhoc) hashes=583+3 location=embedded\nHash type=sha256 size=32\nCandidateCDHash sha256=916a6c6b9dc41b4f4483dcef702981a8b15d3f3e\nCandidateCDHashFull sha256=916a6c6b9dc41b4f4483dcef702981a8b15d3f3e07ba3613d659f24552784b81\nHash choices=sha256\nCMSDigest=916a6c6b9dc41b4f4483dcef702981a8b15d3f3e07ba3613d659f24552784b81\nCMSDigestType=2\nCDHash=916a6c6b9dc41b4f4483dcef702981a8b15d3f3e\nSignature=adhoc\nInfo.plist entries=14\nTeamIdentifier=not set\nSealed Resources version=2 rules=10 files=3\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        ".qwen-local/packaging-probe/rebuilt/LeuQwenNative.framework"
+      ],
+      "exit": 0,
+      "output": ""
+    }
+  ]
+}
