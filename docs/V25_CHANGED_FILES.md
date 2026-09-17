@@ -80,7 +80,7 @@
 - `Shelf/Voice/Voices/VoicePreferenceStore.swift`
 - `ShelfTests/PDFIntegrationTests.swift`
 - `ShelfUITests/ShelfWorldClassUITests.swift`
-- `evidence/project-manifest.json`
+- `docs/internal/evidence/project-manifest.json`
 - `scripts/sync-xcode-sources.py`
 - `scripts/test-study-repair-tools.py`
 - `scripts/test-v244-lens-compile.py`

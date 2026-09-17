@@ -29,7 +29,7 @@ must pass first, and the harness launch argument that runs the feature without h
 Draw all of these from intact passages in the user's own PDFs, not synthetic text. The
 archive ships `Shelf/Resources/Samples/React Notes.pdf` (4 pages, sha256
 `7d42381f…e318640`), whose pages 1-3 are already characterised in
-`recovery-evidence/v26-p0/react-before-after.md`; use those plus the user's other imports.
+`recovery-docs/internal/evidence/v26-p0/react-before-after.md`; use those plus the user's other imports.
 
 | # | Case | What "acceptable" means |
 |---|---|---|

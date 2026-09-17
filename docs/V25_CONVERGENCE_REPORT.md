@@ -1,6 +1,6 @@
 # V25 convergence: repairs awaiting executable verification
 
-2026-09-12. The supplied local QA log establishes BUILD SUCCEEDED, 235 core tests with six assertion failures, and a missing UI helper preventing native test compilation. It was preserved at `recovery-evidence/v25-convergence/supplied-qa-v25-recovery.log` before the requested runner was repeated. That successful build predates this patch.
+2026-09-12. The supplied local QA log establishes BUILD SUCCEEDED, 235 core tests with six assertion failures, and a missing UI helper preventing native test compilation. It was preserved at `recovery-docs/internal/evidence/v25-convergence/supplied-qa-v25-recovery.log` before the requested runner was repeated. That successful build predates this patch.
 
 ## Concrete repairs
 
@@ -39,7 +39,7 @@ No existing test method or assertion was removed. Eight methods were added: four
 
 No successful current build, current Swift assertion result, UI execution or zero-warning compile is claimed. The full runner was attempted once for an explicit current exit status; remaining independent stages were collected separately despite the front gate failure. A prior successful local build is not promoted to proof of the modified source.
 
-Evidence is under `recovery-evidence/v25-convergence/`: targeted logs, current static results, independent build/suite logs, source hashes and `convergence.patch`. The unified patch is against the previous reconstructed ZIP, not an invented Git commit. Current QA output remains at `qa-v25-recovery.log` and `qa-v25-recovery-summary.txt`.
+Evidence is under `recovery-docs/internal/evidence/v25-convergence/`: targeted logs, current static results, independent build/suite logs, source hashes and `convergence.patch`. The unified patch is against the previous reconstructed ZIP, not an invented Git commit. Current QA output remains at `qa-v25-recovery.log` and `docs/internal/qa/qa-v25-recovery-summary.txt`.
 
 ## Required next executable sequence
 

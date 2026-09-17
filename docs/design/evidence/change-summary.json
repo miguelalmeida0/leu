@@ -64,7 +64,7 @@
     "Shelf/Voice/UI/VoicePlayerStrip.swift",
     "Shelf/Voice/UI/VoiceSettingsSheet.swift",
     "Shelf.xcodeproj/project.pbxproj",
-    "evidence/project-manifest.json",
+    "docs/internal/evidence/project-manifest.json",
     "scripts/check-night-field.py",
     "scripts/sync-xcode-sources.py",
     "scripts/test-night-field-contrast.py",

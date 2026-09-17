@@ -58,7 +58,7 @@ Fading and Blind Spots show their real empty states. Populated Continue comes fr
 Run from the checkout:
 
 ~~~sh
-bash scripts/verify-study-home.sh --resume docs/design/study-home-evidence/native-20260913-103833
+bash scripts/verify-study-home.sh --resume docs/design/study-home-docs/internal/evidence/native-20260913-103833
 ~~~
 
 This skips completed static verification/build/default testing, reuses default.xcresult and existing exports, and runs only missing AX1 tests with test-without-building against .build/study-home. Compiled app and UI-test runner exist. No fallback rebuild is performed if they are missing.

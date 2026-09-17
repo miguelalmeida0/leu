@@ -77,8 +77,8 @@ performance thresholds are unchanged.
 - All 20 Apple test methods and all 55 UI test methods remain in the inventory;
   their Swift files are byte-identical to V24.0, but were not executed here.
 
-Actual logs and scope checks are under `evidence/v24-1/`. The current structured
-record is `evidence/verification.json`. Older evidence directories are history.
+Actual logs and scope checks are under `docs/internal/evidence/v24-1/`. The current structured
+record is `docs/internal/evidence/verification.json`. Older evidence directories are history.
 
 ## Native acceptance still required
 

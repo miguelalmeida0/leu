@@ -6,13 +6,13 @@ The source-corruption repair is implemented and executed against the real React 
 
 ## Deliverables
 
-- [Actual before/after text, pages 1–3](../recovery-evidence/v26-p0/react-before-after.md)
-- [Production source/script patch](../recovery-evidence/v26-p0/source.patch)
-- [Changed-code inventory](../recovery-evidence/v26-p0/changed-code.json)
-- [Character coverage, PDF fingerprint, unchanged C paths](../recovery-evidence/v26-p0/checks.json)
-- [Real model attempt log](../recovery-evidence/v26-p0/real-model-run.log)
-- [Targeted native attempt and exact blockers](../recovery-evidence/v26-p0/targeted-native.log)
-- [Targeted core XCTest results](../recovery-evidence/v26-p0/p0-tests.log)
+- [Actual before/after text, pages 1–3](../recovery-docs/internal/evidence/v26-p0/react-before-after.md)
+- [Production source/script patch](../recovery-docs/internal/evidence/v26-p0/source.patch)
+- [Changed-code inventory](../recovery-docs/internal/evidence/v26-p0/changed-code.json)
+- [Character coverage, PDF fingerprint, unchanged C paths](../recovery-docs/internal/evidence/v26-p0/checks.json)
+- [Real model attempt log](../recovery-docs/internal/evidence/v26-p0/real-model-run.log)
+- [Targeted native attempt and exact blockers](../recovery-docs/internal/evidence/v26-p0/targeted-native.log)
+- [Targeted core XCTest results](../recovery-docs/internal/evidence/v26-p0/p0-tests.log)
 
 The patch compares captured intake source bytes with current source bytes. It is not a Git commit diff. The Xcode project and source manifest were regenerated; their intake bytes were not captured, so they are outside that textual diff. No commit was created.
 
@@ -30,11 +30,11 @@ I recovered actual screenshot attachments from `Leu-QA-Diagnostics-v24-5-2026091
 
 | Archived screenshot | Test | Attachment timestamp UTC |
 |---|---|---|
-| [React page 1](../recovery-evidence/v26-p0/archived-before/react-page-1.png) | `test02ReaderBaselineReadAndOriginalModes` | 2026-09-12 13:05:06.651 |
-| [React page 2](../recovery-evidence/v26-p0/archived-before/react-page-2.png) | `test03ArrowPagingAndPositionPersistence` | 2026-09-12 13:05:19.666 |
-| [Active Recall](../recovery-evidence/v26-p0/archived-before/active-recall.png) | `test34ActiveRecallEntryPoint` | 2026-09-12 13:00:55.321 |
+| [React page 1](../recovery-docs/internal/evidence/v26-p0/archived-before/react-page-1.png) | `test02ReaderBaselineReadAndOriginalModes` | 2026-09-12 13:05:06.651 |
+| [React page 2](../recovery-docs/internal/evidence/v26-p0/archived-before/react-page-2.png) | `test03ArrowPagingAndPositionPersistence` | 2026-09-12 13:05:19.666 |
+| [Active Recall](../recovery-docs/internal/evidence/v26-p0/archived-before/active-recall.png) | `test34ActiveRecallEntryPoint` | 2026-09-12 13:00:55.321 |
 
-[Attachment provenance](../recovery-evidence/v26-p0/archived-before/provenance.json) retains original filenames, device fields and test identifiers. These are earlier screenshots, not newly captured output or attachments from the later A/B/C run. The specific user-referenced screenshots were not separately attached for byte comparison. I cannot claim a stronger association.
+[Attachment provenance](../recovery-docs/internal/evidence/v26-p0/archived-before/provenance.json) retains original filenames, device fields and test identifiers. These are earlier screenshots, not newly captured output or attachments from the later A/B/C run. The specific user-referenced screenshots were not separately attached for byte comparison. I cannot claim a stronger association.
 
 ## First corruption: measured, not inferred from the screenshot alone
 
@@ -46,7 +46,7 @@ Same original PDF: `Shelf/Resources/Samples/React Notes.pdf`, 6,689 bytes, four 
 4. Old reconstructed blocks contain missing characters. The existing extraction-v3 analysis already persists the corruption and has zero React questions.
 5. `ReadPageContent.highlightedText` constructs `AttributedString` directly from each block and passes it to `Text`. It only adds highlight attributes. The archived page-1 screenshot displays the same corruption. There is no later spelling transformation in that view.
 
-[Original geometry measurements](../recovery-evidence/v26-p0/pdfkit-probe-before.txt) and [existing persisted analysis](../recovery-evidence/v26-p0/react-persisted-before.json) are retained.
+[Original geometry measurements](../recovery-docs/internal/evidence/v26-p0/pdfkit-probe-before.txt) and [existing persisted analysis](../recovery-docs/internal/evidence/v26-p0/react-persisted-before.json) are retained.
 
 The fix is in `PDFSpatialText.swift`. Missing glyph coverage now falls back to canonical text for reading and fails closed for learning with `SOURCE_INTEGRITY_FAILED`. `PDFTextReconstructor.swift` also separates headings when font levels change, preventing the sample header from merging into the book title.
 
@@ -85,7 +85,7 @@ A.log also exposed an independent test issue: two serializations of the same unc
 
 Obsolete automatically generated passages remain as history references with `sourceIsStale = true`. New plans, due lists, Reader memory markers and direct review exclude them. Rebuilt source passages are added or matching existing passages reactivated. Questions for the rebuilt document are regenerated. User-authored objects, reviews, attempts, confidence records and sessions are retained. A live session referencing obsolete passages is closed with an explicit rebuild notice; its stored history is retained.
 
-**MOCK VERIFIED:** the production repository replayed the actual installed snapshot in memory: 71 objects before, 83 after, 12 stale; all existing review states and user content retained. The actual snapshot had zero attempts, so a separate synthetic-history test covers nonempty attempt/confidence preservation. [Replay log](../recovery-evidence/v26-p0/migration-replay.log), [resulting evidence copy](../recovery-evidence/v26-p0/migration-replay-after.json).
+**MOCK VERIFIED:** the production repository replayed the actual installed snapshot in memory: 71 objects before, 83 after, 12 stale; all existing review states and user content retained. The actual snapshot had zero attempts, so a separate synthetic-history test covers nonempty attempt/confidence preservation. [Replay log](../recovery-docs/internal/evidence/v26-p0/migration-replay.log), [resulting evidence copy](../recovery-docs/internal/evidence/v26-p0/migration-replay-after.json).
 
 **The installed library has not been repaired in place in this session.** The real file-store test and probe encounter denied writes. The replay JSON is an evidence copy, not a manually preloaded expected app result. PDFs, annotations and study history were not deleted.
 

@@ -449,7 +449,7 @@
       "afterSHA256": "92effa92e3d616cdafb1b7b02a3ea93527a208d839dcbeb4807318198a595a8e"
     },
     {
-      "path": "evidence/project-manifest.json",
+      "path": "docs/internal/evidence/project-manifest.json",
       "status": "changed",
       "beforeSHA256": "af4f2cfb5c55346e1646485a0f64cea0d7e106ba24b49284d2f2edcf9bb1191d",
       "afterSHA256": "7b22a2cb27c49c13eb896b456f9b4cb31929c5be5b0e37c9b08dc2912690d7d8"

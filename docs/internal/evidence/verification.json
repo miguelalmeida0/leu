@@ -10,20 +10,20 @@
     "buildSucceeded": false,
     "failingSource": "SettingsScreen.swift",
     "compilerDiagnosticIncluded": false,
-    "path": "evidence/v24-1/supplied-v24-0-mac-build-tail.txt"
+    "path": "docs/internal/evidence/v24-1/supplied-v24-0-mac-build-tail.txt"
   },
   "core": {
     "passed": 195,
     "failed": 0,
     "sourceAndTestsUnchangedFromV240": true,
-    "log": "evidence/v24-1/core-tests.log"
+    "log": "docs/internal/evidence/v24-1/core-tests.log"
   },
   "sourceChecks": {
     "allPassed": true,
     "projectObjects": 442,
     "sourceScriptFiles": 305,
     "swiftFilesSyntaxParsed": 277,
-    "log": "evidence/v24-1/static-checks.log"
+    "log": "docs/internal/evidence/v24-1/static-checks.log"
   },
   "tooling": {
     "existingChecksPassed": 15,
@@ -42,5 +42,5 @@
     "audioListenedTo": false
   },
   "scope": "One application Swift file changed: SettingsScreen.swift constructor plus displayed version. Core, speech, reader, design and all native tests unchanged.",
-  "evidenceDirectory": "evidence/v24-1/"
+  "evidenceDirectory": "docs/internal/evidence/v24-1/"
 }

@@ -1,7 +1,7 @@
 # Leu — Night Field redesign, pass 1
 
 Implemented against the snapshot in `Leu-LATEST-Claude-Redesign-20260912-232703.zip`
-(`REDESIGN_HANDOFF/SOURCE_SNAPSHOT_METADATA.txt`: 373 Swift files, 1089 files total,
+(`docs/internal/redesign-handoff/SOURCE_SNAPSHOT_METADATA.txt`: 373 Swift files, 1089 files total,
 packed 2026-09-12T23:27:04+02:00 from `/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5`).
 
 This is the **design-system and shell layer** — steps 1 to 4 of the mandate's implementation
@@ -132,7 +132,7 @@ modified  Shelf/DesignSystem/ShelfTheme.swift
 modified  Shelf/Learning/Components/PrimaryTabBar.swift
 modified  Shelf/Features/Library/Components/LibraryHeader.swift
 modified  scripts/qa-native.sh
-modified  evidence/project-manifest.json   (sync-xcode-sources.py, membership only)
+modified  docs/internal/evidence/project-manifest.json   (sync-xcode-sources.py, membership only)
 deleted   Shelf/DesignSystem/ShelfTabBar.swift
 deleted   scripts/check-gallery-minimalism.py
 ```

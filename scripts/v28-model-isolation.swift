@@ -35,7 +35,7 @@ import FoundationModels
         }
         report["cases"] = cases
         let data = try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys, .prettyPrinted])
-        try data.write(to: URL(fileURLWithPath: "docs/v28/evidence/model-isolation.json"))
+        try data.write(to: URL(fileURLWithPath: "docs/v28/docs/internal/evidence/model-isolation.json"))
         print(String(decoding: data, as: UTF8.self))
     }
 }

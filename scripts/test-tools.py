@@ -39,5 +39,5 @@ with tempfile.TemporaryDirectory() as directory:
  r=run([str(R/'run.sh'),'--help']);assert r.returncode==0;results.append('launcher: help works without Xcode')
  r=run([str(R/'run.sh')]);assert r.returncode==1 and 'macOS' in r.stderr;results.append('launcher: actionable non-macOS prerequisite error')
 print('\n'.join('PASS: '+r for r in results))
-(R/'evidence/delivery-tools.log').write_text('\n'.join('PASS: '+r for r in results)+'\n')
-(R/'evidence/delivery-tools.json').write_text(json.dumps({'passed':len(results),'checks':results,'nativeLaunchExecuted':False},indent=2)+'\n')
+(R/'docs/internal/evidence/delivery-tools.log').write_text('\n'.join('PASS: '+r for r in results)+'\n')
+(R/'docs/internal/evidence/delivery-tools.json').write_text(json.dumps({'passed':len(results),'checks':results,'nativeLaunchExecuted':False},indent=2)+'\n')

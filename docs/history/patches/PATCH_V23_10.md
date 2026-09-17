@@ -47,7 +47,7 @@ A coverage check refuses a green result unless every expected Apple and UI test 
 - The trace implementation was compiled and exercised with diagnostics disabled, enabled in DEBUG, and compiled out in a release build.
 - The new input policy rejects the V23.9 baseline's replacement accessibility grouping. This is a source-policy regression check, not native before/after execution.
 
-Raw local verification logs and the scoped code diff are included under `evidence/v23-10/` and `docs/V23_10_CODE_CHANGES.diff`.
+Raw local verification logs and the scoped code diff are included under `docs/internal/evidence/v23-10/` and `docs/V23_10_CODE_CHANGES.diff`.
 
 ## Mac execution
 

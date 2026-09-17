@@ -68,12 +68,12 @@ Existing playback uses AVAudioSession playback and the app declares background a
 | New native integration tests | NOT RUN; 3 expected | `ShelfTests/BugfixIntegrationTests.swift` |
 | Full ShelfTests | NOT RUN; 92 expected | Prior unmodified baseline 89/89 is in `docs/design/question-contract-v2/native-20260913-132621/full-shelf-report.json`. |
 | Full UI | NOT RUN; 74 expected | Native runner selects the entire ShelfUITests target. |
-| Study DEFAULT / AX1 | NOT RERUN; existing **7/7 and 4/4** preserved | `docs/design/study-home-evidence/native-20260913-121420/` summaries/attachments. Study Home and Night Field production sources unchanged. |
+| Study DEFAULT / AX1 | NOT RERUN; existing **7/7 and 4/4** preserved | `docs/design/study-home-docs/internal/evidence/native-20260913-121420/` summaries/attachments. Study Home and Night Field production sources unchanged. |
 | Session convergence | NOT RERUN; existing **13/13** preserved | `docs/design/session-convergence/native-20260913-121148/session-unit-summary.json`. Only requested duplicate recall title suppression changed in recall presentation. |
 | Contrast | **55/55 PASS** | `contrast.log` |
 | Structural/native membership | PASS; 565 project objects / 462 source-script files | `validate.log` |
 
-The three new native tests were added to the existing Xcode project and `evidence/project-manifest.json`. Existing valid-source test fixtures now use the current extraction version; their assertions were retained. The old source-sync script does not parse Xcode's reformatted project text, so project membership was applied surgically and validated; the native runner does not invoke that script.
+The three new native tests were added to the existing Xcode project and `docs/internal/evidence/project-manifest.json`. Existing valid-source test fixtures now use the current extraction version; their assertions were retained. The old source-sync script does not parse Xcode's reformatted project text, so project membership was applied surgically and validated; the native runner does not invoke that script.
 
 **Native handoff and remaining work.**
 
@@ -123,4 +123,4 @@ Unresolved: native build/execution; actual affected PDF and original screenshots
 - added [scripts/test-bugfix-host.py](/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/scripts/test-bugfix-host.py)
 - added [scripts/typecheck-bugfix-ios.py](/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/scripts/typecheck-bugfix-ios.py)
 - modified [Shelf.xcodeproj/project.pbxproj](/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/Shelf.xcodeproj/project.pbxproj)
-- Updated [evidence/project-manifest.json](/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/evidence/project-manifest.json).
+- Updated [docs/internal/evidence/project-manifest.json](/Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast/docs/internal/evidence/project-manifest.json).

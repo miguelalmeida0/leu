@@ -8,7 +8,7 @@ The old Apple provider authored arbitrary final questions, choices and quotes, w
 
 Old contract: free-form factual generation → exact legacy template admission → zero accepted questions.
 
-New contract: canonical source packet → grounded claims → complete MCQ representability preflight → Apple model selects a permitted claim/operation pair → deterministic realization → independent recompile/equality check plus existing source/quality checks → existing question repository. The dynamic response schema permits only the available paired IDs. The model cannot author the final factual fields. Claim ID, operation, canonical evidence/range and schema/validator versions persist with the question.
+New contract: canonical source packet → grounded claims → complete MCQ representability preflight → Apple model selects a permitted claim/operation pair → deterministic realization → independent recompile/equality check plus existing source/quality checks → existing question repository. The dynamic response schema permits only the available paired IDs. The model cannot author the final factual fields. Claim ID, operation, canonical docs/internal/evidence/range and schema/validator versions persist with the question.
 
 Preflight runs before the inference closure. Zero meaningful claims produces `noRepresentableQuestion`; meaningful claims without defensible options produces `noDefensibleChoices` internally and the explicit no-representable-question provider error. Neither calls the model. Question cache identity is versioned to V2; explanation generation/cache behavior is unchanged.
 

@@ -2275,7 +2275,7 @@
 +python3 scripts/register-v27-sources.py
 +python3 scripts/test-v27-host.py
 +python3 scripts/probe-v27-model.py
-+run="docs/v27/evidence/native-$(date +%Y%m%d-%H%M%S)"
++run="docs/v27/docs/internal/evidence/native-$(date +%Y%m%d-%H%M%S)"
 +mkdir -p "$run"
 +xcodebuild -project Shelf.xcodeproj -scheme Shelf -configuration Debug \
 +  -destination "platform=iOS Simulator,id=${LEU_SIMULATOR_ID:-A248FB9E-B969-4CF6-A0ED-B2013A3C60A6}" \

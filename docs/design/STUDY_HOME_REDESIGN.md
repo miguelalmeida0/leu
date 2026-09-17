@@ -6,7 +6,7 @@ Requested simulator: A248FB9E-B969-4CF6-A0ED-B2013A3C60A6
 
 ## Build and evidence boundary
 
-**BUILD: BLOCKED / FAIL TO EXECUTE.** The fresh xcodebuild attempt exited 74 before compilation: CoreSimulator service access is denied and Xcode cannot read its temporary Package.resolved lock. The log's malformed-package wording wraps that I/O denial; no package manifest was changed. See [build.log](study-home-evidence/build.log).
+**BUILD: BLOCKED / FAIL TO EXECUTE.** The fresh xcodebuild attempt exited 74 before compilation: CoreSimulator service access is denied and Xcode cannot read its temporary Package.resolved lock. The log's malformed-package wording wraps that I/O denial; no package manifest was changed. See [build.log](study-home-docs/internal/evidence/build.log).
 
 The four changed views **typecheck successfully against the existing compiled production Shelf module**, using the installed iOS Simulator SDK. All 15 UI-test source files also typecheck. These are limited compiler checks, not a clean native build, simulator run, or screenshot certification.
 
@@ -27,7 +27,7 @@ The reconstruction step-indicator source is byte-identical: confirmed positions 
 
 ## Scope guard
 
-[scope-check.json](study-home-evidence/scope-check.json) compares against a snapshot captured before this task's edits:
+[scope-check.json](study-home-docs/internal/evidence/scope-check.json) compares against a snapshot captured before this task's edits:
 - exactly four app source files changed;
 - 356 other app/package files are byte-identical;
 - zero unexpected app changes.
@@ -70,8 +70,8 @@ These numbers do not establish rendered contrast, clipping or AX1 usability; act
 | Real UI journeys | Not executed this session |
 | Default / AX1 screenshot inspection | Pending |
 
-Compiler commands and final logs are in study-home-evidence/.
-The [patch](study-home-evidence/study-home.patch) contains this task's app, test and script changes; generated Xcode membership is already applied in the checkout.
+Compiler commands and final logs are in study-home-docs/internal/evidence/.
+The [patch](study-home-docs/internal/evidence/study-home.patch) contains this task's app, test and script changes; generated Xcode membership is already applied in the checkout.
 
 ## Real screenshot inventory
 
@@ -95,7 +95,7 @@ bash scripts/verify-study-home.sh
 
 The runner builds, boots the specified simulator, runs the focused journeys at default size and AX1, exports actual attachments and test summaries, then restores the prior text-size setting. Default additionally runs the existing Study navigation and session-start regressions. UI tests use the pre-existing isolated Shelf-UITests store. No new fixture injection or production seed path is introduced.
 
-Output: docs/design/study-home-evidence/native-<timestamp>/default-attachments/ and AX1-attachments/. Attachment filenames are assigned by xcresulttool; its manifest maps the names above to real PNGs.
+Output: docs/design/study-home-docs/internal/evidence/native-<timestamp>/default-attachments/ and AX1-attachments/. Attachment filenames are assigned by xcresulttool; its manifest maps the names above to real PNGs.
 
 ## Unresolved
 

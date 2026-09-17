@@ -2,7 +2,7 @@
 # Native verification. Existing UI tests use the app's isolated Shelf-UITests store.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-run="$PWD/docs/design/evidence/native-$(date +%Y%m%d-%H%M%S)"
+run="$PWD/docs/design/docs/internal/evidence/native-$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$run"
 python3 scripts/check-night-field.py | tee "$run/night-field.log"
 python3 scripts/test-night-field-contrast.py > "$run/contrast.log" 2>&1

@@ -77,6 +77,6 @@ Trash is reversible. Permanent deletion requires a trashed record and removes me
 
 A new feature should add domain types/contracts only when needed, then a focused service, tests, and a thin presentation model/view. Keep Swift source below 300 lines. Split by ownership, not arbitrary `Helpers1`/`Helpers2` files.
 
-When adding native source files in Xcode, enable the relevant target membership. The checked-in project uses explicit file references; merely copying a new file into Finder does not add it to the target. Update `evidence/project-manifest.json` or regenerate that inventory when changing membership. The local Swift package discovers its own source files automatically.
+When adding native source files in Xcode, enable the relevant target membership. The checked-in project uses explicit file references; merely copying a new file into Finder does not add it to the target. Update `docs/internal/evidence/project-manifest.json` or regenerate that inventory when changing membership. The local Swift package discovers its own source files automatically.
 
 Avoid replacing explicit injected services with `static shared` dependencies. Avoid allowing feature screens to obtain URLs and edit originals directly. A future OCR, sync, database, or cloud feature must implement a new boundary without weakening the local reader's guarantees.

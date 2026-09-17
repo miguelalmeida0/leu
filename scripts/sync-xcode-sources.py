@@ -5,7 +5,7 @@ import hashlib, json, re, sys
 
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT / 'Shelf.xcodeproj/project.pbxproj'
-MANIFEST = ROOT / 'evidence/project-manifest.json'
+MANIFEST = ROOT / 'docs/internal/evidence/project-manifest.json'
 
 SHELF_GROUP = '91BC77E451450E1E31E5FDBA'
 READER_GROUP = 'C4A18DEBF678F82D4FED4D64'

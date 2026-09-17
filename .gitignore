@@ -7,7 +7,7 @@ xcuserdata/
 *.xcuserstate
 *.shelfbackup
 *.log
-!evidence/*.log
+!docs/internal/evidence/*.log
 
 # Local/generated
 .DS_Store
@@ -24,6 +24,6 @@ DerivedData/
 *.ort
 
 # Generated certification evidence
-docs/v27/evidence/
-docs/v28/evidence/
+docs/v27/docs/internal/evidence/
+docs/v28/docs/internal/evidence/
 docs/design/bugfix-20260914/native-*/

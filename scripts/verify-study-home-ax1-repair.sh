@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 device=A248FB9E-B969-4CF6-A0ED-B2013A3C60A6
-run="$PWD/docs/design/study-home-evidence/native-20260913-111815/ax1-repair/run-$(date +%Y%m%d-%H%M%S)"
+run="$PWD/docs/design/study-home-docs/internal/evidence/native-20260913-111815/ax1-repair/run-$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$run"
 echo "AX1 repair evidence: $run"
 xcrun simctl bootstatus "$device" -b > "$run/simulator.log" 2>&1

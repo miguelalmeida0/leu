@@ -24,7 +24,7 @@ Two real React p.3 questions were manually inspected after production extraction
 1. **Which effect explains the role of a stable key?** Correct: “A stable key helps React match an item to its previous\ninstance within a list of siblings.” Wrong options preserve explicit controlled reversal witnesses: “Reordering should make one item inherit the local state of another”; “A freshly generated random key also does not destroy continuity between renders.”
 2. **Which restriction applies to reordering?** Correct: “Reordering should\nnot make one item inherit the local state of another.” Wrong options reverse the stable-key matching and random-key continuity assertions.
 
-The `\n` notation above denotes actual canonical PDF line breaks. See `evidence/React Notes-p3-accepted.json` for exact values and ranges. These remain fairly conservative relation questions, not evidence of broad excellent-language generation. Full cognitive-operation/corpus coverage is not certified.
+The `\n` notation above denotes actual canonical PDF line breaks. See `docs/internal/evidence/React Notes-p3-accepted.json` for exact values and ranges. These remain fairly conservative relation questions, not evidence of broad excellent-language generation. Full cognitive-operation/corpus coverage is not certified.
 
 ## 3. TEACH LEU
 
@@ -65,7 +65,7 @@ Production PDFKit extraction, geometry integrity and canonical range replay ran 
 
 ## 9. PERFORMANCE
 
-See `evidence/real-pdf-report.json` for measured values. Host measurements: approximately 5.5 ms source admission; 0.34 ms warm retrieval over the three real sample PDFs. A **synthetic** 51-document repeated-sample benchmark measured roughly 3.2 ms median retrieval, with a 1.18-second cold index build performed off the main actor. This is not a real 51-document library or an iPhone benchmark.
+See `docs/internal/evidence/real-pdf-report.json` for measured values. Host measurements: approximately 5.5 ms source admission; 0.34 ms warm retrieval over the three real sample PDFs. A **synthetic** 51-document repeated-sample benchmark measured roughly 3.2 ms median retrieval, with a 1.18-second cold index build performed off the main actor. This is not a real 51-document library or an iPhone benchmark.
 
 Actual reader action presentation under 100 ms is unverified. Teach comparison coalesces requests, cancels stale/closed-sheet inference, bounds response generation and reuses persisted valid results. No successful model latency was measured.
 
@@ -85,9 +85,9 @@ Actual reader action presentation under 100 ms is unverified. Teach comparison c
 
 **No new iOS UI screenshots were produced.** These are real PDF reference renders only:
 
-- `evidence/React Notes-p3-PDF-reference.png`
-- `evidence/System Design-p3-PDF-reference.png`
-- `evidence/JavaScript Deep Dive-p3-PDF-reference.png`
+- `docs/internal/evidence/React Notes-p3-PDF-reference.png`
+- `docs/internal/evidence/System Design-p3-PDF-reference.png`
+- `docs/internal/evidence/JavaScript Deep Dive-p3-PDF-reference.png`
 
 Executable evidence: `deterministic-tests.log`, `real-pdf-report.json`, per-page `*-analysis.json` / `*-proposals.json` / `*-accepted.json`, `mac-model-probe.json`, `native-attempt.log`, `ios-module-Shelf.log`, `app-syntax.log`. The native runner exports real XCTest attachments when execution becomes available.
 

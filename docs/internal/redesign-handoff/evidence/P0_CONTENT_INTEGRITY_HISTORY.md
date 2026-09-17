@@ -6,7 +6,7 @@ Work only in `/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5`.
 
 The latest screenshots are the acceptance failures. They show damaged text in Read Mode and the same damage in Active Recall. The latest user-run integration batch reports A=65, B=65, C=0 under:
 
-`recovery-evidence/v25-final-integration/runs/20260912-153214-91049/`
+`recovery-docs/internal/evidence/v25-final-integration/runs/20260912-153214-91049/`
 
 Read `A.log`, `B.log`, `C.log` and the script that defines those groups. C passing does not establish full release success. Inspect the current workspace, not an older ZIP. Preserve local changes and user data. Do not ask for Claude or the lost checkpoint.
 

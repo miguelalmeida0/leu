@@ -46,7 +46,7 @@ Xcode marketing version and QA/report labels are updated. There are no new app s
 
 **All ShelfCore source and tests, all Apple unit tests, all 55 UI tests, Learning, Knowledge, Voice, design tokens and bundled resources are byte-identical to V24.2.** This includes the no-tree Resume design and V24.2's interaction/persistence repairs.
 
-`docs/V24_3_CODE_CHANGES.diff` contains the complete code delta. `evidence/v24-3/scope-comparison.json` records unchanged directories.
+`docs/V24_3_CODE_CHANGES.diff` contains the complete code delta. `docs/internal/evidence/v24-3/scope-comparison.json` records unchanged directories.
 
 ## Verification actually executed
 

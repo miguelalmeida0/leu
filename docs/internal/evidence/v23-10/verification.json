@@ -11,7 +11,7 @@
     "voiceStressSeconds": 2.2050195,
     "voiceStressThresholdSeconds": 3.0,
     "sourceAndTestsUnchanged": true,
-    "log": "evidence/v23-10/core-v23-10.log"
+    "log": "docs/internal/evidence/v23-10/core-v23-10.log"
   },
   "source": {
     "projectObjects": 435,

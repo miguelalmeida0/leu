@@ -5,7 +5,7 @@ cd "$(dirname "$0")/.."
 python3 scripts/sync-xcode-sources.py
 python3 scripts/check-worldclass-offline.py
 simulator_id="${SHELF_SIMULATOR_UDID:-A248FB9E-B969-4CF6-A0ED-B2013A3C60A6}"
-run_dir="recovery-evidence/explanation-ios-p0/runs/$(date +%Y%m%d-%H%M%S)-$$"
+run_dir="recovery-docs/internal/evidence/explanation-ios-p0/runs/$(date +%Y%m%d-%H%M%S)-$$"
 mkdir -p "$run_dir"
 set +e
 xcodebuild -project Shelf.xcodeproj -scheme Shelf -configuration Debug \

@@ -3,7 +3,7 @@
 
 Replaces check-gallery-minimalism.py. The palette moved, so the palette assertions
 moved with it; every behavioural invariant the old gate protected is preserved below,
-and the locked design rules from REDESIGN_HANDOFF/04_LOCKED_DESIGN_RULES.md are now
+and the locked design rules from docs/internal/redesign-handoff/04_LOCKED_DESIGN_RULES.md are now
 enforced rather than left to review.
 """
 from pathlib import Path

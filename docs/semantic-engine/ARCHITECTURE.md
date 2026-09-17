@@ -156,7 +156,7 @@ Retrieval acceptance uses dozens of independently labeled paraphrase queries, in
 
 ## 8. Concepts, graph and grounded study
 
-Keep KnowledgeConcept IDs for user-created concepts and aliases. Build an identity bridge from existing semantic IDs and section-local extracted candidates. Names/aliases alone do not establish equivalence across different senses. Exact aliases plus compatible source definitions can merge automatically; similarity proposes merges with evidence/confidence and reversible provenance. Preserve old IDs through aliases/tombstones so Trails and attempts survive reindexing. Cross-document concepts reference many source blocks rather than encoding a PDF ID in global identity.
+Keep KnowledgeConcept IDs for user-created concepts and aliases. Build an identity bridge from existing semantic IDs and section-local extracted candidates. Names/aliases alone do not establish equivalence across different senses. Exact aliases plus compatible source definitions can merge automatically; similarity proposes merges with docs/internal/evidence/confidence and reversible provenance. Preserve old IDs through aliases/tombstones so Trails and attempts survive reindexing. Cross-document concepts reference many source blocks rather than encoding a PDF ID in global identity.
 
 Typed concept edges add prerequisite, related, contrastsWith, exampleOf, causes, consequenceOf, commonlyConfusedWith and buildsOn only with supporting block IDs, direction, confidence and derivation. Explicit user edges remain user assertions; co-occurrence stays a suggestion. Do not turn the illustrative closures → effects chain into a hardcoded ontology.
 

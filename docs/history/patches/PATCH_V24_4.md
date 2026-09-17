@@ -57,7 +57,7 @@ The two new app files are registered in the Xcode target and manifest. Project s
 
 Byte comparisons with V24.3 confirm the entire ShelfCore package (source and tests), all Apple tests, all 55 UI tests, RootView, Knowledge, Voice, design-system files and bundled resources are unchanged. No test assertion or performance threshold is removed or weakened. The no-tree Resume requirement remains intact.
 
-The complete code delta is `docs/V24_4_CODE_CHANGES.diff`. The protected-scope comparison is `evidence/v24-4/scope-comparison.json`.
+The complete code delta is `docs/V24_4_CODE_CHANGES.diff`. The protected-scope comparison is `docs/internal/evidence/v24-4/scope-comparison.json`.
 
 ## Verification actually executed
 

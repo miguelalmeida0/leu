@@ -3,7 +3,7 @@
 ## Executed in this delivery environment (V19)
 
 - Swift 6.2.1 on Linux: the portable `ShelfCore` package compiled.
-- **120 XCTest tests passed, zero failures.** Nineteen specifically exercise the V19 page-turn policy. See `evidence/v19/core-tests-linux.log`.
+- **120 XCTest tests passed, zero failures.** Nineteen specifically exercise the V19 page-turn policy. See `docs/internal/evidence/v19/core-tests-linux.log`.
 - Native source files were parsed with the Swift frontend. Parsing is not Apple-SDK typechecking.
 - The `.pbxproj` was parsed using `plutil`; project file references, local package wiring and scheme targets were structurally checked.
 - Shell scripts were syntax-checked, the simulator selector was exercised against fixtures, and the optional backup extractor was checked for good/corrupt input.

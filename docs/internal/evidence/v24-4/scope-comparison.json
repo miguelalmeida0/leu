@@ -1,0 +1,83 @@
+{
+  "baseline_archive": "Leu-Native-V24.3-Root-Compile-Repair.zip",
+  "baseline_sha256": "ed69203b52158c50170a5619c1fb7a3a8070f49e6d5faf24f81bb0a03df0b821",
+  "protected_scope": {
+    "Packages/ShelfCore": {
+      "byteIdentical": true,
+      "files": 125
+    },
+    "ShelfTests": {
+      "byteIdentical": true,
+      "files": 5
+    },
+    "ShelfUITests": {
+      "byteIdentical": true,
+      "files": 9
+    },
+    "Shelf/DesignSystem": {
+      "byteIdentical": true,
+      "files": 6
+    },
+    "Shelf/Resources": {
+      "byteIdentical": true,
+      "files": 32
+    },
+    "Shelf/Voice": {
+      "byteIdentical": true,
+      "files": 12
+    },
+    "Shelf/Knowledge": {
+      "byteIdentical": true,
+      "files": 10
+    },
+    "Shelf/App/RootView.swift": {
+      "byteIdentical": true
+    }
+  },
+  "modified_before_report": [
+    "README.md",
+    "Shelf.xcodeproj/project.pbxproj",
+    "Shelf/Features/Settings/SettingsScreen.swift",
+    "Shelf/Learning/Services/ExplanationRecorder.swift",
+    "Shelf/Learning/UnderstandingLensSheet.swift",
+    "docs/internal/evidence/project-manifest.json",
+    "scripts/check-gallery-minimalism.py",
+    "scripts/check-v24-contract.py",
+    "scripts/qa-and-copy.sh",
+    "scripts/qa-native.sh"
+  ],
+  "new_before_report": [
+    "Shelf/Learning/Components/UnderstandingLensFactRow.swift",
+    "Shelf/Learning/UnderstandingLensFact.swift",
+    "docs/internal/evidence/v24-4/check-connected-architecture.py.log",
+    "docs/internal/evidence/v24-4/check-gallery-minimalism.py.log",
+    "docs/internal/evidence/v24-4/check-learning-architecture.py.log",
+    "docs/internal/evidence/v24-4/check-learning-offline.py.log",
+    "docs/internal/evidence/v24-4/check-shelfcore-imports.py.log",
+    "docs/internal/evidence/v24-4/check-study-interactions.py.log",
+    "docs/internal/evidence/v24-4/check-swiftui-compile-contract.py.log",
+    "docs/internal/evidence/v24-4/check-ui-test-contract.py.log",
+    "docs/internal/evidence/v24-4/check-v24-contract.py.log",
+    "docs/internal/evidence/v24-4/check-v242-interactions.py.log",
+    "docs/internal/evidence/v24-4/check-v243-root-compile.py.log",
+    "docs/internal/evidence/v24-4/check-v244-lens-compile.py.log",
+    "docs/internal/evidence/v24-4/check-voice-architecture.py.log",
+    "docs/internal/evidence/v24-4/check-worldclass-offline.py.log",
+    "docs/internal/evidence/v24-4/core-tests.exit",
+    "docs/internal/evidence/v24-4/core-tests.log",
+    "docs/internal/evidence/v24-4/swift-syntax.json",
+    "docs/internal/evidence/v24-4/test-settings-compile-repair.py.log",
+    "docs/internal/evidence/v24-4/test-study-repair-tools.py.log",
+    "docs/internal/evidence/v24-4/test-tools.py.exit",
+    "docs/internal/evidence/v24-4/test-tools.py.log",
+    "docs/internal/evidence/v24-4/test-v242-interactions.py.log",
+    "docs/internal/evidence/v24-4/test-v243-root-compile.py.log",
+    "docs/internal/evidence/v24-4/test-v244-lens-compile.py.log",
+    "docs/internal/evidence/v24-4/validate.py.log",
+    "scripts/check-v244-lens-compile.py",
+    "scripts/test-v244-lens-compile.py",
+    "validation/v24-4/LensProjectionHarness.swift",
+    "validation/v24-4/LensRouteDependencies.swift",
+    "validation/v24-4/LensSelectionReference.swift"
+  ]
+}

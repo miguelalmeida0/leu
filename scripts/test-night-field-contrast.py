@@ -119,7 +119,7 @@ for name in ('ocean', 'graphite', 'ivory', 'forest', 'sand', 'slate'):
 
 if __name__ == '__main__':
     colors = palette()
-    output = ROOT / 'docs/design/evidence/contrast-ratios.json'
+    output = ROOT / 'docs/design/docs/internal/evidence/contrast-ratios.json'
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps([
         {'foreground': f, 'surface': s, 'minimum': minimum,

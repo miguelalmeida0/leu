@@ -7,7 +7,7 @@ import AppKit
 @main struct V28PDFBaselineReplay {
     static func main() async throws {
         let root = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-        let output = root.appendingPathComponent("docs/v28/evidence/baseline")
+        let output = root.appendingPathComponent("docs/v28/docs/internal/evidence/baseline")
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]; encoder.dateEncodingStrategy = .iso8601
         let names = ["React Notes", "System Design", "JavaScript Deep Dive"]
         var urls = names.map { root.appendingPathComponent("Shelf/Resources/Samples/\($0).pdf") }

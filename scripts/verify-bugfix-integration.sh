@@ -107,16 +107,16 @@ phase() {
     if [ "$repair_default" = true ]; then evidence="$default_repair"
     elif [ -s "$run/default-passed-evidence.txt" ]; then evidence=$(cat "$run/default-passed-evidence.txt"); fi
   fi
-  if [ ! -d "$evidence/$name.xcresult" ]; then
+  if [ ! -d "$docs/internal/evidence/$name.xcresult" ]; then
     xcrun simctl ui "$device" content_size "$size"
-    xcrun simctl ui "$device" content_size > "$evidence/$name-content-size.txt"
-    xcodebuild "${common[@]}" -resultBundlePath "$evidence/$name.xcresult" test-without-building "$@" > "$evidence/$name.log" 2>&1 || status=$?
-    echo "$status" > "$evidence/$name-exit.txt"
+    xcrun simctl ui "$device" content_size > "$docs/internal/evidence/$name-content-size.txt"
+    xcodebuild "${common[@]}" -resultBundlePath "$docs/internal/evidence/$name.xcresult" test-without-building "$@" > "$docs/internal/evidence/$name.log" 2>&1 || status=$?
+    echo "$status" > "$docs/internal/evidence/$name-exit.txt"
   fi
-  if [ -d "$evidence/$name.xcresult" ]; then
-    xcrun xcresulttool get test-results summary --path "$evidence/$name.xcresult" > "$evidence/$name-summary.json"
-    if [ ! -s "$evidence/$name-attachments/manifest.json" ]; then
-      xcrun xcresulttool export attachments --path "$evidence/$name.xcresult" --output-path "$evidence/$name-attachments" > "$evidence/$name-export.log" 2>&1
+  if [ -d "$docs/internal/evidence/$name.xcresult" ]; then
+    xcrun xcresulttool get test-results summary --path "$docs/internal/evidence/$name.xcresult" > "$docs/internal/evidence/$name-summary.json"
+    if [ ! -s "$docs/internal/evidence/$name-attachments/manifest.json" ]; then
+      xcrun xcresulttool export attachments --path "$docs/internal/evidence/$name.xcresult" --output-path "$docs/internal/evidence/$name-attachments" > "$docs/internal/evidence/$name-export.log" 2>&1
     fi
   fi
   python3 - "$evidence" "$name" "$expected" <<'PY'

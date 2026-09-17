@@ -25,7 +25,7 @@ measured**, so it is not a recorded zero-request performance result.
 Runtime diagnostics contain counters, availability, validation codes and error domain/code;
 they do not print the selected text, generated text, document name or model transcript.
 An explicit developer probe separately records the supplied React sample and source
-packets into local `recovery-evidence/explain-like-ten` artifacts for review. That probe
+packets into local `recovery-docs/internal/evidence/explain-like-ten` artifacts for review. That probe
 is excluded from all shipping targets.
 
 Explanations and their source packets are intended to persist locally beneath

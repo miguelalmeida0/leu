@@ -3,7 +3,7 @@
 set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GROUP="${1:-all}"
-OUT="$ROOT/recovery-evidence/v25-final-integration/runs/$(date '+%Y%m%d-%H%M%S')-$$"
+OUT="$ROOT/recovery-docs/internal/evidence/v25-final-integration/runs/$(date '+%Y%m%d-%H%M%S')-$$"
 mkdir -p "$OUT"
 export LEU_UI_DIAGNOSTICS=1 LEU_PDF_DIAGNOSTICS=1
 STATUS=0

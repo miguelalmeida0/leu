@@ -36,7 +36,7 @@ The received report is preserved verbatim at `reference/V25_CLAUDE_RECOVERY_REPO
 
 Xcode 26.6 (17F113) is installed. Generic iOS Simulator Debug clean builds with signing disabled fail with exit 74 during Swift package resolution (`permissionDenied`), before source compilation. Swift itself fails with `permissionDenied`; workspace-local scratch/cache/temp attempts also fail reading generated `output-file-map.json`. CoreSimulator cannot connect to its device set. These are externally blocked gates, not passing builds and not evidence that the source has no compiler errors.
 
-Evidence: `recovery-evidence/v25/native-build-final.log`, `native-build.log`, `full-qa.log`, `independent-suites.log`, `static-results.json`, and `suites/suite-results.json`. Earlier experiments are not counted as additional tests.
+Evidence: `recovery-docs/internal/evidence/v25/native-build-final.log`, `native-build.log`, `full-qa.log`, `independent-suites.log`, `static-results.json`, and `suites/suite-results.json`. Earlier experiments are not counted as additional tests.
 
 | Check | Exact result |
 | --- | --- |
@@ -101,7 +101,7 @@ cd /Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24_5
 SHELF_QA_LOG=qa-v25-recovery.log ./scripts/qa-and-copy.sh
 ```
 
-If the front gate fails, collect independent results with `SHELF_QA_RUN_DIR=recovery-evidence/local-suites python3 scripts/run-qa-suites.py`. An incomplete log is not green.
+If the front gate fails, collect independent results with `SHELF_QA_RUN_DIR=recovery-docs/internal/evidence/local-suites python3 scripts/run-qa-suites.py`. An incomplete log is not green.
 
 ## Archive comparison and package
 
@@ -313,7 +313,7 @@ The debug-only `--voice-benchmark` screen contains 56 text samples. It shows raw
 - `Shelf/Voice/Voices/VoicePreferenceStore.swift`
 - `ShelfTests/PDFIntegrationTests.swift`
 - `ShelfUITests/ShelfWorldClassUITests.swift`
-- `evidence/project-manifest.json`
+- `docs/internal/evidence/project-manifest.json`
 - `scripts/sync-xcode-sources.py`
 - `scripts/test-study-repair-tools.py`
 - `scripts/test-v244-lens-compile.py`

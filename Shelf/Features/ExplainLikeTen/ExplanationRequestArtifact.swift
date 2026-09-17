@@ -149,7 +149,7 @@ final class ExplanationRequestArtifact: @unchecked Sendable {
         // The container copy remains usable if this development-only mirror is denied.
         let workspace = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
             .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
-        roots.append(workspace.appendingPathComponent("recovery-evidence/explanation-ios-p0", isDirectory: true))
+        roots.append(workspace.appendingPathComponent("recovery-docs/internal/evidence/explanation-ios-p0", isDirectory: true))
         #endif
         if let outputDirectories { roots = outputDirectories }
         var status: [String] = []

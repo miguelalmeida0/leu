@@ -2,7 +2,7 @@
 
 2026-09-12. Convergence is **not complete**. The supplied local run proves BUILD SUCCEEDED and 243/243 core tests passed before this patch. It reports 26 Apple/PDF methods with nine assertion failures across three methods, plus the named UI integration failures. No current native pass is claimed.
 
-The supplied log is preserved in `recovery-evidence/v25-final-integration/supplied-qa-v25-recovery.log`; the original `qa-v25-recovery.log` was not overwritten. The previous convergence report describes an earlier patch and remains historical evidence.
+The supplied log is preserved in `recovery-docs/internal/evidence/v25-final-integration/supplied-qa-v25-recovery.log`; the original `qa-v25-recovery.log` was not overwritten. The previous convergence report describes an earlier patch and remains historical evidence.
 
 ## Changes and limits of the diagnosis
 
@@ -60,7 +60,7 @@ For test25, the supplied log shows the React tile tapped and then only the Libra
 | Existing assertion lines | Unchanged in every modified test file; no skip introduced |
 | Full QA | Not run: required targeted-pass precondition is unmet |
 
-Target logs: `recovery-evidence/v25-final-integration/runs/20260912-152605-87025/{A,B,C}.log`. The wrapper reports exit 1 and preserves each group's exit code. Other evidence: `core.log`, `static.json`, `runner-syntax.log`, `baseline.json`, `before-source.zip`, `changed-files.json`, and `integration.patch`.
+Target logs: `recovery-docs/internal/evidence/v25-final-integration/runs/20260912-152605-87025/{A,B,C}.log`. The wrapper reports exit 1 and preserves each group's exit code. Other evidence: `core.log`, `static.json`, `runner-syntax.log`, `baseline.json`, `before-source.zip`, `changed-files.json`, and `integration.patch`.
 
 There is no current BUILD SUCCEEDED, 243/243 assertion result, 26/26 Apple/PDF pass, complete UI pass, or QA exit 0. Permission failures are not test skips or passes.
 

@@ -9,7 +9,7 @@ if [ "$#" -eq 2 ] && [ "$1" = --resume ]; then
   run=$(cd "$2" && pwd)
   resume=true
 elif [ "$#" -eq 0 ]; then
-  run="$PWD/docs/design/study-home-evidence/native-$(date +%Y%m%d-%H%M%S)"
+  run="$PWD/docs/design/study-home-docs/internal/evidence/native-$(date +%Y%m%d-%H%M%S)"
   mkdir -p "$run"
 else
   echo "Usage: bash scripts/verify-study-home.sh [--resume evidence-directory]" >&2

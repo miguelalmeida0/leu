@@ -20,4 +20,4 @@ LATEST KNOWN PRODUCT VERIFICATION BEFORE PACKAGING:
 - withExample first-pass schema: plainMeaning + example, accepted, no repair, ~4.61s
 - Full Explain-like-10 UI: 2/2 PASS
 - Latest attached unit run: 43 executed with 2 assertion failures in one prompt-version persistence test
-See REDESIGN_HANDOFF/01_CURRENT_VERIFIED_STATE.md and attached evidence.
+See docs/internal/redesign-handoff/01_CURRENT_VERIFIED_STATE.md and attached evidence.

@@ -120,7 +120,7 @@ model execution. No p50/p95, cold/warm, memory or physical-device network measur
 
 All paths below are relative to the checkout:
 
-- `recovery-evidence/explain-like-ten/changed-code.patch`: actual diff against the 370-file
+- `recovery-docs/internal/evidence/explain-like-ten/changed-code.patch`: actual diff against the 370-file
   pre-edit snapshot, covering 29 code/project/resource/contract/script files. No Git base
   commit is invented. `changed-code.json` contains before/after hashes.
 - `preserved-source.json`: 21 unchanged sources, including the C gesture/pager sources and
@@ -146,15 +146,15 @@ simplification and formatting scores in `ACCEPTANCE_TESTS.md`.
 For focused mechanics and a separate real model probe on macOS:
 
 ```
-python3 recovery-evidence/explain-like-ten/build-targeted.py core
-python3 recovery-evidence/explain-like-ten/build-targeted.py feature
-python3 recovery-evidence/explain-like-ten/build-targeted.py tests
+python3 recovery-docs/internal/evidence/explain-like-ten/build-targeted.py core
+python3 recovery-docs/internal/evidence/explain-like-ten/build-targeted.py feature
+python3 recovery-docs/internal/evidence/explain-like-ten/build-targeted.py tests
 TMPDIR="$PWD/.build/explain-like-ten-tests" \
 LEU_EXPLANATION_TEST_ROOT="$PWD/.build/explain-like-ten-tests" \
   .build/explain-like-ten-tests/feature-tests
-python3 recovery-evidence/explain-like-ten/build-targeted.py model
+python3 recovery-docs/internal/evidence/explain-like-ten/build-targeted.py model
 .build/explain-like-ten-tests/real-explanation-probe \
-  "Shelf/Resources/Samples/React Notes.pdf" recovery-evidence/explain-like-ten
+  "Shelf/Resources/Samples/React Notes.pdf" recovery-docs/internal/evidence/explain-like-ten
 ```
 
 The debug-only `--explain-like-ten-harness` auto-opens this feature **after opening a real

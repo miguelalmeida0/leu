@@ -12,7 +12,7 @@ This checkpoint adds source-path repairs. It does **not** establish a working na
 - Developer diagnostics distinguish attempted calls, responses, acceptance and persistence, and retain the attempted source packet, raw structured candidate, validated question and actual persisted question separately. A failed call stays failed even if availability is `available`.
 - The native gate pins the original iPhone Air by default. Its first UI launch runs pages 1–3, page-3 Lens, Study and source return without resetting the library. The visible question must itself carry page-3 model provenance.
 
-[Changed-code patch](../recovery-evidence/v26-vertical-slice/changed-code.patch) contains 25 changed/added paths against this turn's captured `before-source.zip`, including Xcode membership. It is not a Git-base diff and excludes the preceding P0 repair already accepted by the user.
+[Changed-code patch](../recovery-docs/internal/evidence/v26-vertical-slice/changed-code.patch) contains 25 changed/added paths against this turn's captured `before-source.zip`, including Xcode membership. It is not a Git-base diff and excludes the preceding P0 repair already accepted by the user.
 
 ## Actual text and source mapping
 
@@ -24,7 +24,7 @@ The source remains `Shelf/Resources/Samples/React Notes.pdf`, SHA256 `7d42381fcb
 | 2 | `Stat i snapsho`; `t Setti g stae reques s anothr rende` | `State is a snapshot`; `Setting state requests another render.` |
 | 3 | `Key describ identit`; `yA stabe ky hels Reat math n itm` | `Keys describe identity`; `A stable key helps React match an item to its previous instance within a list of siblings.` |
 
-[Full actual before/after text](../recovery-evidence/v26-vertical-slice/actual-before-after.md) includes all three pages and intact code. [Structured output](../recovery-evidence/v26-vertical-slice/read-mode-blocks.json) includes canonical text, Read Mode blocks and canonical Lens source text/ranges. The page ranges are UTF16 `(19,447)`, `(19,469)` and `(19,456)`. PDFKit selection strings equal these canonical substrings exactly.
+[Full actual before/after text](../recovery-docs/internal/evidence/v26-vertical-slice/actual-before-after.md) includes all three pages and intact code. [Structured output](../recovery-docs/internal/evidence/v26-vertical-slice/read-mode-blocks.json) includes canonical text, Read Mode blocks and canonical Lens source text/ranges. The page ranges are UTF16 `(19,447)`, `(19,469)` and `(19,456)`. PDFKit selection strings equal these canonical substrings exactly.
 
 These checks executed production extraction on **macOS PDFKit**. They are not installed-app screenshots. Three separate generated PDF fixtures passed conservative filtering checks: repeated margins, insufficient pages and inconsistent geometry. Repeated body sentences and unique headings survived.
 
@@ -36,7 +36,7 @@ Its on-disk extraction version is still **3**. Replaying that snapshot through p
 
 The real snapshot contains zero attempts. A separate in-memory regression uses nonempty attempts/confidence data and verifies preservation. Neither proves an installed-library upgrade. The real file-store test failed on a denied write.
 
-The replay verifies that no React objects are eligible before migration, every repaired eligible quote resolves on its canonical page, and none equals an old damaged source. Its actual React-topic Study plan contains repaired text. That plan currently selects the component passage on page 1; this is **not** the requested model question on page 3. See [migration and planner trace](../recovery-evidence/v26-vertical-slice/migration-replay.log) and [serialized replay snapshot](../recovery-evidence/v26-vertical-slice/migration-replay-after.json).
+The replay verifies that no React objects are eligible before migration, every repaired eligible quote resolves on its canonical page, and none equals an old damaged source. Its actual React-topic Study plan contains repaired text. That plan currently selects the component passage on page 1; this is **not** the requested model question on page 3. See [migration and planner trace](../recovery-docs/internal/evidence/v26-vertical-slice/migration-replay.log) and [serialized replay snapshot](../recovery-docs/internal/evidence/v26-vertical-slice/migration-replay-after.json).
 
 ## Real model execution result
 
@@ -52,7 +52,7 @@ The replay verifies that no React objects are eligible before migration, every r
 | Persisted questions / visible model questions | 0 / 0 |
 | Raw structured response | None returned |
 
-The production provider received the exact PDF fingerprint, extraction-v4 and the 507-UTF16-unit canonical page-3 packet. The [actual model log](../recovery-evidence/v26-vertical-slice/real-page3-model-run.log) contains the full input and error. Error 1008's cause is not established. No deterministic question, mock or TTS result is counted as inference.
+The production provider received the exact PDF fingerprint, extraction-v4 and the 507-UTF16-unit canonical page-3 packet. The [actual model log](../recovery-docs/internal/evidence/v26-vertical-slice/real-page3-model-run.log) contains the full input and error. Error 1008's cause is not established. No deterministic question, mock or TTS result is counted as inference.
 
 There is an unresolved code limitation beyond the environment: admission still requires a matching deterministic semantic realization and literal extractive choices. It cannot yet admit general novel reasoning questions. The provider schema still requires MCQ choices; the requested model-generated open-recall alternative is not implemented. Lens consumes an accepted same-page question explanation rather than an independently generated Lens result. These remain release blockers even on a target where inference succeeds. No fabricated candidate or weakened semantic assertion was used to fill them.
 
@@ -75,7 +75,7 @@ There is an unresolved code limitation beyond the environment: admission still r
 
 Original A/B/C provenance remains in [the preceding report](V26_MEGA_INTELLIGENCE_REPORT.md). C's five gesture tests passed in that supplied run. The gesture driver, horizontal pager and both C test files are byte-identical to this checkpoint's baseline; there is no new C runtime result.
 
-[Verification JSON](../recovery-evidence/v26-vertical-slice/verification.json), [core XCTest log](../recovery-evidence/v26-vertical-slice/core-tests.log), [native blocker](../recovery-evidence/v26-vertical-slice/native-checkpoint.log), and [candidate source hashes](../recovery-evidence/v26-vertical-slice/candidate-source-sha256.json) preserve the evidence and its limits.
+[Verification JSON](../recovery-docs/internal/evidence/v26-vertical-slice/verification.json), [core XCTest log](../recovery-docs/internal/evidence/v26-vertical-slice/core-tests.log), [native blocker](../recovery-docs/internal/evidence/v26-vertical-slice/native-checkpoint.log), and [candidate source hashes](../recovery-docs/internal/evidence/v26-vertical-slice/candidate-source-sha256.json) preserve the evidence and its limits.
 
 ## Required execution action
 

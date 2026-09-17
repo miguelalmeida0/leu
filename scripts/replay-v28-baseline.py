@@ -9,7 +9,7 @@ import sys
 root = Path(__file__).resolve().parent.parent
 os.chdir(root)
 build = root / '.build/v27'
-proof = root / 'docs/v28/evidence/baseline'
+proof = root / 'docs/v28/docs/internal/evidence/baseline'
 build.mkdir(parents=True, exist_ok=True)
 proof.mkdir(parents=True, exist_ok=True)
 dev = Path('/Applications/Xcode.app/Contents/Developer')

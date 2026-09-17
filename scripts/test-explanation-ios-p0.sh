@@ -2,7 +2,7 @@
 # Only the remaining real-provider UI test. The app, not this script, writes generation JSON.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-run_dir="recovery-evidence/explanation-ios-p0/runs/$(date +%Y%m%d-%H%M%S)-single-ui"
+run_dir="recovery-docs/internal/evidence/explanation-ios-p0/runs/$(date +%Y%m%d-%H%M%S)-single-ui"
 mkdir -p "$run_dir"
 set +e
 xcodebuild -project Shelf.xcodeproj -scheme Shelf -configuration Debug \

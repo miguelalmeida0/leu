@@ -33,7 +33,7 @@ Six app source files changed. 354 other app/package files are byte-identical. Mo
 - Root lifecycle/source contract: PASS.
 
 The newly requested native run was actually attempted:
-../study-home-evidence/native-20260913-110849/build.log
+../study-home-docs/internal/evidence/native-20260913-110849/build.log
 
 It stopped before compilation, exit 74: CoreSimulator connection refused and an I/O permission error for Xcode's temporary workspace-state lock. No new app or UI capture is claimed.
 

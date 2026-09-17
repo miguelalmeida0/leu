@@ -56,7 +56,7 @@ The clipboard summarizer also waits for each test's actual outcome before includ
 - The new summary parser was replayed against the supplied native log and kept the one actual failed journey and all four passing outcomes, rather than including passing-test failure-labelled trees.
 - Byte comparisons confirm no changes in Progress root ownership, its native journey assertions, design resources, Reader source, or core source/tests.
 
-Logs and scope comparisons are in `evidence/v23-11/`. The exact scoped code diff is `docs/V23_11_CODE_CHANGES.diff`. Historic patch notes describe earlier candidates, not certification of this one.
+Logs and scope comparisons are in `docs/internal/evidence/v23-11/`. The exact scoped code diff is `docs/V23_11_CODE_CHANGES.diff`. Historic patch notes describe earlier candidates, not certification of this one.
 
 ## Native release acceptance
 

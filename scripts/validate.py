@@ -90,7 +90,7 @@ def main() -> int:
         sizes = [(len(p.read_text().splitlines()), str(p.relative_to(ROOT))) for p in sources]
         for lines, path in sizes:
             require(lines <= 300, f"God-file boundary exceeded: {path} ({lines} lines)")
-        manifest = json.loads((ROOT / "evidence/project-manifest.json").read_text())
+        manifest = json.loads((ROOT / "docs/internal/evidence/project-manifest.json").read_text())
         for key, folder in [("appSources", "Shelf"), ("unitTestSources", "ShelfTests"), ("uiTestSources", "ShelfUITests")]:
             expected = {str(p.relative_to(ROOT)) for p in (ROOT / folder).rglob("*.swift")}
             require(expected == set(manifest[key]), f"Update native target membership/inventory: {key}")

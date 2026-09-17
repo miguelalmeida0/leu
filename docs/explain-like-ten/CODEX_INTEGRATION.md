@@ -28,7 +28,7 @@ not an assumption:
 | Referenced | Present | Action taken |
 |---|---|---|
 | `CURRENT_STATE_AND_OWNERSHIP.md` | no | Ownership inferred from the prompt only. Collision map below. |
-| checkpoint manifest | no | Used `SOURCE_SHA256SUMS.txt` + `evidence/project-manifest.json` instead. |
+| checkpoint manifest | no | Used `SOURCE_SHA256SUMS.txt` + `docs/internal/evidence/project-manifest.json` instead. |
 | `RUNTIME_EXPLANATION_PROMPT.txt` | no | Authored as `Shelf/Features/ExplainLikeTen/RUNTIME_EXPLANATION_PROMPT.txt`, version 1. |
 | `contracts/explanation-candidate.schema.json` | no | Authored at `contracts/explanation-candidate.schema.json`. |
 | `ACCEPTANCE_TESTS.md` | no | Authored at `docs/explain-like-ten/ACCEPTANCE_TESTS.md`. |
@@ -136,12 +136,12 @@ selected block. Both feed `ExplanationPacketBuilder` unchanged, so no extraction
 | `LearningIntelligence.swift`, `AppleLearningIntelligenceProvider.swift` | Codex | read only; addition proposed as a patch |
 | Semantic Core, extraction, `LearningRepository`, migrations | Codex | untouched |
 | Reader shell, shared Lens / Study / Trails, speech | Codex | untouched; hooks proposed as a patch |
-| `Shelf.xcodeproj/project.pbxproj`, `evidence/project-manifest.json` | Codex | **untouched** — see below |
+| `Shelf.xcodeproj/project.pbxproj`, `docs/internal/evidence/project-manifest.json` | Codex | **untouched** — see below |
 | Design tokens (`ShelfTheme`, `ShelfControls`) | Codex | consumed only, nothing added |
 | `Shelf/Features/ExplainLikeTen/**`, `ShelfTests/ExplainLikeTenFeatureTests.swift`, `contracts/`, `docs/explain-like-ten/**` | this feature | additive |
 
 During this session I ran `scripts/sync-xcode-sources.py` against the working tree by mistake.
-It modified `evidence/project-manifest.json`. I restored that file byte-for-byte from the
+It modified `docs/internal/evidence/project-manifest.json`. I restored that file byte-for-byte from the
 supplied archive and verified with `diff -rq` that the working tree now differs from the
 baseline **only by added files**. `project.pbxproj` was confirmed byte-identical throughout.
 

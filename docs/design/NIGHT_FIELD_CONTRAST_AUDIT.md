@@ -6,7 +6,7 @@ Built baseline: /Users/malmeida/Downloads/Leu-NightField-Pass1/LeuNativeLatest. 
 
 Patched review checkout: /Users/malmeida/Documents/ChatGPT/Leu/LeuNightFieldContrast. The original downloaded checkout has not been changed. Its earlier build does not verify this patch.
 
-206 protected files remain byte-identical: core learning/provenance, model providers/prompts/validation, persistence, PDF extraction, voice engines/Pronunciation/Supertonic, reader model and horizontal page-turn implementation. See evidence/protected-paths.json. AppPreferences changes only reader color returns. Reconstruction's post-check display stays active after rearranging so correct positions update progressively; no answer-generation or scoring rules changed.
+206 protected files remain byte-identical: core learning/provenance, model providers/prompts/validation, persistence, PDF extraction, voice engines/Pronunciation/Supertonic, reader model and horizontal page-turn implementation. See docs/internal/evidence/protected-paths.json. AppPreferences changes only reader color returns. Reconstruction's post-check display stays active after rearranging so correct positions update progressively; no answer-generation or scoring rules changed.
 
 ## Semantic colors before / after
 
@@ -153,7 +153,7 @@ Measured failures: **0 in the 42 tested color pairs**. Application-wide rendered
 - Shelf/Voice/UI/VoicePlayerStrip.swift
 - Shelf/Voice/UI/VoiceSettingsSheet.swift
 - Shelf.xcodeproj/project.pbxproj
-- evidence/project-manifest.json
+- docs/internal/evidence/project-manifest.json
 - scripts/check-night-field.py
 - scripts/sync-xcode-sources.py
 - scripts/test-night-field-contrast.py
@@ -249,4 +249,4 @@ No synthetic images or old screenshots are presented as results.
 
 Run bash scripts/verify-night-field-contrast.sh locally from the patched review checkout. It runs static checks, native build and relevant UI tests, exporting actual screenshot attachments into timestamped evidence. Existing UI tests use the separate Shelf-UITests store; the normal library is not reset. The script does not automatically certify screenshots.
 
-The pass remains **OPEN** until the real simulator UI has been reviewed. The exact patch is evidence/night-field-contrast.patch.
+The pass remains **OPEN** until the real simulator UI has been reviewed. The exact patch is docs/internal/evidence/night-field-contrast.patch.

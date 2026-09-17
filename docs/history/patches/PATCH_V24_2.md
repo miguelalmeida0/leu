@@ -78,7 +78,7 @@ The existing V23 test methods are unchanged. The existing core tests remain; nin
 
 The optional recovery harness first typechecks the actual annotated model. This Linux Swift distribution's Observation runtime has an unresolved linker symbol, so its separate execution phase removes only Observation annotations in generated `.build` copies and substitutes platform adapters. It does not alter production source, relax the 204 core tests or claim to verify SwiftUI observation/rendering. The native interruption test remains mandatory.
 
-Logs are under `evidence/v24-2/`. `docs/V24_2_CODE_CHANGES.diff` contains the code patch. The semantic compiler/rules, design-system files and bundled resources compare byte-for-byte with V24.1.
+Logs are under `docs/internal/evidence/v24-2/`. `docs/V24_2_CODE_CHANGES.diff` contains the code patch. The semantic compiler/rules, design-system files and bundled resources compare byte-for-byte with V24.1.
 
 ## What this does not certify
 

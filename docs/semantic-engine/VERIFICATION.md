@@ -20,13 +20,13 @@ Date: 2026-09-12. This records fresh checks during the new architecture audit, n
 | UI inventory | 59 methods; zero executed |
 | Runtime total | 320 inventoried methods; zero executed, not 320 passed and not 320 assertion failures |
 
-See [results.json](evidence/results.json), [build.log](evidence/build.log), [runtime-suites.log](evidence/runtime-suites.log), and [suite-results.json](evidence/suites/suite-results.json). All independent suites were attempted despite the first failure. A single successful source gate is not evidence of semantic usefulness.
+See [results.json](docs/internal/evidence/results.json), [build.log](docs/internal/evidence/build.log), [runtime-suites.log](docs/internal/evidence/runtime-suites.log), and [suite-results.json](docs/internal/evidence/suites/suite-results.json). All independent suites were attempted despite the first failure. A single successful source gate is not evidence of semantic usefulness.
 
 The first audit is a repository-wide file/import/dependency inventory with focused inspection of import, reader, extraction, normalization, persistence, search, concepts, questions, study, Lens, Trails and voice. [SOURCE_AUDIT.json](SOURCE_AUDIT.json) captures per-file hashes and inventory, allowing the documentation-only scope to be checked. It is not a Git diff; this repository has no commits or tracked files.
 
 ## Existing corpus inspection
 
-Python pypdf metadata/text inspection found six bundled PDFs, each four pages: Coding Interviews, Computer Science Essentials, Design Patterns, JavaScript Deep Dive, React Notes and System Design. All 24 pages return nonempty text with pypdf. File sizes range from 6,255 to 7,573 bytes. See [bundled-corpus.json](evidence/bundled-corpus.json).
+Python pypdf metadata/text inspection found six bundled PDFs, each four pages: Coding Interviews, Computer Science Essentials, Design Patterns, JavaScript Deep Dive, React Notes and System Design. All 24 pages return nonempty text with pypdf. File sizes range from 6,255 to 7,573 bytes. See [bundled-corpus.json](docs/internal/evidence/bundled-corpus.json).
 
 This proves only the existence, size and pypdf-readable text of those files. It does not execute PDFKit/Vision, validate geometry, establish OCR confidence or represent a 200-page real-world book. The requested ten document classes and 20/100/300/800-page benchmarks are not present as a completed semantic-engine evaluation suite.
 
@@ -68,7 +68,7 @@ SHELF_QA_LOG=qa-semantic-baseline.log ./scripts/qa-and-copy.sh
 If the front gate fails, collect every independent runtime suite with:
 
 ```sh
-SHELF_QA_RUN_DIR=docs/semantic-engine/evidence/local-suites python3 scripts/run-qa-suites.py
+SHELF_QA_RUN_DIR=docs/semantic-engine/docs/internal/evidence/local-suites python3 scripts/run-qa-suites.py
 ```
 
 The source implementation phase, semantic quality gates and device benchmarks remain outstanding. Neither audit completion nor successful compilation alone would satisfy the user's final acceptance scenario.

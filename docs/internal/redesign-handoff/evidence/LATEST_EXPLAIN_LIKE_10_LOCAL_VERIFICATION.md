@@ -10,7 +10,7 @@ bash scripts/test-explain-like-ten.sh
 
 Command line invocation:
 
-    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Shelf.xcodeproj -scheme Shelf -configuration Debug -destination "platform=iOS Simulator,id=A248FB9E-B969-4CF6-A0ED-B2013A3C60A6" -derivedDataPath .build/ios-tests -parallel-testing-enabled NO CODE\_SIGNING\_ALLOWED=NO -resultBundlePath recovery-evidence/explanation-ios-p0/runs/20260912-225926-single-ui/native.xcresult test "-only-testing\:ShelfUITests/ShelfExplainLikeTenUITests/testRealExplanationAndRefinementsStayOnPageThree"
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Shelf.xcodeproj -scheme Shelf -configuration Debug -destination "platform=iOS Simulator,id=A248FB9E-B969-4CF6-A0ED-B2013A3C60A6" -derivedDataPath .build/ios-tests -parallel-testing-enabled NO CODE\_SIGNING\_ALLOWED=NO -resultBundlePath recovery-docs/internal/evidence/explanation-ios-p0/runs/20260912-225926-single-ui/native.xcresult test "-only-testing\:ShelfUITests/ShelfExplainLikeTenUITests/testRealExplanationAndRefinementsStayOnPageThree"
 
 Build settings from command line:
 
@@ -28,7 +28,7 @@ Resolved source packages:
 
 Writing result bundle at path:
 
-&#x9;/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24\_5/recovery-evidence/explanation-ios-p0/runs/20260912-225926-single-ui/native.xcresult
+&#x9;/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24\_5/recovery-docs/internal/evidence/explanation-ios-p0/runs/20260912-225926-single-ui/native.xcresult
 
 ComputePackagePrebuildTargetDependencyGraph
 
@@ -1790,13 +1790,13 @@ Test Suite 'Selected tests' passed at 2026-09-12 23:00:56.812.
 
 Test session results, code coverage, and logs:
 
-&#x9;/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24\_5/recovery-evidence/explanation-ios-p0/runs/20260912-225926-single-ui/native.xcresult
+&#x9;/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24\_5/recovery-docs/internal/evidence/explanation-ios-p0/runs/20260912-225926-single-ui/native.xcresult
 
 \*\* TEST SUCCEEDED \*\*
 
 Testing started
 
-Single-test evidence: recovery-evidence/explanation-ios-p0/runs/20260912-225926-single-ui (xcodebuild exit 0)
+Single-test evidence: recovery-docs/internal/evidence/explanation-ios-p0/runs/20260912-225926-single-ui (xcodebuild exit 0)
 
 PASS: synced 177 app, 12 unit-test, 14 UI-test Swift files.
 
@@ -1804,7 +1804,7 @@ PASS: Knowledge and learning remain offline; Supertonic uses one explicit pinned
 
 Command line invocation:
 
-    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Shelf.xcodeproj -scheme Shelf -configuration Debug -destination "platform=iOS Simulator,id=A248FB9E-B969-4CF6-A0ED-B2013A3C60A6" -derivedDataPath .build/ios-tests -parallel-testing-enabled NO CODE\_SIGNING\_ALLOWED=NO -resultBundlePath recovery-evidence/explanation-ios-p0/runs/20260912-230059-72767/native.xcresult test "-only-testing\:ShelfTests/ExplainLikeTenFeatureTests" "-only-testing\:ShelfTests/ExplanationAdversarialTests" "-only-testing\:ShelfTests/ExplanationPersistenceTests" "-only-testing\:ShelfUITests/ShelfExplainLikeTenUITests"
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Shelf.xcodeproj -scheme Shelf -configuration Debug -destination "platform=iOS Simulator,id=A248FB9E-B969-4CF6-A0ED-B2013A3C60A6" -derivedDataPath .build/ios-tests -parallel-testing-enabled NO CODE\_SIGNING\_ALLOWED=NO -resultBundlePath recovery-docs/internal/evidence/explanation-ios-p0/runs/20260912-230059-72767/native.xcresult test "-only-testing\:ShelfTests/ExplainLikeTenFeatureTests" "-only-testing\:ShelfTests/ExplanationAdversarialTests" "-only-testing\:ShelfTests/ExplanationPersistenceTests" "-only-testing\:ShelfUITests/ShelfExplainLikeTenUITests"
 
 Build settings from command line:
 
@@ -1822,7 +1822,7 @@ Resolved source packages:
 
 Writing result bundle at path:
 
-&#x9;/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24\_5/recovery-evidence/explanation-ios-p0/runs/20260912-230059-72767/native.xcresult
+&#x9;/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24\_5/recovery-docs/internal/evidence/explanation-ios-p0/runs/20260912-230059-72767/native.xcresult
 
 ComputePackagePrebuildTargetDependencyGraph
 
@@ -3416,7 +3416,7 @@ Test Suite 'Selected tests' passed at 2026-09-12 23:02:30.771.
 
 Test session results, code coverage, and logs:
 
-&#x9;/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24\_5/recovery-evidence/explanation-ios-p0/runs/20260912-230059-72767/native.xcresult
+&#x9;/Users/malmeida/Documents/ChatGPT/Leu/LeuNativeV24\_5/recovery-docs/internal/evidence/explanation-ios-p0/runs/20260912-230059-72767/native.xcresult
 
 Failing tests:
 
@@ -3428,11 +3428,11 @@ Failing tests:
 
 Testing started
 
-Explanation evidence: recovery-evidence/explanation-ios-p0/runs/20260912-230059-72767
+Explanation evidence: recovery-docs/internal/evidence/explanation-ios-p0/runs/20260912-230059-72767
 
 **Leu/LeuNativeV24\_5** on ** master** **[?]** took **3m31s** 
 
-**❯** cat recovery-evidence/explanation-ios-p0/latest-ios-generation.json
+**❯** cat recovery-docs/internal/evidence/explanation-ios-p0/latest-ios-generation.json
 
 {
 

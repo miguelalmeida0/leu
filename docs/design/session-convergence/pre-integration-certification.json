@@ -1,5 +1,5 @@
 {
-  "docs/design/study-home-evidence/native-20260913-111815/default-summary.json": {
+  "docs/design/study-home-docs/internal/evidence/native-20260913-111815/default-summary.json": {
     "sha256": "dbad5149e8b920477fad0794f726837b62c843df34688a6a56de7d62d116df93",
     "result": {
       "devicesAndConfigurations": [
@@ -38,7 +38,7 @@
       "totalTestCount": 7
     }
   },
-  "docs/design/study-home-evidence/native-20260913-111815/ax1-repair/run-20260913-114600/single-summary.json": {
+  "docs/design/study-home-docs/internal/evidence/native-20260913-111815/ax1-repair/run-20260913-114600/single-summary.json": {
     "sha256": "eab514cd041219316c0cda5c16ad711f0f594d913fdcd04a1395d1f4d50ae6d4",
     "result": {
       "devicesAndConfigurations": [
@@ -77,7 +77,7 @@
       "totalTestCount": 1
     }
   },
-  "docs/design/study-home-evidence/native-20260913-111815/ax1-repair/run-20260913-114600/full-summary.json": {
+  "docs/design/study-home-docs/internal/evidence/native-20260913-111815/ax1-repair/run-20260913-114600/full-summary.json": {
     "sha256": "3d7bbfc072324825dd47c4e76e041ab031f1890cc60760a6426e039ca76fd631",
     "result": {
       "devicesAndConfigurations": [
