@@ -1,0 +1,3537 @@
+{
+ "version": 1,
+ "split": "sealed36",
+ "authors": [
+  "independent annotator F (V36 sealed)",
+  "independent annotator G (V36 sealed)",
+  "independent annotator H (V36 sealed)",
+  "independent annotator I (V36 sealed)"
+ ],
+ "guide": "V35 labeling guide + V36 addendum (adversarial categories); each author saw only a catalog of grounded source sentences",
+ "note": "V36 sealed split: four independent annotators (F, G, H, I) writing in four voices, written after the V36 reader was frozen, scored once. Aggregates only.",
+ "cases": [
+  {
+   "id": "s6f-001",
+   "document": "JavaScript Deep Dive",
+   "concept": "closure",
+   "page": null,
+   "text": "Function plus its enclosing scope.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "function together with access to its"
+   ],
+   "categories": [
+    "veryShort",
+    "terse",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6f-pg1",
+   "notes": "Only five words, but 'function plus its enclosing scope' is the whole definition (a function together with access to its surrounding lexical environment) and nothing is wrong.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-002",
+   "document": "Mobile Mastery",
+   "concept": "Load balancer",
+   "page": null,
+   "text": "A load balancer operates rather like a clearing house: each incoming request is allocated to one of several interchangeable copies of the backend, and any copy that fails its health check is simply left out of the allocation.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "distributes incoming traffic across multiple healthy backend"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "novelVocabulary",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "s6f-pg2",
+   "notes": "Spreading requests over healthy backend copies is right, but the purpose (scalability, availability, failover) is never stated, so mostlyUnderstood rather than understood.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-003",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 1,
+   "text": "Time complexity measures how the amount of work scales as the input grows, relative to whatever cost model has been assumed. A linear scan necessarily examines every single element, there is no way round that, whereas binary search works by putting the data into order as it goes, halving the range at each step.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "linear scan may inspect every element",
+     "confusedWith": null
+    },
+    {
+     "kind": "reversal",
+     "claim": "the data must have a compatible ordering",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "how work grows with input size"
+   ],
+   "categories": [
+    "multipleMisconceptions",
+    "absoluteVsQualified",
+    "subjectObjectReversal",
+    "confidentlyWrong",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": "s6f-pg4",
+   "notes": "Growth of work with input under a model is right, but 'necessarily examines every single element' makes the source's 'may' absolute, and binary search is said to produce the ordering that the source makes its precondition.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-004",
+   "document": "Mobile Mastery",
+   "concept": "Structured output",
+   "page": null,
+   "text": "Structured output is to a language model what a standardised form is to a bureaucracy: instead of free prose the model must answer by filling in fixed fields, some of which accept only values from a set list, so that the program downstream can parse the answer reliably and check it against the schema before relying on it.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "machine-readable schema such as JSON fields/enums",
+    "AI output safer to consume programmatically"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Constraining the model's answer to fixed fields and allowed values, and the resulting safe programmatic consumption with schema checks, are both expressed correctly through a bureaucratic-form analogy.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-005",
+   "document": "Design Patterns",
+   "concept": "pattern",
+   "page": null,
+   "text": "I think a pattern is kind of about design problems that keep coming back? like something to do with recurring problems, maybe.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "s6f-pg3",
+   "notes": "Ties patterns to recurring design problems but never says when a pattern is useful (when it makes the problem easier to understand): the right words without the relationship.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-006",
+   "document": "System Design",
+   "concept": null,
+   "page": 1,
+   "text": "One should hand the screens a small immutable summary of the document rather than the database object itself; the justification is essentially one of transaction costs, since database objects are heavy and shipping them through every screen consumes memory and slows down each render.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6f-pg5",
+   "notes": "The design choice (an immutable summary instead of the database object) is right, but it is justified by memory and speed, whereas the source's reason is keeping boundaries changeable and rendering separate from storage details.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-007",
+   "document": "React Notes",
+   "concept": "Rendering",
+   "page": null,
+   "text": "React and the screen.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse"
+   ],
+   "paraphraseGroup": "s6f-pg6",
+   "notes": "Four words naming React and the screen; nothing about rendering calculating the UI description, so there is nothing to judge.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-008",
+   "document": "Mobile Mastery",
+   "concept": "TypeScript",
+   "page": null,
+   "text": "TypeScript is, in essence, JavaScript to which a static type system has been added, the types being checked before the program is ever run, so that a good many integration mistakes are caught early; the annotations double as documentation of the contracts between modules, for colleagues and editor tooling alike. Compatibility is decided by shape rather than by name, much as an enzyme accepts any substrate that fits its active site. Quite often the type need not be written at all, since the compiler works it out from the value, and it also validates network data at runtime, so a malformed API response is rejected on arrival.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "does not validate network data at runtime",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "static type system checked before runtime",
+    "catches many integration mistakes earlier and documents",
+    "can often determine a value's type"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "oppositeMeaningSameWords",
+    "negation",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Everything (static types checked before runtime, early error catching, contracts, structural compatibility, inference) is right except the one clause that TypeScript validates network data at runtime, which the source explicitly denies.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-009",
+   "document": "React Notes",
+   "concept": null,
+   "page": 2,
+   "text": "The rule is quite simple: never use the array index as a key, under any circumstances, because it is always wrong. The safest choice is to generate a fresh random key on every render, since a brand-new key guarantees that React treats each item as up to date.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "array index can be a poor key",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "random key also destroys continuity between renders",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "absoluteVsQualified",
+    "negation",
+    "confidentlyWrong",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Turns 'an index can be a poor key when items move, are inserted or removed' into an absolute ban and recommends fresh random keys per render, which the source says destroy continuity between renders.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-010",
+   "document": "Mobile Mastery",
+   "concept": "Cache",
+   "page": null,
+   "text": "For instance, when my browser keeps the department logo after the first visit so that it doesn't have to download it all over again every time I open a page.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "A single browser example of reusing a stored copy, with no general statement of a faster layer keeping reusable results or of its benefits and risks; torn with mostlyUnderstood, chose fragile because the idea never leaves the example.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-011",
+   "document": "JavaScript Deep Dive",
+   "concept": "closure",
+   "page": null,
+   "text": "As I understand it, a closure is not the function on its own but the function taken together with the environment in which it was written: from inside the function one can still reach the variables that were in scope around it. The analogy I find most helpful is that of a symbiont, which cannot really be described apart from the host it lives in and continues to draw upon; the function, similarly, keeps drawing on its surroundings.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "function together with access to its"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "novelVocabulary",
+    "verbose",
+    "negation"
+   ],
+   "paraphraseGroup": "s6f-pg1",
+   "notes": "A function paired with continuing access to the variables around where it was written is the full definition, given here with a symbiont analogy; nothing is wrong.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-012",
+   "document": "Mobile Mastery",
+   "concept": "Context",
+   "page": null,
+   "text": "Context does not spare you the intermediate components: the value is still handed down by hand through every layer until it reaches the descendant that needs it, much like goods moving along a supply chain in which each middleman must take possession before passing them on. For that reason it is best reserved for data that only one component cares about, rather than app-wide matters such as the theme or the logged-in user.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "without manually passing it through every",
+     "confusedWith": "Prop drilling"
+    },
+    {
+     "kind": "contradiction",
+     "claim": "fits cross-cutting data such as theme",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "oppositeMeaningSameWords",
+    "negation",
+    "confidentlyWrong",
+    "novelExample",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes prop drilling (passing the value by hand through every intermediate component), which is exactly what the source says Context avoids, and then denies that it suits cross-cutting data such as theme or the authenticated user.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-013",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 1,
+   "text": "it's how work grows with input size (under some model). linear search always ends up touching every item, and binary search sorts the list while it narrows it down",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "linear scan may inspect every element",
+     "confusedWith": null
+    },
+    {
+     "kind": "reversal",
+     "claim": "the data must have a compatible ordering",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "how work grows with input size"
+   ],
+   "categories": [
+    "multipleMisconceptions",
+    "absoluteVsQualified",
+    "subjectObjectReversal",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": "s6f-pg4",
+   "notes": "Same understanding as the group: growth with input size is right, 'always ends up touching every item' overgeneralizes the qualified 'may', and binary search is said to sort the data it actually requires to be ordered.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-014",
+   "document": "Mobile Mastery",
+   "concept": "Load balancer",
+   "page": null,
+   "text": "Splits incoming requests among several working server copies.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "distributes incoming traffic across multiple healthy backend"
+   ],
+   "categories": [
+    "terse",
+    "paraphrase",
+    "novelVocabulary",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "s6f-pg2",
+   "notes": "Requests shared among healthy ('working') instances is the definition, but nothing says why (scalability, availability, failover), as in the rest of the group.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-015",
+   "document": "Mobile Mastery",
+   "concept": "Abstraction",
+   "page": null,
+   "text": "An abstraction is a simplified model that hides whatever detail doesn't matter for the task in hand, much as a price summarises an entire supply chain for the buyer, who has no need to know about the farms and freighters behind it. It lets whoever uses it think at the appropriate level, and ideally it conceals the parts most likely to change while exposing what the consumer actually cares about.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "hides irrelevant detail for a particular task",
+    "lets callers reason at the right level"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "novelVocabulary",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "A simplified model hiding task-irrelevant detail, the right-level purpose and hiding volatility are all expressed correctly through a price analogy.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-016",
+   "document": "Design Patterns",
+   "concept": "pattern",
+   "page": null,
+   "text": "As far as I can tell, the notion of a pattern is bound up with the recurrence of design problems, the same kind of difficulty presenting itself again and again across different systems.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6f-pg3",
+   "notes": "Links patterns to recurring design problems but gives no account of when a pattern is useful (making the problem easier to understand), so the central relationship is missing.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-017",
+   "document": "React Notes",
+   "concept": "Rendering",
+   "page": null,
+   "text": "It's when it does its thing so it shows up.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "terse"
+   ],
+   "paraphraseGroup": "s6f-pg6",
+   "notes": "The repeated 'it' leaves unclear what acts on what, and 'shows up' says nothing about calculating a description; as empty as the rest of the group.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-018",
+   "document": "System Design",
+   "concept": null,
+   "page": 1,
+   "text": "Give screens an immutable summary, not the DB object, because the DB object's too heavy and makes the UI slow.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "irrelevantPlausible",
+    "negation"
+   ],
+   "paraphraseGroup": "s6f-pg5",
+   "notes": "Right recommendation (immutable summary, not the database object) justified by weight and speed, which the source does not give; its reason is changeable boundaries and keeping rendering separate from storage.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-019",
+   "document": "Mobile Mastery",
+   "concept": "CI",
+   "page": null,
+   "text": "Continous integration refers to the automatic merging of changes through a repeatable battery of checks: build, lint, type checking, tests. It is often asserted that CI catches defects, but strictly speaking what one observes is a correlation; teams which use CI tend to ship fewer defects, which may simply reflect that better-run teams adopt it, not that the checks themselves stop anything before the merge.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "It catches defects before merge",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "automatically integrating changes through repeatable checks"
+   ],
+   "categories": [
+    "causeVsCorrelation",
+    "misconceptionParaphrase",
+    "negation",
+    "novelVocabulary",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The definition is right, but the source's causal claim that CI catches defects before merge is recast as a mere correlation explained by team quality.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-020",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 3,
+   "text": "It's like a library: the actual files are kept under a stable ID, and alongside them there's a separate catalogue of metadata that people can search through.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [
+    "original files by stable identifier"
+   ],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "partiallyCorrect",
+    "paraphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Retells the library example correctly but never states the lesson (different representations serve different operations; choose by the operations that must be cheap, not by sophistication), so the central idea is only implied.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-021",
+   "document": "Mobile Mastery",
+   "concept": "Primitive values",
+   "page": null,
+   "text": "Primitive values are simply the basic built-in objects of JavaScript: strings, numbers, booleans, arrays and the like. When one of them is assigned to a second variable, both names end up pointing at one and the same value, so that if b is later changed, a changes along with it; that, surely, is the whole point of calling them primitive.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "JavaScript values that are not objects",
+     "confusedWith": null
+    },
+    {
+     "kind": "confusion",
+     "claim": "Assigning them copies the value",
+     "confusedWith": "Reference semantics"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Calls primitives objects (even listing arrays) and gives them shared-reference assignment, the object behaviour the source contrasts them with; two distinct errors.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-022",
+   "document": "JavaScript Deep Dive",
+   "concept": "closure",
+   "page": null,
+   "text": "Put simply, a closure is when the outer function holds on to the variables of the inner function, so that the enclosing function can still reach whatever was declared inside the nested one.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "access to its surrounding lexical environment",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "subjectObjectReversal",
+    "misconceptionParaphrase",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Reverses the direction of access: the function keeps access to its surrounding (outer) environment, not the outer function to the inner function's variables.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-023",
+   "document": "Mobile Mastery",
+   "concept": "Environment variable",
+   "page": null,
+   "text": "An enviroment variable is, so to speak, a labelled setting (a name paired with a value) which the running process picks up from the environment it has been launched in; the address of the database, or a flag saying whether this is production, would be typical instances.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "configuration value provided by the process environment"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The definition (a key-value setting supplied by the process environment) is right, but the reason it matters, keeping deploy-time configuration out of source code, is not stated.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-024",
+   "document": "Mobile Mastery",
+   "concept": null,
+   "page": 3,
+   "text": "Section one follows a browser request on its round trip: how it travels over the network, how routing and load balancers direct it to the right server, where a cache or CDN may answer it early, and how the response makes its way back, rather as one might trace a shipment through a distribution network of hubs and regional warehouses.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "How browser requests travel, get routed"
+   ],
+   "categories": [
+    "paraphrase",
+    "multipleConcepts",
+    "novelExample",
+    "novelVocabulary",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Travel, routing, caching and return of browser requests are all covered in different words, naming routing, load balancing and caching along the way; nothing is wrong.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-025",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 1,
+   "text": "In binary search the ordering of the collection is brought about by the repeated bisection itself, whereas in a linear scan each and every element is invariably inspected; what time complexity captures, under a chosen model of cost, is the rate at which work increases with the size of the input, rather like a dose-response curve.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "linear scan may inspect every element",
+     "confusedWith": null
+    },
+    {
+     "kind": "reversal",
+     "claim": "the data must have a compatible ordering",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "how work grows with input size"
+   ],
+   "categories": [
+    "multipleMisconceptions",
+    "absoluteVsQualified",
+    "subjectObjectReversal",
+    "misconceptionParaphrase",
+    "novelExample"
+   ],
+   "paraphraseGroup": "s6f-pg4",
+   "notes": "Same two errors as the group in passive, reordered form: every element 'invariably' inspected overgeneralizes 'may', and bisection is said to create the ordering that binary search presupposes.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-026",
+   "document": "Design Patterns",
+   "concept": "pattern",
+   "page": null,
+   "text": "Patterns have to do with recurring design problems.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "s6f-pg3",
+   "notes": "Names the recurring design problem but not what makes a pattern useful (easier understanding); a gesture at the idea rather than the relationship.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-027",
+   "document": "Mobile Mastery",
+   "concept": "Load balancer",
+   "page": null,
+   "text": "Incoming traffic is apportioned by the balancer among multiple instances of the backend, rather as an ant colony divides foraging among its workers, with any instance judged unhealthy being withdrawn from the rotation.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "distributes incoming traffic across multiple healthy backend"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "s6f-pg2",
+   "notes": "Distribution over healthy instances is stated in passive, biological terms; the purpose (scalability, availability, failover) is absent, as in the rest of the group.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-028",
+   "document": "React Notes",
+   "concept": "Rendering",
+   "page": null,
+   "text": "Rendering is, if I have understood the notes correctly, one of the keystone processes of the React ecosystem, in much the way that metabolism is one of the fundamental processes of a living organism: a great deal of the framework's behaviour is organised around it, it has to do with what the user ends up seeing on the screen, and it is therefore clearly something that anyone working on interfaces ought to understand well.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "verbose",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6f-pg6",
+   "notes": "Long and fluent but content-free: rendering is 'fundamental' and concerns what appears on screen, with no statement that it calculates the UI description.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-029",
+   "document": "System Design",
+   "concept": null,
+   "page": 1,
+   "text": "Just as a cell exports a compact signalling molecule rather than the organelle that made it, the application should pass the view an immutable summary instead of the database object; this is favoured chiefly because the full object is metabolically expensive, being large in memory and slow to re-render.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "irrelevantPlausible",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6f-pg5",
+   "notes": "Right choice (an immutable summary rather than the database object) defended on memory and re-render cost, a reason the source never gives; it cites changeable boundaries and separating rendering from storage.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-030",
+   "document": "JavaScript Deep Dive",
+   "concept": "closure",
+   "page": null,
+   "text": "By 'closure' is meant the pairing of a function with its lexical surroundings, such that the variables visible at the point where the function was defined remain reachable from within its body.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "function together with access to its"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6f-pg1",
+   "notes": "A function paired with reachable variables from where it was defined is exactly a function with access to its surrounding lexical environment; correct and complete.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-031",
+   "document": "Mobile Mastery",
+   "concept": "Optimistic concurrency in UI",
+   "page": null,
+   "text": "It lets it change straight away on the screen, then it gets compared with the one the server has, and if they don't match it has to be sorted out somehow.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gestures at an immediate local change followed by reconciliation with the server, but the pronouns hide what changes and what is compared, and version/conflict rules and the purpose are missing; torn with mostlyUnderstood, chose fragile.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-032",
+   "document": "Mobile Mastery",
+   "concept": "TypeScript",
+   "page": null,
+   "text": "TypeScript = JavaScript plus types that get checked before the code actually runs. You often don't even have to write the types, it works them out from the values. None of that survives at runtime though, transpilation strips it all back to plain JS.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "static type system checked before runtime",
+    "can often determine a value's type"
+   ],
+   "categories": [
+    "negation",
+    "absoluteVsQualified",
+    "multipleConcepts",
+    "partiallyCorrect",
+    "paraphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition, (often) inferred types and erasure at runtime are right, but the purpose (catching integration mistakes early and documenting contracts) is missing.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-033",
+   "document": "Mobile Mastery",
+   "concept": "Cache",
+   "page": null,
+   "text": "I would describe a cache in terms of inventory: rather than manufacturing every order from raw materials, a shop keeps finished goods on a shelf near the till, so repeat requests are served quickly and the factory (the database, or a paid API) is spared the expensive work. The gains are lower latency, less database load, lower API bills and less computation. The price is freshness, since the shelf may hold yesterday's goods, plus extra complexity; and, somewhat counter-intuitively, if the shelf empties at a bad moment every customer is sent to the factory at once, so load can spike exactly when protection was most needed.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "faster storage layer that keeps reusable results",
+    "can reduce latency, database load, API cost",
+    "can accidentally amplify load exactly when"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "novelVocabulary",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "A faster store of reusable results, the latency/load/cost gains, the freshness trade-off and the load-amplification risk are all correct, through an inventory analogy.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-034",
+   "document": "React Notes",
+   "concept": null,
+   "page": 2,
+   "text": "Keys work rather like the ear tags a field biologist attaches to animals: they let React recognise each list item as the same individual from one render to the next, so that when the list is reshuffled no item ends up with another item's local state. Using the item's position in the array as its tag is risky, since positions change whenever items move, are added or are taken out.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "stable key helps React match an item",
+    "should not make one item inherit",
+    "array index can be a poor key"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "novelVocabulary",
+    "negation",
+    "partiallyCorrect",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Identity matching across renders, no inheriting of another item's state and the index risk are right, but the point that a freshly generated random key destroys continuity is missing.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-035",
+   "document": "Mobile Mastery",
+   "concept": null,
+   "page": 333,
+   "text": "Infinite feeds are a textbook case of the attention economy: platforms build endless scrolling because it maximises engagement and therefore advertising revenue, and there is some evidence that it encourages compulsive use.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "True-sounding remarks on the economics of engagement, but nothing about the drill's scenario (millions of rows, continuous scrolling, new rows being inserted).",
+   "author": "F"
+  },
+  {
+   "id": "s6f-036",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 3,
+   "text": "Hash tables give constant-time lookups on average, balanced search trees give logarithmic lookups and keep their keys sorted, and arrays have excellent memory locality; in economic terms, these are simply the going prices of each structure.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "multipleConcepts",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Accurate general facts about data-structure costs, but none of what the page teaches (not sophistication but the needed operations, separate representations for different operations, listing the most frequent operations first).",
+   "author": "F"
+  },
+  {
+   "id": "s6f-037",
+   "document": "Design Patterns",
+   "concept": "pattern",
+   "page": null,
+   "text": "A pattern earns its keep when it renders some recurring design problem easier to understand, and it does so, I would argue, because patterns are the product of a kind of natural selection among designs: only the fittest solutions survive, so whatever has become a pattern is by that very fact already optimised.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "makes a recurring design problem easier"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelExample",
+    "novelVocabulary",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The conclusion matches the source (useful when it makes a recurring problem easier to understand), but the 'natural selection has optimised them' reason is unsupported and does not explain understandability; it is not contradicted outright, so no misconception is listed.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-038",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 1,
+   "text": "Time complexity is a statement about how the amount of work grows as the input gets larger, always relative to some agreed model of what counts as a step: a growth curve, not a stopwatch reading. A linear scan might, in the worst case, have to look at every element; a binary search keeps halving the range still under consideration, but that only works if the data are already arranged in a compatible order, as when one searches an alphabetised herbarium catalogue.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "how work grows with input size",
+    "linear scan may inspect every element",
+    "binary search repeatedly narrows a sorted",
+    "the data must have a compatible ordering"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "absoluteVsQualified",
+    "negation",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Growth relative to a model, the qualified 'may inspect every element', repeated halving and the ordering precondition are all correct.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-039",
+   "document": "System Design",
+   "concept": null,
+   "page": 1,
+   "text": "The page assigns each responsibility an owner: the interface presents state to the user, an application service coordinates the workflow, and persistence commits the durable changes. Handing the screens an immutable summary of the document keeps rendering independent of how things are stored. Codebases that pass a database object through every screen do tend to have boundaries that are hard to change, although I suspect both are simply symptoms of hurried development rather than one causing the other.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "makes boundaries difficult to change",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "The interface presents state",
+    "An application service coordinates a workflow",
+    "Persistence commits durable changes",
+    "immutable document summary keeps rendering separate"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "causeVsCorrelation",
+    "oppositeMeaningSameWords"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The three roles and the benefit of an immutable summary are right, but the final clause turns the source's causal claim (passing a database object through every screen makes boundaries hard to change) into mere co-occurrence with a common cause.",
+   "author": "F"
+  },
+  {
+   "id": "s6f-040",
+   "document": "React Notes",
+   "concept": null,
+   "page": 2,
+   "text": "Keys are just row IDs.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Only equates keys with row IDs, with nothing on stable identity across renders, reordering, or index and random keys; torn with fragile, chose insufficient because there is too little to judge.",
+   "author": "F"
+  },
+  {
+   "id": "s6g-001",
+   "document": "Computer Science Essentials",
+   "concept": "linear scan",
+   "page": null,
+   "text": "u go thru the list one by one and worst case u end up checking every single thing",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "may inspect every element"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "absoluteVsQualified"
+   ],
+   "paraphraseGroup": "s6g-pg1",
+   "notes": "One-by-one checking that can reach every element in the worst case: the source's 'may inspect every element' in own words, with the qualifier kept.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-002",
+   "document": "Mobile Mastery",
+   "concept": "Tree shaking",
+   "page": null,
+   "text": "tree shaking is when the browser deletes the functions u never call while ur app is running. and it gets rid of literally ALL the unused code every single time no exceptions",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "Build-time elimination of unused module exports",
+     "confusedWith": null
+    },
+    {
+     "kind": "overgeneralization",
+     "claim": "when static analysis allows it",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "absoluteVsQualified",
+    "confidentlyWrong",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Moves tree shaking into the browser at runtime (source: build-time elimination) and claims it always removes all unused code (source: only when static analysis allows it), two distinct wrong ideas.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-003",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 2,
+   "text": "so the app logic doesnt make its own database, it just talks to a save/load interface. then whatever wires the whole app together at startup hands it the real one",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "depend on a storage contract instead",
+    "composition root supplies the concrete implementation"
+   ],
+   "categories": [
+    "paraphrase",
+    "partiallyCorrect",
+    "negation",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6g-pg2",
+   "notes": "Gets depend-on-a-contract and that the startup wiring (composition root) supplies the real store, but never says why (focused tests, deliberately simulated storage failures), so mostlyUnderstood.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-004",
+   "document": "Coding Interviews",
+   "concept": "Simpler code",
+   "page": null,
+   "text": "simple code is always the move, trying to make it faster is just a waste of time",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "until a demonstrated bottleneck requires more work",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "absoluteVsQualified",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6g-pg4",
+   "notes": "Turns 'the better default until a demonstrated bottleneck requires more work' into 'always simple, optimizing is a waste', dropping the source's limiting condition (overgeneralization).",
+   "author": "G"
+  },
+  {
+   "id": "s6g-005",
+   "document": "React Notes",
+   "concept": "component",
+   "page": null,
+   "text": "components have props and state and context n stuff",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "terse"
+   ],
+   "paraphraseGroup": "s6g-pg3",
+   "notes": "Names props, state and context but not that the component describes the UI for a particular set of them: the right words without the relationship, so fragile.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-006",
+   "document": "React Notes",
+   "concept": null,
+   "page": 3,
+   "text": "highlights lol",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort"
+   ],
+   "paraphraseGroup": "s6g-pg6",
+   "notes": "Only a topic word; nothing about the highlights belonging to the reader or being kept apart from the original PDF.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-007",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 1,
+   "text": "the curly brace one gives undefined becuase the n * 2 in there never actually runs, u have to write return to make it run",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "needs an explicit return statement"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "misconceptionParaphrase",
+    "negation"
+   ],
+   "paraphraseGroup": "s6g-pg5",
+   "notes": "Right conclusion (the block body needs an explicit return, else undefined) but wrong mechanism: the multiplication does run, its value just is not returned; that fact is only in the page text, not a catalog sentence, so no misconception entry.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-008",
+   "document": "Mobile Mastery",
+   "concept": "Runtime validation vs static types",
+   "page": null,
+   "text": "ts only checks ur code before it runs. it does NOT check the actual data coming in from an api while ur app is running and that data can totally not match ur types lol. so u need runtime validation to actually check the real values when they show up",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "TypeScript checks code before execution",
+    "incoming values while the program runs",
+    "External data can violate your TypeScript"
+   ],
+   "categories": [
+    "paraphrase",
+    "negation",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "All three points in own words: TS checks before running, live API data can break the declared types, and runtime validation checks the real values as they arrive; the negation is used correctly.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-009",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 0,
+   "text": "patterns r worth using when they make some problem that keeps coming up easier to wrap ur head around. also a new dev should be able to tell what a module is in charge of before they go digging thru how its coded",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "makes a recurring design problem easier",
+    "should know what a module owns"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Both page points paraphrased: a pattern earns its place by making a recurring problem easier to understand, and what a module owns should be clear before reading its implementation.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-010",
+   "document": "Mobile Mastery",
+   "concept": "Code splitting",
+   "page": null,
+   "text": "code splitting is when the bundler cuts out the code u dont use so ur bundle is smaller. its literally the same thing as tree shaking just a diff name bruh",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "Dividing application JavaScript into multiple chunks",
+     "confusedWith": "Tree shaking"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleConcepts",
+    "confidentlyWrong",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gives tree shaking's job (cutting unused code) and calls the two the same thing, whereas code splitting divides the JS into independently loadable chunks: a confusion with Tree shaking.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-011",
+   "document": "Computer Science Essentials",
+   "concept": "linear scan",
+   "page": null,
+   "text": "basically ur looking at each item in order n if ur unlucky that means looking at literally all of them",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "may inspect every element"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "absoluteVsQualified"
+   ],
+   "paraphraseGroup": "s6g-pg1",
+   "notes": "Same idea as the group: in-order checking that may end up touching every item; 'if ur unlucky' keeps the source's 'may'.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-012",
+   "document": "Mobile Mastery",
+   "concept": "Object vs Map",
+   "page": null,
+   "text": "map is just the newer way to write an object tbh, doesnt matter which one u use. keys still gotta be strings either way, u just do .get and .set instead of dots",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "The choice affects key semantics",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "collection with arbitrary key types",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "negation",
+    "confidentlyWrong",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Treats Map as interchangeable newer object syntax (source: the choice affects key semantics, iteration and intent) and says keys must be strings (source: arbitrary key types), two misconceptions.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-013",
+   "document": "React Notes",
+   "concept": "component",
+   "page": null,
+   "text": "its kinda like a recipe for one part of the screen. u hand it a specific combo of props, state n context and it tells react what that part should look like for exactly that combo",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "A component describes the interface"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The recipe analogy carries the definition: for a particular set of props, state and context, the component describes what that part of the UI should look like.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-014",
+   "document": "Coding Interviews",
+   "concept": "Simpler code",
+   "page": null,
+   "text": "just start w the simple version, thats the default",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "paraphrase",
+    "partiallyCorrect",
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Has the core (the simple version is the default) but leaves out the limiting condition, until a demonstrated bottleneck requires more work, so the one sentence is not fully expressed and no credit is given.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-015",
+   "document": "Mobile Mastery",
+   "concept": "Grounding",
+   "page": null,
+   "text": "grounding = making the ai answer off real stuff like docs, search results, tool outputs etc instead of just going off vibes. so like a support bot only answers from the actual policy and shows u which doc it used, wich means u can double check it and it makes up way less random stuff. and the reason it works is bc feeding the model more data just makes it smarter overall",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "support model output with authoritative evidence",
+    "reduces unsupported invention and makes outputs verifiable"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition and payoff are right (answers tied to real sources, checkable, less made up), but the mechanism offered, more data makes the model smarter, is a non-sequitur the source does not support; the wrong clause is the reason, so weakReasoning.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-016",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 2,
+   "text": "workflow depends on a storage contract instead of building a specific db or file store, and the composition root gives it the concrete implementation",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "depend on a storage contract instead",
+    "composition root supplies the concrete implementation"
+   ],
+   "categories": [
+    "partiallyCorrect",
+    "nearVerbatim"
+   ],
+   "paraphraseGroup": "s6g-pg2",
+   "notes": "Near-copies the contract and composition-root sentences, same content as the group, with the testing payoff missing, so mostlyUnderstood.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-017",
+   "document": "React Notes",
+   "concept": null,
+   "page": 3,
+   "text": "shelf doesnt keep them seperate, it saves ur highlights straight into the original pdf. so if u send someone the pdf theyre basically their highlights now too",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "keeps them separate from the original",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "Your highlights belong to you",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "negation",
+    "oppositeMeaningSameWords",
+    "confidentlyWrong",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Says the opposite of both page points with the page's own words: highlights get written into the original PDF (source: kept separate) and end up belonging to whoever gets the file (source: they belong to you).",
+   "author": "G"
+  },
+  {
+   "id": "s6g-018",
+   "document": "Coding Interviews",
+   "concept": "Simpler code",
+   "page": null,
+   "text": "just always write the simplest version n dont ever bother optimizing it. like ever",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "until a demonstrated bottleneck requires more work",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "absoluteVsQualified",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "negation"
+   ],
+   "paraphraseGroup": "s6g-pg4",
+   "notes": "Same overgeneralization as the group: 'always' and 'dont ever' optimize, where the source allows more work once a bottleneck is demonstrated.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-019",
+   "document": "Mobile Mastery",
+   "concept": "Writes",
+   "page": null,
+   "text": "it goes in the cache and they both get updated right then, or it just sits in there n gets saved to it later",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gestures at both write paths (update now vs persist later), but 'they both', 'in there' and 'to it' never name the backing store, so neither sentence can be credited: fragile.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-020",
+   "document": "React Notes",
+   "concept": "component",
+   "page": null,
+   "text": "its a react thing that gets props, holds its own state and can grab stuff from context",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6g-pg3",
+   "notes": "Lists what a component receives or holds (props, state, context) without saying it describes the interface for that combination, fragile like the rest of the group.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-021",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 1,
+   "text": "w {} u gotta put return or js just skips the math inside the block, thats why its undefined",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "needs an explicit return statement"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "misconceptionParaphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6g-pg5",
+   "notes": "Same as the group: 'u gotta put return' is right, 'js skips the math' is a wrong reason the source does not support, so weakReasoning.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-022",
+   "document": "Mobile Mastery",
+   "concept": "Transpilation",
+   "page": null,
+   "text": "transpiling is turning ur normal js into typescript so it has types, then it type checks everything n catches ur bugs before u run it",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "TypeScript types are erased",
+     "confusedWith": null
+    },
+    {
+     "kind": "confusion",
+     "claim": "Transforming source code into another source form",
+     "confusedWith": "TypeScript"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "multipleConcepts",
+    "subjectObjectReversal",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Runs the transformation backwards (JS into TypeScript by adding types; source: types are erased and TS/JSX become JS) and gives transpilation the type checker's job, a confusion with TypeScript.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-023",
+   "document": "Mobile Mastery",
+   "concept": null,
+   "page": 55,
+   "text": "the database section is about how saved data stays linked up, accurate n quick even when a bunch of stuff is hitting it at the same time",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "stays related, correct, and fast under concurrency"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Hits every part of the section's framing: persistent (saved) data staying related, correct and fast under simultaneous access.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-024",
+   "document": "React Notes",
+   "concept": null,
+   "page": 3,
+   "text": "idk smth w highlights??",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse",
+    "hedged"
+   ],
+   "paraphraseGroup": "s6g-pg6",
+   "notes": "Topic word plus uncertainty, no claim about ownership or separate storage.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-025",
+   "document": "Mobile Mastery",
+   "concept": "Code splitting",
+   "page": null,
+   "text": "like if u never go to checkout ur phone never even downloads the checkout code, it only grabs that chunk once u actually tap checkout",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "Users avoid downloading code for features/routes"
+   ],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample",
+    "negation",
+    "paraphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "One scenario shows code for an unvisited route never downloading and its chunk loading on demand, but there is no general statement that the app's JS is divided into independently loadable chunks; torn with understood, so the less generous mostlyUnderstood because it is example-only.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-026",
+   "document": "Mobile Mastery",
+   "concept": "Tree shaking",
+   "page": null,
+   "text": "deletes dead code",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right gist (unused code gets removed) but nothing on when (build time), what (unused exports), the static-analysis condition or why (less shipped JS); fragile rather than insufficient because the one claim is correct.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-027",
+   "document": "Computer Science Essentials",
+   "concept": "linear scan",
+   "page": null,
+   "text": "check em 1 at a time, maybe all of em",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "may inspect every element"
+   ],
+   "categories": [
+    "paraphrase",
+    "terse",
+    "absoluteVsQualified"
+   ],
+   "paraphraseGroup": "s6g-pg1",
+   "notes": "Terse but complete: one at a time, possibly all of them, matching 'may inspect every element' with the qualifier intact.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-028",
+   "document": "Mobile Mastery",
+   "concept": "Dependency injection",
+   "page": null,
+   "text": "ok so DI is basically when a class doesnt create its own stuff inside, like it doesnt do new Database() in the constructor, u pass the db in from outside instead. so in tests u can hand it a fake db and in the real app the real one, and swapping implementations is super easy. and yeah ppl always say DI makes code more testable but lowkey i think thats just correlation, teams that use DI r the same teams that already write alot of tests",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "It improves testability and allows",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "Providing dependencies from outside a module/class"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "causeVsCorrelation",
+    "partiallyCorrect",
+    "misconceptionParaphrase",
+    "negation"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition, fakes in tests and swapping are right, but the last clause recasts 'improves testability' as a mere correlation with teams that already test a lot; one wrong clause in a long answer still makes it a misconception.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-029",
+   "document": "Coding Interviews",
+   "concept": "Simpler code",
+   "page": null,
+   "text": "simple code is easier for ur teammates to read n review, plus it usually has less bugs",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "True-sounding benefits (readability, fewer bugs) that this source does not teach here; nothing about simple being the default until a demonstrated bottleneck requires more work.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-030",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 2,
+   "text": "the workflow builds the concrete implementation itself and then passes it up to the composition root, thats the whole contract thing",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "composition root supplies the concrete implementation",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "subjectObjectReversal",
+    "oppositeMeaningSameWords",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Reuses the page's words but flips the direction: the workflow builds the implementation and hands it to the composition root, instead of the root supplying it to a workflow that only knows the contract.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-031",
+   "document": "React Notes",
+   "concept": "component",
+   "page": null,
+   "text": "i think its like a piece that has props + state + context?? not 100% sure tbh",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "hedged"
+   ],
+   "paraphraseGroup": "s6g-pg3",
+   "notes": "Hedged list of props, state and context with no statement of what the component does with them (describe the UI), so fragile.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-032",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 1,
+   "text": "arrow fn w no curly braces just returns whatever the expression is, automatically. if u add {} its a block so u have to actually type return or u get undefined. and map just builds the new array out of whatever each callback hands back, so thats why b ends up [undefined, undefined]",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "an expression body returns its expression",
+    "needs an explicit return statement",
+    "Map collects the callback results"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "All three points: expression bodies return implicitly, block bodies need an explicit return, and map collects each callback's result, which is why b is all undefined.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-033",
+   "document": "Mobile Mastery",
+   "concept": null,
+   "page": 2,
+   "text": "its the interview answer thing, like u start w a clean definition and then give an example from real product code",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes the page's definition and example steps, which are real but not what this passage teaches: naming the engineering pressure a tool solves and knowing tools create new problems too.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-034",
+   "document": "Coding Interviews",
+   "concept": "Simpler code",
+   "page": null,
+   "text": "never optimize fr, simple code wins every time",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "until a demonstrated bottleneck requires more work",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "absoluteVsQualified",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "negation",
+    "terse"
+   ],
+   "paraphraseGroup": "s6g-pg4",
+   "notes": "Short form of the group's overgeneralization: 'never optimize' and 'every time' ignore the demonstrated-bottleneck exception.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-035",
+   "document": "Mobile Mastery",
+   "concept": "Dependency array",
+   "page": null,
+   "text": "u only put in the stuff u actually want the effect to rerun on. like if u read count inside but dont want it rerunning when count changes just leave it out. ppl say that causes stale closures but ngl i think stale closures n missing deps just kinda show up together in messy code, one doesnt cause the other",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "should include reactive values read by",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "Omitting them can create stale closures",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "causeVsCorrelation",
+    "misconceptionParaphrase",
+    "novelExample",
+    "negation",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Treats the array as a hand-picked trigger list and says leaving read values out is fine (source: include the reactive values the effect reads), then recasts 'omitting them can create stale closures' as mere co-occurrence.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-036",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 2,
+   "text": "the top level of the app picks the real storage and plugs it in, so the code itself just asks for 'smth that can load n save' instead of doing new SqliteStore() inside",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "depend on a storage contract instead",
+    "composition root supplies the concrete implementation"
+   ],
+   "categories": [
+    "paraphrase",
+    "partiallyCorrect",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6g-pg2",
+   "notes": "Order flipped (root first, then the code asking for a load/save thing) but the same content as the group: contract and composition root right, testing benefit absent.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-037",
+   "document": "React Notes",
+   "concept": null,
+   "page": 3,
+   "text": "its about highlighting i think",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse",
+    "hedged"
+   ],
+   "paraphraseGroup": "s6g-pg6",
+   "notes": "Names the topic (highlighting) and nothing else about ownership or storage.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-038",
+   "document": "Mobile Mastery",
+   "concept": "Component composition",
+   "page": null,
+   "text": "instead of one <Card> w like 12 props (showImage, hasFooter, isCompact, withBadge...) u just do <Card><CardImage/><CardTitle/><CardFooter/></Card> and stack the pieces u actually need",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "combining focused components instead of adding"
+   ],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The example contrasts a flag-heavy component with composed focused pieces, which is the core idea, but gives no reason (flexible APIs, no giant conditional components), so mostlyUnderstood.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-039",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 1,
+   "text": "since code in a block body doesnt execute unless u return it, the {} version needs a return statement, otherwise ur stuck w [undefined, undefined]",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "needs an explicit return statement"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "misconceptionParaphrase",
+    "negation"
+   ],
+   "paraphraseGroup": "s6g-pg5",
+   "notes": "Reason-first wording of the group's idea: the need for a return is right, the claim that block code does not execute without it is wrong, so weakReasoning.",
+   "author": "G"
+  },
+  {
+   "id": "s6g-040",
+   "document": "Mobile Mastery",
+   "concept": null,
+   "page": 2,
+   "text": "basically say what its for and that they cause new ones too",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "'what its for' only loosely points at naming the engineering pressure solved, and 'they cause new ones too' has no clear referent (tools? engineers? problems?), so neither page point can be credited: fragile.",
+   "author": "G"
+  },
+  {
+   "id": "s6h-001",
+   "document": "Coding Interviews",
+   "concept": "technically correct solution",
+   "page": null,
+   "text": "Let me put it to you the way a mentor once put it to me. Imagine you finish an interview problem, every test case passes, and you lean back thinking the job's done. Is it, though? Getting the answer right doesn't wrap things up — you're in a back-and-forth with the interviewer, and a working solution is just one piece of that exchange, not the whole of it.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "is only part of the conversation"
+   ],
+   "categories": [
+    "paraphrase",
+    "verbose",
+    "negation",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6h-pg01",
+   "notes": "States the source's single point — a correct solution is one piece of the interview exchange, not the whole — in its own words and adds nothing wrong.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-002",
+   "document": "Mobile Mastery",
+   "concept": "CSS Grid",
+   "page": null,
+   "text": "Grid is what I reach for when I'm laying out a whole page — header, sidebar, main area — or a dashboard full of panels, or one of those walls of cards that reflows as the screen narrows. Why is it so good there? Because you're dropping things into a planned structure instead of nudging them around one by one. The one thing to keep straight is that it only ever lays things out along a single direction at a time — you pick rows or you pick columns — and it sorts out the spacing for you.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "explicit two-dimensional row and column placement",
+     "confusedWith": "Flexbox"
+    }
+   ],
+   "credits": [
+    "page sections, dashboards, and responsive card grids"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "misconceptionParaphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right about where Grid shines, but one clause gives it Flexbox's one-direction-at-a-time model, which contradicts the source's explicit two-dimensional row-and-column placement.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-003",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 0,
+   "text": "Picture how you'd actually build one. You can back a stack with an array or with a linked list, and either way pushing and popping are constant-time operations. Neat, isn't it?",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6h-pg06",
+   "notes": "True facts about implementing a stack, but the page is about what makes a model useful (keeping decision-relevant details, predicting from the description before choosing storage), and none of that appears.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-004",
+   "document": "Mobile Mastery",
+   "concept": "Lazy loading",
+   "page": null,
+   "text": "Imagine a delivery app with a big map screen that most people never open. Why ship all of that up front? So you hold it back, and only the first time someone actually taps 'Map' do you fetch that code and set the screen up.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "until a resource is actually needed"
+   ],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The scenario shows loading and setup deferred until the screen is needed, but the payoff (less initial work, faster startup) is only hinted at by a rhetorical question, so I chose mostlyUnderstood over understood.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-005",
+   "document": "React Notes",
+   "concept": "array index",
+   "page": null,
+   "text": "Here's a rule I give every new developer on day one: never, ever use the array index as a key. Why so strict? Imagine a to-do list keyed by position. The moment you do that, React starts reshuffling things on you — rows jump places, new ones get slotted in where you didn't put them, others vanish. The index key is what sets all that moving around in motion, so just don't.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "An array index can be a poor key",
+     "confusedWith": null
+    },
+    {
+     "kind": "reversal",
+     "claim": "when items move, are inserted or removed",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "misconceptionParaphrase",
+    "absoluteVsQualified",
+    "negation",
+    "subjectObjectReversal",
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "novelExample",
+    "verbose"
+   ],
+   "paraphraseGroup": "s6h-pg04",
+   "notes": "Turns 'can be a poor key when items move' into 'never', and runs the cause backwards by claiming the index key makes items move, get inserted or vanish, when the source says those changes are what make an index a poor key.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-006",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 1,
+   "text": "Imagine you're asked to change the font in the reading view. Should that send you digging through the code that imports files? It shouldn't. And while we're at it — each module ought to offer its callers a tidy, consistent face and keep the insides they don't need to itself.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "should not require editing a file-import transaction",
+    "expose a coherent contract and avoid leaking"
+   ],
+   "categories": [
+    "paraphrase",
+    "partiallyCorrect",
+    "negation",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6h-pg02",
+   "notes": "Gets the separation point and the clean-contract rule, but leaves out the page's limiting caveat that small files help without guaranteeing good boundaries.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-007",
+   "document": "Mobile Mastery",
+   "concept": "Race condition",
+   "page": null,
+   "text": "Imagine two friends trying to book the last seat on a bus from two phones at the same instant. Both apps check, both see 'one seat left', both go ahead — and now the bus is overbooked. Neither bit of code is wrong on its own; whether things come out right depends on which request happens to sneak in first, and you can't predict that. Each request acted on a picture of the world that had already gone out of date.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "correctness depends on the unpredictable timing/interleaving",
+    "can both make decisions from stale state"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "verbose",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Through a fresh scenario it states both source points: correctness hinges on the unpredictable ordering of concurrent requests, and each request decided from state that was already stale.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-008",
+   "document": "Computer Science Essentials",
+   "concept": "useful model",
+   "page": null,
+   "text": "Imagine you're sketching a model of a delivery route. You keep the road distances, because they change which way the driver goes, and you leave out the colour of the van, because it changes nothing about the route. Why prune it like that? Because every detail you carry makes the model heavier for the computer to store and slower to run — trimming is really about keeping it fast.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "keeps the details that affect a decision"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "verboseOneWrongClause",
+    "novelExample",
+    "verbose"
+   ],
+   "paraphraseGroup": "s6h-pg05",
+   "notes": "The keep-what-changes-the-decision rule is right, but the reason offered for simplifying (storage and speed on a computer) is a non-sequitur the source never gives.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-009",
+   "document": "Mobile Mastery",
+   "concept": "Array.some",
+   "page": null,
+   "text": "Now, `some` is simple: it walks the entire array and returns true only when every element passes the predicate — it can't stop early, it has to see them all. Honestly it's just `every` under a friendlier name.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "at least one element passes a predicate",
+     "confusedWith": "Array.every"
+    },
+    {
+     "kind": "contradiction",
+     "claim": "clearly and short-circuits once true",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "multipleMisconceptions",
+    "multipleConcepts",
+    "oppositeMeaningSameWords",
+    "negation"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gives some the all-must-pass meaning of Array.every and separately denies the short-circuit, two distinct wrong ideas stated with confidence.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-010",
+   "document": "System Design",
+   "concept": null,
+   "page": 2,
+   "text": "Caching's a tradeoff, basically. You've got the thumbnail on one side and the original on the other, and it's a balancing act between the two.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "s6h-pg03",
+   "notes": "Has the headline (a tradeoff) and the thumbnail/original pairing, but never says what is traded — saved work against a copy that can go stale — or which side is disposable: the right words without the relationship.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-011",
+   "document": "Mobile Mastery",
+   "concept": "Union type",
+   "page": null,
+   "text": "Think of a traffic light. At any moment it's red, amber or green — one of those three and that's it. Give the light's colour a type built from just those three options and you've basically got the idea.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "value to be one of several alternatives"
+   ],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The example captures a value being one of a fixed set of alternatives, but says nothing about why that helps, namely safely modelling finite UI states and domain choices.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-012",
+   "document": "Coding Interviews",
+   "concept": "technically correct solution",
+   "page": null,
+   "text": "Talk through your thinking.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse",
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Generic interview advice that never mentions a correct solution being only one part of the exchange, so it is too thin to show what the learner understands.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-013",
+   "document": "Mobile Mastery",
+   "concept": "Objects",
+   "page": null,
+   "text": "Imagine two variables, `a` and `b`, where `a` holds an object and you write `b = a`. Change `b.name` and — surprise — `a.name` has changed too, because both names are looking at the very same object, not two copies. Why does JavaScript behave like that? Because so many variables end up wanting to share one object that the language had to start handing out references instead of copies.",
+   "state": "weakReasoning",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "accessed through references, so multiple variables",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "subjectObjectReversal",
+    "verboseOneWrongClause",
+    "verbose",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The behaviour (two variables sharing one object through references) is right, but the 'why' runs backwards: the source says reference access is what lets several variables point at one object, not that demand for sharing produced references.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-014",
+   "document": "Coding Interviews",
+   "concept": "technically correct solution",
+   "page": null,
+   "text": "Correctness isn't the whole conversation.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "is only part of the conversation"
+   ],
+   "categories": [
+    "veryShort",
+    "terse",
+    "negation",
+    "paraphrase"
+   ],
+   "paraphraseGroup": "s6h-pg01",
+   "notes": "Only five words, but the concept is a single sentence and this says exactly that — being correct is just a portion of the interview dialogue — so understood despite the brevity.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-015",
+   "document": "Mobile Mastery",
+   "concept": "Semantic HTML",
+   "page": null,
+   "text": "Take a page that's nothing but divs. You go through and put role=\"button\" and an aria-label on every clickable div, role=\"navigation\" on the menu div, and so on. Now the screen reader knows what each box is, and there you are — the page is semantic.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "instead of generic containers for everything",
+     "confusedWith": "ARIA"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "multipleConcepts",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Treats ARIA roles bolted onto generic divs as what makes a page semantic, whereas the source defines semantic HTML as using meaningful built-in elements instead of generic containers.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-016",
+   "document": "React Notes",
+   "concept": "array index",
+   "page": null,
+   "text": "An index key is perfectly fine as long as the list never changes shape. But imagine you delete the second row of five: every row after it slides up and inherits a new index, so React treats the old third row as if it were the second, and whatever state belonged to one row ends up showing on another. So the moment rows get reordered, added or taken out, the index stops being a key you can trust.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "a poor key when items move"
+   ],
+   "categories": [
+    "absoluteVsQualified",
+    "negation",
+    "novelExample",
+    "paraphrase",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Keeps the source's qualification — the index is a bad key specifically when items are moved, inserted or removed — and illustrates it with a fresh deletion example.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-017",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 0,
+   "text": "Array or linked list underneath; push and pop are O(1).",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "terse",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6h-pg06",
+   "notes": "Stack implementation trivia that says nothing about a model keeping decision-relevant details or about reasoning before choosing storage.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-018",
+   "document": "Mobile Mastery",
+   "concept": "Flaky test",
+   "page": null,
+   "text": "A flaky test is the one that goes green on Monday and red on Tuesday when nobody has touched the code it's checking. Imagine a test that compares timestamps and trips up whenever it happens to run right around midnight. Why does that matter so much? Because real breakages get lost in all the noise. And here's the knock-on effect people miss: once a team has stopped trusting its CI, that loss of trust is what makes the tests start to flake.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "Flakiness destroys trust in CI",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "passes or fails nondeterministically without relevant code"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "subjectObjectReversal",
+    "misconceptionParaphrase",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The definition and the hidden-regressions point are right, but the last clause reverses the source, which says flakiness destroys trust in CI, not that lost trust causes flakiness.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-019",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 1,
+   "text": "Styling tweaks shouldn't drag you into the import logic, and a module should present one sensible interface without spilling internals nobody calling it needs.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "should not require editing a file-import transaction",
+    "expose a coherent contract and avoid leaking"
+   ],
+   "categories": [
+    "paraphrase",
+    "partiallyCorrect",
+    "negation",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6h-pg02",
+   "notes": "Both the separation rule and the coherent-contract rule are there, but the caveat that file length alone does not guarantee good boundaries is missing.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-020",
+   "document": "Mobile Mastery",
+   "concept": "satisfies operator",
+   "page": null,
+   "text": "It checks it against the type, but it keeps its own type rather than that one, so it stays narrow — that's why you'd reach for it with config.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The right pieces may be there, but with every noun replaced by 'it' a teacher cannot confirm the learner knows it is the value's narrower inferred type that survives the check, so I chose fragile over mostlyUnderstood.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-021",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 1,
+   "text": "Honestly, short files are the whole trick. Every time I've broken a big file into little ones the boundaries have come out right, so keep the file length down and good boundaries are guaranteed.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "does not guarantee good boundaries",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "absoluteVsQualified",
+    "causeVsCorrelation",
+    "confidentlyWrong",
+    "oppositeMeaningSameWords"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The source says small files help but length alone does not guarantee good boundaries; the learner turns past co-occurrence into a guarantee.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-022",
+   "document": "React Notes",
+   "concept": "array index",
+   "page": null,
+   "text": "Index as the key? Never. It's the thing that makes your list items jump around and get added or dropped in the wrong spots.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "An array index can be a poor key",
+     "confusedWith": null
+    },
+    {
+     "kind": "reversal",
+     "claim": "when items move, are inserted or removed",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "misconceptionParaphrase",
+    "absoluteVsQualified",
+    "negation",
+    "subjectObjectReversal",
+    "multipleMisconceptions",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": "s6h-pg04",
+   "notes": "Same two errors as its group: an absolute 'never' where the source says 'can be', and the index key cast as the cause of items moving or being added and removed rather than those changes being the condition.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-023",
+   "document": "Mobile Mastery",
+   "concept": "Model routing",
+   "page": null,
+   "text": "Imagine a support inbox. 'What's my order number?' doesn't need the same brainpower as 'why was I charged twice after cancelling?'. So you send each job to the model that fits it — weighing how hard the task is, how good the answer has to be, how quickly it must come back, whether that model is even up right now, and what it'll cost you. Not every question deserves your biggest, priciest model.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "Choose among models based on task",
+    "Not every request needs the largest"
+   ],
+   "categories": [
+    "negation",
+    "absoluteVsQualified",
+    "novelExample",
+    "paraphrase",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Covers every selection criterion the source lists and keeps the correctly qualified point that not every request needs the largest model.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-024",
+   "document": "Computer Science Essentials",
+   "concept": "useful model",
+   "page": null,
+   "text": "Keep what changes the decision, drop what doesn't — because smaller models are cheaper to compute.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "keeps the details that affect a decision"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6h-pg05",
+   "notes": "Right rule, but the justification is computational cost, which the source never offers for a model being useful.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-025",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 0,
+   "text": "Let me walk you through it. Say I tell you a stack is 'last in, first out'. Push A, push B — which one comes off next? B, and you worked that out without knowing whether there's an array or a linked list underneath. That's what a good model does: it hangs on to the details that change your answer and drops the ones that don't. You get to reason with the description well before you decide how to store the thing.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "keeps the details that affect a decision",
+    "helps predict which item is removed next",
+    "useful before deciding how to store"
+   ],
+   "categories": [
+    "paraphrase",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "All three page points appear: the model keeps decision-relevant details, LIFO lets you predict the next removal, and the description is useful before any storage choice.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-026",
+   "document": "System Design",
+   "concept": null,
+   "page": 2,
+   "text": "Think of it as give and take: a cached copy versus the real document, and you weigh one against the other. That's the heart of it.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6h-pg03",
+   "notes": "Names the give-and-take and the copy/original pair, but not what is gained (avoided work), what is risked (staleness) or which side may be thrown away.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-027",
+   "document": "Mobile Mastery",
+   "concept": "Lazy loading",
+   "page": null,
+   "text": "People like to say lazy loading makes an app start faster. I'd put it more carefully: it isn't that holding things back speeds up the launch — it's that the apps which happen to launch quickly tend to be the same ones built with lazy loading. The two just travel together. Picture a photo feed that only fetches each picture when you scroll down to it; you'll usually find that app opens quickly too.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "reduces initial work and improves startup performance",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "until a resource is actually needed"
+   ],
+   "categories": [
+    "causeVsCorrelation",
+    "negation",
+    "misconceptionParaphrase",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes deferral correctly, but explicitly denies that deferring work is what speeds up startup and recasts the source's causal claim as mere co-occurrence.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-028",
+   "document": "Mobile Mastery",
+   "concept": null,
+   "page": 1,
+   "text": "The advice I'd pass on to anyone prepping: study in short bursts, sleep properly the night before, and run a couple of mock interviews with a friend so the real one feels familiar. Why does that help? Because being rested and practised is half the battle.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Sensible general prep advice, but the page's point — deliberately weird memory images are easier to recall under interview pressure — never comes up.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-029",
+   "document": "Coding Interviews",
+   "concept": "technically correct solution",
+   "page": null,
+   "text": "I'd probably frame it like this for a junior, I think: nailing the answer is only one slice of what goes on between you and the interviewer — the exchange as a whole is bigger than that one bit, kind of.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "is only part of the conversation"
+   ],
+   "categories": [
+    "paraphrase",
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6h-pg01",
+   "notes": "Despite the hedging it says the same thing as the source: a correct answer is one slice of the conversation with the interviewer.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-030",
+   "document": "Mobile Mastery",
+   "concept": "Array.some",
+   "page": null,
+   "text": "Here's how I'd put it to a new hire. `some` asks 'is there at least one?', while `every` asks 'are they all?'. So `some` doesn't need the whole array to pass — the first item that matches gets you true, and it quits looking right there instead of checking the rest.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "whether at least one element passes a predicate",
+    "clearly and short-circuits once true"
+   ],
+   "categories": [
+    "multipleConcepts",
+    "negation",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correct existential meaning, contrasted accurately with every, plus the stop-at-first-match behaviour.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-031",
+   "document": "Computer Science Essentials",
+   "concept": "useful model",
+   "page": null,
+   "text": "A model's kinda a simpler version of the real thing, I guess — you leave some stuff out so its easier to handle.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Knows a model simplifies by leaving things out but never says what to keep — the details that bear on a decision — so the central criterion is missing.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-032",
+   "document": "System Design",
+   "concept": null,
+   "page": 2,
+   "text": "The way I'd explain it: here the originals and the private notes are the cache — disposable, you can always get them back — while the PDF thumbnails are the authoritative data you have to guard. Keep a cache so you don't repeat work, fine, but know which side is which.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "are not disposable caches",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "PDF thumbnails are derived data",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "oppositeMeaningSameWords",
+    "multipleMisconceptions",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Swaps the roles, calling originals and private annotations disposable caches and thumbnails authoritative, which contradicts both the derived-data and the not-disposable sentences.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-033",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 0,
+   "text": "So, as far as I remember, a stack usually sits on top of either an array or a linked list, and whichever you pick, push and pop both come out O(1).",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6h-pg06",
+   "notes": "Plausible stack facts, but nothing about what a model should keep or why the LIFO description helps before deciding storage.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-034",
+   "document": "Mobile Mastery",
+   "concept": "Race condition",
+   "page": null,
+   "text": "So they both grab it before either one has put it back, and then its wrong. Thats really it — it depends on when they do it.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gestures at two actors reading before either writes and at timing mattering, but with every 'they/it' unanchored a teacher cannot tell whether the learner means concurrent operations deciding from stale shared state.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-035",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 1,
+   "text": "So, two things, I think, kind of. A module gives its users a clean, consistent surface and hides the rest. And a change to how text looks shouldn't force an edit in the code that brings files in.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "should not require editing a file-import transaction",
+    "expose a coherent contract and avoid leaking"
+   ],
+   "categories": [
+    "paraphrase",
+    "partiallyCorrect",
+    "hedged",
+    "negation"
+   ],
+   "paraphraseGroup": "s6h-pg02",
+   "notes": "The same two rules as the rest of its group in reverse order, still without the caveat that small files do not guarantee good boundaries.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-036",
+   "document": "Mobile Mastery",
+   "concept": "Model routing",
+   "page": null,
+   "text": "Sending prompts to models.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse",
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes calling a model at all, not choosing among models by task, quality, latency, availability or cost.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-037",
+   "document": "React Notes",
+   "concept": "array index",
+   "page": null,
+   "text": "I'd say — and maybe I'm oversimplifying — the index just isn't ever a safe key to hand React. Think about why: when a list is keyed by index, those keys are what end up moving your items around and inserting and deleting rows behind your back, I believe.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "An array index can be a poor key",
+     "confusedWith": null
+    },
+    {
+     "kind": "reversal",
+     "claim": "when items move, are inserted or removed",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "misconceptionParaphrase",
+    "absoluteVsQualified",
+    "negation",
+    "subjectObjectReversal",
+    "multipleMisconceptions",
+    "hedged"
+   ],
+   "paraphraseGroup": "s6h-pg04",
+   "notes": "Hedged, but it still asserts the index is never safe and still makes index keys the cause of moves, inserts and deletes instead of the condition under which they become poor keys.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-038",
+   "document": "Mobile Mastery",
+   "concept": "Flaky test",
+   "page": null,
+   "text": "I think a flaky test is one that, kind of at random, goes red one run and green the next, even though nobody changed anything its actually testing.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "passes or fails nondeterministically without relevant code"
+   ],
+   "categories": [
+    "hedged",
+    "partiallyCorrect",
+    "paraphrase",
+    "negation"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The definition is right, but nothing on why it matters — lost trust in CI and real regressions hidden.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-039",
+   "document": "Computer Science Essentials",
+   "concept": "useful model",
+   "page": null,
+   "text": "I think the idea is you only hold on to the details that would change what you decide and let the rest go, mostly so the model stays light enough to run quickly on the machine.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "keeps the details that affect a decision"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6h-pg05",
+   "notes": "Correct keep/drop criterion, but it is justified by run-time speed, a reason the source does not support.",
+   "author": "H"
+  },
+  {
+   "id": "s6h-040",
+   "document": "System Design",
+   "concept": null,
+   "page": 2,
+   "text": "So what's the lesson here? I'd say it's that keeping a cache means trading something off against the original, I suppose — previews over here, real files over there.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6h-pg03",
+   "notes": "Only gestures at a trade-off between cache and original without saying what is gained, what is risked or what may be discarded — the right words without the relationship.",
+   "author": "H"
+  },
+  {
+   "id": "s6i-001",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 2,
+   "text": "It's like signing off a new warehouse process. You don't just rerun the one order you used to design it, you throw awkward stuff at it and see if the things you took for granted actually hold up.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "probe the assumptions, not merely confirm"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "negation"
+   ],
+   "paraphraseGroup": "s6i-pg01",
+   "notes": "Both halves of the page's contrast are there in warehouse terms: challenge what was taken for granted, and don't just replay the example the thing was designed around.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-002",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 2,
+   "text": "Good tests go after what you assumed when you built the thing. Re-checking the one example you had in your head the whole time proves very little.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "probe the assumptions, not merely confirm"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6i-pg01",
+   "notes": "States that tests should go after the builder's assumptions and that re-checking the design-time example proves little, which is the whole rubric sentence in plain words.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-003",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 2,
+   "text": "I guess the point is tests shouldn't just replay the sample you coded against? they should kind of poke at whatever you were assuming, maybe. like stress-testing the plan instead of re-reading it",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "probe the assumptions, not merely confirm"
+   ],
+   "categories": [
+    "paraphrase",
+    "hedged",
+    "negation",
+    "novelVocabulary",
+    "novelExample"
+   ],
+   "paraphraseGroup": "s6i-pg01",
+   "notes": "Despite the heavy hedging, both parts are present and correct (poke at the assumptions, don't just replay the sample coded against), so the content earns understood.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-004",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 2,
+   "text": "More tests, more coverage.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse",
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "A generic 'more tests' slogan that never touches probing assumptions versus confirming the example used while coding, so there is nothing to judge.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-005",
+   "document": "React Notes",
+   "concept": null,
+   "page": 1,
+   "text": "Updating state is more like putting in a change order than editing the number on the spot. You're asking for a fresh render, and the code that's already running keeps seeing the old figure.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "Setting state requests another render"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "s6i-pg02",
+   "notes": "Gets that setting state requests a fresh render rather than editing the value in place, but says nothing about the updater receiving the previous pending value.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-006",
+   "document": "React Notes",
+   "concept": null,
+   "page": 1,
+   "text": "Setting state doesn't change the value you're looking at in that moment. It just asks React to render again.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "Setting state requests another render"
+   ],
+   "categories": [
+    "paraphrase",
+    "negation",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "s6i-pg02",
+   "notes": "Correct that setting state asks for another render instead of changing the current value, but the functional updater point is missing.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-007",
+   "document": "React Notes",
+   "concept": null,
+   "page": 1,
+   "text": "setting state requests another render, it does not change the state variable inside the handler that's already running",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "Setting state requests another render"
+   ],
+   "categories": [
+    "nearVerbatim",
+    "negation",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "s6i-pg02",
+   "notes": "Mostly copies the page's first point, correctly, but leaves out that the updater receives the previous pending value.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-008",
+   "document": "React Notes",
+   "concept": null,
+   "page": 1,
+   "text": "Setting state doesn't request another render. The re-render just tends to happen around the same time, they're two separate things. And the updater version works because by the time it runs your local variable has already been bumped to the new number, so it just reads that.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "Setting state requests another render",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "not a magically mutated local variable",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "oppositeMeaningSameWords",
+    "negation",
+    "causeVsCorrelation",
+    "multipleMisconceptions",
+    "misconceptionParaphrase",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Denies that setting state triggers the render (recasting the cause as a coincidence) and says the updater reads an already-mutated local variable, contradicting both page statements.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-009",
+   "document": "System Design",
+   "concept": null,
+   "page": 3,
+   "text": "An import is complete when a preview appears. If the customer can see their data, the job's done. And if something breaks after that, the error message should just say their work was saved so nobody panics.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "An import is not complete when",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "without claiming that missing work was saved",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "oppositeMeaningSameWords",
+    "multipleMisconceptions",
+    "misconceptionParaphrase",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": "s6i-pg04",
+   "notes": "Reuses the page's words to say the opposite (a preview means complete) and wants error messages to claim the work was saved.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-010",
+   "document": "System Design",
+   "concept": null,
+   "page": 3,
+   "text": "Once the preview pops up, that's basically our delivery confirmation, the import is finished. For errors keep it reassuring: tell people everything they did is safe even if part of it didn't go through, because scary messages just drive support tickets.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "An import is not complete when",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "without claiming that missing work was saved",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "misconceptionParaphrase",
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6i-pg04",
+   "notes": "Treats the preview as the completion signal and wants reassuring errors that say unsaved work is safe, contradicting two page statements.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-011",
+   "document": "System Design",
+   "concept": null,
+   "page": 3,
+   "text": "i think once you can see the preview the import has pretty much worked? and the error msg should probably tell the user it's all saved anyway, just to be safe",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "An import is not complete when",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "without claiming that missing work was saved",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "multipleMisconceptions",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": "s6i-pg04",
+   "notes": "Hedged, but it still says the import is done once the preview shows and that the error should tell the user everything is saved, the same two contradictions.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-012",
+   "document": "System Design",
+   "concept": null,
+   "page": 3,
+   "text": "A shipment isn't delivered just because the tracking page shows a photo of the box, and an import isn't finished just because a preview shows up. It's done when the data is actually stored and confirmed. You also have to plan for the disk filling up, a save getting cut off halfway, the same request arriving twice, and junk files. And when it fails, the message has to say honestly what happened, not tell the customer their missing work got saved.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "An import is not complete when",
+    "considers full storage, interrupted writes, duplicate requests",
+    "without claiming that missing work was saved"
+   ],
+   "categories": [
+    "paraphrase",
+    "negation",
+    "novelExample",
+    "novelVocabulary",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Covers all three points: a preview doesn't mean done, the four failure cases to plan for, and honest errors that never claim missing work was saved.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-013",
+   "document": "React Notes",
+   "concept": "committing",
+   "page": null,
+   "text": "Commiting is when you save your changes into the repo with a short message so the rest of the team can see what changed.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": "s6i-pg06",
+   "notes": "Describes a version-control commit, which is not what this source means by committing (applying the needed changes to the screen), so there is no evidence either way.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-014",
+   "document": "React Notes",
+   "concept": "committing",
+   "page": null,
+   "text": "It's the save point. You lock your code edits into the version history, kind of like closing out a batch of paperwork and filing it so there's a record.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6i-pg06",
+   "notes": "A version-control 'save point' reading of committing that is plausible in general but off-topic for a source about applying changes to the screen.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-015",
+   "document": "React Notes",
+   "concept": "committing",
+   "page": null,
+   "text": "basically a git commit, you record what you changed so there's a trail",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6i-pg06",
+   "notes": "Equates committing with a git commit, which is plausible in general but not the React idea the source teaches, so understanding can't be judged.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-016",
+   "document": "React Notes",
+   "concept": "committing",
+   "page": null,
+   "text": "It's the last handoff in the chain. Once it's figured out what's different, this is where it actually gets applied to it.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gestures at applying the differences as the last step, but the string of 'it's hides what is applied to what and the screen never appears, so it can't be trusted.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-017",
+   "document": "React Notes",
+   "concept": "freshly generated random key",
+   "page": null,
+   "text": "You shouldn't make up a new random key every time, because generating all those random numbers on every render is expensive and slows the page down.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "negation"
+   ],
+   "paraphraseGroup": "s6i-pg05",
+   "notes": "Right that a fresh random key should be avoided, but the reason given is generation cost rather than the loss of continuity between renders.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-018",
+   "document": "React Notes",
+   "concept": "freshly generated random key",
+   "page": null,
+   "text": "Random keys are a no-go. It's a cost thing, the app burns extra processing cranking out new random IDs on every refresh, like printing a brand-new barcode for every item every hour.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6i-pg05",
+   "notes": "Right conclusion (don't use random keys), but it rests on a processing-cost reason the source never gives instead of the broken continuity between renders.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-019",
+   "document": "React Notes",
+   "concept": "freshly generated random key",
+   "page": null,
+   "text": "avoid them, generating randomness each render = performance hit",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "terse"
+   ],
+   "paraphraseGroup": "s6i-pg05",
+   "notes": "Correct 'avoid' with a performance reason the source does not support; the continuity problem is absent.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-020",
+   "document": "React Notes",
+   "concept": "freshly generated random key",
+   "page": null,
+   "text": "If every item gets a brand-new random ID each time the list is redrawn, React can't match it with what was there last time, so whatever that item was holding onto is lost. Like re-labeling every pallet with a new barcode each night: the stock history just doesn't carry over.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "destroys continuity between renders"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Clearly states that regenerating random keys breaks the link between one render and the next, which is the source's single point.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-021",
+   "document": "Computer Science Essentials",
+   "concept": "Different representations",
+   "page": null,
+   "text": "Data can be represented in different ways, and there are lots of different operations too.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "s6i-pg03",
+   "notes": "Names representations and operations but never says one serves the other, so the relationship the source teaches is missing.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-022",
+   "document": "Computer Science Essentials",
+   "concept": "Different representations",
+   "page": null,
+   "text": "It's about how the same info can be laid out more than one way, spreadsheet, list, map, whatever. And there's different stuff you can do with data.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "s6i-pg03",
+   "notes": "Knows data can be laid out in several ways and that you do different things with it, but not that each layout suits particular operations.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-023",
+   "document": "Computer Science Essentials",
+   "concept": "Different representations",
+   "page": null,
+   "text": "something like... there's more than one way to store stuff, and different operations exist? not totally sure how those two connect tbh",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "hedged"
+   ],
+   "paraphraseGroup": "s6i-pg03",
+   "notes": "Has both ingredients and admits not knowing how they connect, which is exactly the missing relationship.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-024",
+   "document": "Computer Science Essentials",
+   "concept": "Different representations",
+   "page": null,
+   "text": "Same inventory, different layouts depending on the job: the pickers want it sorted by aisle, finance wants it grouped by supplier for invoicing. Neither layout is the 'right' one. Each makes a particular task quick, so you pick the shape based on what you need to do with it.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "Different representations serve different operations"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The inventory example and the closing rule both say each representation is chosen for the operations it makes easy.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-025",
+   "document": "Mobile Mastery",
+   "concept": "HTTP",
+   "page": null,
+   "text": "HTTP, or HTTPS, same thing really, is the language pretty much every website and app uses to talk to our servers. It encrypts everything on the way, like a sealed courier bag, and it remembers each customer from one visit to the next, which is why they stay logged in. Sessions are just something sites tend to have alongside it, not really connected.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "The request-response protocol used by browsers",
+     "confusedWith": "HTTPS"
+    },
+    {
+     "kind": "contradiction",
+     "claim": "HTTP is stateless, so sessions",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "the basic language behind APIs"
+   ],
+   "categories": [
+    "multipleConcepts",
+    "multipleMisconceptions",
+    "causeVsCorrelation",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "novelExample",
+    "novelVocabulary",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The 'language of the web' part is right, but it merges HTTP with HTTPS encryption and says HTTP itself remembers customers, with sessions as an unrelated add-on, contradicting statelessness as the reason sessions exist.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-026",
+   "document": "Mobile Mastery",
+   "concept": "HTTP",
+   "page": null,
+   "text": "It's the back-and-forth format: the app asks for something, the server answers. And it's what nearly everything on the web runs over, pages, pictures, APIs.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "request-response protocol used by browsers",
+    "the basic language behind APIs"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Request-response and 'what the web runs on' are right, but the stateless-so-sessions point is missing.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-027",
+   "document": "Mobile Mastery",
+   "concept": "Layered architecture",
+   "page": null,
+   "text": "You split the app into floors: screens on top, business rules in the middle, database and plumbing in the basement. Dependencies flow upward, so the business rules and the database code depend on the screens and take their orders from them. Having one direction like that is what keeps the spaghetti out.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "dependencies mostly flow inward/ downward",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "Organize responsibilities into layers"
+   ],
+   "categories": [
+    "subjectObjectReversal",
+    "oppositeMeaningSameWords",
+    "misconceptionParaphrase",
+    "confidentlyWrong",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The layers are right, but dependencies are said to run upward from business rules and database to the screens, the reverse of the inward/downward flow, so the spaghetti sentence is not credited either.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-028",
+   "document": "Mobile Mastery",
+   "concept": "ORM",
+   "page": null,
+   "text": "An ORM is the translator between our app's world (customers, orders, invoices) and the database, so devs work with those objects instead of writing raw database commands. The reason teams use one is that it makes the database itself answer faster.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "maps application objects/models to database operations"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "paraphrase",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The mapping definition is right, but the payoff is pinned on a faster database rather than faster development, parameterized queries and centralized schema access, an unsupported reason rather than a contradicted one.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-029",
+   "document": "Mobile Mastery",
+   "concept": "Feature flag",
+   "page": null,
+   "text": "It lets us ship the code whenever engineering's ready but decide separately when customers actually get the feature: staff first, then 5% of customers, then everyone. So deploy day and launch day aren't glued together anymore, and rollouts get a lot less scary.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "enables behavior for selected users/environments",
+    "decouples code deployment from feature release"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Covers switching behavior on for chosen groups and separating deployment from release for a safer rollout, all in business terms.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-030",
+   "document": "Mobile Mastery",
+   "concept": "Feature flag",
+   "page": null,
+   "text": "Feature flags are basically on/off switches wrapped around a feature, so the code can go out with a normal release but stay hidden until product decides to turn it on, maybe just for internal testers or one region first. That splits 'we deployed it' from 'customers can see it'. And because you can always flip it back off, anything behind a flag is completely risk-free to launch. You do need someone to own each flag and clean it up afterwards, or the old ones pile up.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "and supports safer rollout",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "enables behavior for selected users/environments"
+   ],
+   "categories": [
+    "verbose",
+    "verboseOneWrongClause",
+    "absoluteVsQualified",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Everything is right except the claim that anything behind a flag is completely risk-free, an absolute where the source only says flags support safer rollout, so that sentence is not credited.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-031",
+   "document": "Mobile Mastery",
+   "concept": "Database constraint",
+   "page": null,
+   "text": "Rules the database itself enforces.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "A rule enforced by the database"
+   ],
+   "categories": [
+    "veryShort",
+    "terse",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The definition is right, but there is nothing about why (protecting data and invariants even when several parts of the app write), and the purpose is a secondary element, not the core.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-032",
+   "document": "Mobile Mastery",
+   "concept": "Database constraint",
+   "page": null,
+   "text": "Database constraints are really just the access rules, basically authorization done at the database level: which staff can see or change which customer records, like finance can edit invoices but the warehouse team can't. Our app checks those rules first and then tells the database what it's allowed to accept.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "such as NOT NULL, CHECK, UNIQUE",
+     "confusedWith": "Authorization"
+    },
+    {
+     "kind": "reversal",
+     "claim": "A rule enforced by the database",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleConcepts",
+    "multipleMisconceptions",
+    "subjectObjectReversal",
+    "misconceptionParaphrase",
+    "confidentlyWrong",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Replaces integrity rules with authorization (who may see or edit records) and has the app enforcing the rules on the database instead of the database enforcing them.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-033",
+   "document": "Mobile Mastery",
+   "concept": "API loading states",
+   "page": null,
+   "text": "Picture an order-tracking page. While it's fetching, show a placeholder. If the orders come back, show them. If the customer has no orders, say so instead of a blank page. If the call fails, show an error and a retry buton.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "loading, success, empty, and error"
+   ],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "All four states come through one order-tracking scenario, but the why (networks fail and data can be missing, so production UI must show each state) is never stated; torn with understood, so the less generous label.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-034",
+   "document": "Mobile Mastery",
+   "concept": "WebSocket",
+   "page": null,
+   "text": "A websocket (or webhook, people use both words) is when our system automatically pings the partner's URL the moment an order ships, so they get notified without having to keep checking. It's the only way to do anything real-time, full stop.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "A long-lived full-duplex connection",
+     "confusedWith": "Webhook"
+    },
+    {
+     "kind": "overgeneralization",
+     "claim": "useful when both sides need low-latency",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleConcepts",
+    "multipleMisconceptions",
+    "absoluteVsQualified",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes a webhook call to a partner URL instead of a long-lived two-way connection, and calls it the only way to do real-time where the source says it is useful when both sides need low latency.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-035",
+   "document": "Mobile Mastery",
+   "concept": "WebSocket",
+   "page": null,
+   "text": "Kind of like a chat window, new messages just pop up on their own without anyone hitting refresh.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Live chat updates are a correct piece, but there is nothing about a persistent connection over which both client and server send messages.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-036",
+   "document": "Mobile Mastery",
+   "concept": "Deep equality vs reference equality",
+   "page": null,
+   "text": "Two kinds of matching. One asks if they're literally the same one, like the exact same pallet, and the other asks if everything on them matches, box by box, all the way down. Depends which one you use.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "partiallyCorrect",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Both checks are described, but 'one', 'the other' and 'they' are never tied to reference versus deep equality, so the core mapping is missing and the less generous fragile fits.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-037",
+   "document": "Mobile Mastery",
+   "concept": "TypeScript",
+   "page": null,
+   "text": "TypeScript is JavaScript with a spec sheet bolted on. Before anything runs, it checks that all the pieces match the agreed shapes, so a lot of handoff mistakes between teams get caught early instead of by customers, and the type labels double as documentation of the contract for people and for the editor tools. It can also figure out every single type on its own, so you never actually have to write one.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "can often determine a value's type",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "JavaScript plus a static type system",
+    "catches many integration mistakes earlier"
+   ],
+   "categories": [
+    "verbose",
+    "verboseOneWrongClause",
+    "absoluteVsQualified",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Checking before runtime, catching integration mistakes and documenting contracts are right, but 'every single type' and 'never have to write one' overstate the source's 'often'.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-038",
+   "document": "Mobile Mastery",
+   "concept": "TypeScript",
+   "page": null,
+   "text": "TypeScript's the Microsoft one, right? It's everywhere now, half the frontend job posts we put out ask for it.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Who made TypeScript and how popular it is are not what the source teaches, so there is no evidence about static types checked before runtime.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-039",
+   "document": "Mobile Mastery",
+   "concept": "DRY",
+   "page": null,
+   "text": "It doesn't mean you can never have two lines that look alike. It's about each business rule, say the discount policy or the shipping-fee formula, living in exactly one place. If that rule gets copied into three spots, sooner or later someone updates two of them, the invoices stop agreeing, and touching that rule again becomes a gamble.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "avoid duplicating the same knowledge or rule",
+    "Duplicated business rules drift and make maintenance risky"
+   ],
+   "categories": [
+    "paraphrase",
+    "negation",
+    "absoluteVsQualified",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correctly limits DRY to duplicated rules rather than every repeated line and explains that the copies drift and make changes risky.",
+   "author": "I"
+  },
+  {
+   "id": "s6i-040",
+   "document": "Mobile Mastery",
+   "concept": null,
+   "page": 6,
+   "text": "Internet basics, pretty much.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Too vague to show whether they know the page is about how browser requests travel, get routed, cached and returned.",
+   "author": "I"
+  }
+ ]
+}

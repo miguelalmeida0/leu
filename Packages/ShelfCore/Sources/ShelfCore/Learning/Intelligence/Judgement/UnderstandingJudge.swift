@@ -23,6 +23,8 @@ struct UnderstandingJudge: Sendable {
         static let nothingComparable = 0.5, misconception = 0.75, strongCredit = 0.8, partialCredit = 0.2, weakReasoning = 0.5
         /// The leading reading of a judgement that asks first: right about four times in ten until answered.
         static let undecided = 0.4
+        /// A reading that rests only on what the answer says in other words, asked about first.
+        static let semanticOnly = 0.5
     }
 
     func judge(_ diagnosis: UnderstandingDiagnosis, signals: DiagnosisSignals, target: DiagnosisTarget, prior: LearnerPrior) -> UnderstandingJudgement {
@@ -34,8 +36,14 @@ struct UnderstandingJudge: Sendable {
                                                       operation: .define, relatedConcept: nil))
         }
         var hypotheses = reading.misconceptions + reading.possibleConfusions + reading.omittedNegations + reading.lingering(prior)
+            + reading.semanticConfusions + reading.opposites
         let credit = reading.credit
         hypotheses.append(credit)
+        // Credit only the semantic space can see, when the wording itself earns none. It is asked
+        // about before anything is recorded; it never raises credit the wording already earns.
+        let semantic = credit.state == .insufficientEvidence ? reading.semanticCredit : nil
+        if let semantic { hypotheses.append(semantic) }
+        let leading = semantic?.state ?? credit.state
         hypotheses.sort { ($0.support, Self.rank($0.state)) > ($1.support, Self.rank($1.state)) }
 
         // 2. A clearly stated wrong idea.
@@ -44,7 +52,7 @@ struct UnderstandingJudge: Sendable {
         }
         // 3. A wrong idea that is possible but not established. The most specific doubt decides what
         // to ask: a claim the answer seems to misread before a concept it may be mixing up.
-        let specificity: [UnderstandingCue] = [.contradiction, .omittedNegation, .priorMisconception, .possibleConfusion]
+        let specificity: [UnderstandingCue] = [.contradiction, .omittedNegation, .opposite, .priorMisconception, .possibleConfusion]
         if let doubtful = hypotheses.filter({ $0.state == .misconception })
             .min(by: { (specificity.firstIndex(of: $0.cue) ?? 9) < (specificity.firstIndex(of: $1.cue) ?? 9) }) {
             let claims = doubtful.claimID.map { [$0] } ?? reading.definitionID.map { [$0] } ?? []
@@ -53,10 +61,10 @@ struct UnderstandingJudge: Sendable {
             // claim's level, not as a connect-level check.
             let operation: ProbeOperation
             if doubtful.relatedConcept != nil && doubtful.claimID == nil { operation = .contrast }
-            else if [.contradiction, .priorMisconception].contains(doubtful.cue) { operation = .misconceptionCheck }
+            else if [.contradiction, .opposite, .priorMisconception].contains(doubtful.cue) { operation = .misconceptionCheck }
             else { operation = claims.first.map(reading.operation(for:)) ?? .define }
-            return decide(credit.state, Confidence.undecided, hypotheses,
-                          ask: DiscriminatingQuestion(between: [.misconception, credit.state], claimIDs: claims, operation: operation,
+            return decide(leading, Confidence.undecided, hypotheses,
+                          ask: DiscriminatingQuestion(between: [.misconception, leading], claimIDs: claims, operation: operation,
                                                       relatedConcept: doubtful.relatedConcept))
         }
         // Source wording copied: memory of the text, not yet understanding — ask for own words.
@@ -71,9 +79,19 @@ struct UnderstandingJudge: Sendable {
             // Credit that may be less than it looks is weighed against fragile understanding;
             // thin partial credit, against a misreading that shares its words ("only once").
             let alternative: UnderstandingState = credit.state.credits ? .fragile : .misconception
-            return decide(credit.state, Confidence.undecided, hypotheses,
-                          ask: DiscriminatingQuestion(between: [credit.state, alternative], claimIDs: [claim],
+            return decide(leading, Confidence.undecided, hypotheses,
+                          ask: DiscriminatingQuestion(between: [leading, alternative], claimIDs: [claim],
                                                       operation: reading.operation(for: claim), relatedConcept: nil))
+        }
+        // Said only in other words: a reading the semantic space gives, asked about before anything
+        // is recorded. A right conclusion with a reason the source does not settle is weak reasoning,
+        // and the question asks for the reason.
+        if let semantic, let claim = semantic.claimID {
+            let weak = !reading.unsettledReasons.isEmpty
+            let asked = weak ? reading.reasonClaimID ?? claim : claim
+            return decide(weak ? .weakReasoning : semantic.state, Confidence.semanticOnly, hypotheses,
+                          ask: DiscriminatingQuestion(between: weak ? [.weakReasoning, semantic.state] : [semantic.state, .fragile],
+                                                      claimIDs: [asked], operation: reading.operation(for: asked), relatedConcept: nil))
         }
         if credit.cue == .nothingComparable {
             return decide(.insufficientEvidence, Confidence.nothingComparable, hypotheses,
@@ -84,6 +102,15 @@ struct UnderstandingJudge: Sendable {
         if credit.state != .insufficientEvidence, reading.unsupportedReason {
             let weak = UnderstandingHypothesis(.weakReasoning, support: 0.6, cue: .unsupportedReason, claimID: credit.claimID)
             return decide(.weakReasoning, Confidence.weakReasoning, [weak] + hypotheses, ask: nil)
+        }
+        // A reason the source does not give, in its words or in others, beside a credited conclusion:
+        // the reasoning may be the learner's own. Asked about before the credit counts.
+        if credit.state != .insufficientEvidence, !reading.unsettledReasons.isEmpty {
+            let asked = reading.reasonClaimID ?? credit.claimID
+            let weak = UnderstandingHypothesis(.weakReasoning, support: 0.5, cue: .unsupportedReason, claimID: asked)
+            return decide(.weakReasoning, Confidence.undecided, [weak] + hypotheses,
+                          ask: DiscriminatingQuestion(between: [.weakReasoning, credit.state], claimIDs: asked.map { [$0] } ?? [],
+                                                      operation: asked.map(reading.operation(for:)) ?? .purpose, relatedConcept: nil))
         }
         return decide(credit.state, credit.state == .fragile ? Confidence.partialCredit : Confidence.strongCredit, hypotheses, ask: nil)
     }

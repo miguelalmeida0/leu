@@ -7,7 +7,12 @@ import Foundation
 /// never presented as proof of understanding, and nothing here invents a fact: messages
 /// are built from fixed templates, the learner's words and the source's words.
 public struct UnderstandingDiagnoser: Sendable {
-    public init() {}
+    /// Where the reader looks up what words mean, to read what an answer says in other words
+    /// (`SemanticReader`). Without it the reader reads words only, exactly as V35 did.
+    let semantics: SemanticSpace?
+
+    public init() { semantics = SemanticSpace.shared }
+    init(semantics: SemanticSpace?) { self.semantics = semantics }
 
     public func diagnose(_ explanation: String, target: DiagnosisTarget) -> UnderstandingDiagnosis {
         assess(explanation, target: target).diagnosis
@@ -42,11 +47,21 @@ public struct UnderstandingDiagnoser: Sendable {
         }
         let own = rubrics + supporting
         let ownConcept = target.concept
+        let reader = semantics.map { SemanticReader(space: $0, context: context) }
+        // What a clause the lexical reader could not settle says in other words: evidence for the
+        // judgement, not for the record.
+        func readSemantically(_ clause: LearnerClause, _ alignments: [Alignment]) {
+            guard let reader, !signals.clauses.isEmpty else { return }
+            signals.clauses[signals.clauses.count - 1].semantic = reader.read(clause, alignments: alignments)
+        }
         // Every clause yields one statement and, beside it, the strength of the evidence behind it.
         func emit(_ statement: StatementDiagnosis, _ clause: LearnerClause, _ alignment: Alignment? = nil, credits: [Alignment] = []) {
             statements.append(statement)
             var signal = Self.signal(statement, clause: clause, alignment: alignment, context: context)
             for credit in credits { signal.credited[credit.rubric.claim.id] = (credit.recall, credit.distinctive) }
+            if [.supports, .partiallySupports, .unsupported, .overgeneralizes, .restates].contains(statement.verdict) {
+                signal.reason = reader?.reason(in: clause, own: own)
+            }
             signals.clauses.append(signal)
         }
 
@@ -108,11 +123,13 @@ public struct UnderstandingDiagnoser: Sendable {
                 let consistent = ownConcept.map { context.precision(clause, against: $0) } ?? (own.map { Alignment(clause: clause, rubric: $0, context: context).precision }.max() ?? 0)
                 if (consistent >= 0.6 && clause.complement.count >= 2) || doubted?.expressesContent == true {
                     emit(StatementDiagnosis(learnerText: clause.text, verdict: .partiallySupports, claimID: nil, tier: .lexical,
-                                            matchedTerms: [], missingTerms: []), clause, doubted); continue
+                                            matchedTerms: [], missingTerms: []), clause, doubted)
+                    readSemantically(clause, alignments); continue
                 }
                 issues.append(UnderstandingIssue(kind: .unsupported, learnerText: clause.text))
                 emit(StatementDiagnosis(learnerText: clause.text, verdict: .unsupported, claimID: nil, tier: nil,
-                                        matchedTerms: [], missingTerms: []), clause, doubted); continue
+                                        matchedTerms: [], missingTerms: []), clause, doubted)
+                readSemantically(clause, alignments); continue
             }
             for (alignment, coverage) in covering {
                 record(alignment.rubric, coverage, alignment.missingElement, clause.text)
@@ -124,6 +141,7 @@ public struct UnderstandingDiagnoser: Sendable {
             if top.0.overgeneralizes { verdict = .overgeneralizes }
             if top.0.verbatim { issues.append(UnderstandingIssue(kind: .verbatim, claimID: top.0.rubric.claim.id, learnerText: clause.text)); verdict = .restates }
             emit(top.0.statement(verdict), clause, top.0, credits: covering.map(\.0))
+            if top.1 != .covered { readSemantically(clause, alignments) }
         }
         // Whole-text coverage: one idea can span clauses ("an index ... ; without one, big queries ...").
         let whole = LearnerClause(text)
@@ -165,27 +183,6 @@ public struct UnderstandingDiagnoser: Sendable {
         }
     }
 
-    /// Eight or more words without a single article, preposition, conjunction, pronoun or
-    /// auxiliary: "constraint linking value one table key another table referential integrity".
-    /// Real sentences that short of function words are shorter ("Foreign keys protect integrity").
-    static func isKeywordList(_ text: String) -> Bool {
-        let words = Lexicon.words(text)
-        guard words.count >= 8 else { return false }
-        let connective: Set<String> = ["and", "or", "but", "not", "no", "so", "it", "its", "they", "their", "them", "this", "these", "those",
-                                       "that", "which", "who", "what", "when", "if", "because", "than", "as", "you", "your", "we", "i"]
-        return !words.contains { ["a", "an", "the"].contains($0) || ClauseLexicon.prepositions.contains($0) ||
-            ClauseLexicon.auxiliaries.contains($0) || ClauseLexicon.subordinators.contains($0) || connective.contains($0) }
-    }
-
-    private func isNoise(_ text: String, target: DiagnosisTarget) -> Bool {
-        let words = Lexicon.words(Lexicon.normalizePhrases(text)).filter { $0.first?.isLetter == true }
-        guard !words.isEmpty else { return true }
-        let vocabulary = Set(target.allClaims.flatMap { LexicalProfile($0.statement).terms.map(\.stem) })
-        let known = words.filter { Lexicon.common.contains(Lexicon.stem($0)) || vocabulary.contains(Lexicon.stem($0)) ||
-            ClauseLexicon.forms[$0] != nil || Lexicon.familyIndex[Lexicon.stem($0)] != nil }
-        return Double(known.count) / Double(words.count) < 0.34
-    }
-
     private func finish(target: DiagnosisTarget, rubrics: [ClaimRubric], statements: [StatementDiagnosis],
                         best: [String: (coverage: ClaimCoverage, missing: MissingElement?, text: String)],
                         issues rawIssues: [UnderstandingIssue], signals: DiagnosisSignals, prior: LearnerPrior) -> UnderstandingAssessment {
@@ -215,6 +212,8 @@ public struct UnderstandingDiagnoser: Sendable {
             }
         }
         let level = Self.level(issues: issues, coverage: coverage, statements: statements)
+        var signals = signals
+        signals.readSemanticLevel(rubrics: rubrics, lexical: best.mapValues(\.coverage), issues: issues, statements: statements)
         let referenced = target.allClaims
         let draft = UnderstandingDiagnosis(version: UnderstandingDiagnosis.version, concept: target.concept, conceptName: target.conceptName,
             statements: statements, claims: assessments, issues: issues, level: level, coverage: coverage,
@@ -225,30 +224,5 @@ public struct UnderstandingDiagnoser: Sendable {
             statements: statements, claims: assessments, issues: issues, level: level, coverage: coverage,
             intervention: intervention, referencedClaims: Self.referenced(draft, intervention: intervention, all: referenced))
         return UnderstandingAssessment(diagnosis: diagnosis, judgement: judgement, signals: signals)
-    }
-
-    /// Keep only claims the diagnosis actually points at, so persisted diagnoses stay small.
-    private static func referenced(_ diagnosis: UnderstandingDiagnosis, intervention: LearningIntervention, all: [LearningClaim]) -> [LearningClaim] {
-        var ids = Set(diagnosis.claims.map(\.claimID))
-        ids.formUnion(diagnosis.statements.compactMap(\.claimID))
-        ids.formUnion(diagnosis.issues.compactMap(\.claimID))
-        if let focus = intervention.focusClaimID { ids.insert(focus) }
-        ids.formUnion(intervention.followUp?.rubricClaimIDs ?? [])
-        return all.filter { ids.contains($0.id) }.reduce(into: [LearningClaim]()) { result, claim in
-            if !result.contains(where: { $0.id == claim.id }) { result.append(claim) }
-        }
-    }
-
-    static func level(issues: [UnderstandingIssue], coverage: Double, statements: [StatementDiagnosis]) -> UnderstandingLevel {
-        let kinds = Set(issues.map(\.kind))
-        if kinds.contains(.nonsense) { return .insufficient }
-        if !kinds.isDisjoint(with: [.contradiction, .causalReversal, .confusedConcept]) { return .misconceived }
-        let supported = statements.filter { [.supports, .partiallySupports, .overgeneralizes].contains($0.verdict) }
-        if kinds.contains(.verbatim) && supported.isEmpty { return .surface }
-        if kinds.contains(.circular) && coverage < 0.3 { return .circular }
-        if coverage >= 0.75 { return kinds.contains(.overgeneralization) ? .mostly : .solid }
-        if coverage >= 0.45 { return .mostly }
-        if coverage > 0 { return .partial }
-        return statements.isEmpty ? .insufficient : .unrelated
     }
 }

@@ -85,6 +85,8 @@ enum GeneralizationEvaluation {
         var goldPositive = 0, masteryCredited = 0
         var goldMisconception = 0, misconceptionRecorded = 0, misconceptionProbed = 0, misconceptionCredited = 0
         var goldNoMisconception = 0, falseMisconception = 0
+        /// Weak reasoning a teacher sees, how much of it the predictor names, and how often it names it.
+        var goldWeakReasoning = 0, weakReasoningDetected = 0, predictedWeakReasoning = 0
         var probes = 0
         /// Verdicts committed without asking, and how many of them a teacher would reject.
         var committed = 0, committedRight = 0
@@ -114,6 +116,9 @@ enum GeneralizationEvaluation {
         var probeRate: Double { rate(probes, cases) }
         var selectiveAccuracy: Double { rate(committedRight, committed) }
         var wrongCommits: Int { committed - committedRight }
+        /// Learner-model writes a teacher would reject: mastery for an answer that is not understood,
+        /// a misconception that is not there, credit for a misconception neither recorded nor probed.
+        var harmfulWrites: Int { falseMastery + falseMisconception + misconceptionCredited }
         var brierScore: Double { cases == 0 ? 0 : brier / Double(cases) }
         /// Expected calibration error over five confidence bins (coarse correctness).
         var ece: Double {
@@ -134,6 +139,7 @@ enum GeneralizationEvaluation {
                 + "falseMastery=\(falseMastery)/\(goldNotPositive) (\(pct(falseMasteryRate))) masteryRecall=\(masteryCredited)/\(goldPositive) (\(pct(masteryRecall))) "
                 + "misconceptionRecall=\(misconceptionRecorded)/\(goldMisconception) (\(pct(misconceptionRecall))) caughtOrProbed=\(pct(misconceptionCaughtOrProbed)) "
                 + "misconceptionCredited=\(misconceptionCredited) (\(pct(misconceptionCreditedRate))) falseMisconception=\(falseMisconception)/\(goldNoMisconception) (\(pct(falseMisconceptionRate))) "
+                + "weakReasoning=\(weakReasoningDetected)/\(goldWeakReasoning) (predicted \(predictedWeakReasoning)) harmfulWrites=\(harmfulWrites) "
                 + "probes=\(probes) (\(pct(probeRate))) committed=\(committed) selective=\(pct(selectiveAccuracy)) wrongCommits=\(wrongCommits) "
                 + "(overCredit=\(overCredit) falseAlarm=\(falseAlarm) missedMisconception=\(missedMisconception) underCredit=\(underCredit)) "
                 + "targetedProbes=\(targetedProbes)/\(misconceptionProbed) brier=\(String(format: "%.3f", brierScore)) ece=\(String(format: "%.3f", ece)) "
@@ -170,6 +176,8 @@ enum GeneralizationEvaluation {
             let goldCoarse = coarse(item.state, misconception: goldMisconception)
             let predictedCoarse = coarse(judged.state)
             if judged.state == item.state { report.exact += 1 }
+            if item.state == "weakReasoning" { report.goldWeakReasoning += 1; if judged.state == item.state { report.weakReasoningDetected += 1 } }
+            if judged.state == "weakReasoning" { report.predictedWeakReasoning += 1 }
             let right = predictedCoarse == goldCoarse
             if right { report.coarseRight += 1 }
             let positive = goldCoarse == "positive"

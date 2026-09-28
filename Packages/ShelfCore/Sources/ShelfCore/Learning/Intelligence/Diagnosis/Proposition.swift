@@ -13,6 +13,12 @@ struct Proposition {
     /// "avoids firing work for *every* keystroke" negates the universal, not the action.
     let universalInScope: Bool
     let universal: Bool
+    /// How many polarity cues it holds (negations, "without", negative verbs): with two or more,
+    /// its overall polarity is a parity, not a reading ("wasn't changed, without a lookup").
+    let cues: Int
+    /// It limits its own scope ("only part", "alone", "merely"), which a negation can restate
+    /// with the opposite polarity ("X alone does not close it" for "X is only part of it").
+    let restrictive: Bool
 
     private static let boundaries = [";", ", and ", " and it ", " and they ", ", so ", " so that ", " so ", ", which ", " which ", " that ",
                                      ", but ", " but ", " because ", ", while ", " while ", " whereas ", ", otherwise ", " when "]
@@ -70,9 +76,12 @@ struct Proposition {
             let universalInScope = cue.map { cue in profile.words.indices.contains { $0 > cue && Lexicon.universals.contains(profile.words[$0]) } } ?? false
             return Proposition(terms: profile.terms, negative: (profile.negationCount + without) % 2 == 1 ? !negativeVerb : negativeVerb,
                                poles: profile.poles, scope: scope, universalInScope: universalInScope,
-                               universal: !profile.universals.subtracting(["any"]).isEmpty)
+                               universal: !profile.universals.subtracting(["any"]).isEmpty, cues: polarityCues(profile),
+                               restrictive: profile.words.contains { restrictives.contains($0) })
         }
     }
+
+    private static let restrictives: Set<String> = ["only", "alone", "merely", "solely", "just", "purely"]
 
     private static func polarityCues(_ profile: LexicalProfile) -> Int {
         profile.negationCount + (profile.words.contains("without") ? 1 : 0) + profile.terms.filter { negativeVerbs.contains($0.stem) }.count

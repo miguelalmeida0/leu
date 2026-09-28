@@ -63,7 +63,9 @@ struct InterventionPlanner {
             let otherName = target.names[other]?.first ?? other.value
             return make(.distinguishConcepts, "Your explanation could also describe \(otherName).", followUp, focus, related: other)
         }
-        let message = question.between.contains(.misconception)
+        let message = question.between.first == .weakReasoning
+            ? "Your conclusion matches your source, but Leu can't find the reason you give in it."
+            : question.between.contains(.misconception)
             ? "Leu can't tell yet how you read one part of your source."
             : "You may have this already, but Leu can't tell from these words yet."
         return make(.cueMissingIdea, message, followUp, focus)

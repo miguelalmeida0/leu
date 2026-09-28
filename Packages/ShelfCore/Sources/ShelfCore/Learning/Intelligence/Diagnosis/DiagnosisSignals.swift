@@ -24,11 +24,20 @@ struct ClauseSignal: Sendable {
     let words: Int
     /// Every claim the clause credits (not only the verdict's), with the recall and distinctive words behind it.
     var credited: [String: (recall: Double, distinctive: Int)] = [:]
+    /// What the clause says in other words (`SemanticReader`), when the semantic space is available
+    /// and the lexical reader did not already settle the clause (contradiction, reversal, confusion).
+    var semantic: SemanticClauseReading?
+    /// The reason the clause gives, and whether the source says it (`SemanticReader.reason`).
+    var reason: ReasonReading?
 }
 
 /// Everything the judge weighs beyond the diagnosis itself, one entry per statement.
 struct DiagnosisSignals: Sendable {
     var clauses: [ClauseSignal] = []
+    /// Claim coverage and level with what the answer says in other words credited as well — the
+    /// judgement's reading only; the stored diagnosis keeps the lexical coverage.
+    var semanticCoverage: [String: ClaimCoverage] = [:]
+    var semanticLevel: UnderstandingLevel?
 
     static let none = DiagnosisSignals()
 }

@@ -21,9 +21,19 @@ extension GeneralizationEvaluation {
 
     /// V35: the judgement decides what the learner model may learn from the answer, and whether
     /// it should wait for one discriminating answer first. The prior is the learner model so far.
+    /// The reader reads words only, as V35 shipped.
     static func v35(_ input: Input, _ text: String) -> Judged {
+        judged(input, text, UnderstandingDiagnoser(semantics: nil))
+    }
+
+    /// V36: the same judgement, with the reader also reading what the answer says in other words.
+    static func v36(_ input: Input, _ text: String) -> Judged {
+        judged(input, text, UnderstandingDiagnoser())
+    }
+
+    private static func judged(_ input: Input, _ text: String, _ diagnoser: UnderstandingDiagnoser) -> Judged {
         let concepts = input.target.concept.map { [LearnerConceptID(documentID: input.documentID, concept: $0)] } ?? []
-        let assessment = UnderstandingDiagnoser().assess(text, target: input.target, prior: LearnerPrior(input.prior, concepts: concepts, at: input.at))
+        let assessment = diagnoser.assess(text, target: input.target, prior: LearnerPrior(input.prior, concepts: concepts, at: input.at))
         let evidence = LearnerEvidenceMapper(knowledge: input.knowledge).evidence(from: assessment, documentID: input.documentID,
                                                                                     identity: input.item.id + "|" + text, at: input.at)
         let state = assessment.judgement.state == .insufficientEvidence ? "insufficient" : assessment.judgement.state.rawValue

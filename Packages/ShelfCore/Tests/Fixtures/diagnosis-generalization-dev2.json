@@ -1,0 +1,2618 @@
+{
+ "version": 1,
+ "split": "dev2",
+ "authors": [
+  "independent annotator C (V36)",
+  "independent annotator D (V36)",
+  "independent annotator E (V36)"
+ ],
+ "guide": "V35 labeling guide + V36 addendum (adversarial categories); each author saw only a catalog of grounded source sentences",
+ "note": "V36 development split: three independent annotators (C, D, E), seven documents, Mobile Mastery at most 40%. Used to calibrate V36 semantic thresholds; never a sealed set.",
+ "cases": [
+  {
+   "id": "d2c-001",
+   "document": "Mobile Mastery",
+   "concept": "Stale-while-revalidate",
+   "page": null,
+   "text": "Think in a news app. You open it and yesterday's headlines appear on the moment; while you read, in the background it fetches the new ones and swaps them. Price: for a while you may see old news. Gain: you kill two rabbits with one blow - it is quick, and it still shows something when the server is sick.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "Serve slightly stale cached data immediately",
+    "trades bounded freshness for low latency"
+   ],
+   "categories": [
+    "novelExample",
+    "exampleInsteadOfDefinition",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The news-app scenario shows the old copy served at once, the refresh in the background, and the trade of brief staleness for speed and resilience, with nothing wrong.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-002",
+   "document": "Computer Science Essentials",
+   "concept": "binary search",
+   "page": null,
+   "text": "You take the sorted list and look to the element in the middle. If your target is bigger, the whole left half you can forget; if it is smaller, the right half. Then the same thing with the half that stayed, again and again, until you find it or nothing is left to look.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "repeatedly narrows a sorted search space"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2c-pg01",
+   "notes": "Repeatedly discarding the half of a sorted list that cannot hold the target is exactly the source's mechanism, in the learner's own words.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-003",
+   "document": "Coding Interviews",
+   "concept": "Test cases",
+   "page": null,
+   "text": "Test cases are there to confirm the example used while writing the code. If this example gives the right output, the solution is proven and you can pass to the next question.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "not merely confirm the example used",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "oppositeMeaningSameWords",
+    "nearVerbatim",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": "d2c-pg02",
+   "notes": "Copies the source's wording but drops 'not merely', so confirming the example used while coding becomes the whole purpose of testing, the opposite of the source.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-004",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 2,
+   "text": "A closure is a function that can see the variables wich are outside of it.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2c-pg03",
+   "notes": "Gestures at function plus outside variables but says nothing about keeping access after the outer call returns or about separate environments per call; torn with mostlyUnderstood, chose fragile because the page's central point is missing.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-005",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 3,
+   "text": "Having code that works is not the whole interview. You must also tell your assumptions, why you chose this approach, and how the cost grows when the input grows.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "only part of the conversation"
+   ],
+   "categories": [
+    "negation",
+    "paraphrase",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2c-pg04",
+   "notes": "Correctness as only part of the conversation, and what else to explain, is right, but the idea of simpler code as the default until a demonstrated bottleneck is missing.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-006",
+   "document": "JavaScript Deep Dive",
+   "concept": "block body",
+   "page": null,
+   "text": "If the arrow function has curly braces you must write the return yourself, because when you forget it JavaScript throws an error and the program stops.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "needs an explicit return statement"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2c-pg05",
+   "notes": "The rule (explicit return in a block body) is right, but the reason given, that leaving it out throws an error, is wrong and not supported by the source.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-007",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 3,
+   "text": "This page is about design patterns and architecture, how to build software with good quality.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [],
+   "paraphraseGroup": "d2c-pg06",
+   "notes": "Names only the general topic, with nothing about the cost of each abstraction or the offline library not needing a distributed backend, so a teacher cannot tell what was understood.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-008",
+   "document": "Mobile Mastery",
+   "concept": "Technical debt",
+   "page": null,
+   "text": "Technical debt is always bad, there is no good debt - like we say in my country, the cheap comes out expensive. It only appears by accident, when programmers are careless; nobody would take it on purpose.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "Technical debt is not automatically bad",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "or deliberate trade-offs in today's implementation",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "absoluteVsQualified",
+    "negation",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Two distinct errors: debt is declared always bad although the source says it is not automatically bad, and it is said never to be taken on purpose although the source names deliberate trade-offs as a cause.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-009",
+   "document": "Mobile Mastery",
+   "concept": "unknown",
+   "page": null,
+   "text": "With unknown, TypeScript accepts that anything comes in, but it won't let you do nothing with the value before you check what it is - typeof, instanceof, this kind of checks.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "you must narrow it before using it"
+   ],
+   "categories": [
+    "negation",
+    "paraphrase",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The core rule (anything may come in, but it must be checked before use) is right, while the purpose, modelling untrusted input without giving up type safety, is missing.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-010",
+   "document": "Computer Science Essentials",
+   "concept": "binary search",
+   "page": null,
+   "text": "Binary search works on a sorted array: every step it cuts the zone where it searches in two and continues only in one piece, untill it finds the value. It is so fast because it uses the binary representation of the numbers, the zeros and ones, which is the natural language of the processor.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "repeatedly narrows a sorted search space"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The mechanism (repeatedly narrowing a sorted array) is right, but the reason offered for its speed is a 'binary means bits' non-sequitur that the source does not support.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-011",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 2,
+   "text": "The arrow function that counter() gives back carries the value variable with it, like a backpack. counter() is already finished, but next() still reaches that same variable and adds to it: 1, then 2. And each new call of counter() packs a new backpack, so two counters never mix their numbers.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "keep accessing that environment after the outer",
+    "create two independent environments"
+   ],
+   "categories": [
+    "novelExample",
+    "exampleInsteadOfDefinition",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Through the counter example and a backpack analogy it shows that access survives the outer call and that each call gets its own environment; the general definition is only implied, so that sentence is not credited.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-012",
+   "document": "Mobile Mastery",
+   "concept": "Response",
+   "page": null,
+   "text": "Before any response, the browser must ask the DNS for the IP of the domain, then it opens a TCP connection on port 443, and TLS encrypts everything.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "multipleConcepts",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "These are true networking facts about what happens before a request, but they say nothing about what a response is or what it carries.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-013",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 3,
+   "text": "For the interview only one thing matters: that the code gives the right answer, the explanation is decoration. And the lesson of the page is to always write the simplest code - optimizing is never worth it, whatever the input size.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "technically correct solution is only part",
+     "confusedWith": null
+    },
+    {
+     "kind": "overgeneralization",
+     "claim": "Simpler code can be the better default",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "absoluteVsQualified",
+    "confidentlyWrong",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Denies that a correct solution is only part of the conversation, and turns 'simpler code can be the default until a demonstrated bottleneck' into 'always the simplest, never optimize'.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-014",
+   "document": "Computer Science Essentials",
+   "concept": "binary search",
+   "page": null,
+   "text": "Is like searching a word in a paper dictionary. You open around the middle, see your word comes before, so the right part you ignore. Then you open in the middle of what is left, and so on - every time half of the pages go away. It only works because the dictionary is in alphabetic order.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "repeatedly narrows a sorted search space"
+   ],
+   "categories": [
+    "novelExample",
+    "exampleInsteadOfDefinition",
+    "paraphrase",
+    "novelVocabulary",
+    "absoluteVsQualified"
+   ],
+   "paraphraseGroup": "d2c-pg01",
+   "notes": "The dictionary scenario shows repeated halving of an ordered space and correctly makes the ordering the precondition.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-015",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 3,
+   "text": "Each new layer or pattern is one more idea that the next developer has to learn, so it is not for free. A small offline book app does not need servers distributed everywhere to look professional; that would be to put the cart in front of the oxen. Keep the simplest thing that works.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "a concept that the next engineer must learn",
+    "does not need a distributed backend"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "negation"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Captures that every abstraction is one more concept for the next engineer and that a small offline app needs no distributed backend, leading to the simplest-implementation conclusion.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-016",
+   "document": "Coding Interviews",
+   "concept": "Test cases",
+   "page": null,
+   "text": "Basically you run the sample input from the problem statement and check you get the sample output. When it matches, the tests did their job.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "not merely confirm the example used",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "misconceptionParaphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2c-pg02",
+   "notes": "Treats reproducing the sample output as the whole job of testing, which the source explicitly rejects.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-017",
+   "document": "Mobile Mastery",
+   "concept": "Client-side routing",
+   "page": null,
+   "text": "SPAs are fast and SPAs use client-side routing, but this is only a correlation - the speed comes from the small bundle, the router by itself makes nothing faster. And as everything happens in the browser, the server does not need any fallback when somebody opens /settings directly.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "makes SPA navigation fast",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "servers still need fallback/deep-link support",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "causeVsCorrelation",
+    "negation",
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Turns the source's causal claim (client-side routing makes SPA navigation fast) into a mere correlation, and denies the server fallback that direct URL loads still need.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-018",
+   "document": "JavaScript Deep Dive",
+   "concept": "block body",
+   "page": null,
+   "text": "Braces after the arrow -> return is obligatory. Without it the code does not even run, you recieve an exception.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "needs an explicit return statement"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "confidentlyWrong",
+    "negation",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2c-pg05",
+   "notes": "Correct rule with a wrong justification: a missing return in a block body does not stop the code with an exception, and the source gives no such reason.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-019",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 2,
+   "text": "It's when a function uses stuff from around it, from the outer code.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2c-pg03",
+   "notes": "A vague gesture at a function using surrounding variables, with no access surviving the outer call and no independent environments; fragile rather than mostlyUnderstood because the page's central point is absent.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-020",
+   "document": "Mobile Mastery",
+   "concept": "Writes",
+   "page": null,
+   "text": "A write can go by two roads. Or the cache and the database are both updated inside the same write, before you receive the OK; or the write only lands in the cache or in a buffer, you get the OK fast, and the database receives it later, in background.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "update the cache and backing store",
+    "persisted to the backing store asynchronously"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Both write paths in the source are described correctly: cache and store updated within the write, or buffered and persisted to the store asynchronously.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-021",
+   "document": "Mobile Mastery",
+   "concept": "Promise",
+   "page": null,
+   "text": "Promise is for async things. You put .then() after it and it gives you the result when it is ready.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "pronounAmbiguity"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Has the idea of a later result and .then(), but not an object standing for eventual fulfilment or rejection, nor the error handling, and the repeated 'it' blurs promise, operation and result; torn with mostlyUnderstood, chose fragile.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-022",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 3,
+   "text": "A correct answer is maybe half of the job. The other half is talking: the assumptions, the approach you picked, what happens with the cost for big inputs.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "only part of the conversation"
+   ],
+   "categories": [
+    "paraphrase",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2c-pg04",
+   "notes": "Like the rest of its group, it says correctness is only part of the conversation and the reasoning must be explained, but leaves out simple code until a demonstrated bottleneck.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-023",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 3,
+   "text": "General advices about software design and patterns.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": "d2c-pg06",
+   "notes": "Only a topic label, so none of the page's content can be recognised.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-024",
+   "document": "Mobile Mastery",
+   "concept": "Stale-while-revalidate",
+   "page": null,
+   "text": "Stale-while-revalidate: when the request arrives, the cache gives back at once the copy it already has, even if it is a little old, and in the same time it asks the origin for a fresh version, so the next visitor gets the new one. You accept that data can be slightly behind, and in exchange the site keeps answering even when the backend has problems. Of course sites with SWR are usually fast, but I think this is only correlation: the teams that use SWR also use good CDNs, the pattern by itself does not make the answer quicker.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "trades bounded freshness for low latency",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "Serve slightly stale cached data immediately"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "causeVsCorrelation",
+    "negation",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Everything is right except the last clause, which reduces the low latency the source credits to the pattern to a mere correlation with CDNs.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-025",
+   "document": "JavaScript Deep Dive",
+   "concept": "block body",
+   "page": null,
+   "text": "A block body is simply the part between { and } where you write statements, the same as the body of an if or of a for loop.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "A true description of a braces block, but nothing about the explicit return the source teaches; torn with fragile, chose insufficient because the card's only idea is absent.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-026",
+   "document": "Mobile Mastery",
+   "concept": null,
+   "page": 344,
+   "text": "Summary of the page: definitions are only the beginning. Then, a modular monolith is always better than microservices, so never start with microservices. And each monkey on its branch: the UI validation is the one that protects the data, and the database constraints are there to help the users.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "can be more senior than five premature microservices",
+     "confusedWith": null
+    },
+    {
+     "kind": "reversal",
+     "claim": "Database constraints protect data",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "Definitions are the starting line",
+    "Each layer has a job"
+   ],
+   "categories": [
+    "multipleMisconceptions",
+    "absoluteVsQualified",
+    "subjectObjectReversal",
+    "oppositeMeaningSameWords",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right that definitions are only the start and that each layer has its own job, but 'can be more senior than premature microservices' becomes 'always better', and the jobs of UI validation and database constraints are swapped.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-027",
+   "document": "Computer Science Essentials",
+   "concept": "binary search",
+   "page": null,
+   "text": "Keep halving the sorted range.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "repeatedly narrows a sorted search space"
+   ],
+   "categories": [
+    "veryShort",
+    "terse",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2c-pg01",
+   "notes": "Only five words, yet repetition, narrowing and the sorted precondition, the whole of the source sentence, are all there.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-028",
+   "document": "Coding Interviews",
+   "concept": "Test cases",
+   "page": null,
+   "text": "If I understood well, I think the purpose of a test case is to verify that the code works for the example we had in mind while programming, and nothing more is really necessary. To test other things would be to rain on wet ground.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "not merely confirm the example used",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "misconceptionParaphrase",
+    "negation",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2c-pg02",
+   "notes": "Hedged, but it still asserts that checking the example used while coding is enough, the opposite of the source's 'not merely confirm the example'.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-029",
+   "document": "Mobile Mastery",
+   "concept": "Response",
+   "page": null,
+   "text": "Example: GET /profile -> server answers 200 OK, a header Content-Type: application/json, and the profile inside the body. With expired token -> 401 and the body empty. That is what comes back.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "success or failure plus headers"
+   ],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The example shows a status for success and failure, headers and an optional body, but what a response is (the server's report on a request) is only implied; torn with understood, chose mostlyUnderstood.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-030",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 2,
+   "text": "Closure means the outer function keeps access to the variables of the inner function, even after the inner one has returned. So in the example, counter() can still read the value that lives inside the arrow.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "after the outer call has returned",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "subjectObjectReversal",
+    "oppositeMeaningSameWords"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Swaps inner and outer: in the source it is the returned inner function that keeps access to the outer environment after the outer call has returned.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-031",
+   "document": "Mobile Mastery",
+   "concept": "unknown",
+   "page": null,
+   "text": "unknown is what you use for values you cannot trust yet, for example the JSON coming from an API. You can assign anything to it, but before using it you have to narrow it with typeof, instanceof or a type guard, so the compiler still protects you. For that reason it is safer than any, where you can do whatever you want. Technically it is the bottom type of TypeScript, the one that sits below all the other types.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "A safe top type",
+     "confusedWith": "never"
+    }
+   ],
+   "credits": [
+    "models untrusted inputs without abandoning type safety"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "multipleConcepts",
+    "confidentlyWrong",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "All correct until the final clause, which calls unknown the bottom type (that is never) where the source calls it a safe top type.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-032",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 3,
+   "text": "Interview tips, mostly.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Just a topic label, with nothing about correctness being only part of the conversation or about simple code as the default.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-033",
+   "document": "JavaScript Deep Dive",
+   "concept": "block body",
+   "page": null,
+   "text": "I believe the rule is as follows: once you open { } after the =>, one is obliged to put the return keyword explicitly, otherwise the interpreter complains with an error. That is the reason why it is needed, if I understood well.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "needs an explicit return statement"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2c-pg05",
+   "notes": "Like the rest of its group, it correctly requires an explicit return but justifies it with an interpreter error, which is wrong.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-034",
+   "document": "Mobile Mastery",
+   "concept": "Technical debt",
+   "page": null,
+   "text": "Is the bill that arrives later. You take a shortcut, or you keep an old design, or you decide consciously to do it quick-and-dirty today, and afterwards every change in that area costs more hours.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "Future engineering cost created by shortcuts"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "partiallyCorrect",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The definition (future cost from shortcuts, old design or deliberate choices) is right, but the upside, that debt can speed up delivery and is not automatically bad, is missing.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-035",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 2,
+   "text": "Function + outer variables it can use, more or less.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "hedged",
+    "terse"
+   ],
+   "paraphraseGroup": "d2c-pg03",
+   "notes": "The right words (function, outer variables) without the relationship the page stresses, access that survives the outer call and is separate per call; chose fragile over mostlyUnderstood.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-036",
+   "document": "Mobile Mastery",
+   "concept": "Isolation level",
+   "page": null,
+   "text": "I think it is a setting in the database that decides how much they can see from each other while they run in the same time... something with locks, maybe.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The shape of the definition is there, but 'they' is never tied to transactions and the correctness-versus-concurrency trade-off is missing; chose fragile over mostlyUnderstood because of that vagueness.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-037",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 3,
+   "text": "The interviewer does not want only a solution that passes; he wants to hear the reasoning behind - assumptions, approach, how it scales. Correct code alone does not close the conversation.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "only part of the conversation"
+   ],
+   "categories": [
+    "negation",
+    "paraphrase",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2c-pg04",
+   "notes": "Correct code is only part of the conversation and the reasoning has to be explained, but the point about simplicity until a demonstrated bottleneck is missing.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-038",
+   "document": "Mobile Mastery",
+   "concept": "Promise",
+   "page": null,
+   "text": "A Promise is basically the queue where the callbacks wait until the call stack gets empty. After that it always resolves with some value, a promise cannot fail - for the errors you need a try/catch around.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "An object representing the eventual fulfillment",
+     "confusedWith": "Microtask queue"
+    },
+    {
+     "kind": "contradiction",
+     "claim": "has pending, fulfilled, or rejected state",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "multipleConcepts",
+    "confidentlyWrong",
+    "negation",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes the microtask queue instead of a promise object, and says a promise cannot fail although the source gives it a rejected state.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-039",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 3,
+   "text": "Well, it talks about design - patterns, architecture, clean code, this kind of things that make an app to be good.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [],
+   "paraphraseGroup": "d2c-pg06",
+   "notes": "A generic list of design topics in which none of the page's specific points appears.",
+   "author": "C"
+  },
+  {
+   "id": "d2c-040",
+   "document": "Mobile Mastery",
+   "concept": "Client-side routing",
+   "page": null,
+   "text": "Is not a seven-headed beast. You click a link inside the SPA, JavaScript catches it, puts the new address in the history and draws the other screen - no new HTML page comes from the server. So moving around is quick, and the addresses still work for bookmarks and for the back button.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "without requesting a full new HTML document",
+    "makes SPA navigation fast while preserving URLs"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "negation"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Intercepting the click, updating history and rendering locally without a new HTML document, plus fast navigation with URLs that still work, is all correct.",
+   "author": "C"
+  },
+  {
+   "id": "d2d-001",
+   "document": "Design Patterns",
+   "concept": "composition root",
+   "page": null,
+   "text": "comp root = the spot at startup (main(), app bootstrap) where you actually new up the real impls and inject them. everything downstream codes against interfaces and never picks an impl itself. think Spring ApplicationContext / Guice module / wire.Build in Go.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "supplies the concrete implementation"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "negation"
+   ],
+   "paraphraseGroup": "d2d-pg01",
+   "notes": "Startup wiring creates the real implementations and injects them into interface-only consumers, which is the source's single sentence in DI jargon.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-002",
+   "document": "Design Patterns",
+   "concept": "composition root",
+   "page": null,
+   "text": "root of the app wires the graph: for each interface it picks the concrete class + passes it in. callers just take what they're handed (Dagger component / fx.Provide, same idea).",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "supplies the concrete implementation"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample"
+   ],
+   "paraphraseGroup": "d2d-pg01",
+   "notes": "The root chooses the concrete class for each interface and passes it in while callers only receive it, so the supplying role is fully there.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-003",
+   "document": "Design Patterns",
+   "concept": "composition root",
+   "page": null,
+   "text": "Consumers only know the interface. The wiring code at the app's entry point is what hands them the actual class behind it — they don't pick it, they recieve it.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "supplies the concrete implementation"
+   ],
+   "categories": [
+    "paraphrase",
+    "negation"
+   ],
+   "paraphraseGroup": "d2d-pg01",
+   "notes": "Entry-point wiring hands consumers the actual class behind their interface; same understanding as the rest of the group in plain words.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-004",
+   "document": "Design Patterns",
+   "concept": "composition root",
+   "page": null,
+   "text": "ok so in any DI setup you've got interfaces all over the place, and at some point somebody has to decide 'this Cache is Redis in prod, a plain map in tests'. that somebody is main.go (or Program.cs / the startup class if you're in .NET land). it builds the whole object graph and feeds each consumer its real dep. the consumers get zero say in which impl they end up with, they just take the interface they asked for.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "supplies the concrete implementation"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "verbose"
+   ],
+   "paraphraseGroup": "d2d-pg01",
+   "notes": "Long and chatty but fully right: the startup code decides and hands each consumer its concrete implementation, and consumers don't choose.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-005",
+   "document": "Computer Science Essentials",
+   "concept": "Time complexity",
+   "page": null,
+   "text": "how the cost scales as n grows. linear scan: 2x the items -> ~2x the steps.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2d-pg02",
+   "notes": "Growth of cost with input size is right, but it never says this is relative to a stated model, so the limiting condition is missing and the sentence is not credited.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-006",
+   "document": "Computer Science Essentials",
+   "concept": "Time complexity",
+   "page": null,
+   "text": "I think it's basically the growth curve of how many steps an algo takes as you hand it more data?",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "paraphrase",
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2d-pg02",
+   "notes": "Hedged but correct on growth of work with input size; like the rest of the group it omits the 'under a stated model' condition.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-007",
+   "document": "Computer Science Essentials",
+   "concept": "Time complexity",
+   "page": null,
+   "text": "throw more data at it -> how hard does the op count blow up? that curve (n, n log n, n², whatever) is the thing.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2d-pg02",
+   "notes": "Work growing with input size in own words; the dependence on a stated cost model is absent, so it stops short of understood.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-008",
+   "document": "React Notes",
+   "concept": null,
+   "page": 0,
+   "text": "props/state/ctx -> render -> commit. that's the model.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2d-pg03",
+   "notes": "Names the inputs and the two phases in order but says nothing about what rendering produces or what committing does.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-009",
+   "document": "React Notes",
+   "concept": null,
+   "page": 0,
+   "text": "React takes the component's inputs, runs a render pass, then a commit pass, in that order.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2d-pg03",
+   "notes": "Knows a render pass precedes a commit pass, but not that rendering calculates a UI description and committing applies the needed changes.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-010",
+   "document": "React Notes",
+   "concept": null,
+   "page": 0,
+   "text": "iirc it's two phases, render then commit, fed by whatever props/state/context the component has.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "hedged"
+   ],
+   "paraphraseGroup": "d2d-pg03",
+   "notes": "Phases and inputs named with a hedge while the relationship between them (describe, calculate, apply) is missing, same as the group.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-011",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 2,
+   "text": "a and b -> same obj on the heap, so poke it via b and a sees it. fix is `{...a}`: gives you a fully independent clone, nested stuff included.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "does not automatically copy its nested objects",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "refer to the same mutable object",
+    "is visible through the other reference"
+   ],
+   "categories": [
+    "misconceptionParaphrase",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2d-pg04",
+   "notes": "Aliasing and visible mutation are right, but saying spread yields a fully independent clone including nested data is the opposite of the source.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-012",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 2,
+   "text": "two vars can ref the same mutable obj, so a change made through one shows up through the other. copying the outer object with spread does automatically copy its nested objects too, so just spread and you're isolated.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "does not automatically copy its nested objects",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "refer to the same mutable object",
+    "is visible through the other reference"
+   ],
+   "categories": [
+    "oppositeMeaningSameWords",
+    "negation",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": "d2d-pg04",
+   "notes": "Reuses the source's wording but drops its 'not', claiming spread does copy nested objects, while the shared-reference part is right.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-013",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 2,
+   "text": "Aliasing. `const b = a` isn't a copy — both names point at one thing on the heap, so writes through b land in a. Obviously `const b = {...a}` fixes it all the way down, spread clones every level.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "does not automatically copy its nested objects",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "refer to the same mutable object",
+    "is visible through the other reference"
+   ],
+   "categories": [
+    "misconceptionParaphrase",
+    "confidentlyWrong",
+    "negation",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2d-pg04",
+   "notes": "Explains aliasing correctly, then confidently claims spread clones every nested level, contradicting the source.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-014",
+   "document": "Mobile Mastery",
+   "concept": "Denormalization",
+   "page": null,
+   "text": "denorm = break the fat table apart so no fact is stored twice, 3NF-style. writes get cheap, reads pay for it w/ joins.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "Intentionally duplicate or precompute data",
+     "confusedWith": "Normalization"
+    },
+    {
+     "kind": "reversal",
+     "claim": "trades write complexity/ storage for read performance",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "misconceptionParaphrase",
+    "multipleMisconceptions",
+    "subjectObjectReversal",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2d-pg05",
+   "notes": "Describes normalization (removing duplication) instead of deliberate duplication, and flips the trade so reads pay while writes win.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-015",
+   "document": "Mobile Mastery",
+   "concept": "Denormalization",
+   "page": null,
+   "text": "It's when you split things out into seperate tables so each value lives in exactly one place -> zero dupes. Tradeoff: lookups get slower (more joins), inserts/updates + disk get cheaper.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "Intentionally duplicate or precompute data",
+     "confusedWith": "Normalization"
+    },
+    {
+     "kind": "reversal",
+     "claim": "trades write complexity/ storage for read performance",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "misconceptionParaphrase",
+    "multipleMisconceptions",
+    "subjectObjectReversal",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2d-pg05",
+   "notes": "Same two errors as the group: defines it as removing duplicates (normalization) and reverses the trade, making reads the cost and writes/storage the gain.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-016",
+   "document": "Mobile Mastery",
+   "concept": "Denormalization",
+   "page": null,
+   "text": "Denormalizing is cleaning the duplicate data out of a schema — repeated columns get pulled into their own tables behind FKs. So it trades read performance for simpler writes and less storage.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "Intentionally duplicate or precompute data",
+     "confusedWith": "Normalization"
+    },
+    {
+     "kind": "reversal",
+     "claim": "trades write complexity/ storage for read performance",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "oppositeMeaningSameWords",
+    "multipleMisconceptions",
+    "subjectObjectReversal"
+   ],
+   "paraphraseGroup": "d2d-pg05",
+   "notes": "Uses the source's own words (duplicate, trades, read performance, storage) to say the reverse on both counts: removing duplication, and giving up reads for writes.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-017",
+   "document": "System Design",
+   "concept": null,
+   "page": 0,
+   "text": "no universally 'best' design — each one is the answer to a specific set of limits and needs. why? CAP: you only ever get 2 of 3, so every design is a pick.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "solves a particular set of constraints"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "irrelevantPlausible",
+    "negation",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2d-pg06",
+   "notes": "Right that a design answers a particular set of constraints, but the reason offered (CAP's pick-two) is a buzzword non-sequitur the source neither gives nor contradicts, so no misconception entry.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-018",
+   "document": "System Design",
+   "concept": null,
+   "page": 0,
+   "text": "There's no one-size-fits-all architecture; each one is shaped by the particular constraints it's solving for. That falls straight out of the CAP theorem — consistency, availability, partition tolerance, choose two — hence every system ends up solving a different subset.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "solves a particular set of constraints"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "irrelevantPlausible",
+    "negation",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": "d2d-pg06",
+   "notes": "Correct conclusion close to the source's wording, but it is confidently 'derived' from CAP, which is not why an architecture fits particular constraints.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-019",
+   "document": "System Design",
+   "concept": null,
+   "page": 0,
+   "text": "b/c of CAP (pick 2 of C/A/P), whatever system shape you land on is fitted to one particular set of limits, not all of them.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "solves a particular set of constraints"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "d2d-pg06",
+   "notes": "Same as the group: the constraint-specific conclusion is right, the CAP-based reason is a non-sequitur.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-020",
+   "document": "System Design",
+   "concept": null,
+   "page": 0,
+   "text": "it depends.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort"
+   ],
+   "paraphraseGroup": "d2d-pg07",
+   "notes": "Two words with no mention of constraints, users or needs; a teacher can't tell what is understood.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-021",
+   "document": "System Design",
+   "concept": null,
+   "page": 0,
+   "text": "classic 'it depends'.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse"
+   ],
+   "paraphraseGroup": "d2d-pg07",
+   "notes": "A flippant 'it depends' that names nothing the page teaches; too vague to judge.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-022",
+   "document": "System Design",
+   "concept": null,
+   "page": 0,
+   "text": "Depends on the situation, same as everything in eng.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": "d2d-pg07",
+   "notes": "'The situation' is a faint nod to constraints but says nothing about what an architecture solves; torn with fragile, chose insufficient as the less generous label.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-023",
+   "document": "Mobile Mastery",
+   "concept": "Reverse proxy",
+   "page": null,
+   "text": "RP = the public front door (nginx / envoy / a k8s ingress) sitting in front of your backend svcs. clients only ever talk to it and it takes their traffic on the backends' behalf. perks: internal topology stays hidden, and it's the natural spot for TLS termination, path routing, caching, rate limiting, LB.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "sits in front of backend servers",
+    "hides internal topology and can terminate TLS"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Front-door position, taking traffic on the backends' behalf, hidden topology and the TLS/routing/caching/rate-limit/LB duties are all present and correct.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-024",
+   "document": "Mobile Mastery",
+   "concept": "Reverse proxy",
+   "page": null,
+   "text": "It's the box the outside world hits instead of your actual servers, and it keeps your internal layout hidden — b/c it TLS-encrypts the upstream IPs so nobody outside can read them.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "sits in front of backend servers"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correct that it fronts the servers and hides the topology, but the mechanism given (TLS encrypting upstream IPs) is invented; the source never links hiding to TLS, so no misconception entry.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-025",
+   "document": "Mobile Mastery",
+   "concept": "Feature boundary",
+   "page": null,
+   "text": "features/search/ w/ its component + hook + api + tests, vs the classic components/ hooks/ utils/ split. fwiw the feature layout doesn't *cause* better ownership — teams that already own features just tend to lay code out that way, it's correlation. but it does always scale better than type folders, no exceptions, every codebase.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "It improves ownership and keeps related",
+     "confusedWith": null
+    },
+    {
+     "kind": "overgeneralization",
+     "claim": "often scale better than giant global folders",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "causeVsCorrelation",
+    "absoluteVsQualified",
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Turns the source's causal claim that feature boundaries improve ownership into mere correlation, and hardens 'often scale better' into 'always, no exceptions'.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-026",
+   "document": "Mobile Mastery",
+   "concept": "Feature boundary",
+   "page": null,
+   "text": "package-by-feature, not package-by-layer — Java folks have been saying this forever. everything for, say, checkout sits in one dir: the screen, its hooks, its api client, its specs. you don't carve dirs by 'is this a component or a util'.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "rather than file type alone"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "negation",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The feature-not-file-type split and the colocation are right, but the why (clearer ownership, scaling as the product grows) is never given; torn with understood, went less generous.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-027",
+   "document": "Mobile Mastery",
+   "concept": "Conditional type",
+   "page": null,
+   "text": "Conditional types = if/else at the type level: `T extends U ? X : Y`, where extends means 'is assignable to', not strict equality. You reach for them in generic code to transform one type into another — unwrap a Promise, pull the id type off an entity w/ infer, filter members out of a union. ts-toolbelt / type-fest are basically built on them. And unlike Java's erased generics these actually get evaluated at runtime, so a bad payload gets rejected before it hits your handler.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "type-level if/else based on assignability",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "enables expressive generic transformations"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "confidentlyWrong",
+    "novelVocabulary",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "All correct until the closing claim that they are evaluated at runtime, which contradicts their type-level nature; the definition sentence is not credited because that clause undercuts it.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-028",
+   "document": "Mobile Mastery",
+   "concept": "Deep copy",
+   "page": null,
+   "text": "Deep copy walks the whole tree and clones every nested obj/array, so the copy shares no refs with the original — mutate the clone all you want, source is untouched. structuredClone does it natively now, or lodash cloneDeep. Downside: it's expensive on big graphs, and blindly cloning stuff like class instances w/ methods, DOM nodes or anything w/ identity semantics is just wrong. For plain state updates though, `{...state}` already gives you a deep copy, so you rarely need the heavy tools.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "instead of sharing the same nested object",
+     "confusedWith": "Shallow copy"
+    }
+   ],
+   "credits": [
+    "full cloning can be costly or semantically"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "multipleConcepts",
+    "confidentlyWrong",
+    "novelVocabulary",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition and the cost/special-object caveat are right, but calling `{...state}` a deep copy confuses it with a shallow copy whose nested references are still shared, so the definition is not credited.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-029",
+   "document": "Mobile Mastery",
+   "concept": "Session",
+   "page": null,
+   "text": "Session = the signed token the client carries (JWT, basically) — server doesn't have to remember a thing, it just checks the signature on every req. and the whole 'HTTP is stateless' line isn't why sessions exist, they just tend to show up in the same stacks. correlation, not causation.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "Server-recognized state that ties a sequence",
+     "confusedWith": "JWT"
+    },
+    {
+     "kind": "contradiction",
+     "claim": "HTTP is stateless, so sessions",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "causeVsCorrelation",
+    "multipleConcepts",
+    "multipleMisconceptions",
+    "subjectObjectReversal",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "negation",
+    "oppositeMeaningSameWords"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Treats a session as a client-held JWT with no server state (confusion) and denies that HTTP's statelessness is why sessions exist, turning the source's cause into a correlation.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-030",
+   "document": "Mobile Mastery",
+   "concept": "Session",
+   "page": null,
+   "text": "server keeps a record in a store (redis, memcached, whatever) keyed by an opaque id the browser echoes back in a cookie -> that's how req #2…#N get pinned to the same logged-in user.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "ties a sequence of requests to"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Server-side state keyed by a cookie id that ties later requests to the logged-in user is right; why sessions are needed at all (HTTP is stateless) is missing.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-031",
+   "document": "Mobile Mastery",
+   "concept": "keyof",
+   "page": null,
+   "text": "keyof T -> union of T's prop names as string literal types, e.g. keyof {id: number; name: string} = 'id' | 'name'. point: `get<K extends keyof T>(obj: T, key: K)` means a caller can't pass a key that doesn't exist — compile error, not undefined at runtime. (don't mix it up w/ typeof, which lifts a value's type into type space.)",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "produces a union of the property names",
+    "lets APIs accept only valid keys"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "multipleConcepts",
+    "negation"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Union of property names and the purpose (callers can only pass real keys) are both right, and the typeof aside is accurate.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-032",
+   "document": "Mobile Mastery",
+   "concept": "How browser requests",
+   "page": null,
+   "text": "browser fires it off, it bounces through a few hops, sometimes it's already sitting in a cache somewhere, then it comes back.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gestures at travel, caching and return, but every step is 'it', so it's unclear whether the request or the response is cached, and routing is only 'bounces through hops'.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-033",
+   "document": "Mobile Mastery",
+   "concept": null,
+   "page": 340,
+   "text": "latency-sensitive workload -> stream tokens, watch TTFT.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gets the 'users care about responsiveness' half but never mentions the long shared system prefix; torn with mostlyUnderstood, chose fragile since half the scenario is missing.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-034",
+   "document": "React Notes",
+   "concept": null,
+   "page": 0,
+   "text": "component ≈ pure fn: (props, state, context) -> a spec of what the UI should look like. render = React calling it to compute that spec. commit = React pushing only the deltas that are actually needed into the real DOM.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "describes the interface for a particular set",
+    "Rendering calculates that description",
+    "applies the necessary changes to the screen"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Component as a description for given props/state/context, render computing it, and commit applying only the needed changes: all three pieces in own words.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-035",
+   "document": "Computer Science Essentials",
+   "concept": "Time complexity",
+   "page": null,
+   "text": "how the op count scales w/ n — but only relative to the cost model you declared up front (what's 'one step': a comparison? a word op? RAM model?). swap the model and the answer can change.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "grows with input size under a stated model"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "absoluteVsQualified"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Growth of work with input size plus the explicit dependence on a stated cost model, the qualifier the mostlyUnderstood answers leave out.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-036",
+   "document": "Mobile Mastery",
+   "concept": "Denormalization",
+   "page": null,
+   "text": "e.g. copy `author_name` onto every `posts` row so the feed query never has to join `users`.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The example shows deliberately duplicating a column so reads skip a join, which is the central idea, but only by example and with nothing on the write/storage cost it trades away.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-037",
+   "document": "Computer Science Essentials",
+   "concept": "Time complexity",
+   "page": null,
+   "text": "nested loop over the same list -> n². binary search -> log n. hashmap get -> ~O(1).",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correct classes for familiar code shapes, but never says what time complexity describes (growth of work with input size under a model); the idea is only implied.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-038",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 2,
+   "text": "just use immer (or Immutable.js) for state and this whole class of bug goes away. we banned direct mutation in code review ages ago.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Sensible team advice, but it explains none of the page's points: shared references, visible mutation, or spread not copying nested objects.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-039",
+   "document": "React Notes",
+   "concept": null,
+   "page": 0,
+   "text": "rules of hooks: call them at the top level, never inside ifs or loops, and keep the useEffect dep array honest or you get stale closures.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "True React rules, but nothing about a component describing the UI, rendering calculating it, or committing applying changes.",
+   "author": "D"
+  },
+  {
+   "id": "d2d-040",
+   "document": "Design Patterns",
+   "concept": "composition root",
+   "page": null,
+   "text": "where it all gets wired, then they use it.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "'Wired' hints at DI, but 'it'/'they' hide what gets supplied to whom and nothing mentions a concrete implementation; torn with fragile, chose insufficient.",
+   "author": "D"
+  },
+  {
+   "id": "d2e-001",
+   "document": "Mobile Mastery",
+   "concept": "Cache miss",
+   "page": null,
+   "text": "so a cache hit is when you open the fridge and what you want is right there. a cache miss is the opposite — it's not in the fridge, or it is but it's gone off (expired), so you've gotta go to the actual shop, which is like the real database, and usually you restock the fridge on the way back so next time it's a hit. not always though, I think it depends",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "the requested value is absent or expired",
+    "must fall back to the source of truth"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "multipleConcepts",
+    "absoluteVsQualified",
+    "verbose",
+    "hedged"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Absent or expired means a miss, you fall back to the real source, and you usually (not always) refill the cache: both rubric sentences, with the source's 'often' kept as a qualification.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-002",
+   "document": "JavaScript Deep Dive",
+   "concept": "Map",
+   "page": null,
+   "text": "ok so I think map is kind of like being on dish duty at a restaurant — every plate goes through the exact same wash, and whatever comes out the other end gets stacked on a fresh pile. the function you hand it (the callback) runs on each item one at a time, and map just gathers up whatever that function gives back. so what you're left holding at the end is a pile of the answers. at least that's how I get it lol, my flatmate tried explaining it with pancakes which was way worse",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "Map collects the callback results"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "verbose",
+    "hedged"
+   ],
+   "paraphraseGroup": "d2e-pg01",
+   "notes": "Says the callback runs on each item and map gathers up whatever it gives back, which is the whole rubric sentence; the dish-duty picture adds nothing wrong.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-003",
+   "document": "JavaScript Deep Dive",
+   "concept": "expression body",
+   "page": null,
+   "text": "shorter way to write functions",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse",
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": "d2e-pg06",
+   "notes": "True of arrow functions in general, but says nothing about an expression body returning its expression, which is all this source teaches.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-004",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 1,
+   "text": "I think the main thing is when you trace you write down what TYPE each step gives you and also the actual value — like don't just put 2, put '2, a number', or '[2, 3], an array'. kinda like a lunch order, '2' on its own means nothing but '2 sandwiches' actually tells you something",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "trace records both type and value"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2e-pg02",
+   "notes": "Gets that a trace notes both the kind of thing and its value, but never gives the why (a result can look right for the task yet have the wrong shape for the next step).",
+   "author": "E"
+  },
+  {
+   "id": "d2e-005",
+   "document": "Mobile Mastery",
+   "concept": "HttpOnly cookie",
+   "page": null,
+   "text": "HttpOnly cookies can't be read by JavaScript in the browser, so XSS basically can't do anything to you anymore. it's like locking the staff room — the kids can't get in so nothing bad can happen. problem solved",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "it does not eliminate XSS impact",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "marked so browser JavaScript cannot read it"
+   ],
+   "categories": [
+    "absoluteVsQualified",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "novelExample",
+    "negation"
+   ],
+   "paraphraseGroup": "d2e-pg04",
+   "notes": "The JavaScript-can't-read-it part is right, but it claims XSS can then do nothing at all, while the source says HttpOnly reduces exposure in many XSS scenarios and does not eliminate XSS impact.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-006",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 0,
+   "text": "doing a little example first is good I think, it kind of helps you check stuff before you start coding properly, like a warm up lap before the actual race",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "novelExample",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2e-pg03",
+   "notes": "Right that a small example is worth doing first, but 'check stuff' only gestures at the point that it makes hidden assumptions visible; torn with mostlyUnderstood, chose fragile because that cause is the heart of the rubric sentence.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-007",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 0,
+   "text": "you can't stick .map() on the end of .some() because some() quits as soon as it finds one match, so there's nothing left over for map to loop through. like if the bus drops everyone off at the first stop there's nobody left on for the second stop lol",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelExample",
+    "negation"
+   ],
+   "paraphraseGroup": "d2e-pg05",
+   "notes": "Right that .map() can't follow .some(), but the reason (some stops early and leaves nothing to loop over) is wrong; the source's reason is that some gives back a boolean.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-008",
+   "document": "Mobile Mastery",
+   "concept": "Flexbox",
+   "page": null,
+   "text": "flexbox is for lining things up in one direction, like kids queuing at the tuck shop — you pick row or column and it spaces them out and centres them really easily, and stuff can stretch or shrink to fill the gaps which is handy. and it's the one you'd use when you need a full 2D grid, rows and columns both at the same time, like a chessboard layout",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "strongest for one-dimensional layout and alignment",
+     "confusedWith": "CSS Grid"
+    }
+   ],
+   "credits": [
+    "distributing and aligning items along one main axis",
+    "spacing, alignment, and flexible sizing straightforward"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "novelExample",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The one-direction lining up, easy spacing and stretch-or-shrink parts are right, but the last clause hands flexbox the two-dimensional grid job that belongs to CSS Grid, against the source's one-dimensional point.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-009",
+   "document": "JavaScript Deep Dive",
+   "concept": "expression body",
+   "page": null,
+   "text": "so if the arrow function has no curly braces, whatever comes after the arrow IS the answer — it gets handed back automatically and you don't write return at all. like names.map(name => name.toUpperCase()), each uppercased name just comes straight back out, and then map scoops all of those up into the new array. kinda like a vending machine: press the button, snack drops out, no extra step",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "an expression body returns its expression"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "negation",
+    "multipleConcepts",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Clearly says a brace-less arrow body hands back its value without writing return, which is the rubric; the correct aside about map collecting the results is a second concept and nothing is wrong.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-010",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 0,
+   "text": "from what I get, small examples and hidden assumptions kind of go together — like whenever someone writes out a small example there's usually some assumption hiding in there somewhere. so it's more of a pattern you start to notice than anything",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "it makes hidden assumptions visible",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "causeVsCorrelation",
+    "misconceptionParaphrase",
+    "hedged"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Turns the source's cause (a small example makes hidden assumptions visible) into a loose 'they go together' pattern, even placing the assumptions inside the example instead of being revealed by it.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-011",
+   "document": "JavaScript Deep Dive",
+   "concept": "Map",
+   "page": null,
+   "text": "gathers up the callback's answers",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "Map collects the callback results"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "veryShort",
+    "terse"
+   ],
+   "paraphraseGroup": "d2e-pg01",
+   "notes": "Only five words, but they say exactly what this one-sentence rubric says (map collects what the callback returns), so nothing central is missing.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-012",
+   "document": "Mobile Mastery",
+   "concept": "Generic constraint",
+   "page": null,
+   "text": "umm I think it's 'a rule that limits what types a generic parameter may accept' — like T has to have an id on it or it won't let you pass it in",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "limits what types a generic parameter may accept"
+   ],
+   "categories": [
+    "nearVerbatim",
+    "partiallyCorrect",
+    "hedged"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Recites the definition and gives a fitting example, but says nothing about why it matters: the code stays reusable while still being guaranteed the capabilities it needs.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-013",
+   "document": "JavaScript Deep Dive",
+   "concept": "expression body",
+   "page": null,
+   "text": "it's the arrow => way of writing a function, same thing really just less typing, like writing 'u' instead of 'you' in a text",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelExample"
+   ],
+   "paraphraseGroup": "d2e-pg06",
+   "notes": "Describes arrow syntax as a typing shortcut, plausible but beside the point; there is no sign they know an expression body's value is returned.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-014",
+   "document": "Mobile Mastery",
+   "concept": "Primary key",
+   "page": null,
+   "text": "the primary key is the column that points over to a row in another table, like customer_id sitting in the orders table pointing at the customer. and loads of rows can have the same one, that's kind of the point, all of one customer's orders share it",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "the natural target for foreign-key references",
+     "confusedWith": "Foreign key"
+    },
+    {
+     "kind": "contradiction",
+     "claim": "uniquely identifies each row in a table",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "subjectObjectReversal",
+    "misconceptionParaphrase",
+    "multipleMisconceptions",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes the foreign key that points at a primary key instead of the key being pointed at, and says values can repeat, against 'uniquely identifies each row'.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-015",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 1,
+   "text": "trace: note the type and the value at each step",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "trace records both type and value"
+   ],
+   "categories": [
+    "terse",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2e-pg02",
+   "notes": "States the type-and-value rule correctly but gives no reason, missing the source's point that a related-looking result can have the wrong shape for the next operation.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-016",
+   "document": "Mobile Mastery",
+   "concept": "Render",
+   "page": null,
+   "text": "react rendering stuff basically",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort",
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Circular: restates the term without saying what rendering does or why it matters, so there is nothing to judge.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-017",
+   "document": "Mobile Mastery",
+   "concept": "HttpOnly cookie",
+   "page": null,
+   "text": "I'm pretty sure HttpOnly eliminates XSS impact, because the cookie is hidden from client-side JavaScript",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "it does not eliminate XSS impact",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "marked so browser JavaScript cannot read it"
+   ],
+   "categories": [
+    "oppositeMeaningSameWords",
+    "absoluteVsQualified",
+    "negation"
+   ],
+   "paraphraseGroup": "d2e-pg04",
+   "notes": "Reuses the source's own words to say the opposite (the source says HttpOnly does not eliminate XSS impact); the hidden-from-JavaScript part is right.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-018",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 0,
+   "text": "small example before coding helps you catch things maybe",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2e-pg03",
+   "notes": "Knows a small example helps, but 'catch things' never says it exposes hidden assumptions, so the central causal idea is only gestured at; fragile for the same reason as its group.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-019",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 0,
+   "text": "before you pick find or filter or some you've gotta ask what you actually want back — one thing, a whole list, or just a yes/no. cause if you grab some() you get a true/false, and you can't .map() a true/false, there's nothing in it to loop over. like ordering at the chippy, decide if you want one fish or the family bucket before you get in the queue",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "starts with the shape you need back",
+    "A boolean cannot be followed by .map()"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "negation",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Both rubric points in own words: choose the method by the result shape you need, and the true/false from some() cannot be followed by .map().",
+   "author": "E"
+  },
+  {
+   "id": "d2e-020",
+   "document": "Mobile Mastery",
+   "concept": "Serialization",
+   "page": null,
+   "text": "serialization is when you take the object you've got in memory and turn it into something like a JSON string so you can send it over the network or save it in a file, and on the other end they parse it back into data. it's like packing your clothes flat into a suitcase for a bus trip. you do it because it's quicker — you could technically send the object as it is, it'd just be slower and bigger",
+   "state": "weakReasoning",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "cannot directly send a JavaScript object",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "into a transport or storage representation"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "verboseOneWrongClause",
+    "verbose",
+    "negation",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "What serialization is comes out right, but the why is wrong: it says the object could be sent as it is and serializing is just quicker, while the source says a process cannot send a JavaScript object directly.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-021",
+   "document": "JavaScript Deep Dive",
+   "concept": "Map",
+   "page": null,
+   "text": "like if the canteen puts every price up by 5: prices.map(p => p + 5) turns [10, 20, 30] into [15, 25, 35]. that's map",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Only a correct worked example; it never says map gathers what the callback returns, so the idea is shown rather than stated; torn with mostlyUnderstood, chose fragile.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-022",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 1,
+   "text": "When you trace, jot down what each line gives back AND what kind of thing it is — number, array, true/false. Because something can seem like the right sort of answer for the task and still be the wrong shape for whatever comes next, like getting true back when the next line wants a list to map over. Kind of like bringing the right ingredient in the wrong form, whole potatoes when the recipe step says mash",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "trace records both type and value",
+    "wrong shape for the next operation"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Covers both points: record the type as well as the value, because a result can look right for the task and still be the wrong shape for the next step.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-023",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 0,
+   "text": "I think chaining map after some breaks cause some stops early and then map just gets handed an empty list",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "hedged"
+   ],
+   "paraphraseGroup": "d2e-pg05",
+   "notes": "Correct that the chain breaks, wrong about why: it blames early stopping and an empty list instead of some returning a boolean.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-024",
+   "document": "Mobile Mastery",
+   "concept": "Query parameters",
+   "page": null,
+   "text": "they're the little key=value bits you tack onto the end of a link after the question mark, and they sort of tweak how the thing gets handed back to you",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "to alter how a resource is retrieved"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right about key=value pairs after the ? changing how the resource comes back, but never says what they are handy for (filtering, sorting, searching, pagination).",
+   "author": "E"
+  },
+  {
+   "id": "d2e-025",
+   "document": "Mobile Mastery",
+   "concept": "Cache miss",
+   "page": null,
+   "text": "a cache miss is when the database doesn't have the thing, so it has to fall back and go ask the cache for it instead (the cache is like the backup copy). and if the value's in the cache but expired that still counts as a hit, you just get the older version",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "must fall back to the source of truth",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "the requested value is absent or expired",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "subjectObjectReversal",
+    "oppositeMeaningSameWords",
+    "multipleMisconceptions",
+    "misconceptionParaphrase",
+    "multipleConcepts"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Flips the fallback so the cache backs up the database, and counts an expired entry as a hit, while the source says absent or expired is a miss that sends you to the source of truth.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-026",
+   "document": "JavaScript Deep Dive",
+   "concept": "expression body",
+   "page": null,
+   "text": "honestly I think its just arrow functions being a quicker way to write normal functions? like cutting through the park instead of walking all the way round the block. saves you some typing I guess",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "hedged",
+    "novelExample"
+   ],
+   "paraphraseGroup": "d2e-pg06",
+   "notes": "Only the general 'arrow functions are quicker to write' idea, not the source's point that an expression body returns its expression, so a teacher cannot tell what they understand.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-027",
+   "document": "Mobile Mastery",
+   "concept": "Flexbox",
+   "page": null,
+   "text": "I think it's basically for lining things up along a single line, either accross or down, and sharing out the space between them. kind of like how players spread out along the wall for a free kick",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "distributing and aligning items along one main axis"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Has the one-axis lining-up-and-spacing idea, but not the payoff the source stresses (rows, columns, spacing, alignment and flexible sizing become straightforward); torn with understood, chose the less generous label.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-028",
+   "document": "JavaScript Deep Dive",
+   "concept": "Map",
+   "page": null,
+   "text": "Map's like a coach going down the line asking every player the same question and writing each answer on a clipboard, and the clipboard's what you get handed back. So basically it runs your callback on every element and keeps whatever the callback returns.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "Map collects the callback results"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample"
+   ],
+   "paraphraseGroup": "d2e-pg01",
+   "notes": "Runs the callback on every element and keeps what it returns, handed back as one collection: the source's point in sports terms.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-029",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 0,
+   "text": "coding interviews are mostly about knowing your Big O and not panicking. it's like a penalty shootout, if you've practised enough leetcode patterns you'll be fine on the day",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Plausible interview advice, but nothing about small examples exposing hidden assumptions, which is what this page teaches.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-030",
+   "document": "Mobile Mastery",
+   "concept": "Render",
+   "page": null,
+   "text": "render is when React actually paints your stuff onto the screen, like it redraws the whole page from scratch every time something changes. that's why too many renders make things slow I think",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "Rendering computes what the UI should be",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "commits only necessary host/DOM changes",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Treats rendering as painting the screen and as rebuilding the whole page, but the source says rendering only computes what the UI should be and React then commits just the necessary DOM changes.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-031",
+   "document": "Mobile Mastery",
+   "concept": "HttpOnly cookie",
+   "page": null,
+   "text": "ok so from what I remember an HttpOnly cookie is basically a normal cookie with an extra flag stuck on it, and that flag tells the browser don't let any of the page's JavaScript read this one. so scripts running on the page just can't peek at what's inside. kind of like a sealed envelope the bus driver carries for you but isn't allowed to open (random example but it works in my head). which means once you use them XSS definately can't do any damage at all, which is nice",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "it does not eliminate XSS impact",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "marked so browser JavaScript cannot read it"
+   ],
+   "categories": [
+    "verboseOneWrongClause",
+    "verbose",
+    "absoluteVsQualified",
+    "misconceptionParaphrase",
+    "novelExample",
+    "hedged",
+    "negation"
+   ],
+   "paraphraseGroup": "d2e-pg04",
+   "notes": "Long and right about the flag and page scripts being unable to read the cookie, but the last clause turns it into total XSS protection, which the source explicitly denies.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-032",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 1,
+   "text": "Going line by line you keep track of what each thing holds and ALSO what kind of thing it is (array? boolean? plain number?). Both of them, every time. That's what makes it a useful trace I guess.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "trace records both type and value"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2e-pg02",
+   "notes": "Right that you record both what a value is and what kind of thing it is, but the reason (a related-looking result can have the wrong shape for the next operation) is absent.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-033",
+   "document": "JavaScript Deep Dive",
+   "concept": "expression body",
+   "page": null,
+   "text": "when there's no curly brackets it just gives it back by itself I think? so you can skip that bit",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Seems to know something comes back without writing return when there are no curly brackets, but 'it gives it back' and 'that bit' never pin down that the expression's value is returned; too vague to trust.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-034",
+   "document": "Mobile Mastery",
+   "concept": "Generic constraint",
+   "page": null,
+   "text": "so once you put extends on T it basically just turns into that type, like it forgets it was ever a User and now it's only {id: string}. which kind of limits reuse, cause now the function only really works for that one type. it's like a school uniform, everyone ends up looking the same",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "preserving the caller's more specific type",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "preserves reuse while guaranteeing required capabilities",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "oppositeMeaningSameWords",
+    "multipleMisconceptions",
+    "misconceptionParaphrase",
+    "novelExample",
+    "hedged"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Says the constraint erases the caller's specific type and kills reuse, the opposite of both source points (it keeps the caller's more specific type and preserves reuse).",
+   "author": "E"
+  },
+  {
+   "id": "d2e-035",
+   "document": "Mobile Mastery",
+   "concept": "Primary key",
+   "page": null,
+   "text": "it's like your student number (mine's got three 7s in it, random) — no two kids at school get the same one, so it always picks out exactly one record, and it doesn't change, which matters because other stuff like your grades and the library system hang onto that number to find you",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "uniquely identifies each row in a table",
+    "need a stable identity for each record"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "negation"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Unique for every record and stable because other things rely on it: both rubric points through the student-number analogy, with nothing wrong.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-036",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 0,
+   "text": "The page wants you to try a tiny example before you write the real code, apparently because it helps a lot. I guess it's like a practice run before the real thing, kind of like doing a mock before the actual exam",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "novelExample",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "d2e-pg03",
+   "notes": "Says a tiny example helps (with a circular reason) but not what it reveals, so the hidden-assumptions idea is missing; fragile rather than mostlyUnderstood, as for the rest of its group.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-037",
+   "document": "JavaScript Deep Dive",
+   "concept": "Map",
+   "page": null,
+   "text": "it goes through them all and does the thing to each one and then gives it back",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Could describe any loop: 'gives it back' might mean the original array or the callback results, so a teacher cannot tell whether they know map collects the results; chose insufficient over fragile as the less generous label.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-038",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 1,
+   "text": "Honestly the types don't matter when you trace, JavaScript sorts all that out for you, you just write down the values. And if the result looks like the kind of thing the task is asking for, that's what makes it work in the next step, so that's what I check",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "trace records both type and value",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "can look semantically related to the task",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "negation",
+    "causeVsCorrelation",
+    "confidentlyWrong",
+    "multipleMisconceptions",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Two wrong ideas: it drops type from the trace (the source says record both) and treats looking right for the task as what makes a result work in the next step, which is exactly the trap the source warns about.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-039",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 0,
+   "text": "Some() short-circuits on the first hit, which leaves map with nothing to work on. That's why .some().map() doesn't work.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary",
+    "negation"
+   ],
+   "paraphraseGroup": "d2e-pg05",
+   "notes": "Right conclusion (.some().map() fails) resting on a wrong mechanism (short-circuiting leaves map nothing), not on the boolean return shape the source gives.",
+   "author": "E"
+  },
+  {
+   "id": "d2e-040",
+   "document": "Mobile Mastery",
+   "concept": null,
+   "page": 343,
+   "text": "this drill's kind of like setting up a kitchen so if you switch oven brands later you don't have to rip out the whole counter. you plan for stuff getting swapped in later I guess",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample",
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The oven-swap picture hints at vendors changing over time, but it never states the scenario itself (a feature that will gain several UIs and several vendors), so the central idea is only gestured at.",
+   "author": "E"
+  }
+ ]
+}

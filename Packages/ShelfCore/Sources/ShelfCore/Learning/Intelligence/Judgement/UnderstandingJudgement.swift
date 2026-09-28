@@ -43,6 +43,11 @@ public enum UnderstandingCue: String, Sendable {
     case verbatim
     /// Nothing comparable, or only the concept's own name.
     case nothingComparable
+    /// Key ideas expressed in other words, as read by the semantic space: never recorded before
+    /// one more answer.
+    case semanticCoverage
+    /// A claim word answered by its opposite ("slower" where the source says "faster").
+    case opposite
 }
 
 /// One reading of an answer and how well the answer's evidence supports it.
