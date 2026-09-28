@@ -92,13 +92,17 @@ struct ClaimRubric {
     let propositions: [Proposition]
     /// The grammatical subject is the claim's concept (not another noun inside its card).
     let subjectIsConcept: Bool
+    /// What the claim qualifies: its limiting condition and the words after its first hedge
+    /// ("usually *with a relatively short lifetime*").
+    let qualified: [LexicalTerm]
 
     init(_ claim: LearningClaim) {
         self.claim = claim
         propositions = Proposition.split(claim.statement)
         subjectIsConcept = claim.grounding.isInferred || ConceptKey(claim.subject) == claim.concept && claim.topic.map { $0 == claim.concept } ?? true
         weight = claim.kind == .definition ? 1.5 : 1
-        profile = LexicalProfile(claim.statement)
+        let statement = LexicalProfile(claim.statement)
+        profile = statement
         let subjectText = claim.grounding.isInferred ? claim.conceptName : claim.subject
         subject = LexicalProfile(subjectText).terms
         subjectConjuncts = subjectText.components(separatedBy: #" and "#).map { LexicalProfile($0).terms }.filter { !$0.isEmpty }
@@ -122,6 +126,9 @@ struct ClaimRubric {
         copular = lemma == "be" || ["is", "are"].contains(claim.predicate.lowercased())
         verbStem = lemma.flatMap { ["be", "can", "may", "must", "should", "will", "do", "have"].contains($0) ? nil : Lexicon.stem($0) }
         hedged = !profile.hedges.isEmpty || !condition.isEmpty
+        let hedge = statement.words.firstIndex { Lexicon.hedges.contains($0) }
+        let afterHedge = hedge.map { cut in zip(statement.terms, statement.termPositions).filter { $0.1 > cut }.map(\.0) } ?? []
+        qualified = condition + afterHedge
         objectHead = LexicalProfile(parsed?.object ?? claim.object).terms.first { $0.weight == 1 }?.stem
         normalized = DiagnosisText.normalized(claim.statement)
     }
@@ -152,11 +159,15 @@ struct LearnerClause {
     let complementHead: String?
     let normalized: String
     let propositions: [Proposition]
+    /// What the clause asserts, without the alternative it rejects ("unlike a hash, …").
+    let assertedProfile: LexicalProfile
 
     init(_ text: String) {
         self.text = text
-        propositions = Proposition.split(text)
+        let asserted = DiagnosisText.asserted(text)
+        propositions = Proposition.split(asserted)
         profile = LexicalProfile(text)
+        assertedProfile = asserted == text ? profile : LexicalProfile(asserted)
         normalized = DiagnosisText.normalized(text)
         if let parsed = ClauseParser.parse(text) {
             let subjectText = parsed.subject.lowercased()
@@ -185,6 +196,12 @@ enum DiagnosisText {
     static let addressedSubject = try! NSRegularExpression(pattern: #"^(?:with|without|in|for) .+? (you|we)$"#)
     static let rejectedAlternative = try! NSRegularExpression(pattern: #"(?i)\b(?:instead of|rather than|unlike)\b[^,;]*"#)
     private static let nonWord = try! NSRegularExpression(pattern: #"[^a-z0-9']+"#)
+
+    /// The text without the alternatives it rejects: "unlike a hash", "instead of a listener on
+    /// every child" name what the learner is contrasting, not what they assert.
+    static func asserted(_ text: String) -> String {
+        rejectedAlternative.stringByReplacingMatches(in: text, range: NSRange(text.startIndex..., in: text), withTemplate: "")
+    }
 
     /// Lowercased words only, for comparing wording sequences.
     static func normalized(_ text: String) -> String {

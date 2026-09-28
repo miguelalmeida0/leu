@@ -1,0 +1,2241 @@
+{
+ "version": 1,
+ "split": "sealed",
+ "author": "independent annotator B (V35)",
+ "guide": "Labels follow scratch guide v35: states understood | mostlyUnderstood | fragile | misconception | weakReasoning | insufficient. Sealed: evaluated once, aggregates only.",
+ "cases": [
+  {
+   "id": "gs-001",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Doing it twice leaves you in the same place as doing it once. That matters because duplicates happen constantly - the connection resends, somebody double taps, or the phone stops waiting even though the backend already finished the job.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "repeating an operation has the same intended effect",
+    "clients time out after servers already committed"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-01",
+   "notes": "Both the repeat-equals-once idea and the real sources of duplicates (resends, double taps, a client giving up after the server finished) are stated correctly."
+  },
+  {
+   "id": "gs-002",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "ok so picture a crosswalk button. you can jab it five times and the light still only changes once, the extra presses don't add anything. that's the idea: an action you can fire again and again and it ends up exactly like firing it one time. and on the server side you really need that, because in real life the same request shows up more than once all the time - flaky wifi resending it, people clicking pay twice, or the app giving up on the response even though the server had actually already done the work. so the repeats have to be harmless, basically.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "repeating an operation has the same intended effect",
+    "clients time out after servers already committed"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "verbose"
+   ],
+   "paraphraseGroup": "pgs-01",
+   "notes": "Same understanding as its group via an everyday analogy: repeats equal one execution, and duplicates arise from resends, double clicks and timeouts after the work was done."
+  },
+  {
+   "id": "gs-003",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "People double-click, the network layer resends, a client times out even though the server had already finished - so the same request can land more than once. I think the idea is you set things up so that handling it a second time gives the same outcome as handling it once, kind of like only the first one counted?",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "repeating an operation has the same intended effect",
+    "clients time out after servers already committed"
+   ],
+   "categories": [
+    "paraphrase",
+    "hedged"
+   ],
+   "paraphraseGroup": "pgs-01",
+   "notes": "Hedged but complete: why duplicates occur and that a repeat must have the same effect as a single run."
+  },
+  {
+   "id": "gs-004",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Idempotency is when your app automatically fires the request off again if it fails, so the user never has to press the button a second time. Simple as that - a built-in do-over for bad connections.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "repeating an operation has the same intended effect",
+     "confusedWith": "Retry"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes automatic retrying, the neighbouring concept, as if it were this property and says nothing about repeats having the same effect as one run."
+  },
+  {
+   "id": "gs-005",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "An idempotent endpoint gives you the same result no matter how many times you call it, so retrying is safe. That works because the server processes requests strictly one at a time, so two copies can never both go through.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "repeating an operation has the same intended effect"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition and safe retries are right, but the mechanism offered (serial processing stops duplicates) is not why repeats are harmless in this source."
+  },
+  {
+   "id": "gs-006",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "It's one of the HTTP method rules: GET, PUT and DELETE are idempotent, POST isn't. Comes up in basically every API interview.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Recites HTTP-verb trivia the source does not teach and never says what the property is, so understanding cannot be judged."
+  },
+  {
+   "id": "gs-007",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "Throttling means you wait until the user stops typing or scrolling for a moment, and only then run the function, once.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "once per time window while events continue",
+     "confusedWith": "Debouncing"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-02",
+   "notes": "Wait-for-quiet-then-fire-once is debouncing; throttling runs at most once per window while events keep coming."
+  },
+  {
+   "id": "gs-008",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "Basically the handler doesn't run at all while the events are still pouring in; it holds off until there's a quiet gap and then goes off a single time at the end.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "once per time window while events continue",
+     "confusedWith": "Debouncing"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-02",
+   "notes": "Same debounce description in other words: nothing runs during the burst, one call after it ends."
+  },
+  {
+   "id": "gs-009",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "I'm pretty sure it's when you hold the function back until things calm down, and then it runs one time after all the events have stopped? Kind of a wait-then-fire thing.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "once per time window while events continue",
+     "confusedWith": "Debouncing"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-02",
+   "notes": "Hedged version of the same confusion with debouncing (fire once after events stop)."
+  },
+  {
+   "id": "gs-010",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "Slowing stuff down so the app doesn't lag.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Too vague to show the once-per-window cap or which handlers it protects; a teacher cannot tell what is understood."
+  },
+  {
+   "id": "gs-011",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "It's like a speed cap on a function, it only gets to go every so often. You'd use it for scrolling and that kind of stuff I guess.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gestures at a rate cap and a scroll use, but never says it is at most once per time window while events continue or that it protects expensive handlers; prefer fragile over mostly understood."
+  },
+  {
+   "id": "gs-012",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "It's the permissions check - working out which pages and actions a person is allowed to get into.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "verifying who a user or service is",
+     "confusedWith": "Authorization"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-03",
+   "notes": "Gives the definition of authorization (what you may access) instead of verifying identity."
+  },
+  {
+   "id": "gs-013",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "The system looks at your role and decides what you can and can't do. Like an admin is allowed to delete posts but a regular member can only read them.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "verifying who a user or service is",
+     "confusedWith": "Authorization"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-03",
+   "notes": "Role-based permission deciding is authorization; identity verification is absent."
+  },
+  {
+   "id": "gs-014",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "authentication = access rights, obviously. what you're permitted to use and what you're not.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "verifying who a user or service is",
+     "confusedWith": "Authorization"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-03",
+   "notes": "Confidently equates the concept with access rights, which is its contrast partner."
+  },
+  {
+   "id": "gs-015",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Proving that whoever is knocking - a person or another service - really is who they say they are, e.g. a fingerprint plus a code texted to your phone. The system needs a solid answer to 'who is this' before it lets anyone in.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "verifying who a user or service is",
+    "the system needs a trustworthy identity"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Identity verification for users or services and the need for a trustworthy identity before access are both expressed."
+  },
+  {
+   "id": "gs-016",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Hmm, something to do with logging in and security, tokens maybe? Kind of how apps keep your account safe I think.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Only loose associations (login, tokens, safety) under heavy hedging; nothing shows what identity verification is."
+  },
+  {
+   "id": "gs-017",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "A JWT is an encrypted token: the user's details are scrambled inside it, so if someone intercepts it they can't read any of it.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "signed claim containers, not automatically encrypted",
+     "confusedWith": "Encryption"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-04",
+   "notes": "Treats the token as encryption that hides its contents; the source says it is signed, not automatically encrypted."
+  },
+  {
+   "id": "gs-018",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "Think of a sealed envelope that only the server has the key to open - whatever's inside the token stays hidden from anybody snooping on the traffic.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "signed claim containers, not automatically encrypted",
+     "confusedWith": "Encryption"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-04",
+   "notes": "Envelope analogy for the same idea that the token's contents are secret, i.e. encryption rather than signing."
+  },
+  {
+   "id": "gs-019",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "Obviously the whole point of JWT is secrecy. The payload is encrypted, so nobody who gets hold of the token can see what's in it.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "signed claim containers, not automatically encrypted",
+     "confusedWith": "Encryption"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": "pgs-04",
+   "notes": "Asserts with confidence that the payload is encrypted and unreadable, confusing the format with encryption."
+  },
+  {
+   "id": "gs-020",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "It's a token made of three chunks separated by dots, and you send it along in the header.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Knows the three-part shape but not that it is a signed set of claims or why a recipient can check it without a lookup."
+  },
+  {
+   "id": "gs-021",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "The nice thing about JWTs is the backend can trust what's inside without checking the database every single time. That works because the contents are base64 encoded, and base64 can't be changed without breaking the token.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right that no per-request database lookup is needed, but it credits base64 encoding instead of the signature from a trusted signer."
+  },
+  {
+   "id": "gs-022",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "JWT is pronounced like 'jot'. It's an open standard and pretty much every auth library out there can hand you one.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "True-sounding trivia about the name and tooling; nothing about signed claims or verification."
+  },
+  {
+   "id": "gs-023",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "Stateless servers are easier to scale out because they're lightweight - less processing per request means each machine can take more traffic.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning"
+   ],
+   "paraphraseGroup": "pgs-05",
+   "notes": "Easier scaling is right, but the reason given (less work per request) replaces the real one: any replica can serve the next request because nothing lives only in local memory."
+  },
+  {
+   "id": "gs-024",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "you can add more of them no problem. why? they're lean, not much going on inside, so every instance soaks up way more load than a normal server would",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-05",
+   "notes": "Same right conclusion (easy to add instances) with the same wrong per-machine-capacity reason."
+  },
+  {
+   "id": "gs-025",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "Since a stateless server does less work on each request it runs quicker and one box can take a bigger share of users, and I think that's probably why spinning up extra copies of it is so painless.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-05",
+   "notes": "Reverses the order and hedges, but still explains easy scale-out by lighter per-request work rather than replica interchangeability."
+  },
+  {
+   "id": "gs-026",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "Think of a help desk where any agent can take your call because your whole ticket history lives in the shared system, not in one agent's head. A server built like that doesn't depend on anything it privately remembers in its own RAM to deal with a request - the info either travels with the request (a token, say) or sits in a shared store everyone can reach. So whichever copy happens to get the next request can handle it, which makes adding more machines, or swapping out one that died, a lot simpler.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "state stored only in its own local memory",
+    "Any replica can serve the next request"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "No reliance on instance-local memory and any copy serving the next request (easier scaling and failover) are both explained through an original analogy."
+  },
+  {
+   "id": "gs-027",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "useMemo remembers the result of a computation between re-renders and only works it out again when one of the values in its dependency list changes.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "caches a calculation result between renders"
+   ],
+   "categories": [
+    "paraphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correct cache-until-dependencies-change definition, but nothing on why (skipping costly recalculation or keeping a stable identity)."
+  },
+  {
+   "id": "gs-028",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "useMemo memoizes the callback function itself, so the exact same function instance gets passed to child components on every render. That's all it's for.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "caches a calculation result between renders",
+     "confusedWith": "useCallback"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes caching a function instance, which is the contrast partner's job, instead of caching a calculated result."
+  },
+  {
+   "id": "gs-029",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "It saves you from redoing a heavy calculation on every render. The way it pulls that off is by pushing the work onto a background thread so the main thread isn't blocked.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right that it avoids repeated expensive work, but the background-thread mechanism is invented; it reuses a cached result until dependencies change."
+  },
+  {
+   "id": "gs-030",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "useMemo = performance thing, memorizes values.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Associates it with caching for performance, but says nothing about keeping a result between renders or about dependencies."
+  },
+  {
+   "id": "gs-031",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "Hooks like useMemo have to be called at the top level of a component, never inside loops or if statements, or React throws a fit.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "A true rule about hooks in general, not what the source teaches about this hook."
+  },
+  {
+   "id": "gs-032",
+   "document": "Mobile Mastery",
+   "concept": "Retry",
+   "page": null,
+   "text": "When a request fails the client just sends it again after a moment instead of giving up straight away.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Core action (try the failed call again) is right, but the limiting condition that the failure may be temporary is missing, so the definition sentence is not fully credited."
+  },
+  {
+   "id": "gs-033",
+   "document": "Mobile Mastery",
+   "concept": "Retry",
+   "page": null,
+   "text": "Any error = retry. Keep resending until it goes through, it always works out eventually.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "when the failure may be temporary",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Says every error should be retried and always succeeds, ignoring that the source limits it to failures that may be temporary."
+  },
+  {
+   "id": "gs-034",
+   "document": "Mobile Mastery",
+   "concept": "Retry",
+   "page": null,
+   "text": "Retry has to do with timeouts and errors, like a 503 or something.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right associations (timeouts, 503) without the relationship: trying again because transient failures often succeed later."
+  },
+  {
+   "id": "gs-035",
+   "document": "Mobile Mastery",
+   "concept": "Race condition",
+   "page": null,
+   "text": "It's when two things run at the same time and that causes a bug.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "pgs-06",
+   "notes": "Concurrency plus a bug is gestured at, but not that correctness hinges on unpredictable timing or that each side acts on stale state."
+  },
+  {
+   "id": "gs-036",
+   "document": "Mobile Mastery",
+   "concept": "Race condition",
+   "page": null,
+   "text": "Two requests at once, something breaks.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "pgs-06",
+   "notes": "Terse form of the same partial idea: simultaneous requests cause breakage, no timing dependence or stale reads."
+  },
+  {
+   "id": "gs-037",
+   "document": "Mobile Mastery",
+   "concept": "Race condition",
+   "page": null,
+   "text": "I think it's basically a bug you get when multiple processes are going simultaneously, like they kind of collide with each other?",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-06",
+   "notes": "Hedged 'things collide when parallel' with the central relationship missing."
+  },
+  {
+   "id": "gs-038",
+   "document": "Mobile Mastery",
+   "concept": "Race condition",
+   "page": null,
+   "text": "So a race condition, from what I got, is a problem that shows up when you've got more than one operation happening in parallel - several threads, or several users hitting the server at the same moment - and because they're all going at once you end up with a bug. That's pretty much it really, parallel stuff overlapping equals bugs, which I guess is why people always say concurrency is hard.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "verbose",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "pgs-06",
+   "notes": "Long and repetitive but says only that parallel operations cause bugs; nothing on timing-dependent correctness or stale state."
+  },
+  {
+   "id": "gs-039",
+   "document": "Mobile Mastery",
+   "concept": "Race condition",
+   "page": null,
+   "text": "Two people grab the last concert ticket together: both apps check, both see '1 left', both go ahead, and the seat gets sold twice. Whether it breaks depends on how the two requests happen to overlap, which you can't predict, and each acted on a count that was already out of date.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "correctness depends on the unpredictable timing/interleaving",
+    "can both make decisions from stale state"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "An original example that states both the unpredictable-interleaving dependence and decisions made from stale state."
+  },
+  {
+   "id": "gs-040",
+   "document": "Mobile Mastery",
+   "concept": "Deadlock",
+   "page": null,
+   "text": "Each transaction holds a lock the other wants. Stalemate.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "each hold resources the other needs"
+   ],
+   "categories": [
+    "terse",
+    "paraphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Minimal but exact: each holds what the other needs and neither proceeds."
+  },
+  {
+   "id": "gs-041",
+   "document": "Mobile Mastery",
+   "concept": "Deadlock",
+   "page": null,
+   "text": "Like two cars meeting in the middle of a one-lane bridge: each needs the bit of road the other is sitting on, so neither can move. In a database it's two transactions that each locked a row and now each wants the other's row - a loop of waiting. The DB usually spots it and kills one of them so the other can finish.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "each hold resources the other needs",
+    "Concurrent locking can create circular waits"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary",
+    "verbose"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Mutual holding, the circular wait from locking and the database aborting a participant are all correct."
+  },
+  {
+   "id": "gs-042",
+   "document": "Mobile Mastery",
+   "concept": "Deadlock",
+   "page": null,
+   "text": "A deadlock is when one really slow transaction hangs on to a lock for so long that everyone else has to queue up behind it. The database can't do anything about it either, you just have to wait until the slow one finishes.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "each hold resources the other needs",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "Databases detect deadlocks and abort a participant",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes ordinary lock contention by one slow transaction instead of mutual waiting, and denies that the database detects and aborts a participant."
+  },
+  {
+   "id": "gs-043",
+   "document": "Mobile Mastery",
+   "concept": "Deadlock",
+   "page": null,
+   "text": "Something with locks where transactions end up waiting and everything kind of freezes.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Locks and waiting are mentioned, but not that each transaction holds what the other needs; the circular relationship is missing."
+  },
+  {
+   "id": "gs-044",
+   "document": "Mobile Mastery",
+   "concept": "Deadlock",
+   "page": null,
+   "text": "A deadlock? Bad for performance, avoid them.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Says nothing about what happens; a teacher cannot tell what is understood."
+  },
+  {
+   "id": "gs-045",
+   "document": "Mobile Mastery",
+   "concept": "Transaction",
+   "page": null,
+   "text": "A transaction bundles several database statements together so they either all get saved or none of them do.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "treated as a single logical unit"
+   ],
+   "categories": [
+    "paraphrase"
+   ],
+   "paraphraseGroup": "pgs-07",
+   "notes": "All-or-nothing grouping is right, but the purpose (no partial updates leaving business data inconsistent) is not stated."
+  },
+  {
+   "id": "gs-046",
+   "document": "Mobile Mastery",
+   "concept": "Transaction",
+   "page": null,
+   "text": "you wrap a bunch of queries up as one unit. if everything goes fine it commits, if anything blows up the whole lot gets rolled back",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "treated as a single logical unit"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-07",
+   "notes": "Same commit-or-roll-back unit, again without the why about inconsistent business data."
+  },
+  {
+   "id": "gs-047",
+   "document": "Mobile Mastery",
+   "concept": "Transaction",
+   "page": null,
+   "text": "Multiple DB operations the database handles as one package: the entire package goes through, or the entire package is undone.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "treated as a single logical unit"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-07",
+   "notes": "Package wording for the same single-unit idea; purpose still missing."
+  },
+  {
+   "id": "gs-048",
+   "document": "Mobile Mastery",
+   "concept": "Transaction",
+   "page": null,
+   "text": "I think it's basically all-or-nothing for a set of writes? Like they succeed as a group or get reverted as a group, I'm fairly sure that's the main thing.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "treated as a single logical unit"
+   ],
+   "categories": [
+    "paraphrase",
+    "hedged"
+   ],
+   "paraphraseGroup": "pgs-07",
+   "notes": "Hedged all-or-nothing definition with the same missing purpose."
+  },
+  {
+   "id": "gs-049",
+   "document": "Mobile Mastery",
+   "concept": "Transaction",
+   "page": null,
+   "text": "If one of the steps fails, the database keeps the ones that already worked and you just rerun the failed step - that's how a transaction saves you from starting over.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "It prevents partial updates",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Claims completed steps are kept after a failure, the opposite of rolling back to prevent partial updates."
+  },
+  {
+   "id": "gs-050",
+   "document": "Mobile Mastery",
+   "concept": "Foreign key",
+   "page": null,
+   "text": "It's a column in one table that has to match a key in some other table - an order pointing at the customer who placed it, say - so the database won't let you end up with rows pointing at stuff that doesn't exist.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "linking a value in one table",
+    "protects referential integrity between related records"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The cross-table link enforced as a rule and its purpose (no rows referencing missing records) are both correct."
+  },
+  {
+   "id": "gs-051",
+   "document": "Mobile Mastery",
+   "concept": "Foreign key",
+   "page": null,
+   "text": "Foreign keys keep related records valid across tables. They do it by indexing the column, so the database can find the matching rows fast, and that's what keeps everything consistent.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "protects referential integrity between related records"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right that it guards related rows, but the mechanism given is fast index lookups rather than a constraint that the value must reference an existing key."
+  },
+  {
+   "id": "gs-052",
+   "document": "Mobile Mastery",
+   "concept": "Foreign key",
+   "page": null,
+   "text": "A foreign key column can never be null and it always has to point at an existing row, no exceptions - the database rejects anything else every single time.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "unless nullability or cascading rules say otherwise",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Turns the rule into 'never null, no exceptions', though the source qualifies it with nullability and cascading rules."
+  },
+  {
+   "id": "gs-053",
+   "document": "Mobile Mastery",
+   "concept": "Foreign key",
+   "page": null,
+   "text": "You usually name them something like user_id, and they make writing JOINs a lot easier.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Naming habits and JOIN convenience are plausible but not the constraint or the integrity purpose this source teaches."
+  },
+  {
+   "id": "gs-054",
+   "document": "Mobile Mastery",
+   "concept": "CDN",
+   "page": null,
+   "text": "A bunch of servers scattered around the world keep copies of your files, so people download them from somewhere nearby instead of from your main server. Quicker for them, less work for your server.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "serves content close to users, often from cache",
+    "lowers latency and reduces load on the origin"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-08",
+   "notes": "Distributed nearby copies, lower latency and reduced origin load are all present in everyday words."
+  },
+  {
+   "id": "gs-055",
+   "document": "Mobile Mastery",
+   "concept": "CDN",
+   "page": null,
+   "text": "CDN = copies parked near your users. Far-away visitors get stuff faster, and your own box gets hit way less.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "serves content close to users, often from cache",
+    "lowers latency and reduces load on the origin"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-08",
+   "notes": "Compressed version of the same three ideas: nearby cached copies, speed for users, less load on the origin."
+  },
+  {
+   "id": "gs-056",
+   "document": "Mobile Mastery",
+   "concept": "CDN",
+   "page": null,
+   "text": "Honestly it's like a pizza chain opening branches all over the country instead of baking every pizza at headquarters and driving it out from there. The edge servers keep cached copies of your images, scripts and so on close to whoever is asking for them, so things arrive a lot faster, and the main server (the origin) doesn't have to answer every single request itself, which takes a big chunk of load off it. Same idea as a local warehouse, really.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "serves content close to users, often from cache",
+    "lowers latency and reduces load on the origin"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample",
+    "verbose"
+   ],
+   "paraphraseGroup": "pgs-08",
+   "notes": "Analogy-heavy but the same understanding: nearby edge caches, faster delivery, relief for the origin."
+  },
+  {
+   "id": "gs-057",
+   "document": "Mobile Mastery",
+   "concept": "CDN",
+   "page": null,
+   "text": "CDNs can only handle static files like images and CSS; anything dynamic always has to go straight to your server. They also make the origin busier, since it constantly has to push fresh copies out to every edge.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "modern CDNs also proxy dynamic traffic",
+     "confusedWith": null
+    },
+    {
+     "kind": "reversal",
+     "claim": "reduces load on the origin",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Denies that modern CDNs proxy dynamic traffic and reverses the effect on origin load."
+  },
+  {
+   "id": "gs-058",
+   "document": "Mobile Mastery",
+   "concept": "Cache-aside",
+   "page": null,
+   "text": "App looks in the cache first. Not there? It grabs the data from the database and drops a copy into the cache for next time. Easy pattern, and really common when you read way more than you write.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "checks cache first, loads from source on miss",
+    "simple and common for read-heavy data"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Check, load on miss, then fill the cache, plus simple and common for read-heavy data: both rubric ideas are there."
+  },
+  {
+   "id": "gs-059",
+   "document": "Mobile Mastery",
+   "concept": "Cache-aside",
+   "page": null,
+   "text": "Like checking the fridge before shopping: milk there? use it. Not there? buy some and stick it in the fridge for next time. The app itself does the checking and restocking, the DB stays the source of truth. Simple go-to option when things get read a lot.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "checks cache first, loads from source on miss",
+    "simple and common for read-heavy data"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Fridge analogy maps the check-miss-load-fill flow correctly and notes it suits read-heavy data."
+  },
+  {
+   "id": "gs-060",
+   "document": "Mobile Mastery",
+   "concept": "Cache-aside",
+   "page": null,
+   "text": "The code tries the cache, and on a miss it reads from the DB and stores the result in the cache before returning it.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "checks cache first, loads from source on miss"
+   ],
+   "categories": [
+    "paraphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correct flow, but nothing on when it fits (simple, common for read-heavy data); prefer mostly understood."
+  },
+  {
+   "id": "gs-061",
+   "document": "Mobile Mastery",
+   "concept": "Cache-aside",
+   "page": null,
+   "text": "Cache-aside means every time you write to the database you write the same data into the cache at the same moment, so the cache is always in sync.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "on miss, then populates the cache",
+     "confusedWith": "Write-through cache"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes write-through caching (cache updated on every write) instead of filling the cache lazily on a read miss."
+  },
+  {
+   "id": "gs-062",
+   "document": "Mobile Mastery",
+   "concept": "TTL",
+   "page": null,
+   "text": "It's the expiry timer on a cached value - how long it counts as good before it gets thrown out.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "a cached or leased value remains valid"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-09",
+   "notes": "Correct 'how long until it expires' definition; the reason (bounding staleness, stopping data from living forever) is missing."
+  },
+  {
+   "id": "gs-063",
+   "document": "Mobile Mastery",
+   "concept": "TTL",
+   "page": null,
+   "text": "basically a countdown. you store something with a TTL of 60s and after a minute it expires and isn't valid anymore",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "a cached or leased value remains valid"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-09",
+   "notes": "Same definition via a small example, same missing purpose."
+  },
+  {
+   "id": "gs-064",
+   "document": "Mobile Mastery",
+   "concept": "TTL",
+   "page": null,
+   "text": "The amount of time a cached or leased value is considered valid before it expires.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "a cached or leased value remains valid"
+   ],
+   "categories": [
+    "nearVerbatim"
+   ],
+   "paraphraseGroup": "pgs-09",
+   "notes": "Near copy of the definition sentence; purpose absent."
+  },
+  {
+   "id": "gs-065",
+   "document": "Mobile Mastery",
+   "concept": "TTL",
+   "page": null,
+   "text": "Obviously longer TTLs give you fresher data since the value is always sitting there ready, and short TTLs are what cause stale reads.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "Short TTLs improve freshness",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Flips the freshness trade-off: the source says short TTLs improve freshness and long ones raise staleness risk."
+  },
+  {
+   "id": "gs-066",
+   "document": "Mobile Mastery",
+   "concept": "TTL",
+   "page": null,
+   "text": "TTL is the hop counter on an IP packet - every router knocks one off and when it hits zero the packet gets dropped.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes the networking hop-limit meaning, not the cache or lease expiry this source teaches."
+  },
+  {
+   "id": "gs-067",
+   "document": "Mobile Mastery",
+   "concept": "TTL",
+   "page": null,
+   "text": "It's a time setting on the cache, something to do with keeping data fresh.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right words (time, cache, fresh) without the relationship: how long a value stays valid before expiring."
+  },
+  {
+   "id": "gs-068",
+   "document": "Mobile Mastery",
+   "concept": "Immutability",
+   "page": null,
+   "text": "Rather than editing an object in place you make a fresh copy with the change and leave the original alone. That way it's easy to follow how your state went from one version to the next, and something like React can spot a change just by noticing it's a different object.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "creating new values for updates",
+    "supports change detection by identity"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "New values instead of edits, easier reasoning about transitions and identity-based change detection are all correct."
+  },
+  {
+   "id": "gs-069",
+   "document": "Mobile Mastery",
+   "concept": "Immutability",
+   "page": null,
+   "text": "Don't modify existing data - when something needs to change, build a new version of it instead.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "creating new values for updates"
+   ],
+   "categories": [
+    "paraphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correct practice, but the payoff (clearer state transitions, change detection by identity) is missing."
+  },
+  {
+   "id": "gs-070",
+   "document": "Mobile Mastery",
+   "concept": "Immutability",
+   "page": null,
+   "text": "Immutability is when you update state by changing the object's properties directly, like user.name = 'Ada', so it stays the same object. That's the whole idea.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "creating new values for updates",
+     "confusedWith": "Mutation"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes in-place mutation as if it were the concept, the opposite of creating new values."
+  },
+  {
+   "id": "gs-071",
+   "document": "Mobile Mastery",
+   "concept": "Immutability",
+   "page": null,
+   "text": "Immutable updates make it easier for the UI to notice when something changed. That's because creating new objects is lighter on memory than editing old ones, so the comparison runs quicker.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right that change detection gets easier, but the memory-saving reason is wrong; the point is that a new value has a new identity to compare."
+  },
+  {
+   "id": "gs-072",
+   "document": "Mobile Mastery",
+   "concept": "Immutability",
+   "page": null,
+   "text": "Data that doesn't change, like constants.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Unchanging data is a piece of it, but creating new values for updates is missing and the constants comparison is loose."
+  },
+  {
+   "id": "gs-073",
+   "document": "Mobile Mastery",
+   "concept": "Pure function",
+   "page": null,
+   "text": "Like a calculator key: punch in the same numbers and you get the same answer every time, and pressing it doesn't change anything else. Code written that way is easy to unit test, you can cache its results or run lots of it at once, and you can think about it without surprises.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "output depends only on its inputs",
+    "Pure logic is easier to test"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Inputs-only output, no side effects and the testing/caching/parallel/reasoning benefits are all expressed through an analogy."
+  },
+  {
+   "id": "gs-074",
+   "document": "Mobile Mastery",
+   "concept": "Pure function",
+   "page": null,
+   "text": "Pure functions are easier to test mostly because they tend to be tiny - fewer lines means fewer places for bugs to hide, so the tests are simpler.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Easier testing is right, but size is not the reason; the source ties it to inputs-only output with no side effects."
+  },
+  {
+   "id": "gs-075",
+   "document": "Mobile Mastery",
+   "concept": "Pure function",
+   "page": null,
+   "text": "A pure function is one that doesn't take any parameters, which is why it always returns the same thing. Downside is they're harder to test because you can't pass test data in.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "output depends only on its inputs",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "Pure logic is easier to test",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Says it takes no inputs (the source says output depends only on inputs) and that it is harder to test (the source says easier)."
+  },
+  {
+   "id": "gs-076",
+   "document": "Mobile Mastery",
+   "concept": "Pure function",
+   "page": null,
+   "text": "A function that's clean and well written.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Generic praise that says nothing about inputs, outputs or side effects."
+  },
+  {
+   "id": "gs-077",
+   "document": "Mobile Mastery",
+   "concept": "Memory leak",
+   "page": null,
+   "text": "A memory leak is when memory your program still needs gets freed too early and the data is lost. It can't really happen in JavaScript though, since the garbage collector handles everything.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "even though the application no longer needs it",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "unwanted references keep objects reachable",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions"
+   ],
+   "paraphraseGroup": "pgs-10",
+   "notes": "Reverses the definition (freeing needed memory instead of retaining unneeded memory) and denies leaks in garbage-collected JavaScript."
+  },
+  {
+   "id": "gs-078",
+   "document": "Mobile Mastery",
+   "concept": "Memory leak",
+   "page": null,
+   "text": "memory that's still in use gets released by mistake - that's the leak. JS devs don't have to worry about it tho, garbage collection takes care of that.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "even though the application no longer needs it",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "unwanted references keep objects reachable",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-10",
+   "notes": "Same two errors in casual wording: premature release as the leak, and no leaks under garbage collection."
+  },
+  {
+   "id": "gs-079",
+   "document": "Mobile Mastery",
+   "concept": "Memory leak",
+   "page": null,
+   "text": "Obviously a leak means the program loses memory it wasn't finished with - it gets handed back before you're done using it. And in any garbage-collected language, JS included, leaks simply don't exist.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "even though the application no longer needs it",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "unwanted references keep objects reachable",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": "pgs-10",
+   "notes": "Confident version of the same reversed definition plus the claim that garbage collection rules leaks out."
+  },
+  {
+   "id": "gs-080",
+   "document": "Mobile Mastery",
+   "concept": "Memory leak",
+   "page": null,
+   "text": "The app keeps eating more and more RAM the longer it runs, until it gets sluggish or just crashes.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [
+    "Long-running apps can become slower or crash"
+   ],
+   "categories": [
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The symptom is right, but not what a leak is: memory still held after the app no longer needs it."
+  },
+  {
+   "id": "gs-081",
+   "document": "Mobile Mastery",
+   "concept": "Sharding",
+   "page": null,
+   "text": "Something you do to databases for performance.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": "pgs-11",
+   "notes": "Only 'a database performance thing'; no partitioning, nodes or key."
+  },
+  {
+   "id": "gs-082",
+   "document": "Mobile Mastery",
+   "concept": "Sharding",
+   "page": null,
+   "text": "It's one of those database optimization techniques you reach for when things get slow.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-11",
+   "notes": "Same empty 'optimization technique' answer; nothing specific to splitting data."
+  },
+  {
+   "id": "gs-083",
+   "document": "Mobile Mastery",
+   "concept": "Sharding",
+   "page": null,
+   "text": "i think it's one of those tricks big companies use on their databases so they run faster? not totally sure how it works tbh",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-11",
+   "notes": "Hedged restatement of 'makes databases faster' with no content about the concept."
+  },
+  {
+   "id": "gs-084",
+   "document": "Mobile Mastery",
+   "concept": "Sharding",
+   "page": null,
+   "text": "You split the rows up across several database servers and decide where each row lives by some key, like the customer id, so no single machine has to hold everything.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "across multiple database nodes using a shard key"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correct partition-by-key idea; the payoff of scaling writes and storage past one machine is only hinted at."
+  },
+  {
+   "id": "gs-085",
+   "document": "Mobile Mastery",
+   "concept": "SQL injection",
+   "page": null,
+   "text": "Someone types sneaky text into a form, and because it gets glued straight into the query it changes what the query actually does - like turning 'find this user' into 'give me every user'. Worst case they can read or trash your whole database.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "attacker-controlled input changes the structure or meaning",
+    "It can expose or modify entire databases"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "novelExample"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Input altering the query's meaning and the database-wide exposure or damage are both stated."
+  },
+  {
+   "id": "gs-086",
+   "document": "Mobile Mastery",
+   "concept": "SQL injection",
+   "page": null,
+   "text": "SQL injection is when an attacker sneaks a script into a web page, and then it runs in other visitors' browsers and steals their stuff.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "structure or meaning of a SQL query",
+     "confusedWith": "XSS"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes cross-site scripting (scripts running in other users' browsers), not input rewriting a SQL query."
+  },
+  {
+   "id": "gs-087",
+   "document": "Mobile Mastery",
+   "concept": "SQL injection",
+   "page": null,
+   "text": "Hackers attacking the database.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Far too vague to show how input changes a query."
+  },
+  {
+   "id": "gs-088",
+   "document": "Mobile Mastery",
+   "concept": "CSRF",
+   "page": null,
+   "text": "Say you're logged into your bank in one tab and you open some shady page in another. That page quietly gets your browser to fire off a 'send money' request to the bank, and since the browser tacks your bank cookie on all by itself, the bank thinks it's really you asking. So the evil site never even needs to see your cookie, it just piggybacks on the fact you're already signed in. Stuff like SameSite cookies or anti-forgery tokens is how you block it.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "causes a victim's browser to send",
+    "Browsers may attach cookies automatically"
+   ],
+   "categories": [
+    "verbose",
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "A forged request sent by the victim's own browser and the automatic cookie attachment it exploits are both clearly explained."
+  },
+  {
+   "id": "gs-089",
+   "document": "Mobile Mastery",
+   "concept": "CSRF",
+   "page": null,
+   "text": "A malicious site causes the victim's browser to send an unwanted authenticated request to another site.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "causes a victim's browser to send"
+   ],
+   "categories": [
+    "nearVerbatim"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Near-verbatim definition with no mechanism (cookies attached automatically, ambient credentials)."
+  },
+  {
+   "id": "gs-090",
+   "document": "Mobile Mastery",
+   "concept": "CSRF",
+   "page": null,
+   "text": "CSRF is simply when the attacker manages to get their own JavaScript injected into a trusted site so it runs on the victim's page.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "causes a victim's browser to send",
+     "confusedWith": "XSS"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Script injection into a trusted page is XSS; the forged cross-site request riding on the victim's cookies is absent."
+  },
+  {
+   "id": "gs-091",
+   "document": "Mobile Mastery",
+   "concept": "CSRF",
+   "page": null,
+   "text": "A cross-site attack with forged requests and cookies.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right words strung together without the relationship: another site making the victim's browser send an authenticated request."
+  },
+  {
+   "id": "gs-092",
+   "document": "Mobile Mastery",
+   "concept": "CSRF",
+   "page": null,
+   "text": "Not sure honestly, I think it's some kind of attack websites have to protect against? Maybe related to hacking accounts, not 100% though.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Heavily hedged and generic; nothing specific to this attack."
+  },
+  {
+   "id": "gs-093",
+   "document": "Mobile Mastery",
+   "concept": "HttpOnly cookie",
+   "page": null,
+   "text": "It's a flag on a cookie that hides it from any script running in the page, so document.cookie can't see it. Point is, if someone does manage to sneak a script in, they can't just scoop up your session cookie - although they can still do other damage.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "marked so browser JavaScript cannot read it",
+    "reduces exposure of session secrets to JavaScript"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Unreadable by page scripts and the reduced session exposure under XSS (without eliminating it) are both correct."
+  },
+  {
+   "id": "gs-094",
+   "document": "Mobile Mastery",
+   "concept": "HttpOnly cookie",
+   "page": null,
+   "text": "HttpOnly makes session cookies safer against XSS. It does that by encrypting the cookie value, so a script that reads it only gets gibberish.",
+   "state": "weakReasoning",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "marked so browser JavaScript cannot read it",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Conclusion (less XSS exposure) is right, but the mechanism is invented encryption and it assumes scripts can still read the cookie, contradicting the definition."
+  },
+  {
+   "id": "gs-095",
+   "document": "Mobile Mastery",
+   "concept": "HttpOnly cookie",
+   "page": null,
+   "text": "Once your session cookie is HttpOnly, XSS is basically solved - an injected script can't do anything harmful anymore.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "though it does not eliminate XSS impact",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Claims the flag neutralises XSS entirely; the source says it reduces exposure but does not eliminate XSS impact."
+  },
+  {
+   "id": "gs-096",
+   "document": "Mobile Mastery",
+   "concept": "HttpOnly cookie",
+   "page": null,
+   "text": "A cookie with some extra security flag switched on, meant to help against scripts somehow.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "A security flag against scripts is gestured at, but not that JavaScript cannot read the cookie or what that protects."
+  },
+  {
+   "id": "gs-097",
+   "document": "Mobile Mastery",
+   "concept": "Event bubbling",
+   "page": null,
+   "text": "When you click something nested inside other elements, the click travels up to each parent in turn, all the way up the tree. That's what lets a parent listen for its children's events - e.g. one listener on a list instead of one on every item.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "propagates upward through its ancestors",
+    "It enables parent handlers and event delegation"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-12",
+   "notes": "Upward travel through ancestors and the resulting parent handlers and delegation are both present."
+  },
+  {
+   "id": "gs-098",
+   "document": "Mobile Mastery",
+   "concept": "Event bubbling",
+   "page": null,
+   "text": "Events rise from the child to the parent to the grandparent and so on, so a container can react to clicks on the stuff inside it - which is how delegation works.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "propagates upward through its ancestors",
+    "It enables parent handlers and event delegation"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-12",
+   "notes": "Same two ideas: rising through ancestors, which enables container handlers and delegation."
+  },
+  {
+   "id": "gs-099",
+   "document": "Mobile Mastery",
+   "concept": "Event bubbling",
+   "page": null,
+   "text": "Inner element fires, event climbs through every ancestor. Result: outer handlers, or a single delegated one, can catch it.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "propagates upward through its ancestors",
+    "It enables parent handlers and event delegation"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-12",
+   "notes": "Clipped phrasing of the same upward propagation and what it enables."
+  },
+  {
+   "id": "gs-100",
+   "document": "Mobile Mastery",
+   "concept": "Event bubbling",
+   "page": null,
+   "text": "Events are how JavaScript reacts to the user - clicks, key presses, scrolling - and you hook them up with addEventListener.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "True statements about events in general, nothing about propagation up through ancestors."
+  },
+  {
+   "id": "gs-101",
+   "document": "Mobile Mastery",
+   "concept": "Lazy loading",
+   "page": null,
+   "text": "Don't load something until the moment it's actually needed - like only pulling in the video player code once someone hits play.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "until a resource is actually needed"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelExample",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correct defer-until-needed idea with an original example; the payoff (less initial work, faster startup) is left out."
+  },
+  {
+   "id": "gs-102",
+   "document": "Mobile Mastery",
+   "concept": "Lazy loading",
+   "page": null,
+   "text": "Lazy loading speeds up startup because lazy-loaded files get compressed harder, so they're smaller to download.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "rightConclusionWrongReasoning"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Faster startup is right, but compression is not the reason; the gain comes from deferring work until it is needed."
+  },
+  {
+   "id": "gs-103",
+   "document": "Mobile Mastery",
+   "concept": "Lazy loading",
+   "page": null,
+   "text": "A performance trick for React apps.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Too vague to show what is deferred or why."
+  },
+  {
+   "id": "gs-104",
+   "document": "Mobile Mastery",
+   "concept": "Optimistic locking",
+   "page": null,
+   "text": "You don't lock anything when reading, you just note the version you saw. When you save, the write only goes through if that version is still current - if somebody else got in first, yours is rejected and you retry. Worth it when clashes are rare, since you skip the cost of heavy locking.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "rejects an update if the record changed",
+    "avoids heavy locks when conflicts are uncommon"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Free reads, rejection of stale updates and the rare-conflict trade-off against heavy locks are all correct."
+  },
+  {
+   "id": "gs-105",
+   "document": "Mobile Mastery",
+   "concept": "Optimistic locking",
+   "page": null,
+   "text": "It allows reads freely but rejects an update if the record has changed since it was read.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "rejects an update if the record changed"
+   ],
+   "categories": [
+    "nearVerbatim"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Near copy of the definition; the purpose (avoiding heavy locks when conflicts are uncommon) is missing."
+  },
+  {
+   "id": "gs-106",
+   "document": "Mobile Mastery",
+   "concept": "Optimistic locking",
+   "page": null,
+   "text": "Optimistic locking locks the row the second you read it so nobody else can even look at it until you're done. It's the one you pick when there are tons of conflicts.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "strategy that allows reads freely",
+     "confusedWith": null
+    },
+    {
+     "kind": "reversal",
+     "claim": "when conflicts are uncommon",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Says reads take a blocking lock (the source says reads are free) and flips the use case to frequent conflicts."
+  },
+  {
+   "id": "gs-107",
+   "document": "Mobile Mastery",
+   "concept": "Optimistic locking",
+   "page": null,
+   "text": "Version numbers on rows so updates don't clash.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Mentions versions and clashes but not the rule that an update is rejected when the record changed since it was read."
+  },
+  {
+   "id": "gs-108",
+   "document": "Mobile Mastery",
+   "concept": "Optimistic locking",
+   "page": null,
+   "text": "Locks are how databases stop two people editing the same data at once, and you can choose between different isolation levels depending on how strict you want it.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "General locking and isolation talk that is plausible but not this strategy."
+  },
+  {
+   "id": "gs-109",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 1,
+   "text": "When you trace code, write down what kind of thing each step gives back as well as the actual value, not just the number.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "trace records both type and value"
+   ],
+   "categories": [
+    "paraphrase"
+   ],
+   "paraphraseGroup": "pgs-13",
+   "notes": "Knows to record type as well as value, but not why: a result can look related to the task yet have the wrong shape for the next step."
+  },
+  {
+   "id": "gs-110",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 1,
+   "text": "track both things: is it an array, a number, a string... and what's actually in it. for every expression and every return value.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "trace records both type and value"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-13",
+   "notes": "Same type-plus-value habit in casual form; the wrong-shape reason is absent."
+  },
+  {
+   "id": "gs-111",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 1,
+   "text": "I'd say the takeaway is probably to note the data type next to the value at each line while stepping through a program, I think.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "trace records both type and value"
+   ],
+   "categories": [
+    "paraphrase",
+    "hedged"
+   ],
+   "paraphraseGroup": "pgs-13",
+   "notes": "Hedged restatement of the same habit without the reason behind it."
+  },
+  {
+   "id": "gs-112",
+   "document": "Coding Interviews",
+   "concept": null,
+   "page": 1,
+   "text": "Only the values matter when you trace. If the output has the right-looking numbers, the chain is fine and you don't need to bother about types.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "trace records both type and value",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "wrong shape for the next operation",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Drops types from the trace and assumes right-looking output is fine, contradicting both the page's type-and-value rule and its wrong-shape warning."
+  },
+  {
+   "id": "gs-113",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 1,
+   "text": "Keep the UI, the logic and the saving-to-disk bits apart, so tweaking a font never means touching the import code. Short files help, but short alone doesn't make the boundaries right. And each module should offer a clear, consistent interface without spilling internals callers don't need.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "typography change should not require editing",
+    "file length alone does not guarantee good boundaries",
+    "expose a coherent contract and avoid leaking details"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "All three points (separated concerns, length not guaranteeing boundaries, coherent contract without leaked details) are expressed."
+  },
+  {
+   "id": "gs-114",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 1,
+   "text": "Basically: keep every file small. If your files are short your boundaries are automatically good.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "file length alone does not guarantee good boundaries",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Treats small files as a guarantee of good boundaries, which the page explicitly denies."
+  },
+  {
+   "id": "gs-115",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 1,
+   "text": "Follow SOLID, use patterns like factory and singleton, and write unit tests for everything.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Generic design advice that is not what this page teaches."
+  },
+  {
+   "id": "gs-116",
+   "document": "Design Patterns",
+   "concept": null,
+   "page": 1,
+   "text": "Changing a font shouldn't mean editing the file-import transaction. Keeping those apart matters because separated code runs faster - less stuff gets loaded at once.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "typography change should not require editing"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right that styling changes should not reach import code, but justified by speed instead of separate reasons to change."
+  },
+  {
+   "id": "gs-117",
+   "document": "System Design",
+   "concept": null,
+   "page": 3,
+   "text": "A preview showing up doesn't mean the import actually finished. Also you need good error handling.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [
+    "not complete when a preview appears"
+   ],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "pgs-14",
+   "notes": "Gets that a preview is not completion, but the failure cases to design for and honest error messages shrink to a vague 'handle errors'."
+  },
+  {
+   "id": "gs-118",
+   "document": "System Design",
+   "concept": null,
+   "page": 3,
+   "text": "just because you can see the preview doesn't mean it's done!! and errors should be dealt with properly",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [
+    "not complete when a preview appears"
+   ],
+   "categories": [
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgs-14",
+   "notes": "Same single correct point plus the same vague error remark."
+  },
+  {
+   "id": "gs-119",
+   "document": "System Design",
+   "concept": null,
+   "page": 3,
+   "text": "I think the import isn't really finished at the point where the preview pops up, and then there's something about handling failures well, maybe?",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [
+    "not complete when a preview appears"
+   ],
+   "categories": [
+    "partiallyCorrect",
+    "hedged"
+   ],
+   "paraphraseGroup": "pgs-14",
+   "notes": "Hedged version of the same partial grasp: preview is not completion, the rest only gestured at."
+  },
+  {
+   "id": "gs-120",
+   "document": "System Design",
+   "concept": null,
+   "page": 3,
+   "text": "If a save fails partway through, it's fine to tell the user everything got saved so they don't panic, and then fix it quietly in the background.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "without claiming that missing work was saved",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Recommends telling users unsaved work was saved, the exact opposite of the page's error-message rule."
+  }
+ ]
+}

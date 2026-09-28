@@ -1,0 +1,2288 @@
+{
+ "version": 1,
+ "split": "dev",
+ "author": "independent annotator A (V35)",
+ "guide": "Labels follow scratch guide v35: states understood | mostlyUnderstood | fragile | misconception | weakReasoning | insufficient.",
+ "cases": [
+  {
+   "id": "gd-001",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Idempotency is the property that repeating an operation has the same intended effect as performing it once. You need it because networks retry, users double-click, and clients time out after the server has already committed the work.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "repeating an operation has the same intended effect",
+    "users double-click, and clients time out"
+   ],
+   "categories": [
+    "nearVerbatim"
+   ],
+   "paraphraseGroup": "pgd-01",
+   "notes": "Near copy of the definition plus the reasons duplicates happen; both correct, so understood."
+  },
+  {
+   "id": "gd-002",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "If the same request lands twice - say the app retried after a timeout even though the server had actually finished, or someone tapped Pay two times - the end result should be as if it only happened once.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "repeating an operation has the same intended effect",
+    "users double-click, and clients time out"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-01",
+   "notes": "Same-effect-as-once plus the real-world sources of duplicates (retry after timeout, double tap), in own words."
+  },
+  {
+   "id": "gd-003",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Think of a lift call button: mash it five times and one lift still comes. An API call should work the same way, because in real life stuff gets sent twice all the time - flaky wifi resends, impatient people double-tap, a client gives up waiting after the server already did the job.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "repeating an operation has the same intended effect",
+    "users double-click, and clients time out"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-01",
+   "notes": "Lift-button analogy carries the same-effect idea and the learner names retries, double taps and timeouts as the reason."
+  },
+  {
+   "id": "gd-004",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Doing the same call twice, or ten times, leaves things exactly as if you'd done it once.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "repeating an operation has the same intended effect"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition is right but nothing about why repeats happen (retries, double-clicks, timeouts after committed work)."
+  },
+  {
+   "id": "gd-005",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Idempotency is when the client automatically sends the request again if it fails, and keeps trying until the server finally answers.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "repeating an operation has the same intended effect",
+     "confusedWith": "Retry"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes the act of retrying instead of the property that a repeat has the same effect as one call - a confusion with Retry."
+  },
+  {
+   "id": "gd-006",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "It's about keeping your API clean and predictable - using the proper HTTP verbs, returning sensible status codes and documenting every endpoint so clients know what to expect.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Plausible API-hygiene advice that never says what happens when an operation is repeated."
+  },
+  {
+   "id": "gd-007",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "Throttling is limiting an action so it runs at most once per time window while the events keep coming. It protects expensive handlers during things like scroll, resize or pointer movement.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "runs at most once per time window",
+    "It protects expensive handlers during scroll,"
+   ],
+   "categories": [
+    "nearVerbatim"
+   ],
+   "paraphraseGroup": "pgd-15",
+   "notes": "Near copy of both the definition and the purpose; correct and complete."
+  },
+  {
+   "id": "gd-008",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "Heavy scroll handler runs once per interval, not every event.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "runs at most once per time window",
+    "It protects expensive handlers during scroll,"
+   ],
+   "categories": [
+    "terse",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-15",
+   "notes": "Terse but states the once-per-interval cap while events keep firing and that it shields a costly scroll handler."
+  },
+  {
+   "id": "gd-009",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "Like a bus that leaves every ten minutes no matter how many people keep turning up: while the mouse is moving or the window is being dragged bigger, your costly callback gets a turn only once per slot, so it doesn't choke the page.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "runs at most once per time window",
+    "It protects expensive handlers during scroll,"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-15",
+   "notes": "Bus analogy gives the fixed-rate cap during continuing events and the protection of a costly callback during pointer/resize activity."
+  },
+  {
+   "id": "gd-010",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "Throttling waits until the user has completely stopped scrolling and then runs the handler a single time after everything goes quiet. That's the whole trick.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "once per time window while events continue",
+     "confusedWith": "Debouncing"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Wait-for-quiet-then-run-once is debouncing; throttling runs periodically while events continue."
+  },
+  {
+   "id": "gd-011",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "Throttling means the function only fires once per interval however many events come in. The reason is that JavaScript is single-threaded, so without it the events would pile up, overflow the call stack and crash the tab.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "runs at most once per time window"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition is right, but the reason given (call-stack overflow from single-threading) is a buzzword non-sequitur instead of protecting expensive handlers."
+  },
+  {
+   "id": "gd-012",
+   "document": "Mobile Mastery",
+   "concept": "Debouncing",
+   "page": null,
+   "text": "Debouncing means the function can only run once every X milliseconds while you're typing, so it fires on a steady schedule the whole time.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "until a burst of events has been quiet",
+     "confusedWith": "Throttling"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-03",
+   "notes": "A fixed once-per-interval rate during typing is throttling; debouncing waits for the burst to go quiet."
+  },
+  {
+   "id": "gd-013",
+   "document": "Mobile Mastery",
+   "concept": "Debouncing",
+   "page": null,
+   "text": "basically you put a cap on it so while somebody keeps hammering keys the search goes off at a fixed rate, like one call every half second max",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "until a burst of events has been quiet",
+     "confusedWith": "Throttling"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-03",
+   "notes": "Same throttling-style fixed rate while keys are still being pressed; no waiting for a pause."
+  },
+  {
+   "id": "gd-014",
+   "document": "Mobile Mastery",
+   "concept": "Debouncing",
+   "page": null,
+   "text": "I'm fairly sure it's a rate cap: no matter how fast the events come in, the handler goes off at most once per interval, even while the typing is still happening.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "until a burst of events has been quiet",
+     "confusedWith": "Throttling"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-03",
+   "notes": "Hedged version of the same confusion: periodic firing during the burst instead of after it goes quiet."
+  },
+  {
+   "id": "gd-015",
+   "document": "Mobile Mastery",
+   "concept": "Debouncing",
+   "page": null,
+   "text": "It's like an elevator door: each time someone else steps in, the countdown restarts, and it only shuts once nobody has come in for a few seconds. Same with a search box - you fire the lookup after the person pauses typing, not on every letter, so the heavy work doesn't run constantly.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "until a burst of events has been quiet",
+    "avoids firing expensive work for every keystroke"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Elevator analogy captures the reset-until-quiet delay, and the search-box part gives the purpose of not doing heavy work per keystroke."
+  },
+  {
+   "id": "gd-016",
+   "document": "Mobile Mastery",
+   "concept": "Debouncing",
+   "page": null,
+   "text": "i think it's something about waiting a little before running a function? like so it doesn't do too much work maybe",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gestures at waiting and saving work but never says the wait is until events stop; too vague to trust."
+  },
+  {
+   "id": "gd-017",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Authentication is where the app checks what you're allowed to do, like whether you can edit a post or only look at it.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "verifying who a user or service is",
+     "confusedWith": "Authorization"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-02",
+   "notes": "Describes deciding permissions, which is authorization, not verifying identity."
+  },
+  {
+   "id": "gd-018",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "It decides your permissions - admin vs normal user, which pages you can open, that kind of thing.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "verifying who a user or service is",
+     "confusedWith": "Authorization"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-02",
+   "notes": "Same confusion: permissions and roles instead of establishing who the user is."
+  },
+  {
+   "id": "gd-019",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Obviously authentication is the permissions layer: once the system has your role, it works out exactly which actions and resources you're allowed.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "verifying who a user or service is",
+     "confusedWith": "Authorization"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-02",
+   "notes": "Confidently equates authentication with the permission check (authorization)."
+  },
+  {
+   "id": "gd-020",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Think of a bouncer checking your ID at the door: it's only about proving you really are who you claim to be - password, face scan, a code texted to your phone. The app has to be sure of that before it lets you near anything.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "verifying who a user or service is",
+    "the system needs a trustworthy identity"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Bouncer analogy gives identity verification and that a trustworthy identity must come before any access."
+  },
+  {
+   "id": "gd-021",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Proving you are who you say you are, e.g. logging in with a password.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "verifying who a user or service is"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Identity verification is right, but it does not say a trusted identity is needed before access is granted."
+  },
+  {
+   "id": "gd-022",
+   "document": "Mobile Mastery",
+   "concept": "Authorization",
+   "page": null,
+   "text": "Okay so, once the system already knows who you are (that part's the login step), authorization is the separate question of what you're actually allowed to touch. And just being you doesn't automatically mean you can do something - which honestly surprised me - every single request for a specific thing, like deleting this file or viewing that report, gets checked on its own, every time.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "deciding what an authenticated identity is allowed",
+    "Identity alone is not permission.",
+    "authorization still happens per action/resource."
+   ],
+   "categories": [
+    "verbose",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Rambling but gives all three ideas: deciding what a known identity may do, identity is not permission, and a check per action/resource."
+  },
+  {
+   "id": "gd-023",
+   "document": "Mobile Mastery",
+   "concept": "Authorization",
+   "page": null,
+   "text": "It's simple: authorization happens once, when you log in. After you've proven who you are you're trusted, so you can basically do anything in the app for the rest of the session.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "Identity alone is not permission.",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "authorization still happens per action/resource.",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Two wrong ideas: a proven identity grants everything, and the check happens once at login instead of per action/resource."
+  },
+  {
+   "id": "gd-024",
+   "document": "Mobile Mastery",
+   "concept": "Authorization",
+   "page": null,
+   "text": "authorization is checking your username and password to confirm it's really you",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "deciding what an authenticated identity is allowed",
+     "confusedWith": "Authentication"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Checking credentials to confirm identity is authentication, not deciding what that identity may do."
+  },
+  {
+   "id": "gd-025",
+   "document": "Mobile Mastery",
+   "concept": "Authorization",
+   "page": null,
+   "text": "Authorization is deciding what a logged-in user is allowed to do - for example regular users can read reports but only admins can delete accounts.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "deciding what an authenticated identity is allowed"
+   ],
+   "categories": [
+    "paraphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition is right, but it misses that identity alone is not permission and that the check happens per action/resource."
+  },
+  {
+   "id": "gd-026",
+   "document": "Mobile Mastery",
+   "concept": "Authorization",
+   "page": null,
+   "text": "it's kind of about permissions and roles i think? like admin stuff",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Mentions permissions and roles but never says what is being decided or for whom; too vague to trust."
+  },
+  {
+   "id": "gd-027",
+   "document": "Mobile Mastery",
+   "concept": "CORS",
+   "page": null,
+   "text": "CORS is cross origin resource sharing, a security thing.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": "pgd-07",
+   "notes": "Only expands the acronym and calls it security; nothing about what it controls."
+  },
+  {
+   "id": "gd-028",
+   "document": "Mobile Mastery",
+   "concept": "CORS",
+   "page": null,
+   "text": "I think it stands for Cross-Origin Resource Sharing? It has something to do with security on the web, I'm pretty sure.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged"
+   ],
+   "paraphraseGroup": "pgd-07",
+   "notes": "Hedged acronym expansion plus 'web security'; no content a teacher can assess."
+  },
+  {
+   "id": "gd-029",
+   "document": "Mobile Mastery",
+   "concept": "CORS",
+   "page": null,
+   "text": "So CORS, which is short for cross-origin resource sharing (a mouthful, I know), is basically one of those web security features that every developer runs into eventually. I've seen it come up a lot in tutorials and on Stack Overflow. The main thing to know is that it's related to security on the web and to resources being shared across origins, which is kind of what the name says anyway.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "verbose"
+   ],
+   "paraphraseGroup": "pgd-07",
+   "notes": "Long, but it only restates the name and says 'web security'; still no idea of who enforces what."
+  },
+  {
+   "id": "gd-030",
+   "document": "Mobile Mastery",
+   "concept": "CORS",
+   "page": null,
+   "text": "CORS is a firewall on the server that blocks requests coming from other domains, and it stops everything - browsers, curl, Postman, mobile apps - from calling your API unless you whitelist them.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "A browser-enforced policy that controls whether",
+     "confusedWith": null
+    },
+    {
+     "kind": "overgeneralization",
+     "claim": "does not stop non-browser clients",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Two wrong ideas: it is a server-side request blocker rather than browser-enforced read control, and it supposedly stops non-browser clients too."
+  },
+  {
+   "id": "gd-031",
+   "document": "Mobile Mastery",
+   "concept": "CORS",
+   "page": null,
+   "text": "CORS is how the backend checks who is calling it - it verifies the user's identity before it agrees to send the data back.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "controls whether frontend JavaScript can read responses",
+     "confusedWith": "Authentication"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Treats CORS as identity verification; the source says it is browser read control and explicitly not authentication."
+  },
+  {
+   "id": "gd-032",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "A JWT is an encrypted token, so nobody who grabs it can see what's inside - that's exactly why it's safe to stuff user info in there.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "claim containers, not automatically encrypted",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-09",
+   "notes": "Claims JWT contents are hidden by encryption; the source says JWTs are signed, not automatically encrypted."
+  },
+  {
+   "id": "gd-033",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "JWTs hide their contents. The payload part is scrambled, so only the server is able to read the user data in it.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "claim containers, not automatically encrypted",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-09",
+   "notes": "Same wrong idea in other words: the payload is supposedly scrambled and unreadable to the client."
+  },
+  {
+   "id": "gd-034",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "it's a login token that's encrypted, which keeps the info inside private from the browser and from anyone snooping on the traffic i believe",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "claim containers, not automatically encrypted",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-09",
+   "notes": "Hedged, but still asserts the token's contents are encrypted and private."
+  },
+  {
+   "id": "gd-035",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "It's a small token in three dot-separated chunks - header, payload, signature. Because of the signature, whoever receives it can check the data really came from the issuer it trusts and wasn't changed, without hitting the database every time. Anyone can still decode and read the middle bit, though.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "compact signed token format containing claims",
+    "claims were issued by a trusted signer"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gives the signed three-part format and the verify-without-lookup purpose, and correctly notes it is readable (not encrypted)."
+  },
+  {
+   "id": "gd-036",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "A JWT is a signed token carrying claims like the user id and expiry, and the API doesn't need a DB lookup to trust it - because it's encrypted, so the client can't read or fake anything inside.",
+   "state": "weakReasoning",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "claim containers, not automatically encrypted",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "compact signed token format containing claims"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Conclusion (signed claims, trusted without a lookup) is right, but the reason offered is encryption, which contradicts the source; the signature is what makes it trustworthy."
+  },
+  {
+   "id": "gd-037",
+   "document": "Mobile Mastery",
+   "concept": "Hashing",
+   "page": null,
+   "text": "Hashing turns any input into a fixed-size fingerprint that you can't turn back into the original. For passwords you use a purposely slow algorithm with a random salt, keep only the result, and at login you hash what they typed and compare - so the real password is never stored anywhere.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "one-way transformation that maps input to",
+    "uses deliberately slow, salted algorithms.",
+    "verified without storing recoverable plaintext"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-04",
+   "notes": "One-way fixed-size output, slow salted algorithms for passwords, and verifying without keeping the plaintext - all correct."
+  },
+  {
+   "id": "gd-038",
+   "document": "Mobile Mastery",
+   "concept": "Hashing",
+   "page": null,
+   "text": "you run the password through a one way function (bcrypt/argon2 - slow on purpose, plus a salt) and save what comes out. it can't be undone, the output is always the same length, and to check a login you redo it and compare. no actual passwords sitting in the db",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "one-way transformation that maps input to",
+    "uses deliberately slow, salted algorithms.",
+    "verified without storing recoverable plaintext"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-04",
+   "notes": "Same three ideas in a different order and casual wording."
+  },
+  {
+   "id": "gd-039",
+   "document": "Mobile Mastery",
+   "concept": "Hashing",
+   "page": null,
+   "text": "Picture a meat grinder: steak becomes mince but never the other way, and every batch comes out the same size. Sites do that to passwords, adding a random pinch of salt and using a purposely slow grinder so attackers can't try billions a second, then compare at login instead of keeping the steak.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "one-way transformation that maps input to",
+    "uses deliberately slow, salted algorithms.",
+    "verified without storing recoverable plaintext"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-04",
+   "notes": "Grinder analogy carries one-way and fixed size, then slow salted hashing and compare-at-login without storing the password."
+  },
+  {
+   "id": "gd-040",
+   "document": "Mobile Mastery",
+   "concept": "Hashing",
+   "page": null,
+   "text": "Hashing is basically encryption for passwords: you scramble the password with a secret key and then decrypt it when the user logs in so you can compare. And you want the fastest hash you can find so logins don't lag.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "one-way transformation that maps input to",
+     "confusedWith": "Encryption"
+    },
+    {
+     "kind": "contradiction",
+     "claim": "uses deliberately slow, salted algorithms.",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Two wrong ideas: treats hashing as reversible keyed encryption, and wants a fast algorithm where the source says deliberately slow."
+  },
+  {
+   "id": "gd-041",
+   "document": "Mobile Mastery",
+   "concept": "Hashing",
+   "page": null,
+   "text": "it's the thing where the password gets turned into a random-looking string so it isn't stored as is. i think you can't really get it back? not totally sure",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right direction (not stored as-is, maybe irreversible) but one-way is only guessed at and fixed-length output and slow salting are absent."
+  },
+  {
+   "id": "gd-042",
+   "document": "Mobile Mastery",
+   "concept": "Encryption",
+   "page": null,
+   "text": "You lock the data up with a key so it's gibberish to everyone else, and whoever holds the right key can unlock it back to exactly what it was - unlike a hash, which you can't undo.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "A reversible transformation that protects data"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Keyed, reversible protection of data, contrasted correctly with one-way hashing."
+  },
+  {
+   "id": "gd-043",
+   "document": "Mobile Mastery",
+   "concept": "Encryption",
+   "page": null,
+   "text": "Encryption is one-way: once the data is scrambled you can never get the original back, and that's exactly why it's secure.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "A reversible transformation that protects data",
+     "confusedWith": "Hashing"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes a one-way transformation, which is hashing; the source says encryption is reversible with a key."
+  },
+  {
+   "id": "gd-044",
+   "document": "Mobile Mastery",
+   "concept": "Encryption",
+   "page": null,
+   "text": "scrambles your data so hackers can't read it",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right that it hides data, but says nothing about keys or getting the data back, which is the core of this concept."
+  },
+  {
+   "id": "gd-045",
+   "document": "Mobile Mastery",
+   "concept": "Encryption",
+   "page": null,
+   "text": "Encryption is why you should always look for the padlock and HTTPS in the address bar; websites without it aren't safe for typing in your card details.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Browser-safety advice that never says what encryption is or does."
+  },
+  {
+   "id": "gd-046",
+   "document": "Mobile Mastery",
+   "concept": "Database index",
+   "page": null,
+   "text": "An index makes lookups on a column faster, because the database saves the answers of queries you've already run and hands them back instantly the next time.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "make particular lookups or orderings faster"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-06",
+   "notes": "Faster lookups is right, but the mechanism given is a query-result cache rather than a maintained structure that avoids scanning rows."
+  },
+  {
+   "id": "gd-047",
+   "document": "Mobile Mastery",
+   "concept": "Database index",
+   "page": null,
+   "text": "Indexes = quicker searches. How it works: the DB remembers the results of previous queries, so the second time you ask it just returns the saved result.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "make particular lookups or orderings faster"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-06",
+   "notes": "Same right conclusion with the same wrong caching mechanism."
+  },
+  {
+   "id": "gd-048",
+   "document": "Mobile Mastery",
+   "concept": "Database index",
+   "page": null,
+   "text": "It speeds up finding rows by a certain column. I believe it does that by caching results from earlier queries in memory, so repeated lookups skip the work.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "make particular lookups or orderings faster"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-06",
+   "notes": "Hedged version: speed-up is right, the reason (caching earlier results) is wrong."
+  },
+  {
+   "id": "gd-049",
+   "document": "Mobile Mastery",
+   "concept": "Database index",
+   "page": null,
+   "text": "It's an extra structure the database keeps up to date so that searching or sorting by a particular column goes quicker.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "make particular lookups or orderings faster"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correct definition, but nothing about why it matters (large queries scanning huge numbers of rows otherwise)."
+  },
+  {
+   "id": "gd-050",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "A closure is when you have a function inside another function. It has something to do with scope.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "pgd-05",
+   "notes": "Names nesting and scope but not the key relationship: keeping access to the variables where the function was created."
+  },
+  {
+   "id": "gd-051",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "nested functions basically - a function defined in a function, and scope is involved somehow",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-05",
+   "notes": "Same pieces (nesting, scope) without saying what the inner function retains."
+  },
+  {
+   "id": "gd-052",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "I think it's about scope, like when one function is written inside of another one? That's a closure, I'm pretty sure.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "hedged"
+   ],
+   "paraphraseGroup": "pgd-05",
+   "notes": "Hedged restatement of nesting plus scope; the retained access to variables is missing."
+  },
+  {
+   "id": "gd-053",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "When the outer function finishes, all of its local variables get wiped, so the inner function can't see them anymore - a closure only works while the outer function is still running.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "after the outer function has finished.",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The source says a closure keeps access to its lexical environment after the outer function has finished; this says the opposite."
+  },
+  {
+   "id": "gd-054",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "The way I picture it, a function carries a little backpack holding the variables that were around where it was born, and it can keep using and even changing them long after that outer function has returned. That's honestly the whole trick behind a lot of stuff - private counters nobody else can touch, callbacks that remember things, React hooks, hiding data inside a module, all of that.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "access to the lexical variables from the scope",
+    "encapsulation, callbacks, hooks, and private state patterns."
+   ],
+   "categories": [
+    "verbose",
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Backpack analogy gives access to the creation-scope variables after the outer function returns, and lists the patterns closures power."
+  },
+  {
+   "id": "gd-055",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "It's like a takeaway counter where your order number is printed on your receipt: any cashier can serve you, because none of them has to remember you personally. The app box doesn't keep your session in its own RAM - that lives in a token or a shared store like Redis - so whichever copy gets your next call can handle it, which makes adding servers or surviving one dying way easier.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "without relying on request-specific state stored only",
+    "Any replica can serve the next request"
+   ],
+   "categories": [
+    "verbose",
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Takeaway-counter analogy plus explanation: no per-request state in local memory, any copy can take the next call, easier scaling and failover."
+  },
+  {
+   "id": "gd-056",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "Each request carries or looks up everything it needs, so the server isn't holding on to per-user stuff in its own memory between calls.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "without relying on request-specific state stored only"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition is right, but it never says why: any replica can serve the next request, easing scaling and failover."
+  },
+  {
+   "id": "gd-057",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "A stateless server doesn't store any data at all - no database, no sessions, nothing anywhere. Everything has to be worked out from scratch on every single request.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "keep request state outside a specific instance",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Overgeneralizes 'stateless' to 'no state anywhere'; the source says state is kept outside the specific instance, not eliminated."
+  },
+  {
+   "id": "gd-058",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "Any instance can answer the next request, and that's because stateless servers are lighter and faster since they basically don't use memory.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "Any replica can serve the next request"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Any-instance conclusion is right, but the reason (lighter, faster, no memory use) is wrong; it works because request state lives outside the instance."
+  },
+  {
+   "id": "gd-059",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "it has no state",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Just restates the name; no sign of which state, where it lives, or why it matters."
+  },
+  {
+   "id": "gd-060",
+   "document": "Mobile Mastery",
+   "concept": "Horizontal scaling",
+   "page": null,
+   "text": "Instead of making one server beefier, you just add more servers running the same app.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "capacity by adding more instances or machines"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-08",
+   "notes": "Adding machines is right, but nothing about higher throughput or redundancy beyond one box."
+  },
+  {
+   "id": "gd-061",
+   "document": "Mobile Mastery",
+   "concept": "Horizontal scaling",
+   "page": null,
+   "text": "scaling out: spin up extra copies/machines rather than upgrading the one box you have",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "capacity by adding more instances or machines"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-08",
+   "notes": "Same core idea (more copies, not a bigger box) with the benefit still missing."
+  },
+  {
+   "id": "gd-062",
+   "document": "Mobile Mastery",
+   "concept": "Horizontal scaling",
+   "page": null,
+   "text": "You grow by adding more machines to the pool - so you might go from a handful of instances to dozens of them.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "capacity by adding more instances or machines"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-08",
+   "notes": "Adds machines to grow capacity; no mention of throughput or resilience beyond one box."
+  },
+  {
+   "id": "gd-063",
+   "document": "Mobile Mastery",
+   "concept": "Horizontal scaling",
+   "page": null,
+   "text": "Horizontal scaling means upgrading your server - more RAM, a faster CPU - so the same machine can handle more users.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "capacity by adding more instances or machines",
+     "confusedWith": "Vertical scaling"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Upgrading one machine's RAM/CPU is vertical scaling; horizontal adds more instances."
+  },
+  {
+   "id": "gd-064",
+   "document": "Mobile Mastery",
+   "concept": "Vertical scaling",
+   "page": null,
+   "text": "Scaling up: you give the one machine a bigger CPU and more RAM, like swapping your laptop for a monster workstation. It's usually the easy first thing to try, but you can only buy so big a box, and if that single box goes down you're still down.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "Increasing the CPU, RAM, or resources",
+    "has hardware and availability limits"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "More resources for one machine, simplest first move, and both the hardware ceiling and the availability limit."
+  },
+  {
+   "id": "gd-065",
+   "document": "Mobile Mastery",
+   "concept": "Vertical scaling",
+   "page": null,
+   "text": "Vertical scaling is just upgrading your server's hardware, and it's the best approach because there's no ceiling - you can keep adding RAM forever - and having one really powerful machine gets rid of the single point of failure.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "has hardware and availability limits",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "can preserve a single point of failure",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "Increasing the CPU, RAM, or resources"
+   ],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition right, but claims no limits and that one big box removes the single point of failure - both contradict the source."
+  },
+  {
+   "id": "gd-066",
+   "document": "Mobile Mastery",
+   "concept": "Vertical scaling",
+   "page": null,
+   "text": "making the server bigger i guess?",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "A hedged, vague 'bigger'; the one-machine resource idea is only gestured at and the limits are absent."
+  },
+  {
+   "id": "gd-067",
+   "document": "Mobile Mastery",
+   "concept": "Access token",
+   "page": null,
+   "text": "It's like a festival wristband: your app shows it on every API call to prove it's allowed in, and it's only good until tonight, so if somebody swipes it they don't get to use it for long.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "credential presented to an API to authorize",
+    "reduce damage if the token is stolen"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Wristband analogy covers presenting it on each API call, a short lifetime, and why short limits damage if stolen."
+  },
+  {
+   "id": "gd-068",
+   "document": "Mobile Mastery",
+   "concept": "Access token",
+   "page": null,
+   "text": "the short-lived thing you send in the Authorization header whenever you call an API",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "credential presented to an API to authorize"
+   ],
+   "categories": [
+    "paraphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "What it is and that it is short-lived are right, but not why the lifetime is short (limiting damage if stolen)."
+  },
+  {
+   "id": "gd-069",
+   "document": "Mobile Mastery",
+   "concept": "Access token",
+   "page": null,
+   "text": "An access token is the long-lasting one you keep for weeks and use to get new tokens without logging in again. Making it last longer is actually safer, since you're not sending your password around.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "usually with a relatively short lifetime",
+     "confusedWith": "Refresh token"
+    },
+    {
+     "kind": "contradiction",
+     "claim": "reduce damage if the token is stolen",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes the refresh token (long-lived, used to get new tokens) and claims longer lifetimes are safer, the opposite of the source."
+  },
+  {
+   "id": "gd-070",
+   "document": "Mobile Mastery",
+   "concept": "Access token",
+   "page": null,
+   "text": "Tokens are used everywhere in modern apps - OAuth, OpenID Connect, 'Sign in with Google' and so on.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "True-sounding name-dropping with nothing about what an access token is or why it is short-lived."
+  },
+  {
+   "id": "gd-071",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "A refresh token lets the app grab a fresh access token without making you log in again - it works because your password is saved inside it, so the server just logs you in again automatically.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "used to obtain new access tokens"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-14",
+   "notes": "Getting new access tokens without a new sign-in is right, but the mechanism (it contains your password) is invented."
+  },
+  {
+   "id": "gd-072",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "When the access token dies, the refresh token gets you a new one with no login screen. That's possible because the refresh token is basically your password in encrypted form, which the auth server re-checks each time.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "used to obtain new access tokens"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-14",
+   "notes": "Same right conclusion; same wrong reason (it is the user's stored password)."
+  },
+  {
+   "id": "gd-073",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "It's what quietly gets you a new access token so you're not kicked back to sign-in; my understanding is it holds your username and password and just replays them.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "used to obtain new access tokens"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-14",
+   "notes": "Hedged version: right outcome, wrong credential-replay mechanism."
+  },
+  {
+   "id": "gd-074",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "it refreshes your login so you stay signed in, kind of? not sure how",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gestures at staying signed in but not that it obtains new access tokens, nor the convenience/short-lifetime balance."
+  },
+  {
+   "id": "gd-075",
+   "document": "Mobile Mastery",
+   "concept": "Rate limiting",
+   "page": null,
+   "text": "You cap how many calls each user or API key can make in a given window, say 100 a minute, and anything past that gets bounced with a 429.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "how frequently a client, identity, or key"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-12",
+   "notes": "Per-client cap on frequency is right; why (availability, cost, abuse) is missing."
+  },
+  {
+   "id": "gd-076",
+   "document": "Mobile Mastery",
+   "concept": "Rate limiting",
+   "page": null,
+   "text": "each client only gets so many requests per time period; go over and you're blocked for a bit",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "how frequently a client, identity, or key"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-12",
+   "notes": "Same definition in casual words, still no purpose."
+  },
+  {
+   "id": "gd-077",
+   "document": "Mobile Mastery",
+   "concept": "Rate limiting",
+   "page": null,
+   "text": "Rate limiting is restricting how frequently a client, identity or key may perform an operation.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "how frequently a client, identity, or key"
+   ],
+   "categories": [
+    "nearVerbatim"
+   ],
+   "paraphraseGroup": "pgd-12",
+   "notes": "Near copy of the definition only; the purpose sentence is not expressed."
+  },
+  {
+   "id": "gd-078",
+   "document": "Mobile Mastery",
+   "concept": "Rate limiting",
+   "page": null,
+   "text": "i think it's kind of like a speed limit on how much people can use something? so it doesn't get overloaded maybe",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "novelExample",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Speed-limit image gestures at limiting use and avoiding overload, but not per client/key frequency; too vague to trust."
+  },
+  {
+   "id": "gd-079",
+   "document": "Mobile Mastery",
+   "concept": "Rate limiting",
+   "page": null,
+   "text": "It's the reason your phone plan slows your data down after you've used up your 20GB for the month.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Carrier data caps are a different thing; nothing about restricting how often a client may perform an operation."
+  },
+  {
+   "id": "gd-080",
+   "document": "Mobile Mastery",
+   "concept": "Circuit breaker",
+   "page": null,
+   "text": "When a service keeps failing, the breaker cuts it off completely and your app stops calling it for good, until someone goes in and resets it by hand.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "a failure threshold, then probe recovery.",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-10",
+   "notes": "Says the cut-off is permanent until a manual reset; the source says calls stop temporarily and recovery is probed."
+  },
+  {
+   "id": "gd-081",
+   "document": "Mobile Mastery",
+   "concept": "Circuit breaker",
+   "page": null,
+   "text": "It's a kill switch: enough errors and the dependency is permanently disconnected, and it stays that way until an engineer switches it back on.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "a failure threshold, then probe recovery.",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-10",
+   "notes": "Same wrong idea (permanent disconnect, no probing), stated assertively."
+  },
+  {
+   "id": "gd-082",
+   "document": "Mobile Mastery",
+   "concept": "Circuit breaker",
+   "page": null,
+   "text": "after too many failures you just never call that service again. it's disabled, full stop, until a manual reset",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "a failure threshold, then probe recovery.",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-10",
+   "notes": "Same permanent-cutoff belief in terse casual wording."
+  },
+  {
+   "id": "gd-083",
+   "document": "Mobile Mastery",
+   "concept": "Circuit breaker",
+   "page": null,
+   "text": "After a bunch of failures in a row you stop sending calls to the broken service for a while, then let one test request through to see if it's back before opening the floodgates again.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "Stop calling a failing dependency temporarily"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Threshold, temporary stop and probing are right, but not why: stopping slow failures from eating all resources."
+  },
+  {
+   "id": "gd-084",
+   "document": "Mobile Mastery",
+   "concept": "Circuit breaker",
+   "page": null,
+   "text": "It stops calling a dependency that keeps failing and tries it again later. The point is that otherwise the failed responses would get cached and served to users.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "Stop calling a failing dependency temporarily"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The behaviour is right, but the reason (avoiding cached error responses) is not the source's reason of protecting resources from repeated slow failures."
+  },
+  {
+   "id": "gd-085",
+   "document": "Mobile Mastery",
+   "concept": "Exponential backoff",
+   "page": null,
+   "text": "You retry after the same fixed wait every time, like 2 seconds, 2 seconds, 2 seconds. And the jitter is what makes all the clients retry at exactly the same moment, so the server can deal with them in one go.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "where delays grow after consecutive failures,",
+     "confusedWith": null
+    },
+    {
+     "kind": "reversal",
+     "claim": "prevents many clients from retrying in lockstep.",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Two wrong ideas: delays stay fixed instead of growing, and jitter is said to synchronize clients, the reverse of what it does."
+  },
+  {
+   "id": "gd-086",
+   "document": "Mobile Mastery",
+   "concept": "Exponential backoff",
+   "page": null,
+   "text": "So basically every time a retry fails you wait longer before the next attempt - like 1 second, then 2, then 4, then 8, roughly doubling each round - and you usually throw a little bit of randomness on top of each wait. That's the pattern, anyway; it's basically a smarter way of doing retries than just hammering the thing over and over again with the same wait each time.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "where delays grow after consecutive failures,"
+   ],
+   "categories": [
+    "verbose",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Growing delays with jitter are described well, but the purpose (breathing room for a recovering service, avoiding synchronized retry storms) stays vague."
+  },
+  {
+   "id": "gd-087",
+   "document": "Mobile Mastery",
+   "concept": "Exponential backoff",
+   "page": null,
+   "text": "it's about retrying stuff but slower each time? something exponential, i don't fully get it",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "A hedged, vague 'slower each time'; the growing-delay idea is only gestured at, with no jitter or purpose."
+  },
+  {
+   "id": "gd-088",
+   "document": "Mobile Mastery",
+   "concept": "Exponential backoff",
+   "page": null,
+   "text": "Exponential growth is when something keeps doubling, like compound interest or bacteria splitting in a petri dish.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "True statement about exponential growth in general; nothing about retries, delays or protecting a recovering service."
+  },
+  {
+   "id": "gd-089",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "useMemo is for performance, it memoizes things so the app is faster.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": "pgd-13",
+   "notes": "Knows it is a performance tool but not what is cached (a calculation result) or when it is recomputed (dependencies change)."
+  },
+  {
+   "id": "gd-090",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "It's an optimization hook - you wrap stuff in it to make React quicker, something to do with memo.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-13",
+   "notes": "Same pieces (optimization, memo) without the cache-until-dependencies-change relationship."
+  },
+  {
+   "id": "gd-091",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "i think it's used to speed up components, like memoization? so things don't slow down",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "hedged"
+   ],
+   "paraphraseGroup": "pgd-13",
+   "notes": "Hedged version of the same vague speed-up idea."
+  },
+  {
+   "id": "gd-092",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "useMemo guarantees your function will never run again unless the dependencies change, so you can rely on it to make sure side effects only happen once.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "a performance optimization, not a semantic guarantee.",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Treats useMemo as a hard guarantee to rely on for correctness; the source says it is only a performance optimization."
+  },
+  {
+   "id": "gd-093",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "It's a React hook.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "True but says nothing about what it caches or why."
+  },
+  {
+   "id": "gd-094",
+   "document": "Mobile Mastery",
+   "concept": "useCallback",
+   "page": null,
+   "text": "It hands you back the same function object across renders as long as the deps don't change. That matters when you pass the function down to a child wrapped in React.memo, or when it sits in a useEffect dependency list - otherwise you'd get a brand-new function every render, which would re-render the child or re-run the effect for no reason, which is kind of the whole point.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "caches a function reference until dependencies change.",
+    "matter for memoized children or effect dependencies."
+   ],
+   "categories": [
+    "verbose",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Same function reference until deps change, and why that identity matters for memoized children and effect dependencies."
+  },
+  {
+   "id": "gd-095",
+   "document": "Mobile Mastery",
+   "concept": "useCallback",
+   "page": null,
+   "text": "useCallback runs your function and caches whatever it returns, so the expensive computation doesn't happen again on each render.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "caches a function reference until dependencies change.",
+     "confusedWith": "useMemo"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Caching the returned value of a computation is useMemo; useCallback caches the function reference itself."
+  },
+  {
+   "id": "gd-096",
+   "document": "Mobile Mastery",
+   "concept": "useCallback",
+   "page": null,
+   "text": "useCallback keeps the same function reference between renders until the deps change - it does that so the function executes faster, since React doesn't have to compile it again each time.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "caches a function reference until dependencies change."
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition is right, but the reason (faster execution, no recompiling) is invented; stable identity matters for memoized children and effects."
+  },
+  {
+   "id": "gd-097",
+   "document": "Mobile Mastery",
+   "concept": "useCallback",
+   "page": null,
+   "text": "A React hook that caches a function reference until dependencies change.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "caches a function reference until dependencies change."
+   ],
+   "categories": [
+    "nearVerbatim"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Copies the definition but gives no reason why a stable function identity matters."
+  },
+  {
+   "id": "gd-098",
+   "document": "Mobile Mastery",
+   "concept": "Controlled component",
+   "page": null,
+   "text": "A controlled component is an input that keeps its own value in the DOM, and you read it with a ref when the form gets submitted.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "current value is driven by React state/props.",
+     "confusedWith": "Uncontrolled component"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "DOM-owned value read through a ref is the uncontrolled pattern; a controlled element's value is driven by React state/props."
+  },
+  {
+   "id": "gd-099",
+   "document": "Mobile Mastery",
+   "concept": "Controlled component",
+   "page": null,
+   "text": "The box shows whatever is in state, and typing fires onChange which updates that state - so React always decides what's displayed in the input.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "current value is driven by React state/props."
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "State drives the value and changes flow back through events, but the purpose (validation, formatting, coordinated UI) is missing."
+  },
+  {
+   "id": "gd-100",
+   "document": "Mobile Mastery",
+   "concept": "Controlled component",
+   "page": null,
+   "text": "you use value and onChange on the input, i think that's what makes it controlled?",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Names the right props but not the relationship (React state driving the current value); hedged."
+  },
+  {
+   "id": "gd-101",
+   "document": "Mobile Mastery",
+   "concept": "Controlled component",
+   "page": null,
+   "text": "Controlled components are considered better practice than class components and they make your code cleaner and easier to test.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Plausible-sounding opinion mixing in class components; nothing about state driving the element's value."
+  },
+  {
+   "id": "gd-102",
+   "document": "Mobile Mastery",
+   "concept": "Uncontrolled component",
+   "page": null,
+   "text": "The browser's own input holds whatever the user typed, and you only peek at it through a ref when you need it, like on submit. Less wiring for a quick little form, and handy when some non-React script is also poking at the field.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "keeps its current value primarily in the DOM,",
+    "reduce plumbing for simple forms"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Value lives in the DOM and is read through a ref, plus both purposes: less plumbing for simple forms and non-React integration."
+  },
+  {
+   "id": "gd-103",
+   "document": "Mobile Mastery",
+   "concept": "Uncontrolled component",
+   "page": null,
+   "text": "the opposite of controlled, React doesn't manage it",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Contrast with controlled is a correct piece, but it never says where the value lives or how it is read."
+  },
+  {
+   "id": "gd-104",
+   "document": "Mobile Mastery",
+   "concept": "Uncontrolled component",
+   "page": null,
+   "text": "it's a type of React component",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "True but empty; nothing about forms, the DOM or refs."
+  },
+  {
+   "id": "gd-105",
+   "document": "Mobile Mastery",
+   "concept": "Message queue",
+   "page": null,
+   "text": "One part of the system drops jobs into a line and some other worker picks them up and does them whenever it gets to them.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "producers enqueue messages/jobs and consumers process them later."
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Producer/consumer buffering is right, but not why: decoupling request latency from background work and smoothing bursts."
+  },
+  {
+   "id": "gd-106",
+   "document": "Mobile Mastery",
+   "concept": "Message queue",
+   "page": null,
+   "text": "it's like a to-do list for servers?",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse",
+    "hedged",
+    "novelExample",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The to-do-list image hints at queued work, but who adds, who processes and why are all missing."
+  },
+  {
+   "id": "gd-107",
+   "document": "Mobile Mastery",
+   "concept": "Message queue",
+   "page": null,
+   "text": "The API just drops the task onto the queue and a worker handles it later, so the user gets a quick response instead of waiting for the email to go out. The reason that's faster, as far as I know, is that queues talk over a special binary protocol that's way lighter than HTTP, so the work itself takes less time to do - which is why every big company uses them.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "producers enqueue messages/jobs and consumers process them later."
+   ],
+   "categories": [
+    "verbose",
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Enqueue-then-worker and the quick response are right, but the explanation (a lighter binary protocol makes the work faster) is a non-sequitur; the gain comes from decoupling."
+  },
+  {
+   "id": "gd-108",
+   "document": "Mobile Mastery",
+   "concept": "Message queue",
+   "page": null,
+   "text": "Kafka and RabbitMQ are popular message queues, and big companies like Netflix and Uber rely on them heavily.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Name-dropping products and users; nothing about producers, consumers or why a queue helps."
+  },
+  {
+   "id": "gd-109",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 0,
+   "text": "A model is a simplification. Models are important in CS.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": "pgd-16",
+   "notes": "Only repeats the page title and calls it important; nothing about which details a model keeps or why."
+  },
+  {
+   "id": "gd-110",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 0,
+   "text": "Okay so the main point of this page, if I'm reading it right, is that a model is a simplification. Like, models simplify things, and simplifying is useful, because things are complicated and a simpler version is easier. I feel like that's something that comes up everywhere in computer science, so it's a pretty important idea overall, I'd say, and worth remembering.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "verbose"
+   ],
+   "paraphraseGroup": "pgd-16",
+   "notes": "Long but circular: 'models simplify and simplifying is useful', with no idea of keeping decision-relevant details."
+  },
+  {
+   "id": "gd-111",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 0,
+   "text": "The page is about how a model is a simpler version of something, which I guess matters a lot in computer science generally.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged"
+   ],
+   "paraphraseGroup": "pgd-16",
+   "notes": "Hedged restatement of the title; no rubric idea is expressed."
+  },
+  {
+   "id": "gd-112",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 0,
+   "text": "A good model keeps only the bits that change what you'd decide and drops the rest - like calling a stack 'last in, first out' tells you straight away what comes off next.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "keeps the details that affect a decision",
+    "helps predict which item is removed next."
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Main idea and the stack example are right; it misses that the description is useful before deciding how to store the stack."
+  },
+  {
+   "id": "gd-113",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 0,
+   "text": "Pick the array method by what you want out of it - one item (find), a new array (filter) or a true/false (some/every). And if you get back a true/false you can't chain .map() onto it.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "starts with the shape you need back.",
+    "boolean cannot be followed by .map()."
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-11",
+   "notes": "Choose by the return shape you need, and a boolean result cannot be chained with .map()."
+  },
+  {
+   "id": "gd-114",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 0,
+   "text": "first figure out what kind of result you want back, then choose the method. some() and every() just give you a boolean, and there's no map on a boolean",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "starts with the shape you need back.",
+    "boolean cannot be followed by .map()."
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-11",
+   "notes": "Same two ideas in casual wording and a different order of detail."
+  },
+  {
+   "id": "gd-115",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 0,
+   "text": "It's like ordering food: decide whether you want one dish, a whole platter or just a yes/no answer before you pick the menu item. If the method hands you a plain yes/no, you can't carry on with .map() because that only exists on arrays.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "starts with the shape you need back.",
+    "boolean cannot be followed by .map()."
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-11",
+   "notes": "Food-ordering analogy for choosing by result shape, plus the no-.map()-on-a-boolean rule."
+  },
+  {
+   "id": "gd-116",
+   "document": "JavaScript Deep Dive",
+   "concept": null,
+   "page": 0,
+   "text": "find gives back one item, filter gives an array, some gives a boolean",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correct facts about each method, but neither the choose-by-return-shape principle nor the no-.map()-on-a-boolean constraint."
+  },
+  {
+   "id": "gd-117",
+   "document": "React Notes",
+   "concept": null,
+   "page": 0,
+   "text": "A component is basically a recipe for what the UI should look like given its props, state and context. Rendering is React working out that recipe; committing is the separate step where it actually touches the screen, and only with the changes that are needed.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "describes the interface for a particular set",
+    "Rendering calculates that description;",
+    "applies the necessary changes to the screen."
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "All three ideas: component as a description for given inputs, rendering computes it, committing applies only needed changes."
+  },
+  {
+   "id": "gd-118",
+   "document": "React Notes",
+   "concept": null,
+   "page": 0,
+   "text": "Rendering is obviously when React paints the changes onto the screen, and committing is the step before that where it figures out what the component should look like.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "Rendering calculates that description;",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Swaps the two phases: the source says rendering calculates the description and committing applies changes to the screen."
+  },
+  {
+   "id": "gd-119",
+   "document": "React Notes",
+   "concept": null,
+   "page": 0,
+   "text": "React uses a virtual DOM and was made by Facebook; it's the most popular front-end library out there.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "General React trivia; nothing about components, rendering or committing as this page teaches them."
+  },
+  {
+   "id": "gd-120",
+   "document": "React Notes",
+   "concept": null,
+   "page": 0,
+   "text": "components and rendering stuff",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Just names topics from the page; no understanding shown."
+  }
+ ]
+}

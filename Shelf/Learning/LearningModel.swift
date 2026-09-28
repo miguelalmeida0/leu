@@ -64,6 +64,8 @@ final class LearningModel {
     @ObservationIgnored var snapshotGate = SnapshotRevisionGate()
     /// What Leu noticed in the typed recall, once the source is revealed.
     var recallDiagnosis: UnderstandingDiagnosis?
+    /// The judgement behind it: what the typed recall may teach the learner model. Never stored.
+    @ObservationIgnored var recallAssessment: UnderstandingAssessment?
     /// What the chosen wrong option reveals, in the source's words.
     var answerFeedbackNote: String?
     var modelState: LearningModelState = .unavailable

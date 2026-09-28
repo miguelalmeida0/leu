@@ -12,6 +12,9 @@ public enum ProbeReason: String, Codable, Sendable {
     case overconfidence
     /// Nothing is weak: keep it alive with a different kind of question.
     case consolidate
+    /// Follow through on a Teach It Back explanation: the question that settles an undecided
+    /// reading, or a transfer check after an understood one.
+    case verification
 }
 
 public struct ProbeDecision: Equatable, Sendable {
@@ -51,7 +54,7 @@ public struct AdaptiveProbeSelector: Sendable {
     public enum Preference: Sendable { case open, choice, any }
 
     public func next(for concept: LearnerConceptID, state: LearnerModelState, preferring preference: Preference = .any,
-                     now: Date) -> ProbeDecision? {
+                     now: Date, verification: PendingVerification? = nil) -> ProbeDecision? {
         let diversity = ProbeDiversity()
         let misconceptions = state.misconceptions(for: concept)
         let all = generator.probes(for: concept.concept, documentID: concept.documentID, misconceptions: misconceptions)
@@ -98,6 +101,17 @@ public struct AdaptiveProbeSelector: Sendable {
             let discriminating = record.kind == .confusion ? all.filter { $0.operation == .recognizeDefinition || $0.operation == .recognizeExample } : []
             if let decision = pick(targeted, .misconception) ?? pick(discriminating, .misconception) { return decision }
         }
+        // 2b. A Teach It Back explanation waiting on one more answer.
+        if let verification, verification.concept == concept {
+            switch verification.kind {
+            case .discriminate:
+                if preference != .choice, let probe = verification.question.flatMap({ asked(concept, $0) }) {
+                    return ProbeDecision(probe: probe, reason: .verification, startsObjective: nil)
+                }
+            case .transfer:
+                if let decision = pick(all.filter { $0.level >= 3 && $0.operation != .misconceptionCheck }, .verification) { return decision }
+            }
+        }
         let mastery = state.mastery(concept)
         let level = mastery?.level(at: now) ?? 0
         // 3. Failing at the basics with a weak prerequisite: detour once, then come back. A detour
@@ -133,6 +147,19 @@ public struct AdaptiveProbeSelector: Sendable {
         return pool.filter { $0.id != last || pool.count == 1 }
             .min { (lastAsked($0), abs($0.level - target), $0.id) < (lastAsked($1), abs($1.level - target), $1.id) }
             .map { ProbeDecision(probe: $0, reason: reason, startsObjective: nil) }
+    }
+
+    /// The question a Teach It Back comparison ended with, as an open probe — only while every
+    /// claim that answers it is still in the source and the question passes the probe checks.
+    private func asked(_ concept: LearnerConceptID, _ question: FollowUpQuestion) -> LearningProbe? {
+        let claims = question.rubricClaimIDs.compactMap { id in knowledge.claims.first { $0.id == id } }
+        guard !claims.isEmpty, claims.count == question.rubricClaimIDs.count,
+              claims.allSatisfy({ $0.evidence.documentID == concept.documentID }) else { return nil }
+        let name = knowledge.concept(concept.concept)?.name ?? claims[0].conceptName
+        let related = question.operation == .contrast ? claims.map { $0.topic ?? $0.concept }.first { $0 != concept.concept } : nil
+        let probe = LearningProbe(concept: concept, conceptName: name, operation: question.operation, prompt: question.prompt,
+                                  format: .open, rubric: claims, relatedConcept: related)
+        return ProbeValidator.failure(probe, in: knowledge) == nil ? probe : nil
     }
 
     private func definitionProbe(for concept: LearnerConceptID, state: LearnerModelState, preferring preference: Preference,

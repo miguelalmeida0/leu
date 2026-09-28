@@ -21,6 +21,10 @@ struct Alignment {
     let genusMatch: Bool
     let matched: [String]
     let missing: [String]
+    /// Distinctive claim words the clause expresses (generic words like "work" or "value" excluded).
+    let distinctive: Int
+    /// The clause matches a negated claim without expressing the negation.
+    let unexpressedNegation: Bool
 
     /// `subjectPenalty` scales subject evidence down when another claim's subject fits better
     /// ("a block body" is not "an expression body").
@@ -56,20 +60,20 @@ struct Alignment {
         let countOpposed = agreesByNegation || propositionConflict
         // "does not fire" expresses "avoids firing": a negative verb is said by a negation.
         let negationExpressed = !propositionConflict && (clause.profile.negationCount > 0 || clause.profile.words.contains("without"))
-        func weighted(_ terms: [LexicalTerm], against profile: LexicalProfile, opposed: Set<String>) -> (Double, [String], [String]) {
-            guard !terms.isEmpty else { return (0, [], []) }
-            var earned = 0.0, total = 0.0, hit: [String] = [], miss: [String] = []
+        func weighted(_ terms: [LexicalTerm], against profile: LexicalProfile, opposed: Set<String>) -> (Double, [String], [String], Int) {
+            guard !terms.isEmpty else { return (0, [], [], 0) }
+            var earned = 0.0, total = 0.0, hit: [String] = [], miss: [String] = [], distinctive = 0
             for term in terms {
                 total += term.weight
                 let negativeVerb = negationExpressed && profile.stems == clause.profile.stems && Proposition.negativeVerbs.contains(term.stem)
                 let score = (countOpposed && opposed.contains(term.stem)) || negativeVerb ? 1 : profile.match(term)
                 earned += term.weight * score
-                if score > 0 { hit.append(term.surface) } else if term.weight == 1 { miss.append(term.surface) }
+                if score > 0 { hit.append(term.surface); if term.weight == 1 { distinctive += 1 } } else if term.weight == 1 { miss.append(term.surface) }
             }
-            return (total > 0 ? earned / total : 0, hit, miss)
+            return (total > 0 ? earned / total : 0, hit, miss, distinctive)
         }
         let recallResult = weighted(rubric.complement, against: clause.profile, opposed: opposedClaim)
-        recall = recallResult.0; matched = recallResult.1; missing = recallResult.2
+        recall = recallResult.0; matched = recallResult.1; missing = recallResult.2; distinctive = recallResult.3
         let learnerTerms = clause.complement.filter { term in !(context.target.concept.map { context.mentions(term.surface, $0) } ?? false) }
         precision = weighted(learnerTerms, against: rubric.profile, opposed: opposedLearner).0
         conditionCoverage = rubric.condition.isEmpty ? 1 : weighted(rubric.condition, against: clause.profile, opposed: []).0
@@ -86,7 +90,7 @@ struct Alignment {
             else if teachesTarget { subjectMatch = max(direct, 0.6) * subjectPenalty }
             else {
                 // The claim's subject may appear elsewhere in the clause ("... when the list is reordered").
-                let elsewhere = rubric.subjectOverlap(clause.profile) * 0.7
+                let elsewhere = rubric.subjectOverlap(clause.assertedProfile) * 0.7
                 subjectMatch = max(direct, elsewhere) * subjectPenalty
             }
         } else { subjectMatch = teachesTarget ? 1 : 0.5 }
@@ -108,6 +112,20 @@ struct Alignment {
             let objectToSubject = weighted(rubric.subject, against: clause.complementProfile, opposed: []).0
             reversed = subjectToObject >= 0.6 && objectToSubject >= 0.6 && rubric.subjectOverlap(subject) < 0.5
         } else { reversed = false }
+
+        // The claim proposition this clause restates best is negative ("Identity alone is not
+        // permission"), yet the clause says nothing negative — no negation, no "without", no
+        // negative verb or its paraphrase ("stops"), no opposite pole.
+        let restated = rubric.propositions.max { a, b in Self.share(a, in: clause.profile) < Self.share(b, in: clause.profile) }
+        let expressesNegation = clause.profile.negationCount > 0 || clause.profile.words.contains("without") || flips > 0 ||
+            clause.profile.terms.contains { Proposition.negativeVerbs.contains($0.stem) || !$0.families.isDisjoint(with: Proposition.negativeVerbFamilies) }
+        unexpressedNegation = restated?.negative == true && !expressesNegation && recall > 0
+    }
+
+    /// Weighted share of a proposition's terms that a profile expresses.
+    static func share(_ proposition: Proposition, in profile: LexicalProfile) -> Double {
+        let total = proposition.terms.reduce(0) { $0 + $1.weight }
+        return total > 0 ? proposition.terms.reduce(0) { $0 + $1.weight * profile.match($1) } / total : 0
     }
 
     var contradicts: Bool {
@@ -120,11 +138,12 @@ struct Alignment {
 
     /// Coverage this clause gives the claim, if any.
     var coverage: ClaimCoverage? {
-        guard !contradicts, !reversed else { return nil }
+        // A negated claim ("Identity alone is not permission") is not expressed by a clause that
+        // leaves the negation out ("they have permission to do everything").
+        guard !contradicts, !reversed, !unexpressedNegation else { return nil }
         if verbatim { return .covered }
         guard subjectMatch >= 0.5 || (subjectMatch >= 0.34 && precision >= 0.5) else { return nil }
-        let expressesRelation = relationMatch == 1 || rubric.verbStem == nil || recall >= 0.8
-        if recall >= 0.62 && subjectMatch >= 0.5 && conditionCoverage >= 0.5 && expressesRelation && !overgeneralizes { return .covered }
+        if expressesContent && !overgeneralizes { return .covered }
         // One shared word ("render") is not evidence that a claim was expressed.
         let substantive = matched.count >= 2 || (rubric.complement.count <= 2 && relationMatch == 1)
         let related = relationMatch == 1 || rubric.verbStem == nil || recall >= 0.5 || precision >= 0.6
@@ -134,13 +153,29 @@ struct Alignment {
         return nil
     }
 
+    /// Most of the claim, about its subject, with its relation and limiting condition — the
+    /// evidence that credits a claim.
+    var expressesContent: Bool {
+        let expressesRelation = relationMatch == 1 || rubric.verbStem == nil || recall >= 0.8
+        return recall >= 0.62 && subjectMatch >= 0.5 && conditionCoverage >= 0.5 && expressesRelation
+    }
+
     /// Universal wording the source does not support. Universals that describe the rejected
-    /// alternative ("instead of a listener on every child") do not count.
+    /// alternative ("instead of a listener on every child") do not count, nor a negated one
+    /// ("not every event"), nor one that quantifies something other than what the source
+    /// qualifies ("shown on every API call" beside "usually short-lived").
     var overgeneralizes: Bool {
         guard recall >= 0.2, rubric.profile.universals.isEmpty, rubric.hedged, !propositionConflict else { return false }
-        let text = clause.text
-        let asserted = DiagnosisText.rejectedAlternative.stringByReplacingMatches(in: text, range: NSRange(text.startIndex..., in: text), withTemplate: "")
-        return !LexicalProfile(asserted).universals.subtracting(["all", "any"]).isEmpty
+        let words = clause.assertedProfile.words
+        let qualified = rubric.qualified
+        return words.indices.contains { index in
+            guard Lexicon.universals.contains(words[index]), !["all", "any"].contains(words[index]),
+                  !words[max(0, index - 2)..<index].contains(where: { Lexicon.negations.contains($0) }) else { return false }
+            guard !qualified.isEmpty else { return true }
+            let quantified = LexicalProfileView(terms: words[(index + 1)..<min(words.count, index + 5)]
+                .filter { !Lexicon.stopwords.contains($0) }.map { LexicalTerm(surface: $0, stem: Lexicon.stem($0)) })
+            return qualified.contains { quantified.match($0) >= 0.85 }
+        }
     }
 
     var missingElement: MissingElement? {

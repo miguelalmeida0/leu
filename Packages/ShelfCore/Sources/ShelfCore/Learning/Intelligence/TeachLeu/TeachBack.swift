@@ -10,8 +10,23 @@ public enum TeachBack {
     /// Nil when the knowledge base holds no claim inside the passage; the caller keeps the V27
     /// comparison in that case.
     public static func assess(_ explanation: String, source: IntelligenceSource, knowledge: ConceptKnowledgeBase) -> TeachLeuResult? {
+        assessment(explanation, source: source, knowledge: knowledge)?.result
+    }
+
+    /// The result together with the judgement behind it, read against what the learner model
+    /// already holds about the passage's concepts (`model`). The judgement decides what the
+    /// explanation may teach the learner model; it is not stored.
+    public static func assessment(_ explanation: String, source: IntelligenceSource, knowledge: ConceptKnowledgeBase,
+                                  model: LearnerModelState = LearnerModelState(), at date: Date = Date()) -> (result: TeachLeuResult, assessment: UnderstandingAssessment)? {
         guard let target = DiagnosisTarget.passage(source.passage, in: knowledge) else { return nil }
-        let diagnosis = UnderstandingDiagnoser().diagnose(explanation, target: target)
+        let concepts = target.concept.map { [LearnerConceptID(documentID: source.passage.documentID, concept: $0)] }
+            ?? LearnerEvidenceMapper(knowledge: knowledge).concepts(in: source.passage).map(\.id)
+        let assessment = UnderstandingDiagnoser().assess(explanation, target: target, prior: LearnerPrior(model, concepts: concepts, at: date))
+        return (result(assessment.diagnosis, target: target, source: source, knowledge: knowledge), assessment)
+    }
+
+    private static func result(_ diagnosis: UnderstandingDiagnosis, target: DiagnosisTarget, source: IntelligenceSource,
+                               knowledge: ConceptKnowledgeBase) -> TeachLeuResult {
         func claim(_ id: String?) -> LearningClaim? { diagnosis.claim(id) }
         // "You captured" lists only ideas the explanation covers in full; an idea it only touches
         // is worth adding, shown in the source's own words.

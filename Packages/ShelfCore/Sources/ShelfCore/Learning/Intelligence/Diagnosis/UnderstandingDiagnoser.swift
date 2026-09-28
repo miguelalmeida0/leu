@@ -10,6 +10,12 @@ public struct UnderstandingDiagnoser: Sendable {
     public init() {}
 
     public func diagnose(_ explanation: String, target: DiagnosisTarget) -> UnderstandingDiagnosis {
+        assess(explanation, target: target).diagnosis
+    }
+
+    /// The diagnosis together with the judgement behind its next step. `prior` is what the
+    /// learner model already knows about the target's concepts (live misconceptions).
+    public func assess(_ explanation: String, target: DiagnosisTarget, prior: LearnerPrior = LearnerPrior()) -> UnderstandingAssessment {
         let text = String(explanation.prefix(4000))
         let rubrics = target.rubric.map(ClaimRubric.init)
         let supporting = target.supporting.map(ClaimRubric.init)
@@ -21,10 +27,11 @@ public struct UnderstandingDiagnoser: Sendable {
         if clauses.isEmpty || isNoise(text, target: target) || clauses.allSatisfy({ Self.isKeywordList($0.text) }) {
             return finish(target: target, rubrics: rubrics, statements: clauses.map {
                 StatementDiagnosis(learnerText: $0.text, verdict: .noise, claimID: nil, tier: nil, matchedTerms: [], missingTerms: [])
-            }, best: [:], issues: [UnderstandingIssue(kind: .nonsense)])
+            }, best: [:], issues: [UnderstandingIssue(kind: .nonsense)], signals: .none, prior: prior)
         }
 
         var statements: [StatementDiagnosis] = []
+        var signals = DiagnosisSignals()
         var issues: [UnderstandingIssue] = []
         var best: [String: (coverage: ClaimCoverage, missing: MissingElement?, text: String)] = [:]
         func record(_ rubric: ClaimRubric, _ coverage: ClaimCoverage, _ missing: MissingElement?, _ text: String) {
@@ -35,10 +42,17 @@ public struct UnderstandingDiagnoser: Sendable {
         }
         let own = rubrics + supporting
         let ownConcept = target.concept
+        // Every clause yields one statement and, beside it, the strength of the evidence behind it.
+        func emit(_ statement: StatementDiagnosis, _ clause: LearnerClause, _ alignment: Alignment? = nil, credits: [Alignment] = []) {
+            statements.append(statement)
+            var signal = Self.signal(statement, clause: clause, alignment: alignment, context: context)
+            for credit in credits { signal.credited[credit.rubric.claim.id] = (credit.recall, credit.distinctive) }
+            signals.clauses.append(signal)
+        }
 
         for clause in clauses {
             if Self.isKeywordList(clause.text) {
-                statements.append(StatementDiagnosis(learnerText: clause.text, verdict: .noise, claimID: nil, tier: nil, matchedTerms: [], missingTerms: []))
+                emit(StatementDiagnosis(learnerText: clause.text, verdict: .noise, claimID: nil, tier: nil, matchedTerms: [], missingTerms: []), clause)
                 continue
             }
             let penalties = subjectPenalties(clause, own)
@@ -55,26 +69,26 @@ public struct UnderstandingDiagnoser: Sendable {
                 if let ownConcept, let rival = strongestRival(clause, context: context, own: ownConcept) {
                     issues.append(UnderstandingIssue(kind: .confusedConcept, claimID: rival.claim?.id, relatedConcept: rival.concept, learnerText: clause.text))
                 }
-                statements.append(strongest.statement(.contradicts)); continue
+                emit(strongest.statement(.contradicts), clause, strongest); continue
             }
             if let reversal = alignments.filter(\.reversed).max(by: { $0.score < $1.score }) {
                 record(reversal.rubric, .contradicted, nil, clause.text)
                 issues.append(UnderstandingIssue(kind: .causalReversal, claimID: reversal.rubric.claim.id, learnerText: clause.text))
-                statements.append(reversal.statement(.reverses)); continue
+                emit(reversal.statement(.reverses), clause, reversal); continue
             }
             let covering = alignments.compactMap { alignment in alignment.coverage.map { (alignment, $0) } }
             // 2. Circular: the concept explained by its own name.
             if let concept = context.circularConcept(clause), !covering.contains(where: { $0.1 == .covered || $0.0.recall >= 0.5 }) {
                 issues.append(UnderstandingIssue(kind: .circular, relatedConcept: concept, learnerText: clause.text))
-                statements.append(StatementDiagnosis(learnerText: clause.text, verdict: .circular, claimID: nil, tier: .lexical,
-                                                     matchedTerms: [], missingTerms: [])); continue
+                emit(StatementDiagnosis(learnerText: clause.text, verdict: .circular, claimID: nil, tier: .lexical,
+                                        matchedTerms: [], missingTerms: []), clause); continue
             }
             // 3. Confusion: this concept described in another concept's words.
             if let ownConcept, context.refersToTarget(clause), !covering.contains(where: { $0.1 == .covered }),
                let rival = strongestRival(clause, context: context, own: ownConcept) {
                 issues.append(UnderstandingIssue(kind: .confusedConcept, claimID: rival.claim?.id, relatedConcept: rival.concept, learnerText: clause.text))
-                statements.append(StatementDiagnosis(learnerText: clause.text, verdict: .confuses, claimID: rival.claim?.id, tier: .lexical,
-                                                     matchedTerms: [], missingTerms: [])); continue
+                emit(StatementDiagnosis(learnerText: clause.text, verdict: .confuses, claimID: rival.claim?.id, tier: .lexical,
+                                        matchedTerms: [], missingTerms: []), clause); continue
             }
             // Passage mode: a page claim attributed to the wrong subject.
             if ownConcept == nil, covering.isEmpty, let subject = clause.subject {
@@ -83,19 +97,22 @@ public struct UnderstandingDiagnoser: Sendable {
                    own.allSatisfy({ $0.subjectOverlap(subject) < 0.5 }) == false {
                     issues.append(UnderstandingIssue(kind: .confusedConcept, claimID: rival.rubric.claim.id,
                                                      relatedConcept: rival.rubric.claim.concept, learnerText: clause.text))
-                    statements.append(rival.statement(.confuses)); continue
+                    emit(rival.statement(.confuses), clause, rival); continue
                 }
             }
             // 4. Coverage of every claim this clause expresses.
             guard let top = covering.max(by: { ($0.1 == .covered ? 1 : 0, $0.0.score) < ($1.1 == .covered ? 1 : 0, $1.0.score) }) else {
+                // A negated claim restated without its negation is not credited; it is a doubt the judge
+                // weighs. Its content is the source's, so it is not "unsettled" either.
+                let doubted = alignments.filter { $0.unexpressedNegation && $0.recall >= 0.3 }.max { $0.score < $1.score }
                 let consistent = ownConcept.map { context.precision(clause, against: $0) } ?? (own.map { Alignment(clause: clause, rubric: $0, context: context).precision }.max() ?? 0)
-                if consistent >= 0.6 && clause.complement.count >= 2 {
-                    statements.append(StatementDiagnosis(learnerText: clause.text, verdict: .partiallySupports, claimID: nil, tier: .lexical,
-                                                         matchedTerms: [], missingTerms: [])); continue
+                if (consistent >= 0.6 && clause.complement.count >= 2) || doubted?.expressesContent == true {
+                    emit(StatementDiagnosis(learnerText: clause.text, verdict: .partiallySupports, claimID: nil, tier: .lexical,
+                                            matchedTerms: [], missingTerms: []), clause, doubted); continue
                 }
                 issues.append(UnderstandingIssue(kind: .unsupported, learnerText: clause.text))
-                statements.append(StatementDiagnosis(learnerText: clause.text, verdict: .unsupported, claimID: nil, tier: nil,
-                                                     matchedTerms: [], missingTerms: [])); continue
+                emit(StatementDiagnosis(learnerText: clause.text, verdict: .unsupported, claimID: nil, tier: nil,
+                                        matchedTerms: [], missingTerms: []), clause, doubted); continue
             }
             for (alignment, coverage) in covering {
                 record(alignment.rubric, coverage, alignment.missingElement, clause.text)
@@ -106,7 +123,7 @@ public struct UnderstandingDiagnoser: Sendable {
             var verdict: StatementVerdict = top.1 == .covered ? .supports : .partiallySupports
             if top.0.overgeneralizes { verdict = .overgeneralizes }
             if top.0.verbatim { issues.append(UnderstandingIssue(kind: .verbatim, claimID: top.0.rubric.claim.id, learnerText: clause.text)); verdict = .restates }
-            statements.append(top.0.statement(verdict))
+            emit(top.0.statement(verdict), clause, top.0, credits: covering.map(\.0))
         }
         // Whole-text coverage: one idea can span clauses ("an index ... ; without one, big queries ...").
         let whole = LearnerClause(text)
@@ -118,7 +135,7 @@ public struct UnderstandingDiagnoser: Sendable {
             }
         }
         issues = Array(NSOrderedSet(array: issues).array as! [UnderstandingIssue])
-        return finish(target: target, rubrics: rubrics, statements: statements, best: best, issues: issues)
+        return finish(target: target, rubrics: rubrics, statements: statements, best: best, issues: issues, signals: signals, prior: prior)
     }
 
     /// Another concept whose grounded wording explains the clause far better than the target's.
@@ -171,7 +188,7 @@ public struct UnderstandingDiagnoser: Sendable {
 
     private func finish(target: DiagnosisTarget, rubrics: [ClaimRubric], statements: [StatementDiagnosis],
                         best: [String: (coverage: ClaimCoverage, missing: MissingElement?, text: String)],
-                        issues rawIssues: [UnderstandingIssue]) -> UnderstandingDiagnosis {
+                        issues rawIssues: [UnderstandingIssue], signals: DiagnosisSignals, prior: LearnerPrior) -> UnderstandingAssessment {
         var issues = rawIssues
         let assessments = rubrics.filter { $0.claim.role == .core }.map { rubric -> ClaimAssessment in
             let found = best[rubric.claim.id]
@@ -202,10 +219,12 @@ public struct UnderstandingDiagnoser: Sendable {
         let draft = UnderstandingDiagnosis(version: UnderstandingDiagnosis.version, concept: target.concept, conceptName: target.conceptName,
             statements: statements, claims: assessments, issues: issues, level: level, coverage: coverage,
             intervention: .placeholder, referencedClaims: referenced)
-        let intervention = InterventionPlanner().plan(draft, target: target)
-        return UnderstandingDiagnosis(version: draft.version, concept: draft.concept, conceptName: draft.conceptName,
+        let judgement = UnderstandingJudge().judge(draft, signals: signals, target: target, prior: prior)
+        let intervention = InterventionPlanner().plan(draft, target: target, judgement: judgement)
+        let diagnosis = UnderstandingDiagnosis(version: draft.version, concept: draft.concept, conceptName: draft.conceptName,
             statements: statements, claims: assessments, issues: issues, level: level, coverage: coverage,
             intervention: intervention, referencedClaims: Self.referenced(draft, intervention: intervention, all: referenced))
+        return UnderstandingAssessment(diagnosis: diagnosis, judgement: judgement, signals: signals)
     }
 
     /// Keep only claims the diagnosis actually points at, so persisted diagnoses stay small.

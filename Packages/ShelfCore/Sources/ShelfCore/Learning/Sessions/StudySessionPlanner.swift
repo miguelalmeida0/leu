@@ -29,6 +29,11 @@ public struct ShelfStudySessionPlanner: StudySessionPlanning, Sendable {
             return made
         }
         let priority = RetrievalPriority()
+        // Teach It Back explanations still waiting on one more answer come first.
+        let verifications = knowledge.isEmpty ? [:] : Dictionary(
+            TeachBackFollowThrough.pending(attempts: snapshot.understandingAttempts, model: snapshot.learnerModel,
+                                           analyses: snapshot.analyses, now: now).map { ($0.concept, $0) },
+            uniquingKeysWith: { first, _ in first })
         var plannedProbes = Set<String>()
         let target = safeMinutes * 60
         let objects = snapshot.studyObjects.filter { object in
@@ -52,7 +57,8 @@ public struct ShelfStudySessionPlanner: StudySessionPlanning, Sendable {
             let novelty = state.reviewCount == 0 ? 0.72 : 0.36
             let concepts = knowledge.isEmpty ? [] : tools(object.source.documentID).mapper.concepts(in: object.source)
             for concept in concepts where passages[concept.id] == nil { passages[concept.id] = object }
-            let learner = concepts.map { priority.score(for: $0.id, in: snapshot.learnerModel, at: now) }.max() ?? 0
+            let pending = concepts.first { verifications[$0.id] != nil }
+            let learner = max(concepts.map { priority.score(for: $0.id, in: snapshot.learnerModel, at: now) }.max() ?? 0, pending == nil ? 0 : 0.7)
             let base = dueScore * 0.48 + weakness * 0.26 + object.importance * 0.16 + novelty * 0.10 + learner * 0.3
             let rankedQuestions = ConceptImportanceModel().ranked(snapshot.questions.filter { $0.source.documentID == object.source.documentID && $0.source.pageIndex == object.source.pageIndex }, snapshot: snapshot)
             if let question = rankedQuestions.first {
@@ -68,9 +74,11 @@ public struct ShelfStudySessionPlanner: StudySessionPlanning, Sendable {
                 pendingProbes[candidates.count - 1] = (concept.id, .choice)
             }
             if mode != .interview {
-                candidates.append((base * 0.94, StudyActivity(kind: .recall, learningObjectID: object.id,
-                                                              title: object.title, estimatedSeconds: 70)))
-                if let concept = concepts.first { pendingProbes[candidates.count - 1] = (concept.id, .open) }
+                // A discriminating question waits to be answered in the learner's own words: ask it first.
+                let asks = pending.map { verifications[$0.id]?.kind == .discriminate } ?? false
+                candidates.append((asks ? base + 0.2 : base * 0.94, StudyActivity(kind: .recall, learningObjectID: object.id,
+                                                                                 title: object.title, estimatedSeconds: 70)))
+                if let concept = pending ?? concepts.first { pendingProbes[candidates.count - 1] = (concept.id, .open) }
                 if snapshot.masks.contains(where: { $0.learningObjectID == object.id }) {
                     candidates.append((base * 0.97, StudyActivity(kind: .mask, learningObjectID: object.id,
                                                                   title: object.title, estimatedSeconds: 80)))
@@ -98,7 +106,8 @@ public struct ShelfStudySessionPlanner: StudySessionPlanning, Sendable {
             if let known = resolved[index] { return known }
             var activity = candidates[index].1
             if let (concept, preference) = pendingProbes[index] {
-                var decision = tools(concept.documentID).selector.next(for: concept, state: snapshot.learnerModel, preferring: preference, now: now)
+                var decision = tools(concept.documentID).selector.next(for: concept, state: snapshot.learnerModel, preferring: preference, now: now,
+                                                                       verification: verifications[concept])
                     .flatMap { plannedProbes.contains($0.probe.id) ? nil : $0 }
                 // A detour asks about a prerequisite: it belongs with that concept's own passage.
                 if let detour = decision, detour.probe.concept != concept {

@@ -59,18 +59,23 @@ import ShelfCore
     /// grade. Runs off the main actor and is dropped if the learner has moved on.
     func diagnoseRecall() {
         recallDiagnosis = nil
+        recallAssessment = nil
         let draft = recallDraft.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !recallMarkedUnknown, !draft.isEmpty, let object = currentObject else { return }
         let knowledge = readyKnowledge(for: object.source.documentID)
         guard !knowledge.isEmpty else { return }
         let probe = currentActivity?.probe, activity = currentActivity?.id
+        // Read against what the learner model already holds: a live misconception is not papered over.
+        let model = snapshot.learnerModel, now = Date()
         Task { [weak self] in
-            let diagnosis = await Task.detached(priority: .userInitiated) { () -> UnderstandingDiagnosis? in
+            let assessment = await Task.detached(priority: .userInitiated) { () -> UnderstandingAssessment? in
                 let target = probe.flatMap { DiagnosisTarget.probe($0, in: knowledge) } ?? DiagnosisTarget.passage(object.source, in: knowledge)
-                return target.map { UnderstandingDiagnoser().diagnose(draft, target: $0) }
+                let concepts = probe.map { [$0.concept] } ?? LearnerEvidenceMapper(knowledge: knowledge).concepts(in: object.source).map(\.id)
+                return target.map { UnderstandingDiagnoser().assess(draft, target: $0, prior: LearnerPrior(model, concepts: concepts, at: now)) }
             }.value
             guard let self, self.currentActivity?.id == activity, self.recallDraft.trimmingCharacters(in: .whitespacesAndNewlines) == draft else { return }
-            self.recallDiagnosis = diagnosis
+            self.recallAssessment = assessment
+            self.recallDiagnosis = assessment?.diagnosis
         }
     }
 
@@ -100,7 +105,7 @@ import ShelfCore
         guard !knowledge.isEmpty else { return [] }
         let input = AdaptiveEvidenceInput(knowledge: knowledge, object: object, rating: rating, question: currentQuestion,
                                           selected: selectedAnswerID, confidence: selectedConfidence, probe: currentActivity?.probe,
-                                          detour: currentActivity?.remediation, diagnosis: recallDiagnosis, date: date)
+                                          detour: currentActivity?.remediation, assessment: recallAssessment, date: date)
         return await Task.detached(priority: .userInitiated) { input.evidence() }.value
     }
 
@@ -109,6 +114,7 @@ import ShelfCore
         recallDraft = ""
         recallMarkedUnknown = false
         recallDiagnosis = nil
+        recallAssessment = nil
         answerFeedbackNote = nil
         selectedAnswerID = nil
         answerCommitted = false
@@ -128,7 +134,7 @@ struct AdaptiveEvidenceInput: Sendable {
     let confidence: ConfidenceLevel?
     let probe: LearningProbe?
     let detour: RemediationObjective?
-    let diagnosis: UnderstandingDiagnosis?
+    let assessment: UnderstandingAssessment?
     let date: Date
 
     func evidence() -> [LearningEvidence] {
@@ -137,6 +143,6 @@ struct AdaptiveEvidenceInput: Sendable {
             return mapper.evidence(answering: question, selected: selected, confidence: confidence,
                                    operation: probe?.operation, probeID: probe?.id, at: date, startsObjective: detour)
         }
-        return mapper.evidence(recall: object.source, rating: rating, probe: probe, diagnosis: diagnosis, at: date, startsObjective: detour)
+        return mapper.evidence(recall: object.source, rating: rating, probe: probe, assessment: assessment, at: date, startsObjective: detour)
     }
 }

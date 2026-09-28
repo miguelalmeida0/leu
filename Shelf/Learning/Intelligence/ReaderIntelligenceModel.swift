@@ -96,17 +96,18 @@ final class ReaderIntelligenceModel {
                 inferring = true
                 let knowledge = await learning.knowledge(for: analysis)
                 guard !Task.isCancelled, revision == token, source.isCurrent(in: learning.snapshot.analyses) else { return }
-                if let result = TeachBack.assess(text, source: source, knowledge: knowledge) {
-                    attempt.result = result
+                let now = Date()
+                if let assessed = TeachBack.assessment(text, source: source, knowledge: knowledge, model: learning.snapshot.learnerModel, at: now) {
+                    attempt.result = assessed.result
                     persistDraft()
-                    if let diagnosis = result.diagnosis {
-                        // Committed with the attempt, which remembers it was counted: comparing it
-                        // again after an edit, however much later, is not new evidence.
-                        let evidence = LearnerEvidenceMapper(knowledge: knowledge).evidence(from: diagnosis, documentID: source.packet.documentID,
-                                                                                            identity: attempt.id.uuidString, at: Date())
-                        do { try await learning.repository.recordEvidence(evidence, for: attempt); try await learning.refreshSnapshot() }
-                        catch { message = "What this explanation shows could not be saved. Your text is still here." }
-                    }
+                    // Committed with the attempt, which remembers it was counted: comparing it again
+                    // after an edit, however much later, is not new evidence. While the comparison
+                    // waits on its discriminating question, nothing is counted yet: the next step
+                    // asks it, and the revised explanation is what counts.
+                    let evidence = LearnerEvidenceMapper(knowledge: knowledge).evidence(from: assessed.assessment, documentID: source.packet.documentID,
+                                                                                        identity: attempt.id.uuidString, at: now)
+                    do { try await learning.repository.recordEvidence(evidence, for: attempt); try await learning.refreshSnapshot() }
+                    catch { message = "What this explanation shows could not be saved. Your text is still here." }
                     await record(.taughtConcept)
                     return
                 }

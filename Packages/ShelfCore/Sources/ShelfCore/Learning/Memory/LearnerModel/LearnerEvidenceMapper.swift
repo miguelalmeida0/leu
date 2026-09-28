@@ -118,6 +118,20 @@ public struct LearnerEvidenceMapper: Sendable {
         return evidence(recalling: source, rating: rating, at: date)
     }
 
+    /// A revealed recall card judged, not only compared: typed recall the judgement accepts speaks
+    /// for the answer; typed recall it cannot confirm (or holds back behind a question) leaves only
+    /// the learner's own read, and "Knew it" then counts as no more than "Difficult".
+    public func evidence(recall source: LearningSource, rating: RecallRating, probe: LearningProbe?, assessment: UnderstandingAssessment?,
+                         at date: Date, startsObjective: RemediationObjective? = nil) -> [LearningEvidence] {
+        guard let assessment else { return evidence(recall: source, rating: rating, probe: probe, diagnosis: nil, at: date, startsObjective: startsObjective) }
+        let compared = evidence(from: assessment, documentID: source.documentID, operation: probe?.operation, probeID: probe?.id,
+                                rivals: probe?.relatedConcept.map { [$0] } ?? [], at: date, startsObjective: startsObjective)
+        if !compared.isEmpty { return compared }
+        let own: RecallRating = rating == .knewIt ? .difficult : rating
+        if let probe { return evidence(rating: probe, rating: own, at: date, startsObjective: startsObjective) }
+        return evidence(recalling: source, rating: own, at: date)
+    }
+
     /// "Forgot / Difficult / Knew it" after revealing a passage: the learner's own read, half weight.
     public func evidence(recalling source: LearningSource, rating: RecallRating, operation: ProbeOperation = .define,
                          probeID: String? = nil, at date: Date) -> [LearningEvidence] {
@@ -125,6 +139,28 @@ public struct LearnerEvidenceMapper: Sendable {
         return concepts(in: source).map { reference in
             LearningEvidence(concept: reference.id, conceptName: reference.name, operation: operation, outcome: outcome,
                              channel: .selfRating, claimIDs: reference.claims.prefix(4).map(\.id), probeID: probeID, occurredAt: date)
+        }
+    }
+
+    /// A judged explanation. Nothing is learned while the judgement waits for a discriminating
+    /// answer, or when nothing comparable was written; a right conclusion given with a reason the
+    /// source does not settle earns at most partial credit; otherwise the diagnosis speaks, claim by
+    /// claim (an incomplete answer still shows the ideas it does state in full).
+    public func evidence(from assessment: UnderstandingAssessment, documentID: UUID, operation: ProbeOperation? = nil,
+                         probeID: String? = nil, rivals: [ConceptKey] = [], identity: String? = nil, at date: Date,
+                         startsObjective: RemediationObjective? = nil) -> [LearningEvidence] {
+        let judgement = assessment.judgement
+        guard !judgement.needsEvidence, judgement.state != .insufficientEvidence else { return [] }
+        let items = evidence(from: assessment.diagnosis, documentID: documentID, operation: operation, probeID: probeID, rivals: rivals,
+                             identity: identity, at: date, startsObjective: startsObjective)
+        guard judgement.state == .weakReasoning else { return items }
+        return items.map { item in
+            guard item.outcome == .correct else { return item }
+            var capped = LearningEvidence(concept: item.concept, conceptName: item.conceptName, operation: item.operation, outcome: .partial,
+                                          channel: item.channel, confidence: item.confidence, claimIDs: item.claimIDs, misconception: item.misconception,
+                                          probeID: item.probeID, occurredAt: item.occurredAt, rivals: item.rivals, identity: identity)
+            capped.startsObjective = item.startsObjective
+            return capped
         }
     }
 

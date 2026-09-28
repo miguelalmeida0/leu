@@ -48,6 +48,27 @@ public struct LearningIntervention: Codable, Equatable, Sendable {
 }
 
 struct InterventionPlanner {
+    /// When the judgement needs one more answer, the next step is the question that tells its
+    /// leading readings apart; otherwise it follows from the diagnosis.
+    func plan(_ diagnosis: UnderstandingDiagnosis, target: DiagnosisTarget, judgement: UnderstandingJudgement) -> LearningIntervention {
+        // Nothing comparable, or source wording copied: the diagnosis's own next step already asks.
+        // A wrong idea the diagnosis states is still shown beside the source, as the comparison
+        // shows it ("check this"); the judgement only holds back recording it until it is settled.
+        guard let question = judgement.question, question.between.first != .insufficientEvidence, diagnosis.level != .surface,
+              !diagnosis.hasMisconception, let followUp = FollowUps.discriminating(question, target: target) else { return plan(diagnosis, target: target) }
+        let focus = question.claimIDs.first.flatMap { id in target.allClaims.first { $0.id == id } }
+        // Nothing is revealed yet: the answer to the follow-up is what decides. The message states
+        // only the doubt (a recall card shows the message without the question).
+        if let other = question.relatedConcept, question.operation == .contrast {
+            let otherName = target.names[other]?.first ?? other.value
+            return make(.distinguishConcepts, "Your explanation could also describe \(otherName).", followUp, focus, related: other)
+        }
+        let message = question.between.contains(.misconception)
+            ? "Leu can't tell yet how you read one part of your source."
+            : "You may have this already, but Leu can't tell from these words yet."
+        return make(.cueMissingIdea, message, followUp, focus)
+    }
+
     func plan(_ diagnosis: UnderstandingDiagnosis, target: DiagnosisTarget) -> LearningIntervention {
         let name = target.conceptName.map { PromptRealizer.inline($0) } ?? "this idea"
         let display = target.conceptName ?? "this idea"
@@ -159,6 +180,19 @@ enum FollowUps {
         let otherDefinition = target.competitors.first { ($0.topic ?? $0.concept) == otherKey && $0.kind == .definition } ?? other
         return FollowUpQuestion(prompt: "How does \(PromptRealizer.inline(name)) differ from \(PromptRealizer.inline(otherName))?",
                                 rubricClaimIDs: [own.id, otherDefinition.id], operation: .contrast, concept: target.concept)
+    }
+
+    /// The question a discriminating decision asks, worded from its claims.
+    static func discriminating(_ question: DiscriminatingQuestion, target: DiagnosisTarget) -> FollowUpQuestion? {
+        if question.operation == .contrast, let other = question.relatedConcept {
+            let theirs = target.competitors.filter { AlignmentContext.owner(of: $0, names: target.names) == other }
+            guard let partner = theirs.first(where: { $0.kind == .definition }) ?? theirs.first else { return nil }
+            return contrast(target, other: partner)
+        }
+        if question.operation == .define { return define(target) }
+        guard let claim = question.claimIDs.first.flatMap({ id in target.allClaims.first { $0.id == id } }) else { return define(target) }
+        if question.operation == .condition, let asked = condition(claim) { return asked }
+        return restate(claim, operation: question.operation)
     }
 
     /// After solid understanding (or a verbatim restatement): a different, harder angle.

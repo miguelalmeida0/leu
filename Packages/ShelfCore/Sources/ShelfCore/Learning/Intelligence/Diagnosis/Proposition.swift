@@ -20,6 +20,8 @@ struct Proposition {
     private static let keptBoundaries = [(", not ", "not ")]
     /// Verbs whose meaning carries a negation ("avoids repeating work" = does not repeat work).
     static let negativeVerbs: Set<String> = Set(["avoid", "prevent", "block", "forbid", "prohibit", "disallow", "lack", "hinder"].map(Lexicon.stem))
+    /// Paraphrase families of those verbs ("stops", "guards against").
+    static let negativeVerbFamilies: Set<Int> = Set(negativeVerbs.flatMap { Lexicon.familyIndex[$0] ?? [] })
     private static let copulaEndings = ["is", "are", "was", "were", "means", "happens", "occurs"]
 
     static func split(_ text: String) -> [Proposition] {
