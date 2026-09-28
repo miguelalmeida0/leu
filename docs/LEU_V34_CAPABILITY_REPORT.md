@@ -60,7 +60,7 @@ of the learner's PDF.
 
 | Measure | Baseline (`bf7c5cb`) | V34 |
 |---|---|---|
-| ShelfCore tests (Linux, Swift 6.1.3) | 320 (after 2 test-portability edits), 0 failures | **423**, 0 failures |
+| ShelfCore tests (Linux, Swift 6.1.3) | 320 (after 2 test-portability edits), 0 failures | **424**, 0 failures |
 | Compiler warnings (clean build) | 0 | 0 |
 | Diagnosis — dev, actionable | 5/49 (10%) | **45/49 (92%)** |
 | Diagnosis — held-out, actionable | 6/43 (14%) | **24/43 (56%) blind first run**; 32/43 (74%) after fixes (non-blind) |
@@ -96,7 +96,7 @@ reach), **limited** (honest constraint noted).
 | 8 | Retrieval practice | delivered | `RetrievalPriority` combines misconception salience, weakness, recent confident errors and forgetting; it is zero without evidence, so old plans are unchanged. Open-recall probes are attached to recall activities, the typed recall is compared with the source, and the reveal shows the sentences that answer the question. |
 | 9 | Better explanation strategies | delivered | `InterventionPlanner` produces one smallest next step from fixed templates plus source or learner words. It can correct a contradiction by showing the source sentence, contrast two concepts, qualify an overgeneralisation, ask for a missing condition, cue a missing idea without revealing it, ask for a rephrase without the name, ask for the learner's own words, or deepen. Only an explanation covering every key idea is told so. A deepening contrast is offered only with a concept the source sets beside this one or its closest sibling of the same kind. Every step has a grounded follow-up question. |
 | 10 | Learning continuity | delivered | The learner model lives in `LearningSnapshot` (optional key; legacy snapshots decode). Objectives and misconceptions carry over between sessions, and probes and detours survive checkpoints. |
-| 11 | Failure resilience / stale requests | delivered | Repository revision plus `SnapshotRevisionGate` on every learning refresh, including the checkpoint path (defect D7) and the Lens. Evidence is committed atomically with its review and never counted twice: recent evidence is recognised by id, older evidence by a time watermark, and a Teach It Back attempt, stored in the same transaction, remembers that it was counted. A learner model this Leu cannot read (damaged, not even an object, or written by a newer Leu) is kept verbatim and never modified; the stored shape is pinned to its version by a test. A session plan is used only if no write happened while it was made. |
+| 11 | Failure resilience / stale requests | delivered | Repository revision plus `SnapshotRevisionGate` on every learning refresh, including the checkpoint path (defect D7) and the Lens. Evidence is committed atomically with its review and never counted twice: recent evidence is recognised by id, older evidence by a time watermark, and a Teach It Back attempt, stored in the same transaction, remembers that it was counted. A learner model this Leu cannot read (damaged, not even an object, or written by a newer Leu) is kept verbatim and never modified. The stored shape is pinned to its version by a test that saves a canonical model through the real snapshot store and checks every key path with its JSON type (including `appliedEvidence[].id`/`at`, the ISO-8601 `evidenceWatermark`, and the absence of the pre-release `appliedEvidenceIDs`) and every stored enum value. A session plan is used only if no write happened while it was made. |
 | 12 | Generation quality gates | delivered | `ProbeValidator` checks rubric existence, current evidence, leakage, prompt shape, unresolved references, option validity, answer ≠ distractor, distractors not named in quotes, and quoted text that would single out the answer (a word of it no distractor shares, or its acronym spelled out). `SemanticStemGate` catches malformed stems, thin descriptions and fragment options, and a set-level check drops prompts that appear twice with different answers, in fresh compiles and in stored banks. |
 | 13 | Question diversity | delivered | `ProbeDiversity`: no prompt repeats until the others have been asked, the same kind of question is never asked three times running, and no duplicate probe appears within a session. |
 | 14 | Confidence calibration | delivered | `CalibrationProfile` is built from objectively scored choice answers only. Confident errors raise retrieval priority, and an overconfident learner gets explanation rather than recognition questions. |
@@ -362,8 +362,20 @@ password hashing.
   * A learner model this Leu cannot read is kept verbatim and never modified: a
     malformed field, a malformed version, a value that is not an object at all
     ("corrupt", `[1, 2, 3]`), or a model written by a newer Leu. A missing or null model
-    (a legacy snapshot) becomes an empty, writable one. A test pins the stored shape to the model's version, so
-    a future change must bump it.
+    (a legacy snapshot) becomes an empty, writable one.
+  * The stored shape is pinned to the model's version. A test fills every field and
+    optional of a canonical model, saves it through the real snapshot store
+    (`FileLearningSnapshotStore`: sorted keys, ISO-8601 dates) and checks the file: the
+    exact top-level keys; every nested key path with its JSON type; `appliedEvidence`
+    entries as `id` + `at`; the `evidenceWatermark`; the absence of the pre-release
+    `appliedEvidenceIDs`; every stored enum value; and a lossless reload. Any change fails
+    the test until a new version with its own pinned shape is added. Mutation checks
+    confirmed it: re-emitting `appliedEvidenceIDs`, writing the watermark as a number, and
+    renaming a nested key each fail it.
+  * Version 1 is the first released shape. Pre-release builds wrote
+    `appliedEvidenceIDs: [String]`, which never shipped, so no production migration
+    exists. A pre-release file still loads: the key is ignored and never written back
+    (tested).
   * StudySession checkpoints written before V34 still resume; finished sessions are
     stored without their questions, keeping history small.
   * All collections are bounded.
@@ -400,7 +412,7 @@ builds will differ; no device numbers are claimed.
 | — with six books sharing concept names | — | 1.05 s [0.47–0.57 s]: no growth with library size |
 | Diagnose one explanation (concept card with neighbours) | — | ≈0.1 s; input bounded to 4 000 characters |
 | Trace a chosen wrong option to the source | — | 0.33 s for a sentence option, 4 ms for a concept name; off the main actor |
-| Full ShelfCore test suite | 24.6 s (320 tests) | 121 s (423 tests; corpus-level quality tests included) |
+| Full ShelfCore test suite | 24.6 s (320 tests) | 126 s (424 tests; corpus-level quality tests included) |
 
 Planning does more work than before (it chooses and checks a grounded question for each
 activity), but the learner no longer waits on it: before V34 the whole plan ran on the
@@ -410,12 +422,12 @@ main actor.
 
 ## 9. Test results
 
-* ShelfCore: **423 tests, 0 failures**, on a clean build with 0 warnings.
-  New tests (103):
+* ShelfCore: **424 tests, 0 failures**, on a clean build with 0 warnings.
+  New tests (104):
 
   | Suite | Tests | Covers |
   |---|---|---|
-  | LearnerModelTests | 23 | every unreadable learner model preserved verbatim (malformed, not an object, future) while missing/null starts empty, old evidence refused after the id record moved on, mastery vs one lucky answer, spacing vs cramming, decay, capped levels, misconception retirement on two distinct days, retirement only by checked answers about the same idea, confusion retired only by telling the same pair apart, salience decay, retrieval priority, calibration, idempotency, detour return, bounds, legacy/unreadable/future-version models, stored shape pinned to the version |
+  | LearnerModelTests | 24 | stored shape pinned key path by key path (with JSON types and enum values) through the real snapshot store, pre-release id list neither migrated nor written back, every unreadable learner model preserved verbatim (malformed, not an object, future) while missing/null starts empty, old evidence refused after the id record moved on, mastery vs one lucky answer, spacing vs cramming, decay, capped levels, misconception retirement on two distinct days, retirement only by checked answers about the same idea, confusion retired only by telling the same pair apart, salience decay, retrieval priority, calibration, idempotency, detour return, bounds, legacy/unreadable/future-version models |
   | LearnerEvidenceTests + LearnerRepositoryTests | 15 | a plan made while the library changed is never used, a Teach It Back attempt counts once even after 450 later answers, question → concept, sibling choice → confusion, reversed sentence → contradiction, untraceable distractor → nothing, explanation → evidence, one recall = one observation, same attempt counted once, self-rating at half weight, atomic commit with review, failed save keeps nothing, retries counted once, stale snapshot rejected, detour persisted only for known documents |
   | ProbeEngineTests | 14 | every probe on the manual grounded, answerable and leak-free (an independent check that no quote contains the answer's own words), rejection of ungrounded, stale and leaking probes, natural prompts for every name shape (HTTP, "never", Title Case names, clausal subjects), open probes graded against their own rubric, scripted learners (new concept climbs, misconception retested until retired, confusion retired through the selector's own contrasts, prerequisite detour and return, abandoned detour expires, overconfidence → explanation, variety) |
   | AdaptivePlannerTests | 7 | no knowledge = exactly the old plan, misconception first, no repeats, question matches its passage and the reveal holds its answer, a second book with the same names changes nothing, checkpoint round trip, finished sessions stored without questions |
@@ -590,7 +602,7 @@ were fixed before the commit; the table names the test that covers each fix:
 | Minor: "Earlier you wrote" for an option the learner only picked | "Earlier you answered" | — (wording) |
 | Minor: one ungated snapshot write (Lens) | Goes through the revision gate | harness type-check |
 | Minor: stored Teach It Back results not bound to their explanation or to the heading a subject came from | Both are checked on re-admission | TeachBackTests |
-| Minor: an unreadable learner model was reset and then overwritten | Kept verbatim, never modified; stored shape pinned to the version | LearnerModelTests |
+| Minor: an unreadable learner model was reset and then overwritten | Kept verbatim, never modified; stored shape pinned to the version, key path by key path through the real store | LearnerModelTests |
 | Minor: saved sessions grew 4×, and are kept forever | Finished sessions drop their questions | AdaptivePlannerTests |
 | Minor: a detour expired only when a new answer arrived | Expires by age in the selector | ProbeEngineTests |
 | Minor: the ambiguous-prompt filter did not reach banks already stored | Applied by the existing extraction migration | SemanticBankQualityTests |
@@ -622,6 +634,20 @@ Files changed by the follow-up (a second local commit on the same branch; §5 an
 - `Packages/ShelfCore/Tests/ShelfCoreTests/V34/LearnerModelTests.swift`
 - `Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift`
 - `Shelf/Learning/LearningModel+Sessions.swift`
+- `docs/LEU_V34_CAPABILITY_REPORT.md`
+
+**Schema pin audit.** The final audit found that the test named "the stored shape is
+pinned" checked only enum values, not the serialized shape. The follow-up had moved
+`appliedEvidenceIDs: [String]` to `appliedEvidence` + `evidenceWatermark` without changing
+`currentVersion`. That is acceptable only because V34 had not shipped, which makes version 1
+the first released shape. The test now pins that shape literally, as described in §7,
+and was mutation-checked. The explicit no-migration note sits beside `currentVersion`. No
+behavior changed.
+
+Files changed by the schema-pin fix (a third local commit):
+
+- `Packages/ShelfCore/Sources/ShelfCore/Learning/Memory/LearnerModel/LearnerModelState.swift` (documentation comment only)
+- `Packages/ShelfCore/Tests/ShelfCoreTests/V34/LearnerModelPersistenceTests.swift`
 - `docs/LEU_V34_CAPABILITY_REPORT.md`
 
 **As a staff engineer**

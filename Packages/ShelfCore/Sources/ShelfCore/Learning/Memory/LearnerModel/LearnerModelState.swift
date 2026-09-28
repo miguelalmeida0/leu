@@ -119,6 +119,10 @@ public struct AppliedEvidence: Codable, Equatable, Sendable {
 /// Everything Leu has learned about the learner. Persisted inside `LearningSnapshot` and
 /// updated in the same transaction as the attempt it derives from. Bounded.
 public struct LearnerModelState: Codable, Equatable, Sendable {
+    /// Version 1 is the first released shape (V34), pinned key path by key path with its JSON
+    /// types in `LearnerModelPersistenceTests`: change what is stored only with a new version and
+    /// a new pin. Pre-release builds wrote `appliedEvidenceIDs`; that shape never shipped, so
+    /// nothing migrates from it (a version-1 model ignores the key and never writes it).
     public static let currentVersion = 1
     static let conceptLimit = 2_000, misconceptionLimit = 300, probeLimit = 80, evidenceIDLimit = 400
 
