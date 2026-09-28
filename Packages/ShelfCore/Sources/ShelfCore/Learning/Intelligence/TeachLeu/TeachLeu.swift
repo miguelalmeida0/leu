@@ -38,6 +38,8 @@ public struct TeachLeuResult: Codable, Equatable, Sendable {
     public let challenged: [TeachLeuChallenge]
     public let unsettled: [String]
     public let backend: String
+    /// The full source-bound reading behind the sections above (V34 comparisons only).
+    public var diagnosis: UnderstandingDiagnosis? = nil
 }
 
 /// The model only suggests pairs. No free-form model judgement is displayed.
@@ -82,6 +84,7 @@ public enum TeachLeuValidator {
     }
     public static func isValid(_ result: TeachLeuResult, explanation: String, analyses: [UUID: DocumentAnalysis]) -> Bool {
         guard result.source.isCurrent(in: analyses) else { return false }
+        if result.backend == TeachBack.backend { return TeachBack.isGrounded(result, explanation: explanation, analyses: analyses) }
         return result == evaluate(explanation, source: result.source, backend: result.backend)
     }
     private static func normalize(_ value: String) -> String {

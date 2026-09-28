@@ -1,5 +1,4 @@
 import XCTest
-import CryptoKit
 @testable import ShelfCore
 
 final class V28PersistenceTests: XCTestCase {
@@ -24,9 +23,11 @@ final class V28PersistenceTests: XCTestCase {
     }
     func testReadDoesNotChangeChecksum() throws {
         let root = try root(), store = FileLearningSnapshotStore(root: root)
-        try store.save(state("checksum")); let before = SHA256.hash(data: try Data(contentsOf: path(root)))
+        try store.save(state("checksum")); let before = try Data(contentsOf: path(root))
         _ = try store.load()
-        XCTAssertEqual(SHA256.hash(data: try Data(contentsOf: path(root))), before)
+        // Byte equality is stricter than the former digest comparison and needs no
+        // CryptoKit, which does not exist on Linux toolchains.
+        XCTAssertEqual(try Data(contentsOf: path(root)), before)
     }
     func testInterruptedLegacyNextDoesNotReplaceCommittedState() throws {
         let root = try root(), store = FileLearningSnapshotStore(root: root), value = state("committed")

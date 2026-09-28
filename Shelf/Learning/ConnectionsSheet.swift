@@ -36,7 +36,7 @@ struct ConnectionsSheet: View {
                                 let cleanLabel = customLabel.trimmingCharacters(in: .whitespacesAndNewlines)
                                 try await model.repository.connect(sourceObject.id, to: target.id, kind: kind,
                                                                    customLabel: kind == .custom && !cleanLabel.isEmpty ? cleanLabel : nil)
-                                model.snapshot = try await model.repository.snapshot()
+                                try await model.refreshSnapshot()
                                 model.play(.objectConnected); dismiss()
                             } catch { model.errorMessage = error.localizedDescription }
                         }

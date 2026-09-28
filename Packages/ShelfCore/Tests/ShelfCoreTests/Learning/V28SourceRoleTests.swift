@@ -36,7 +36,7 @@ final class V28SourceRoleTests: XCTestCase {
             "SAY THIS IN THE INTERVIEW", "A cache reduces repeated computation across subsequent requests.",
             "REAL EXAMPLE", "A sample helps clients compare the repeated execution results.",
             "WATCH / LEVEL-UP", "A retry budget limits repeated operations after the deadline."]
-        let helper = V27IntelligenceTests(), analysis = helper.fixture(parts)
+        let analysis = V27IntelligenceTests.makeFixture(parts)
         let packet = try XCTUnwrap(LearningSourcePacket(analysis: analysis, page: analysis.pages[0]))
         let claims = GroundedQuestionCompiler().compile(packet).meaningfulClaims
         XCTAssertEqual(claims.map(\.evidence.text), [parts[1]])

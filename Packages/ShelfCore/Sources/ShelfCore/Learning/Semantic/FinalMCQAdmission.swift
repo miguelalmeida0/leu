@@ -9,6 +9,7 @@ public enum FinalMCQAdmission {
             if let failure = QuestionV3Validator.persistedFailure(question, analysis: analysis) { return failure }
         }
         guard (3...4).contains(question.options.count), let answer = question.correctOption?.text else { return "invalid_options" }
+        if let reason = SemanticStemGate.rejectionReason(question) { return reason }
         let options = question.options.map(\.text)
         guard Set(options.map(normalize)).count == options.count else { return "duplicate_options" }
         for option in options {

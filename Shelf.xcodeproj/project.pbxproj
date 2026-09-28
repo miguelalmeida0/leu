@@ -64,6 +64,8 @@
 		435FBCB26C2BE12C374507CE /* LeuComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C28BEF589761715B314EEF /* LeuComponents.swift */; };
 		43EA9B0A509240609DB92BD8 /* ExplanationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7274C6BD79EA4F90FB01CD /* ExplanationValidator.swift */; };
 		44089423203DF88EC3782C06 /* LearningModel+Sessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05AEC02F92F0D2F2F8101778 /* LearningModel+Sessions.swift */; };
+		0FC15FFE54537C958AF2E28D /* LearningModel+Feelings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772B4348EE478614F1F87DC1 /* LearningModel+Feelings.swift */; };
+		FC55B2D6DD8415DD0CB75E6C /* LearningModel+Adaptive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20166DD52D9F6038011532DE /* LearningModel+Adaptive.swift */; };
 		44A68ABC934A831A512F1BE9 /* Components/UnderstandingLensFactRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE210EC411B4DFA4AA514F0C /* Components/UnderstandingLensFactRow.swift */; };
 		4589C587585081D3437F41CD /* Services/PDFTextExtractionCheckpointStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD161F57B86CE38EE5F2AAC9 /* Services/PDFTextExtractionCheckpointStore.swift */; };
 		46D75A081804159DB9283225 /* ShelfStudyHomeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB1FB40254C0892A93FF71B /* ShelfStudyHomeUITests.swift */; };
@@ -263,6 +265,8 @@
 		04FAA4ABD0566CA89A86A6C0 /* UI/VoiceBenchmarkScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI/VoiceBenchmarkScreen.swift; sourceTree = "<group>"; };
 		056EAADE6B43EA200C6EE9C1 /* JSONSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSnapshotStore.swift; sourceTree = "<group>"; };
 		05AEC02F92F0D2F2F8101778 /* LearningModel+Sessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LearningModel+Sessions.swift"; sourceTree = "<group>"; };
+		772B4348EE478614F1F87DC1 /* LearningModel+Feelings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LearningModel+Feelings.swift"; sourceTree = "<group>"; };
+		20166DD52D9F6038011532DE /* LearningModel+Adaptive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LearningModel+Adaptive.swift"; sourceTree = "<group>"; };
 		0683965D6C097984E04E5BF0 /* SemanticZoomSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticZoomSurface.swift; sourceTree = "<group>"; };
 		075250B20D685BE5EDCFDAB3 /* ShelfError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfError.swift; sourceTree = "<group>"; };
 		095FFB92CD070C7045E0FB58 /* ReadingPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingPosition.swift; sourceTree = "<group>"; };
@@ -832,6 +836,8 @@
 				4AC69D2705533DEE13B1C87F /* LearnTodayScreen.swift */,
 				0EC5C4C8DF2C6BB528BB6D6A /* LearningModel+Objects.swift */,
 				05AEC02F92F0D2F2F8101778 /* LearningModel+Sessions.swift */,
+				772B4348EE478614F1F87DC1 /* LearningModel+Feelings.swift */,
+				20166DD52D9F6038011532DE /* LearningModel+Adaptive.swift */,
 				32BE49E3B53D90CC60885A52 /* LearningModel.swift */,
 				A9AEBAC45C588E5040F7D572 /* LearningObjectActionSheet.swift */,
 				FE871916E15D37ABCF07C697 /* LearningTimelineSheet.swift */,
@@ -1406,6 +1412,8 @@
 				F89BBFFC8C9AC42F4C4FBFBB /* LearnTodayScreen.swift in Sources */,
 				FF28A887955DDAE23B0C9C4D /* LearningModel+Objects.swift in Sources */,
 				44089423203DF88EC3782C06 /* LearningModel+Sessions.swift in Sources */,
+				0FC15FFE54537C958AF2E28D /* LearningModel+Feelings.swift in Sources */,
+				FC55B2D6DD8415DD0CB75E6C /* LearningModel+Adaptive.swift in Sources */,
 				F2378563EF6A09C37318791A /* LearningModel.swift in Sources */,
 				19334081E6722950D29D902B /* LearningObjectActionSheet.swift in Sources */,
 				12B0906F90C8B305849D7995 /* LearningTimelineSheet.swift in Sources */,

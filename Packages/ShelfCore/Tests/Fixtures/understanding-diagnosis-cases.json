@@ -1,0 +1,1606 @@
+{
+ "version": 1,
+ "purpose": "Labeled learner explanations for evaluating Leu's understanding diagnosis. Labels were written before the V34 diagnoser existed. Holdout cases must never be used for tuning.",
+ "labeler": "Single annotator (V34 engineering pass); not human-panel validated.",
+ "claimKeys": "Each label is a substring of exactly one source sentence on the referenced page (or the referenced concept card).",
+ "issueKinds": [
+  "contradiction",
+  "causalReversal",
+  "overgeneralization",
+  "confusedConcept",
+  "unsupported",
+  "circular",
+  "verbatim",
+  "nonsense"
+ ],
+ "cases": [
+  {
+   "id": "dev-react-01",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "A stable key helps React match an item to its previous instance within a list of siblings.",
+   "covered": [
+    "helps React match an item"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "verbatim"
+   ],
+   "optionalIssues": [],
+   "notes": "Exact copy of one source sentence."
+  },
+  {
+   "id": "dev-react-02",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "Keys let React recognize which item is which between renders, so each item keeps its own state even when the list is reordered.",
+   "covered": [
+    "should not make one item inherit"
+   ],
+   "partial": [
+    "helps React match an item"
+   ],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": "Positive paraphrase of a negated claim must not be read as a contradiction."
+  },
+  {
+   "id": "dev-react-03",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "Keys tell React which item is which when a list changes.",
+   "covered": [],
+   "partial": [
+    "helps React match an item"
+   ],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": "V27 audited identity paraphrase."
+  },
+  {
+   "id": "dev-react-04",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "Using the array index as a key is fine even when items are reordered.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "array index can be a poor key"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-react-05",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "A random key keeps continuity between renders.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "random key also destroys continuity"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-react-06",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "Keys are keys that React uses for keys in lists.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "circular"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-react-07",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "React is a JavaScript library made by Meta for building user interfaces.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "unsupported"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-react-08",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "asdf qwerty zxcv lorem ipsum",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "nonsense"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-react-09",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "Keys give each list item a stable identity so React can match it with its previous version. Indexes make bad keys when items move, and random keys break continuity between renders.",
+   "covered": [
+    "random key also destroys continuity"
+   ],
+   "partial": [
+    "helps React match an item",
+    "array index can be a poor key"
+   ],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-react-10",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "Keys make React render lists faster.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "unsupported"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-react-11",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "An array index is always a bad key.",
+   "covered": [],
+   "partial": [
+    "array index can be a poor key"
+   ],
+   "conflicts": [],
+   "issues": [
+    "overgeneralization"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-react-12",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 2,
+   "concept": null,
+   "text": "Random keys help React preserve state between renders.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "random key also destroys continuity"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-cache-01",
+   "split": "dev",
+   "document": "System Design",
+   "page": 2,
+   "concept": null,
+   "text": "A cache saves you from redoing work, but it creates a second copy that can go stale.",
+   "covered": [
+    "cache avoids repeating work"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-cache-02",
+   "split": "dev",
+   "document": "System Design",
+   "page": 2,
+   "concept": null,
+   "text": "A cache avoids repeating work.",
+   "covered": [],
+   "partial": [
+    "cache avoids repeating work"
+   ],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-cache-03",
+   "split": "dev",
+   "document": "System Design",
+   "page": 2,
+   "concept": null,
+   "text": "Caches never become stale because they copy the original.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "cache avoids repeating work"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [
+    "unsupported",
+    "overgeneralization"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "dev-cache-04",
+   "split": "dev",
+   "document": "System Design",
+   "page": 2,
+   "concept": null,
+   "text": "Original documents are disposable caches, so you can delete them.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "not disposable caches"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [
+    "unsupported"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "dev-cache-05",
+   "split": "dev",
+   "document": "System Design",
+   "page": 2,
+   "concept": null,
+   "text": "Thumbnails are derived data.",
+   "covered": [
+    "thumbnails are derived data"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [
+    "verbatim"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "dev-cache-06",
+   "split": "dev",
+   "document": "System Design",
+   "page": 2,
+   "concept": null,
+   "text": "A cache is where the browser stores downloaded files.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "unsupported"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-cache-07",
+   "split": "dev",
+   "document": "System Design",
+   "page": 2,
+   "concept": null,
+   "text": "Caching means caching data in a cache.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "circular"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-cache-08",
+   "split": "dev",
+   "document": "System Design",
+   "page": 2,
+   "concept": null,
+   "text": "Using a cache means you never repeat work and nothing can go wrong.",
+   "covered": [],
+   "partial": [
+    "cache avoids repeating work"
+   ],
+   "conflicts": [],
+   "issues": [
+    "overgeneralization"
+   ],
+   "optionalIssues": [
+    "unsupported",
+    "contradiction"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "dev-closure-01",
+   "split": "dev",
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "concept": null,
+   "text": "A closure is a function that remembers the variables from where it was created, even after the outer function has finished.",
+   "covered": [
+    "function together with access",
+    "keep accessing that environment"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": "Hard lexical paraphrase."
+  },
+  {
+   "id": "dev-closure-02",
+   "split": "dev",
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "concept": null,
+   "text": "A closure copies the variables when it is created, so later changes are not visible.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "unsupported"
+   ],
+   "optionalIssues": [
+    "contradiction"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "dev-closure-03",
+   "split": "dev",
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "concept": null,
+   "text": "Each call to counter() creates its own independent environment.",
+   "covered": [
+    "separate calls to counter()"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-closure-04",
+   "split": "dev",
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "concept": null,
+   "text": "All calls to counter() share the same environment.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "separate calls to counter()"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-closure-05",
+   "split": "dev",
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "concept": null,
+   "text": "A closure is a function.",
+   "covered": [],
+   "partial": [
+    "function together with access"
+   ],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-closure-06",
+   "split": "dev",
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "concept": null,
+   "text": "A closure is when a function is closed.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "circular"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-state-01",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 1,
+   "concept": null,
+   "text": "Calling setState immediately changes the variable in the running handler.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "does not change the state variable"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-state-02",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 1,
+   "concept": null,
+   "text": "Setting state asks React to render again, but the handler that is already running still sees the old value.",
+   "covered": [
+    "Setting state requests another render",
+    "does not change the state variable"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": "Second clause paraphrases a negated claim."
+  },
+  {
+   "id": "dev-state-03",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 1,
+   "concept": null,
+   "text": "The updater function receives the previous pending value.",
+   "covered": [
+    "updater receives the previous pending value"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-state-04",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 1,
+   "concept": null,
+   "text": "Setting state requests another render.",
+   "covered": [
+    "Setting state requests another render"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [
+    "verbatim"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "dev-state-05",
+   "split": "dev",
+   "document": "React Notes",
+   "page": 1,
+   "concept": null,
+   "text": "Another render requests setting state.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "Setting state requests another render"
+   ],
+   "issues": [
+    "causalReversal"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-return-01",
+   "split": "dev",
+   "document": "JavaScript Deep Dive",
+   "page": 1,
+   "concept": null,
+   "text": "Arrow functions with a block body return their value automatically.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "block body needs an explicit return"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-return-02",
+   "split": "dev",
+   "document": "JavaScript Deep Dive",
+   "page": 1,
+   "concept": null,
+   "text": "An expression body returns its value automatically, but with curly braces you have to write return yourself.",
+   "covered": [
+    "expression body returns its expression"
+   ],
+   "partial": [
+    "block body needs an explicit return"
+   ],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-return-03",
+   "split": "dev",
+   "document": "JavaScript Deep Dive",
+   "page": 1,
+   "concept": null,
+   "text": "A block body needs an explicit return statement.",
+   "covered": [
+    "block body needs an explicit return"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [
+    "verbatim"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "dev-fk-01",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Foreign key",
+   "text": "A foreign key links a value in one table to a key in another table, which keeps references between related rows valid.",
+   "covered": [
+    "constraint linking a value",
+    "protects referential integrity"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-fk-02",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Foreign key",
+   "text": "A foreign key makes lookups faster.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "confusedConcept"
+   ],
+   "optionalIssues": [
+    "unsupported"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "dev-fk-03",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Foreign key",
+   "text": "It is a constraint.",
+   "covered": [],
+   "partial": [
+    "constraint linking a value"
+   ],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-fk-04",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Foreign key",
+   "text": "A foreign key is a key that is foreign.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "circular"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-idx-01",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Database index",
+   "text": "An index is an extra data structure that speeds up certain lookups; without one, big queries might scan lots of rows.",
+   "covered": [
+    "data structure maintained to make particular lookups",
+    "large queries may scan huge numbers of rows"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-idx-02",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Database index",
+   "text": "An index makes every query faster.",
+   "covered": [],
+   "partial": [
+    "data structure maintained to make particular lookups"
+   ],
+   "conflicts": [],
+   "issues": [
+    "overgeneralization"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-idx-03",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Database index",
+   "text": "An index guarantees referential integrity between tables.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "confusedConcept"
+   ],
+   "optionalIssues": [
+    "unsupported"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "dev-ed-01",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Event delegation",
+   "text": "Instead of adding a listener to every child, you put one listener on the parent and check which child triggered the event.",
+   "covered": [
+    "common ancestor and determining which descendant"
+   ],
+   "partial": [
+    "One listener can handle many"
+   ],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-ed-02",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Event delegation",
+   "text": "Event delegation means adding a separate listener to each child element.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "One listener can handle many"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-qp-01",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Query parameters",
+   "text": "Query parameters are the key=value pairs after the ? in a URL; they are used for things like filters, sorting and pagination.",
+   "covered": [
+    "filtering, sorting, searching"
+   ],
+   "partial": [
+    "appended to a URL"
+   ],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-qp-02",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Query parameters",
+   "text": "Query parameters identify a specific resource in the URL path.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "confusedConcept"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-pp-01",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Path parameter",
+   "text": "A path parameter is a variable part of the URL path, like 42 in /users/42, that identifies which resource you want.",
+   "covered": [
+    "dynamic segment in a URL path"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-pp-02",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Path parameter",
+   "text": "Path parameters are used for filtering and sorting a collection.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "confusedConcept"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-pk-01",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Primary key",
+   "text": "A primary key uniquely identifies each row in a table.",
+   "covered": [
+    "uniquely identifies each row"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "dev-pk-02",
+   "split": "dev",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Primary key",
+   "text": "A primary key links a value in one table to a key in another table.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "confusedConcept"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-cdn-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "CDN",
+   "text": "A CDN is a network of servers spread around the world that serves content from locations near users, which cuts latency and takes load off the origin server.",
+   "covered": [
+    "geographically distributed edge network",
+    "lowers latency and reduces load"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-cdn-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "CDN",
+   "text": "A CDN increases latency because content travels further.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "lowers latency and reduces load"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [
+    "unsupported"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "ho-cdn-03",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "CDN",
+   "text": "A CDN stores the database for the application.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "unsupported"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-enc-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Encryption",
+   "text": "Encryption transforms data with a key so that someone with the right key can turn it back into the original.",
+   "covered": [
+    "reversible transformation that protects data"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-enc-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Encryption",
+   "text": "Encryption is a one-way transformation that cannot be reversed.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "reversible transformation that protects data"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [
+    "confusedConcept"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "ho-hash-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Hashing",
+   "text": "Hashing turns input into a fixed-length digest in one direction only, and for passwords you use slow salted algorithms.",
+   "covered": [
+    "one-way transformation that maps input"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-hash-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Hashing",
+   "text": "Hashing is reversible if you have the key.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "one-way transformation that maps input"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [
+    "confusedConcept"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "ho-authn-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Authentication",
+   "text": "Authentication checks who a user or service really is.",
+   "covered": [
+    "process of verifying who a user or service is"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-authn-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Authentication",
+   "text": "Authentication decides what a user is allowed to do.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "confusedConcept"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-authz-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Authorization",
+   "text": "Authorization is deciding what an already authenticated user is allowed to do; knowing who someone is does not mean they have permission.",
+   "covered": [
+    "process of deciding what an authenticated identity",
+    "Identity alone is not permission"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-authz-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Authorization",
+   "text": "Once you know who the user is, they have permission to do everything.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "Identity alone is not permission"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [
+    "overgeneralization"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "ho-idem-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Idempotency",
+   "text": "Idempotency means doing the same operation twice has the same effect as doing it once.",
+   "covered": [
+    "repeating an operation has the same intended effect"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-idem-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Idempotency",
+   "text": "Idempotency means an operation can only be performed once.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "unsupported"
+   ],
+   "optionalIssues": [
+    "contradiction"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "ho-deb-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Debouncing",
+   "text": "Debouncing waits until events stop for a set time before running the action, so expensive work does not run on every keystroke.",
+   "covered": [
+    "Delaying an action until a burst of events",
+    "avoids firing expensive work"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-deb-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Debouncing",
+   "text": "Debouncing runs the action at most once per time window while events keep coming.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "confusedConcept"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-thr-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Throttling",
+   "text": "Throttling limits a handler so it runs at most once per time window even while events continue.",
+   "covered": [
+    "runs at most once per time window"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-thr-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Throttling",
+   "text": "Throttling waits until the events stop before running.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "confusedConcept"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-race-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Race condition",
+   "text": "A race condition is a bug where the result depends on the timing of concurrent operations.",
+   "covered": [
+    "correctness depends on the unpredictable timing"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-race-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Race condition",
+   "text": "Race conditions happen because the code is slow.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "unsupported"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-tx-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Transaction",
+   "text": "A transaction groups database operations so they all commit or all roll back as one unit, which prevents partial updates.",
+   "covered": [
+    "group of database operations treated as a single logical unit",
+    "prevents partial updates"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-tx-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Transaction",
+   "text": "A transaction allows partial updates to be saved if something fails.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "prevents partial updates"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-prom-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Promise",
+   "text": "A promise is an object that represents the eventual result or failure of an async operation.",
+   "covered": [
+    "eventual fulfillment or rejection"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-prom-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Promise",
+   "text": "A promise makes asynchronous code run synchronously.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "unsupported"
+   ],
+   "optionalIssues": [
+    "contradiction"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "ho-cors-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "CORS",
+   "text": "CORS is a browser policy that controls whether JavaScript on one origin can read responses from another origin.",
+   "covered": [
+    "browser-enforced policy that controls whether frontend JavaScript"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-cors-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "CORS",
+   "text": "CORS is a form of authentication that stops every client from calling the API.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [
+    "unsupported",
+    "overgeneralization"
+   ],
+   "notes": "The card's interview section states CORS is not authentication."
+  },
+  {
+   "id": "ho-jwt-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "JWT",
+   "text": "A JWT is a signed token containing claims, so the receiver can verify who issued it without a database lookup.",
+   "covered": [
+    "compact signed token format",
+    "verify that claims were issued by a trusted signer"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-jwt-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "JWT",
+   "text": "JWTs are encrypted, so nobody can read the payload.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [
+    "unsupported"
+   ],
+   "notes": "Interview section: signed claim containers, not automatically encrypted."
+  },
+  {
+   "id": "ho-lb-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Load balancer",
+   "text": "A load balancer spreads incoming requests across several healthy servers to improve availability and scalability.",
+   "covered": [
+    "distributes incoming traffic across multiple healthy backend instances",
+    "improves scalability, availability"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-lb-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Load balancer",
+   "text": "A load balancer sends all traffic to a single server.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "distributes incoming traffic across multiple healthy backend instances"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-ci-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Cache invalidation",
+   "text": "Cache invalidation means removing or updating cached data when the real data changes; otherwise the cache can quickly serve wrong answers.",
+   "covered": [
+    "Removing or updating cached data",
+    "confidently wrong"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-ci-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Cache invalidation",
+   "text": "Cache invalidation is when the cache stops working.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "unsupported"
+   ],
+   "optionalIssues": [
+    "circular"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "ho-oui-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Optimistic UI",
+   "text": "Optimistic UI updates the screen right away as if the request will succeed, and rolls back if the server says it failed.",
+   "covered": [
+    "Updating the interface immediately as if a mutation will succeed"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-oui-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Optimistic UI",
+   "text": "Optimistic UI waits for the server response before updating the interface.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "Updating the interface immediately as if a mutation will succeed"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-retry-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Retry",
+   "text": "Retrying means trying a failed operation again when the failure might only be temporary.",
+   "covered": [
+    "Attempting a failed operation again"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-retry-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Retry",
+   "text": "You should always retry every failed request until it succeeds.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "overgeneralization"
+   ],
+   "optionalIssues": [
+    "unsupported",
+    "contradiction"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "ho-dead-01",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Deadlock",
+   "text": "A deadlock is when two transactions each hold something the other one needs, so both are stuck.",
+   "covered": [
+    "each hold resources the other needs"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-dead-02",
+   "split": "holdout",
+   "document": "Mobile Mastery",
+   "page": null,
+   "concept": "Deadlock",
+   "text": "A deadlock is when a transaction is slow.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [],
+   "issues": [
+    "unsupported"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-sd-01",
+   "split": "holdout",
+   "document": "System Design",
+   "page": 1,
+   "concept": null,
+   "text": "The view presents state, an application service coordinates the workflow, and persistence commits durable changes.",
+   "covered": [
+    "application service coordinates a workflow",
+    "Persistence commits durable changes"
+   ],
+   "partial": [
+    "interface presents state"
+   ],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-sd-02",
+   "split": "holdout",
+   "document": "System Design",
+   "page": 1,
+   "concept": null,
+   "text": "Passing a database object through every screen makes boundaries easier to change.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "difficult to change"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-cs-01",
+   "split": "holdout",
+   "document": "Computer Science Essentials",
+   "page": 1,
+   "concept": null,
+   "text": "Time complexity tells you exactly how long code takes on your phone.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "does not predict the exact time"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-cs-02",
+   "split": "holdout",
+   "document": "Computer Science Essentials",
+   "page": 1,
+   "concept": null,
+   "text": "Time complexity describes how the amount of work grows as the input gets bigger.",
+   "covered": [
+    "describes how work grows"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-cs-03",
+   "split": "holdout",
+   "document": "Computer Science Essentials",
+   "page": 2,
+   "concept": null,
+   "text": "Spreading an object makes a deep copy, including all nested objects.",
+   "covered": [],
+   "partial": [],
+   "conflicts": [
+    "does not automatically copy its nested objects"
+   ],
+   "issues": [
+    "contradiction"
+   ],
+   "optionalIssues": [],
+   "notes": ""
+  },
+  {
+   "id": "ho-dp-01",
+   "split": "holdout",
+   "document": "Design Patterns",
+   "page": 2,
+   "concept": null,
+   "text": "A workflow depends on a storage contract, and the composition root provides the concrete implementation.",
+   "covered": [
+    "depend on a storage contract",
+    "composition root supplies the concrete implementation"
+   ],
+   "partial": [],
+   "conflicts": [],
+   "issues": [],
+   "optionalIssues": [],
+   "notes": ""
+  }
+ ]
+}

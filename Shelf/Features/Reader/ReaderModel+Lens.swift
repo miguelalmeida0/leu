@@ -27,7 +27,7 @@ extension ReaderModel {
         Task {
             do {
                 try await learning.repository.recordLensUse(source)
-                learning.snapshot = try await learning.repository.snapshot()
+                try await learning.refreshSnapshot()
             } catch { learning.errorMessage = error.localizedDescription }
         }
         pendingLensSource = source

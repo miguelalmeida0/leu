@@ -10,6 +10,13 @@ final class V27IntelligenceTests: XCTestCase {
     ]
     func fixture(_ parts: [String], verified: Bool? = true, version: Int = SourceExtractionVersion.current,
                  id: UUID = UUID()) -> DocumentAnalysis {
+        Self.makeFixture(parts, verified: verified, version: version, id: id)
+    }
+    /// Shared with other suites. XCTestCase has no portable zero-argument initializer
+    /// (swift-corelibs-xctest requires a name and closure), so never instantiate a suite
+    /// just to borrow this builder.
+    static func makeFixture(_ parts: [String], verified: Bool? = true, version: Int = SourceExtractionVersion.current,
+                            id: UUID = UUID()) -> DocumentAnalysis {
         let text = parts.joined(separator: "\n")
         var page = AnalyzedPage(pageIndex: 2, normalizedText: text,
             segments: parts.map { SourceSegment(pageIndex: 2, kind: .paragraph, text: $0) })

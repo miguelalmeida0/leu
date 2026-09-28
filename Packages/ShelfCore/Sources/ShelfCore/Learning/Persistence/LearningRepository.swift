@@ -4,6 +4,9 @@ public actor LearningRepository {
     private let persistence: any LearningSnapshotPersistence
     private var state: LearningSnapshot?
     private let scheduler: any ReviewScheduling
+    let reducer = LearnerModelReducer()
+    /// Increments with every committed transaction.
+    public private(set) var revision = 0
 
     public init(persistence: any LearningSnapshotPersistence,
                 scheduler: any ReviewScheduling = ShelfReviewScheduler()) {
@@ -25,43 +28,8 @@ public actor LearningRepository {
 
     public func snapshot() throws -> LearningSnapshot { try open() }
 
-    public func storeUnderstandingAttempt(_ attempt: UnderstandingAttempt) throws {
-        try transaction { snapshot in
-            guard attempt.source.isCurrent(in: snapshot.analyses), attempt.learnerExplanation.count <= 6000 else {
-                throw LearningIntelligenceError.sourceIntegrityFailed
-            }
-            if let result = attempt.result {
-                guard result.source == attempt.source,
-                      TeachLeuValidator.isValid(result, explanation: attempt.learnerExplanation, analyses: snapshot.analyses) else {
-                    throw LearningIntelligenceError.invalidResponse
-                }
-            }
-            snapshot.understandingAttempts.removeAll { $0.id == attempt.id }
-            snapshot.understandingAttempts.append(attempt)
-        }
-    }
-
-    public func storeUnderstandingEvent(_ event: UnderstandingEvent) throws {
-        try transaction { snapshot in
-            guard event.source.isCurrent(in: snapshot.analyses) else { throw LearningIntelligenceError.sourceIntegrityFailed }
-            if !snapshot.understandingEvents.contains(where: { $0.id == event.id }) { snapshot.understandingEvents.append(event) }
-        }
-    }
-
-    public func storeModelQuestion(_ question: LearningQuestion) throws {
-        try transaction { snapshot in
-            guard let provenance = question.modelProvenance,
-                  let analysis = snapshot.analyses[question.source.documentID],
-                  analysis.fingerprint == provenance.packet.fingerprint,
-                  analysis.extractionVersion == provenance.packet.extractionVersion,
-                  analysis.pages.contains(where: { $0.isIntelligenceEligible && $0.pageIndex == question.source.pageIndex && $0.canonicalText == provenance.packet.sourceText }) else {
-                throw LearningIntelligenceError.sourceIntegrityFailed
-            }
-            guard FinalMCQAdmission.rejectionReason(question, analysis: analysis) == nil else {
-                throw LearningIntelligenceError.sourceIntegrityFailed
-            }
-            if !snapshot.questions.contains(where: { $0.id == question.id }) { snapshot.questions.append(question) }
-        }
+    public func revisionedSnapshot() throws -> RevisionedLearningSnapshot {
+        RevisionedLearningSnapshot(snapshot: try open(), revision: revision)
     }
 
     public func upsertAnalysis(_ analysis: DocumentAnalysis, topics: [TopicClassification],
@@ -134,11 +102,13 @@ public actor LearningRepository {
         }
     }
 
+    /// Records a review and, in the same transaction, what it shows about the learner.
     public func review(objectID: UUID, questionID: UUID? = nil, rating: RecallRating,
                        correct: Bool? = nil, confidence: ConfidenceLevel? = nil,
                        responseTime: TimeInterval? = nil, hintCount: Int = 0,
-                       at date: Date = Date()) throws {
+                       at date: Date = Date(), evidence: [LearningEvidence] = []) throws {
         try transaction { snapshot in
+            apply(evidence, to: &snapshot)
             guard let object = snapshot.learningObjects.first(where: { $0.id == objectID }) else { throw ShelfError.notFound }
             let current = snapshot.reviewStates[objectID] ?? ReviewState(learningObjectID: objectID, importance: object.importance)
             snapshot.reviewStates[objectID] = scheduler.reviewed(current, rating: rating, hintCount: hintCount, at: date)
@@ -236,12 +206,13 @@ public actor LearningRepository {
         try transaction { try StudyCheckpointMutation.apply(session: session, context: context, to: &$0) }
     }
 
-    private func transaction<T>(_ mutation: (inout LearningSnapshot) throws -> T) throws -> T {
+    func transaction<T>(_ mutation: (inout LearningSnapshot) throws -> T) throws -> T {
         var next = try open()
         let result = try mutation(&next)
         try validate(next)
         try persistence.save(next)
         state = next
+        revision += 1
         return result
     }
 
@@ -257,54 +228,5 @@ public actor LearningRepository {
 
     private func mergeTopics(_ topics: [LearningTopic], into snapshot: inout LearningSnapshot) {
         for topic in topics where !snapshot.topics.contains(where: { $0.id == topic.id }) { snapshot.topics.append(topic) }
-    }
-
-    private func ensureObjects(for analysis: DocumentAnalysis, topicIDs: Set<UUID>, in snapshot: inout LearningSnapshot) {
-        let currentTexts = Set(analysis.pages.filter(\.isIntelligenceEligible).flatMap { $0.segments.filter { !InstructionalText.excludesFromStudy($0) }.map { "\($0.pageIndex)|\($0.text)" } })
-        for index in snapshot.learningObjects.indices where
-            snapshot.learningObjects[index].source.documentID == analysis.documentID &&
-            snapshot.learningObjects[index].origin == .documentAnalysis {
-            let source = snapshot.learningObjects[index].source
-            snapshot.learningObjects[index].sourceIsStale = true
-            if currentTexts.contains("\(source.pageIndex)|\(source.sourceText)") {
-                snapshot.learningObjects[index].sourceIsStale = false
-            }
-        }
-        let existing = Set(snapshot.learningObjects.filter {
-            $0.source.documentID == analysis.documentID && $0.origin == .documentAnalysis
-        }.map { "\($0.source.pageIndex)|\($0.source.sourceText)" })
-
-        for page in analysis.pages where page.isIntelligenceEligible {
-            let primary = page.segments.filter { segment in
-                guard !InstructionalText.excludesFromStudy(segment) else { return false }
-                return segment.kind == .definition ||
-                    (segment.kind == .heading && segment.importance >= 0.78) ||
-                    (segment.kind == .paragraph && segment.importance >= 0.54)
-            }
-            .sorted { lhs, rhs in
-                lhs.importance == rhs.importance ? lhs.text.count < rhs.text.count : lhs.importance > rhs.importance
-            }
-            .prefix(3)
-
-            for segment in primary {
-                let key = "\(segment.pageIndex)|\(segment.text)"
-                guard !existing.contains(key) else { continue }
-                let source = LearningSource(documentID: analysis.documentID, pageIndex: segment.pageIndex,
-                                            sourceText: segment.text, sectionTitle: segment.sectionTitle)
-                let type: LearningObjectType = segment.kind == .definition ? .definition : .passage
-                let title = segment.kind == .heading ? segment.text : conciseTitle(segment)
-                let object = LearningObject(id: StableIdentity.uuid("object|\(analysis.documentID)|\(key)"), type: type,
-                                            source: source, topicIDs: topicIDs, title: title,
-                                            importance: segment.importance, origin: .documentAnalysis)
-                snapshot.learningObjects.append(object)
-                snapshot.reviewStates[object.id] = ReviewState(learningObjectID: object.id, importance: object.importance)
-            }
-        }
-    }
-
-    private func conciseTitle(_ segment: SourceSegment) -> String {
-        if let section = segment.sectionTitle, !section.isEmpty { return String(section.prefix(72)) }
-        let firstSentence = segment.text.split(separator: ".", maxSplits: 1, omittingEmptySubsequences: true).first.map(String.init) ?? segment.text
-        return String(firstSentence.prefix(72))
     }
 }

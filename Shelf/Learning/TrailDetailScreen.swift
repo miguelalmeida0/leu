@@ -101,7 +101,7 @@ struct TrailDetailScreen: View {
             defer { saving = false }
             do {
                 _ = try await model.repository.saveTrail(trail)
-                model.snapshot = try await model.repository.snapshot()
+                try await model.refreshSnapshot()
                 draft = trail
                 after()
             } catch { model.errorMessage = error.localizedDescription }

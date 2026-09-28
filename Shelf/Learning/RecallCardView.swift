@@ -34,7 +34,8 @@ struct RecallCardView: View {
     }
 
     private func task(_ object: LearningObject) -> some View {
-        let prompt = object.prompt ?? object.title
+        // The adaptive session may ask a specific grounded question about this passage.
+        let prompt = model.currentActivity?.probe?.prompt ?? object.prompt ?? object.title
         // A heading segment records itself as its own section title, which printed
         // the same sentence twice: once as the eyebrow, once as the prompt.
         let label = object.source.sectionTitle.flatMap { section -> String? in
@@ -109,14 +110,14 @@ struct RecallCardView: View {
             .accessibilityIdentifier("recall-dont-know")
             .accessibilityAddTraits(model.recallMarkedUnknown ? .isSelected : [])
 
-            Button("Reveal source") { revealed = true; typing = false; model.play(.sourceRevealed) }
+            Button("Reveal source") { revealed = true; typing = false; model.diagnoseRecall(); model.play(.sourceRevealed) }
                 .buttonStyle(ShelfButtonStyle(filled: true))
                 .accessibilityIdentifier("recall-reveal-source")
         }
     }
 
-    /// Your words beside the page's words. Leu does not evaluate the answer, so nothing
-    /// here claims the attempt was right or wrong: the learner decides that below.
+    /// Your words beside the page's words. Leu compares the wording with the source's claims
+    /// and names one next step; it does not grade: the learner decides how recall felt below.
     private func comparison(_ object: LearningObject) -> some View {
         VStack(alignment: .leading, spacing: 18) {
             if model.recallMarkedUnknown || !model.recallDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -128,16 +129,27 @@ struct RecallCardView: View {
                         .accessibilityIdentifier("recall-your-answer")
                 }
             }
+            if let noticed = model.recallDiagnosis?.intervention, !noticed.message.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    label("Compared with your source")
+                    Text(noticed.message)
+                        .font(.callout).foregroundStyle(ShelfTheme.text)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("recall-comparison")
+                }
+            }
             VStack(alignment: .leading, spacing: 8) {
                 label("From your source")
-                Text(object.source.sourceText)
+                // A grounded question is answered by its own source sentences, not by the passage
+                // (sometimes only a heading) it was planned from.
+                Text(model.currentActivity?.probe?.answerText ?? object.source.sourceText)
                     .accessibilityIdentifier("recall-source-quote")
                     .font(.system(.title3, design: .serif)).lineSpacing(5)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.leading, 14)
                     .overlay(alignment: .leading) { Rectangle().fill(ShelfTheme.accent).frame(width: 2) }
             }
-            Button("View in PDF") { model.openSource(object.source) }
+            Button("View in PDF") { model.openSource(model.currentActivity?.probe?.answerSource ?? object.source) }
                 .buttonStyle(ShelfButtonStyle())
                 .accessibilityIdentifier("recall-view-source")
             VStack(alignment: .leading, spacing: 10) {

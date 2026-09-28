@@ -11,10 +11,17 @@ public struct StudyActivity: Identifiable, Codable, Equatable, Sendable {
     public var questionID: UUID?
     public var title: String
     public var estimatedSeconds: Int
+    /// The grounded question chosen for this activity by the adaptive selector, if any. A recall
+    /// activity shows its prompt; a question activity is its choice form.
+    public var probe: LearningProbe?
+    /// A prerequisite detour this activity starts, remembered with its answer.
+    public var remediation: RemediationObjective?
     public init(id: UUID = UUID(), kind: StudyActivityKind, learningObjectID: UUID? = nil,
-                questionID: UUID? = nil, title: String, estimatedSeconds: Int) {
+                questionID: UUID? = nil, title: String, estimatedSeconds: Int,
+                probe: LearningProbe? = nil, remediation: RemediationObjective? = nil) {
         self.id = id; self.kind = kind; self.learningObjectID = learningObjectID
         self.questionID = questionID; self.title = title; self.estimatedSeconds = max(15, estimatedSeconds)
+        self.probe = probe; self.remediation = remediation
     }
 }
 

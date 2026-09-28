@@ -12,19 +12,30 @@ public struct SemanticQuestionCompiler: Sendable {
         var generated = 0
         #endif
         var fingerprints = Set<String>()
-        for p in truth {
-            guard let claim = p.claim, let rendered = QuestionRealizer().realize(claim) else { continue }
+        // Each proposition is realized once; families keep the proposition order the per-question
+        // filters used, so every question and its options are exactly what they were.
+        let realized = truth.map { $0.claim.flatMap { QuestionRealizer().realize($0) } }
+        // The self-containment check is a regular expression; each distinct option text is checked once.
+        var unresolved: [String: Bool] = [:]
+        for text in realized.compactMap({ $0?.answer }) + truth.compactMap({ $0.claim?.subject }) where unresolved[text] == nil {
+            unresolved[text] = QuestionSelfContainment.hasUnresolvedReference(text)
+        }
+        var byRelation: [String: [Int]] = [:], bySubject: [String: [Int]] = [:]
+        for (position, p) in truth.enumerated() {
+            byRelation["\(p.claim?.intent.rawValue ?? "")|\(p.relation.rawValue)", default: []].append(position)
+            bySubject["\(p.subjectID)|\(p.relation.rawValue)", default: []].append(position)
+        }
+        for (position, p) in truth.enumerated() {
+            guard let claim = p.claim, let rendered = realized[position] else { continue }
             #if DEBUG
             generated += 1
             #endif
-            let sameFamily = truth.filter { other in
-                other.subjectID != p.subjectID && other.claim?.intent == claim.intent && other.relation == p.relation
-            }
-            let knownAnswers = Set(truth.filter { $0.subjectID == p.subjectID && $0.relation == p.relation }
-                .compactMap { $0.claim.flatMap { QuestionRealizer().realize($0)?.answer } }.map(normalized))
-            let alternativeAnswers = sameFamily.compactMap { $0.claim.flatMap { QuestionRealizer().realize($0)?.answer } }
+            let family = (byRelation["\(claim.intent.rawValue)|\(p.relation.rawValue)"] ?? []).filter { truth[$0].subjectID != p.subjectID }
+            let sameFamily = family.map { truth[$0] }
+            let knownAnswers = Set((bySubject["\(p.subjectID)|\(p.relation.rawValue)"] ?? []).compactMap { realized[$0]?.answer }.map(normalized))
+            let alternativeAnswers = family.compactMap { realized[$0]?.answer }
                 .filter { !knownAnswers.contains(normalized($0)) }
-            if let question = make(p, rendered: rendered, alternatives: alternativeAnswers, topicIDs: topicIDs, reverse: false) {
+            if let question = make(p, rendered: rendered, alternatives: alternativeAnswers, topicIDs: topicIDs, reverse: false, unresolved: unresolved) {
                 if fingerprints.insert(question.stableKey).inserted { output.append(question) }
             }
             // Definition reversal is a distinct retrieval task, not a reversed verb template.
@@ -35,12 +46,14 @@ public struct SemanticQuestionCompiler: Sendable {
                 let reverse = RealizedQuestion(intent: .define, prompt: "Which concept is described as \(claim.object)?",
                                                answer: claim.subject, evidence: p.evidence)
                 let alternatives = sameFamily.filter { normalized($0.objectText) != normalized(claim.object) }.compactMap { $0.claim?.subject }
-                if let question = make(p, rendered: reverse, alternatives: alternatives, topicIDs: topicIDs, reverse: true),
+                if let question = make(p, rendered: reverse, alternatives: alternatives, topicIDs: topicIDs, reverse: true, unresolved: unresolved),
                    fingerprints.insert(question.stableKey).inserted { output.append(question) }
             }
         }
+        let ambiguous = SemanticStemGate.ambiguousPrompts(output)
         output = output.filter { question in
-            let reason = FinalMCQAdmission.rejectionReason(question, analysis: analysis)
+            let reason = ambiguous.contains(CanonicalWhitespaceResolver.normalize(question.prompt).lowercased())
+                ? "ambiguous_prompt" : FinalMCQAdmission.rejectionReason(question, analysis: analysis)
             #if DEBUG
             if ProcessInfo.processInfo.environment["LEU_UI_DIAGNOSTICS"] == "1" {
                 print("[leu-option-admission] path=semantic id=\(question.id) page=\(question.source.pageIndex) words=\(question.options.map { $0.text.split(whereSeparator: \.isWhitespace).count }) result=\(reason ?? "accepted")")
@@ -48,27 +61,25 @@ public struct SemanticQuestionCompiler: Sendable {
             #endif
             return reason == nil
         }
-        let importance = ConceptImportanceModel()
         #if DEBUG
         if ProcessInfo.processInfo.environment["LEU_UI_DIAGNOSTICS"] == "1" {
             print("[leu-integration] questions.compile document=\(index.documentID) generated=\(generated) accepted=\(output.count)")
         }
         #endif
-        return output.sorted {
-            let a = importance.sourceScore($0, index: index, analysis: analysis)
-            let b = importance.sourceScore($1, index: index, analysis: analysis)
-            return a == b ? $0.stableKey < $1.stableKey : a > b
-        }
+        // Scored once each (the score is a pure function of the question), then ordered exactly as before.
+        let context = ConceptImportanceModel.SourceContext(index: index, analysis: analysis, scoring: output)
+        let scored = output.map { (question: $0, score: context.score($0)) }
+        return scored.sorted { $0.score == $1.score ? $0.question.stableKey < $1.question.stableKey : $0.score > $1.score }.map(\.question)
     }
 
     private func make(_ p: SemanticProposition, rendered: RealizedQuestion, alternatives: [String],
-                      topicIDs: Set<UUID>, reverse: Bool) -> LearningQuestion? {
+                      topicIDs: Set<UUID>, reverse: Bool, unresolved: [String: Bool] = [:]) -> LearningQuestion? {
         guard let claim = p.claim,
               QuestionSelfContainment.rejectionReason(prompt: rendered.prompt, answer: rendered.answer, concept: claim.subject) == nil else { return nil }
         let correctKey = normalized(rendered.answer)
         var seen: Set<String> = [correctKey]
         let distractors = alternatives.filter {
-            !QuestionSelfContainment.hasUnresolvedReference($0) && QuestionOptionQuality.comparable($0, to: rendered.answer) &&
+            !(unresolved[$0] ?? QuestionSelfContainment.hasUnresolvedReference($0)) && QuestionOptionQuality.comparable($0, to: rendered.answer) &&
                 seen.insert(normalized($0)).inserted
         }
         guard distractors.count >= 2 else { return nil }

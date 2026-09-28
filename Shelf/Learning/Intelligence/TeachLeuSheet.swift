@@ -79,6 +79,13 @@ import ShelfCore
                 ForEach(Array(result.unsettled.enumerated()), id: \.offset) { _, text in Text("“\(text)”") }
                 Text("No conclusion has been drawn about these statements.").foregroundStyle(ShelfTheme.secondary)
             }
+            if let next = result.diagnosis?.intervention, !next.message.isEmpty {
+                Text("NEXT STEP").font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
+                Text(next.message).accessibilityIdentifier("teach-leu-next-step")
+                if let followUp = next.followUp {
+                    Text(followUp.prompt).font(.system(.body, design: .serif)).accessibilityIdentifier("teach-leu-follow-up")
+                }
+            }
         }.accessibilityIdentifier("teach-leu-result")
     }
 }

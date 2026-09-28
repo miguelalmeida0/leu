@@ -54,6 +54,18 @@ final class LearningModel {
     @ObservationIgnored var connectionIndexVersion = ""
     @ObservationIgnored var makeIntelligenceReader: ((LearningSource, String) -> IntelligenceReaderRoute?)?
     let explanationCache: ExplanationCache
+    /// Grounded knowledge per document, compiled off the main actor and never persisted.
+    let knowledgeCache = ConceptKnowledgeCache()
+    @ObservationIgnored var knowledgeByDocument: [UUID: (key: String, base: ConceptKnowledgeBase)] = [:]
+    /// `readyKnowledge`, merged once per change of the documents it covers.
+    @ObservationIgnored var mergedKnowledge: (key: String, base: ConceptKnowledgeBase)?
+    @ObservationIgnored var planningTask: Task<Void, Never>?
+    /// Admits a fetched snapshot only when it is not older than the one on screen.
+    @ObservationIgnored var snapshotGate = SnapshotRevisionGate()
+    /// What Leu noticed in the typed recall, once the source is revealed.
+    var recallDiagnosis: UnderstandingDiagnosis?
+    /// What the chosen wrong option reveals, in the source's words.
+    var answerFeedbackNote: String?
     var modelState: LearningModelState = .unavailable
     var modelAvailability: LearningModelState = .unavailable
     var intelligenceCapability = IntelligenceCapabilityReport(availability: .unavailable)
@@ -115,7 +127,8 @@ final class LearningModel {
 
     var currentQuestion: LearningQuestion? {
         guard currentObject != nil, let id = currentActivity?.questionID else { return nil }
-        return snapshot.questions.first { $0.id == id }
+        // A grounded recognition question is rebuilt from its probe; it is never stored in the bank.
+        return snapshot.questions.first { $0.id == id } ?? currentActivity?.probe?.question.flatMap { $0.id == id ? $0 : nil }
     }
 
     var currentObject: LearningObject? {
@@ -178,7 +191,7 @@ final class LearningModel {
                     try await repository.upsertAnalysis(bundle.analysis, topics: bundle.topics, questions: bundle.questions, semanticIndex: bundle.semanticIndex)
                     await indexer.commitCompleted(documentID: book.id)
                     if !bundle.hasUsableText { noText += 1 }
-                    snapshot = try await repository.snapshot()
+                    try await refreshSnapshot()
                     if previousVersion != bundle.analysis.extractionVersion {
                         let history = Dictionary(uniqueKeysWithValues: snapshot.attempts.map { ($0.id, $0) })
                         let confidence = Dictionary(uniqueKeysWithValues: snapshot.confidenceRecords.map { ($0.id, $0) })

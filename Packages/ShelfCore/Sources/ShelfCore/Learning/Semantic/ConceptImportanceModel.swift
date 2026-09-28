@@ -4,6 +4,52 @@ import Foundation
 public struct ConceptImportanceModel: Sendable {
     public init() {}
 
+    /// Everything `sourceScore` reads, prepared once for scoring many questions of one document.
+    struct SourceContext {
+        let index: SemanticIndex
+        let propositions: [String: SemanticProposition]
+        let concepts: [String: SemanticConcept]
+        let claimsBySubject: [String: [SemanticProposition]]
+        let headings: [String]
+        /// Whether a concept name appears in a heading, per concept (a pure function of the name).
+        let headed: [String: Bool]
+
+        init(index: SemanticIndex, analysis: DocumentAnalysis?, scoring questions: [LearningQuestion]? = nil) {
+            self.index = index
+            var propositions: [String: SemanticProposition] = [:]
+            for proposition in index.propositions where propositions[proposition.id] == nil { propositions[proposition.id] = proposition }
+            self.propositions = propositions
+            var concepts: [String: SemanticConcept] = [:]
+            for concept in index.concepts where concepts[concept.id] == nil { concepts[concept.id] = concept }
+            self.concepts = concepts
+            claimsBySubject = Dictionary(grouping: index.propositions, by: \.subjectID)
+            let headings = (analysis?.pages.flatMap(\.segments) ?? []).filter { $0.kind == .heading }.map(\.text)
+            self.headings = headings
+            var headed: [String: Bool] = [:]
+            let needed = questions.map { questions in
+                Set(questions.compactMap { $0.propositionID.flatMap { propositions[$0]?.subjectID } })
+            }
+            for concept in index.concepts where headed[concept.canonicalName] == nil && needed.map({ $0.contains(concept.id) }) ?? true {
+                headed[concept.canonicalName] = headings.contains { $0.localizedCaseInsensitiveContains(concept.canonicalName) }
+            }
+            self.headed = headed
+        }
+
+        func score(_ question: LearningQuestion) -> Double {
+            guard let id = question.propositionID, let proposition = propositions[id],
+                  let concept = concepts[proposition.subjectID] else { return question.qualityScore }
+            let claims = claimsBySubject[concept.id] ?? []
+            let pages = Set(claims.map { $0.evidence.pageIndex }).count
+            let heading = headed[concept.canonicalName] ?? headings.contains { $0.localizedCaseInsensitiveContains(concept.canonicalName) }
+            let section = proposition.evidence.sectionTitle?.localizedCaseInsensitiveContains(concept.canonicalName) == true
+            let density = Set(claims.map(\.relation)).count
+            let definition = claims.contains { $0.relation == .definedAs }
+            return question.qualityScore * 0.55 + (heading ? 0.14 : section ? 0.08 : 0)
+                + (definition ? 0.06 : 0) + min(0.12, Double(claims.count) * 0.025)
+                + min(0.10, Double(pages) * 0.025) + min(0.10, Double(density) * 0.025)
+        }
+    }
+
     public func sourceScore(_ question: LearningQuestion, index: SemanticIndex?, analysis: DocumentAnalysis?) -> Double {
         guard let index, let proposition = index.propositions.first(where: { $0.id == question.propositionID }),
               let concept = index.concepts.first(where: { $0.id == proposition.subjectID }) else { return question.qualityScore }

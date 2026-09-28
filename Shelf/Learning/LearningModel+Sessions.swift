@@ -79,8 +79,19 @@ extension LearningModel {
                            mode: .activeRecall, activities: activities))
     }
 
+    /// Planning chooses and checks the questions a session will ask, which takes a moment on a
+    /// large library, so it runs off the main actor. A second tap while it runs is ignored.
     func startSession(topicID: UUID?, minutes: Int, mode: StudySessionMode = .learn) {
-        begin(planner.plan(snapshot: snapshot, topicID: topicID, minutes: minutes, mode: mode, now: Date()))
+        guard planningTask == nil else { return }
+        let snapshot = snapshot, knowledge = readyKnowledge, planner = planner
+        planningTask = Task { [weak self] in
+            let session = await Task.detached(priority: .userInitiated) {
+                planner.plan(snapshot: snapshot, knowledge: knowledge, topicID: topicID, minutes: minutes, mode: mode, now: Date())
+            }.value
+            guard let self else { return }
+            planningTask = nil
+            if activeSession == nil { begin(session) }
+        }
     }
 
     func selectAnswer(_ id: UUID) {
@@ -97,11 +108,12 @@ extension LearningModel {
         play(.answerCommitted)
         if let question = currentQuestion {
             play(selectedAnswerID == question.correctOptionID ? .answerCorrect : .answerIncorrect)
+            explainChosenOption(question)
             if let analysis = snapshot.analyses[question.source.documentID],
                let source = IntelligenceSource(source: question.source, analysis: analysis) {
                 Task {
                     do { try await repository.storeUnderstandingEvent(.init(kind: .answeredQuestion, source: source))
-                        snapshot = try await repository.snapshot()
+                        try await refreshSnapshot()
                     } catch { errorMessage = "Could not save this learning event." }
                 }
             }
@@ -117,11 +129,14 @@ extension LearningModel {
         guard let object = currentObject else { advance(); return }
         let correct = currentQuestion.map { $0.correctOptionID == selectedAnswerID }
         let responseTime = activityStartedAt.map { Date().timeIntervalSince($0) }
+        let now = Date()
+        let evidence = await adaptiveEvidence(for: object, rating: rating, at: now)
         do {
             try await repository.review(objectID: object.id, questionID: currentQuestion?.id,
                                         rating: rating, correct: correct, confidence: selectedConfidence,
-                                        responseTime: responseTime, hintCount: revealedHintCount)
-            snapshot = try await repository.snapshot()
+                                        responseTime: responseTime, hintCount: revealedHintCount, at: now,
+                                        evidence: evidence)
+            try await refreshSnapshot()
             let mastery = snapshot.reviewStates[object.id].map { scheduler.mastery(for: $0, at: Date()) }
             if mastery == .strengthening || mastery == .durable { play(.memoryStrengthened) }
             advance()
@@ -211,57 +226,5 @@ extension LearningModel {
 
     private func sourceKey(_ source: LearningSource) -> String {
         "\(source.documentID.uuidString)|\(source.pageIndex)"
-    }
-
-    func resetActivityState() {
-        recallDraft = ""
-        recallMarkedUnknown = false
-        selectedAnswerID = nil
-        answerCommitted = false
-        selectedConfidence = nil
-        revealedHintCount = 0
-        activityStartedAt = Date()
-    }
-}
-
-@MainActor
-extension LearningModel {
-    var currentSessionAttempts: [LearningAttempt] {
-        let since = sessionStartedAt ?? .distantPast
-        return snapshot.attempts.filter { $0.occurredAt >= since }
-    }
-
-    var shouldOfferEmotionalCheckIn: Bool {
-        #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("--force-emotional-checkin") {
-            return snapshot.emotionalCheckInPreference != .off
-        }
-        #endif
-        return EmotionalCheckInPolicy().shouldOffer(preference: snapshot.emotionalCheckInPreference,
-                                                     attempts: currentSessionAttempts,
-                                                     lastCheckIn: snapshot.emotionalCheckIns.last?.occurredAt)
-    }
-
-    func recordFeeling(_ feeling: StudyFeeling) async {
-        do {
-            try await repository.recordEmotionalCheckIn(EmotionalCheckIn(sessionID: activeSession?.id, feeling: feeling))
-            snapshot = try await repository.snapshot()
-            selectedFeeling = feeling
-            play(.selectionChanged)
-        } catch { errorMessage = error.localizedDescription }
-    }
-
-    func setEmotionalCheckInPreference(_ preference: EmotionalCheckInPreference) async {
-        do {
-            try await repository.setEmotionalCheckInPreference(preference)
-            snapshot = try await repository.snapshot()
-        } catch { errorMessage = error.localizedDescription }
-    }
-
-    func deleteEmotionalCheckIns() async {
-        do {
-            try await repository.deleteEmotionalCheckIns()
-            snapshot = try await repository.snapshot()
-        } catch { errorMessage = error.localizedDescription }
     }
 }

@@ -23,6 +23,8 @@ public struct LearningSnapshot: Codable, Equatable, Sendable {
     public var lensUsage: [String: Int]
     public var understandingAttempts: [UnderstandingAttempt] = []
     public var understandingEvents: [UnderstandingEvent] = []
+    /// What the learner can do with each concept, their live misconceptions and calibration.
+    public var learnerModel = LearnerModelState()
     public var studyObjects: [LearningObject] {
         learningObjects.filter { object in
             guard object.sourceIsStale != true else { return false }
@@ -61,7 +63,7 @@ public struct LearningSnapshot: Codable, Equatable, Sendable {
         case schemaVersion, analyses, semanticIndexes, topics, manualDocumentTopics, learningObjects, questions
         case reviewStates, attempts, confidenceRecords, relationships, trails, masks, recordings, sessions, timeline
         case emotionalCheckIns, emotionalCheckInPreference, resumeStudyContext, lensUsage
-        case understandingAttempts, understandingEvents
+        case understandingAttempts, understandingEvents, learnerModel
     }
 
     public init(from decoder: Decoder) throws {
@@ -88,5 +90,9 @@ public struct LearningSnapshot: Codable, Equatable, Sendable {
         lensUsage = try c.decodeIfPresent([String: Int].self, forKey: .lensUsage) ?? [:]
         understandingAttempts = try c.decodeIfPresent([UnderstandingAttempt].self, forKey: .understandingAttempts) ?? []
         understandingEvents = try c.decodeIfPresent([UnderstandingEvent].self, forKey: .understandingEvents) ?? []
+        // An unreadable learner model must never make the learner's documents, cards and history
+        // unreadable. The model keeps what it cannot read (see LearnerModelState); only a value
+        // that is not even a model restarts empty.
+        learnerModel = (try? c.decodeIfPresent(LearnerModelState.self, forKey: .learnerModel)) ?? LearnerModelState()
     }
 }

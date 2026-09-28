@@ -15,6 +15,9 @@ final class ReaderIntelligenceModel {
     var attempt: UnderstandingAttempt
     var connections: [GroundedConnection] = []
     let activity: ActivityDefinition?
+    /// Whether the page's own grounded claims make this passage comparable (V34), known in
+    /// milliseconds from this page alone.
+    let groundedTeachable: Bool
     var inferring = false
     var message: String?
     var readerRoute: IntelligenceReaderRoute?
@@ -34,8 +37,12 @@ final class ReaderIntelligenceModel {
                 sectionTitle: source.packet.sectionTitle), analysis: $0)
         }
         activity = (pageSource ?? source).claims.isEmpty ? nil : ActivityValidator.definition(for: pageSource ?? source)
+        let local = learning.snapshot.analyses[source.packet.documentID].map {
+            ConceptKnowledgeCompiler().compile($0, pageIndices: [source.packet.pageIndex])
+        } ?? .empty
+        groundedTeachable = DiagnosisTarget.passage(source.passage, in: local) != nil
     }
-    var canTeach: Bool { !source.claims.isEmpty }
+    var canTeach: Bool { groundedTeachable || !source.claims.isEmpty }
     var sourceLabel: String {
         (learning.library.snapshot.activeBooks.first { $0.id == source.packet.documentID }?.title ?? "Source") + " · p. \(source.packet.pageIndex + 1)"
     }
@@ -70,7 +77,7 @@ final class ReaderIntelligenceModel {
                 pendingSave = nil
                 do {
                     try await repository.storeUnderstandingAttempt(latest)
-                    learning.snapshot = try await repository.snapshot()
+                    try await learning.refreshSnapshot()
                 } catch { message = "This thought could not be saved. Your text is still here." }
             }
         }
@@ -83,6 +90,26 @@ final class ReaderIntelligenceModel {
         request = Task { [weak self] in
             guard let self else { return }
             defer { if revision == token { request = nil; inferring = false } }
+            // V34: the explanation read against the passage's grounded claims, on this device,
+            // without a model. The earlier comparison remains for passages without such claims.
+            if groundedTeachable, let analysis = learning.snapshot.analyses[source.packet.documentID] {
+                inferring = true
+                let knowledge = await learning.knowledge(for: analysis)
+                guard !Task.isCancelled, revision == token, source.isCurrent(in: learning.snapshot.analyses) else { return }
+                if let result = TeachBack.assess(text, source: source, knowledge: knowledge) {
+                    attempt.result = result
+                    persistDraft()
+                    if let diagnosis = result.diagnosis {
+                        // Keyed to this attempt: comparing it again after an edit is not new evidence.
+                        let evidence = LearnerEvidenceMapper(knowledge: knowledge).evidence(from: diagnosis, documentID: source.packet.documentID,
+                                                                                            identity: attempt.id.uuidString, at: Date())
+                        do { try await learning.repository.recordEvidence(evidence); try await learning.refreshSnapshot() }
+                        catch { message = "What this explanation shows could not be saved. Your text is still here." }
+                    }
+                    await record(.taughtConcept)
+                    return
+                }
+            }
             let availability = await learning.intelligenceProvider.availability()
             learning.intelligenceCapability = IntelligenceCapabilityReport(availability: availability)
             if availability != .available { message = IntelligenceCapabilityReport.fallbackMessage }
@@ -111,7 +138,7 @@ final class ReaderIntelligenceModel {
     func record(_ kind: UnderstandingEvent.Kind, citation: IntelligenceSource? = nil) async {
         do {
             try await learning.repository.storeUnderstandingEvent(.init(kind: kind, source: citation ?? source))
-            learning.snapshot = try await learning.repository.snapshot()
+            try await learning.refreshSnapshot()
         } catch { message = "The learning event could not be saved." }
     }
     func viewSource(_ citation: IntelligenceSource? = nil, returningTo title: String) {

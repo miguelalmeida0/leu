@@ -40,12 +40,13 @@ extension LearningModel {
             await previous?.value
             do {
                 try await repository.saveStudyCheckpoint(session: session, context: context)
-                let saved = try await repository.snapshot()
+                let saved = try await repository.revisionedSnapshot()
                 guard let self, studySaveRevision == revision else { return }
-                snapshot = saved
+                // A rating saved after this checkpoint may already be on screen; never step back.
+                if snapshotGate.admit(saved.revision) { snapshot = saved.snapshot }
                 isSavingStudyState = false
                 StudyInteractionTrace.record("study.checkpoint.saved")
-                StudyInteractionTrace.record("study.checkpoint question=\(String(describing: context?.questionID)) bank=\(saved.questions.count)")
+                StudyInteractionTrace.record("study.checkpoint question=\(String(describing: context?.questionID)) bank=\(saved.snapshot.questions.count)")
             } catch {
                 guard let self, studySaveRevision == revision else { return }
                 isSavingStudyState = false

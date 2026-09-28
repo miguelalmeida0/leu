@@ -32,7 +32,7 @@ extension LearningModel {
                                                   title: title.isEmpty ? "Learning item" : title,
                                                   prompt: prompt, topicIDs: topicIDs,
                                                   importance: 0.68, origin: .userSelection)
-        snapshot = try await repository.snapshot()
+        try await refreshSnapshot()
         return object
     }
 
@@ -67,7 +67,7 @@ extension LearningModel {
         try await repository.saveMask(DiagramMask(learningObjectID: object.id, source: object.source,
                                                   regions: regions,
                                                   label: cleanLabel.isEmpty ? nil : cleanLabel))
-        snapshot = try await repository.snapshot()
+        try await refreshSnapshot()
         play(.objectCaptured)
     }
 
@@ -84,20 +84,20 @@ extension LearningModel {
         let recording = ExplanationRecording(learningObjectID: object.id, filename: url.lastPathComponent,
                                              duration: duration, selfRating: rating)
         try await repository.saveRecording(recording)
-        snapshot = try await repository.snapshot()
+        try await refreshSnapshot()
     }
 
     func setManualTopics(documentID: UUID, topicIDs: Set<UUID>) async {
         do {
             try await repository.setManualTopics(documentID: documentID, topicIDs: topicIDs)
-            snapshot = try await repository.snapshot()
+            try await refreshSnapshot()
         } catch { errorMessage = error.localizedDescription }
     }
 
     func addTopic(name: String) async -> LearningTopic? {
         do {
             let topic = try await repository.addTopic(name: name)
-            snapshot = try await repository.snapshot()
+            try await refreshSnapshot()
             return topic
         } catch {
             errorMessage = error.localizedDescription
@@ -110,7 +110,7 @@ extension LearningModel {
         guard !clean.isEmpty else { return }
         do {
             _ = try await repository.saveTrail(LearningTrail(title: clean))
-            snapshot = try await repository.snapshot()
+            try await refreshSnapshot()
         } catch { errorMessage = error.localizedDescription }
     }
 }

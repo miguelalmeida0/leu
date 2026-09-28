@@ -44,6 +44,13 @@ struct QuestionFeedbackView: View {
                  : "The page supports a different answer. Compare the two below.")
                 .font(.caption).foregroundStyle(ShelfTheme.secondary)
                 .fixedSize(horizontal: false, vertical: true)
+            if !matchesSource, let note = model.answerFeedbackNote {
+                // What the chosen option is, traced to the source's own words.
+                Text(note)
+                    .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("question-distractor-note")
+            }
         }
         .accessibilityIdentifier("question-your-answer")
     }

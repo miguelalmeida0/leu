@@ -9,9 +9,15 @@ public enum DerivedExtractionMigration {
         }.map(\.documentID))
         var changed = false
         let count = snapshot.questions.count
+        // As in a fresh compile: one prompt stored with two different answers cannot be answered
+        // from the prompt alone. Semantic questions only; the V3 contract is untouched.
+        let semantic = Dictionary(grouping: snapshot.questions.filter { $0.stableKey.hasPrefix("semantic|") }, by: \.source.documentID)
+        let ambiguous = Set(semantic.flatMap { documentID, questions in SemanticStemGate.ambiguousPrompts(questions).map { "\(documentID)|\($0)" } })
         snapshot.questions.removeAll { question in
             outdated.contains(question.source.documentID) ||
-                FinalMCQAdmission.rejectionReason(question, analysis: snapshot.analyses[question.source.documentID]) != nil
+                FinalMCQAdmission.rejectionReason(question, analysis: snapshot.analyses[question.source.documentID]) != nil ||
+                (question.stableKey.hasPrefix("semantic|") &&
+                    ambiguous.contains("\(question.source.documentID)|\(CanonicalWhitespaceResolver.normalize(question.prompt).lowercased())"))
         }
         changed = snapshot.questions.count != count
         for id in outdated {

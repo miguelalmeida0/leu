@@ -14,6 +14,10 @@ enum StudyCheckpointMutation {
     }
 
     static func storeSession(_ session: StudySession, in snapshot: inout LearningSnapshot) {
+        var session = session
+        // A finished session is history, rewritten with every save: its grounded questions were
+        // needed only to resume it.
+        if session.completedAt != nil { for index in session.activities.indices { session.activities[index].probe = nil } }
         let existing = snapshot.sessions.firstIndex(where: { $0.id == session.id })
         let wasComplete = existing.map { snapshot.sessions[$0].completedAt != nil } ?? false
         if let existing { snapshot.sessions[existing] = session }
