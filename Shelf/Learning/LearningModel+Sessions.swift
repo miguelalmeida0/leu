@@ -81,16 +81,32 @@ extension LearningModel {
 
     /// Planning chooses and checks the questions a session will ask, which takes a moment on a
     /// large library, so it runs off the main actor. A second tap while it runs is ignored.
+    /// A plan begins only if it was made from the snapshot that is current when it is ready:
+    /// indexing, an upsert or a refresh during planning discards it and planning starts again.
     func startSession(topicID: UUID?, minutes: Int, mode: StudySessionMode = .learn) {
         guard planningTask == nil else { return }
-        let snapshot = snapshot, knowledge = readyKnowledge, planner = planner
+        let entries = knowledgeByDocument, planner = planner, repository = repository
         planningTask = Task { [weak self] in
-            let session = await Task.detached(priority: .userInitiated) {
-                planner.plan(snapshot: snapshot, knowledge: knowledge, topicID: topicID, minutes: minutes, mode: mode, now: Date())
-            }.value
-            guard let self else { return }
-            planningTask = nil
-            if activeSession == nil { begin(session) }
+            defer { self?.planningTask = nil }
+            for _ in 0..<3 {
+                let planned = try? await CurrentStudyPlan.make(from: repository) { snapshot in
+                    await Task.detached(priority: .userInitiated) {
+                        // Only knowledge compiled from exactly this snapshot's analyses.
+                        let knowledge = ConceptKnowledgeBase.merged(entries.filter { documentID, entry in
+                            snapshot.analyses[documentID].map { ConceptKnowledgeCache.key($0) == entry.key } == true
+                        }.sorted { $0.key.uuidString < $1.key.uuidString }.map(\.value.base))
+                        return planner.plan(snapshot: snapshot, knowledge: knowledge, topicID: topicID, minutes: minutes, mode: mode, now: Date())
+                    }.value
+                }
+                guard let self else { return }
+                guard let planned else { break }
+                if snapshotGate.admit(planned.source.revision) { snapshot = planned.source.snapshot }
+                // A newer snapshot reached the screen after the plan was checked: plan again.
+                guard snapshotGate.applied == planned.source.revision else { continue }
+                if activeSession == nil { begin(planned.session) }
+                return
+            }
+            self?.errorMessage = "Your library changed while this session was being prepared. Start it again."
         }
     }
 

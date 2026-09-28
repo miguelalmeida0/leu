@@ -110,6 +110,12 @@ public struct MisconceptionRecord: Codable, Equatable, Sendable, Identifiable {
     }
 }
 
+/// One applied piece of evidence, remembered for a while by id.
+public struct AppliedEvidence: Codable, Equatable, Sendable {
+    public let id: String
+    public let at: Date
+}
+
 /// Everything Leu has learned about the learner. Persisted inside `LearningSnapshot` and
 /// updated in the same transaction as the attempt it derives from. Bounded.
 public struct LearnerModelState: Codable, Equatable, Sendable {
@@ -122,39 +128,48 @@ public struct LearnerModelState: Codable, Equatable, Sendable {
     public var calibration: CalibrationProfile
     public var recentProbes: [ProbeRecord]
     public var objective: RemediationObjective?
-    /// Recently applied evidence, so a retried save never counts twice.
-    public var appliedEvidenceIDs: [String]
-    /// A model this Leu cannot read — written by a newer Leu, or damaged — kept as it is so
-    /// nothing that cannot be rebuilt is ever overwritten.
+    /// Recently applied evidence (id and time), so a retried save never counts twice.
+    public internal(set) var appliedEvidence: [AppliedEvidence]
+    /// The latest time of any evidence that has left `appliedEvidence`. Evidence this old or
+    /// older can no longer be recognised by id, so it is refused: replaying an old answer after
+    /// any number of later answers never counts it again, and the record stays bounded.
+    public internal(set) var evidenceWatermark: Date?
+    public var appliedEvidenceIDs: [String] { appliedEvidence.map(\.id) }
+    /// A model this Leu cannot read — written by a newer Leu, damaged, or not even an object —
+    /// kept as it is so nothing that cannot be rebuilt is ever overwritten.
     private var preserved: PreservedJSON?
 
     public init(version: Int = LearnerModelState.currentVersion, concepts: [ConceptMastery] = [], misconceptions: [MisconceptionRecord] = [],
                 calibration: CalibrationProfile = CalibrationProfile(), recentProbes: [ProbeRecord] = [],
-                objective: RemediationObjective? = nil, appliedEvidenceIDs: [String] = []) {
+                objective: RemediationObjective? = nil) {
         self.version = version; self.concepts = concepts; self.misconceptions = misconceptions; self.calibration = calibration
-        self.recentProbes = recentProbes; self.objective = objective; self.appliedEvidenceIDs = appliedEvidenceIDs
+        self.recentProbes = recentProbes; self.objective = objective; appliedEvidence = []
     }
 
-    private enum CodingKeys: String, CodingKey { case version, concepts, misconceptions, calibration, recentProbes, objective, appliedEvidenceIDs }
+    private enum CodingKeys: String, CodingKey {
+        case version, concepts, misconceptions, calibration, recentProbes, objective, appliedEvidence, evidenceWatermark
+    }
 
     public init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        version = try c.decodeIfPresent(Int.self, forKey: .version) ?? 1
-        guard version <= Self.currentVersion else {
-            concepts = []; misconceptions = []; calibration = CalibrationProfile(); recentProbes = []; objective = nil; appliedEvidenceIDs = []
-            preserved = try PreservedJSON(from: decoder)
-            return
-        }
+        version = Self.currentVersion; concepts = []; misconceptions = []; calibration = CalibrationProfile(); recentProbes = []
+        objective = nil; appliedEvidence = []; evidenceWatermark = nil
         do {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            version = try c.decodeIfPresent(Int.self, forKey: .version) ?? 1
+            // A model from a newer Leu is kept whole even if this Leu could read part of it.
+            guard version <= Self.currentVersion else { preserved = try PreservedJSON(from: decoder); return }
             concepts = try c.decodeIfPresent([ConceptMastery].self, forKey: .concepts) ?? []
             misconceptions = try c.decodeIfPresent([MisconceptionRecord].self, forKey: .misconceptions) ?? []
             calibration = try c.decodeIfPresent(CalibrationProfile.self, forKey: .calibration) ?? CalibrationProfile()
             recentProbes = try c.decodeIfPresent([ProbeRecord].self, forKey: .recentProbes) ?? []
             objective = try c.decodeIfPresent(RemediationObjective.self, forKey: .objective)
-            appliedEvidenceIDs = try c.decodeIfPresent([String].self, forKey: .appliedEvidenceIDs) ?? []
+            appliedEvidence = try c.decodeIfPresent([AppliedEvidence].self, forKey: .appliedEvidence) ?? []
+            evidenceWatermark = try c.decodeIfPresent(Date.self, forKey: .evidenceWatermark)
         } catch {
-            // Unreadable at this version: kept verbatim and left untouched, like a newer model.
-            concepts = []; misconceptions = []; calibration = CalibrationProfile(); recentProbes = []; objective = nil; appliedEvidenceIDs = []
+            // Unreadable at this version — a malformed field, or a value that is not a model
+            // object at all ("corrupt", [1, 2, 3]): kept verbatim and left untouched.
+            version = Self.currentVersion; concepts = []; misconceptions = []; calibration = CalibrationProfile(); recentProbes = []
+            objective = nil; appliedEvidence = []; evidenceWatermark = nil
             preserved = try PreservedJSON(from: decoder)
         }
     }
@@ -168,7 +183,8 @@ public struct LearnerModelState: Codable, Equatable, Sendable {
         try c.encode(calibration, forKey: .calibration)
         try c.encode(recentProbes, forKey: .recentProbes)
         try c.encodeIfPresent(objective, forKey: .objective)
-        try c.encode(appliedEvidenceIDs, forKey: .appliedEvidenceIDs)
+        try c.encode(appliedEvidence, forKey: .appliedEvidence)
+        try c.encodeIfPresent(evidenceWatermark, forKey: .evidenceWatermark)
     }
 
     public var isEmpty: Bool { concepts.isEmpty && misconceptions.isEmpty }

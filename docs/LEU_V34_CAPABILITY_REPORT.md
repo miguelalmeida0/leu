@@ -60,7 +60,7 @@ of the learner's PDF.
 
 | Measure | Baseline (`bf7c5cb`) | V34 |
 |---|---|---|
-| ShelfCore tests (Linux, Swift 6.1.3) | 320 (after 2 test-portability edits), 0 failures | **419**, 0 failures |
+| ShelfCore tests (Linux, Swift 6.1.3) | 320 (after 2 test-portability edits), 0 failures | **423**, 0 failures |
 | Compiler warnings (clean build) | 0 | 0 |
 | Diagnosis — dev, actionable | 5/49 (10%) | **45/49 (92%)** |
 | Diagnosis — held-out, actionable | 6/43 (14%) | **24/43 (56%) blind first run**; 32/43 (74%) after fixes (non-blind) |
@@ -96,7 +96,7 @@ reach), **limited** (honest constraint noted).
 | 8 | Retrieval practice | delivered | `RetrievalPriority` combines misconception salience, weakness, recent confident errors and forgetting; it is zero without evidence, so old plans are unchanged. Open-recall probes are attached to recall activities, the typed recall is compared with the source, and the reveal shows the sentences that answer the question. |
 | 9 | Better explanation strategies | delivered | `InterventionPlanner` produces one smallest next step from fixed templates plus source or learner words. It can correct a contradiction by showing the source sentence, contrast two concepts, qualify an overgeneralisation, ask for a missing condition, cue a missing idea without revealing it, ask for a rephrase without the name, ask for the learner's own words, or deepen. Only an explanation covering every key idea is told so. A deepening contrast is offered only with a concept the source sets beside this one or its closest sibling of the same kind. Every step has a grounded follow-up question. |
 | 10 | Learning continuity | delivered | The learner model lives in `LearningSnapshot` (optional key; legacy snapshots decode). Objectives and misconceptions carry over between sessions, and probes and detours survive checkpoints. |
-| 11 | Failure resilience / stale requests | delivered | Repository revision plus `SnapshotRevisionGate` on every learning refresh, including the checkpoint path (defect D7) and the Lens. Evidence is committed atomically with its review and never counted twice; re-comparing the same Teach It Back attempt adds nothing. A learner model this Leu cannot read (damaged, or written by a newer Leu) is kept verbatim and never modified; the stored shape is pinned to its version by a test. |
+| 11 | Failure resilience / stale requests | delivered | Repository revision plus `SnapshotRevisionGate` on every learning refresh, including the checkpoint path (defect D7) and the Lens. Evidence is committed atomically with its review and never counted twice: recent evidence is recognised by id, older evidence by a time watermark, and a Teach It Back attempt, stored in the same transaction, remembers that it was counted. A learner model this Leu cannot read (damaged, not even an object, or written by a newer Leu) is kept verbatim and never modified; the stored shape is pinned to its version by a test. A session plan is used only if no write happened while it was made. |
 | 12 | Generation quality gates | delivered | `ProbeValidator` checks rubric existence, current evidence, leakage, prompt shape, unresolved references, option validity, answer ≠ distractor, distractors not named in quotes, and quoted text that would single out the answer (a word of it no distractor shares, or its acronym spelled out). `SemanticStemGate` catches malformed stems, thin descriptions and fragment options, and a set-level check drops prompts that appear twice with different answers, in fresh compiles and in stored banks. |
 | 13 | Question diversity | delivered | `ProbeDiversity`: no prompt repeats until the others have been asked, the same kind of question is never asked three times running, and no duplicate probe appears within a session. |
 | 14 | Confidence calibration | delivered | `CalibrationProfile` is built from objectively scored choice answers only. Confident errors raise retrieval priority, and an overconfident learner gets explanation rather than recognition questions. |
@@ -344,15 +344,25 @@ password hashing.
 * **Main actor.** Session planning and answer analysis run off the main actor: tracing a
   wrong option, comparing typed recall, and turning an answer into evidence. A result is
   applied only if the learner is still on the same activity. A second tap on *Start*
-  while planning is ignored.
+  while planning is ignored. A plan is kept only if the repository revision it was made
+  from is still current when it is ready and is the snapshot on screen; indexing, an
+  upsert or a refresh during planning discards it and planning starts again (at most three
+  times, then the learner is asked to start again). An outdated plan never begins.
 * **Atomicity and idempotency.** Evidence is applied in the same transaction as its
-  review; a failed save keeps neither (tested). A retried save cannot double count
-  (bounded applied-ID ring), one answer yields one observation, re-comparing the same
-  Teach It Back attempt adds nothing, and evidence for removed documents is ignored.
+  review; a failed save keeps neither (tested). The learner model remembers the last 400
+  applied evidence ids; evidence older than any id it has forgotten is refused by a time
+  watermark, so replaying an old answer after any number of later ones never counts it
+  again, and the record stays bounded. A Teach It Back attempt is stored in the same
+  transaction as its evidence and remembers that it was counted, so comparing it again,
+  however much later, adds nothing. One answer yields one observation, and evidence for
+  removed documents is ignored. The watermark assumes the device clock does not move
+  backwards past it; evidence dated earlier than already forgotten evidence is refused.
 * **Persistence safety.**
   * Legacy snapshots decode with an empty learner model.
-  * A learner model this Leu cannot read, damaged or written by a newer Leu, is kept
-    verbatim and never modified. A test pins the stored shape to the model's version, so
+  * A learner model this Leu cannot read is kept verbatim and never modified: a
+    malformed field, a malformed version, a value that is not an object at all
+    ("corrupt", `[1, 2, 3]`), or a model written by a newer Leu. A missing or null model
+    (a legacy snapshot) becomes an empty, writable one. A test pins the stored shape to the model's version, so
     a future change must bump it.
   * StudySession checkpoints written before V34 still resume; finished sessions are
     stored without their questions, keeping history small.
@@ -390,7 +400,7 @@ builds will differ; no device numbers are claimed.
 | — with six books sharing concept names | — | 1.05 s [0.47–0.57 s]: no growth with library size |
 | Diagnose one explanation (concept card with neighbours) | — | ≈0.1 s; input bounded to 4 000 characters |
 | Trace a chosen wrong option to the source | — | 0.33 s for a sentence option, 4 ms for a concept name; off the main actor |
-| Full ShelfCore test suite | 24.6 s (320 tests) | 98 s (419 tests; corpus-level quality tests included) |
+| Full ShelfCore test suite | 24.6 s (320 tests) | 121 s (423 tests; corpus-level quality tests included) |
 
 Planning does more work than before (it chooses and checks a grounded question for each
 activity), but the learner no longer waits on it: before V34 the whole plan ran on the
@@ -400,13 +410,13 @@ main actor.
 
 ## 9. Test results
 
-* ShelfCore: **419 tests, 0 failures**, on a clean build with 0 warnings.
-  New tests (99):
+* ShelfCore: **423 tests, 0 failures**, on a clean build with 0 warnings.
+  New tests (103):
 
   | Suite | Tests | Covers |
   |---|---|---|
-  | LearnerModelTests | 21 | mastery vs one lucky answer, spacing vs cramming, decay, capped levels, misconception retirement on two distinct days, retirement only by checked answers about the same idea, confusion retired only by telling the same pair apart, salience decay, retrieval priority, calibration, idempotency, detour return, bounds, legacy/unreadable/future-version models, stored shape pinned to the version |
-  | LearnerEvidenceTests + LearnerRepositoryTests | 13 | question → concept, sibling choice → confusion, reversed sentence → contradiction, untraceable distractor → nothing, explanation → evidence, one recall = one observation, same attempt counted once, self-rating at half weight, atomic commit with review, failed save keeps nothing, retries counted once, stale snapshot rejected, detour persisted only for known documents |
+  | LearnerModelTests | 23 | every unreadable learner model preserved verbatim (malformed, not an object, future) while missing/null starts empty, old evidence refused after the id record moved on, mastery vs one lucky answer, spacing vs cramming, decay, capped levels, misconception retirement on two distinct days, retirement only by checked answers about the same idea, confusion retired only by telling the same pair apart, salience decay, retrieval priority, calibration, idempotency, detour return, bounds, legacy/unreadable/future-version models, stored shape pinned to the version |
+  | LearnerEvidenceTests + LearnerRepositoryTests | 15 | a plan made while the library changed is never used, a Teach It Back attempt counts once even after 450 later answers, question → concept, sibling choice → confusion, reversed sentence → contradiction, untraceable distractor → nothing, explanation → evidence, one recall = one observation, same attempt counted once, self-rating at half weight, atomic commit with review, failed save keeps nothing, retries counted once, stale snapshot rejected, detour persisted only for known documents |
   | ProbeEngineTests | 14 | every probe on the manual grounded, answerable and leak-free (an independent check that no quote contains the answer's own words), rejection of ungrounded, stale and leaking probes, natural prompts for every name shape (HTTP, "never", Title Case names, clausal subjects), open probes graded against their own rubric, scripted learners (new concept climbs, misconception retested until retired, confusion retired through the selector's own contrasts, prerequisite detour and return, abandoned detour expires, overconfidence → explanation, variety) |
   | AdaptivePlannerTests | 7 | no knowledge = exactly the old plan, misconception first, no repeats, question matches its passage and the reveal holds its answer, a second book with the same names changes nothing, checkpoint round trip, finished sessions stored without questions |
   | SemanticBankQualityTests | 7 | baseline malformed stems rejected, good stems kept, ambiguous prompts dropped in fresh and stored banks, V3 untouched, manual bank fast and deterministic |
@@ -463,8 +473,8 @@ main actor.
   * Self-rated recall is evidence at half weight: the learner's own read, not a verdict.
   * Teach It Back counts the first comparison of each attempt; later comparisons of the
     same attempt, made after seeing the source, add nothing.
-  * Teach It Back evidence and the attempt are saved in two transactions. Because the
-    evidence is keyed to the attempt, a retry cannot count it twice.
+  * Evidence dated earlier than evidence the learner model has already forgotten by id
+    is refused (a clock set backwards could drop a genuine answer).
 * **Legacy code kept.** V27's hardcoded React identity paraphrase and `ActivityValidator`
   are unchanged. V34 supersedes the former on the product path, but it is kept for V27's
   contract tests and as a fallback. `ActivityValidator` still recognises two literal
@@ -587,10 +597,32 @@ were fixed before the commit; the table names the test that covers each fix:
 | Minor: planning took ≈1 s on the main actor, growing with library size | Off the main actor; per-document knowledge removed the growth | measured, §8 |
 | Minor: `setRemediationObjective` was unused | Removed; detours are installed only with the answer that starts them | LearnerRepositoryTests |
 
-Two points were reviewed and deliberately left as they are. "Distinct days" follow the
-device time zone, because they are the learner's days. Teach It Back evidence and its
-attempt are saved in separate transactions, because keying the evidence to the attempt
-already prevents double counting.
+One point was reviewed and deliberately left as it is: "distinct days" follow the device
+time zone, because they are the learner's days. (Teach It Back evidence and its attempt,
+first left in separate transactions, are now saved together; see the follow-up audit.)
+
+**Follow-up audit (after the handoff branch).** An independent audit of the pushed branch
+found three more problems. All are fixed, each with a regression test:
+
+| Finding | Fix | Test |
+|---|---|---|
+| An off-main session plan could begin after indexing or a refresh had changed the snapshot it was made from | `CurrentStudyPlan` plans from the repository's revisioned snapshot and keeps the plan only if the revision is unchanged when planning ends; the app also requires that revision to be the one on screen, re-plans otherwise, and never begins an outdated plan | LearnerRepositoryTests (a write during planning forces a re-plan; constant writes yield no plan) |
+| Evidence idempotency covered only the last 400 ids | A time watermark refuses evidence older than any forgotten id; Teach It Back attempts record that they were counted, in the same transaction as their evidence | LearnerModelTests (old evidence replayed after 450 later answers), LearnerRepositoryTests (an attempt re-compared after 450 answers) |
+| A learner model that was valid JSON but not an object (`"corrupt"`, `[1,2,3]`) fell back to a new writable model and could be overwritten | Any present but unreadable value is preserved verbatim; only missing or null becomes an empty writable model | LearnerModelTests (malformed field, malformed version, future version, string, array, number, missing, null) |
+
+Files changed by the follow-up (a second local commit on the same branch; §5 and §12 describe the first):
+
+- `Packages/ShelfCore/Sources/ShelfCore/Learning/Intelligence/UnderstandingMemory/IntelligenceSource.swift`
+- `Packages/ShelfCore/Sources/ShelfCore/Learning/Memory/LearnerModel/LearnerModelReducer.swift`
+- `Packages/ShelfCore/Sources/ShelfCore/Learning/Memory/LearnerModel/LearnerModelState.swift`
+- `Packages/ShelfCore/Sources/ShelfCore/Learning/Persistence/LearningRepository+Intelligence.swift`
+- `Packages/ShelfCore/Sources/ShelfCore/Learning/Sessions/CurrentStudyPlan.swift`
+- `Packages/ShelfCore/Tests/ShelfCoreTests/V34/LearnerEvidenceTests.swift`
+- `Packages/ShelfCore/Tests/ShelfCoreTests/V34/LearnerModelPersistenceTests.swift` (new: storage tests split out to stay under the 300-line file boundary)
+- `Packages/ShelfCore/Tests/ShelfCoreTests/V34/LearnerModelTests.swift`
+- `Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift`
+- `Shelf/Learning/LearningModel+Sessions.swift`
+- `docs/LEU_V34_CAPABILITY_REPORT.md`
 
 **As a staff engineer**
 

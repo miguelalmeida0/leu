@@ -49,6 +49,8 @@ public struct UnderstandingAttempt: Codable, Equatable, Sendable, Identifiable {
     public var result: TeachLeuResult?
     public let createdAt: Date
     public var resolved: Bool
+    /// When what this attempt shows was added to the learner model. An attempt counts once.
+    public var evidenceRecordedAt: Date?
     public var supportedClaimIDs: [String] { result?.supported.map(\.claimID) ?? [] }
     public var omittedClaimIDs: [String] { result?.omitted.map(\.id) ?? [] }
     public var challengedClaimIDs: [String] { result?.challenged.compactMap(\.sourceClaimID) ?? [] }

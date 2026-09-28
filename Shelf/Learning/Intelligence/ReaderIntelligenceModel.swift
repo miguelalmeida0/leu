@@ -100,10 +100,11 @@ final class ReaderIntelligenceModel {
                     attempt.result = result
                     persistDraft()
                     if let diagnosis = result.diagnosis {
-                        // Keyed to this attempt: comparing it again after an edit is not new evidence.
+                        // Committed with the attempt, which remembers it was counted: comparing it
+                        // again after an edit, however much later, is not new evidence.
                         let evidence = LearnerEvidenceMapper(knowledge: knowledge).evidence(from: diagnosis, documentID: source.packet.documentID,
                                                                                             identity: attempt.id.uuidString, at: Date())
-                        do { try await learning.repository.recordEvidence(evidence); try await learning.refreshSnapshot() }
+                        do { try await learning.repository.recordEvidence(evidence, for: attempt); try await learning.refreshSnapshot() }
                         catch { message = "What this explanation shows could not be saved. Your text is still here." }
                     }
                     await record(.taughtConcept)

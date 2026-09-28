@@ -205,4 +205,67 @@ final class LearnerRepositoryTests: XCTestCase {
         let unchanged = try await repository.snapshot().learnerModel.objective
         XCTAssertEqual(unchanged?.objective, evidence.concept, "evidence about a removed document changes nothing")
     }
+
+    func testATeachBackAttemptCountsOnceEvenAfterTheIDRecordHasMovedOn() async throws {
+        let (repository, _, object, evidence) = try await prepared()
+        let source = try XCTUnwrap(IntelligenceSource(source: object.source, analysis: LearningCorpus.analysis("React Notes")))
+        let attempt = UnderstandingAttempt(source: source, learnerExplanation: "First try.")
+        func explained(at date: Date) -> LearningEvidence {
+            LearningEvidence(concept: evidence.concept, conceptName: evidence.conceptName, operation: .define, outcome: .correct,
+                             channel: .explanation, claimIDs: evidence.claimIDs, occurredAt: date, identity: attempt.id.uuidString)
+        }
+        try await repository.recordEvidence([explained(at: now)], for: attempt)
+        // 450 later answers push the attempt's evidence out of the bounded id record.
+        for chunk in 0..<25 {
+            try await repository.recordEvidence((1...18).map { n in
+                LearningEvidence(concept: evidence.concept, conceptName: evidence.conceptName, operation: .recognizeDefinition, outcome: .correct,
+                                 channel: .choice, occurredAt: now.addingTimeInterval(Double(chunk * 18 + n)))
+            })
+        }
+        let before = try await repository.snapshot()
+        XCTAssertFalse(before.learnerModel.appliedEvidenceIDs.contains(explained(at: now).id))
+        // The same attempt, edited and compared again much later: its evidence has the same id
+        // but a new time, so only the attempt itself can recognise it.
+        var edited = attempt
+        edited.learnerExplanation = "Second try."
+        try await repository.recordEvidence([explained(at: now.addingTimeInterval(86_400))], for: edited)
+        let after = try await repository.snapshot()
+        XCTAssertEqual(after.learnerModel, before.learnerModel, "an attempt never affects mastery twice")
+        XCTAssertEqual(after.understandingAttempts.first { $0.id == attempt.id }?.learnerExplanation, "Second try.")
+        // Saving the draft again (without the mark) never forgets that it was counted.
+        try await repository.storeUnderstandingAttempt(attempt)
+        let saved = try await repository.snapshot().understandingAttempts.first { $0.id == attempt.id }
+        XCTAssertEqual(saved?.evidenceRecordedAt, now)
+    }
+
+    func testAPlanMadeWhileTheLibraryChangedIsNeverUsed() async throws {
+        let (repository, _, _, evidence) = try await prepared()
+        let now = self.now, calls = Counter()
+        let planned = try await CurrentStudyPlan.make(from: repository) { snapshot in
+            // An answer (or indexing) lands while the first plan is being made.
+            if calls.next() == 1 { try? await repository.recordEvidence([evidence]) }
+            return ShelfStudySessionPlanner().plan(snapshot: snapshot, topicID: nil, minutes: 10, now: now)
+        }
+        let result = try XCTUnwrap(planned)
+        XCTAssertEqual(calls.value, 2, "the plan made from the older snapshot was discarded and made again")
+        let revision = await repository.revision
+        XCTAssertEqual(result.source.revision, revision)
+        let current = try await repository.snapshot()
+        XCTAssertEqual(result.source.snapshot.learnerModel, current.learnerModel, "the plan comes from the current snapshot")
+        // A library that changes during every attempt yields no plan rather than an outdated one.
+        let never = try await CurrentStudyPlan.make(from: repository) { snapshot in
+            let n = calls.next()
+            try? await repository.recordEvidence([LearningEvidence(concept: evidence.concept, conceptName: evidence.conceptName,
+                operation: .define, outcome: .correct, channel: .choice, occurredAt: now.addingTimeInterval(Double(n)))])
+            return ShelfStudySessionPlanner().plan(snapshot: snapshot, topicID: nil, minutes: 10, now: now)
+        }
+        XCTAssertNil(never)
+    }
+}
+
+private final class Counter: @unchecked Sendable {
+    private let lock = NSLock()
+    private var count = 0
+    var value: Int { lock.withLock { count } }
+    func next() -> Int { lock.withLock { count += 1; return count } }
 }

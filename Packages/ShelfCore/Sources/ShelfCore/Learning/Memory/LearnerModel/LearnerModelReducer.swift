@@ -13,7 +13,9 @@ public struct LearnerModelReducer: Sendable {
     /// Returns false when nothing changed (a duplicate, or a model written by a newer Leu).
     @discardableResult
     public func apply(_ evidence: LearningEvidence, to state: inout LearnerModelState) -> Bool {
-        guard state.isWritable, !state.appliedEvidenceIDs.contains(evidence.id) else { return false }
+        guard state.isWritable, !state.appliedEvidence.contains(where: { $0.id == evidence.id }) else { return false }
+        // Older than anything the id record still remembers: it may already have been counted.
+        if let watermark = state.evidenceWatermark, evidence.occurredAt <= watermark { return false }
         let now = evidence.occurredAt
         if state.objective == nil, let objective = evidence.startsObjective { state.objective = objective }
         updateMastery(evidence, in: &state)
@@ -26,7 +28,7 @@ public struct LearnerModelReducer: Sendable {
                                                   askedAt: now, outcome: evidence.outcome))
         }
         updateObjective(evidence, in: &state)
-        state.appliedEvidenceIDs.append(evidence.id)
+        state.appliedEvidence.append(AppliedEvidence(id: evidence.id, at: evidence.occurredAt))
         bound(&state)
         return true
     }
@@ -124,8 +126,11 @@ public struct LearnerModelReducer: Sendable {
         if state.recentProbes.count > LearnerModelState.probeLimit {
             state.recentProbes.removeFirst(state.recentProbes.count - LearnerModelState.probeLimit)
         }
-        if state.appliedEvidenceIDs.count > LearnerModelState.evidenceIDLimit {
-            state.appliedEvidenceIDs.removeFirst(state.appliedEvidenceIDs.count - LearnerModelState.evidenceIDLimit)
+        if state.appliedEvidence.count > LearnerModelState.evidenceIDLimit {
+            let evicted = state.appliedEvidence.prefix(state.appliedEvidence.count - LearnerModelState.evidenceIDLimit)
+            // What leaves the id record is still refused, by time.
+            if let latest = evicted.map(\.at).max() { state.evidenceWatermark = max(state.evidenceWatermark ?? latest, latest) }
+            state.appliedEvidence.removeFirst(evicted.count)
         }
         if state.misconceptions.count > LearnerModelState.misconceptionLimit {
             // Resolved records go first, then the oldest.
