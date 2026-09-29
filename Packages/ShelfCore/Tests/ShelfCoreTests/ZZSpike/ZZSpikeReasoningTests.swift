@@ -1,0 +1,70 @@
+import XCTest
+@testable import ShelfCore
+
+// THROWAWAY — V37 capability spike only (branch `test`, never merged into dev before a pass).
+
+/// Weak reasoning scored apart from the state, and V10 (the model's own low confidence).
+final class ZZSpikeReasoningTests: XCTestCase {
+    private typealias S = SpikeSynthetic
+
+    private func item(_ state: String, _ categories: [String], text: String = "JWTs are signed, so nobody can read them.",
+                      concept: String = "JWT") throws -> GeneralizationEvaluation.Case {
+        let json = """
+        {"id": "r-\(abs(text.hashValue))-\(state)", "document": "Mobile Mastery", "concept": "\(concept)", "page": null,
+         "text": \(String(reflecting: text)), "state": "\(state)", "misconceptions": [], "credits": [],
+         "categories": \(String(reflecting: categories)),
+         "paraphraseGroup": null}
+        """
+        return try JSONDecoder().decode(GeneralizationEvaluation.Case.self, from: Data(json.utf8))
+    }
+
+    /// A misconception can also carry a reasoning fault: the state's precedence never hides it.
+    func testGoldReasoningIssuesIgnoreStatePrecedence() throws {
+        XCTAssertTrue(SpikeReasoning.gold(try item("weakReasoning", []), explicit: nil))
+        XCTAssertTrue(SpikeReasoning.gold(try item("misconception", ["wrongConclusionPlausibleReason"]), explicit: nil))
+        XCTAssertTrue(SpikeReasoning.gold(try item("misconception", ["causeVsCorrelation"]), explicit: nil))
+        XCTAssertFalse(SpikeReasoning.gold(try item("misconception", ["negation"]), explicit: nil))
+        XCTAssertFalse(SpikeReasoning.gold(try item("weakReasoning", []), explicit: false), "an explicit label wins")
+    }
+
+    /// "JWTs are signed, so nobody can read them": a plausible reason linked to a wrong conclusion is a
+    /// reasoning issue even though the state is misconception.
+    func testReadingFlagsAWrongConclusionDrawnFromAPlausibleReason() throws {
+        let jwt = try item("misconception", ["wrongConclusionPlausibleReason"])
+        let labels = [S.label(1, "claim-ff95fc8d2fc5f02e", "partiallyEntails", role: "reason"),
+                      S.label(2, S.jwtNotEncrypted, "contradicts", misconception: "m1")]
+        for config in SpikeConfig.allCases {
+            let record = S.record(jwt.id, labels, links: [SpikeLink(reason: 1, conclusion: 2)],
+                                  opinion: S.opinion([("contradiction", 2, "opposite")]))
+            let (linked, spike) = try S.judge(jwt, record: record, config: config)
+            XCTAssertEqual(spike.segments.count, 2, "V35's clause splitter separates \", so\"")
+            XCTAssertEqual(linked.judged.state, "misconception", config.rawValue)
+            XCTAssertTrue(SpikeReasoning.predicted(linked.judged, checked: linked.checked), config.rawValue)
+            let (unlinked, _) = try S.judge(jwt, record: S.record(jwt.id, labels, opinion: S.opinion([("contradiction", 2, "opposite")])), config: config)
+            XCTAssertFalse(SpikeReasoning.predicted(unlinked.judged, checked: unlinked.checked), "no link, no reasoning claim")
+        }
+    }
+
+    /// V10: a label the model itself calls low-confidence is asked about, never written firmly (C, D);
+    /// B trusts the reading as it is.
+    func testV10LowConfidenceIsNeverWrittenFirmly() throws {
+        let text = "It checks that the person is really who they claim to be."
+        let item = S.adHoc(text, concept: "Authentication")
+        let unsure = S.record(item.id, [S.label(1, S.authDefinition, "entails", confidence: "low")], opinion: S.opinion([("credit", 1, "same")]))
+        XCTAssertFalse(try S.judge(item, record: unsure, config: .b).0.judged.asksProbe)
+        for config in [SpikeConfig.c, .d] {
+            let outcome = try S.judge(item, record: unsure, config: config).0
+            XCTAssertTrue(outcome.checked!.fired.contains("V10"), config.rawValue)
+            XCTAssertTrue(outcome.judged.asksProbe)
+            XCTAssertFalse(outcome.judged.recordsMastery)
+        }
+        let denial = S.adHoc("Authentication does not verify identity.", concept: "Authentication")
+        let unsureDenial = S.record(denial.id, [S.label(1, S.authDefinition, "contradicts", polarity: "negated", confidence: "low")],
+                                    opinion: S.opinion([("contradiction", 1, "opposite")]))
+        let doubted = try S.judge(denial, record: unsureDenial, config: .d).0
+        XCTAssertTrue(doubted.judged.asksProbe)
+        XCTAssertFalse(doubted.judged.recordsMisconception)
+        let invalid = S.record(item.id, [S.label(1, S.authDefinition, "entails", confidence: "certain")])
+        XCTAssertEqual(try S.judge(item, record: invalid, config: .b).0.fallback, .invalidReading, "V1 checks the value")
+    }
+}

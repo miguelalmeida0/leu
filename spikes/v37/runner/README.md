@@ -55,7 +55,7 @@ sw_vers; xcodebuild -version; sysctl -n hw.model; swift --version
 (cd spikes/v37/runner && swift build -c release && swift test)          # 8 tests pass
 R=spikes/v37/runner/.build/release/spike-runner
 $R availability                                                          # available
-$R hash --prompts spikes/v37/prompts   # a301def6d16dc1a81e27a51fba1cb719f423d768eae4349d9f9acded87651332
+$R hash --prompts spikes/v37/prompts   # 0ec5cad0d660258d578d169759ab9bc88fc7d5c2ecf366335b71f9f340afadf1
 
 # 3. Gate ciphertexts untouched (no decryption); OpenSSL 3 for the freeze step later
 shasum -a 256 spikes/v37/gate/*.enc                                      # = gate/FINGERPRINTS.txt
@@ -63,7 +63,7 @@ brew install openssl@3 && "$(brew --prefix openssl@3)/bin/openssl" version
 
 # 4. ShelfCore spike tests on macOS (includes the sealed36 reproduction, totals only)
 (cd Packages/ShelfCore && swift test --filter ZZSpike)
-#   20 tests pass; SPIKE|S36|totals only|A coarse 82/160 falseMastery 10/104 harmful 23 probes 114
+#   24 tests pass; SPIKE|S36|totals only|A coarse 82/160 falseMastery 10/104 harmful 23 probes 114
 #                                        | A0 coarse 83/160 falseMastery 11/104 harmful 25 probes 113
 
 # 5. The Mac export equals the Linux reference exports
@@ -84,7 +84,7 @@ $R read --model fake --inputs spikes/v37/inputs/C.json --prompts spikes/v37/prom
    LEU_SPIKE_SCORE_INPUTS=$PWD/../../spikes/v37/inputs/C.json LEU_SPIKE_SCORE_OUT=/tmp/v37-C-fake.score.json \
    swift test --filter ZZSpikeScoreRun)
 #   SPIKE-CANONICAL|B|passed 2/5, C 2/5, D 2/5, as on Linux (the stand-in's readings mean nothing)
-(cd spikes/v37/score && python3 -m unittest test_stats)                  # 10 tests OK
+(cd spikes/v37/score && python3 -m unittest test_stats)                  # 11 tests OK
 ```
 
 ## Step 3 on the Mac (after approval): the development loop on P and C only

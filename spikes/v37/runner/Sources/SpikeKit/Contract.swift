@@ -43,10 +43,12 @@ public struct SpikeAnswerKeyFile: Codable, Sendable {
 public struct SpikeSegmentLabel: Codable, Equatable, Sendable {
     public let n: Int
     public let role, claim, relation, misconception, polarity, specificity, describes: String
+    /// high · medium · low: the model's own confidence in this label.
+    public var confidence: String?
     public init(n: Int, role: String, claim: String, relation: String, misconception: String, polarity: String,
-                specificity: String, describes: String) {
+                specificity: String, describes: String, confidence: String? = nil) {
         self.n = n; self.role = role; self.claim = claim; self.relation = relation; self.misconception = misconception
-        self.polarity = polarity; self.specificity = specificity; self.describes = describes
+        self.polarity = polarity; self.specificity = specificity; self.describes = describes; self.confidence = confidence
     }
 }
 

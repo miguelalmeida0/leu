@@ -1,7 +1,7 @@
 import XCTest
 @testable import ShelfCore
 
-// THROWAWAY — V37 capability spike only (branch `claude/v37-capability-spike`, never merged).
+// THROWAWAY — V37 capability spike only (branch `test`, never merged into dev before a pass).
 
 /// Scores one recorded run (SPIKE_SPEC §8, PREREGISTRATION §4): A0 and A directly, B/C/D from the
 /// recorded readings through the checks and the adapter. Open sets (P, C) also get per-case rows.
@@ -169,14 +169,23 @@ final class ZZSpikeScoreRun: XCTestCase {
         let byID = Dictionary(fixture.cases.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
         // Per case: the signature (for consistency) and correctness (for paired tests). Blind sets keep
         // these only in the blind output file.
-        result["perCase"] = tally.judged.mapValues { cases -> [String: Any] in
+        var perCase: [String: Any] = [:]
+        for (name, cases) in tally.judged {
             var entries: [String: Any] = [:]
             for (id, judged) in cases {
                 guard let item = byID[id] else { continue }
                 entries[id] = ["signature": SpikeScore.signature(judged), "exactRight": judged.state == item.state,
-                               "coarseRight": GeneralizationEvaluation.coarse(judged.state) == SpikeScore.goldCoarse(item)]
+                               "coarseRight": GeneralizationEvaluation.coarse(judged.state) == SpikeScore.goldCoarse(item),
+                               "reasoningIssue": SpikeReasoning.predicted(judged, checked: tally.outcomes[name]?[id]?.checked)]
             }
-            return entries
+            perCase[name] = entries
+        }
+        result["perCase"] = perCase
+        // Weak reasoning apart from the state (PREREGISTRATION §4, amended): G4 and G5 read this.
+        let reasoning = SpikeReasoning.count(fixture, explicit: SpikeReasoning.explicitLabels(env["LEU_SPIKE_SCORE_CASES"]!), tally: tally)
+        result["reasoning"] = reasoning.mapValues { ["gold": $0.gold, "predicted": $0.predicted, "detected": $0.detected] }
+        for (name, count) in reasoning.sorted(by: { $0.key < $1.key }) {
+            print("SPIKE|\(label)|\(name)|reasoning issues gold=\(count.gold) predicted=\(count.predicted) detected=\(count.detected)")
         }
         if !recorded.records.isEmpty {
             result["failures"] = SpikeScore.failures(fixture, recorded, tally)

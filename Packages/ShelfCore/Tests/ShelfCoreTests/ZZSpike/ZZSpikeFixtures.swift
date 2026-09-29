@@ -1,7 +1,7 @@
 import XCTest
 @testable import ShelfCore
 
-// THROWAWAY — V37 capability spike only (branch `claude/v37-capability-spike`, never merged).
+// THROWAWAY — V37 capability spike only (branch `test`, never merged into dev before a pass).
 
 /// Synthetic readings for Linux checks of the harness: no model is involved. A reading is written
 /// per segment as a compact label; a second opinion as verdicts per (kind, segment).
@@ -18,9 +18,9 @@ enum SpikeSynthetic {
 
     static func label(_ n: Int, _ claim: String = "none", _ relation: String = "unrelated", role: String = "statement",
                       misconception: String = "none", polarity: String = "affirmed", specificity: String = "specific",
-                      describes: String = "target") -> SpikeSegmentLabel {
+                      describes: String = "target", confidence: String? = nil) -> SpikeSegmentLabel {
         SpikeSegmentLabel(n: n, role: role, claim: claim, relation: relation, misconception: misconception, polarity: polarity,
-                          specificity: specificity, describes: describes)
+                          specificity: specificity, describes: describes, confidence: confidence)
     }
 
     /// A second opinion from (kind, segment, verdict) triples; items are numbered in order.

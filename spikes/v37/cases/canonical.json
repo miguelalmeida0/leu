@@ -1,6 +1,6 @@
 {
  "split": "v37-canonical",
- "note": "The five mandatory canonical cases (PREREGISTRATION G10). The pass criteria are checked automatically on every required run. Claim ids come from catalogs/catalog-full.json (exported from ShelfCore at the V36 commit).",
+ "note": "The five mandatory canonical cases (PREREGISTRATION G10). The pass criteria are checked automatically on every required run. Claim ids come from catalogs/catalog-full.json (exported from ShelfCore at the V36 commit). Amended 2026-09-29 at the owner's instruction: C4's next question must target the access/mechanism claim (a targeted mechanism probe), whether or not the judgement commits.",
  "claimIDs": {
   "authenticationDefinition": "claim-7485a5102853e2f4",
   "closureDefinition": "claim-63b3e0f7dcdc4888",
@@ -86,7 +86,7 @@
     "reason": {"relations": ["contradicts", "unrelated"], "orMisconceptionAbout": "copying values", "secondOpinionMustNotBe": "same"},
     "states": ["weakReasoning"],
     "recordsMastery": false,
-    "ifAskedClaimIDsInclude": ["claim-63b3e0f7dcdc4888", "claim-329d5dceec7cb700"]
+    "nextQuestionClaimIDsInclude": ["claim-63b3e0f7dcdc4888", "claim-329d5dceec7cb700"]
    }
   },
   {

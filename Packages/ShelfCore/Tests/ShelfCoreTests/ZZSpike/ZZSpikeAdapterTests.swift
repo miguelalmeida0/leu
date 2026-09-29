@@ -1,7 +1,7 @@
 import XCTest
 @testable import ShelfCore
 
-// THROWAWAY — V37 capability spike only (branch `claude/v37-capability-spike`, never merged).
+// THROWAWAY — V37 capability spike only (branch `test`, never merged into dev before a pass).
 
 /// The harness on Linux, with synthetic readings only: the canonical criteria, each check, the
 /// second-opinion rules, the Tier 0 fallbacks, the baselines and the scorer end to end.
@@ -47,11 +47,9 @@ final class ZZSpikeAdapterTests: XCTestCase {
         XCTAssertTrue(failed.contains("reading") && failed.contains("state"), "\(failed)")
     }
 
-    /// Found while building the harness, recorded here and reported (nothing changed): the unchanged
-    /// judge credits core claims only, so C3 read against Closure's supporting "retain access" claim —
-    /// which §3.2 allows — is asked about, not credited; C1/C3 read as partial entailment reach only
-    /// "fragile"; and C4 with a D verdict of "part" on the copying reason asks about Closure's purpose
-    /// claim (the judge's how/why claim), not the access claim.
+    /// Found while building the harness and reported (the judge is unchanged): it credits core claims
+    /// only, so C3 read against Closure's supporting "retain access" claim — which §3.2 allows — is asked
+    /// about, not credited; and C1/C3 read as partial entailment reach only "fragile".
     func testCanonicalTensionsWithTheUnchangedJudge() throws {
         let supportingOnly = S.record("C3", [S.label(1, S.closureRetain, "entails")])
         let (supporting, failedSupporting) = try check("C3", supportingOnly, .b)
@@ -59,14 +57,26 @@ final class ZZSpikeAdapterTests: XCTestCase {
         XCTAssertTrue(failedSupporting.contains("state") && failedSupporting.contains("asksProbe"))
         let partial = S.record("C3", [S.label(1, S.closureDefinition, "partiallyEntails")])
         XCTAssertEqual(try check("C3", partial, .b).0.judged.state, "fragile")
+    }
+
+    /// C4 (amended): whether the wrong reason is confirmed (committed weak reasoning) or not (asked),
+    /// the next question targets the access mechanism the reason breaks — never the purpose claim the
+    /// judge would otherwise ask about — and no mastery is recorded.
+    func testC4NextQuestionTargetsTheBrokenMechanism() throws {
+        let careful = S.canonicalRecords()["C4"]!
+        let (committed, failedCommitted) = try check("C4", careful, .d)
+        XCTAssertEqual(failedCommitted, [])
+        XCTAssertFalse(committed.judged.asksProbe)
+        XCTAssertEqual(committed.nextClaims, [S.closureRetain])
         let part = S.record("C4", [S.label(1, S.closureDefinition, "entails"), S.label(2, S.closureRetain, "contradicts", role: "reason", misconception: "m1")],
                             links: [SpikeLink(reason: 2, conclusion: 1)],
                             opinion: S.opinion([("credit", 1, "same"), ("contradiction", 2, "opposite"), ("reason", 2, "part")]))
         let (asked, failed) = try check("C4", part, .d)
         XCTAssertEqual(asked.judged.state, "weakReasoning")
         XCTAssertTrue(asked.judged.asksProbe)
-        XCTAssertEqual(asked.judged.probeClaims, ["claim-ea1f1e097d9c8eab"])
-        XCTAssertEqual(failed, ["question"])
+        XCTAssertEqual(asked.judged.probeClaims, [S.closureRetain])
+        XCTAssertFalse(asked.judged.recordsMastery)
+        XCTAssertEqual(failed, [])
     }
 
     // MARK: - Checks (each only downgrades; B trusts the reading fully)
@@ -252,6 +262,10 @@ final class ZZSpikeAdapterTests: XCTestCase {
         XCTAssertEqual(failures["schemaError"], 0); XCTAssertEqual(failures["missing"], 0)
         XCTAssertEqual((result["perCase"] as? [String: Any])?.count, 5, "A0, A, B, C, D")
         XCTAssertEqual((result["latency"] as? [Any])?.count, 5)
+        // C4 (weak reasoning) and C5 (a wrong conclusion from a plausible reason) are both gold reasoning
+        // issues; the careful C5 reading has one segment and no link, so only C4 is found.
+        let reasoning = try XCTUnwrap(result["reasoning"] as? [String: [String: Int]])
+        XCTAssertEqual(reasoning["D"], ["gold": 2, "predicted": 1, "detected": 1])
         XCTAssertThrowsError(try ZZSpikeScoreRun.score(env.merging(["LEU_SPIKE_SCORE_BLIND": "1"]) { $1 }), "blind output outside blind/ is refused")
     }
 }

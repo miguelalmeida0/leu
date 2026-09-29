@@ -1,7 +1,7 @@
 import Foundation
 @testable import ShelfCore
 
-// THROWAWAY — V37 capability spike only (branch `claude/v37-capability-spike`, never merged).
+// THROWAWAY — V37 capability spike only (branch `test`, never merged into dev before a pass).
 // The JSON contract between the ShelfCore side (export, adapter, scorer) and the Mac/iPhone runner
 // (`spikes/v37/runner`). Both sides decode the same keys; see `spikes/v37/runner/README.md`.
 
@@ -34,6 +34,8 @@ struct SpikeAnswerKeyFile: Codable { let keys: [String: SpikeAnswerKey] }
 struct SpikeSegmentLabel: Codable, Equatable {
     let n: Int
     let role, claim, relation, misconception, polarity, specificity, describes: String
+    /// high · medium · low (the model's own confidence in this label).
+    var confidence: String? = nil
 }
 
 struct SpikeLink: Codable, Equatable { let reason, conclusion: Int }

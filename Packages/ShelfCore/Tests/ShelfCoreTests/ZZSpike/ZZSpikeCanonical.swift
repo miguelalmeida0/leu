@@ -1,7 +1,7 @@
 import Foundation
 @testable import ShelfCore
 
-// THROWAWAY — V37 capability spike only (branch `claude/v37-capability-spike`, never merged).
+// THROWAWAY — V37 capability spike only (branch `test`, never merged into dev before a pass).
 
 /// The canonical cases' pass criteria (SPIKE_SPEC §3.2, encoded in `cases/canonical.json`), checked
 /// automatically from the recorded reading and the judgement. Every criterion must hold.
@@ -22,6 +22,8 @@ enum SpikeCanonical {
         let recordsCredit, recordsMastery, recordsMisconception, asksProbe: Bool?
         let misconceptionRecordedOrMisconceptionCheckAsked: Bool?
         let ifAskedClaimIDsInclude: [String]?
+        /// The one next question asks about one of these claims (C4, amended 2026-09-29).
+        let nextQuestionClaimIDsInclude: [String]?
     }
     struct Case: Decodable { let id: String; let passCriteria: Criteria? }
     struct File: Decodable { let cases: [Case] }
@@ -86,6 +88,7 @@ enum SpikeCanonical {
         if let v = c.recordsMisconception, judged.recordsMisconception != v { failed.append("recordsMisconception") }
         if let v = c.asksProbe, judged.asksProbe != v { failed.append("asksProbe") }
         if let ids = c.ifAskedClaimIDsInclude, judged.asksProbe, Set(ids).isDisjoint(with: judged.probeClaims) { failed.append("question") }
+        if let ids = c.nextQuestionClaimIDsInclude, Set(ids).isDisjoint(with: outcome.nextClaims) { failed.append("nextQuestion") }
         return failed
     }
 

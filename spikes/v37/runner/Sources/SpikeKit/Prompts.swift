@@ -7,7 +7,7 @@ import Foundation
 public struct PromptSet: Sendable {
     public static let files = ["answer-key.txt", "reading.txt", "second-opinion.txt"]
     /// Changes whenever the request layout in `Requests` changes.
-    public static let layoutVersion = "v37-spike-request-layout-1"
+    public static let layoutVersion = "v37-spike-request-layout-2"
     public let answerKey, reading, secondOpinion: String
     public let sha: String
 

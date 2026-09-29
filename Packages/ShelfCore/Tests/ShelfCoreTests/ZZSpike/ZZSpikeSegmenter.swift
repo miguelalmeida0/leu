@@ -1,7 +1,7 @@
 import XCTest
 @testable import ShelfCore
 
-// THROWAWAY — V37 capability spike only (branch `claude/v37-capability-spike`, never merged).
+// THROWAWAY — V37 capability spike only (branch `test`, never merged into dev before a pass).
 
 /// Deterministic answer segmentation for the spike: V35's own clause splitter, then a split at a
 /// reason marker so the model (and V35's own reason rule) see the reason as its own segment. The

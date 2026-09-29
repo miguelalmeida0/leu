@@ -63,6 +63,13 @@ class StatisticsTests(unittest.TestCase):
         self.assertEqual(m["G9"], (10, 240))
         self.assertEqual(m["G11"], (3, 240))
 
+    def test_weak_reasoning_is_scored_apart_from_the_state(self):
+        exact = stats.metrics(report(wr=(10, 50, 12)))
+        independent = stats.metrics(report(wr=(10, 50, 12)), None, {"gold": 64, "predicted": 30, "detected": 24})
+        self.assertEqual(exact["G4"], (10, 50))
+        self.assertEqual(independent["G4"], (24, 64), "a reasoning issue inside a misconception still counts")
+        self.assertEqual(independent["G5"], (24, 30))
+
 
 class AuthorTests(unittest.TestCase):
     def test_blind_author_breakdown_refuses_per_case_groups(self):

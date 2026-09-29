@@ -43,8 +43,8 @@ final class SpikeKitTests: XCTestCase {
 
     let careful = """
     {"segments": [
-      {"n": "1", "role": "statement", "claim": "c1", "relation": "entails", "misconception": "none", "polarity": "affirmed", "specificity": "specific", "describes": "target"},
-      {"n": "2", "role": "reason", "claim": "s1", "relation": "contradicts", "misconception": "m1", "polarity": "affirmed", "specificity": "specific", "describes": "target"}],
+      {"n": "1", "role": "statement", "claim": "c1", "relation": "entails", "misconception": "none", "polarity": "affirmed", "specificity": "specific", "describes": "target", "confidence": "high"},
+      {"n": "2", "role": "reason", "claim": "s1", "relation": "contradicts", "misconception": "m1", "polarity": "affirmed", "specificity": "specific", "describes": "target", "confidence": "medium"}],
      "links": [{"reason": "2", "conclusion": "1"}]}
     """
 
@@ -76,6 +76,7 @@ final class SpikeKitTests: XCTestCase {
         XCTAssertEqual(values("claim"), ["c1", "c2", "s1", "none"])
         XCTAssertEqual(values("misconception"), ["m1", "none"])
         XCTAssertEqual(values("describes"), ["target", "Scope", "unclear"])
+        XCTAssertEqual(values("confidence"), ["high", "medium", "low"])
     }
 
     func testCarefulReadingMapsBackAndAsksCreditContradictionAndReason() async throws {
@@ -87,6 +88,7 @@ final class SpikeKitTests: XCTestCase {
         let reading = try XCTUnwrap(record.reading.output)
         XCTAssertEqual(reading.segments.map(\.claim), ["claim-63b3e0f7dcdc4888", "claim-329d5dceec7cb700"])
         XCTAssertEqual(reading.links, [SpikeLink(reason: 2, conclusion: 1)])
+        XCTAssertEqual(reading.segments.map(\.confidence), ["high", "medium"])
         let opinion = try XCTUnwrap(record.secondOpinion?.output)
         XCTAssertEqual(opinion.items.map(\.kind), ["credit", "contradiction", "reason"])
         XCTAssertEqual(opinion.items.map(\.segment), [1, 2, 2])

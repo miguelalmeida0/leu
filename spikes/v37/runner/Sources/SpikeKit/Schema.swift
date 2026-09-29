@@ -37,6 +37,7 @@ public enum SpikeSchemas {
     public static let relations = ["entails", "partiallyEntails", "contradicts", "unrelated"]
     public static let polarities = ["affirmed", "negated"]
     public static let specificities = ["specific", "vague"]
+    public static let confidences = ["high", "medium", "low"]
     public static let verdicts = ["same", "part", "opposite", "different"]
     public static let mistakeKinds = ["opposite", "reversed", "overgeneralized", "confused"]
 
@@ -59,7 +60,8 @@ public enum SpikeSchemas {
             .init("misconception", .choice(name: "MistakeID", values: unique((key?.mistakes.map(\.id) ?? []) + ["none"]))),
             .init("polarity", .choice(name: "Polarity", values: polarities)),
             .init("specificity", .choice(name: "Specificity", values: specificities)),
-            .init("describes", .choice(name: "Describes", values: unique(["target"] + input.neighbours.map(\.name) + ["unclear"])))
+            .init("describes", .choice(name: "Describes", values: unique(["target"] + input.neighbours.map(\.name) + ["unclear"]))),
+            .init("confidence", .choice(name: "Confidence", values: confidences))
         ])
         let link = SchemaNode.object(name: "ReasonLink", properties: [
             .init("reason", .choice(name: "ReasonSegment", values: numbers(k))),

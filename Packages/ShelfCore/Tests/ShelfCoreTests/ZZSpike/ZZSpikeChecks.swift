@@ -1,7 +1,7 @@
 import Foundation
 @testable import ShelfCore
 
-// THROWAWAY — V37 capability spike only (branch `claude/v37-capability-spike`, never merged).
+// THROWAWAY — V37 capability spike only (branch `test`, never merged into dev before a pass).
 
 enum SpikeConfig: String, CaseIterable { case b = "B", c = "C", d = "D" }
 enum SpikeWrongKind: String { case contradiction, reversal, overgeneralization, confusion }
@@ -22,8 +22,14 @@ struct SpikeChecked {
         var confusedWith: ConceptKey?
         var reasonOf: Int?                  // the credited conclusion this segment is a wrong reason for
         var reasonConfirmed = false
+        /// The claim the model tied the segment to (its claim, or the claim its mistake contradicts),
+        /// kept when a wrong reason is folded into its conclusion: the claim a repair question asks about.
+        var named: String?
+        var confidence = "high"
     }
     var segments: [Segment]
+    /// Reason → conclusion links that survived V1 and, in C and D, V8.
+    var links: [SpikeLink] = []
     var fired: [String] = []
 }
 
@@ -31,6 +37,7 @@ enum SpikeChecks {
     static let roles: Set = ["statement", "reason", "example", "analogy", "hedge", "filler"]
     static let relations: Set = ["entails", "partiallyEntails", "contradicts", "unrelated"]
     static let conclusionMarkers: Set = ["therefore", "thus", "hence", "that's why", "that is why", "which means"]
+    static let confidences: Set = ["high", "medium", "low"]
 
     /// V1 (every configuration): nil when the reading cannot be used at all, i.e. a schema error.
     static func check(_ reading: SpikeReading, input: SpikeInput, text: String, key: SpikeAnswerKey?, target: DiagnosisTarget,
@@ -41,6 +48,7 @@ enum SpikeChecks {
               reading.segments.allSatisfy({ label in
                   (label.claim == "none" || claimIDs.contains(label.claim)) && roles.contains(label.role) && relations.contains(label.relation)
                       && (label.misconception == "none" || mistakes.contains { $0.id == label.misconception })
+                      && (label.confidence.map(confidences.contains) ?? true)
               }) else { return nil }
         var checked = SpikeChecked(segments: input.segments.map { SpikeChecked.Segment(n: $0.n, text: $0.text) })
         let neighbours = Dictionary(input.neighbours.map { ($0.name, $0) }, uniquingKeysWith: { a, _ in a })
@@ -48,6 +56,8 @@ enum SpikeChecks {
             var s = checked.segments[label.n - 1]
             s.role = label.role; s.relation = label.relation; s.polarity = label.polarity; s.specificity = label.specificity
             let mistake = mistakes.first { $0.id == label.misconception }
+            s.named = label.claim != "none" ? label.claim : mistake?.contradicts
+            s.confidence = label.confidence ?? "high"
             if ["entails", "partiallyEntails"].contains(label.relation), label.claim != "none" {
                 s.claimID = label.claim; s.credit = label.relation == "entails" ? .covered : .partial; s.creditFirm = true
             } else if label.relation == "contradicts", label.claim != "none" || mistake != nil || neighbours[label.describes] != nil {
@@ -70,6 +80,7 @@ enum SpikeChecks {
             if kept.count < links.count { checked.fired.append("V8") }
             links = kept
         }
+        checked.links = links
         applyLinks(links, to: &checked)
         guard config != .b else { return checked }
         verify(&checked, target: target, input: input, key: key)
@@ -109,7 +120,7 @@ enum SpikeChecks {
         return gap.lowercased().range(of: #"\bso\b|\bbecause\b|\bsince\b"#, options: .regularExpression) != nil
     }
 
-    /// V2–V7 on credit, V9 on wrong ideas.
+    /// V2–V7 on credit, V9 on wrong ideas, V10 on both.
     static func verify(_ checked: inout SpikeChecked, target: DiagnosisTarget, input: SpikeInput, key: SpikeAnswerKey?) {
         let claims = Dictionary((target.rubric + target.supporting).map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
         let nameStems = Set((target.concept.flatMap { target.names[$0] } ?? []).flatMap { LexicalProfile($0).terms.map(\.stem) })
@@ -144,6 +155,11 @@ enum SpikeChecks {
                         || (!profile.universals.isEmpty && !claimProfile.hedges.isEmpty)
                 } ?? false
                 if !grounded && !backed { s.wrongFirm = false; checked.fired.append("V9") }
+            }
+            // V10: what the model itself calls a low-confidence label is never written firmly.
+            if s.confidence == "low" {
+                if s.creditFirm { mark(&s, "V10", &checked) }
+                if s.wrong != nil, s.wrongFirm { s.wrongFirm = false; checked.fired.append("V10") }
             }
             checked.segments[index] = s
         }

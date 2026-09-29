@@ -1,7 +1,7 @@
 import Foundation
 @testable import ShelfCore
 
-// THROWAWAY — V37 capability spike only (branch `claude/v37-capability-spike`, never merged).
+// THROWAWAY — V37 capability spike only (branch `test`, never merged into dev before a pass).
 
 /// Into the unchanged judge (SPIKE_SPEC §7). A checked reading becomes the diagnosis and signals
 /// `UnderstandingJudge` already consumes; the unchanged judge, planner and evidence mapper decide.
@@ -21,6 +21,8 @@ enum SpikeAdapter {
         let fallback: Fallback
         let checked: SpikeChecked?
         let assessment: UnderstandingAssessment?
+        /// The claims the one next question asks about, whether or not the judgement waits for it.
+        let nextClaims: [String]
     }
 
     /// The same words the judge's own weak-reasoning rule looks for (`JudgementReading.reason`, private there).
@@ -29,7 +31,8 @@ enum SpikeAdapter {
     static func judge(_ input: GeneralizationEvaluation.Input, spike: SpikeInput, record: SpikeRecord?, key: SpikeAnswerKey?,
                       config: SpikeConfig) -> Outcome {
         func tier0(_ reason: Fallback) -> Outcome {
-            Outcome(judged: GeneralizationEvaluation.v35(input, input.text), fallback: reason, checked: nil, assessment: nil)
+            let judged = GeneralizationEvaluation.v35(input, input.text)
+            return Outcome(judged: judged, fallback: reason, checked: nil, assessment: nil, nextClaims: judged.probeClaims)
         }
         guard !spike.segments.isEmpty else { return tier0(.empty) }
         guard let record else { return tier0(.missingRecord) }
@@ -45,7 +48,23 @@ enum SpikeAdapter {
         guard let checked = SpikeChecks.check(reading, input: spike, text: input.text, key: key, target: input.target,
                                               config: config, opinion: opinion) else { return tier0(.invalidReading) }
         let assessment = assess(checked, input: input)
-        return Outcome(judged: judged(assessment, input), fallback: .none, checked: checked, assessment: assessment)
+        var judged = judged(assessment, input)
+        let next = nextClaims(checked, state: judged.state, assessment: assessment, target: input.target)
+        if judged.asksProbe && judged.state == "weakReasoning" { judged.probeClaims = next }
+        return Outcome(judged: judged, fallback: .none, checked: checked, assessment: assessment, nextClaims: next)
+    }
+
+    /// The one next question (amended 2026-09-29): a reasoning fault is repaired where it breaks. When
+    /// the judgement is weak reasoning and the model tied the wrong reason to a claim, the question asks
+    /// about that claim (C4: the access mechanism, not the concept's purpose); otherwise it is the
+    /// planner's own next question. What is recorded is unchanged: that stays the judge's and mapper's.
+    static func nextClaims(_ checked: SpikeChecked, state: String, assessment: UnderstandingAssessment, target: DiagnosisTarget) -> [String] {
+        let known = Set(target.allClaims.map(\.id))
+        if state == "weakReasoning",
+           let broken = checked.segments.first(where: { $0.reasonOf != nil && $0.named.map(known.contains) == true })?.named {
+            return [broken]
+        }
+        return assessment.diagnosis.intervention.followUp?.rubricClaimIDs ?? []
     }
 
     /// The §7 table, segment by segment, then V35's own coverage, missing-idea issues and level.

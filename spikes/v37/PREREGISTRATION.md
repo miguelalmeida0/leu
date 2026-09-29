@@ -21,7 +21,9 @@ choice is recorded in the freeze manifest.
 
 ## 3. Data
 
-* **Primary gate PG.** 240 cases: 6 new authors (J–O) × 40, as specified in SPIKE_SPEC §3.3.
+* **Primary gate PG — RETIRED from the pass/fail role (amendment A1).** The final gate is the new
+  holdout NH ([HOLDOUT_PLAN.md](HOLDOUT_PLAN.md)). PG as sealed: 240 cases, 6 new authors (J–O) × 40,
+  as specified in SPIKE_SPEC §3.3.
   Blind after structural validation. 25% double-labelled; raw coarse agreement ≥ 80% before
   scoring (guide repair as in SPIKE_SPEC §3.3).
   * **Sealed 2026-09-29** (`gate/FINGERPRINTS.txt`) with `openssl enc -aes-256-cbc -pbkdf2
@@ -105,8 +107,8 @@ Any miss means the capability spike FAILS.
 | G1 | Coarse accuracy | ≥ 70% |
 | G2 | Paraphrase | ≥ 65% |
 | G3 | Novel vocabulary | ≥ 65% |
-| G4 | Weak-reasoning recall | ≥ 45% |
-| G5 | Weak-reasoning precision | ≥ 60% |
+| G4 | Weak-reasoning recall, scored apart from the state (A2) | ≥ 45% |
+| G5 | Weak-reasoning precision, scored apart from the state (A2) | ≥ 60% |
 | G6 | Commit accuracy | ≥ 85% |
 | G7 | Follow-up rate | ≤ 60% |
 | G8 | False mastery rate | ≤ A's rate on PG |
@@ -259,6 +261,72 @@ The manifest records:
   * Cold and warm are measured separately and never averaged. Neither can hide the other.
 * **2026-09-29 — gate passphrase rotated** after the first passphrase was exposed in the
   conversation. The plaintext is byte-identical; only the ciphertexts changed (§3).
+
+## Amendments before development (2026-09-29, at your instruction)
+
+Recorded before any Apple-model inference and before any development run. They override the
+sections they name.
+
+* **A1 — Primary gate replaced (§3, §5).**
+  * PG, sealed 2026-09-29, is **retired from the pass/fail role**. Its first passphrase was
+    exposed in the conversation, and the ciphertexts that passphrase opens remain in branch
+    history. It is never decrypted or scored.
+  * The final gate is a **new independent sealed holdout (NH)** of about 240 cases, following
+    [HOLDOUT_PLAN.md](HOLDOUT_PLAN.md).
+  * NH is written only **after** the complete freeze: prompts, schemas, segmentation, checks,
+    adapter, scoring and thresholds.
+  * Its passphrase is generated straight into a file and never displayed, committed or logged.
+  * No development agent ever sees its plaintext. It is decrypted only for the one frozen gate run,
+    and it is run once. Nothing is tuned after its result is seen.
+* **A2 — Weak reasoning scored apart from the state (§4, G4, G5).** A case can hold a misconception
+  and a reasoning fault at once, and precedence must not hide the fault.
+  * **Gold reasoning issue:** NH's explicit `reasoningIssue` label. For P and C, which have no such
+    label, a gold reasoning issue is either:
+    * the state `weakReasoning`; or
+    * the tag `rightConclusionWrongReasoning`, `wrongConclusionPlausibleReason` or
+      `causeVsCorrelation`.
+  * **Predicted reasoning issue:** either:
+    * the judgement is weak reasoning; or
+    * in B, C and D, a reason → conclusion link survives the checks, and either its reason earns no
+      credit or its conclusion is a wrong idea.
+  * **G4** weak-reasoning recall = detected / gold ≥ 45%.
+  * **G5** weak-reasoning precision = detected / predicted ≥ 60%.
+  * The old exact-state numbers are still reported.
+* **A3 — Canonical expectations as you restated them (§3.2, G10).**
+  * **C4:** no mastery; weak reasoning; and **the next question targets the access/mechanism claim**
+    (`nextQuestionClaimIDsInclude`), whether the judgement commits or asks.
+  * **Next-question rule:** when the judgement is weak reasoning and the reading ties the wrong
+    reason to a claim, the one next question asks about that claim.
+  * This changes which claim is asked about, never what is recorded: the judge and the evidence
+    mapper are unchanged.
+* **A4 — Confidence in the reading (§5, §7).**
+  * Each segment label carries `confidence` (high · medium · low), and V1 validates the value.
+  * **V10** (C, D): a label the model calls low-confidence is never written firmly. Credit becomes
+    tentative; a wrong idea becomes doubtful.
+  * The request layout is now version 2; prompt-set SHA-256
+    `0ec5cad0d660258d578d169759ab9bc88fc7d5c2ecf366335b71f9f340afadf1`.
+* **A5 — Development budget (§6).**
+  * At most 3 working days and 25 meaningful iterations, on P and C only.
+  * **ES1:** if the best of B/C/D is below 65% coarse accuracy on P, STOP.
+  * **ES2** (canonical 5/5 on three consecutive development runs) is unchanged.
+* **A6 — Hard gates, on NH.** G1–G15 as before, with G4 and G5 per A2, and canonical 5/5 on every
+  required run.
+  * **Latency:** warm p95 ≤ 12 s is a hard gate; cold ≤ 20 s is the operational ceiling. They are
+    measured separately and never averaged.
+  * The report also gives the distance to a premium 4–5 s warm target.
+* **A7 — Stretch targets** (reported only, never used to claim a pass): coarse ≥ 80%,
+  paraphrase ≥ 75%, novel vocabulary ≥ 75%, weak-reasoning recall ≥ 65%, commit accuracy ≥ 92%,
+  false mastery near zero, consistency ≥ 98%.
+* **A8 — On failure.** STOP, with no rescue by special-case lexical rules. The report must give:
+  * the exact failure taxonomy, with examples by class (P and C only);
+  * which part failed: model, schema, verification, judge or latency;
+  * a recommendation for the next architecture, comparing a different Apple-model strategy, a
+    compact local NLI verifier, the bundled contextual model (with the Qwen device evidence) and a
+    hybrid.
+* **A9 — Branches.** The spike continues on `test`. Nothing merges into `dev` before a genuine pass.
+* **A10 — Final report.** It covers only: the best development configuration, canonical 5/5, the
+  blind gate result, V36 vs V37, latency, the failure taxonomy, GO / ARCHITECTURE FAIL, and the
+  exact next engineering step.
 
 ## Deviations log
 

@@ -72,16 +72,19 @@ def p95(values):
     return ordered[math.ceil(0.95 * len(ordered)) - 1]
 
 
-def metrics(report, failures=None):
-    """PREREGISTRATION §4, from one configuration's report (and the run's failure counts)."""
+def metrics(report, failures=None, reasoning=None):
+    """PREREGISTRATION §4, from one configuration's report, the run's failure counts, and its reasoning
+    counts. G4/G5 score weak reasoning apart from the state (amended 2026-09-29): a reasoning issue
+    counts even when the state is misconception. Files without reasoning counts fall back to the
+    exact-state numbers."""
     cat = report.get("perCategory", {})
     cases = report["cases"]
     m = {
         "G1": (report["coarseRight"], cases),
         "G2": (cat.get("paraphrase", {}).get("right", 0), cat.get("paraphrase", {}).get("n", 0)),
         "G3": (cat.get("novelVocabulary", {}).get("right", 0), cat.get("novelVocabulary", {}).get("n", 0)),
-        "G4": (report["weakReasoningDetected"], report["goldWeakReasoning"]),
-        "G5": (report["weakReasoningDetected"], report["predictedWeakReasoning"]),
+        "G4": (reasoning["detected"], reasoning["gold"]) if reasoning else (report["weakReasoningDetected"], report["goldWeakReasoning"]),
+        "G5": (reasoning["detected"], reasoning["predicted"]) if reasoning else (report["weakReasoningDetected"], report["predictedWeakReasoning"]),
         "G6": (report["committedRight"], report["committed"]),
         "G7": (report["probes"], cases),
         "G8": (report["falseMastery"], report["goldNotPositive"]),
@@ -104,7 +107,7 @@ def summary(paths):
         for config, report in sorted(score["reports"].items()):
             failures = score.get("failures") if config in ("B", "C", "D") else None
             parts = []
-            for gate, (k, n) in metrics(report, failures).items():
+            for gate, (k, n) in metrics(report, failures, score.get("reasoning", {}).get(config)).items():
                 low, high = wilson(k, n)
                 parts.append(f"{names[gate]} {k}/{n} {ratio(k, n):.1%} [{low:.0%}–{high:.0%}]")
             print(f"  {config}: " + "; ".join(parts))
@@ -168,12 +171,12 @@ def latency_gates(iphone, cold):
 def gate(args):
     runs = [load(p) for p in args.mac] + [load(args.iphone)]
     primary = args.primary
-    baseline = metrics(runs[0]["reports"]["A"])
+    baseline = metrics(runs[0]["reports"]["A"], None, runs[0].get("reasoning", {}).get("A"))
     rows = []
     for gate_id in ("G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G11", "G12", "G13"):
         results = []
         for run in runs:
-            k, n = metrics(run["reports"][primary], run.get("failures"))[gate_id]
+            k, n = metrics(run["reports"][primary], run.get("failures"), run.get("reasoning", {}).get(primary))[gate_id]
             value = ratio(k, n)
             if gate_id in ("G7", "G11", "G12", "G13"):
                 ok = value <= THRESHOLDS[gate_id]

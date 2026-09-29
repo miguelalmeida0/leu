@@ -5,8 +5,12 @@ development set (80 cases), the canonical cases (5) and the primary gate (240 ca
 written, validated, double-labelled (100% coarse agreement) and sealed. Step 2 is COMPLETE: the
 export, checks, adapter, scorer, statistics and Mac runner are built and checked on Linux with
 synthetic readings ([STEP2_NOTES.md](STEP2_NOTES.md)). Apple's model has not been run, and the
-gate has not been consumed. Mac preflight, model and prompt development wait for approval.**
-Throwaway experiment on branch `claude/v37-capability-spike`, which is never merged. No
+gate has not been consumed. Amended 2026-09-29 (PREREGISTRATION A1–A10): PG is retired, and the
+final gate is a new holdout written after the freeze ([HOLDOUT_PLAN.md](HOLDOUT_PLAN.md)); weak
+reasoning is scored apart from the state; the development loop runs on the Mac
+([DEV_LOOP.md](DEV_LOOP.md)).**
+Throwaway experiment on branch `test` (formerly `claude/v37-capability-spike`), never merged into
+`dev` before a genuine pass. No
 production code is written. The binding decision rules are in
 [PREREGISTRATION.md](PREREGISTRATION.md); if the two documents ever disagree, the
 preregistration wins.

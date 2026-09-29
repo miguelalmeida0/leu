@@ -4,7 +4,7 @@ import Foundation
 
 /// The raw guided-generation outputs, before aliases and numbers are mapped back.
 struct RawReading: Decodable {
-    struct Segment: Decodable { let n, role, claim, relation, misconception, polarity, specificity, describes: String }
+    struct Segment: Decodable { let n, role, claim, relation, misconception, polarity, specificity, describes, confidence: String }
     struct Link: Decodable { let reason, conclusion: String }
     let segments: [Segment]
     let links: [Link]
@@ -28,7 +28,7 @@ public enum Selection {
         let segments = raw.segments.map { s in
             SpikeSegmentLabel(n: Int(s.n) ?? -1, role: s.role, claim: s.claim == "none" ? "none" : ids[s.claim] ?? s.claim,
                               relation: s.relation, misconception: s.misconception, polarity: s.polarity,
-                              specificity: s.specificity, describes: s.describes)
+                              specificity: s.specificity, describes: s.describes, confidence: s.confidence)
         }
         return SpikeReading(segments: segments, links: raw.links.map { SpikeLink(reason: Int($0.reason) ?? -1, conclusion: Int($0.conclusion) ?? -1) })
     }

@@ -1,7 +1,7 @@
 import XCTest
 @testable import ShelfCore
 
-/// THROWAWAY — V37 capability spike only (branch `claude/v37-capability-spike`, never merged).
+/// THROWAWAY — V37 capability spike only (branch `test`, never merged into dev before a pass).
 /// Exports the concept and passage catalogue the spike's case authors write against, built from
 /// the same knowledge bases and `DiagnosisTarget`s the generalization harness scores with, so
 /// every credit and misconception anchor an author copies is a sentence the harness can find.

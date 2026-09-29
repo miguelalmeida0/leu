@@ -1,5 +1,5 @@
 // swift-tools-version: 5.9
-// THROWAWAY — V37 capability spike only (branch `claude/v37-capability-spike`, never merged).
+// THROWAWAY — V37 capability spike only (branch `test`, never merged into dev before a pass).
 // The runner that calls Apple's on-device model on the Mac (and later from the iPhone host app).
 // It depends on nothing outside this directory; Foundation Models code compiles only where the
 // framework exists, so the package also builds and tests on Linux with the model compiled out.
