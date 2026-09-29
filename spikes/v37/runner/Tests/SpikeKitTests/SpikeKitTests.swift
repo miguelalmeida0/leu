@@ -8,7 +8,9 @@ import XCTest
 struct ScriptedModel: SpikeModel {
     let reading: String?, opinion: String?, answerKey: String?
     var check: String? = #"{"verdict": "mistaken"}"#
-    var locate: String? = #"{"segment": "2", "kind": "wrongReason", "claim": "s1"}"#
+    var locate: String? = #"{"segment": "2", "instead": "It keeps access to its lexical environment.", "kind": "wrongReason", "claim": "c2"}"#
+    /// The whole-answer check reads an answer containing this text as correct (a copied true claim).
+    var correctIf: String? = nil
     var status = "ok"
 
     func respond(_ request: ModelRequest) async -> ModelResponse {
@@ -18,7 +20,7 @@ struct ScriptedModel: SpikeModel {
             switch name {
             case "Reading": json = reading
             case "SecondOpinion": json = opinion
-            case "AnswerCheck": json = check
+            case "AnswerCheck": json = correctIf.map { request.prompt.contains($0) } == true ? #"{"verdict": "correct"}"# : check
             case "Locate": json = locate
             default: json = answerKey
             }
@@ -143,20 +145,35 @@ final class SpikeKitTests: XCTestCase {
         XCTAssertEqual(record.secondOpinion?.status, "none")
     }
 
-    func testAnswerKeyKeepsOnlyShortGroundedOppositeMistakes() async throws {
+    /// The locator's own "instead" names the environment claim s1; its id pick (c2) shares nothing with it,
+    /// so the claim is resolved to s1 (dev06 consistency rule).
+    func testLocatorClaimFollowsItsOwnWords() {
+        XCTAssertEqual(Selection.resolveClaim("c2", instead: "It keeps access to its lexical environment.", input: closure), "s1")
+        XCTAssertEqual(Selection.resolveClaim("c1", instead: "It keeps access to its lexical environment.", input: closure), "c1",
+                       "a pick that shares a stem with its own words stands")
+        XCTAssertEqual(Selection.resolveClaim("c2", instead: "Something else entirely.", input: closure), "c2")
+    }
+
+    func testARestatedClaimIsNotAMistake() {
+        XCTAssertTrue(Selection.restates("Closures power encapsulation, callbacks and hooks.", input: closure))
+        XCTAssertFalse(Selection.restates("Closures do not power encapsulation or callbacks.", input: closure), "a denial is a real opposite")
+        XCTAssertFalse(Selection.restates("JavaScript copies the outer variables into the inner function.", input: closure))
+    }
+
+    func testAnswerKeyKeepsOnlyShortGroundedMistakenMistakes() async throws {
         let proposed = """
         {"mistakes": [
           {"claim": "s1", "text": "JavaScript copies the outer variables into the inner function.", "kind": "opposite", "confusedWith": "none", "question": "q1"},
           {"claim": "c2", "text": "Bananas are yellow.", "kind": "opposite", "confusedWith": "none", "question": "q2"},
           {"claim": "c1", "text": "A closure is just any function inside another function scope.", "kind": "overgeneralized", "confusedWith": "none", "question": "q3"}]}
         """
-        let model = ScriptedModel(reading: nil, opinion: #"{"verdicts": [{"item": "1", "verdict": "opposite"}, {"item": "2", "verdict": "part"}]}"#,
-                                  answerKey: proposed)
+        var model = ScriptedModel(reading: nil, opinion: nil, answerKey: proposed)
+        model.correctIf = "any function inside another"
         let (key, detail) = await SpikePipeline(model: model, prompts: prompts).compileKey(closure)
         XCTAssertEqual(key.status, "ok")
         XCTAssertEqual(key.mistakes.map(\.id), ["m1"])
         XCTAssertEqual(key.mistakes[0].contradicts, "claim-329d5dceec7cb700")
-        XCTAssertEqual(Set(detail.dropped.map(\.reason)), ["ungrounded", "notOpposite"])
+        XCTAssertEqual(Set(detail.dropped.map(\.reason)), ["ungrounded", "readAs-correct"])
         XCTAssertEqual(detail.proposed, 3)
     }
 

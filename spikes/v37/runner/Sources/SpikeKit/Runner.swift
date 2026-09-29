@@ -30,8 +30,9 @@ public enum Settings {
     public static let readingTimeout = 30.0, opinionTimeout = 15.0, answerKeyTimeout = 60.0
     public static let maxRetries = 2, retryDelay = 2.0
     public static let promptBudget = 3500
-    /// Calls run one after another (SPIKE_SEQUENTIAL=1) or the reading alongside the check and locator.
-    public static var sequential: Bool { ProcessInfo.processInfo.environment["SPIKE_SEQUENTIAL"] == "1" }
+    /// Calls run one after another (the default since dev06), or the reading alongside the check and
+    /// locator with SPIKE_PARALLEL=1 (dev03–05: the parallel calls contend for the on-device model).
+    public static var sequential: Bool { ProcessInfo.processInfo.environment["SPIKE_PARALLEL"] != "1" }
 }
 
 public struct SpikePipeline: Sendable {
@@ -109,7 +110,8 @@ public struct SpikePipeline: Sendable {
                 return SpikeCall(status: "schemaError", latencyMs: latency, retries: retries, output: nil)
             }
             let ids = Dictionary(input.claims.map { ($0.alias, $0.id) }, uniquingKeysWith: { a, _ in a })
-            items.append(SpikeOpinionItem(item: 2, kind: "locate", segment: Int(raw.segment) ?? 0, claimID: ids[raw.claim], neighbour: nil))
+            let claim = Selection.resolveClaim(raw.claim, instead: raw.instead, input: input)
+            items.append(SpikeOpinionItem(item: 2, kind: "locate", segment: Int(raw.segment) ?? 0, claimID: ids[claim], neighbour: nil))
             verdicts.append(SpikeVerdict(item: 2, verdict: raw.segment == "none" ? "none" : raw.kind))
         }
         return SpikeCall(status: "ok", latencyMs: latency, retries: retries, output: SpikeSecondOpinionOutput(items: items, verdicts: verdicts))
@@ -153,26 +155,34 @@ public struct SpikePipeline: Sendable {
             guard let claim = claims[mistake.claim] else { dropped.append(.init(text: mistake.text, reason: "unknownClaim")); continue }
             if mistake.text.split(whereSeparator: \.isWhitespace).count > 25 { dropped.append(.init(text: mistake.text, reason: "tooLong")); continue }
             if !Selection.grounded(mistake, claim: claim, input: input) { dropped.append(.init(text: mistake.text, reason: "ungrounded")); continue }
+            if Selection.restates(mistake.text, input: input) { dropped.append(.init(text: mistake.text, reason: "restatesClaim")); continue }
             candidates.append((mistake, claim))
         }
         guard !candidates.isEmpty else {
             return (SpikeAnswerKey(status: "empty", mistakes: []), detail("empty", compile: "ok", proposed: raw.mistakes.count, dropped: dropped))
         }
-        let pairs = candidates.enumerated().map { index, pair in
-            Selection.Pair(item: SpikeOpinionItem(item: index + 1, kind: "mistake", segment: 0, claimID: pair.1.id, neighbour: nil),
-                           a: pair.1.text, b: "\"\(pair.0.text)\"")
-        }
-        let check = await secondOpinion(pairs)
-        let verdicts = Dictionary((check.output?.verdicts ?? []).map { ($0.item, $0.verdict) }, uniquingKeysWith: { a, _ in a })
-        var kept: [SpikeAnswerKey.Mistake] = []
-        for (index, (mistake, claim)) in candidates.enumerated() {
-            guard verdicts[index + 1] == "opposite" else { dropped.append(.init(text: mistake.text, reason: "notOpposite")); continue }
+        // Self-check (dev06): each candidate is read by the whole-answer check as if a student had said it,
+        // and kept only when the check calls it mistaken. A copied true claim reads as correct and is dropped
+        // (the pairwise check it replaces called nearly everything "opposite", keeping 22 true claims on P).
+        var kept: [SpikeAnswerKey.Mistake] = [], checkStatus = "ok", checkLatency = 0
+        for (mistake, claim) in candidates {
+            let probe = SpikeInput(caseID: input.caseID, set: input.set, targetKey: input.targetKey, targetName: input.targetName,
+                                   question: input.question, claims: input.claims, neighbours: input.neighbours,
+                                   segments: [.init(n: 1, text: mistake.text)], wordCount: 0)
+            let check = await model.respond(ModelRequest(instructions: prompts.answerCheck, prompt: Requests.answerCheck(probe),
+                                                         schema: SpikeSchemas.answerCheck(), maxTokens: Settings.opinionTokens,
+                                                         timeout: Settings.opinionTimeout))
+            checkLatency += check.latencyMs
+            guard check.status == "ok", let json = check.json, let verdict = try? JSONDecoder().decode(RawAnswerCheck.self, from: Data(json.utf8)).verdict
+            else { checkStatus = check.status == "ok" ? "schemaError" : check.status; dropped.append(.init(text: mistake.text, reason: "checkFailed")); continue }
+            guard verdict == "mistaken" else { dropped.append(.init(text: mistake.text, reason: "readAs-" + verdict)); continue }
             guard kept.count < 6 else { continue }
             kept.append(.init(id: "m\(kept.count + 1)", text: mistake.text, contradicts: claim.id, kind: mistake.kind,
                               confusedWith: mistake.confusedWith, question: mistake.question))
         }
+        let check = (checkStatus, checkLatency)
         let status = kept.isEmpty ? "empty" : "ok"
         return (SpikeAnswerKey(status: status, mistakes: kept),
-                detail(status, compile: "ok", proposed: raw.mistakes.count, check: (check.status, check.latencyMs), dropped: dropped))
+                detail(status, compile: "ok", proposed: raw.mistakes.count, check: check, dropped: dropped))
     }
 }

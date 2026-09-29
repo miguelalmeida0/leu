@@ -12,7 +12,7 @@ struct RawReading: Decodable {
 
 struct RawAnswerCheck: Decodable { let verdict: String }
 
-struct RawLocate: Decodable { let segment, kind, claim: String }
+struct RawLocate: Decodable { let segment, instead, kind, claim: String }
 
 struct RawOpinion: Decodable {
     struct Verdict: Decodable { let item, verdict: String }
@@ -114,6 +114,17 @@ public enum Selection {
         return pairs
     }
 
+    /// The locator's claim, checked against its own words (dev06): kept unless what it says the textbook
+    /// says instead shares no content stem with that claim while clearly matching another listed claim.
+    static func resolveClaim(_ picked: String, instead: String, input: SpikeInput) -> String {
+        let said = stems(instead).subtracting(stems(input.targetName))
+        func overlap(_ alias: String) -> Int { input.claims.first { $0.alias == alias }.map { said.intersection(stems($0.text)).count } ?? 0 }
+        guard overlap(picked) == 0 else { return picked }
+        let scored = input.claims.map { ($0.alias, overlap($0.alias)) }.sorted { $0.1 > $1.1 }
+        guard let best = scored.first, best.1 >= 2, scored.count < 2 || best.1 > scored[1].1 else { return picked }
+        return best.0
+    }
+
     // MARK: - Answer keys
 
     static let stopwords: Set<String> = ["the", "and", "for", "that", "this", "with", "are", "was", "were", "its", "it's", "they", "them",
@@ -129,6 +140,17 @@ public enum Selection {
             }
             return word
         })
+    }
+
+    static let negations: Set<String> = ["not", "never", "no", "nobody", "none", "nothing", "cannot", "can't", "doesn't", "don't",
+                                         "isn't", "aren't", "won't", "without"]
+
+    /// A candidate mistake that restates a listed claim (dev06): its content stems all appear in one claim and
+    /// the two agree on negation. The compile copied true claims as "mistakes" (24 of 49 kept on P).
+    static func restates(_ text: String, input: SpikeInput) -> Bool {
+        let own = stems(text).subtracting(stems(input.targetName))
+        func negated(_ s: String) -> Bool { !Set(s.lowercased().split { !$0.isLetter && $0 != "'" }.map(String.init)).isDisjoint(with: negations) }
+        return !own.isEmpty && input.claims.contains { own.isSubset(of: stems($0.text)) && negated($0.text) == negated(text) }
     }
 
     /// SPIKE_SPEC §5 self-check, first half: a mistake must share grounding with its claim, or with

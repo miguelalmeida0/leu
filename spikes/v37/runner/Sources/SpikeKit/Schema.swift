@@ -59,13 +59,14 @@ public enum SpikeSchemas {
     public static func reading(_ input: SpikeInput, key: SpikeAnswerKey?) -> SchemaNode {
         let k = input.segments.count
         let segment = SchemaNode.object(name: "SegmentLabel", properties: [
+            // Polarity first: at the end of the row the model almost never said "negated" (probe: 0/39).
             .init("n", .choice(name: "SegmentNumber", values: numbers(k))),
+            .init("polarity", .choice(name: "Polarity", values: polarities)),
             .init("role", .choice(name: "SegmentRole", values: roles)),
             .init("relation", .choice(name: "Relation", values: relationWords)),
             .init("claim", .choice(name: "ClaimID", values: unique(input.claims.map(\.alias) + ["none"]))),
             .init("misconception", .choice(name: "MistakeID", values: unique((key?.mistakes.map(\.id) ?? []) + ["none"]))),
             .init("describes", .choice(name: "Describes", values: unique(["target"] + input.neighbours.map(\.name) + ["unclear"]))),
-            .init("polarity", .choice(name: "Polarity", values: polarities)),
             .init("specificity", .choice(name: "Specificity", values: specificities)),
             .init("confidence", .choice(name: "Confidence", values: confidences))
         ])
@@ -101,6 +102,8 @@ public enum SpikeSchemas {
     public static func locate(_ input: SpikeInput) -> SchemaNode {
         .object(name: "Locate", properties: [
             .init("segment", .choice(name: "FalseSegment", values: numbers(input.segments.count) + ["none"])),
+            // What the textbook says instead (scratch): it names the ruling fact before a claim id is chosen.
+            .init("instead", .text),
             .init("kind", .choice(name: "ErrorKind", values: locateKinds)),
             .init("claim", .choice(name: "WrongClaim", values: unique(input.claims.map(\.alias) + ["none"])))
         ])
@@ -109,11 +112,13 @@ public enum SpikeSchemas {
     /// The answer key: 3–6 mistakes, each tied to a claim by its alias. No field descriptions: the
     /// approved prompts carry every instruction.
     public static func answerKey(_ input: SpikeInput) -> SchemaNode {
+        // The kind of error is chosen before the sentence is written (dev06): written first, the sentence
+        // was a copy of a true claim 32 times in 40.
         let mistake = SchemaNode.object(name: "LikelyMistake", properties: [
             .init("claim", .choice(name: "RulingClaim", values: unique(input.claims.map(\.alias)))),
-            .init("text", .text),
             .init("kind", .choice(name: "MistakeKind", values: mistakeKinds)),
             .init("confusedWith", .choice(name: "ConfusedWith", values: unique(input.neighbours.map(\.name) + ["none"]))),
+            .init("text", .text),
             .init("question", .text)
         ])
         return .object(name: "AnswerKey", properties: [.init("mistakes", .array(of: mistake, min: 3, max: 6))])

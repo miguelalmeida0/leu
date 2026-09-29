@@ -4532,11 +4532,7 @@
         },
         {
           "n" : 6,
-          "text" : "So: deciding what an identified person may do"
-        },
-        {
-          "n" : 7,
-          "text" : "door by door."
+          "text" : "So: deciding what an identified person may do, door by door."
         }
       ],
       "set" : "P",
@@ -4678,14 +4674,10 @@
         },
         {
           "n" : 2,
-          "text" : "So once your components are wrapped"
+          "text" : "So once your components are wrapped, nothing can crash the app anymore: even a failed fetch in a click handler or an error in a setTimeout just ends up in the fallback."
         },
         {
           "n" : 3,
-          "text" : "nothing can crash the app anymore: even a failed fetch in a click handler or an error in a setTimeout just ends up in the fallback."
-        },
-        {
-          "n" : 4,
           "text" : "Every error gets handled for you."
         }
       ],

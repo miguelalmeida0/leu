@@ -3,12 +3,12 @@
     "Mobile Mastery|Authentication" : {
       "mistakes" : [
         {
-          "confusedWith" : "Authorization",
-          "contradicts" : "claim-7485a5102853e2f4",
+          "confusedWith" : "Refresh token",
+          "contradicts" : "claim-508e25d02094b377",
           "id" : "m1",
-          "kind" : "confused",
-          "question" : "What is the main purpose of authentication?",
-          "text" : "Authentication is the process of deciding what an authenticated identity is allowed to do."
+          "kind" : "reversed",
+          "question" : "What is a longer-lived credential used to obtain new access tokens without asking the user to sign in again?",
+          "text" : "Before granting access, the system needs a shorter-lived credential."
         }
       ],
       "status" : "ok"
@@ -21,9 +21,24 @@
     },
     "Mobile Mastery|JWT" : {
       "mistakes" : [
-
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-b6c3668d41921be7",
+          "id" : "m1",
+          "kind" : "reversed",
+          "question" : "What is the purpose of a JWT?",
+          "text" : "A JWT is not used to verify that claims were issued by a trusted signer."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-f8f60f6a0a9d8164",
+          "id" : "m2",
+          "kind" : "overgeneralized",
+          "question" : "Are JWTs always encrypted?",
+          "text" : "JWTs are always encrypted."
+        }
       ],
-      "status" : "empty"
+      "status" : "ok"
     }
   }
 }
