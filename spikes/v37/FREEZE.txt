@@ -1,13 +1,15 @@
 # V37 FREEZE (PREREGISTRATION §12; written before any gate run)
 
-frozen code commit: 4aa76a6f3a79d91a96d2ba1d6017f6ce3aaf8dee
+previous candidate freeze: 4aa76a6 (manifest commit da9cc99), kept in history as the dev12 reference
+
+frozen code commit: 28ee88a17caf6dd612e2ff660225da1ce8473ef8
 branch: test
 working tree clean: yes
-written: 2026-09-29T15:18:31+00:00
+written: 2026-09-29T17:08:46+00:00
 
-primary configuration: D (rows, then whole-answer check → locator; checks V1–V11; composition; unchanged judge)
-enabled checks: V1 V2 V3 V4 V5 V6 V7 V8(marker links) V9 V10 V11; P1 (premise), F1 (family), D-rules (credit, cap, wrong, reason, unplaced)
-prompt-set SHA-256 (spike-runner hash): bd7847e75be8b28a36fb73dd6661be4f003cf2c4464b72fcce741b14c4ec583e
+primary configuration: D, dev14 (rows, then whole-answer check → locator; checks V1–V11 with V3a; composition; unchanged judge)
+enabled checks: V1 V2 V3 V3a(omitted negation) V4 V5 V6 V7 V8(marker links) V9 V10 V11; P1 (premise), F1 (family), D-rules (agree, credit, cap, wrong, reason, unplaced); reason clauses probed
+prompt-set SHA-256 (spike-runner hash): 8921d92fd8acd8c1378cb0bca56125102464341c160f82ebe1ede0762fc7cc47
 
 ## system prompt (reading)
 group-sha256: 6607923e4aacda172f95bc82b4acabe69d5e80f0edbe7d80d807a32c36143c60
@@ -24,12 +26,12 @@ group-sha256: 681a3f668a171176dfe0dc8c03dc06cd12f3acc5e22d6f44ca142db705931542
   b694d1984f963e1f07adfa55c81c5484a966b2b1d8b2af423f6c9e6d5bd33655  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeSegmenter.swift
 
 ## claim-family logic, composition and D's agreement rule
-group-sha256: 714a17ee83fe18d777c20d09aee203538e53ac54b47bce3f4a64baae7120bed3
-  0fcd0bc8eb7d5106f5dd131f25a74bb0b84bcadbde40bed9132b52a7c4bdd5b6  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeComposition.swift
+group-sha256: dffc8ab18802627ede2cbf2b8413b4b2bb456d74dd57be361ad1149566039d38
+  15764cfbfcdc9844d366e2f1ccdd3d59202a469dedf0cceffb0ac0678e67eb12  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeComposition.swift
 
 ## deterministic checks (V1–V11)
-group-sha256: 87fad0f50b5507214b26d02b5ee78d2558bd35fa59323286441f3234edeec593
-  4569c1a06fb0ba72657250a83a79d3fdb9d764f1cc48c9da077b5231733acd4b  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeChecks.swift
+group-sha256: 329f4df70142ce08c1e799af777892600517e99e2051ea29a01b16c7e12f018a
+  0a61ddc80b02410814c4b2078628b22efb47e2afffed650b037e611e7f1c90f6  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeChecks.swift
 
 ## second-opinion prompts (whole-answer check, locator)
 group-sha256: c45e7aeb4be97676666a4cf7a1a4b02d09997d93c430d6692736b380b304d3f5
@@ -42,8 +44,8 @@ group-sha256: 62c547cfc73716cfded788f397cda28b9c043e5edd948f60178513546a29be41
   b4d9bf012f7dcdfad60254298b435529282816e966278591c10475e37ff989bf  spikes/v37/prompts/second-opinion.txt
 
 ## judgement adapter
-group-sha256: ba4c98e7cf6e9a0b755aad050143e31c49802d806ed3f822d45ea0fa746961b3
-  8f8d32d61ab3211fadd2a4b81083c5b2f7fc2bb3766f42ef0ac2a2cdae389ca9  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeAdapter.swift
+group-sha256: dca8533154e9189c9266f0a09eba47c35d4530effc51d48f10d616779f049a59
+  f7776e891bdcd303bb96a3d615f86cbedef94c3dade2c7006c31b86388891147  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeAdapter.swift
 
 ## learner-write policy (unchanged judge, reading, planner, evidence mapper)
 group-sha256: 4463e744b6f8b230214c621eea41aca3a867dfddd3b32bc251e41825c410a413
@@ -55,26 +57,26 @@ group-sha256: 4463e744b6f8b230214c621eea41aca3a867dfddd3b32bc251e41825c410a413
   ceb4b7428f8d0eb8152f52ddcc2af2516eb634a2b6ac9a23190280837236995a  Packages/ShelfCore/Sources/ShelfCore/Learning/Memory/LearnerModel/LearnerEvidenceMapper.swift
 
 ## misconception-memory policy
-group-sha256: 30bb32a8ecc06a8e21074728028742b545527620220e3c6739ca94e78bc16ced
-  62fc41f42070bc01b0bf9e3301d5842f84ed8aa2e66b9d17743789b4c962af5a  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeMemory.swift
+group-sha256: 1b4d836f2fd534ad9871e94cbdc148c269651548582702a8ed617e8286a3c5de
+  b7d5e03bfe79d226b3dc76a69a2aef5daaacc6229e0877dae358ce680ce14390  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeMemory.swift
 
 ## scorer
-group-sha256: 3ab8d649fb5f3a351495b7b1a9208126f52ec705ebbff1db2dc89f13de67c28b
+group-sha256: 21dfb4b415cc1b19e24fe2e4430c113318be9d9375040882ab1a9fc78f5ceb80
   b4560e068ed1d54d5b4dbc6d72a8e758a334ea21af8b03e17fd33db05c662980  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeScore.swift
-  2af2ab29ee80e388e7910eaa7250191457ead2138afd3d0268598922e44f10ec  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeCanonical.swift
+  ff899099344b9381c6dd0cf21866b84ab8ac7584def7d857aed36f40b4744090  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeCanonical.swift
   25e5ba80a767840f0abb9a903e286b1d5cb22af6a9f70e3c4bf91106fe7e9738  Packages/ShelfCore/Tests/ShelfCoreTests/ZZSpike/ZZSpikeReasoning.swift
   d3a4a9fcd7f7c53579d32de33d77830fad5a437b863f8b6b620705fb2e6f01f3  spikes/v37/score/stats.py
 
 ## thresholds (preregistered gates; canonical criteria)
-group-sha256: 6826404835d6282c1238d0ef9a582ae00f062d34114d40ed4084148b47c24389
-  1489cf3aacc0c9e5a124b9c1308059bc50585ca506ee4d4c84117f89a66835dd  spikes/v37/PREREGISTRATION.md
+group-sha256: 4fd8998849cc720619b91b24b0bb76f921ca696adc8039b79e9aff96041d9ae7
+  730e55dce13255cfa829a9875610ab1da4f8d92449d5338189262db6197f214e  spikes/v37/PREREGISTRATION.md
   b71711b8945ac2a89eb4c9e7946e26c107c33f373bfe8c00c85854876fe72a40  spikes/v37/cases/canonical.json
 
 ## runner (engine, pipeline, request layout, generation settings, CLI)
-group-sha256: d66c5c2c609a21b6a81b778058f8dbfd0f2bc4483bea758a851a6bb7af0c1e13
+group-sha256: 492c07416994e9afac6b4ac5bd01b3d4f2ad36c49577283a8f94de77f2873bfb
   9cfbbb30365136a6f544f69180479d98c4da4c4036c62bfeb5b0da9e607b26e1  spikes/v37/runner/Sources/SpikeFoundation/FoundationModelsEngine.swift
   f85aa3255e3f7695eec0dfa2263e418e4bbdec7909fff4577aef5beb1efebf7f  spikes/v37/runner/Sources/SpikeKit/Runner.swift
-  d45dd59a85afe6947f38c4448ad0b84dbca1d91b6d5e3c4cde831ca5aab841f3  spikes/v37/runner/Sources/SpikeKit/Prompts.swift
+  4d8f81c016227d58dfeb3dbb34ead8f4aa9d9034add80fa4a1bc17765639c32f  spikes/v37/runner/Sources/SpikeKit/Prompts.swift
   fd262dc8358ce80764571f3cc3e30f31bfcc9f59a50153a14c1df864a3e2d187  spikes/v37/runner/Sources/SpikeKit/Contract.swift
   1306acccb73341f06cb45d5a794f17fe48380400b28086d1413740e7871e7a16  spikes/v37/runner/Sources/SpikeKit/SHA256.swift
   dc8be7979fbbc6a8f793276f2fd5cbcfe94d6c2258420bf1579de066fae4b844  spikes/v37/runner/Sources/SpikeKit/FakeModel.swift
