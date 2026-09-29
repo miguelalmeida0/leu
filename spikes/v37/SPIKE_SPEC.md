@@ -1,6 +1,8 @@
 # Leu V37 capability spike — specification
 
-**Status: FINAL DRAFT, awaiting approval. Not executed.**
+**Status: APPROVED 2026-09-29, with the G16 latency gate added. Step 1 (cases, validation,
+second labels, sealing) authorized. Apple's model has not been run, and the gate has not been
+consumed.**
 Throwaway experiment on branch `claude/v37-capability-spike`, which is never merged. No
 production code is written. The binding decision rules are in
 [PREREGISTRATION.md](PREREGISTRATION.md); if the two documents ever disagree, the
@@ -27,7 +29,7 @@ the preregistration.
 | C3 | "A closure remembers its surrounding bindings." | "The inner function can still use variables from the function that created it." |
 | C4 | "The inner function works because JavaScript copies all variables." | "The inner function can still access the outer variable because JavaScript copies all outer variables into it." |
 | E / E0 | Optional | E only under the pre-freeze rule in §4 (development data only). E0 is not built. |
-| Hard gate | 10 rules | Your list, verbatim, including weak-reasoning precision ≥ 60%. Latency is reported, not gated. |
+| Hard gate | 10 rules | Your list, verbatim, including weak-reasoning precision ≥ 60%, **plus G16**: iPhone 15 Pro p95 ≤ 12 s for answers ≤ 80 words, cold and warm measured separately. 6–12 s passes but is reported as a production UX problem; over 12 s fails. No latency-hiding optimization. |
 | Where the model runs | Mac and iPhone | A local Claude Code session on the Mac for all Foundation Models work, Mac first. The iPhone 15 Pro device gate runs only after the Mac configuration is frozen. |
 | Human track | Optional | Deferred until the architecture passes. |
 
@@ -320,6 +322,8 @@ For a reason item, B reads: `a reason the student gives for "<conclusion>": "<re
   `rateLimited` error (logged).
 * Every prompt must fit in 3,500 tokens, so it also fits iOS 26's 4K context.
 * Output-length choices (short property names and values) are part of prompt design on P.
+* **Nothing may hide latency** during the spike: no `prewarm`, no speculative or background
+  calls before an answer is submitted, no reading cache, no streaming counted as done early.
 
 ## 7. Segmentation, checks, second opinion, and the path into the V35 judge
 
@@ -386,7 +390,10 @@ Metrics come from the existing harness (`GeneralizationEvaluation.Report`, run w
   * correct commits per harmful write;
   * run-to-run and Mac–iPhone decision consistency;
   * schema-error, refusal and timeout rates;
-  * latency (median, 90th and 95th percentile, max; cold and warm) and tokens in/out.
+  * **G16 latency:** iPhone 15 Pro, answers ≤ 80 words, end to end (reading, second opinion,
+    checks, judge). The warm sample is every such gate answer after the first call of the
+    process. The cold sample is 20 relaunches with one answer each. The p95 of each must be
+    ≤ 12 s. Full distributions and tokens in/out are also reported.
 * **Reported only:**
   * per-author, per-category and per-state breakdowns;
   * paraphrase-group stability;
@@ -411,6 +418,9 @@ Metrics come from the existing harness (`GeneralizationEvaluation.Report`, run w
 * **Frozen Mac runs 1–3:** C + PG + P. sealed36 on run 1 only. A0/A are computed once
   (deterministic).
 * **iPhone 15 Pro run:** C + PG, using the frozen inputs and answer keys compiled on the Mac.
+  Then **20 cold launches** driven from the Mac with `xcrun devicectl`: each relaunch runs one
+  ≤ 80-word gate answer, in seeded order. Answer-key compile time on the iPhone is also
+  measured for the 3 canonical targets (reported, not gated).
 * **Decision.** The hard gates are applied to **every** required run, and the worst run
   counts.
 * **Statistics.**
@@ -449,7 +459,7 @@ Metrics come from the existing harness (`GeneralizationEvaluation.Report`, run w
 | 2. Export, adapter, checks, scorer, runner sources, statistics; Linux checks; A reproduces the sealed36 totals | Container | 2–3 days | — |
 | 3. Build the runner; answer keys for P and C; development loop; freeze | Mac | ≤ 3 days | ≤ 2.5 h |
 | 4. Gate and sealed36 answer keys (frozen); frozen Mac runs 1–3; sealed36 | Mac | ½ day | ~1.3 h |
-| 5. iPhone run (C + PG), batched with cool-downs | iPhone | ½ day | ~40 min |
+| 5. iPhone run (C + PG, batched with cool-downs) + 20 cold launches | iPhone | ½ day | ~55 min |
 | 6. Scoring, gate decision, report | Mac | ½ day | — |
 | Fallback (only if the Apple model fails) | Mac | 2–3 days | ~2 h |
 

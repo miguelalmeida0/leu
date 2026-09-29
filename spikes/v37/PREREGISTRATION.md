@@ -1,8 +1,8 @@
 # Leu V37 capability spike — preregistration
 
-**Registered:** 2026-09-29, pending your approval. It becomes binding when you approve the
-final spec. After that, it changes only through a dated entry in `DEVIATIONS.md` that you have
-approved. The method is in [SPIKE_SPEC.md](SPIKE_SPEC.md); on any decision rule, this
+**Registered and approved:** 2026-09-29, and binding from that date. It changes only through
+a dated entry in `DEVIATIONS.md` that you have approved. G16 was added at approval, before
+any case was written. The method is in [SPIKE_SPEC.md](SPIKE_SPEC.md); on any decision rule, this
 document wins.
 
 ## 1. Hypothesis
@@ -59,6 +59,14 @@ All metrics come from `GeneralizationEvaluation.evaluate(…, metamorphic: false
 | Timeout rate | cases with any call over its timeout (reading 30 s, second opinion 15 s) / cases |
 | Run-to-run consistency | share of PG cases whose signature is identical across frozen Mac runs 1–3 |
 | Mac–iPhone agreement | share of PG cases whose signature is identical on Mac run 1 and the iPhone run |
+| iPhone latency (per answer) | wall time on the iPhone 15 Pro from submitting the answer to the decision being ready: the reading call, the second-opinion call, any logged `rateLimited` retries, and the deterministic checks and judge. Only PG answers of **≤ 80 words** (whitespace-separated) count. The once-per-target answer-key compile is excluded; its time is reported separately (§11). |
+| Warm latency sample | every ≤ 80-word PG answer in the iPhone run after the first model call of that app process |
+| Cold latency sample | 20 cold launches: the app is terminated and relaunched (`xcrun devicectl … --terminate-existing`), and each launch times exactly one ≤ 80-word PG answer, chosen in seeded order, with no earlier model call in the process |
+| p95 | the nearest-rank 95th percentile of a latency sample |
+
+No latency-hiding optimization is allowed in the measured runs: no `prewarm`, no speculative
+or background model calls before the answer is submitted, no caching of readings, and no
+streaming counted as "done" early.
 
 A case whose model call fails is scored with V35's decision for that case, as the product
 would behave. It is also counted in the failure rates above, and it is never dropped.
@@ -84,15 +92,19 @@ Any miss means the capability spike FAILS.
 | G13 | Timeout rate | ≤ 1% |
 | G14 | Run-to-run consistency | ≥ 97% |
 | G15 | Mac–iPhone agreement | ≥ 95% |
+| G16 | iPhone 15 Pro latency, answers ≤ 80 words | p95 ≤ 12 s for the **warm** sample **and** for the **cold** sample. 6–12 s passes, but must be reported as a production UX problem. Over 12 s = FAIL. |
 
-* **Required runs:** frozen Mac runs 1, 2 and 3, and the iPhone 15 Pro run.
+* **Required runs:** frozen Mac runs 1, 2 and 3, and the iPhone 15 Pro run (with its 20 cold
+  launches).
 * **How gates apply.** G1–G13 are evaluated on **each** required run, and the worst run
-  counts. G14 and G15 are evaluated as defined in §4.
+  counts. G14 and G15 are evaluated as defined in §4. G16 is evaluated on the iPhone run, cold
+  and warm separately, and the worse of the two counts.
 * **A0 and A** are deterministic and scored once on PG, at scoring time only.
 * **Runs.** Every completed run counts; no completed run may be discarded or repeated. A run
   interrupted by an infrastructure failure (app killed, device restart) is logged and restarted
   from the beginning.
-* **Latency** is reported and is **not** a gate.
+* **Latency.** G16 is the only latency gate. It was added on 2026-09-29, before any case
+  existed.
 
 **No reinterpretation.** After scoring, none of the following is allowed:
 
@@ -171,7 +183,8 @@ re-scored once, and the change is logged in `DEVIATIONS.md` with before and afte
 
 ## 11. Reported, not decided
 
-* latency and tokens;
+* full latency distributions (median, 90th percentile, max; Mac and iPhone), token counts,
+  and answer-key compile time on the iPhone for the canonical targets;
 * sealed36 totals;
 * breakdowns by category, author and state;
 * paraphrase-group stability, Brier score and ECE;
@@ -203,6 +216,12 @@ The manifest records:
   plan. Nothing is implemented without your approval.
 * **FAIL:** follow §8.
 * **NO-GO:** report the evidence.
+
+## Amendments before case writing
+
+* **2026-09-29 — G16 added.** Your instruction: iPhone 15 Pro latency p95 ≤ 12 s for answers
+  ≤ 80 words; cold and warm measured separately; 6–12 s passes but is reported as a production
+  UX problem; over 12 s fails. Recorded before any development or gate case was written.
 
 ## Deviations log
 
