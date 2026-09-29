@@ -11,7 +11,14 @@ claims or notes.
   seal   <out-dir> <file> [<file> ...]                       encrypt with the passphrase in
                                                              LEU_GATE_PASSPHRASE, verify the round trip,
                                                              write fingerprints, delete the plaintext
+  rotate <gate-dir> <old-passphrase-file> <new-passphrase-file>
+                                                             re-encrypt every sealed file under a new
+                                                             passphrase, in memory only; replaces the old
+                                                             ciphertexts only after every round trip matches
+                                                             the recorded plaintext SHA-256
 """
+import re
+import tempfile
 import collections
 import hashlib
 import json
@@ -124,6 +131,43 @@ def seal(out_dir, paths):
         handle.write("\n".join(lines) + "\n")
 
 
+def openssl(direction, data, passphrase_file):
+    """Encrypt or decrypt bytes in memory; the passphrase is read by openssl from its file."""
+    return subprocess.run(["openssl", "enc", direction, *CIPHER, "-pass", f"file:{passphrase_file}"],
+                          input=data, capture_output=True, check=True).stdout
+
+
+def rotate(gate_dir, old_passphrase_file, new_passphrase_file):
+    fingerprint_path = os.path.join(gate_dir, "FINGERPRINTS.txt")
+    entries = re.findall(r"^(\S+\.enc)\s+plaintext-sha256=([0-9a-f]{64})", open(fingerprint_path).read(), re.M)
+    assert entries, "no sealed files recorded"
+    rotated = []
+    for name, plain_hash in entries:
+        plain = openssl("-d", open(os.path.join(gate_dir, name), "rb").read(), old_passphrase_file)
+        assert hashlib.sha256(plain).hexdigest() == plain_hash, f"{name}: old ciphertext does not match its recorded plaintext"
+        cipher = openssl("-e", plain, new_passphrase_file)
+        assert hashlib.sha256(openssl("-d", cipher, new_passphrase_file)).hexdigest() == plain_hash, f"{name}: new round trip failed"
+        rotated.append((name, plain_hash, cipher))
+    # Every file verified: only now replace the old ciphertexts (atomically), then verify from disk.
+    lines = ["# V37 primary gate: sealed files",
+             "cipher: openssl enc " + " ".join(CIPHER) + " (passphrase held by the owner, never committed)",
+             "plaintext hash: SHA-256 of canonical JSON (sorted keys, compact separators, UTF-8)",
+             "rotated: 2026-09-29, new passphrase after the first was exposed in the conversation; plaintext unchanged", ""]
+    for name, plain_hash, cipher in rotated:
+        path = os.path.join(gate_dir, name)
+        handle, temporary = tempfile.mkstemp(dir=gate_dir)
+        with os.fdopen(handle, "wb") as out:
+            out.write(cipher)
+        os.replace(temporary, path)
+        on_disk = open(path, "rb").read()
+        assert hashlib.sha256(openssl("-d", on_disk, new_passphrase_file)).hexdigest() == plain_hash, f"{name}: disk check failed"
+        cipher_hash = hashlib.sha256(on_disk).hexdigest()
+        lines.append(f"{name}  plaintext-sha256={plain_hash}  ciphertext-sha256={cipher_hash}  bytes={len(on_disk)}")
+        print(f"rotated {name}: plaintext sha256 unchanged, new ciphertext sha256={cipher_hash}")
+    with open(fingerprint_path, "w") as handle:
+        handle.write("\n".join(lines) + "\n")
+
+
 if __name__ == "__main__":
     command, args = sys.argv[1], sys.argv[2:]
     if command == "merge":
@@ -134,6 +178,8 @@ if __name__ == "__main__":
         agree(*args)
     elif command == "seal":
         seal(args[0], args[1:])
+    elif command == "rotate":
+        rotate(*args)
     else:
         print(__doc__)
         sys.exit(2)

@@ -28,15 +28,24 @@ choice is recorded in the freeze manifest.
     -iter 200000 -salt`. The passphrase is held by the owner and never committed. Decrypting
     needs OpenSSL ≥ 1.1.1 (for example Homebrew `openssl@3`); macOS's bundled LibreSSL may not
     support `-pbkdf2`.
+  * **Passphrase rotated 2026-09-29**, because the first passphrase was exposed in the
+    conversation. All three files were re-encrypted in memory under a new random passphrase,
+    and every round trip was verified against the recorded plaintext hashes before the old
+    ciphertexts were replaced. **The plaintext is byte-identical** (same SHA-256 values below).
+    The old passphrase no longer opens the current files. The new passphrase is held by the
+    owner only: never printed, committed or logged.
   * `primary-gate.json.enc`:
     * plaintext SHA-256 `c1c1b53088ed8bd8291535283df8d1e49a96ddcb1f31a47c36e5188af8730ada`
-    * ciphertext SHA-256 `ebded0d0fb1687aec4caa28c5cb1c51e1895649e17ddbf5932923462a53e9327`
+    * ciphertext SHA-256 `413990bdb05106b39ee355822fce3f9c59dea0d04f9387314dd444d687a570b5`
   * `labels2.json.enc` (the blind second labels):
     * plaintext SHA-256 `8ed9d58e3e97d780a0a541dc4d133f57c9cf668b50236c2774647d6e6c9040d0`
-    * ciphertext SHA-256 `e3e405ecfd23ae1d998faf201140144535eb2f02b76138e83143d9079755d714`
+    * ciphertext SHA-256 `5e5a54f7bffe40ef3a4b4b05eb98873a4650fdab3519bb4f7a29c719e87cfd12`
   * `double-label-map.json.enc` (neutral id → case id):
     * plaintext SHA-256 `93a4f4301ecdd9d8900e00232d0f0c4efb8afe32d05a280423c0afc9cb8a9937`
-    * ciphertext SHA-256 `900fc8169ef7a1039df94ae9f3867181c2a410af134fbba8fe3fbe3b1bdacd98`
+    * ciphertext SHA-256 `f64b12c2b5a4031401b0b475f22604e0f06b469e565618dad6ecdbaefec23735`
+  * **Superseded ciphertexts** (the exposed first passphrase opens these) remain in branch
+    history at commits `5be790b` and `0f66470`. Purging them needs a rewrite of this throwaway
+    branch's history; that is pending the owner's decision.
   * **Agreement** (`gate/AGREEMENT.json`), 60 cases double-labelled (25%, 10 per author):
     * raw coarse agreement **100%** (60/60), coarse κ 1.00;
     * exact-state agreement 98.3% (59/60), exact κ 0.98.
@@ -76,7 +85,8 @@ All metrics come from `GeneralizationEvaluation.evaluate(…, metamorphic: false
 | Mac–iPhone agreement | share of PG cases whose signature is identical on Mac run 1 and the iPhone run |
 | iPhone latency (per answer) | wall time on the iPhone 15 Pro from submitting the answer to the decision being ready: the reading call, the second-opinion call, any logged `rateLimited` retries, and the deterministic checks and judge. Only PG answers of **≤ 80 words** (whitespace-separated) count. The once-per-target answer-key compile is excluded; its time is reported separately (§11). |
 | Warm latency sample | every ≤ 80-word PG answer in the iPhone run after the first model call of that app process |
-| Cold latency sample | 20 cold launches: the app is terminated and relaunched (`xcrun devicectl … --terminate-existing`), and each launch times exactly one ≤ 80-word PG answer, chosen in seeded order, with no earlier model call in the process |
+| Cold first-answer latency | 20 cold launches: the app is terminated and relaunched (`xcrun devicectl … --terminate-existing`), and each launch times exactly one ≤ 80-word PG answer, chosen in seeded order, with no earlier model call in the process. That launch's per-answer latency is its cold first-answer latency. |
+| Cold ceiling statistic | the **slowest** of the 20 cold first-answer latencies (a ceiling: every cold launch counts, none is discarded) |
 | p95 | the nearest-rank 95th percentile of a latency sample |
 
 No latency-hiding optimization is allowed in the measured runs: no `prewarm`, no speculative
@@ -107,19 +117,21 @@ Any miss means the capability spike FAILS.
 | G13 | Timeout rate | ≤ 1% |
 | G14 | Run-to-run consistency | ≥ 97% |
 | G15 | Mac–iPhone agreement | ≥ 95% |
-| G16 | iPhone 15 Pro latency, answers ≤ 80 words | p95 ≤ 12 s for the **warm** sample **and** for the **cold** sample. 6–12 s passes, but must be reported as a production UX problem. Over 12 s = FAIL. |
+| G16-warm | iPhone 15 Pro warm latency, answers ≤ 80 words | **p95 ≤ 12 s** (hard gate). 6–12 s passes, but must be flagged as a production UX problem. Over 12 s = FAIL. |
+| G16-cold | iPhone 15 Pro cold first-answer latency | **≤ 20 s** (hard operational ceiling; the slowest of the 20 cold launches). 12–20 s passes, but requires a production prewarming strategy. Over 20 s = FAIL. |
 
 * **Required runs:** frozen Mac runs 1, 2 and 3, and the iPhone 15 Pro run (with its 20 cold
   launches).
 * **How gates apply.** G1–G13 are evaluated on **each** required run, and the worst run
-  counts. G14 and G15 are evaluated as defined in §4. G16 is evaluated on the iPhone run, cold
-  and warm separately, and the worse of the two counts.
+  counts. G14 and G15 are evaluated as defined in §4. **G16-warm and G16-cold are separate
+  gates** on the iPhone run. Each must pass on its own. Their samples are never pooled or
+  averaged, and a good result on one can never offset a bad result on the other.
 * **A0 and A** are deterministic and scored once on PG, at scoring time only.
 * **Runs.** Every completed run counts; no completed run may be discarded or repeated. A run
   interrupted by an infrastructure failure (app killed, device restart) is logged and restarted
   from the beginning.
-* **Latency.** G16 is the only latency gate. It was added on 2026-09-29, before any case
-  existed.
+* **Latency.** G16-warm and G16-cold are the only latency gates. G16 was added before any case
+  existed and split into warm and cold before any Apple-model inference (both 2026-09-29).
 
 **No reinterpretation.** After scoring, none of the following is allowed:
 
@@ -237,6 +249,16 @@ The manifest records:
 * **2026-09-29 — G16 added.** Your instruction: iPhone 15 Pro latency p95 ≤ 12 s for answers
   ≤ 80 words; cold and warm measured separately; 6–12 s passes but is reported as a production
   UX problem; over 12 s fails. Recorded before any development or gate case was written.
+* **2026-09-29 — G16 split into warm and cold**, at your instruction, after Step 1 and **before
+  any Apple-model inference**. The worst-of-cold-and-warm rule is replaced:
+  * **Warm:** p95 ≤ 12 s for answers ≤ 80 words is a hard gate. 6–12 s passes, but is flagged as
+    a production UX problem. Over 12 s fails.
+  * **Cold:** first-answer latency ≤ 20 s is a hard operational ceiling, measured as the slowest
+    of the 20 cold launches. 12–20 s passes, but requires a production prewarming strategy. Over
+    20 s fails.
+  * Cold and warm are measured separately and never averaged. Neither can hide the other.
+* **2026-09-29 — gate passphrase rotated** after the first passphrase was exposed in the
+  conversation. The plaintext is byte-identical; only the ciphertexts changed (§3).
 
 ## Deviations log
 

@@ -30,7 +30,7 @@ the preregistration.
 | C3 | "A closure remembers its surrounding bindings." | "The inner function can still use variables from the function that created it." |
 | C4 | "The inner function works because JavaScript copies all variables." | "The inner function can still access the outer variable because JavaScript copies all outer variables into it." |
 | E / E0 | Optional | E only under the pre-freeze rule in §4 (development data only). E0 is not built. |
-| Hard gate | 10 rules | Your list, verbatim, including weak-reasoning precision ≥ 60%, **plus G16**: iPhone 15 Pro p95 ≤ 12 s for answers ≤ 80 words, cold and warm measured separately. 6–12 s passes but is reported as a production UX problem; over 12 s fails. No latency-hiding optimization. |
+| Hard gate | 10 rules | Your list, verbatim, including weak-reasoning precision ≥ 60%, **plus G16 on iPhone 15 Pro**, cold and warm measured separately and never averaged. **Warm:** p95 ≤ 12 s for answers ≤ 80 words (6–12 s passes but is a production UX problem; over 12 s fails). **Cold:** first-answer latency ≤ 20 s, the slowest of 20 cold launches (12–20 s passes but needs a production prewarming strategy; over 20 s fails). No latency-hiding optimization. |
 | Where the model runs | Mac and iPhone | A local Claude Code session on the Mac for all Foundation Models work, Mac first. The iPhone 15 Pro device gate runs only after the Mac configuration is frozen. |
 | Human track | Optional | Deferred until the architecture passes. |
 
@@ -392,9 +392,10 @@ Metrics come from the existing harness (`GeneralizationEvaluation.Report`, run w
   * run-to-run and Mac–iPhone decision consistency;
   * schema-error, refusal and timeout rates;
   * **G16 latency:** iPhone 15 Pro, answers ≤ 80 words, end to end (reading, second opinion,
-    checks, judge). The warm sample is every such gate answer after the first call of the
-    process. The cold sample is 20 relaunches with one answer each. The p95 of each must be
-    ≤ 12 s. Full distributions and tokens in/out are also reported.
+    checks, judge), with two separate gates:
+    * **Warm**, every such gate answer after the first call of the process: p95 ≤ 12 s.
+    * **Cold**, 20 relaunches with one answer each: the slowest ≤ 20 s.
+    * Full distributions and tokens in/out are also reported.
 * **Reported only:**
   * per-author, per-category and per-state breakdowns;
   * paraphrase-group stability;
