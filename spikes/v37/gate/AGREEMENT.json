@@ -1,0 +1,17 @@
+{
+ "adjudication": "not required: 0 coarse disagreements (SPIKE_SPEC 3.3 adjudicates coarse disagreements only)",
+ "coarseAgreement": 1.0,
+ "coarseConfusion": {
+  "misconception->misconception": 27,
+  "positive->positive": 17,
+  "weak->weak": 16
+ },
+ "coarseDisagreementCount": 0,
+ "coarseDisagreements": 0,
+ "coarseKappa": 1.0,
+ "doubleLabelled": 60,
+ "exactAgreement": 0.9833333333333333,
+ "exactKappa": 0.9776951672862453,
+ "guideRepair": "not required: raw coarse agreement 100% >= 80%",
+ "selection": "seed 3737, 10 per author, neutral ids DL-01..DL-60, second labeller blind to first labels and authors"
+}

@@ -1,8 +1,9 @@
 # Leu V37 capability spike — specification
 
-**Status: APPROVED 2026-09-29, with the G16 latency gate added. Step 1 (cases, validation,
-second labels, sealing) authorized. Apple's model has not been run, and the gate has not been
-consumed.**
+**Status: APPROVED 2026-09-29, with the G16 latency gate added. Step 1 is COMPLETE: the
+development set (80 cases), the canonical cases (5) and the primary gate (240 cases) are
+written, validated, double-labelled (100% coarse agreement) and sealed. Apple's model has not
+been run, and the gate has not been consumed. Model and prompt development wait for approval.**
 Throwaway experiment on branch `claude/v37-capability-spike`, which is never merged. No
 production code is written. The binding decision rules are in
 [PREREGISTRATION.md](PREREGISTRATION.md); if the two documents ever disagree, the

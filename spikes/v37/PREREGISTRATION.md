@@ -24,9 +24,24 @@ choice is recorded in the freeze manifest.
 * **Primary gate PG.** 240 cases: 6 new authors (J–O) × 40, as specified in SPIKE_SPEC §3.3.
   Blind after structural validation. 25% double-labelled; raw coarse agreement ≥ 80% before
   scoring (guide repair as in SPIKE_SPEC §3.3).
-  * Plaintext SHA-256: `<recorded at sealing>`
-  * Ciphertext SHA-256: `<recorded at sealing>`
-  * Raw coarse agreement / exact-state agreement / κ (coarse, exact): `<recorded before freeze>`
+  * **Sealed 2026-09-29** (`gate/FINGERPRINTS.txt`) with `openssl enc -aes-256-cbc -pbkdf2
+    -iter 200000 -salt`. The passphrase is held by the owner and never committed. Decrypting
+    needs OpenSSL ≥ 1.1.1 (for example Homebrew `openssl@3`); macOS's bundled LibreSSL may not
+    support `-pbkdf2`.
+  * `primary-gate.json.enc`:
+    * plaintext SHA-256 `c1c1b53088ed8bd8291535283df8d1e49a96ddcb1f31a47c36e5188af8730ada`
+    * ciphertext SHA-256 `ebded0d0fb1687aec4caa28c5cb1c51e1895649e17ddbf5932923462a53e9327`
+  * `labels2.json.enc` (the blind second labels):
+    * plaintext SHA-256 `8ed9d58e3e97d780a0a541dc4d133f57c9cf668b50236c2774647d6e6c9040d0`
+    * ciphertext SHA-256 `e3e405ecfd23ae1d998faf201140144535eb2f02b76138e83143d9079755d714`
+  * `double-label-map.json.enc` (neutral id → case id):
+    * plaintext SHA-256 `93a4f4301ecdd9d8900e00232d0f0c4efb8afe32d05a280423c0afc9cb8a9937`
+    * ciphertext SHA-256 `900fc8169ef7a1039df94ae9f3867181c2a410af134fbba8fe3fbe3b1bdacd98`
+  * **Agreement** (`gate/AGREEMENT.json`), 60 cases double-labelled (25%, 10 per author):
+    * raw coarse agreement **100%** (60/60), coarse κ 1.00;
+    * exact-state agreement 98.3% (59/60), exact κ 0.98.
+    * Guide repair: not required. Adjudication: not required (0 coarse disagreements).
+  * **Gold labels** are the authors' own. No label was changed after structural validation.
 * **Development P** (80) and **canonical C** (5) are open. They are the only data used for
   development and failure analysis.
 * **sealed36 (S36)** is secondary: totals only, **never part of the decision**. A must
