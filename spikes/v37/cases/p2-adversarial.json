@@ -1,0 +1,524 @@
+{
+ "split": "v37-p2",
+ "cases": [
+  {
+   "id": "P2-01",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "A closure remembers its surrounding bindings.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "plus access to the lexical variables"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "terse",
+    "partiallyCorrect",
+    "themeClosure"
+   ],
+   "paraphraseGroup": null,
+   "notes": "States the core idea (a closure keeps access to the variables of the scope it was created in) in its own words, but says nothing about what closures are for, so mostlyUnderstood rather than understood."
+  },
+  {
+   "id": "P2-02",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "A refresh token is a longer-lasting credential that gets you new access tokens without logging in again.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "used to obtain new access tokens"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gives the whole definition (a longer-lived credential that obtains new access tokens without signing in again) but not why it exists, the balance with short-lived access credentials, so mostlyUnderstood."
+  },
+  {
+   "id": "P2-03",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Idempotency makes retries dangerous.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "Idempotency makes retries safe",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "oppositeMeaningSameWords",
+    "terse",
+    "veryShort"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Swaps one word of the source's statement that idempotency makes retries safe, asserting the opposite."
+  },
+  {
+   "id": "P2-04",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "Nobody holding a JWT can read the claims in its payload.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "signed claim containers, not automatically encrypted",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "oppositeMeaningSameWords",
+    "negation",
+    "confidentlyWrong",
+    "themeJWT"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Claims the payload cannot be read, but the source says JWTs are signed and not automatically encrypted, so a holder can read the claims."
+  },
+  {
+   "id": "P2-05",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "Throttling waits until the events stop coming and only then runs the handler once.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "once per time window while events continue",
+     "confusedWith": "Debouncing"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "oppositeMeaningSameWords"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes debouncing (wait until the events stop, then run once) instead of throttling, which runs at most once per window while events continue."
+  },
+  {
+   "id": "P2-06",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Repeating an idempotent operation does not have the same effect as doing it once.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "repeating an operation has the same intended effect",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "negation",
+    "oppositeMeaningSameWords"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The negation turns the definition into its opposite, since the source says repeating the operation has the same intended effect as doing it once."
+  },
+  {
+   "id": "P2-07",
+   "document": "Mobile Mastery",
+   "concept": "Retry",
+   "page": null,
+   "text": "Retrying a failed call always makes it succeed eventually, whatever the error.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "Transient network/service errors often succeed later",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "absoluteVsQualified",
+    "confidentlyWrong",
+    "misconceptionParaphrase"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Turns the source's qualified claim (transient errors often succeed later, retry when the failure may be temporary) into guaranteed success for any error."
+  },
+  {
+   "id": "P2-08",
+   "document": "Mobile Mastery",
+   "concept": "Retry",
+   "page": null,
+   "text": "You try a failed call again when the failure might only be temporary.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "again when the failure may be temporary"
+   ],
+   "categories": [
+    "absoluteVsQualified",
+    "paraphrase",
+    "novelVocabulary",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correctly qualified restatement of the definition (retry when the failure may be temporary), but the reason, that transient errors often succeed later, is missing, so mostlyUnderstood."
+  },
+  {
+   "id": "P2-09",
+   "document": "Mobile Mastery",
+   "concept": "Database index",
+   "page": null,
+   "text": "Big tables are usually the slow ones, so a table's size is what an index shrinks to make lookups fast.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "trade additional storage and write cost",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "causeVsCorrelation",
+    "wrongConclusionPlausibleReason",
+    "misconceptionParaphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "From the plausible observation that big tables are slow it concludes that an index shrinks the table, whereas the source says an index costs additional storage and write cost to make reads faster."
+  },
+  {
+   "id": "P2-10",
+   "document": "Mobile Mastery",
+   "concept": "Retry",
+   "page": null,
+   "text": "Calls that fail at night tend to succeed in the morning, so the time of day is what makes a retry work.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "Transient network/service errors often succeed later",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "causeVsCorrelation",
+    "wrongConclusionPlausibleReason",
+    "misconceptionParaphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Treats a correlation (night failures, morning successes) as the cause, whereas the source says retries work because transient errors often succeed later, not because of the time of day."
+  },
+  {
+   "id": "P2-11",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "An access token is a longer-lived credential used to obtain new refresh tokens.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "longer-lived credential used to obtain new access tokens",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "subjectObjectReversal",
+    "oppositeMeaningSameWords"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Swaps the two tokens: in the source the refresh token is the longer-lived credential used to obtain new access tokens, not the other way round."
+  },
+  {
+   "id": "P2-12",
+   "document": "Mobile Mastery",
+   "concept": "Authorization",
+   "page": null,
+   "text": "Authorization is what an allowed identity uses to decide who it is.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "reversal",
+     "claim": "deciding what an authenticated identity is allowed",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "subjectObjectReversal",
+    "oppositeMeaningSameWords",
+    "themeAuthnAuthz"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Reverses the definition (authorization decides what an authenticated identity may do) into an allowed identity deciding who it is, which is really authentication."
+  },
+  {
+   "id": "P2-13",
+   "document": "Mobile Mastery",
+   "concept": "Database index",
+   "page": null,
+   "text": "An index speeds up lookups on a column, because the database keeps the results of earlier queries and hands them back.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "make particular lookups or orderings faster"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right that an index speeds up lookups, but the reason given (reusing cached results of earlier queries) is a cache, not the maintained data structure the source describes, though no source sentence is directly contradicted."
+  },
+  {
+   "id": "P2-14",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "A refresh token gets you a new access token without logging in again, because your password is stored inside it.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "used to obtain new access tokens"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right that a refresh token gets a new access token without signing in again, but the reason (the password is stored inside it) is wrong and not supported by the source, which calls it a separate longer-lived credential."
+  },
+  {
+   "id": "P2-15",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Authentication checks who you are; authorization then decides what you may do.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "verifying who a user or service is",
+    "the system needs a trustworthy identity"
+   ],
+   "categories": [
+    "multipleConcepts",
+    "paraphrase",
+    "novelVocabulary",
+    "themeAuthnAuthz"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Correctly says authentication verifies who you are and that authorization only comes afterwards to decide permissions, covering both the definition and the identity-before-access constraint."
+  },
+  {
+   "id": "P2-16",
+   "document": "Mobile Mastery",
+   "concept": "Debouncing",
+   "page": null,
+   "text": "Debouncing waits for a pause in the events, while throttling runs at most once per window.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "until a burst of events has been quiet"
+   ],
+   "categories": [
+    "multipleConcepts",
+    "paraphrase",
+    "novelVocabulary",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Captures debouncing as waiting for a pause in the events and contrasts it correctly with throttling, but omits the purpose (not firing expensive work on every keystroke), so mostlyUnderstood."
+  },
+  {
+   "id": "P2-17",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Idempotency is about retries.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "terse",
+    "veryShort"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Only links idempotency to retries without saying what the property is; torn between fragile and insufficient, I chose the less generous insufficient because a teacher cannot tell what is understood."
+  },
+  {
+   "id": "P2-18",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "JWTs are really popular and lots of web frameworks support them.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "themeJWT"
+   ],
+   "paraphraseGroup": null,
+   "notes": "True-sounding remarks about popularity and framework support say nothing the source teaches about JWTs (signed claims verified without a database lookup)."
+  },
+  {
+   "id": "P2-19",
+   "document": "Mobile Mastery",
+   "concept": "HttpOnly cookie",
+   "page": null,
+   "text": "Marking a cookie HttpOnly makes XSS attacks harmless.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "it does not eliminate XSS impact",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "misconceptionParaphrase",
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The source says HttpOnly reduces exposure of session secrets but does not eliminate XSS impact, so calling XSS harmless contradicts it."
+  },
+  {
+   "id": "P2-20",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Pressing an elevator call button five times still brings just one elevator.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "exampleInsteadOfDefinition",
+    "novelExample",
+    "analogy",
+    "novelVocabulary",
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "An apt everyday example of repeating an action with the same effect as doing it once, but the general property and why it matters for retries are never stated; torn with mostlyUnderstood, so the less generous fragile."
+  },
+  {
+   "id": "P2-21",
+   "document": "Mobile Mastery",
+   "concept": "Database index",
+   "page": null,
+   "text": "It's fast.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "veryShort"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Two words with no stated subject say nothing about what an index is or how it speeds up lookups."
+  },
+  {
+   "id": "P2-22",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "A JWT is a compact token with a header, a payload and a signature. The signature lets the API check who issued it without looking anything up in a database. Because it is encrypted, nobody can read the claims inside.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "signed claim containers, not automatically encrypted",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "compact signed token format containing claims",
+    "without a database lookup for every verification"
+   ],
+   "categories": [
+    "fluentButWrong",
+    "confidentlyWrong",
+    "oppositeMeaningSameWords",
+    "negation",
+    "themeJWT"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The structure and the lookup-free verification are right, but the confident last clause that the token is encrypted and unreadable contradicts the source's signed, not automatically encrypted."
+  },
+  {
+   "id": "P2-23",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "A stateless server handles each request without relying on anything kept in its own memory, so any replica can take the next request, which makes horizontal scaling easier; that is also why stateless servers never need a database.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "keep request state outside a specific instance",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "can handle each request without relying on",
+    "Any replica can serve the next request"
+   ],
+   "categories": [
+    "fluentButWrong",
+    "confidentlyWrong",
+    "misconceptionParaphrase",
+    "wrongConclusionPlausibleReason",
+    "negation"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition and the replica/scaling mechanism are right, but the final clause wrongly concludes that stateless servers never need a database, whereas the source keeps request state outside the instance."
+  },
+  {
+   "id": "P2-24",
+   "document": "Mobile Mastery",
+   "concept": "useCallback",
+   "page": null,
+   "text": "It keeps it so that it doesn't have to make it again.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Every noun is a pronoun, so a teacher cannot tell whether the learner knows useCallback caches a function reference until its dependencies change; torn with fragile, so the less generous insufficient."
+  },
+  {
+   "id": "P2-25",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "It keeps them around after it finishes so that it can use them.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "pronounAmbiguity",
+    "themeClosure"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gestures at variables surviving after a function finishes, but the pronouns hide which function keeps them and which one finishes; torn with fragile, so the less generous insufficient."
+  }
+ ]
+}
