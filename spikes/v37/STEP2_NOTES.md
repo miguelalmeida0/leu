@@ -136,3 +136,46 @@ From `ZZSpikeScoreRun` with A0 and A only (no readings). 95% Wilson intervals ar
 | Follow-up rate (G7) | 56/80, 70% | 57/80, 71% |
 | False mastery (G8) | 3/58, 5% | 2/58, 3% |
 | Harmful writes (G9) | 10/80, 12.5% | 8/80, 10% |
+
+## Final verification (2026-09-29)
+
+Run on the code at `071379e`. The later commits change only documentation and add a data file
+that no test reads.
+
+* **ShelfCore clean build** from an empty build directory: exit 0, **0 warnings**.
+* **Full ShelfCore suite: 495 tests, 0 failures**, including V34–V36 and the 20 spike tests.
+* **Runner clean build:** 0 warnings; 8 tests pass.
+* **`stats.py`:** 10 tests pass.
+* **`scripts/validate.py`** (the 300-line rule and structure checks) and
+  **`scripts/check-learning-offline.py`** pass.
+
+## Branch cleanup (2026-09-29)
+
+At your instruction the repository keeps three branches:
+
+| Branch | Holds |
+|---|---|
+| `main` | Untouched |
+| `dev` | `6e19a6d`, V36 |
+| `test` | This spike branch, renamed |
+
+The other branches are removed. Their tips are listed so any one can be restored with
+`git push origin <sha>:refs/heads/<name>` while GitHub still holds the objects.
+
+| Removed branch | Tip | Commits in none of main, dev or test |
+|---|---|---|
+| `claude/leu-v34-verification-handoff` | `3fbd9aba10b17d9223d262ef313378f80a24caa0` | 0 |
+| `claude/leu-v35-diagnosis-generalization` | `759dc88c90b14765f0c9352e4c4eadce47cf256b` | 0 |
+| `claude/leu-v36-semantic-understanding` | `6e19a6d29792bd56a8e188d9dfc4d509114e1079` | 0 |
+| `claude/super-intelligence` | `30ab6d5a65e6cb5b040c4cd924bcfc46a32df21e` | 0 |
+| `claude/super-intelligence-core-v1` | `eb6b76ce307d41a067cb805e3e1a9895644d386c` | 2 |
+| `claude/v37-capability-spike` | continues as `test` | 0 |
+| `codex/qwen-local-understanding` | `e4168a9acf5dd233d4d96cce04c9f510b57bb56e` | 9 |
+| `codex/v28-living-knowledge` | `8249120ce9cf47ae733e3df50aec480b52dab3f8` | 2 |
+| `codex/v28.1-instant-intelligence` | `09854ebccddd0324fd8789ea7f95b389cd0c54ab` | 4 (still reachable from tag `v28.1-rc1`) |
+| `codex/v29-real-reasoning` | `cab3655d927435f2f2143fc9598468bb65fc4e9e` | 3 |
+| `codex/v29.1-teach-integration` | `16d550ec41c61d6d6e1e4177fda4db9c4e5ad857` | 5 |
+
+**The fallback's manifest is preserved.** PREREGISTRATION §8 cites the model manifest on
+`codex/qwen-local-understanding`. A byte-identical copy (SHA-256 `86ad664f…`) is kept at
+`fallback/MODEL_MANIFEST.json`.
