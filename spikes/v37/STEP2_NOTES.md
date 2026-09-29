@@ -123,4 +123,16 @@ These were found with synthetic readings through the unchanged judge and pinned 
 
 ## P baselines (open development set, deterministic)
 
-Filled in from `ZZSpikeScoreRun` (A0 and A only, no readings); see the table below.
+From `ZZSpikeScoreRun` with A0 and A only (no readings). 95% Wilson intervals are in brackets.
+
+| Metric (gate) | A0, V35 | A, V36 |
+|---|---|---|
+| Coarse accuracy (G1) | 37/80, 46% [36–57] | 37/80, 46% [36–57] |
+| Paraphrase (G2) | 6/25, 24% | 6/25, 24% |
+| Novel vocabulary (G3) | 19/56, 34% | 19/56, 34% |
+| Weak-reasoning recall (G4) | 0/13 | 0/13 |
+| Weak-reasoning precision (G5) | 0/1 | 0/2 |
+| Commit accuracy (G6) | 10/24, 42% | 10/23, 43% |
+| Follow-up rate (G7) | 56/80, 70% | 57/80, 71% |
+| False mastery (G8) | 3/58, 5% | 2/58, 3% |
+| Harmful writes (G9) | 10/80, 12.5% | 8/80, 10% |

@@ -201,7 +201,9 @@ final class ZZSpikeScoreRun: XCTestCase {
             }
         }
         let data = try JSONSerialization.data(withJSONObject: result, options: [.prettyPrinted, .sortedKeys])
-        try data.write(to: URL(fileURLWithPath: out))
+        let file = URL(fileURLWithPath: out)
+        try FileManager.default.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try data.write(to: file)
         print("SPIKE|\(label)|written|\(blind ? "blind file (not printed)" : out)")
         return result
     }

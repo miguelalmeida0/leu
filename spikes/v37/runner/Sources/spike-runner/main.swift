@@ -66,7 +66,13 @@ func keys() throws -> [String: SpikeAnswerKey] {
     return try JSONDecoder().decode(SpikeAnswerKeyFile.self, from: Data(contentsOf: try url("keys"))).keys
 }
 
+/// Output folders are created as needed.
+func prepare(_ file: URL) throws {
+    try FileManager.default.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
+}
+
 func write<T: Encodable>(_ value: T, to file: URL) throws {
+    try prepare(file)
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
     try encoder.encode(value).write(to: file)
@@ -125,6 +131,7 @@ func dryRun() throws {
     if let limit = options["limit"].flatMap(Int.init) { cases = Array(cases.prefix(limit)) }
     let unkeyed = cases.filter { keys[$0.targetKey] == nil && !$0.segments.isEmpty }.count
     if unkeyed > 0 { print("warning: \(unkeyed) cases have no answer key for their target (read with no likely mistakes)") }
+    try prepare(out)
     _ = FileManager.default.createFile(atPath: out.path, contents: nil)
     let handle = try FileHandle(forWritingTo: out)
     defer { try? handle.close() }
