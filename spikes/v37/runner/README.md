@@ -40,6 +40,52 @@ spike-runner read --inputs FILE --keys KEYS.json --prompts ../prompts --out RUN.
 * **`read`** never resumes a run: a run restarts from the beginning (PREREGISTRATION §5). It
   refuses an existing output file unless `--overwrite` is given.
 
+## Preflight on the Mac (no model call, no decryption)
+
+Run from the repository root. The expected results are the Linux results from Step 2.
+
+```
+# 1. Branch and machine
+git fetch origin claude/v37-capability-spike && git checkout claude/v37-capability-spike && git pull --ff-only
+git log -1 --oneline
+sw_vers; xcodebuild -version; sysctl -n hw.model; swift --version
+
+# 2. Runner: first compile of the Foundation Models engine; tests; availability (reads status only)
+(cd spikes/v37/runner && swift build -c release && swift test)          # 8 tests pass
+R=spikes/v37/runner/.build/release/spike-runner
+$R availability                                                          # available
+$R hash --prompts spikes/v37/prompts   # a301def6d16dc1a81e27a51fba1cb719f423d768eae4349d9f9acded87651332
+
+# 3. Gate ciphertexts untouched (no decryption); OpenSSL 3 for the freeze step later
+shasum -a 256 spikes/v37/gate/*.enc                                      # = gate/FINGERPRINTS.txt
+brew install openssl@3 && "$(brew --prefix openssl@3)/bin/openssl" version
+
+# 4. ShelfCore spike tests on macOS (includes the sealed36 reproduction, totals only)
+(cd Packages/ShelfCore && swift test --filter ZZSpike)
+#   20 tests pass; SPIKE|S36|totals only|A coarse 82/160 falseMastery 10/104 harmful 23 probes 114
+#                                        | A0 coarse 83/160 falseMastery 11/104 harmful 25 probes 113
+
+# 5. The Mac export equals the Linux reference exports
+(cd Packages/ShelfCore && for S in P:p-dev C:canonical; do
+   LEU_SPIKE_CASES=$PWD/../../spikes/v37/cases/${S#*:}.json LEU_SPIKE_SET=${S%%:*} LEU_SPIKE_EXPORT=/tmp/v37-${S%%:*}.json \
+   swift test --filter ZZSpikeExport/testExportInputs; done)
+python3 -c "import json; [print(s, 'identical' if json.load(open(f'/tmp/v37-{s}.json')) == json.load(open(f'spikes/v37/inputs/{s}.json')) else 'DIFFERENT') for s in 'PC']"
+
+# 6. Dry runs: every request rendered and sized, no model call
+$R dry-run --inputs spikes/v37/inputs/P.json --prompts spikes/v37/prompts  # casesOverBudget=0
+$R dry-run --inputs spikes/v37/inputs/C.json --prompts spikes/v37/prompts  # casesOverBudget=0
+
+# 7. The stand-in model end to end through the scorer (no Apple model call)
+$R read --model fake --inputs spikes/v37/inputs/C.json --prompts spikes/v37/prompts \
+   --out /tmp/v37-C-fake.jsonl --device mac --run 0 --overwrite
+(cd Packages/ShelfCore && LEU_SPIKE_SCORE_CASES=$PWD/../../spikes/v37/cases/canonical.json LEU_SPIKE_SCORE_SET=C \
+   LEU_SPIKE_SCORE_LABEL=C-fake-mac LEU_SPIKE_SCORE_READINGS=/tmp/v37-C-fake.jsonl \
+   LEU_SPIKE_SCORE_INPUTS=$PWD/../../spikes/v37/inputs/C.json LEU_SPIKE_SCORE_OUT=/tmp/v37-C-fake.score.json \
+   swift test --filter ZZSpikeScoreRun)
+#   SPIKE-CANONICAL|B|passed 2/5, C 2/5, D 2/5, as on Linux (the stand-in's readings mean nothing)
+(cd spikes/v37/score && python3 -m unittest test_stats)                  # 10 tests OK
+```
+
 ## Step 3 on the Mac (after approval): the development loop on P and C only
 
 Run from the repository root. `export/score` run ShelfCore's test target with environment
