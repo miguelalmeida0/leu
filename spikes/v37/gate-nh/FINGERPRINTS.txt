@@ -1,0 +1,7 @@
+# V37 NH holdout: sealed files
+cipher: openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt (passphrase file held by the owner, never committed)
+plaintext hash: SHA-256 of canonical JSON (sorted keys, compact separators, UTF-8)
+
+nh-holdout.json.enc  plaintext-sha256=ed3f8e1fa355fc4cccd2f9a35013103e40d36a8ec9984cef984e1501e92dba83  ciphertext-sha256=f8e97affe3b9837848ba67f4edeead112a6a23f691d48bc5d32c0c23d1a04e79  bytes=152432
+nh-labels2.json.enc  plaintext-sha256=d215a002b3f2f658f20850a3356feb3b4ef3a087b8f10935205bc057338d283c  ciphertext-sha256=d474883a50d3aca7303ff2dd60252f28a929eaf1e357975f77f6338447c255e1  bytes=15264
+nh-double-label-map.json.enc  plaintext-sha256=c02352a5df2882ac8a3c1f037331f187b31345db71bfef920cfd646c9e86335d  ciphertext-sha256=903ad809d982428604026f2fb65cb7eecee219b6bbdea633fb15fce061b50ef4  bytes=928

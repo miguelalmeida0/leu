@@ -1,0 +1,334 @@
+{
+ "concepts": [
+  {
+   "concept": "closure",
+   "contrastPartner": "-",
+   "document": "JavaScript Deep Dive",
+   "examples": [],
+   "key": "closure",
+   "neighbours": [],
+   "page": 2,
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    }
+   ],
+   "section": "",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authentication",
+   "contrastPartner": "Authorization",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Password + MFA creates an authenticated session for user 42."
+   ],
+   "key": "authentication",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "CORS",
+    "Cookie",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 41,
+   "rubric": [
+    {
+     "id": "claim-7485a5102853e2f4",
+     "kind": "definition",
+     "text": "The process of verifying who a user or service is."
+    },
+    {
+     "id": "claim-508e25d02094b377",
+     "kind": "constraint",
+     "text": "Before granting access, the system needs a trustworthy identity."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authorization",
+   "contrastPartner": "Authentication",
+   "document": "Mobile Mastery",
+   "examples": [
+    "user role can read reports; admin role can delete accounts."
+   ],
+   "key": "authorization",
+   "neighbours": [
+    "Access token",
+    "Authentication",
+    "Cookie",
+    "Database constraint",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 42,
+   "rubric": [
+    {
+     "id": "claim-a1b2f230a4062697",
+     "kind": "definition",
+     "text": "The process of deciding what an authenticated identity is allowed to do."
+    },
+    {
+     "id": "claim-54d49440ea8daee0",
+     "kind": "property",
+     "text": "Identity alone is not permission."
+    },
+    {
+     "id": "claim-a9d2e28b3dc2414a",
+     "kind": "mechanism",
+     "text": "authorization still happens per action/resource."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Closure",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "createCounter() returns a function that keeps access to count after createCounter returns."
+   ],
+   "key": "closure",
+   "neighbours": [
+    "Encapsulation",
+    "Hoisting",
+    "Mutation",
+    "Primitive values",
+    "Reference semantics",
+    "Scope",
+    "State",
+    "async / await",
+    "try / catch",
+    "var, let, const"
+   ],
+   "page": 83,
+   "rubric": [
+    {
+     "id": "claim-63b3e0f7dcdc4888",
+     "kind": "definition",
+     "text": "A function plus access to the lexical variables from the scope where it was created."
+    },
+    {
+     "id": "claim-ea1f1e097d9c8eab",
+     "kind": "purpose",
+     "text": "Closures power encapsulation, callbacks, hooks, and private state patterns."
+    }
+   ],
+   "section": "JAVASCRIPT CORE MENTAL MODELS",
+   "supporting": [
+    "A closure lets a function retain access to its lexical environment after the outer function has finished."
+   ],
+   "supportingIDs": [
+    "claim-329d5dceec7cb700"
+   ]
+  },
+  {
+   "concept": "JWT",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Authorization: Bearer <jwt> containing sub, exp, and roles."
+   ],
+   "key": "jwt",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "Cookie",
+    "Database",
+    "Encryption",
+    "Hashing",
+    "Headers",
+    "HttpOnly cookie",
+    "Refresh token",
+    "Session",
+    "Token"
+   ],
+   "page": 46,
+   "rubric": [
+    {
+     "id": "claim-ff95fc8d2fc5f02e",
+     "kind": "definition",
+     "text": "A compact signed token format containing claims, represented as header.payload.signature."
+    },
+    {
+     "id": "claim-b6c3668d41921be7",
+     "kind": "purpose",
+     "text": "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [
+    "JWTs are signed claim containers, not automatically encrypted."
+   ],
+   "supportingIDs": [
+    "claim-f8f60f6a0a9d8164"
+   ]
+  },
+  {
+   "concept": "Relational database",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "PostgreSQL tables users and orders linked by orders.user_id."
+   ],
+   "key": "relational database",
+   "neighbours": [
+    "ACID",
+    "Database",
+    "Database index",
+    "Foreign key",
+    "Primary key",
+    "Race condition",
+    "SQL JOIN",
+    "Transaction"
+   ],
+   "page": 57,
+   "rubric": [
+    {
+     "id": "claim-3867d7f3e00733",
+     "kind": "definition",
+     "text": "A database model built around tables, rows, columns, relationships, and constraints."
+    },
+    {
+     "id": "claim-e48b101330c3613c",
+     "kind": "property",
+     "text": "It is excellent when data relationships and transactional consistency matter."
+    }
+   ],
+   "section": "DATABASES & DATA INTEGRITY",
+   "supporting": [
+    "Relational databases model structured data with tables and constraints and are queried commonly with SQL;"
+   ],
+   "supportingIDs": [
+    "claim-bfca08aa60d5cb8b"
+   ]
+  },
+  {
+   "concept": "Semantic search",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "query embedding -> nearest document embeddings."
+   ],
+   "key": "semantic search",
+   "neighbours": [
+    "Chunking",
+    "Context window",
+    "Embedding",
+    "Grounding",
+    "RAG",
+    "Reranking",
+    "Tokenizer",
+    "Vector database"
+   ],
+   "page": 302,
+   "rubric": [
+    {
+     "id": "claim-63d5014d11b393a8",
+     "kind": "definition",
+     "text": "Search based on meaning similarity rather than only exact lexical matches."
+    },
+    {
+     "id": "claim-82a587bf48fd27bc",
+     "kind": "mechanism",
+     "text": "It can find relevant content even when wording differs."
+    }
+   ],
+   "section": "AI ENGINEERING & LLM SYSTEMS",
+   "supporting": [
+    "Semantic search improves recall across paraphrases;"
+   ],
+   "supportingIDs": [
+    "claim-ec770d2ee4925271"
+   ]
+  }
+ ],
+ "passages": [
+  {
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 A closure keeps access A closure is a function together with access to its surrounding lexical environment. The function can keep accessing that environment after the outer call has returned. function counter() { let value = 0; return () => { value += 1; return value; }; } const next = counter(); next(); // 1 next(); // 2 Two separate calls to counter() create two independent environments. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    },
+    {
+     "id": "claim-ee55517299423231",
+     "kind": "mechanism",
+     "text": "The function can keep accessing that environment after the outer call has returned."
+    },
+    {
+     "id": "claim-ad61d3ae9c591c48",
+     "kind": "consequence",
+     "text": "Two separate calls to counter() create two independent environments."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Coding Interviews",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 Test the boundary Test cases should probe the assumptions, not merely confirm the example used while writing the code. Include the smallest input, a repeated value and a case that challenges ordering. function firstEven(values) { return values.find(value => value % 2 === 0); } firstEven([]); // undefined firstEven([3, 5]); // undefined firstEven([3, 4, 2]); // 4 Explain what the caller should do when a result is undefined. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-1af0c4caf05af702",
+     "kind": "contrast",
+     "text": "Test cases should probe the assumptions, not merely confirm the example used while writing the code."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Design Patterns",
+   "page": 0,
+   "pageText": "SHELF SAMPLES / 01 Design Patterns Make the boundary visible A pattern is useful when it makes a recurring design problem easier to understand. It is not a requirement to put every application behind layers of indirection. Contract Adapter System For a PDF reader, a small interface for storing library metadata lets the application service work with a disk implementation or a test double. A new engineer should know what a module owns before reading its implementation. SHELF / ORIGINAL SAMPLE NOTES 1",
+   "rubric": [
+    {
+     "id": "claim-f92bd4a40b93d8b8",
+     "kind": "property",
+     "text": "A pattern is useful when it makes a recurring design problem easier to understand."
+    },
+    {
+     "id": "claim-98e92f50515bebed",
+     "kind": "constraint",
+     "text": "A new engineer should know what a module owns before reading its implementation."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "System Design",
+   "page": 0,
+   "pageText": "SHELF SAMPLES / 01 System Design Start with the job Before drawing components, establish who uses the system, what they need to do, and what failure would mean. An architecture solves a particular set of constraints. Need Constraint Decision For a personal PDF reader, local access, data integrity and fast navigation may matter more than multi-region availability. Do not pay for complexity that the task does not require. A useful question: what must still work when the internet does not? SHELF / ORIGINAL SAMPLE NOTES 1",
+   "rubric": [
+    {
+     "id": "claim-6cdcf11a35a9cb3b",
+     "kind": "mechanism",
+     "text": "An architecture solves a particular set of constraints."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  }
+ ]
+}

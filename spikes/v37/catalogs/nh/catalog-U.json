@@ -1,0 +1,368 @@
+{
+ "concepts": [
+  {
+   "concept": "closure",
+   "contrastPartner": "-",
+   "document": "JavaScript Deep Dive",
+   "examples": [],
+   "key": "closure",
+   "neighbours": [],
+   "page": 2,
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    }
+   ],
+   "section": "",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authentication",
+   "contrastPartner": "Authorization",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Password + MFA creates an authenticated session for user 42."
+   ],
+   "key": "authentication",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "CORS",
+    "Cookie",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 41,
+   "rubric": [
+    {
+     "id": "claim-7485a5102853e2f4",
+     "kind": "definition",
+     "text": "The process of verifying who a user or service is."
+    },
+    {
+     "id": "claim-508e25d02094b377",
+     "kind": "constraint",
+     "text": "Before granting access, the system needs a trustworthy identity."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authorization",
+   "contrastPartner": "Authentication",
+   "document": "Mobile Mastery",
+   "examples": [
+    "user role can read reports; admin role can delete accounts."
+   ],
+   "key": "authorization",
+   "neighbours": [
+    "Access token",
+    "Authentication",
+    "Cookie",
+    "Database constraint",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 42,
+   "rubric": [
+    {
+     "id": "claim-a1b2f230a4062697",
+     "kind": "definition",
+     "text": "The process of deciding what an authenticated identity is allowed to do."
+    },
+    {
+     "id": "claim-54d49440ea8daee0",
+     "kind": "property",
+     "text": "Identity alone is not permission."
+    },
+    {
+     "id": "claim-a9d2e28b3dc2414a",
+     "kind": "mechanism",
+     "text": "authorization still happens per action/resource."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Closure",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "createCounter() returns a function that keeps access to count after createCounter returns."
+   ],
+   "key": "closure",
+   "neighbours": [
+    "Encapsulation",
+    "Hoisting",
+    "Mutation",
+    "Primitive values",
+    "Reference semantics",
+    "Scope",
+    "State",
+    "async / await",
+    "try / catch",
+    "var, let, const"
+   ],
+   "page": 83,
+   "rubric": [
+    {
+     "id": "claim-63b3e0f7dcdc4888",
+     "kind": "definition",
+     "text": "A function plus access to the lexical variables from the scope where it was created."
+    },
+    {
+     "id": "claim-ea1f1e097d9c8eab",
+     "kind": "purpose",
+     "text": "Closures power encapsulation, callbacks, hooks, and private state patterns."
+    }
+   ],
+   "section": "JAVASCRIPT CORE MENTAL MODELS",
+   "supporting": [
+    "A closure lets a function retain access to its lexical environment after the outer function has finished."
+   ],
+   "supportingIDs": [
+    "claim-329d5dceec7cb700"
+   ]
+  },
+  {
+   "concept": "JWT",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Authorization: Bearer <jwt> containing sub, exp, and roles."
+   ],
+   "key": "jwt",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "Cookie",
+    "Database",
+    "Encryption",
+    "Hashing",
+    "Headers",
+    "HttpOnly cookie",
+    "Refresh token",
+    "Session",
+    "Token"
+   ],
+   "page": 46,
+   "rubric": [
+    {
+     "id": "claim-ff95fc8d2fc5f02e",
+     "kind": "definition",
+     "text": "A compact signed token format containing claims, represented as header.payload.signature."
+    },
+    {
+     "id": "claim-b6c3668d41921be7",
+     "kind": "purpose",
+     "text": "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [
+    "JWTs are signed claim containers, not automatically encrypted."
+   ],
+   "supportingIDs": [
+    "claim-f8f60f6a0a9d8164"
+   ]
+  },
+  {
+   "concept": "Module",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "payments/index.ts exports charge(); internal gateway mapping stays private."
+   ],
+   "key": "module",
+   "neighbours": [
+    "Abstraction",
+    "Cohesion",
+    "Contract",
+    "Dependency inversion",
+    "Encapsulation",
+    "Interface",
+    "Layered architecture",
+    "Ports and adapters",
+    "Pure core, imperative shell",
+    "Single Responsibility Principle"
+   ],
+   "page": 248,
+   "rubric": [
+    {
+     "id": "claim-dc1155d1c31df1fc",
+     "kind": "definition",
+     "text": "A cohesive unit that exposes a public interface while hiding internal implementation details."
+    },
+    {
+     "id": "claim-1cd4c17155933523",
+     "kind": "purpose",
+     "text": "Modules reduce the amount of code a developer must understand at once."
+    },
+    {
+     "id": "claim-8ce42c21d3a7ed56",
+     "kind": "constraint",
+     "text": "A module should have one coherent reason to change."
+    }
+   ],
+   "section": "MODULARITY & MAINTAINABILITY",
+   "supporting": [
+    "A good module has a focused responsibility, a small public surface, and internals that can change without breaking callers."
+   ],
+   "supportingIDs": [
+    "claim-2306aeb03ef42a4a"
+   ]
+  },
+  {
+   "concept": "Code splitting",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Route-level dynamic imports create separate dashboard/settings bundles."
+   ],
+   "key": "code splitting",
+   "neighbours": [
+    "Bundler",
+    "CSR",
+    "Chunking",
+    "Hydration",
+    "Lazy loading",
+    "Routing",
+    "SPA",
+    "SSR",
+    "Transpilation",
+    "Tree shaking"
+   ],
+   "page": 131,
+   "rubric": [
+    {
+     "id": "claim-ddd96313664f7dc7",
+     "kind": "definition",
+     "text": "Dividing application JavaScript into multiple chunks that can be loaded independently."
+    },
+    {
+     "id": "claim-b5ef4c86b2138e2d",
+     "kind": "purpose",
+     "text": "Users avoid downloading code for features/routes they never open."
+    }
+   ],
+   "section": "FRONTEND PLATFORM, UX & PERFORMANCE",
+   "supporting": [
+    "Code splitting reduces the initial bundle by loading chunks on demand;"
+   ],
+   "supportingIDs": [
+    "claim-7e95c98ea7f353f3"
+   ]
+  }
+ ],
+ "passages": [
+  {
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 A closure keeps access A closure is a function together with access to its surrounding lexical environment. The function can keep accessing that environment after the outer call has returned. function counter() { let value = 0; return () => { value += 1; return value; }; } const next = counter(); next(); // 1 next(); // 2 Two separate calls to counter() create two independent environments. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    },
+    {
+     "id": "claim-ee55517299423231",
+     "kind": "mechanism",
+     "text": "The function can keep accessing that environment after the outer call has returned."
+    },
+    {
+     "id": "claim-ad61d3ae9c591c48",
+     "kind": "consequence",
+     "text": "Two separate calls to counter() create two independent environments."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "System Design",
+   "page": 3,
+   "pageText": "SHELF SAMPLES / 04 Design the failure path An import is not complete when a preview appears. It is complete when the required data has been safely stored and the operation has been acknowledged. A recoverable design considers full storage, interrupted writes, duplicate requests and corrupted input. Error messages must tell the user what happened without claiming that missing work was saved. This is original sample material illustrating general engineering reasoning. The architecture and recovery semantics of this app are documented in the source package. Review exercise: sketch a save operation that can fail at any step without overwriting the original. SHELF / ORIGINAL SAMPLE NOTES 4",
+   "rubric": [
+    {
+     "id": "claim-42b798d75ec1f932",
+     "kind": "mechanism",
+     "text": "An import is not complete when a preview appears."
+    },
+    {
+     "id": "claim-9efa761ff142c219",
+     "kind": "mechanism",
+     "text": "A recoverable design considers full storage, interrupted writes, duplicate requests and corrupted input."
+    },
+    {
+     "id": "claim-16b253721b17428f",
+     "kind": "constraint",
+     "text": "Error messages must tell the user what happened without claiming that missing work was saved."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Coding Interviews",
+   "page": 3,
+   "pageText": "SHELF SAMPLES / 04 Explain the tradeoff A technically correct solution is only part of the conversation. Explain the assumptions, the chosen approach and the cost as the input grows. Avoid claiming that one implementation is faster without defining the input, runtime and measurement. Simpler code can be the better default until a demonstrated bottleneck requires more work. These are original sample practice notes. No scoring, generated questions or interview simulation is running inside Shelf. Write one note: what would make you change your chosen solution? SHELF / ORIGINAL SAMPLE NOTES 4",
+   "rubric": [
+    {
+     "id": "claim-ea60004bc65ba0ba",
+     "kind": "property",
+     "text": "A technically correct solution is only part of the conversation."
+    },
+    {
+     "id": "claim-4915efb345003c3e",
+     "kind": "definition",
+     "text": "Simpler code can be the better default until a demonstrated bottleneck requires more work."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Computer Science Essentials",
+   "page": 3,
+   "pageText": "SHELF SAMPLES / 04 Use the right structure The important question is not which data structure is most sophisticated. It is which operations must be cheap, which ordering matters and what guarantees the caller needs. A library may keep its original files by stable identifier while maintaining a separate searchable metadata representation. Different representations serve different operations. Original sample material. JavaScript reference semantics: developer.mozilla. org/en-US/docs/Web/JavaScript/Guide/Working_with_objects Before optimizing, list the three operations your application performs most often. SHELF / ORIGINAL SAMPLE NOTES 4",
+   "rubric": [
+    {
+     "id": "claim-1e262f035115b4e3",
+     "kind": "property",
+     "text": "The important question is not which data structure is most sophisticated."
+    },
+    {
+     "id": "claim-6d80f18bb2d59a3",
+     "kind": "contrast",
+     "text": "A library may keep its original files by stable identifier while maintaining a separate searchable metadata representation."
+    },
+    {
+     "id": "claim-40742fed28743ad7",
+     "kind": "mechanism",
+     "text": "Different representations serve different operations."
+    },
+    {
+     "id": "claim-9c294ad45f1350ed",
+     "kind": "mechanism",
+     "text": "Before optimizing, list the three operations your application performs most often."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  }
+ ]
+}

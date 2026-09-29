@@ -1,0 +1,1093 @@
+{
+ "concepts": [
+  {
+   "concept": "closure",
+   "contrastPartner": "-",
+   "document": "JavaScript Deep Dive",
+   "examples": [],
+   "key": "closure",
+   "neighbours": [],
+   "page": 2,
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    }
+   ],
+   "section": "",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authentication",
+   "contrastPartner": "Authorization",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Password + MFA creates an authenticated session for user 42."
+   ],
+   "key": "authentication",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "CORS",
+    "Cookie",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 41,
+   "rubric": [
+    {
+     "id": "claim-7485a5102853e2f4",
+     "kind": "definition",
+     "text": "The process of verifying who a user or service is."
+    },
+    {
+     "id": "claim-508e25d02094b377",
+     "kind": "constraint",
+     "text": "Before granting access, the system needs a trustworthy identity."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authorization",
+   "contrastPartner": "Authentication",
+   "document": "Mobile Mastery",
+   "examples": [
+    "user role can read reports; admin role can delete accounts."
+   ],
+   "key": "authorization",
+   "neighbours": [
+    "Access token",
+    "Authentication",
+    "Cookie",
+    "Database constraint",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 42,
+   "rubric": [
+    {
+     "id": "claim-a1b2f230a4062697",
+     "kind": "definition",
+     "text": "The process of deciding what an authenticated identity is allowed to do."
+    },
+    {
+     "id": "claim-54d49440ea8daee0",
+     "kind": "property",
+     "text": "Identity alone is not permission."
+    },
+    {
+     "id": "claim-a9d2e28b3dc2414a",
+     "kind": "mechanism",
+     "text": "authorization still happens per action/resource."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Cache stampede",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "hot key expires -> 10k requests -> 10k DB queries."
+   ],
+   "key": "cache stampede",
+   "neighbours": [
+    "Cache",
+    "Conditional request",
+    "Distributed cache",
+    "ETag",
+    "Eviction policy",
+    "LRU cache",
+    "Origin",
+    "Request",
+    "Stale-while-revalidate",
+    "Write-behind cache",
+    "Write-through cache"
+   ],
+   "page": 285,
+   "rubric": [
+    {
+     "id": "claim-f82dab82b6493e12",
+     "kind": "mechanism",
+     "text": "Many requests miss or expire the same hot key and all hit the origin simultaneously."
+    },
+    {
+     "id": "claim-6afd099568861cc",
+     "kind": "mechanism",
+     "text": "A cache can accidentally amplify load exactly when protection is needed."
+    }
+   ],
+   "section": "CACHING, PERFORMANCE & SCALABILITY",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Closure",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "createCounter() returns a function that keeps access to count after createCounter returns."
+   ],
+   "key": "closure",
+   "neighbours": [
+    "Encapsulation",
+    "Hoisting",
+    "Mutation",
+    "Primitive values",
+    "Reference semantics",
+    "Scope",
+    "State",
+    "async / await",
+    "try / catch",
+    "var, let, const"
+   ],
+   "page": 83,
+   "rubric": [
+    {
+     "id": "claim-63b3e0f7dcdc4888",
+     "kind": "definition",
+     "text": "A function plus access to the lexical variables from the scope where it was created."
+    },
+    {
+     "id": "claim-ea1f1e097d9c8eab",
+     "kind": "purpose",
+     "text": "Closures power encapsulation, callbacks, hooks, and private state patterns."
+    }
+   ],
+   "section": "JAVASCRIPT CORE MENTAL MODELS",
+   "supporting": [
+    "A closure lets a function retain access to its lexical environment after the outer function has finished."
+   ],
+   "supportingIDs": [
+    "claim-329d5dceec7cb700"
+   ]
+  },
+  {
+   "concept": "Code splitting",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Route-level dynamic imports create separate dashboard/settings bundles."
+   ],
+   "key": "code splitting",
+   "neighbours": [
+    "Bundler",
+    "CSR",
+    "Chunking",
+    "Hydration",
+    "Lazy loading",
+    "Routing",
+    "SPA",
+    "SSR",
+    "Transpilation",
+    "Tree shaking"
+   ],
+   "page": 131,
+   "rubric": [
+    {
+     "id": "claim-ddd96313664f7dc7",
+     "kind": "definition",
+     "text": "Dividing application JavaScript into multiple chunks that can be loaded independently."
+    },
+    {
+     "id": "claim-b5ef4c86b2138e2d",
+     "kind": "purpose",
+     "text": "Users avoid downloading code for features/routes they never open."
+    }
+   ],
+   "section": "FRONTEND PLATFORM, UX & PERFORMANCE",
+   "supporting": [
+    "Code splitting reduces the initial bundle by loading chunks on demand;"
+   ],
+   "supportingIDs": [
+    "claim-7e95c98ea7f353f3"
+   ]
+  },
+  {
+   "concept": "ETag",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "If-None-Match: \"abc\" -> 304 Not Modified."
+   ],
+   "key": "etag",
+   "neighbours": [
+    "Backpressure",
+    "Cache",
+    "Cache stampede",
+    "Circuit breaker",
+    "Conditional request",
+    "Distributed cache",
+    "Eviction policy",
+    "HTTP",
+    "LRU cache",
+    "Request",
+    "Response",
+    "Stale-while-revalidate"
+   ],
+   "page": 287,
+   "rubric": [
+    {
+     "id": "claim-2df7f46b61dfde03",
+     "kind": "definition",
+     "text": "A response identifier representing a specific version of a resource."
+    },
+    {
+     "id": "claim-4f79683a632affb2",
+     "kind": "mechanism",
+     "text": "Clients can ask whether their cached copy is still current without downloading the full body."
+    }
+   ],
+   "section": "CACHING, PERFORMANCE & SCALABILITY",
+   "supporting": [
+    "ETags support conditional HTTP requests and reduce bandwidth when cached representations are unchanged."
+   ],
+   "supportingIDs": [
+    "claim-b468363b3960dc77"
+   ]
+  },
+  {
+   "concept": "Flexbox",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "display:flex; gap:1rem; align-items:center;",
+    "justify-content:space-between."
+   ],
+   "key": "flexbox",
+   "neighbours": [
+    "ARIA",
+    "Accessibility",
+    "CSS Grid",
+    "Client-side routing",
+    "Responsive design",
+    "Routing",
+    "SPA",
+    "Semantic HTML"
+   ],
+   "page": 142,
+   "rubric": [
+    {
+     "id": "claim-3520a9419f8e4974",
+     "kind": "definition",
+     "text": "A CSS layout model optimized for distributing and aligning items along one main axis."
+    },
+    {
+     "id": "claim-9b109f6bca91527f",
+     "kind": "consequence",
+     "text": "It makes rows, columns, spacing, alignment, and flexible sizing straightforward."
+    }
+   ],
+   "section": "FRONTEND PLATFORM, UX & PERFORMANCE",
+   "supporting": [
+    "Flexbox is strongest for one-dimensional layout and alignment;"
+   ],
+   "supportingIDs": [
+    "claim-d319e8f874ddba96"
+   ]
+  },
+  {
+   "concept": "HTTP",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "GET /users/42 -> 200 + JSON user data."
+   ],
+   "key": "http",
+   "neighbours": [
+    "DNS",
+    "HTTP methods",
+    "HTTPS",
+    "IP address",
+    "Port",
+    "Request",
+    "Response",
+    "TLS"
+   ],
+   "page": 7,
+   "rubric": [
+    {
+     "id": "claim-a6afcbb6091e9106",
+     "kind": "definition",
+     "text": "The request-response protocol used by browsers, apps, and servers to exchange web data."
+    },
+    {
+     "id": "claim-8da7bf4c9f75d644",
+     "kind": "definition",
+     "text": "It is the basic language behind APIs, pages, images, and most web traffic."
+    },
+    {
+     "id": "claim-7357595863f5ca7b",
+     "kind": "property",
+     "text": "HTTP is stateless, so sessions provide continuity."
+    }
+   ],
+   "section": "WEB, NETWORKING & DELIVERY",
+   "supporting": [
+    "HTTP is a stateless request-response protocol."
+   ],
+   "supportingIDs": [
+    "claim-c2ae94a37b51b965"
+   ]
+  },
+  {
+   "concept": "JWT",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Authorization: Bearer <jwt> containing sub, exp, and roles."
+   ],
+   "key": "jwt",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "Cookie",
+    "Database",
+    "Encryption",
+    "Hashing",
+    "Headers",
+    "HttpOnly cookie",
+    "Refresh token",
+    "Session",
+    "Token"
+   ],
+   "page": 46,
+   "rubric": [
+    {
+     "id": "claim-ff95fc8d2fc5f02e",
+     "kind": "definition",
+     "text": "A compact signed token format containing claims, represented as header.payload.signature."
+    },
+    {
+     "id": "claim-b6c3668d41921be7",
+     "kind": "purpose",
+     "text": "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [
+    "JWTs are signed claim containers, not automatically encrypted."
+   ],
+   "supportingIDs": [
+    "claim-f8f60f6a0a9d8164"
+   ]
+  },
+  {
+   "concept": "Memoization boundary",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "React.memo(Chart), useMemo(expensiveProjection)"
+   ],
+   "key": "memoization boundary",
+   "neighbours": [
+    "Portal",
+    "Referential stability",
+    "Render",
+    "Render purity",
+    "State machine",
+    "Strict Mode",
+    "Suspense",
+    "Transition",
+    "useDeferredValue"
+   ],
+   "page": 237,
+   "rubric": [
+    {
+     "id": "claim-38d17271da5aec6",
+     "kind": "definition",
+     "text": "A deliberate place where stable inputs can allow expensive work or child rendering to be reused."
+    },
+    {
+     "id": "claim-bbf45ffa311eb77a",
+     "kind": "tradeoff",
+     "text": "It can reduce repeated computation, but adds complexity and comparison overhead."
+    }
+   ],
+   "section": "REACT: STATE, IDENTITY & ARCHITECTURE",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Model routing",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "classifier -> cheap model for extraction;",
+    "stronger model for complex reasoning; fallback on outage."
+   ],
+   "key": "model routing",
+   "neighbours": [
+    "Agent loop",
+    "Hallucination",
+    "Inference",
+    "Latency",
+    "Prompt injection",
+    "Request",
+    "Structured output",
+    "Temperature",
+    "Tokens per second",
+    "Tool calling"
+   ],
+   "page": 312,
+   "rubric": [
+    {
+     "id": "claim-ae417476a6c040c9",
+     "kind": "definition",
+     "text": "Choose among models based on task, quality need, latency, availability, or cost."
+    },
+    {
+     "id": "claim-dae1c5e15c9cf96f",
+     "kind": "constraint",
+     "text": "Not every request needs the largest model."
+    }
+   ],
+   "section": "AI ENGINEERING & LLM SYSTEMS",
+   "supporting": [
+    "Model routing optimizes quality/cost/latency by matching model capability to task and providing fallback paths."
+   ],
+   "supportingIDs": [
+    "claim-14cf219c9af37971"
+   ]
+  },
+  {
+   "concept": "Module",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "payments/index.ts exports charge(); internal gateway mapping stays private."
+   ],
+   "key": "module",
+   "neighbours": [
+    "Abstraction",
+    "Cohesion",
+    "Contract",
+    "Dependency inversion",
+    "Encapsulation",
+    "Interface",
+    "Layered architecture",
+    "Ports and adapters",
+    "Pure core, imperative shell",
+    "Single Responsibility Principle"
+   ],
+   "page": 248,
+   "rubric": [
+    {
+     "id": "claim-dc1155d1c31df1fc",
+     "kind": "definition",
+     "text": "A cohesive unit that exposes a public interface while hiding internal implementation details."
+    },
+    {
+     "id": "claim-1cd4c17155933523",
+     "kind": "purpose",
+     "text": "Modules reduce the amount of code a developer must understand at once."
+    },
+    {
+     "id": "claim-8ce42c21d3a7ed56",
+     "kind": "constraint",
+     "text": "A module should have one coherent reason to change."
+    }
+   ],
+   "section": "MODULARITY & MAINTAINABILITY",
+   "supporting": [
+    "A good module has a focused responsibility, a small public surface, and internals that can change without breaking callers."
+   ],
+   "supportingIDs": [
+    "claim-2306aeb03ef42a4a"
+   ]
+  },
+  {
+   "concept": "Pagination",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "GET /users?limit=20&cursor=abc."
+   ],
+   "key": "pagination",
+   "neighbours": [
+    "ACID",
+    "Chunking",
+    "Cursor pagination",
+    "Database",
+    "Database index",
+    "Offset pagination",
+    "Optimistic locking",
+    "Race condition",
+    "Render",
+    "SQL JOIN",
+    "Transaction"
+   ],
+   "page": 66,
+   "rubric": [
+    {
+     "id": "claim-b2ff14a8f69f7d28",
+     "kind": "definition",
+     "text": "Fetching a large result set in smaller chunks rather than all at once."
+    },
+    {
+     "id": "claim-e380d3e3ccdaf525",
+     "kind": "constraint",
+     "text": "It limits payload size, rendering work, database load, and memory use."
+    }
+   ],
+   "section": "DATABASES & DATA INTEGRITY",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Relational database",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "PostgreSQL tables users and orders linked by orders.user_id."
+   ],
+   "key": "relational database",
+   "neighbours": [
+    "ACID",
+    "Database",
+    "Database index",
+    "Foreign key",
+    "Primary key",
+    "Race condition",
+    "SQL JOIN",
+    "Transaction"
+   ],
+   "page": 57,
+   "rubric": [
+    {
+     "id": "claim-3867d7f3e00733",
+     "kind": "definition",
+     "text": "A database model built around tables, rows, columns, relationships, and constraints."
+    },
+    {
+     "id": "claim-e48b101330c3613c",
+     "kind": "property",
+     "text": "It is excellent when data relationships and transactional consistency matter."
+    }
+   ],
+   "section": "DATABASES & DATA INTEGRITY",
+   "supporting": [
+    "Relational databases model structured data with tables and constraints and are queried commonly with SQL;"
+   ],
+   "supportingIDs": [
+    "claim-bfca08aa60d5cb8b"
+   ]
+  },
+  {
+   "concept": "SQL injection",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "parameterized `WHERE email = $1`."
+   ],
+   "key": "sql injection",
+   "neighbours": [
+    "Access token",
+    "CSRF",
+    "Database",
+    "Encryption",
+    "Hashing",
+    "JWT",
+    "Rate limiting",
+    "Refresh token",
+    "XSS"
+   ],
+   "page": 53,
+   "rubric": [
+    {
+     "id": "claim-1fbc9c0266cbb67f",
+     "kind": "definition",
+     "text": "A vulnerability where attacker-controlled input changes the structure or meaning of a SQL query."
+    },
+    {
+     "id": "claim-cf26a47879d7dd4b",
+     "kind": "mechanism",
+     "text": "It can expose or modify entire databases."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Semantic search",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "query embedding -> nearest document embeddings."
+   ],
+   "key": "semantic search",
+   "neighbours": [
+    "Chunking",
+    "Context window",
+    "Embedding",
+    "Grounding",
+    "RAG",
+    "Reranking",
+    "Tokenizer",
+    "Vector database"
+   ],
+   "page": 302,
+   "rubric": [
+    {
+     "id": "claim-63d5014d11b393a8",
+     "kind": "definition",
+     "text": "Search based on meaning similarity rather than only exact lexical matches."
+    },
+    {
+     "id": "claim-82a587bf48fd27bc",
+     "kind": "mechanism",
+     "text": "It can find relevant content even when wording differs."
+    }
+   ],
+   "section": "AI ENGINEERING & LLM SYSTEMS",
+   "supporting": [
+    "Semantic search improves recall across paraphrases;"
+   ],
+   "supportingIDs": [
+    "claim-ec770d2ee4925271"
+   ]
+  }
+ ],
+ "passages": [
+  {
+   "document": "Coding Interviews",
+   "page": 0,
+   "pageText": "SHELF SAMPLES / 01 Coding Interviews Reason before typing State the expected input and output. Ask about empty input, duplicates, ordering and invalid values before choosing an algorithm. Clarify Example Implement A small example is useful because it makes hidden assumptions visible. It is easier to correct the contract before coding than to retrofit it into a finished implementation. What does a successful result look like for an empty input? SHELF / ORIGINAL SAMPLE NOTES 1",
+   "rubric": [
+    {
+     "id": "claim-433cee912105d6c7",
+     "kind": "cause",
+     "text": "A small example is useful because it makes hidden assumptions visible."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Coding Interviews",
+   "page": 1,
+   "pageText": "SHELF SAMPLES / 02 Trace the program Read a short program in execution order. Track the value produced by each expression and the value returned by each function. const numbers = [1, 2, 3]; const kept = numbers.filter(n => n > 1); const doubled = kept.map(n => n * 2); console.log(doubled); // [4, 6] A useful trace records both type and value. A result can look semantically related to the task while having the wrong shape for the next operation. Try the same reasoning with no matching numbers. Does your chain still work? SHELF / ORIGINAL SAMPLE NOTES 2",
+   "rubric": [
+    {
+     "id": "claim-25643f3863318fa8",
+     "kind": "mechanism",
+     "text": "A useful trace records both type and value."
+    },
+    {
+     "id": "claim-1ddd81a6103e3a7a",
+     "kind": "contrast",
+     "text": "A result can look semantically related to the task while having the wrong shape for the next operation."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Coding Interviews",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 Test the boundary Test cases should probe the assumptions, not merely confirm the example used while writing the code. Include the smallest input, a repeated value and a case that challenges ordering. function firstEven(values) { return values.find(value => value % 2 === 0); } firstEven([]); // undefined firstEven([3, 5]); // undefined firstEven([3, 4, 2]); // 4 Explain what the caller should do when a result is undefined. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-1af0c4caf05af702",
+     "kind": "contrast",
+     "text": "Test cases should probe the assumptions, not merely confirm the example used while writing the code."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Coding Interviews",
+   "page": 3,
+   "pageText": "SHELF SAMPLES / 04 Explain the tradeoff A technically correct solution is only part of the conversation. Explain the assumptions, the chosen approach and the cost as the input grows. Avoid claiming that one implementation is faster without defining the input, runtime and measurement. Simpler code can be the better default until a demonstrated bottleneck requires more work. These are original sample practice notes. No scoring, generated questions or interview simulation is running inside Shelf. Write one note: what would make you change your chosen solution? SHELF / ORIGINAL SAMPLE NOTES 4",
+   "rubric": [
+    {
+     "id": "claim-ea60004bc65ba0ba",
+     "kind": "property",
+     "text": "A technically correct solution is only part of the conversation."
+    },
+    {
+     "id": "claim-4915efb345003c3e",
+     "kind": "definition",
+     "text": "Simpler code can be the better default until a demonstrated bottleneck requires more work."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Computer Science Essentials",
+   "page": 1,
+   "pageText": "SHELF SAMPLES / 02 Growth, not a stopwatch Time complexity describes how work grows with input size under a stated model. It does not predict the exact time on a particular device. A linear scan may inspect every element. A binary search repeatedly narrows a sorted search space. The latter relies on a precondition: the data must have a compatible ordering. Ask whether preparation and sorting costs are included in the analysis. SHELF / ORIGINAL SAMPLE NOTES 2",
+   "rubric": [
+    {
+     "id": "claim-625f5f758c73269d",
+     "kind": "property",
+     "text": "Time complexity describes how work grows with input size under a stated model."
+    },
+    {
+     "id": "claim-d7b697e831126b2c",
+     "kind": "mechanism",
+     "text": "A linear scan may inspect every element."
+    },
+    {
+     "id": "claim-393cd302c49c1e71",
+     "kind": "mechanism",
+     "text": "A binary search repeatedly narrows a sorted search space."
+    },
+    {
+     "id": "claim-d777ff0bbbf22535",
+     "kind": "mechanism",
+     "text": "The latter relies on a precondition: the data must have a compatible ordering."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Computer Science Essentials",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 References and copies Two variables can refer to the same mutable object. Changing that object through one variable is visible through the other reference. const a = { score: 1 }; const b = a; b.score = 2; console.log(a.score); // 2 Copying an outer object with spread does not automatically copy its nested objects. The boundary between shared and copied data matters. Draw two arrows pointing to the same object. The bug becomes easier to see. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-ff729a2d5aabb886",
+     "kind": "property",
+     "text": "Two variables can refer to the same mutable object."
+    },
+    {
+     "id": "claim-7eeaa2c57a8c30fc",
+     "kind": "property",
+     "text": "Changing that object through one variable is visible through the other reference."
+    },
+    {
+     "id": "claim-35eb847c10c9039d",
+     "kind": "mechanism",
+     "text": "Copying an outer object with spread does not automatically copy its nested objects."
+    },
+    {
+     "id": "claim-229e2b7a2a2155d0",
+     "kind": "consequence",
+     "text": "The bug becomes easier to see."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Computer Science Essentials",
+   "page": 3,
+   "pageText": "SHELF SAMPLES / 04 Use the right structure The important question is not which data structure is most sophisticated. It is which operations must be cheap, which ordering matters and what guarantees the caller needs. A library may keep its original files by stable identifier while maintaining a separate searchable metadata representation. Different representations serve different operations. Original sample material. JavaScript reference semantics: developer.mozilla. org/en-US/docs/Web/JavaScript/Guide/Working_with_objects Before optimizing, list the three operations your application performs most often. SHELF / ORIGINAL SAMPLE NOTES 4",
+   "rubric": [
+    {
+     "id": "claim-1e262f035115b4e3",
+     "kind": "property",
+     "text": "The important question is not which data structure is most sophisticated."
+    },
+    {
+     "id": "claim-6d80f18bb2d59a3",
+     "kind": "contrast",
+     "text": "A library may keep its original files by stable identifier while maintaining a separate searchable metadata representation."
+    },
+    {
+     "id": "claim-40742fed28743ad7",
+     "kind": "mechanism",
+     "text": "Different representations serve different operations."
+    },
+    {
+     "id": "claim-9c294ad45f1350ed",
+     "kind": "mechanism",
+     "text": "Before optimizing, list the three operations your application performs most often."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Design Patterns",
+   "page": 0,
+   "pageText": "SHELF SAMPLES / 01 Design Patterns Make the boundary visible A pattern is useful when it makes a recurring design problem easier to understand. It is not a requirement to put every application behind layers of indirection. Contract Adapter System For a PDF reader, a small interface for storing library metadata lets the application service work with a disk implementation or a test double. A new engineer should know what a module owns before reading its implementation. SHELF / ORIGINAL SAMPLE NOTES 1",
+   "rubric": [
+    {
+     "id": "claim-f92bd4a40b93d8b8",
+     "kind": "property",
+     "text": "A pattern is useful when it makes a recurring design problem easier to understand."
+    },
+    {
+     "id": "claim-98e92f50515bebed",
+     "kind": "constraint",
+     "text": "A new engineer should know what a module owns before reading its implementation."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Design Patterns",
+   "page": 1,
+   "pageText": "SHELF SAMPLES / 02 One reason to change Keep rendering, workflow decisions and durable storage separate. A typography change should not require editing a file-import transaction. Small files help, but file length alone does not guarantee good boundaries. A module should expose a coherent contract and avoid leaking details that callers do not need. Try naming a module without using the words manager, helper or utils. SHELF / ORIGINAL SAMPLE NOTES 2",
+   "rubric": [
+    {
+     "id": "claim-9fed6726ce2a81c9",
+     "kind": "constraint",
+     "text": "A typography change should not require editing a file-import transaction."
+    },
+    {
+     "id": "claim-a653443630d49a62",
+     "kind": "purpose",
+     "text": "Small files help, but file length alone does not guarantee good boundaries."
+    },
+    {
+     "id": "claim-77722c03e0247a1d",
+     "kind": "constraint",
+     "text": "A module should expose a coherent contract and avoid leaking details that callers do not need."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Design Patterns",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 Depend on a contract An application workflow can depend on a storage contract instead of constructing a specific database or file store. The composition root supplies the concrete implementation. protocol LibraryPersistence { func load() throws -> Library func save(_ library: Library) throws } This keeps tests focused. A storage failure can be introduced deliberately without filling the device or corrupting real user files. Test that an unsuccessful save does not leak uncommitted in-memory state. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-f874b3589f62fcf",
+     "kind": "constraint",
+     "text": "An application workflow can depend on a storage contract instead of constructing a specific database or file store."
+    },
+    {
+     "id": "claim-b82218b0883babba",
+     "kind": "mechanism",
+     "text": "The composition root supplies the concrete implementation."
+    },
+    {
+     "id": "claim-2378f719cba92898",
+     "kind": "mechanism",
+     "text": "This keeps tests focused."
+    },
+    {
+     "id": "claim-f69263a3186c7a31",
+     "kind": "mechanism",
+     "text": "A storage failure can be introduced deliberately without filling the device or corrupting real user files."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Design Patterns",
+   "page": 3,
+   "pageText": "SHELF SAMPLES / 04 Use patterns sparingly Every abstraction introduces a concept that the next engineer must learn. Add the boundary when it protects a responsibility, enables an important test or isolates a volatile dependency. Keep the simplest implementation that meets the real constraints. An offline personal library does not need a distributed backend to look or feel well made. This sample explains the design approach used in Shelf. The architecture and decision records in the source package describe the actual implementation. What can you remove without weakening a guarantee the user depends on? SHELF / ORIGINAL SAMPLE NOTES 4",
+   "rubric": [
+    {
+     "id": "claim-751e4c4b4edb3a55",
+     "kind": "mechanism",
+     "text": "Every abstraction introduces a concept that the next engineer must learn."
+    },
+    {
+     "id": "claim-6c4118771d829651",
+     "kind": "constraint",
+     "text": "An offline personal library does not need a distributed backend to look or feel well made."
+    },
+    {
+     "id": "claim-48f633b64f995c53",
+     "kind": "mechanism",
+     "text": "This sample explains the design approach used in Shelf."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "JavaScript Deep Dive",
+   "page": 0,
+   "pageText": "SHELF SAMPLES / 01 JavaScript Deep Dive Know the return shape Choosing an array method starts with the shape you need back. One item, a new array and a yes-or-no answer are different results. items.find(test); // item or undefined items.filter(test); // array items.some(test); // boolean items.every(test); // boolean Find selects the first matching value. Filter creates an array containing matching values. Some asks whether a match exists; every asks whether all visited items pass. A boolean cannot be followed by .map(). Check the return value before chaining methods. SHELF / ORIGINAL SAMPLE NOTES 1",
+   "rubric": [
+    {
+     "id": "claim-af9d0274c51cce2a",
+     "kind": "constraint",
+     "text": "Choosing an array method starts with the shape you need back."
+    },
+    {
+     "id": "claim-cd90dfeaa65ebc2",
+     "kind": "constraint",
+     "text": "A boolean cannot be followed by .map()."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "JavaScript Deep Dive",
+   "page": 1,
+   "pageText": "SHELF SAMPLES / 02 Return is not decoration With an arrow function, an expression body returns its expression. A block body needs an explicit return statement. const a = [1, 2].map(n => n * 2); // [2, 4] const b = [1, 2].map(n => { n * 2; }); // [undefined, undefined] The multiplication in the second example happens, but its value is not returned by the callback. Map collects the callback results. Close the document and explain this bug out loud before checking the code again. SHELF / ORIGINAL SAMPLE NOTES 2",
+   "rubric": [
+    {
+     "id": "claim-56e23bbc7ea083f5",
+     "kind": "mechanism",
+     "text": "With an arrow function, an expression body returns its expression."
+    },
+    {
+     "id": "claim-9bde477cb5ff3ccf",
+     "kind": "constraint",
+     "text": "A block body needs an explicit return statement."
+    },
+    {
+     "id": "claim-3ff525d3ed6930b8",
+     "kind": "mechanism",
+     "text": "Map collects the callback results."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 A closure keeps access A closure is a function together with access to its surrounding lexical environment. The function can keep accessing that environment after the outer call has returned. function counter() { let value = 0; return () => { value += 1; return value; }; } const next = counter(); next(); // 1 next(); // 2 Two separate calls to counter() create two independent environments. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    },
+    {
+     "id": "claim-ee55517299423231",
+     "kind": "mechanism",
+     "text": "The function can keep accessing that environment after the outer call has returned."
+    },
+    {
+     "id": "claim-ad61d3ae9c591c48",
+     "kind": "consequence",
+     "text": "Two separate calls to counter() create two independent environments."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "React Notes",
+   "page": 1,
+   "pageText": "SHELF SAMPLES / 02 State is a snapshot Setting state requests another render. It does not change the state variable inside the event handler that is already running. setCount(count + 1); console.log(count); // Still the current render's value. When the next value depends on the previous queued value, use a functional updater. setCount(previous => previous + 1); setCount(previous => previous + 1); The updater receives the previous pending value, not a magically mutated local variable. SHELF / ORIGINAL SAMPLE NOTES 2",
+   "rubric": [
+    {
+     "id": "claim-58351435ff34fd1b",
+     "kind": "mechanism",
+     "text": "Setting state requests another render."
+    },
+    {
+     "id": "claim-e87546257b6fd3b",
+     "kind": "mechanism",
+     "text": "The updater receives the previous pending value, not a magically mutated local variable."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "React Notes",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 Keys describe identity A stable key helps React match an item to its previous instance within a list of siblings. Reordering should not make one item inherit the local state of another. items.map(item => ( <Row key={item.id} item={item} /> )); An array index can be a poor key when items move, are inserted or removed. A freshly generated random key also destroys continuity between renders. Practice: explain why editing a row can reveal a bad key choice. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-6589e423c849f37f",
+     "kind": "purpose",
+     "text": "A stable key helps React match an item to its previous instance within a list of siblings."
+    },
+    {
+     "id": "claim-68a7f9102661337f",
+     "kind": "constraint",
+     "text": "Reordering should not make one item inherit the local state of another."
+    },
+    {
+     "id": "claim-6ee84b90bb904705",
+     "kind": "definition",
+     "text": "An array index can be a poor key when items move, are inserted or removed."
+    },
+    {
+     "id": "claim-9c00928e839ac7d4",
+     "kind": "consequence",
+     "text": "A freshly generated random key also destroys continuity between renders."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "System Design",
+   "page": 0,
+   "pageText": "SHELF SAMPLES / 01 System Design Start with the job Before drawing components, establish who uses the system, what they need to do, and what failure would mean. An architecture solves a particular set of constraints. Need Constraint Decision For a personal PDF reader, local access, data integrity and fast navigation may matter more than multi-region availability. Do not pay for complexity that the task does not require. A useful question: what must still work when the internet does not? SHELF / ORIGINAL SAMPLE NOTES 1",
+   "rubric": [
+    {
+     "id": "claim-6cdcf11a35a9cb3b",
+     "kind": "mechanism",
+     "text": "An architecture solves a particular set of constraints."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "System Design",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 Caching is a tradeoff A cache avoids repeating work, but introduces a second representation that can become stale. Decide what is authoritative, how entries are invalidated and how much memory the cache may use. PDF thumbnails are derived data. If a thumbnail disappears, recreate it. Original documents and private annotations are not disposable caches. Original Thumbnail Display Ask: can this information be recreated without asking the user to do the work again? SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-1971206b161b7ef4",
+     "kind": "tradeoff",
+     "text": "A cache avoids repeating work, but introduces a second representation that can become stale."
+    },
+    {
+     "id": "claim-80c412094639a331",
+     "kind": "mechanism",
+     "text": "PDF thumbnails are derived data."
+    },
+    {
+     "id": "claim-8f12f84148e3e82",
+     "kind": "property",
+     "text": "Original documents and private annotations are not disposable caches."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "System Design",
+   "page": 3,
+   "pageText": "SHELF SAMPLES / 04 Design the failure path An import is not complete when a preview appears. It is complete when the required data has been safely stored and the operation has been acknowledged. A recoverable design considers full storage, interrupted writes, duplicate requests and corrupted input. Error messages must tell the user what happened without claiming that missing work was saved. This is original sample material illustrating general engineering reasoning. The architecture and recovery semantics of this app are documented in the source package. Review exercise: sketch a save operation that can fail at any step without overwriting the original. SHELF / ORIGINAL SAMPLE NOTES 4",
+   "rubric": [
+    {
+     "id": "claim-42b798d75ec1f932",
+     "kind": "mechanism",
+     "text": "An import is not complete when a preview appears."
+    },
+    {
+     "id": "claim-9efa761ff142c219",
+     "kind": "mechanism",
+     "text": "A recoverable design considers full storage, interrupted writes, duplicate requests and corrupted input."
+    },
+    {
+     "id": "claim-16b253721b17428f",
+     "kind": "constraint",
+     "text": "Error messages must tell the user what happened without claiming that missing work was saved."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  }
+ ]
+}

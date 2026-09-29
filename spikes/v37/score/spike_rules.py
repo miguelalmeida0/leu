@@ -12,7 +12,9 @@ TAGS = {"paraphrase", "novelVocabulary", "terse", "verbose", "partiallyCorrect",
         "veryShort", "verboseOneWrongClause", "pronounAmbiguity",
         # V37 spike additions
         "wrongConclusionPlausibleReason", "typos", "nonNativeEnglish", "analogy", "fluentButWrong",
-        "themeJWT", "themeAuthnAuthz", "themeClosure"}
+        "themeJWT", "themeAuthnAuthz", "themeClosure",
+        # NH holdout addition (HOLDOUT_PLAN): cause and effect swapped
+        "causalReversal"}
 THEME_OF = {("Mobile Mastery", "JWT"): "themeJWT", ("Mobile Mastery", "Authentication"): "themeAuthnAuthz",
             ("Mobile Mastery", "Authorization"): "themeAuthnAuthz", ("Mobile Mastery", "Closure"): "themeClosure",
             ("JavaScript Deep Dive", "closure"): "themeClosure", ("JavaScript Deep Dive", 2): "themeClosure"}

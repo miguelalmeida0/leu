@@ -1,0 +1,357 @@
+{
+ "concepts": [
+  {
+   "concept": "closure",
+   "contrastPartner": "-",
+   "document": "JavaScript Deep Dive",
+   "examples": [],
+   "key": "closure",
+   "neighbours": [],
+   "page": 2,
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    }
+   ],
+   "section": "",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authentication",
+   "contrastPartner": "Authorization",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Password + MFA creates an authenticated session for user 42."
+   ],
+   "key": "authentication",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "CORS",
+    "Cookie",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 41,
+   "rubric": [
+    {
+     "id": "claim-7485a5102853e2f4",
+     "kind": "definition",
+     "text": "The process of verifying who a user or service is."
+    },
+    {
+     "id": "claim-508e25d02094b377",
+     "kind": "constraint",
+     "text": "Before granting access, the system needs a trustworthy identity."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authorization",
+   "contrastPartner": "Authentication",
+   "document": "Mobile Mastery",
+   "examples": [
+    "user role can read reports; admin role can delete accounts."
+   ],
+   "key": "authorization",
+   "neighbours": [
+    "Access token",
+    "Authentication",
+    "Cookie",
+    "Database constraint",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 42,
+   "rubric": [
+    {
+     "id": "claim-a1b2f230a4062697",
+     "kind": "definition",
+     "text": "The process of deciding what an authenticated identity is allowed to do."
+    },
+    {
+     "id": "claim-54d49440ea8daee0",
+     "kind": "property",
+     "text": "Identity alone is not permission."
+    },
+    {
+     "id": "claim-a9d2e28b3dc2414a",
+     "kind": "mechanism",
+     "text": "authorization still happens per action/resource."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Closure",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "createCounter() returns a function that keeps access to count after createCounter returns."
+   ],
+   "key": "closure",
+   "neighbours": [
+    "Encapsulation",
+    "Hoisting",
+    "Mutation",
+    "Primitive values",
+    "Reference semantics",
+    "Scope",
+    "State",
+    "async / await",
+    "try / catch",
+    "var, let, const"
+   ],
+   "page": 83,
+   "rubric": [
+    {
+     "id": "claim-63b3e0f7dcdc4888",
+     "kind": "definition",
+     "text": "A function plus access to the lexical variables from the scope where it was created."
+    },
+    {
+     "id": "claim-ea1f1e097d9c8eab",
+     "kind": "purpose",
+     "text": "Closures power encapsulation, callbacks, hooks, and private state patterns."
+    }
+   ],
+   "section": "JAVASCRIPT CORE MENTAL MODELS",
+   "supporting": [
+    "A closure lets a function retain access to its lexical environment after the outer function has finished."
+   ],
+   "supportingIDs": [
+    "claim-329d5dceec7cb700"
+   ]
+  },
+  {
+   "concept": "JWT",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Authorization: Bearer <jwt> containing sub, exp, and roles."
+   ],
+   "key": "jwt",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "Cookie",
+    "Database",
+    "Encryption",
+    "Hashing",
+    "Headers",
+    "HttpOnly cookie",
+    "Refresh token",
+    "Session",
+    "Token"
+   ],
+   "page": 46,
+   "rubric": [
+    {
+     "id": "claim-ff95fc8d2fc5f02e",
+     "kind": "definition",
+     "text": "A compact signed token format containing claims, represented as header.payload.signature."
+    },
+    {
+     "id": "claim-b6c3668d41921be7",
+     "kind": "purpose",
+     "text": "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [
+    "JWTs are signed claim containers, not automatically encrypted."
+   ],
+   "supportingIDs": [
+    "claim-f8f60f6a0a9d8164"
+   ]
+  },
+  {
+   "concept": "Flexbox",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "display:flex; gap:1rem; align-items:center;",
+    "justify-content:space-between."
+   ],
+   "key": "flexbox",
+   "neighbours": [
+    "ARIA",
+    "Accessibility",
+    "CSS Grid",
+    "Client-side routing",
+    "Responsive design",
+    "Routing",
+    "SPA",
+    "Semantic HTML"
+   ],
+   "page": 142,
+   "rubric": [
+    {
+     "id": "claim-3520a9419f8e4974",
+     "kind": "definition",
+     "text": "A CSS layout model optimized for distributing and aligning items along one main axis."
+    },
+    {
+     "id": "claim-9b109f6bca91527f",
+     "kind": "consequence",
+     "text": "It makes rows, columns, spacing, alignment, and flexible sizing straightforward."
+    }
+   ],
+   "section": "FRONTEND PLATFORM, UX & PERFORMANCE",
+   "supporting": [
+    "Flexbox is strongest for one-dimensional layout and alignment;"
+   ],
+   "supportingIDs": [
+    "claim-d319e8f874ddba96"
+   ]
+  },
+  {
+   "concept": "Memoization boundary",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "React.memo(Chart), useMemo(expensiveProjection)"
+   ],
+   "key": "memoization boundary",
+   "neighbours": [
+    "Portal",
+    "Referential stability",
+    "Render",
+    "Render purity",
+    "State machine",
+    "Strict Mode",
+    "Suspense",
+    "Transition",
+    "useDeferredValue"
+   ],
+   "page": 237,
+   "rubric": [
+    {
+     "id": "claim-38d17271da5aec6",
+     "kind": "definition",
+     "text": "A deliberate place where stable inputs can allow expensive work or child rendering to be reused."
+    },
+    {
+     "id": "claim-bbf45ffa311eb77a",
+     "kind": "tradeoff",
+     "text": "It can reduce repeated computation, but adds complexity and comparison overhead."
+    }
+   ],
+   "section": "REACT: STATE, IDENTITY & ARCHITECTURE",
+   "supporting": [],
+   "supportingIDs": []
+  }
+ ],
+ "passages": [
+  {
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 A closure keeps access A closure is a function together with access to its surrounding lexical environment. The function can keep accessing that environment after the outer call has returned. function counter() { let value = 0; return () => { value += 1; return value; }; } const next = counter(); next(); // 1 next(); // 2 Two separate calls to counter() create two independent environments. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    },
+    {
+     "id": "claim-ee55517299423231",
+     "kind": "mechanism",
+     "text": "The function can keep accessing that environment after the outer call has returned."
+    },
+    {
+     "id": "claim-ad61d3ae9c591c48",
+     "kind": "consequence",
+     "text": "Two separate calls to counter() create two independent environments."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Coding Interviews",
+   "page": 1,
+   "pageText": "SHELF SAMPLES / 02 Trace the program Read a short program in execution order. Track the value produced by each expression and the value returned by each function. const numbers = [1, 2, 3]; const kept = numbers.filter(n => n > 1); const doubled = kept.map(n => n * 2); console.log(doubled); // [4, 6] A useful trace records both type and value. A result can look semantically related to the task while having the wrong shape for the next operation. Try the same reasoning with no matching numbers. Does your chain still work? SHELF / ORIGINAL SAMPLE NOTES 2",
+   "rubric": [
+    {
+     "id": "claim-25643f3863318fa8",
+     "kind": "mechanism",
+     "text": "A useful trace records both type and value."
+    },
+    {
+     "id": "claim-1ddd81a6103e3a7a",
+     "kind": "contrast",
+     "text": "A result can look semantically related to the task while having the wrong shape for the next operation."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Computer Science Essentials",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 References and copies Two variables can refer to the same mutable object. Changing that object through one variable is visible through the other reference. const a = { score: 1 }; const b = a; b.score = 2; console.log(a.score); // 2 Copying an outer object with spread does not automatically copy its nested objects. The boundary between shared and copied data matters. Draw two arrows pointing to the same object. The bug becomes easier to see. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-ff729a2d5aabb886",
+     "kind": "property",
+     "text": "Two variables can refer to the same mutable object."
+    },
+    {
+     "id": "claim-7eeaa2c57a8c30fc",
+     "kind": "property",
+     "text": "Changing that object through one variable is visible through the other reference."
+    },
+    {
+     "id": "claim-35eb847c10c9039d",
+     "kind": "mechanism",
+     "text": "Copying an outer object with spread does not automatically copy its nested objects."
+    },
+    {
+     "id": "claim-229e2b7a2a2155d0",
+     "kind": "consequence",
+     "text": "The bug becomes easier to see."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Design Patterns",
+   "page": 1,
+   "pageText": "SHELF SAMPLES / 02 One reason to change Keep rendering, workflow decisions and durable storage separate. A typography change should not require editing a file-import transaction. Small files help, but file length alone does not guarantee good boundaries. A module should expose a coherent contract and avoid leaking details that callers do not need. Try naming a module without using the words manager, helper or utils. SHELF / ORIGINAL SAMPLE NOTES 2",
+   "rubric": [
+    {
+     "id": "claim-9fed6726ce2a81c9",
+     "kind": "constraint",
+     "text": "A typography change should not require editing a file-import transaction."
+    },
+    {
+     "id": "claim-a653443630d49a62",
+     "kind": "purpose",
+     "text": "Small files help, but file length alone does not guarantee good boundaries."
+    },
+    {
+     "id": "claim-77722c03e0247a1d",
+     "kind": "constraint",
+     "text": "A module should expose a coherent contract and avoid leaking details that callers do not need."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  }
+ ]
+}
