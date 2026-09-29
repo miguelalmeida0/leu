@@ -61,17 +61,52 @@ extension DeterministicQuestionEngine {
     func containsWord(_ text: String, _ word: String) -> Bool { occurrenceCount(word, in: text) > 0 }
 
     func occurrenceCount(_ word: String, in text: String) -> Int {
-        let escaped = NSRegularExpression.escapedPattern(for: word)
-        guard let regex = try? NSRegularExpression(pattern: "(?i)(?<![\\p{L}\\p{N}])\(escaped)(?![\\p{L}\\p{N}])") else { return 0 }
-        return regex.numberOfMatches(in: text, range: NSRange(text.startIndex..., in: text))
+        wholeWordRanges(word, in: text).count
     }
 
     func replaceFirstWord(_ word: String, in text: String, with replacement: String) -> String {
-        let escaped = NSRegularExpression.escapedPattern(for: word)
-        guard let regex = try? NSRegularExpression(pattern: "(?i)(?<![\\p{L}\\p{N}])\(escaped)(?![\\p{L}\\p{N}])"),
-              let match = regex.firstMatch(in: text, range: NSRange(text.startIndex..., in: text)),
-              let range = Range(match.range, in: text) else { return text }
-        var copy = text; copy.replaceSubrange(range, with: replacement); return copy
+        guard let range = wholeWordRanges(word, in: text).first else { return text }
+        var copy = text
+        copy.replaceSubrange(range, with: replacement)
+        return copy
+    }
+
+    private func wholeWordRanges(_ word: String, in text: String) -> [Range<String.Index>] {
+        guard !word.isEmpty else { return [] }
+
+        var ranges: [Range<String.Index>] = []
+        var searchStart = text.startIndex
+
+        while searchStart < text.endIndex,
+              let range = text.range(
+                of: word,
+                options: .caseInsensitive,
+                range: searchStart..<text.endIndex
+              ) {
+            let leftIsWord: Bool
+            if range.lowerBound == text.startIndex {
+                leftIsWord = false
+            } else {
+                let character = text[text.index(before: range.lowerBound)]
+                leftIsWord = character.isLetter || character.isNumber
+            }
+
+            let rightIsWord: Bool
+            if range.upperBound == text.endIndex {
+                rightIsWord = false
+            } else {
+                let character = text[range.upperBound]
+                rightIsWord = character.isLetter || character.isNumber
+            }
+
+            if !leftIsWord && !rightIsWord {
+                ranges.append(range)
+            }
+
+            searchStart = range.upperBound
+        }
+
+        return ranges
     }
 
     func deterministicOrder(count: Int, seed: UInt64) -> [Int] {

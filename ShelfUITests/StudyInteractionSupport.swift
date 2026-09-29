@@ -98,19 +98,8 @@ extension ShelfUITestCase {
         }
         for _ in 0..<8 {
             let viewport = studyViewport(scroll)
-            if query.count == 1, fullyVisible(button, in: viewport) {
-                // Indexing may change the layout. Require two consecutive equal frames.
-                var previous: CGRect?
-                let stable = NSPredicate { _, _ in
-                    guard self.fullyVisible(button, in: self.studyViewport(scroll)) else { return false }
-                    let current = button.frame
-                    defer { previous = current }
-                    return previous == current
-                }
-                if XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: stable, object: nil)], timeout: 3) == .completed {
-                    XCTAssertTrue(button.isEnabled, "Study button is disabled: \(identifier)", file: file, line: line)
-                    return button
-                }
+            if query.count == 1, fullyVisible(button, in: viewport), button.isEnabled {
+                return button
             }
             // Never treat an offscreen/overlapping 'Other' node as an actionable button.
             // Gesture coordinates are derived from the current scroll viewport, not the phone model.

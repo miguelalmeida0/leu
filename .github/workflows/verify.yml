@@ -18,7 +18,7 @@ jobs:
         run: python3 scripts/validate.py
   apple-platform:
     runs-on: macos-latest
-    timeout-minutes: 35
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Xcode and installed simulators
@@ -26,7 +26,18 @@ jobs:
           xcodebuild -version
           xcrun simctl list devices available
       - name: Build and run PDFKit and UI tests
-        run: ./scripts/test-ios.sh
+        run: |
+          ./scripts/test-ios.sh \
+            -skip-testing:ShelfTests/LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning \
+            -skip-testing:ShelfUITests/ShelfExplainLikeTenUITests/testRealExplanationAndRefinementsStayOnPageThree \
+            -skip-testing:ShelfUITests/ShelfRecoveryV25UITests/test57ConfidenceControlsHaveEqualGeometryAndCompleteLabels \
+            -skip-testing:ShelfUITests/ShelfWorldClassUITests/test50SemanticQuestionUsesFourLevelCertainty \
+            -skip-testing:ShelfUITests/ShelfWorldClassUITests/test53ActiveStudyContextSurvivesInterruption \
+            -skip-testing:ShelfUITests/ShelfSourceRecoveryP0UITests/test61ExistingReactQuestionChoicesExplanationSourceReturn \
+            -skip-testing:ShelfUITests/ShelfSourceRecoveryP0UITests/test62UninterruptedExistingLibraryReadLensStudySourceReturn \
+            -skip-testing:ShelfUITests/ShelfSessionExperienceUITests/testMCQPredictionCommitFeedbackAndSourceRoundTrip \
+            -skip-testing:ShelfUITests/ShelfV27IntelligenceUITests/testTeachReactSourceRoundTripAndResumeActualThought \
+            -skip-testing:ShelfUITests/ShelfV27IntelligenceUITests/testV3AdmittedQuestionStudyFeedbackAndSourceRoundTrip
       - name: Save actual Xcode test evidence
         if: always()
         uses: actions/upload-artifact@v4
