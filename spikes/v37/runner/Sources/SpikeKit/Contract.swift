@@ -78,6 +78,9 @@ public struct SpikeOpinionItem: Codable, Equatable, Sendable {
     public let segment: Int
     public let claimID: String?
     public let neighbour: String?
+    /// V37 locator only: the likely mistake it chose, and what it said the textbook says instead (audit).
+    public var mistakeID: String?
+    public var note: String?
     public init(item: Int, kind: String, segment: Int, claimID: String?, neighbour: String?) {
         self.item = item; self.kind = kind; self.segment = segment; self.claimID = claimID; self.neighbour = neighbour
     }

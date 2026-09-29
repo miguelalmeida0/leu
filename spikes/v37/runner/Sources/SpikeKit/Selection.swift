@@ -12,7 +12,7 @@ struct RawReading: Decodable {
 
 struct RawAnswerCheck: Decodable { let verdict: String }
 
-struct RawLocate: Decodable { let segment, instead, kind, claim: String }
+struct RawLocate: Decodable { let segment, instead, mistake, kind, claim: String }
 
 struct RawOpinion: Decodable {
     struct Verdict: Decodable { let item, verdict: String }
@@ -53,7 +53,7 @@ public enum Selection {
         var segments = reading.segments
         let row = segments[index]
         var label = SpikeSegmentLabel(n: row.n, role: row.role, claim: locate.claimID ?? (row.claim), relation: "contradicts",
-                                      misconception: row.misconception, polarity: row.polarity, specificity: row.specificity,
+                                      misconception: locate.mistakeID ?? row.misconception, polarity: row.polarity, specificity: row.specificity,
                                       describes: locate.neighbour ?? (row.describes == "target" ? "target" : row.describes),
                                       confidence: row.confidence)
         label.says = row.says

@@ -65,8 +65,10 @@ public enum Requests {
     }
 
     /// The locator: where the false thing is, if anywhere (claims by alias, numbered segments).
-    public static func locate(_ input: SpikeInput) -> String {
-        (["Target: \(input.targetName)", "", "Claims:"] + input.claims.map { "\($0.alias) (\($0.kind)): \($0.text)" }
+    public static func locate(_ input: SpikeInput, key: SpikeAnswerKey?) -> String {
+        let mistakes = key?.mistakes ?? []
+        return (["Target: \(input.targetName)", "", "Claims:"] + input.claims.map { "\($0.alias) (\($0.kind)): \($0.text)" }
+            + ["", "Likely mistakes:"] + (mistakes.isEmpty ? ["none"] : mistakes.map { "\($0.id): \($0.text)" })
             + ["", "Neighbouring concepts:"] + neighbours(input)
             + ["", "Student's explanation, in numbered segments:"] + input.segments.map { "\($0.n). \($0.text)" }).joined(separator: "\n")
     }

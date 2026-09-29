@@ -8,7 +8,7 @@ import XCTest
 struct ScriptedModel: SpikeModel {
     let reading: String?, opinion: String?, answerKey: String?
     var check: String? = #"{"verdict": "mistaken"}"#
-    var locate: String? = #"{"segment": "2", "instead": "It keeps access to its lexical environment.", "kind": "wrongReason", "claim": "c2"}"#
+    var locate: String? = #"{"segment": "2", "instead": "It keeps access to its lexical environment.", "mistake": "none", "kind": "wrongReason", "claim": "c2"}"#
     /// The whole-answer check reads an answer containing this text as correct (a copied true claim).
     var correctIf: String? = nil
     var status = "ok"

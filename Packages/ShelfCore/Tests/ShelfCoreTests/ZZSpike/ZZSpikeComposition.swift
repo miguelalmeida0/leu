@@ -84,7 +84,9 @@ enum SpikeComposition {
         let wrongReasonPlaced = wrongAnswer && placed.map { checked.segments[$0 - 1].reasonOf != nil } == true
         for index in checked.segments.indices {
             var s = checked.segments[index]
-            if s.credit != nil, s.creditFirm {
+            // Disputed whether firm or already tentative (dev08: a full credit V7 had made tentative still
+            // counted as covered, so "vague" answers reached "mostly").
+            if s.credit != nil {
                 let explained = wrongReasonPlaced && checked.segments[placed! - 1].reasonOf == s.n
                 if !(answer == "correct" || explained) { s.credit = .partial; s.creditFirm = false; checked.fired.append("D-credit") }
             }

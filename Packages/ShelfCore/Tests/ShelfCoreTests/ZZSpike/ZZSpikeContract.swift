@@ -57,6 +57,9 @@ struct SpikeOpinionItem: Codable, Equatable {
     let segment: Int
     let claimID: String?
     let neighbour: String?
+    /// V37 locator only: the likely mistake it chose, and what it said the textbook says instead (audit).
+    var mistakeID: String? = nil
+    var note: String? = nil
 }
 
 struct SpikeVerdict: Codable, Equatable { let item: Int; let verdict: String }

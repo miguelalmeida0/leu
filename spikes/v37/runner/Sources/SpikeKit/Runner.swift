@@ -64,10 +64,10 @@ public struct SpikePipeline: Sendable {
         let response: ModelResponse, opinion: SpikeCall<SpikeSecondOpinionOutput>
         if Settings.sequential {
             // One model call at a time: concurrent sessions contend for the on-device model (dev05 p95).
-            opinion = await checkAndLocate(input)
+            opinion = await checkAndLocate(input, key: key)
             response = await model.respond(readingRequest)
         } else {
-            async let checked = checkAndLocate(input)
+            async let checked = checkAndLocate(input, key: key)
             response = await model.respond(readingRequest)
             opinion = await checked
         }
@@ -85,7 +85,7 @@ public struct SpikePipeline: Sendable {
 
     /// The whole-answer check (item 1, kind "answer"), then — only when it finds the answer wrong — the
     /// locator (item 2, kind "locate": its segment, claim id and kind; segment 0 for "none").
-    func checkAndLocate(_ input: SpikeInput) async -> SpikeCall<SpikeSecondOpinionOutput> {
+    func checkAndLocate(_ input: SpikeInput, key: SpikeAnswerKey?) async -> SpikeCall<SpikeSecondOpinionOutput> {
         let check = await model.respond(ModelRequest(instructions: prompts.answerCheck, prompt: Requests.answerCheck(input),
                                                      schema: SpikeSchemas.answerCheck(), maxTokens: Settings.opinionTokens,
                                                      timeout: Settings.opinionTimeout))
@@ -99,8 +99,8 @@ public struct SpikePipeline: Sendable {
         var verdicts = [SpikeVerdict(item: 1, verdict: verdict)]
         var latency = check.latencyMs, retries = check.retries
         if verdict == "mistaken" || verdict == "flawedReason" {
-            let located = await model.respond(ModelRequest(instructions: prompts.locate, prompt: Requests.locate(input),
-                                                           schema: SpikeSchemas.locate(input), maxTokens: Settings.opinionTokens,
+            let located = await model.respond(ModelRequest(instructions: prompts.locate, prompt: Requests.locate(input, key: key),
+                                                           schema: SpikeSchemas.locate(input, key: key), maxTokens: Settings.opinionTokens,
                                                            timeout: Settings.opinionTimeout))
             latency += located.latencyMs; retries += located.retries
             guard located.status == "ok", let json = located.json else {
@@ -110,8 +110,13 @@ public struct SpikePipeline: Sendable {
                 return SpikeCall(status: "schemaError", latencyMs: latency, retries: retries, output: nil)
             }
             let ids = Dictionary(input.claims.map { ($0.alias, $0.id) }, uniquingKeysWith: { a, _ in a })
+            // A chosen likely mistake names its claim (the key ties each mistake to one); otherwise the
+            // locator's claim, checked against its own words.
+            let mistake = key?.mistakes.first { $0.id == raw.mistake }
             let claim = Selection.resolveClaim(raw.claim, instead: raw.instead, input: input)
-            items.append(SpikeOpinionItem(item: 2, kind: "locate", segment: Int(raw.segment) ?? 0, claimID: ids[claim], neighbour: nil))
+            var item = SpikeOpinionItem(item: 2, kind: "locate", segment: Int(raw.segment) ?? 0, claimID: mistake?.contradicts ?? ids[claim], neighbour: nil)
+            item.mistakeID = mistake?.id; item.note = raw.instead
+            items.append(item)
             verdicts.append(SpikeVerdict(item: 2, verdict: raw.segment == "none" ? "none" : raw.kind))
         }
         return SpikeCall(status: "ok", latencyMs: latency, retries: retries, output: SpikeSecondOpinionOutput(items: items, verdicts: verdicts))

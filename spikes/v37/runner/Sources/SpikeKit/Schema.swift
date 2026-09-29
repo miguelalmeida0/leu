@@ -99,11 +99,12 @@ public enum SpikeSchemas {
     public static let locateKinds = ["wrongIdea", "wrongReason", "otherConcept"]
 
     /// The locator: one segment (or none), what kind of error, and the claim it gets wrong.
-    public static func locate(_ input: SpikeInput) -> SchemaNode {
+    public static func locate(_ input: SpikeInput, key: SpikeAnswerKey?) -> SchemaNode {
         .object(name: "Locate", properties: [
             .init("segment", .choice(name: "FalseSegment", values: numbers(input.segments.count) + ["none"])),
             // What the textbook says instead (scratch): it names the ruling fact before a claim id is chosen.
             .init("instead", .text),
+            .init("mistake", .choice(name: "LocatedMistake", values: unique((key?.mistakes.map(\.id) ?? []) + ["none"]))),
             .init("kind", .choice(name: "ErrorKind", values: locateKinds)),
             .init("claim", .choice(name: "WrongClaim", values: unique(input.claims.map(\.alias) + ["none"])))
         ])
