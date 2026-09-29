@@ -58,11 +58,28 @@ public struct SemanticCompiler: Sendable {
         let lower = text.lowercased()
         return domainPack.filter { concept in
             ([concept.canonicalName] + concept.aliases).contains { token in
-                let t = token.lowercased()
-                return lower.range(of: #"(?<![A-Za-z0-9_])"# + NSRegularExpression.escapedPattern(for: t) + #"(?![A-Za-z0-9_])"#,
-                                   options: .regularExpression) != nil
+                containsStandaloneToken(token.lowercased(), in: lower)
             }
         }
+    }
+
+    private func containsStandaloneToken(_ token: String, in text: String) -> Bool {
+        guard !token.isEmpty else { return false }
+        var start = text.startIndex
+        while start < text.endIndex,
+              let range = text.range(of: token, range: start..<text.endIndex) {
+            let leftIsToken = range.lowerBound > text.startIndex &&
+                isSemanticTokenCharacter(text[text.index(before: range.lowerBound)])
+            let rightIsToken = range.upperBound < text.endIndex &&
+                isSemanticTokenCharacter(text[range.upperBound])
+            if !leftIsToken && !rightIsToken { return true }
+            start = range.upperBound
+        }
+        return false
+    }
+
+    private func isSemanticTokenCharacter(_ character: Character) -> Bool {
+        character.isLetter || character.isNumber || character == "_"
     }
 
     private func conceptForTerm(_ term: String) -> SemanticConcept {

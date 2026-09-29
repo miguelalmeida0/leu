@@ -45,9 +45,25 @@ public struct KnowledgeIndexBuilder: Sendable {
         if needle.contains(" ") || needle.contains(".") || needle.contains("/") || needle.contains("-") {
             return haystack.range(of: needle, options: [.caseInsensitive, .diacriticInsensitive]) != nil
         }
-        let escaped = NSRegularExpression.escapedPattern(for: needle)
-        return haystack.range(of: #"(?<![A-Za-z0-9_$])"# + escaped + #"(?![A-Za-z0-9_$])"#,
-                              options: .regularExpression) != nil
+        return containsStandaloneToken(needle, in: haystack)
+    }
+
+    private func containsStandaloneToken(_ needle: String, in haystack: String) -> Bool {
+        var start = haystack.startIndex
+        while start < haystack.endIndex,
+              let range = haystack.range(of: needle, range: start..<haystack.endIndex) {
+            let leftIsToken = range.lowerBound > haystack.startIndex &&
+                isTokenCharacter(haystack[haystack.index(before: range.lowerBound)])
+            let rightIsToken = range.upperBound < haystack.endIndex &&
+                isTokenCharacter(haystack[range.upperBound])
+            if !leftIsToken && !rightIsToken { return true }
+            start = range.upperBound
+        }
+        return false
+    }
+
+    private func isTokenCharacter(_ character: Character) -> Bool {
+        character.isLetter || character.isNumber || character == "_" || character == "$"
     }
 
     private func canonical(_ text: String) -> String {

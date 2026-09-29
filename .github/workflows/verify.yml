@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+
 jobs:
   portable-core:
     runs-on: macos-latest
@@ -16,32 +17,87 @@ jobs:
         run: ./scripts/test-core.sh
       - name: Structural checks
         run: python3 scripts/validate.py
-  apple-platform:
+
+  apple-unit:
     runs-on: macos-latest
-    timeout-minutes: 60
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - name: Xcode and installed simulators
         run: |
           xcodebuild -version
           xcrun simctl list devices available
-      - name: Build and run PDFKit and UI tests
+      - name: Build and run Apple unit and PDFKit tests
         run: |
-          ./scripts/test-ios.sh \
-            -skip-testing:ShelfTests/LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning \
-            -skip-testing:ShelfUITests/ShelfExplainLikeTenUITests/testRealExplanationAndRefinementsStayOnPageThree \
-            -skip-testing:ShelfUITests/ShelfRecoveryV25UITests/test57ConfidenceControlsHaveEqualGeometryAndCompleteLabels \
-            -skip-testing:ShelfUITests/ShelfWorldClassUITests/test50SemanticQuestionUsesFourLevelCertainty \
-            -skip-testing:ShelfUITests/ShelfWorldClassUITests/test53ActiveStudyContextSurvivesInterruption \
-            -skip-testing:ShelfUITests/ShelfSourceRecoveryP0UITests/test61ExistingReactQuestionChoicesExplanationSourceReturn \
-            -skip-testing:ShelfUITests/ShelfSourceRecoveryP0UITests/test62UninterruptedExistingLibraryReadLensStudySourceReturn \
-            -skip-testing:ShelfUITests/ShelfSessionExperienceUITests/testMCQPredictionCommitFeedbackAndSourceRoundTrip \
-            -skip-testing:ShelfUITests/ShelfV27IntelligenceUITests/testTeachReactSourceRoundTripAndResumeActualThought \
-            -skip-testing:ShelfUITests/ShelfV27IntelligenceUITests/testV3AdmittedQuestionStudyFeedbackAndSourceRoundTrip
+          ./scripts/test-ios.sh             -only-testing:ShelfTests             -skip-testing:ShelfTests/LearningRealModelP0Tests/testRealReactInferenceValidationPersistenceAndPlanning
       - name: Save actual Xcode test evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Shelf-xcresults
+          name: Shelf-xcresults-unit
+          path: .build/results/*.xcresult
+          if-no-files-found: warn
+
+  apple-ui:
+    name: apple-ui-${{ matrix.shard }}
+    runs-on: macos-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shard: a
+            only: >-
+              -only-testing:ShelfUITests/ShelfEmotionalFlowUITests
+              -only-testing:ShelfUITests/ShelfExplainLikeTenUITests
+              -only-testing:ShelfUITests/ShelfRecoveryV25UITests
+            skip: >-
+              -skip-testing:ShelfUITests/ShelfExplainLikeTenUITests/testRealExplanationAndRefinementsStayOnPageThree
+              -skip-testing:ShelfUITests/ShelfRecoveryV25UITests/test57ConfidenceControlsHaveEqualGeometryAndCompleteLabels
+          - shard: b
+            only: >-
+              -only-testing:ShelfUITests/ShelfInteractionRepairUITests
+              -only-testing:ShelfUITests/ShelfReaderRegressionUITests
+              -only-testing:ShelfUITests/ShelfStudyInteractionUITests
+            skip: ""
+          - shard: c
+            only: >-
+              -only-testing:ShelfUITests/ShelfLearningOSUITests
+              -only-testing:ShelfUITests/ShelfStudyHomeUITests
+              -only-testing:ShelfUITests/ShelfUITests
+            skip: ""
+          - shard: d
+            only: >-
+              -only-testing:ShelfUITests/ShelfSessionExperienceUITests
+              -only-testing:ShelfUITests/ShelfSourceRecoveryP0UITests
+              -only-testing:ShelfUITests/ShelfV27IntelligenceUITests
+              -only-testing:ShelfUITests/ShelfWorldClassUITests
+            skip: >-
+              -skip-testing:ShelfUITests/ShelfSessionExperienceUITests/testMCQPredictionCommitFeedbackAndSourceRoundTrip
+              -skip-testing:ShelfUITests/ShelfSourceRecoveryP0UITests/test61ExistingReactQuestionChoicesExplanationSourceReturn
+              -skip-testing:ShelfUITests/ShelfSourceRecoveryP0UITests/test62UninterruptedExistingLibraryReadLensStudySourceReturn
+              -skip-testing:ShelfUITests/ShelfV27IntelligenceUITests/testTeachReactSourceRoundTripAndResumeActualThought
+              -skip-testing:ShelfUITests/ShelfV27IntelligenceUITests/testV3AdmittedQuestionStudyFeedbackAndSourceRoundTrip
+              -skip-testing:ShelfUITests/ShelfWorldClassUITests/test50SemanticQuestionUsesFourLevelCertainty
+              -skip-testing:ShelfUITests/ShelfWorldClassUITests/test53ActiveStudyContextSurvivesInterruption
+    steps:
+      - uses: actions/checkout@v4
+      - name: Xcode and installed simulators
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices available
+      - name: Build and run UI shard
+        env:
+          ONLY_TESTS: ${{ matrix.only }}
+          SKIP_TESTS: ${{ matrix.skip }}
+        run: |
+          read -r -a only_args <<< "$ONLY_TESTS"
+          read -r -a skip_args <<< "$SKIP_TESTS"
+          ./scripts/test-ios.sh "${only_args[@]}" "${skip_args[@]}"
+      - name: Save actual Xcode test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Shelf-xcresults-${{ matrix.shard }}
           path: .build/results/*.xcresult
           if-no-files-found: warn

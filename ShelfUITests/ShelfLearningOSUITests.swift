@@ -91,11 +91,11 @@ final class ShelfLearningOSUITests: ShelfUITestCase {
         let learn = readerTool(identifier: "reader-tool-learn", label: "Study")
         XCTAssertTrue(learn.exists); learn.tap()
         XCTAssertTrue(element("learning-object-actions").waitForExistence(timeout: 5))
+        expandPassageTools()
+        XCTAssertTrue(identifiedControl("learning-action-understand", label: "Understand").waitForExistence(timeout: 5))
         XCTAssertTrue(identifiedControl("learning-action-remember", label: "Remember").exists)
-        XCTAssertTrue(identifiedControl("learning-action-test", label: "Test").exists)
-        XCTAssertTrue(identifiedControl("learning-action-connect", label: "Connect").exists)
         XCTAssertTrue(identifiedControl("learning-action-mask", label: "Mask").exists)
-        XCTAssertTrue(identifiedControl("learning-action-explain", label: "Explain").exists)
+        XCTAssertTrue(identifiedControl("learning-action-explain", label: "Record explanation").exists)
         capture("38-learning-actions")
     }
 
@@ -104,8 +104,10 @@ final class ShelfLearningOSUITests: ShelfUITestCase {
         let learn = readerTool(identifier: "reader-tool-learn", label: "Study")
         XCTAssertTrue(learn.exists); learn.tap()
         XCTAssertTrue(element("learning-object-actions").waitForExistence(timeout: 5))
+        expandPassageTools()
         let remember = identifiedControl("learning-action-remember", label: "Remember")
-        XCTAssertTrue(remember.waitForExistence(timeout: 5)); remember.tap()
+        for _ in 0..<3 where !remember.isHittable { app.swipeUp() }
+        XCTAssertTrue(remember.waitForExistence(timeout: 5) && remember.isHittable); remember.tap()
         XCTAssertTrue(app.buttons["Back to library"].waitForExistence(timeout: 8))
         app.buttons["Back to library"].tap()
 
@@ -154,17 +156,29 @@ final class ShelfLearningOSUITests: ShelfUITestCase {
         capture("40-progress-starts-real-recall")
     }
 
-    func test41ReaderTestActionOpensSourceBoundPromptEditor() {
+    func test41ReaderTeachActionOpensSourceBoundTeachSheet() {
         openReactNotes()
         let learn = readerTool(identifier: "reader-tool-learn", label: "Study")
         XCTAssertTrue(learn.exists); learn.tap()
         XCTAssertTrue(element("learning-object-actions").waitForExistence(timeout: 5))
-        let testAction = identifiedControl("learning-action-test", label: "Test")
-        XCTAssertTrue(testAction.waitForExistence(timeout: 5)); testAction.tap()
-        XCTAssertTrue(element("recall-prompt-editor").waitForExistence(timeout: 6))
-        XCTAssertTrue(element("manual-recall-prompt").exists)
-        XCTAssertTrue(app.buttons["save-recall-prompt"].exists)
-        capture("41-source-bound-test-editor")
+        let teach = identifiedControl("learning-action-teach-leu", label: "Teach Leu")
+        XCTAssertTrue(teach.waitForExistence(timeout: 20)); teach.tap()
+        XCTAssertTrue(element("teach-leu-screen").waitForExistence(timeout: 10))
+        XCTAssertTrue(element("teach-leu-source-quote").exists)
+        XCTAssertTrue(element("teach-leu-explanation").exists)
+        XCTAssertTrue(app.buttons["teach-leu-compare"].exists)
+        capture("41-source-bound-teach")
+    }
+
+    private func expandPassageTools() {
+        let tools = identifiedControl("learning-passage-tools", label: "Passage tools")
+        XCTAssertTrue(tools.waitForExistence(timeout: 5))
+        let remember = identifiedControl("learning-action-remember", label: "Remember")
+        if !remember.exists {
+            XCTAssertTrue(tools.isHittable)
+            tools.tap()
+        }
+        XCTAssertTrue(remember.waitForExistence(timeout: 5))
     }
 
     private func openLearn() {
