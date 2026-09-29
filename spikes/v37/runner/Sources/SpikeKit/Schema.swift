@@ -97,7 +97,6 @@ public enum SpikeSchemas {
     }
 
     public static let locateKinds = ["wrongIdea", "wrongReason", "otherConcept"]
-
     /// The locator: one segment (or none), what kind of error, and the claim it gets wrong.
     public static func locate(_ input: SpikeInput, key: SpikeAnswerKey?) -> SchemaNode {
         .object(name: "Locate", properties: [

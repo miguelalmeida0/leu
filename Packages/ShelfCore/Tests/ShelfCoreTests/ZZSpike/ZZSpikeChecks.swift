@@ -22,6 +22,9 @@ struct SpikeChecked {
         var confusedWith: ConceptKey?
         var reasonOf: Int?                  // the credited conclusion this segment is a wrong reason for
         var reasonConfirmed = false
+        /// D: both readers take this reason to be true (the row reads it as correct and the check calls the
+        /// answer correct), so it is a settled reason, not one to ask about.
+        var reasonSupported = false
         /// The claim the model tied the segment to (its claim, or the claim its mistake contradicts),
         /// kept when a wrong reason is folded into its conclusion: the claim a repair question asks about.
         var named: String?

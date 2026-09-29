@@ -120,8 +120,8 @@ enum SpikeAdapter {
                     issues.append(UnderstandingIssue(kind: .unsupported, learnerText: s.text))
                     emit(s.text, .unsupported, signalText: marked ? s.text : "because " + s.text)
                 } else {
-                    // Not confirmed: the reason is not settled, and the judge asks about it.
-                    emit(s.text, .noise, reason: ReasonReading(text: s.text, supported: false))
+                    // Not confirmed: unless both readers take it to be true, the reason is not settled and the judge asks.
+                    emit(s.text, .noise, reason: ReasonReading(text: s.text, supported: s.reasonSupported))
                 }
                 continue
             }

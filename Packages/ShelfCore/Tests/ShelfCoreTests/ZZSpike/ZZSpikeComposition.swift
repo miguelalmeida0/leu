@@ -94,10 +94,14 @@ enum SpikeComposition {
                 let agreed = s.n == placed ? wrongAnswer : answer == "mistaken"
                 if !agreed { s.wrongFirm = false; checked.fired.append("D-wrong") }
             }
-            if s.reasonOf != nil { s.reasonConfirmed = wrongAnswer && s.n == placed }
+            if s.reasonOf != nil {
+                s.reasonConfirmed = wrongAnswer && s.n == placed
+                s.reasonSupported = answer == "correct" && ["entails", "partiallyEntails"].contains(s.relation)
+            }
             checked.segments[index] = s
         }
-        let disputed = checked.segments.filter { $0.credit != nil && !$0.creditFirm }
+        // Only credit the check disputes is capped (dev09: tentative credit the check agrees with was capped too).
+        let disputed = answer == "correct" ? [] : checked.segments.filter { $0.credit != nil && !$0.creditFirm }
         if disputed.count > 1 {
             let keep = disputed.first { $0.familyID == definition } ?? disputed[0]
             for s in disputed where s.n != keep.n {

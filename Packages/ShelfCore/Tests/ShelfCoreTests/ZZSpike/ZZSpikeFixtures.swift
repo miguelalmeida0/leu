@@ -36,8 +36,8 @@ enum SpikeSynthetic {
         var items = [SpikeOpinionItem(item: 1, kind: "answer", segment: 0, claimID: nil, neighbour: nil)]
         var verdicts = [SpikeVerdict(item: 1, verdict: verdict)]
         if let (segment, claim, kind) = locate {
-            items.append(SpikeOpinionItem(item: 2, kind: "locate", segment: segment, claimID: claim, neighbour: nil))
-            verdicts.append(SpikeVerdict(item: 2, verdict: segment == 0 ? "none" : kind))
+            items.append(SpikeOpinionItem(item: items.count + 1, kind: "locate", segment: segment, claimID: claim, neighbour: nil))
+            verdicts.append(SpikeVerdict(item: items.count, verdict: segment == 0 ? "none" : kind))
         }
         return SpikeSecondOpinionOutput(items: items, verdicts: verdicts)
     }
