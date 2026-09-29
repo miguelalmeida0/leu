@@ -1,0 +1,290 @@
+{
+  "cases" : [
+    {
+      "caseID" : "C1",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-7485a5102853e2f4",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of verifying who a user or service is."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-508e25d02094b377",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "Before granting access, the system needs a trustworthy identity."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        },
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A system whose behavior depends on state remembered across interactions.",
+          "key" : "stateful system",
+          "name" : "Stateful system"
+        }
+      ],
+      "question" : "Explain Authentication in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "It checks that the person is really who they claim to be."
+        }
+      ],
+      "set" : "C",
+      "targetKey" : "Mobile Mastery|Authentication",
+      "targetName" : "Authentication",
+      "wordCount" : 12
+    },
+    {
+      "caseID" : "C2",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-7485a5102853e2f4",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of verifying who a user or service is."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-508e25d02094b377",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "Before granting access, the system needs a trustworthy identity."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        },
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A system whose behavior depends on state remembered across interactions.",
+          "key" : "stateful system",
+          "name" : "Stateful system"
+        }
+      ],
+      "question" : "Explain Authentication in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Authentication does not verify identity."
+        }
+      ],
+      "set" : "C",
+      "targetKey" : "Mobile Mastery|Authentication",
+      "targetName" : "Authentication",
+      "wordCount" : 5
+    },
+    {
+      "caseID" : "C3",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-63b3e0f7dcdc4888",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A function plus access to the lexical variables from the scope where it was created."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-ea1f1e097d9c8eab",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "Closures power encapsulation, callbacks, hooks, and private state patterns."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-329d5dceec7cb700",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Objects are accessed through references, so multiple variables can refer to the same underlying object.",
+          "key" : "reference semantic",
+          "name" : "Reference semantics"
+        },
+        {
+          "definition" : "Hide internal state\/implementation and expose only the operations consumers need.",
+          "key" : "encapsulation",
+          "name" : "Encapsulation"
+        },
+        {
+          "definition" : "JavaScript's declaration processing behavior that makes some bindings\/functions known before the line where they are declared.",
+          "key" : "hoisting",
+          "name" : "Hoisting"
+        },
+        {
+          "definition" : "The rules that determine where a variable name is visible and accessible.",
+          "key" : "scope",
+          "name" : "Scope"
+        }
+      ],
+      "question" : "Explain Closure in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "The inner function can still use variables from the function that created it."
+        }
+      ],
+      "set" : "C",
+      "targetKey" : "Mobile Mastery|Closure",
+      "targetName" : "Closure",
+      "wordCount" : 13
+    },
+    {
+      "caseID" : "C4",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-63b3e0f7dcdc4888",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A function plus access to the lexical variables from the scope where it was created."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-ea1f1e097d9c8eab",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "Closures power encapsulation, callbacks, hooks, and private state patterns."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-329d5dceec7cb700",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Objects are accessed through references, so multiple variables can refer to the same underlying object.",
+          "key" : "reference semantic",
+          "name" : "Reference semantics"
+        },
+        {
+          "definition" : "Hide internal state\/implementation and expose only the operations consumers need.",
+          "key" : "encapsulation",
+          "name" : "Encapsulation"
+        },
+        {
+          "definition" : "JavaScript's declaration processing behavior that makes some bindings\/functions known before the line where they are declared.",
+          "key" : "hoisting",
+          "name" : "Hoisting"
+        },
+        {
+          "definition" : "The rules that determine where a variable name is visible and accessible.",
+          "key" : "scope",
+          "name" : "Scope"
+        }
+      ],
+      "question" : "Explain Closure in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "The inner function can still access the outer variable"
+        },
+        {
+          "n" : 2,
+          "text" : "because JavaScript copies all outer variables into it."
+        }
+      ],
+      "set" : "C",
+      "targetKey" : "Mobile Mastery|Closure",
+      "targetName" : "Closure",
+      "wordCount" : 17
+    },
+    {
+      "caseID" : "C5",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-ff95fc8d2fc5f02e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A compact signed token format containing claims, represented as header.payload.signature."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-b6c3668d41921be7",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-f8f60f6a0a9d8164",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "JWTs are signed claim containers, not automatically encrypted."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "A chunk of text represented as an integer ID for model processing.",
+          "key" : "token",
+          "name" : "Token"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        }
+      ],
+      "question" : "Explain JWT in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "JWTs are signed so nobody can read them."
+        }
+      ],
+      "set" : "C",
+      "targetKey" : "Mobile Mastery|JWT",
+      "targetName" : "JWT",
+      "wordCount" : 8
+    }
+  ],
+  "set" : "C"
+}

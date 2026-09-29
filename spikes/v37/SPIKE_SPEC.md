@@ -2,8 +2,10 @@
 
 **Status: APPROVED 2026-09-29, with the G16 latency gate added. Step 1 is COMPLETE: the
 development set (80 cases), the canonical cases (5) and the primary gate (240 cases) are
-written, validated, double-labelled (100% coarse agreement) and sealed. Apple's model has not
-been run, and the gate has not been consumed. Model and prompt development wait for approval.**
+written, validated, double-labelled (100% coarse agreement) and sealed. Step 2 is COMPLETE: the
+export, checks, adapter, scorer, statistics and Mac runner are built and checked on Linux with
+synthetic readings ([STEP2_NOTES.md](STEP2_NOTES.md)). Apple's model has not been run, and the
+gate has not been consumed. Mac preflight, model and prompt development wait for approval.**
 Throwaway experiment on branch `claude/v37-capability-spike`, which is never merged. No
 production code is written. The binding decision rules are in
 [PREREGISTRATION.md](PREREGISTRATION.md); if the two documents ever disagree, the

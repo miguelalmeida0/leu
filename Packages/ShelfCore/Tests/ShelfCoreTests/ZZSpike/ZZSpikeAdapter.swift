@@ -1,0 +1,192 @@
+import Foundation
+@testable import ShelfCore
+
+// THROWAWAY — V37 capability spike only (branch `claude/v37-capability-spike`, never merged).
+
+/// Into the unchanged judge (SPIKE_SPEC §7). A checked reading becomes the diagnosis and signals
+/// `UnderstandingJudge` already consumes; the unchanged judge, planner and evidence mapper decide.
+/// The judge is this branch's (V35's rules plus V36's evidence-only rules). The V36 semantic inputs
+/// (`semantic`, `semanticCoverage`, `semanticLevel`) stay empty, so its semantic rules never fire; the
+/// one V36-era input used is `ClauseSignal.reason`, for §7's "an unconfirmed reason is asked about".
+enum SpikeAdapter {
+    /// Why a case was judged by Tier 0 (`GeneralizationEvaluation.v35`) instead of the reading.
+    enum Fallback: String, CaseIterable {
+        case none, empty, missingRecord, readingFailed, invalidReading, opinionFailed
+        /// An empty answer needs no model call; every other fallback is a model failure (preregistration §4).
+        var isFailure: Bool { self != .none && self != .empty }
+    }
+
+    struct Outcome {
+        let judged: GeneralizationEvaluation.Judged
+        let fallback: Fallback
+        let checked: SpikeChecked?
+        let assessment: UnderstandingAssessment?
+    }
+
+    /// The same words the judge's own weak-reasoning rule looks for (`JudgementReading.reason`, private there).
+    static let judgeReasonMarker = try! NSRegularExpression(pattern: #"(?i)\b(?:because|since|as a result|that's why|which means|due to)\b"#)
+
+    static func judge(_ input: GeneralizationEvaluation.Input, spike: SpikeInput, record: SpikeRecord?, key: SpikeAnswerKey?,
+                      config: SpikeConfig) -> Outcome {
+        func tier0(_ reason: Fallback) -> Outcome {
+            Outcome(judged: GeneralizationEvaluation.v35(input, input.text), fallback: reason, checked: nil, assessment: nil)
+        }
+        guard !spike.segments.isEmpty else { return tier0(.empty) }
+        guard let record else { return tier0(.missingRecord) }
+        guard record.reading.status == "ok", let reading = record.reading.output else { return tier0(.readingFailed) }
+        var opinion: SpikeSecondOpinionOutput?
+        if config == .d {
+            // "none": nothing decisive to check, so no call was made.
+            guard let call = record.secondOpinion else { return tier0(.opinionFailed) }
+            if call.status == "none" { opinion = SpikeSecondOpinionOutput(items: [], verdicts: []) }
+            else if call.status == "ok", let output = call.output { opinion = output }
+            else { return tier0(.opinionFailed) }
+        }
+        guard let checked = SpikeChecks.check(reading, input: spike, text: input.text, key: key, target: input.target,
+                                              config: config, opinion: opinion) else { return tier0(.invalidReading) }
+        let assessment = assess(checked, input: input)
+        return Outcome(judged: judged(assessment, input), fallback: .none, checked: checked, assessment: assessment)
+    }
+
+    /// The §7 table, segment by segment, then V35's own coverage, missing-idea issues and level.
+    static func assess(_ checked: SpikeChecked, input: GeneralizationEvaluation.Input) -> UnderstandingAssessment {
+        let target = input.target
+        let known = Set(target.allClaims.map(\.id))
+        let core = target.rubric.filter { $0.role == .core }
+        let coreIDs = Set(core.map(\.id))
+        // V35's own reader runs alongside for its verbatim-copy signal. Self-doubt needs nothing: the
+        // judge reads it from the statements' own words.
+        let copied = UnderstandingDiagnoser(semantics: nil).assess(input.text, target: target)
+            .diagnosis.statements.filter { $0.verdict == .restates }.map(\.learnerText)
+        var statements: [StatementDiagnosis] = [], issues: [UnderstandingIssue] = []
+        var signals = DiagnosisSignals()
+        var best: [String: (coverage: ClaimCoverage, text: String)] = [:]
+        // As V35: core claims only; a contradiction outranks credit, full credit outranks partial.
+        func record(_ id: String?, _ coverage: ClaimCoverage, _ text: String) {
+            guard let id, coreIDs.contains(id) else { return }
+            let rank: [ClaimCoverage: Int] = [.missing: 0, .partial: 1, .covered: 2, .contradicted: 3]
+            if let existing = best[id], rank[existing.coverage]! >= rank[coverage]! { return }
+            best[id] = (coverage, text)
+        }
+        func emit(_ text: String, _ verdict: StatementVerdict, claim: String? = nil, recall: Double = 0, distinctive: Int = 0,
+                  conflict: Double = 0, rival: ConceptKey? = nil, reason: ReasonReading? = nil, signalText: String? = nil) {
+            let tier: EvidenceTier? = claim == nil ? nil : .lexical
+            statements.append(StatementDiagnosis(learnerText: text, verdict: verdict, claimID: claim, tier: tier, matchedTerms: [], missingTerms: []))
+            var signal = ClauseSignal(text: signalText ?? text, verdict: verdict, claimID: claim, recall: recall, precision: recall > 0 ? 1 : 0,
+                                      distinctive: distinctive, rival: rival, rivalPrecision: rival == nil ? 0 : 0.6,
+                                      rivalMatched: rival == nil ? 0 : 2, ownPrecision: rival == nil ? 1 : 0.1, conflictOverlap: conflict,
+                                      unexpressedNegation: false, words: LexicalProfile(text).words.count)
+            if let claim, [.supports, .partiallySupports, .restates, .overgeneralizes].contains(verdict) {
+                signal.credited[claim] = (recall, distinctive)
+            }
+            signal.reason = reason
+            signals.clauses.append(signal)
+        }
+
+        for s in checked.segments {
+            let claim = s.claimID.flatMap { known.contains($0) ? $0 : nil }
+            if s.reasonOf != nil {
+                if s.reasonConfirmed {
+                    // A wrong reason behind a credited conclusion: an unsupported clause that gives a reason,
+                    // which the judge's own rule commits as weak reasoning. A reason marked only by ", so" or
+                    // by its role has no marker of its own, so its signal carries "because".
+                    let range = NSRange(s.text.startIndex..., in: s.text)
+                    let marked = judgeReasonMarker.firstMatch(in: s.text, range: range) != nil
+                    issues.append(UnderstandingIssue(kind: .unsupported, learnerText: s.text))
+                    emit(s.text, .unsupported, signalText: marked ? s.text : "because " + s.text)
+                } else {
+                    // Not confirmed: the reason is not settled, and the judge asks about it.
+                    emit(s.text, .noise, reason: ReasonReading(text: s.text, supported: false))
+                }
+                continue
+            }
+            if let coverage = s.credit, let claim {
+                // Firm credit is strong evidence; tentative credit is thin, so the judge asks first.
+                // Only firm credit on copied source wording is V35's verbatim restatement.
+                let copy = s.creditFirm && copied.contains { $0.contains(s.text) }
+                if copy { issues.append(UnderstandingIssue(kind: .verbatim, claimID: claim, learnerText: s.text)) }
+                record(claim, coverage, s.text)
+                emit(s.text, copy ? .restates : coverage == .covered ? .supports : .partiallySupports, claim: claim,
+                     recall: s.creditFirm ? 1 : 0.35, distinctive: s.creditFirm ? 2 : 1)
+                continue
+            }
+            if let wrong = s.wrong {
+                if s.wrongFirm {
+                    switch wrong {
+                    case .contradiction:
+                        record(claim, .contradicted, s.text)
+                        issues.append(UnderstandingIssue(kind: .contradiction, claimID: claim, learnerText: s.text))
+                        emit(s.text, .contradicts, claim: claim, recall: 1, distinctive: 2, conflict: 1)
+                    case .reversal:
+                        record(claim, .contradicted, s.text)
+                        issues.append(UnderstandingIssue(kind: .causalReversal, claimID: claim, learnerText: s.text))
+                        emit(s.text, .reverses, claim: claim, recall: 1, distinctive: 2)
+                    case .overgeneralization:
+                        // As V35: the idea without its limit — partial coverage and a stated wrong idea.
+                        record(claim, .partial, s.text)
+                        issues.append(UnderstandingIssue(kind: .overgeneralization, claimID: claim, learnerText: s.text))
+                        emit(s.text, .overgeneralizes, claim: claim, recall: 1, distinctive: 2)
+                    case .confusion:
+                        issues.append(UnderstandingIssue(kind: .confusedConcept, relatedConcept: s.confusedWith, learnerText: s.text))
+                        emit(s.text, .confuses)
+                    }
+                } else if wrong == .confusion, let rival = s.confusedWith {
+                    // A doubtful confusion: the rival-concept signal, which the judge asks about as a contrast.
+                    issues.append(UnderstandingIssue(kind: .unsupported, learnerText: s.text))
+                    emit(s.text, .unsupported, rival: rival)
+                } else {
+                    // Any other doubtful wrong idea: a contradiction the answer does not state clearly.
+                    record(claim, .contradicted, s.text)
+                    issues.append(UnderstandingIssue(kind: .contradiction, claimID: claim, learnerText: s.text))
+                    emit(s.text, .contradicts, claim: claim)
+                }
+                continue
+            }
+            if ["hedge", "filler"].contains(s.role) { emit(s.text, .noise); continue }
+            issues.append(UnderstandingIssue(kind: .unsupported, learnerText: s.text))
+            emit(s.text, .unsupported)
+        }
+
+        // V35's finish: coverage over core claims (definitions weigh 1.5), missing key ideas, level.
+        issues = Array(NSOrderedSet(array: issues).array as! [UnderstandingIssue])
+        let assessments = core.map { claim in
+            ClaimAssessment(claimID: claim.id, coverage: best[claim.id]?.coverage ?? .missing, missing: nil, learnerText: best[claim.id]?.text)
+        }
+        let weights = core.map { ClaimRubric($0).weight }
+        let earned = zip(core, weights).reduce(0.0) { sum, pair in
+            switch best[pair.0.id]?.coverage {
+            case .covered?: return sum + pair.1
+            case .partial?: return sum + pair.1 * 0.5
+            default: return sum
+            }
+        }
+        let total = weights.reduce(0, +)
+        let coverage = total > 0 ? earned / total : 0
+        for assessment in assessments where assessment.coverage == .missing {
+            issues.append(UnderstandingIssue(kind: .missingKeyIdea, claimID: assessment.claimID))
+        }
+        let level = UnderstandingDiagnoser.level(issues: issues, coverage: coverage, statements: statements)
+        let draft = UnderstandingDiagnosis(version: UnderstandingDiagnosis.version, concept: target.concept, conceptName: target.conceptName,
+            statements: statements, claims: assessments, issues: issues, level: level, coverage: coverage,
+            intervention: .placeholder, referencedClaims: target.allClaims)
+        let concepts = target.concept.map { [LearnerConceptID(documentID: input.documentID, concept: $0)] } ?? []
+        let prior = LearnerPrior(input.prior, concepts: concepts, at: input.at)
+        let judgement = UnderstandingJudge().judge(draft, signals: signals, target: target, prior: prior)
+        let intervention = InterventionPlanner().plan(draft, target: target, judgement: judgement)
+        let diagnosis = UnderstandingDiagnosis(version: draft.version, concept: draft.concept, conceptName: draft.conceptName,
+            statements: statements, claims: assessments, issues: issues, level: level, coverage: coverage, intervention: intervention,
+            referencedClaims: UnderstandingDiagnoser.referenced(draft, intervention: intervention, all: target.allClaims))
+        return UnderstandingAssessment(diagnosis: diagnosis, judgement: judgement, signals: signals)
+    }
+
+    /// As `GeneralizationEvaluation.judged` (private there): what the judgement lets the learner model learn.
+    static func judged(_ assessment: UnderstandingAssessment, _ input: GeneralizationEvaluation.Input) -> GeneralizationEvaluation.Judged {
+        let evidence = LearnerEvidenceMapper(knowledge: input.knowledge).evidence(from: assessment, documentID: input.documentID,
+                                                                                    identity: input.item.id + "|" + input.text, at: input.at)
+        let state = assessment.judgement.state == .insufficientEvidence ? "insufficient" : assessment.judgement.state.rawValue
+        let asks = assessment.judgement.needsEvidence
+        return GeneralizationEvaluation.Judged(state: state, confidence: assessment.judgement.confidence, asksProbe: asks, evidence: evidence,
+                                               probeClaims: asks ? assessment.diagnosis.intervention.followUp?.rubricClaimIDs ?? [] : [],
+                                               probeConcept: asks ? assessment.diagnosis.intervention.relatedConcept : nil)
+    }
+}

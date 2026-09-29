@@ -1,0 +1,4918 @@
+{
+  "cases" : [
+    {
+      "caseID" : "gd-002",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-6589842cf9f75b65",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The property that repeating an operation has the same intended effect as performing it once."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-3cf9b2257ac2f198",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Networks retry, users double-click, and clients time out after servers already committed work."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-32e5f4b79c3317d8",
+          "kind" : "consequence",
+          "role" : "supporting",
+          "text" : "Idempotency makes retries safe."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
+          "key" : "exponential backoff",
+          "name" : "Exponential backoff"
+        },
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "Attempting a failed operation again when the failure may be temporary.",
+          "key" : "retry",
+          "name" : "Retry"
+        },
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        }
+      ],
+      "question" : "Explain Idempotency in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "If the same request lands twice - say the app retried after a timeout even though the server had actually finished, or someone tapped Pay two times - the end result should be as if it only happened once."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Idempotency",
+      "targetName" : "Idempotency",
+      "wordCount" : 39
+    },
+    {
+      "caseID" : "gd-003",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-6589842cf9f75b65",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The property that repeating an operation has the same intended effect as performing it once."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-3cf9b2257ac2f198",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Networks retry, users double-click, and clients time out after servers already committed work."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-32e5f4b79c3317d8",
+          "kind" : "consequence",
+          "role" : "supporting",
+          "text" : "Idempotency makes retries safe."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
+          "key" : "exponential backoff",
+          "name" : "Exponential backoff"
+        },
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "Attempting a failed operation again when the failure may be temporary.",
+          "key" : "retry",
+          "name" : "Retry"
+        },
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        }
+      ],
+      "question" : "Explain Idempotency in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Think of a lift call button: mash it five times and one lift still comes."
+        },
+        {
+          "n" : 2,
+          "text" : "An API call should work the same way"
+        },
+        {
+          "n" : 3,
+          "text" : "because in real life stuff gets sent twice all the time - flaky wifi resends, impatient people double-tap, a client gives up waiting after the server already did the job."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Idempotency",
+      "targetName" : "Idempotency",
+      "wordCount" : 53
+    },
+    {
+      "caseID" : "gd-005",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-6589842cf9f75b65",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The property that repeating an operation has the same intended effect as performing it once."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-3cf9b2257ac2f198",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Networks retry, users double-click, and clients time out after servers already committed work."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-32e5f4b79c3317d8",
+          "kind" : "consequence",
+          "role" : "supporting",
+          "text" : "Idempotency makes retries safe."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
+          "key" : "exponential backoff",
+          "name" : "Exponential backoff"
+        },
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "Attempting a failed operation again when the failure may be temporary.",
+          "key" : "retry",
+          "name" : "Retry"
+        },
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        }
+      ],
+      "question" : "Explain Idempotency in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Idempotency is when the client automatically sends the request again if it fails, and keeps trying until the server finally answers."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Idempotency",
+      "targetName" : "Idempotency",
+      "wordCount" : 21
+    },
+    {
+      "caseID" : "gd-015",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-caffc41a1629fcff",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Delaying an action until a burst of events has been quiet for a chosen interval."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-9a758b1ddfa496e5",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It avoids firing expensive work for every keystroke."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Limiting an action so it runs at most once per time window while events continue.",
+          "key" : "throttling",
+          "name" : "Throttling"
+        },
+        {
+          "definition" : "A React mechanism for making a value available to descendants without manually passing it through every intermediate component.",
+          "key" : "context",
+          "name" : "Context"
+        },
+        {
+          "definition" : "A function beginning with use that composes React hooks into reusable stateful logic.",
+          "key" : "custom hook",
+          "name" : "Custom hook"
+        },
+        {
+          "definition" : "Passing data through intermediate components solely so deeper descendants can receive it.",
+          "key" : "prop drilling",
+          "name" : "Prop drilling"
+        }
+      ],
+      "question" : "Explain Debouncing in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "It's like an elevator door: each time someone else steps in, the countdown restarts, and it only shuts once nobody has come in for a few seconds."
+        },
+        {
+          "n" : 2,
+          "text" : "Same with a search box - you fire the lookup after the person pauses typing, not on every letter"
+        },
+        {
+          "n" : 3,
+          "text" : "the heavy work doesn't run constantly."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Debouncing",
+      "targetName" : "Debouncing",
+      "wordCount" : 53
+    },
+    {
+      "caseID" : "gd-016",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-caffc41a1629fcff",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Delaying an action until a burst of events has been quiet for a chosen interval."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-9a758b1ddfa496e5",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It avoids firing expensive work for every keystroke."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Limiting an action so it runs at most once per time window while events continue.",
+          "key" : "throttling",
+          "name" : "Throttling"
+        },
+        {
+          "definition" : "A React mechanism for making a value available to descendants without manually passing it through every intermediate component.",
+          "key" : "context",
+          "name" : "Context"
+        },
+        {
+          "definition" : "A function beginning with use that composes React hooks into reusable stateful logic.",
+          "key" : "custom hook",
+          "name" : "Custom hook"
+        },
+        {
+          "definition" : "Passing data through intermediate components solely so deeper descendants can receive it.",
+          "key" : "prop drilling",
+          "name" : "Prop drilling"
+        }
+      ],
+      "question" : "Explain Debouncing in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "i think it's something about waiting a little before running a function? like so it doesn't do too much work maybe"
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Debouncing",
+      "targetName" : "Debouncing",
+      "wordCount" : 21
+    },
+    {
+      "caseID" : "gd-017",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-7485a5102853e2f4",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of verifying who a user or service is."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-508e25d02094b377",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "Before granting access, the system needs a trustworthy identity."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        },
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A system whose behavior depends on state remembered across interactions.",
+          "key" : "stateful system",
+          "name" : "Stateful system"
+        }
+      ],
+      "question" : "Explain Authentication in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Authentication is where the app checks what you're allowed to do, like whether you can edit a post or only look at it."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Authentication",
+      "targetName" : "Authentication",
+      "wordCount" : 23
+    },
+    {
+      "caseID" : "gd-019",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-7485a5102853e2f4",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of verifying who a user or service is."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-508e25d02094b377",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "Before granting access, the system needs a trustworthy identity."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        },
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A system whose behavior depends on state remembered across interactions.",
+          "key" : "stateful system",
+          "name" : "Stateful system"
+        }
+      ],
+      "question" : "Explain Authentication in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Obviously authentication is the permissions layer: once the system has your role, it works out exactly which actions and resources you're allowed."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Authentication",
+      "targetName" : "Authentication",
+      "wordCount" : 22
+    },
+    {
+      "caseID" : "gd-020",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-7485a5102853e2f4",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of verifying who a user or service is."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-508e25d02094b377",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "Before granting access, the system needs a trustworthy identity."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        },
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A system whose behavior depends on state remembered across interactions.",
+          "key" : "stateful system",
+          "name" : "Stateful system"
+        }
+      ],
+      "question" : "Explain Authentication in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Think of a bouncer checking your ID at the door: it's only about proving you really are who you claim to be - password, face scan, a code texted to your phone."
+        },
+        {
+          "n" : 2,
+          "text" : "The app has to be sure of that before it lets you near anything."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Authentication",
+      "targetName" : "Authentication",
+      "wordCount" : 46
+    },
+    {
+      "caseID" : "gd-021",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-7485a5102853e2f4",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of verifying who a user or service is."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-508e25d02094b377",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "Before granting access, the system needs a trustworthy identity."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        },
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A system whose behavior depends on state remembered across interactions.",
+          "key" : "stateful system",
+          "name" : "Stateful system"
+        }
+      ],
+      "question" : "Explain Authentication in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Proving you are who you say you are, e.g. logging in with a password."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Authentication",
+      "targetName" : "Authentication",
+      "wordCount" : 14
+    },
+    {
+      "caseID" : "gd-030",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-1106c4957af6b798",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A browser-enforced policy that controls whether frontend JavaScript can read responses from another origin."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-21c39a468eba7eca",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "It prevents arbitrary websites from freely reading sensitive cross-origin responses."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-914894bd0a3bdd3c",
+          "kind" : "definition",
+          "role" : "supporting",
+          "text" : "CORS is a browser security mechanism based on server response headers."
+        },
+        {
+          "alias" : "s2",
+          "id" : "claim-f5bcef315510807b",
+          "kind" : "property",
+          "role" : "supporting",
+          "text" : "It is not authentication and it does not stop non-browser clients."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of verifying who a user or service is.",
+          "key" : "authentication",
+          "name" : "Authentication"
+        },
+        {
+          "definition" : "The browser security identity formed by scheme, host, and port.",
+          "key" : "origin",
+          "name" : "Origin"
+        },
+        {
+          "definition" : "An intermediary that forwards traffic between a client and another service.",
+          "key" : "proxy",
+          "name" : "Proxy"
+        },
+        {
+          "definition" : "A proxy that sits in front of backend servers and receives client traffic on their behalf.",
+          "key" : "reverse proxy",
+          "name" : "Reverse proxy"
+        }
+      ],
+      "question" : "Explain CORS in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "CORS is a firewall on the server that blocks requests coming from other domains"
+        },
+        {
+          "n" : 2,
+          "text" : "it stops everything - browsers, curl, Postman, mobile apps - from calling your API unless you whitelist them."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|CORS",
+      "targetName" : "CORS",
+      "wordCount" : 33
+    },
+    {
+      "caseID" : "gd-031",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-1106c4957af6b798",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A browser-enforced policy that controls whether frontend JavaScript can read responses from another origin."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-21c39a468eba7eca",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "It prevents arbitrary websites from freely reading sensitive cross-origin responses."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-914894bd0a3bdd3c",
+          "kind" : "definition",
+          "role" : "supporting",
+          "text" : "CORS is a browser security mechanism based on server response headers."
+        },
+        {
+          "alias" : "s2",
+          "id" : "claim-f5bcef315510807b",
+          "kind" : "property",
+          "role" : "supporting",
+          "text" : "It is not authentication and it does not stop non-browser clients."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of verifying who a user or service is.",
+          "key" : "authentication",
+          "name" : "Authentication"
+        },
+        {
+          "definition" : "The browser security identity formed by scheme, host, and port.",
+          "key" : "origin",
+          "name" : "Origin"
+        },
+        {
+          "definition" : "An intermediary that forwards traffic between a client and another service.",
+          "key" : "proxy",
+          "name" : "Proxy"
+        },
+        {
+          "definition" : "A proxy that sits in front of backend servers and receives client traffic on their behalf.",
+          "key" : "reverse proxy",
+          "name" : "Reverse proxy"
+        }
+      ],
+      "question" : "Explain CORS in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "CORS is how the backend checks who is calling it - it verifies the user's identity before it agrees to send the data back."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|CORS",
+      "targetName" : "CORS",
+      "wordCount" : 24
+    },
+    {
+      "caseID" : "gd-034",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-ff95fc8d2fc5f02e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A compact signed token format containing claims, represented as header.payload.signature."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-b6c3668d41921be7",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-f8f60f6a0a9d8164",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "JWTs are signed claim containers, not automatically encrypted."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "A chunk of text represented as an integer ID for model processing.",
+          "key" : "token",
+          "name" : "Token"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        }
+      ],
+      "question" : "Explain JWT in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "it's a login token that's encrypted"
+        },
+        {
+          "n" : 2,
+          "text" : "keeps the info inside private from the browser and from anyone snooping on the traffic i believe"
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|JWT",
+      "targetName" : "JWT",
+      "wordCount" : 24
+    },
+    {
+      "caseID" : "gd-035",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-ff95fc8d2fc5f02e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A compact signed token format containing claims, represented as header.payload.signature."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-b6c3668d41921be7",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-f8f60f6a0a9d8164",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "JWTs are signed claim containers, not automatically encrypted."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "A chunk of text represented as an integer ID for model processing.",
+          "key" : "token",
+          "name" : "Token"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        }
+      ],
+      "question" : "Explain JWT in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "It's a small token in three dot-separated chunks - header, payload, signature."
+        },
+        {
+          "n" : 2,
+          "text" : "Because of the signature"
+        },
+        {
+          "n" : 3,
+          "text" : "whoever receives it can check the data really came from the issuer it trusts and wasn't changed, without hitting the database every time."
+        },
+        {
+          "n" : 4,
+          "text" : "Anyone can still decode and read the middle bit, though."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|JWT",
+      "targetName" : "JWT",
+      "wordCount" : 49
+    },
+    {
+      "caseID" : "gd-036",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-ff95fc8d2fc5f02e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A compact signed token format containing claims, represented as header.payload.signature."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-b6c3668d41921be7",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-f8f60f6a0a9d8164",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "JWTs are signed claim containers, not automatically encrypted."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "A chunk of text represented as an integer ID for model processing.",
+          "key" : "token",
+          "name" : "Token"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        }
+      ],
+      "question" : "Explain JWT in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "A JWT is a signed token carrying claims like the user id and expiry"
+        },
+        {
+          "n" : 2,
+          "text" : "the API doesn't need a DB lookup to trust it -"
+        },
+        {
+          "n" : 3,
+          "text" : "because it's encrypted"
+        },
+        {
+          "n" : 4,
+          "text" : "the client can't read or fake anything inside."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|JWT",
+      "targetName" : "JWT",
+      "wordCount" : 38
+    },
+    {
+      "caseID" : "gd-041",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-87d8ccc05b95b511",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A one-way transformation that maps input to a fixedlength digest;"
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-80ce9c4feaa6ac0b",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "password hashing uses deliberately slow, salted algorithms."
+        },
+        {
+          "alias" : "c3",
+          "id" : "claim-6c30078d1416b57e",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "Passwords should be verified without storing recoverable plaintext."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-b5a5968c73ad3121",
+          "kind" : "property",
+          "role" : "supporting",
+          "text" : "hashing is intended to be one-way."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A reversible transformation that protects data using cryptographic keys.",
+          "key" : "encryption",
+          "name" : "Encryption"
+        },
+        {
+          "definition" : "A vulnerability where attacker-controlled input changes the structure or meaning of a SQL query.",
+          "key" : "sql injection",
+          "name" : "SQL injection"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "Cross-Site Request Forgery: a malicious site causes a victim's browser to send an unwanted authenticated request.",
+          "key" : "csrf",
+          "name" : "CSRF"
+        }
+      ],
+      "question" : "Explain Hashing in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "it's the thing where the password gets turned into a random-looking string so it isn't stored as is. i think you can't really get it back? not totally sure"
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Hashing",
+      "targetName" : "Hashing",
+      "wordCount" : 29
+    },
+    {
+      "caseID" : "gd-042",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-5016477d10a96b31",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A reversible transformation that protects data using cryptographic keys."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-c2a7587d7647e62b",
+          "kind" : "property",
+          "role" : "supporting",
+          "text" : "Encryption is reversible with a key;"
+        },
+        {
+          "alias" : "s2",
+          "id" : "claim-b5a5968c73ad3121",
+          "kind" : "property",
+          "role" : "supporting",
+          "text" : "hashing is intended to be one-way."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A one-way transformation that maps input to a fixedlength digest;",
+          "key" : "hashing",
+          "name" : "Hashing"
+        },
+        {
+          "definition" : "Restricting how frequently a client, identity, or key may perform an operation.",
+          "key" : "rate limiting",
+          "name" : "Rate limiting"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "Cross-Site Request Forgery: a malicious site causes a victim's browser to send an unwanted authenticated request.",
+          "key" : "csrf",
+          "name" : "CSRF"
+        }
+      ],
+      "question" : "Explain Encryption in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "You lock the data up with a key so it's gibberish to everyone else"
+        },
+        {
+          "n" : 2,
+          "text" : "whoever holds the right key can unlock it back to exactly what it was - unlike a hash"
+        },
+        {
+          "n" : 3,
+          "text" : "you can't undo."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Encryption",
+      "targetName" : "Encryption",
+      "wordCount" : 37
+    },
+    {
+      "caseID" : "gd-047",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-58b0202c8e57fcc1",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A data structure maintained to make particular lookups or orderings faster."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-44228c8f2ef50e5",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Without useful indexes, large queries may scan huge numbers of rows."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-ef5ef4b37b447038",
+          "kind" : "tradeoff",
+          "role" : "supporting",
+          "text" : "Indexes trade additional storage and write cost for faster reads."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A system for persistently storing, querying, and updating application data.",
+          "key" : "database",
+          "name" : "Database"
+        },
+        {
+          "definition" : "A column or column set that uniquely identifies each row in a table.",
+          "key" : "primary key",
+          "name" : "Primary key"
+        },
+        {
+          "definition" : "A database model built around tables, rows, columns, relationships, and constraints.",
+          "key" : "relational database",
+          "name" : "Relational database"
+        },
+        {
+          "definition" : "An operation that combines rows from related tables based on a condition.",
+          "key" : "sql join",
+          "name" : "SQL JOIN"
+        }
+      ],
+      "question" : "Explain Database index in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Indexes = quicker searches."
+        },
+        {
+          "n" : 2,
+          "text" : "How it works: the DB remembers the results of previous queries"
+        },
+        {
+          "n" : 3,
+          "text" : "the second time you ask it just returns the saved result."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Database index",
+      "targetName" : "Database index",
+      "wordCount" : 27
+    },
+    {
+      "caseID" : "gd-050",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-63b3e0f7dcdc4888",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A function plus access to the lexical variables from the scope where it was created."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-ea1f1e097d9c8eab",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "Closures power encapsulation, callbacks, hooks, and private state patterns."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-329d5dceec7cb700",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Objects are accessed through references, so multiple variables can refer to the same underlying object.",
+          "key" : "reference semantic",
+          "name" : "Reference semantics"
+        },
+        {
+          "definition" : "Hide internal state\/implementation and expose only the operations consumers need.",
+          "key" : "encapsulation",
+          "name" : "Encapsulation"
+        },
+        {
+          "definition" : "JavaScript's declaration processing behavior that makes some bindings\/functions known before the line where they are declared.",
+          "key" : "hoisting",
+          "name" : "Hoisting"
+        },
+        {
+          "definition" : "The rules that determine where a variable name is visible and accessible.",
+          "key" : "scope",
+          "name" : "Scope"
+        }
+      ],
+      "question" : "Explain Closure in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "A closure is when you have a function inside another function."
+        },
+        {
+          "n" : 2,
+          "text" : "It has something to do with scope."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Closure",
+      "targetName" : "Closure",
+      "wordCount" : 18
+    },
+    {
+      "caseID" : "gd-058",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-9c4ec437af71f4b3",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A server that can handle each request without relying on request-specific state stored only in its own local memory."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-15ec2ba7e4119df4",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Any replica can serve the next request, which simplifies horizontal scaling and failover."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-faa4a24dc4125a94",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "Stateless application servers keep request state outside a specific instance, making load balancing and horizontal scaling easier."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Data owned by a component or store that can change over time and trigger UI updates.",
+          "key" : "state",
+          "name" : "State"
+        },
+        {
+          "definition" : "A faster storage layer that keeps reusable results so expensive work can be avoided.",
+          "key" : "cache",
+          "name" : "Cache"
+        },
+        {
+          "definition" : "A cache lookup that finds a usable stored value.",
+          "key" : "cache hit",
+          "name" : "Cache hit"
+        },
+        {
+          "definition" : "A lookup where the requested value is absent or expired.",
+          "key" : "cache miss",
+          "name" : "Cache miss"
+        }
+      ],
+      "question" : "Explain Stateless server in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Any instance can answer the next request, and that's"
+        },
+        {
+          "n" : 2,
+          "text" : "because stateless servers are lighter and faster"
+        },
+        {
+          "n" : 3,
+          "text" : "since they basically don't use memory."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Stateless server",
+      "targetName" : "Stateless server",
+      "wordCount" : 22
+    },
+    {
+      "caseID" : "gd-060",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-d8f3082a6a6ffb32",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Increasing capacity by adding more instances or machines."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-af454f7a895d72ca",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "It can raise throughput and improve redundancy beyond one box."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-67f437c973de24a7",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "Horizontal scaling adds nodes."
+        },
+        {
+          "alias" : "s2",
+          "id" : "claim-2bed1a1659df6649",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "It improves capacity and resilience but requires shared state, coordination, and distributed-system thinking."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Increasing the CPU, RAM, or resources of one machine.",
+          "key" : "vertical scaling",
+          "name" : "Vertical scaling"
+        },
+        {
+          "definition" : "A component that distributes incoming traffic across multiple healthy backend instances.",
+          "key" : "load balancer",
+          "name" : "Load balancer"
+        },
+        {
+          "definition" : "A server that can handle each request without relying on request-specific state stored only in its own local memory.",
+          "key" : "stateless server",
+          "name" : "Stateless server"
+        },
+        {
+          "definition" : "The amount of work a system completes per unit time.",
+          "key" : "throughput",
+          "name" : "Throughput"
+        }
+      ],
+      "question" : "Explain Horizontal scaling in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Instead of making one server beefier, you just add more servers running the same app."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Horizontal scaling",
+      "targetName" : "Horizontal scaling",
+      "wordCount" : 15
+    },
+    {
+      "caseID" : "gd-062",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-d8f3082a6a6ffb32",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Increasing capacity by adding more instances or machines."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-af454f7a895d72ca",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "It can raise throughput and improve redundancy beyond one box."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-67f437c973de24a7",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "Horizontal scaling adds nodes."
+        },
+        {
+          "alias" : "s2",
+          "id" : "claim-2bed1a1659df6649",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "It improves capacity and resilience but requires shared state, coordination, and distributed-system thinking."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Increasing the CPU, RAM, or resources of one machine.",
+          "key" : "vertical scaling",
+          "name" : "Vertical scaling"
+        },
+        {
+          "definition" : "A component that distributes incoming traffic across multiple healthy backend instances.",
+          "key" : "load balancer",
+          "name" : "Load balancer"
+        },
+        {
+          "definition" : "A server that can handle each request without relying on request-specific state stored only in its own local memory.",
+          "key" : "stateless server",
+          "name" : "Stateless server"
+        },
+        {
+          "definition" : "The amount of work a system completes per unit time.",
+          "key" : "throughput",
+          "name" : "Throughput"
+        }
+      ],
+      "question" : "Explain Horizontal scaling in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "You grow by adding more machines to the pool - so you might go from a handful of instances to dozens of them."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Horizontal scaling",
+      "targetName" : "Horizontal scaling",
+      "wordCount" : 23
+    },
+    {
+      "caseID" : "gd-063",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-d8f3082a6a6ffb32",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Increasing capacity by adding more instances or machines."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-af454f7a895d72ca",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "It can raise throughput and improve redundancy beyond one box."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-67f437c973de24a7",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "Horizontal scaling adds nodes."
+        },
+        {
+          "alias" : "s2",
+          "id" : "claim-2bed1a1659df6649",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "It improves capacity and resilience but requires shared state, coordination, and distributed-system thinking."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Increasing the CPU, RAM, or resources of one machine.",
+          "key" : "vertical scaling",
+          "name" : "Vertical scaling"
+        },
+        {
+          "definition" : "A component that distributes incoming traffic across multiple healthy backend instances.",
+          "key" : "load balancer",
+          "name" : "Load balancer"
+        },
+        {
+          "definition" : "A server that can handle each request without relying on request-specific state stored only in its own local memory.",
+          "key" : "stateless server",
+          "name" : "Stateless server"
+        },
+        {
+          "definition" : "The amount of work a system completes per unit time.",
+          "key" : "throughput",
+          "name" : "Throughput"
+        }
+      ],
+      "question" : "Explain Horizontal scaling in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Horizontal scaling means upgrading your server - more RAM, a faster CPU - so the same machine can handle more users."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Horizontal scaling",
+      "targetName" : "Horizontal scaling",
+      "wordCount" : 21
+    },
+    {
+      "caseID" : "gd-065",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-21e932cb7af1b724",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Increasing the CPU, RAM, or resources of one machine."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-cb2cacb590c85f62",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "It is often the simplest first scaling move but has hardware and availability limits."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-f6483a6fcd48ec44",
+          "kind" : "consequence",
+          "role" : "supporting",
+          "text" : "Vertical scaling makes a single node stronger."
+        },
+        {
+          "alias" : "s2",
+          "id" : "claim-22120386de1ed292",
+          "kind" : "property",
+          "role" : "supporting",
+          "text" : "It is simple but eventually hits limits and can preserve a single point of failure."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Increasing capacity by adding more instances or machines.",
+          "key" : "horizontal scaling",
+          "name" : "Horizontal scaling"
+        },
+        {
+          "definition" : "A faster storage layer that keeps reusable results so expensive work can be avoided.",
+          "key" : "cache",
+          "name" : "Cache"
+        },
+        {
+          "definition" : "A cache lookup that finds a usable stored value.",
+          "key" : "cache hit",
+          "name" : "Cache hit"
+        },
+        {
+          "definition" : "Removing or updating cached data when the underlying truth changes.",
+          "key" : "cache invalidation",
+          "name" : "Cache invalidation"
+        }
+      ],
+      "question" : "Explain Vertical scaling in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Vertical scaling is just upgrading your server's hardware, and it's the best approach"
+        },
+        {
+          "n" : 2,
+          "text" : "because there's no ceiling - you can keep adding RAM forever - and having one really powerful machine gets rid of the single point of failure."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Vertical scaling",
+      "targetName" : "Vertical scaling",
+      "wordCount" : 39
+    },
+    {
+      "caseID" : "gd-069",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-f7d36955ca232d94",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-3ebf432abc0f24be",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "Short lifetimes reduce damage if the token is stolen."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-28770ac3cccc5eb9",
+          "kind" : "definition",
+          "role" : "supporting",
+          "text" : "An access token is a short-lived credential used to call protected APIs;"
+        },
+        {
+          "alias" : "s2",
+          "id" : "claim-c818adb748cbfa9e",
+          "kind" : "constraint",
+          "role" : "supporting",
+          "text" : "scopes\/claims limit what it can do."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The rules that determine where a variable name is visible and accessible.",
+          "key" : "scope",
+          "name" : "Scope"
+        },
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "A compact signed token format containing claims, represented as header.payload.signature.",
+          "key" : "jwt",
+          "name" : "JWT"
+        },
+        {
+          "definition" : "A reversible transformation that protects data using cryptographic keys.",
+          "key" : "encryption",
+          "name" : "Encryption"
+        }
+      ],
+      "question" : "Explain Access token in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "An access token is the long-lasting one you keep for weeks and use to get new tokens without logging in again."
+        },
+        {
+          "n" : 2,
+          "text" : "Making it last longer is actually safer"
+        },
+        {
+          "n" : 3,
+          "text" : "since you're not sending your password around."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Access token",
+      "targetName" : "Access token",
+      "wordCount" : 35
+    },
+    {
+      "caseID" : "gd-071",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-af1e6d60ebd8762e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-570436823b15dd8a",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "It balances user convenience with short-lived access credentials."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "A compact signed token format containing claims, represented as header.payload.signature.",
+          "key" : "jwt",
+          "name" : "JWT"
+        },
+        {
+          "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
+          "key" : "cookie",
+          "name" : "Cookie"
+        },
+        {
+          "definition" : "Cross-Site Request Forgery: a malicious site causes a victim's browser to send an unwanted authenticated request.",
+          "key" : "csrf",
+          "name" : "CSRF"
+        }
+      ],
+      "question" : "Explain Refresh token in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "A refresh token lets the app grab a fresh access token without making you log in again - it works"
+        },
+        {
+          "n" : 2,
+          "text" : "because your password is saved inside it"
+        },
+        {
+          "n" : 3,
+          "text" : "the server just logs you in again automatically."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Refresh token",
+      "targetName" : "Refresh token",
+      "wordCount" : 36
+    },
+    {
+      "caseID" : "gd-072",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-af1e6d60ebd8762e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-570436823b15dd8a",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "It balances user convenience with short-lived access credentials."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "A compact signed token format containing claims, represented as header.payload.signature.",
+          "key" : "jwt",
+          "name" : "JWT"
+        },
+        {
+          "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
+          "key" : "cookie",
+          "name" : "Cookie"
+        },
+        {
+          "definition" : "Cross-Site Request Forgery: a malicious site causes a victim's browser to send an unwanted authenticated request.",
+          "key" : "csrf",
+          "name" : "CSRF"
+        }
+      ],
+      "question" : "Explain Refresh token in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "When the access token dies, the refresh token gets you a new one with no login screen."
+        },
+        {
+          "n" : 2,
+          "text" : "That's possible"
+        },
+        {
+          "n" : 3,
+          "text" : "because the refresh token is basically your password in encrypted form"
+        },
+        {
+          "n" : 4,
+          "text" : "the auth server re-checks each time."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Refresh token",
+      "targetName" : "Refresh token",
+      "wordCount" : 37
+    },
+    {
+      "caseID" : "gd-073",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-af1e6d60ebd8762e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-570436823b15dd8a",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "It balances user convenience with short-lived access credentials."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "A compact signed token format containing claims, represented as header.payload.signature.",
+          "key" : "jwt",
+          "name" : "JWT"
+        },
+        {
+          "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
+          "key" : "cookie",
+          "name" : "Cookie"
+        },
+        {
+          "definition" : "Cross-Site Request Forgery: a malicious site causes a victim's browser to send an unwanted authenticated request.",
+          "key" : "csrf",
+          "name" : "CSRF"
+        }
+      ],
+      "question" : "Explain Refresh token in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "It's what quietly gets you a new access token so you're not kicked back to sign-in"
+        },
+        {
+          "n" : 2,
+          "text" : "my understanding is it holds your username and password and just replays them."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Refresh token",
+      "targetName" : "Refresh token",
+      "wordCount" : 29
+    },
+    {
+      "caseID" : "gd-076",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-9524f2c252618c57",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Restricting how frequently a client, identity, or key may perform an operation."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-31a1b3e915ac00b7",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It protects availability, cost, and abuse-sensitive endpoints."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-ab2a3a2e71afa06",
+          "kind" : "constraint",
+          "role" : "supporting",
+          "text" : "Rate limiting limits request volume by identity, key, IP, or resource."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A message a client sends asking a server to perform an operation or return data.",
+          "key" : "request",
+          "name" : "Request"
+        },
+        {
+          "definition" : "A reversible transformation that protects data using cryptographic keys.",
+          "key" : "encryption",
+          "name" : "Encryption"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "Cross-Site Request Forgery: a malicious site causes a victim's browser to send an unwanted authenticated request.",
+          "key" : "csrf",
+          "name" : "CSRF"
+        }
+      ],
+      "question" : "Explain Rate limiting in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "each client only gets so many requests per time period"
+        },
+        {
+          "n" : 2,
+          "text" : "go over and you're blocked for a bit"
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Rate limiting",
+      "targetName" : "Rate limiting",
+      "wordCount" : 18
+    },
+    {
+      "caseID" : "gd-084",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-996dae7aeb8dd79c",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Stop calling a failing dependency temporarily after a failure threshold, then probe recovery."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-89a4fbe528883dfd",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "It prevents repeated slow failures from consuming all resources."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-5ce55c11527978f5",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "Circuit breakers fail fast when a dependency is unhealthy and give it time to recover."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Isolate resource pools so one failing workload cannot consume everything.",
+          "key" : "bulkhead",
+          "name" : "Bulkhead"
+        },
+        {
+          "definition" : "A mechanism that slows producers when consumers cannot keep up.",
+          "key" : "backpressure",
+          "name" : "Backpressure"
+        },
+        {
+          "definition" : "Estimate how much traffic, storage, concurrency, and failure headroom the system can support.",
+          "key" : "capacity planning",
+          "name" : "Capacity planning"
+        },
+        {
+          "definition" : "A response identifier representing a specific version of a resource.",
+          "key" : "etag",
+          "name" : "ETag"
+        }
+      ],
+      "question" : "Explain Circuit breaker in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "It stops calling a dependency that keeps failing and tries it again later."
+        },
+        {
+          "n" : 2,
+          "text" : "The point is that otherwise the failed responses would get cached and served to users."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Circuit breaker",
+      "targetName" : "Circuit breaker",
+      "wordCount" : 28
+    },
+    {
+      "caseID" : "gd-085",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-9f3fca9d4581b27c",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A retry strategy where delays grow after consecutive failures, often with random jitter."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-e9179df42224e028",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It gives a recovering service breathing room and avoids synchronized retry storms."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-62cf9a2cac87d8ba",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "Exponential backoff reduces pressure during outages;"
+        },
+        {
+          "alias" : "s2",
+          "id" : "claim-726cb46d1c6545a0",
+          "kind" : "constraint",
+          "role" : "supporting",
+          "text" : "jitter prevents many clients from retrying in lockstep."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "Attempting a failed operation again when the failure may be temporary.",
+          "key" : "retry",
+          "name" : "Retry"
+        },
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        },
+        {
+          "definition" : "The property that repeating an operation has the same intended effect as performing it once.",
+          "key" : "idempotency",
+          "name" : "Idempotency"
+        }
+      ],
+      "question" : "Explain Exponential backoff in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "You retry after the same fixed wait every time, like 2 seconds, 2 seconds, 2 seconds."
+        },
+        {
+          "n" : 2,
+          "text" : "And the jitter is what makes all the clients retry at exactly the same moment"
+        },
+        {
+          "n" : 3,
+          "text" : "the server can deal with them in one go."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Exponential backoff",
+      "targetName" : "Exponential backoff",
+      "wordCount" : 41
+    },
+    {
+      "caseID" : "gd-088",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-9f3fca9d4581b27c",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A retry strategy where delays grow after consecutive failures, often with random jitter."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-e9179df42224e028",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It gives a recovering service breathing room and avoids synchronized retry storms."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-62cf9a2cac87d8ba",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "Exponential backoff reduces pressure during outages;"
+        },
+        {
+          "alias" : "s2",
+          "id" : "claim-726cb46d1c6545a0",
+          "kind" : "constraint",
+          "role" : "supporting",
+          "text" : "jitter prevents many clients from retrying in lockstep."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "Attempting a failed operation again when the failure may be temporary.",
+          "key" : "retry",
+          "name" : "Retry"
+        },
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        },
+        {
+          "definition" : "The property that repeating an operation has the same intended effect as performing it once.",
+          "key" : "idempotency",
+          "name" : "Idempotency"
+        }
+      ],
+      "question" : "Explain Exponential backoff in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Exponential growth is when something keeps doubling, like compound interest or bacteria splitting in a petri dish."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Exponential backoff",
+      "targetName" : "Exponential backoff",
+      "wordCount" : 17
+    },
+    {
+      "caseID" : "gd-089",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-385fd717aab9cf4e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A React hook that caches a calculation result between renders until dependencies change."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-a8aa9a8b047d32e6",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It can avoid expensive recalculation or stabilize identity when that matters."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-6f1a35b9afd390eb",
+          "kind" : "definition",
+          "role" : "supporting",
+          "text" : "useMemo is a performance optimization, not a semantic guarantee."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A React hook that caches a function reference until dependencies change.",
+          "key" : "usecallback",
+          "name" : "useCallback"
+        },
+        {
+          "definition" : "A React hook returning a stable mutable object whose .current changes do not trigger rendering.",
+          "key" : "useref",
+          "name" : "useRef"
+        },
+        {
+          "definition" : "A faster storage layer that keeps reusable results so expensive work can be avoided.",
+          "key" : "cache",
+          "name" : "Cache"
+        },
+        {
+          "definition" : "A React mechanism for making a value available to descendants without manually passing it through every intermediate component.",
+          "key" : "context",
+          "name" : "Context"
+        }
+      ],
+      "question" : "Explain useMemo in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "useMemo is for performance, it memoizes things so the app is faster."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|useMemo",
+      "targetName" : "useMemo",
+      "wordCount" : 12
+    },
+    {
+      "caseID" : "gd-091",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-385fd717aab9cf4e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A React hook that caches a calculation result between renders until dependencies change."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-a8aa9a8b047d32e6",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It can avoid expensive recalculation or stabilize identity when that matters."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-6f1a35b9afd390eb",
+          "kind" : "definition",
+          "role" : "supporting",
+          "text" : "useMemo is a performance optimization, not a semantic guarantee."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A React hook that caches a function reference until dependencies change.",
+          "key" : "usecallback",
+          "name" : "useCallback"
+        },
+        {
+          "definition" : "A React hook returning a stable mutable object whose .current changes do not trigger rendering.",
+          "key" : "useref",
+          "name" : "useRef"
+        },
+        {
+          "definition" : "A faster storage layer that keeps reusable results so expensive work can be avoided.",
+          "key" : "cache",
+          "name" : "Cache"
+        },
+        {
+          "definition" : "A React mechanism for making a value available to descendants without manually passing it through every intermediate component.",
+          "key" : "context",
+          "name" : "Context"
+        }
+      ],
+      "question" : "Explain useMemo in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "i think it's used to speed up components, like memoization? so things don't slow down"
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|useMemo",
+      "targetName" : "useMemo",
+      "wordCount" : 15
+    },
+    {
+      "caseID" : "gd-101",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-cfe36c0ba51fbf76",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A form element whose current value is driven by React state\/props."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-56256b1f3d8d2b44",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It gives React explicit control for validation, formatting, and coordinated UI."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-2c471882fc980a8b",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "A controlled input gets its value from React state and reports changes back through events, keeping UI state explicit."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A form element that keeps its current value primarily in the DOM, often accessed with a ref.",
+          "key" : "uncontrolled component",
+          "name" : "Uncontrolled component"
+        },
+        {
+          "definition" : "A value computed from existing props\/state instead of stored independently.",
+          "key" : "derived state",
+          "name" : "Derived state"
+        },
+        {
+          "definition" : "A React hook returning a stable mutable object whose .current changes do not trigger rendering.",
+          "key" : "useref",
+          "name" : "useRef"
+        },
+        {
+          "definition" : "Data owned by a component or store that can change over time and trigger UI updates.",
+          "key" : "state",
+          "name" : "State"
+        }
+      ],
+      "question" : "Explain Controlled component in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Controlled components are considered better practice than class components and they make your code cleaner and easier to test."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Controlled component",
+      "targetName" : "Controlled component",
+      "wordCount" : 19
+    },
+    {
+      "caseID" : "gd-102",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-47caca453007322f",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A form element that keeps its current value primarily in the DOM, often accessed with a ref."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-75596adcd3608e7",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It can reduce plumbing for simple forms or integrate with non-React behavior."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-29784b5bd731c234",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "An uncontrolled input lets the DOM own the current value."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A form element whose current value is driven by React state\/props.",
+          "key" : "controlled component",
+          "name" : "Controlled component"
+        },
+        {
+          "definition" : "The browser's tree of objects representing the current document and its elements.",
+          "key" : "dom",
+          "name" : "DOM"
+        },
+        {
+          "definition" : "A React hook returning a stable mutable object whose .current changes do not trigger rendering.",
+          "key" : "useref",
+          "name" : "useRef"
+        },
+        {
+          "definition" : "The list of reactive values an effect\/memo\/callback depends on.",
+          "key" : "dependency array",
+          "name" : "Dependency array"
+        }
+      ],
+      "question" : "Explain Uncontrolled component in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "The browser's own input holds whatever the user typed, and you only peek at it through a ref when you need it, like on submit."
+        },
+        {
+          "n" : 2,
+          "text" : "Less wiring for a quick little form, and handy when some non-React script is also poking at the field."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Uncontrolled component",
+      "targetName" : "Uncontrolled component",
+      "wordCount" : 44
+    },
+    {
+      "caseID" : "gd-105",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-12dc42a98271b1e4",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A durable or buffered channel where producers enqueue messages\/jobs and consumers process them later."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-3eca114e9db05d28",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "It decouples request latency from background work and smooths bursts."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The time required for an operation or request to complete.",
+          "key" : "latency",
+          "name" : "Latency"
+        },
+        {
+          "definition" : "A message a client sends asking a server to perform an operation or return data.",
+          "key" : "request",
+          "name" : "Request"
+        },
+        {
+          "definition" : "Workers handle asynchronous jobs from queues\/ schedulers.",
+          "key" : "worker",
+          "name" : "Worker"
+        },
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        }
+      ],
+      "question" : "Explain Message queue in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "One part of the system drops jobs into a line and some other worker picks them up and does them whenever it gets to them."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Message queue",
+      "targetName" : "Message queue",
+      "wordCount" : 25
+    },
+    {
+      "caseID" : "gd-107",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-12dc42a98271b1e4",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A durable or buffered channel where producers enqueue messages\/jobs and consumers process them later."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-3eca114e9db05d28",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "It decouples request latency from background work and smooths bursts."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The time required for an operation or request to complete.",
+          "key" : "latency",
+          "name" : "Latency"
+        },
+        {
+          "definition" : "A message a client sends asking a server to perform an operation or return data.",
+          "key" : "request",
+          "name" : "Request"
+        },
+        {
+          "definition" : "Workers handle asynchronous jobs from queues\/ schedulers.",
+          "key" : "worker",
+          "name" : "Worker"
+        },
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        }
+      ],
+      "question" : "Explain Message queue in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "The API just drops the task onto the queue and a worker handles it later"
+        },
+        {
+          "n" : 2,
+          "text" : "the user gets a quick response instead of waiting for the email to go out."
+        },
+        {
+          "n" : 3,
+          "text" : "The reason that's faster, as far as I know, is that queues talk over a special binary protocol that's way lighter than HTTP"
+        },
+        {
+          "n" : 4,
+          "text" : "the work itself takes less time to do - which is why every big company uses them."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Message queue",
+      "targetName" : "Message queue",
+      "wordCount" : 72
+    },
+    {
+      "caseID" : "gd-111",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-970758ef43d4440b",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "A useful model keeps the details that affect a decision and leaves out those that do not."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-355a7fb7b4494fb6",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "For example, describing a stack as last-in, first-out helps predict which item is removed next."
+        },
+        {
+          "alias" : "c3",
+          "id" : "claim-6b81605d7b17738a",
+          "kind" : "property",
+          "role" : "core",
+          "text" : "The description is useful before deciding how to store the stack."
+        }
+      ],
+      "neighbours" : [
+
+      ],
+      "question" : "Explain what this page says in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "The page is about how a model is a simpler version of something"
+        },
+        {
+          "n" : 2,
+          "text" : "I guess matters a lot in computer science generally."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Computer Science Essentials|p0",
+      "targetName" : "this page",
+      "wordCount" : 23
+    },
+    {
+      "caseID" : "gd-119",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-d885ca6fb21f330d",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A component describes the interface for a particular set of props, state and context."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-83cc027fe6836eee",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Rendering calculates that description;"
+        },
+        {
+          "alias" : "c3",
+          "id" : "claim-a90b2f7c4ea655bb",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "committing applies the necessary changes to the screen."
+        }
+      ],
+      "neighbours" : [
+
+      ],
+      "question" : "Explain what this page says in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "React uses a virtual DOM and was made by Facebook"
+        },
+        {
+          "n" : 2,
+          "text" : "it's the most popular front-end library out there."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "React Notes|p0",
+      "targetName" : "this page",
+      "wordCount" : 18
+    },
+    {
+      "caseID" : "gd-120",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-d885ca6fb21f330d",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A component describes the interface for a particular set of props, state and context."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-83cc027fe6836eee",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Rendering calculates that description;"
+        },
+        {
+          "alias" : "c3",
+          "id" : "claim-a90b2f7c4ea655bb",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "committing applies the necessary changes to the screen."
+        }
+      ],
+      "neighbours" : [
+
+      ],
+      "question" : "Explain what this page says in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "components and rendering stuff"
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "React Notes|p0",
+      "targetName" : "this page",
+      "wordCount" : 4
+    },
+    {
+      "caseID" : "P2-01",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-63b3e0f7dcdc4888",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A function plus access to the lexical variables from the scope where it was created."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-ea1f1e097d9c8eab",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "Closures power encapsulation, callbacks, hooks, and private state patterns."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-329d5dceec7cb700",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Objects are accessed through references, so multiple variables can refer to the same underlying object.",
+          "key" : "reference semantic",
+          "name" : "Reference semantics"
+        },
+        {
+          "definition" : "Hide internal state\/implementation and expose only the operations consumers need.",
+          "key" : "encapsulation",
+          "name" : "Encapsulation"
+        },
+        {
+          "definition" : "JavaScript's declaration processing behavior that makes some bindings\/functions known before the line where they are declared.",
+          "key" : "hoisting",
+          "name" : "Hoisting"
+        },
+        {
+          "definition" : "The rules that determine where a variable name is visible and accessible.",
+          "key" : "scope",
+          "name" : "Scope"
+        }
+      ],
+      "question" : "Explain Closure in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "A closure remembers its surrounding bindings."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Closure",
+      "targetName" : "Closure",
+      "wordCount" : 6
+    },
+    {
+      "caseID" : "P2-02",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-af1e6d60ebd8762e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-570436823b15dd8a",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "It balances user convenience with short-lived access credentials."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "A compact signed token format containing claims, represented as header.payload.signature.",
+          "key" : "jwt",
+          "name" : "JWT"
+        },
+        {
+          "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
+          "key" : "cookie",
+          "name" : "Cookie"
+        },
+        {
+          "definition" : "Cross-Site Request Forgery: a malicious site causes a victim's browser to send an unwanted authenticated request.",
+          "key" : "csrf",
+          "name" : "CSRF"
+        }
+      ],
+      "question" : "Explain Refresh token in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "A refresh token is a longer-lasting credential that gets you new access tokens without logging in again."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Refresh token",
+      "targetName" : "Refresh token",
+      "wordCount" : 17
+    },
+    {
+      "caseID" : "P2-03",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-6589842cf9f75b65",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The property that repeating an operation has the same intended effect as performing it once."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-3cf9b2257ac2f198",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Networks retry, users double-click, and clients time out after servers already committed work."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-32e5f4b79c3317d8",
+          "kind" : "consequence",
+          "role" : "supporting",
+          "text" : "Idempotency makes retries safe."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
+          "key" : "exponential backoff",
+          "name" : "Exponential backoff"
+        },
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "Attempting a failed operation again when the failure may be temporary.",
+          "key" : "retry",
+          "name" : "Retry"
+        },
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        }
+      ],
+      "question" : "Explain Idempotency in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Idempotency makes retries dangerous."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Idempotency",
+      "targetName" : "Idempotency",
+      "wordCount" : 4
+    },
+    {
+      "caseID" : "P2-04",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-ff95fc8d2fc5f02e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A compact signed token format containing claims, represented as header.payload.signature."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-b6c3668d41921be7",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-f8f60f6a0a9d8164",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "JWTs are signed claim containers, not automatically encrypted."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "A chunk of text represented as an integer ID for model processing.",
+          "key" : "token",
+          "name" : "Token"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        }
+      ],
+      "question" : "Explain JWT in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Nobody holding a JWT can read the claims in its payload."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|JWT",
+      "targetName" : "JWT",
+      "wordCount" : 11
+    },
+    {
+      "caseID" : "P2-05",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-cc1271248ced688",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Limiting an action so it runs at most once per time window while events continue."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-9f979f8aff4557c6",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It protects expensive handlers during scroll, resize, or pointer movement."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Delaying an action until a burst of events has been quiet for a chosen interval.",
+          "key" : "debouncing",
+          "name" : "Debouncing"
+        },
+        {
+          "definition" : "A React mechanism for making a value available to descendants without manually passing it through every intermediate component.",
+          "key" : "context",
+          "name" : "Context"
+        },
+        {
+          "definition" : "A function beginning with use that composes React hooks into reusable stateful logic.",
+          "key" : "custom hook",
+          "name" : "Custom hook"
+        },
+        {
+          "definition" : "Passing data through intermediate components solely so deeper descendants can receive it.",
+          "key" : "prop drilling",
+          "name" : "Prop drilling"
+        }
+      ],
+      "question" : "Explain Throttling in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Throttling waits until the events stop coming and only then runs the handler once."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Throttling",
+      "targetName" : "Throttling",
+      "wordCount" : 14
+    },
+    {
+      "caseID" : "P2-06",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-6589842cf9f75b65",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The property that repeating an operation has the same intended effect as performing it once."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-3cf9b2257ac2f198",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Networks retry, users double-click, and clients time out after servers already committed work."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-32e5f4b79c3317d8",
+          "kind" : "consequence",
+          "role" : "supporting",
+          "text" : "Idempotency makes retries safe."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
+          "key" : "exponential backoff",
+          "name" : "Exponential backoff"
+        },
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "Attempting a failed operation again when the failure may be temporary.",
+          "key" : "retry",
+          "name" : "Retry"
+        },
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        }
+      ],
+      "question" : "Explain Idempotency in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Repeating an idempotent operation does not have the same effect as doing it once."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Idempotency",
+      "targetName" : "Idempotency",
+      "wordCount" : 14
+    },
+    {
+      "caseID" : "P2-07",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-c094adde9deaadb6",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Attempting a failed operation again when the failure may be temporary."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-d0c558277aa2f6bc",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Transient network\/service errors often succeed later."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
+          "key" : "exponential backoff",
+          "name" : "Exponential backoff"
+        },
+        {
+          "definition" : "The property that repeating an operation has the same intended effect as performing it once.",
+          "key" : "idempotency",
+          "name" : "Idempotency"
+        },
+        {
+          "definition" : "A durable or buffered channel where producers enqueue messages\/jobs and consumers process them later.",
+          "key" : "message queue",
+          "name" : "Message queue"
+        }
+      ],
+      "question" : "Explain Retry in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Retrying a failed call always makes it succeed eventually, whatever the error."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Retry",
+      "targetName" : "Retry",
+      "wordCount" : 12
+    },
+    {
+      "caseID" : "P2-08",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-c094adde9deaadb6",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Attempting a failed operation again when the failure may be temporary."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-d0c558277aa2f6bc",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Transient network\/service errors often succeed later."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
+          "key" : "exponential backoff",
+          "name" : "Exponential backoff"
+        },
+        {
+          "definition" : "The property that repeating an operation has the same intended effect as performing it once.",
+          "key" : "idempotency",
+          "name" : "Idempotency"
+        },
+        {
+          "definition" : "A durable or buffered channel where producers enqueue messages\/jobs and consumers process them later.",
+          "key" : "message queue",
+          "name" : "Message queue"
+        }
+      ],
+      "question" : "Explain Retry in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "You try a failed call again when the failure might only be temporary."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Retry",
+      "targetName" : "Retry",
+      "wordCount" : 13
+    },
+    {
+      "caseID" : "P2-09",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-58b0202c8e57fcc1",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A data structure maintained to make particular lookups or orderings faster."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-44228c8f2ef50e5",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Without useful indexes, large queries may scan huge numbers of rows."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-ef5ef4b37b447038",
+          "kind" : "tradeoff",
+          "role" : "supporting",
+          "text" : "Indexes trade additional storage and write cost for faster reads."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A system for persistently storing, querying, and updating application data.",
+          "key" : "database",
+          "name" : "Database"
+        },
+        {
+          "definition" : "A column or column set that uniquely identifies each row in a table.",
+          "key" : "primary key",
+          "name" : "Primary key"
+        },
+        {
+          "definition" : "A database model built around tables, rows, columns, relationships, and constraints.",
+          "key" : "relational database",
+          "name" : "Relational database"
+        },
+        {
+          "definition" : "An operation that combines rows from related tables based on a condition.",
+          "key" : "sql join",
+          "name" : "SQL JOIN"
+        }
+      ],
+      "question" : "Explain Database index in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Big tables are usually the slow ones"
+        },
+        {
+          "n" : 2,
+          "text" : "a table's size is what an index shrinks to make lookups fast."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Database index",
+      "targetName" : "Database index",
+      "wordCount" : 20
+    },
+    {
+      "caseID" : "P2-10",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-c094adde9deaadb6",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Attempting a failed operation again when the failure may be temporary."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-d0c558277aa2f6bc",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Transient network\/service errors often succeed later."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
+          "key" : "exponential backoff",
+          "name" : "Exponential backoff"
+        },
+        {
+          "definition" : "The property that repeating an operation has the same intended effect as performing it once.",
+          "key" : "idempotency",
+          "name" : "Idempotency"
+        },
+        {
+          "definition" : "A durable or buffered channel where producers enqueue messages\/jobs and consumers process them later.",
+          "key" : "message queue",
+          "name" : "Message queue"
+        }
+      ],
+      "question" : "Explain Retry in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Calls that fail at night tend to succeed in the morning"
+        },
+        {
+          "n" : 2,
+          "text" : "the time of day is what makes a retry work."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Retry",
+      "targetName" : "Retry",
+      "wordCount" : 22
+    },
+    {
+      "caseID" : "P2-11",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-af1e6d60ebd8762e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-570436823b15dd8a",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "It balances user convenience with short-lived access credentials."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "A compact signed token format containing claims, represented as header.payload.signature.",
+          "key" : "jwt",
+          "name" : "JWT"
+        },
+        {
+          "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
+          "key" : "cookie",
+          "name" : "Cookie"
+        },
+        {
+          "definition" : "Cross-Site Request Forgery: a malicious site causes a victim's browser to send an unwanted authenticated request.",
+          "key" : "csrf",
+          "name" : "CSRF"
+        }
+      ],
+      "question" : "Explain Refresh token in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "An access token is a longer-lived credential used to obtain new refresh tokens."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Refresh token",
+      "targetName" : "Refresh token",
+      "wordCount" : 13
+    },
+    {
+      "caseID" : "P2-12",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-a1b2f230a4062697",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of deciding what an authenticated identity is allowed to do."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-54d49440ea8daee0",
+          "kind" : "property",
+          "role" : "core",
+          "text" : "Identity alone is not permission."
+        },
+        {
+          "alias" : "c3",
+          "id" : "claim-a9d2e28b3dc2414a",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "authorization still happens per action\/resource."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of verifying who a user or service is.",
+          "key" : "authentication",
+          "name" : "Authentication"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
+          "key" : "cookie",
+          "name" : "Cookie"
+        }
+      ],
+      "question" : "Explain Authorization in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Authorization is what an allowed identity uses to decide who it is."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Authorization",
+      "targetName" : "Authorization",
+      "wordCount" : 12
+    },
+    {
+      "caseID" : "P2-13",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-58b0202c8e57fcc1",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A data structure maintained to make particular lookups or orderings faster."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-44228c8f2ef50e5",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Without useful indexes, large queries may scan huge numbers of rows."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-ef5ef4b37b447038",
+          "kind" : "tradeoff",
+          "role" : "supporting",
+          "text" : "Indexes trade additional storage and write cost for faster reads."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A system for persistently storing, querying, and updating application data.",
+          "key" : "database",
+          "name" : "Database"
+        },
+        {
+          "definition" : "A column or column set that uniquely identifies each row in a table.",
+          "key" : "primary key",
+          "name" : "Primary key"
+        },
+        {
+          "definition" : "A database model built around tables, rows, columns, relationships, and constraints.",
+          "key" : "relational database",
+          "name" : "Relational database"
+        },
+        {
+          "definition" : "An operation that combines rows from related tables based on a condition.",
+          "key" : "sql join",
+          "name" : "SQL JOIN"
+        }
+      ],
+      "question" : "Explain Database index in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "An index speeds up lookups on a column"
+        },
+        {
+          "n" : 2,
+          "text" : "because the database keeps the results of earlier queries and hands them back."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Database index",
+      "targetName" : "Database index",
+      "wordCount" : 21
+    },
+    {
+      "caseID" : "P2-14",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-af1e6d60ebd8762e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-570436823b15dd8a",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "It balances user convenience with short-lived access credentials."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "A compact signed token format containing claims, represented as header.payload.signature.",
+          "key" : "jwt",
+          "name" : "JWT"
+        },
+        {
+          "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
+          "key" : "cookie",
+          "name" : "Cookie"
+        },
+        {
+          "definition" : "Cross-Site Request Forgery: a malicious site causes a victim's browser to send an unwanted authenticated request.",
+          "key" : "csrf",
+          "name" : "CSRF"
+        }
+      ],
+      "question" : "Explain Refresh token in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "A refresh token gets you a new access token without logging in again"
+        },
+        {
+          "n" : 2,
+          "text" : "because your password is stored inside it."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Refresh token",
+      "targetName" : "Refresh token",
+      "wordCount" : 20
+    },
+    {
+      "caseID" : "P2-15",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-7485a5102853e2f4",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of verifying who a user or service is."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-508e25d02094b377",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "Before granting access, the system needs a trustworthy identity."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        },
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A system whose behavior depends on state remembered across interactions.",
+          "key" : "stateful system",
+          "name" : "Stateful system"
+        }
+      ],
+      "question" : "Explain Authentication in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Authentication checks who you are"
+        },
+        {
+          "n" : 2,
+          "text" : "authorization then decides what you may do."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Authentication",
+      "targetName" : "Authentication",
+      "wordCount" : 12
+    },
+    {
+      "caseID" : "P2-16",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-caffc41a1629fcff",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Delaying an action until a burst of events has been quiet for a chosen interval."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-9a758b1ddfa496e5",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It avoids firing expensive work for every keystroke."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Limiting an action so it runs at most once per time window while events continue.",
+          "key" : "throttling",
+          "name" : "Throttling"
+        },
+        {
+          "definition" : "A React mechanism for making a value available to descendants without manually passing it through every intermediate component.",
+          "key" : "context",
+          "name" : "Context"
+        },
+        {
+          "definition" : "A function beginning with use that composes React hooks into reusable stateful logic.",
+          "key" : "custom hook",
+          "name" : "Custom hook"
+        },
+        {
+          "definition" : "Passing data through intermediate components solely so deeper descendants can receive it.",
+          "key" : "prop drilling",
+          "name" : "Prop drilling"
+        }
+      ],
+      "question" : "Explain Debouncing in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Debouncing waits for a pause in the events"
+        },
+        {
+          "n" : 2,
+          "text" : "throttling runs at most once per window."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Debouncing",
+      "targetName" : "Debouncing",
+      "wordCount" : 16
+    },
+    {
+      "caseID" : "P2-17",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-6589842cf9f75b65",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The property that repeating an operation has the same intended effect as performing it once."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-3cf9b2257ac2f198",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Networks retry, users double-click, and clients time out after servers already committed work."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-32e5f4b79c3317d8",
+          "kind" : "consequence",
+          "role" : "supporting",
+          "text" : "Idempotency makes retries safe."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
+          "key" : "exponential backoff",
+          "name" : "Exponential backoff"
+        },
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "Attempting a failed operation again when the failure may be temporary.",
+          "key" : "retry",
+          "name" : "Retry"
+        },
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        }
+      ],
+      "question" : "Explain Idempotency in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Idempotency is about retries."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Idempotency",
+      "targetName" : "Idempotency",
+      "wordCount" : 4
+    },
+    {
+      "caseID" : "P2-18",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-ff95fc8d2fc5f02e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A compact signed token format containing claims, represented as header.payload.signature."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-b6c3668d41921be7",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-f8f60f6a0a9d8164",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "JWTs are signed claim containers, not automatically encrypted."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "A chunk of text represented as an integer ID for model processing.",
+          "key" : "token",
+          "name" : "Token"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        }
+      ],
+      "question" : "Explain JWT in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "JWTs are really popular and lots of web frameworks support them."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|JWT",
+      "targetName" : "JWT",
+      "wordCount" : 11
+    },
+    {
+      "caseID" : "P2-19",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-619b002f3f9d424e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A cookie marked so browser JavaScript cannot read it."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-54e2980209db9210",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It reduces exposure of session secrets to JavaScript during many XSS scenarios."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-5ec5d150bad06858",
+          "kind" : "constraint",
+          "role" : "supporting",
+          "text" : "HttpOnly prevents client-side JavaScript from reading a cookie, which is useful for session credentials, though it does not eliminate XSS impact."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
+          "key" : "cookie",
+          "name" : "Cookie"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "The request-response protocol used by browsers, apps, and servers to exchange web data.",
+          "key" : "http",
+          "name" : "HTTP"
+        },
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        }
+      ],
+      "question" : "Explain HttpOnly cookie in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Marking a cookie HttpOnly makes XSS attacks harmless."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|HttpOnly cookie",
+      "targetName" : "HttpOnly cookie",
+      "wordCount" : 8
+    },
+    {
+      "caseID" : "P2-20",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-6589842cf9f75b65",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The property that repeating an operation has the same intended effect as performing it once."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-3cf9b2257ac2f198",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Networks retry, users double-click, and clients time out after servers already committed work."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-32e5f4b79c3317d8",
+          "kind" : "consequence",
+          "role" : "supporting",
+          "text" : "Idempotency makes retries safe."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
+          "key" : "exponential backoff",
+          "name" : "Exponential backoff"
+        },
+        {
+          "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
+          "key" : "microservice",
+          "name" : "Microservices"
+        },
+        {
+          "definition" : "Attempting a failed operation again when the failure may be temporary.",
+          "key" : "retry",
+          "name" : "Retry"
+        },
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        }
+      ],
+      "question" : "Explain Idempotency in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Pressing an elevator call button five times still brings just one elevator."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Idempotency",
+      "targetName" : "Idempotency",
+      "wordCount" : 12
+    },
+    {
+      "caseID" : "P2-21",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-58b0202c8e57fcc1",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A data structure maintained to make particular lookups or orderings faster."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-44228c8f2ef50e5",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Without useful indexes, large queries may scan huge numbers of rows."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-ef5ef4b37b447038",
+          "kind" : "tradeoff",
+          "role" : "supporting",
+          "text" : "Indexes trade additional storage and write cost for faster reads."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A system for persistently storing, querying, and updating application data.",
+          "key" : "database",
+          "name" : "Database"
+        },
+        {
+          "definition" : "A column or column set that uniquely identifies each row in a table.",
+          "key" : "primary key",
+          "name" : "Primary key"
+        },
+        {
+          "definition" : "A database model built around tables, rows, columns, relationships, and constraints.",
+          "key" : "relational database",
+          "name" : "Relational database"
+        },
+        {
+          "definition" : "An operation that combines rows from related tables based on a condition.",
+          "key" : "sql join",
+          "name" : "SQL JOIN"
+        }
+      ],
+      "question" : "Explain Database index in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "It's fast."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Database index",
+      "targetName" : "Database index",
+      "wordCount" : 2
+    },
+    {
+      "caseID" : "P2-22",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-ff95fc8d2fc5f02e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A compact signed token format containing claims, represented as header.payload.signature."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-b6c3668d41921be7",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-f8f60f6a0a9d8164",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "JWTs are signed claim containers, not automatically encrypted."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "A chunk of text represented as an integer ID for model processing.",
+          "key" : "token",
+          "name" : "Token"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        }
+      ],
+      "question" : "Explain JWT in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "A JWT is a compact token with a header, a payload and a signature."
+        },
+        {
+          "n" : 2,
+          "text" : "The signature lets the API check who issued it without looking anything up in a database."
+        },
+        {
+          "n" : 3,
+          "text" : "Because it is encrypted"
+        },
+        {
+          "n" : 4,
+          "text" : "nobody can read the claims inside."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|JWT",
+      "targetName" : "JWT",
+      "wordCount" : 40
+    },
+    {
+      "caseID" : "P2-23",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-9c4ec437af71f4b3",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A server that can handle each request without relying on request-specific state stored only in its own local memory."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-15ec2ba7e4119df4",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Any replica can serve the next request, which simplifies horizontal scaling and failover."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-faa4a24dc4125a94",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "Stateless application servers keep request state outside a specific instance, making load balancing and horizontal scaling easier."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Data owned by a component or store that can change over time and trigger UI updates.",
+          "key" : "state",
+          "name" : "State"
+        },
+        {
+          "definition" : "A faster storage layer that keeps reusable results so expensive work can be avoided.",
+          "key" : "cache",
+          "name" : "Cache"
+        },
+        {
+          "definition" : "A cache lookup that finds a usable stored value.",
+          "key" : "cache hit",
+          "name" : "Cache hit"
+        },
+        {
+          "definition" : "A lookup where the requested value is absent or expired.",
+          "key" : "cache miss",
+          "name" : "Cache miss"
+        }
+      ],
+      "question" : "Explain Stateless server in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "A stateless server handles each request without relying on anything kept in its own memory"
+        },
+        {
+          "n" : 2,
+          "text" : "any replica can take the next request"
+        },
+        {
+          "n" : 3,
+          "text" : "makes horizontal scaling easier"
+        },
+        {
+          "n" : 4,
+          "text" : "that is also why stateless servers never need a database."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Stateless server",
+      "targetName" : "Stateless server",
+      "wordCount" : 38
+    },
+    {
+      "caseID" : "P2-24",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-62d17be95808ed3e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A React hook that caches a function reference until dependencies change."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-64f4d267eed605a2",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "Stable function identity can matter for memoized children or effect dependencies."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-aa5be10153a30fd1",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "useCallback memoizes function identity."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A React hook that caches a calculation result between renders until dependencies change.",
+          "key" : "usememo",
+          "name" : "useMemo"
+        },
+        {
+          "definition" : "A function beginning with use that composes React hooks into reusable stateful logic.",
+          "key" : "custom hook",
+          "name" : "Custom hook"
+        },
+        {
+          "definition" : "A React hook returning a stable mutable object whose .current changes do not trigger rendering.",
+          "key" : "useref",
+          "name" : "useRef"
+        },
+        {
+          "definition" : "A React mechanism for making a value available to descendants without manually passing it through every intermediate component.",
+          "key" : "context",
+          "name" : "Context"
+        }
+      ],
+      "question" : "Explain useCallback in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "It keeps it so that it doesn't have to make it again."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|useCallback",
+      "targetName" : "useCallback",
+      "wordCount" : 12
+    },
+    {
+      "caseID" : "P2-25",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-63b3e0f7dcdc4888",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A function plus access to the lexical variables from the scope where it was created."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-ea1f1e097d9c8eab",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "Closures power encapsulation, callbacks, hooks, and private state patterns."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-329d5dceec7cb700",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Objects are accessed through references, so multiple variables can refer to the same underlying object.",
+          "key" : "reference semantic",
+          "name" : "Reference semantics"
+        },
+        {
+          "definition" : "Hide internal state\/implementation and expose only the operations consumers need.",
+          "key" : "encapsulation",
+          "name" : "Encapsulation"
+        },
+        {
+          "definition" : "JavaScript's declaration processing behavior that makes some bindings\/functions known before the line where they are declared.",
+          "key" : "hoisting",
+          "name" : "Hoisting"
+        },
+        {
+          "definition" : "The rules that determine where a variable name is visible and accessible.",
+          "key" : "scope",
+          "name" : "Scope"
+        }
+      ],
+      "question" : "Explain Closure in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "It keeps them around after it finishes so that it can use them."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Closure",
+      "targetName" : "Closure",
+      "wordCount" : 13
+    },
+    {
+      "caseID" : "X-01",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-7485a5102853e2f4",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of verifying who a user or service is."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-508e25d02094b377",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "Before granting access, the system needs a trustworthy identity."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        },
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A system whose behavior depends on state remembered across interactions.",
+          "key" : "stateful system",
+          "name" : "Stateful system"
+        }
+      ],
+      "question" : "Explain Authentication in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Authentication is when the system confirm who you are, a person or also a service that call the API."
+        },
+        {
+          "n" : 2,
+          "text" : "It must be sure your identity is real and can be trusted before to give you any access."
+        },
+        {
+          "n" : 3,
+          "text" : "Is like passport control in airport: before anything else, they check that you are really you."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Authentication",
+      "targetName" : "Authentication",
+      "wordCount" : 53
+    },
+    {
+      "caseID" : "X-02",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-a1b2f230a4062697",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of deciding what an authenticated identity is allowed to do."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-54d49440ea8daee0",
+          "kind" : "property",
+          "role" : "core",
+          "text" : "Identity alone is not permission."
+        },
+        {
+          "alias" : "c3",
+          "id" : "claim-a9d2e28b3dc2414a",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "authorization still happens per action\/resource."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of verifying who a user or service is.",
+          "key" : "authentication",
+          "name" : "Authentication"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
+          "key" : "cookie",
+          "name" : "Cookie"
+        }
+      ],
+      "question" : "Explain Authorization in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Authorization is the step after a successful login."
+        },
+        {
+          "n" : 2,
+          "text" : "Once the password and MFA check passes, the server knows exactly who the user is"
+        },
+        {
+          "n" : 3,
+          "text" : "a verified identity can be trusted"
+        },
+        {
+          "n" : 4,
+          "text" : "the user is cleared for any action."
+        },
+        {
+          "n" : 5,
+          "text" : "Later requests don't need re-checking either"
+        },
+        {
+          "n" : 6,
+          "text" : "since the login already settled permissions."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Authorization",
+      "targetName" : "Authorization",
+      "wordCount" : 50
+    },
+    {
+      "caseID" : "X-03",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-7485a5102853e2f4",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of verifying who a user or service is."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-508e25d02094b377",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "Before granting access, the system needs a trustworthy identity."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of deciding what an authenticated identity is allowed to do.",
+          "key" : "authorization",
+          "name" : "Authorization"
+        },
+        {
+          "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
+          "key" : "refresh token",
+          "name" : "Refresh token"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A system whose behavior depends on state remembered across interactions.",
+          "key" : "stateful system",
+          "name" : "Stateful system"
+        }
+      ],
+      "question" : "Explain Authentication in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Authentification is when the system decide what the user have the right to do."
+        },
+        {
+          "n" : 2,
+          "text" : "For exemple a normal user can read the reports"
+        },
+        {
+          "n" : 3,
+          "text" : "the admin can also delete acounts"
+        },
+        {
+          "n" : 4,
+          "text" : "it depends of the role that you have."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Authentication",
+      "targetName" : "Authentication",
+      "wordCount" : 39
+    },
+    {
+      "caseID" : "X-04",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-a1b2f230a4062697",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of deciding what an authenticated identity is allowed to do."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-54d49440ea8daee0",
+          "kind" : "property",
+          "role" : "core",
+          "text" : "Identity alone is not permission."
+        },
+        {
+          "alias" : "c3",
+          "id" : "claim-a9d2e28b3dc2414a",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "authorization still happens per action\/resource."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of verifying who a user or service is.",
+          "key" : "authentication",
+          "name" : "Authentication"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
+          "key" : "cookie",
+          "name" : "Cookie"
+        }
+      ],
+      "question" : "Explain Authorization in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Hotel version: the front desk checking your ID is authentication."
+        },
+        {
+          "n" : 2,
+          "text" : "Authorization is what your key card then opens, your room"
+        },
+        {
+          "n" : 3,
+          "text" : "not the staff office."
+        },
+        {
+          "n" : 4,
+          "text" : "Knowing who you are doesn't get you in everywhere"
+        },
+        {
+          "n" : 5,
+          "text" : "each door checks the card again."
+        },
+        {
+          "n" : 6,
+          "text" : "So: deciding what an identified person may do, door by door."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Authorization",
+      "targetName" : "Authorization",
+      "wordCount" : 52
+    },
+    {
+      "caseID" : "X-05",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-a1b2f230a4062697",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "The process of deciding what an authenticated identity is allowed to do."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-54d49440ea8daee0",
+          "kind" : "property",
+          "role" : "core",
+          "text" : "Identity alone is not permission."
+        },
+        {
+          "alias" : "c3",
+          "id" : "claim-a9d2e28b3dc2414a",
+          "kind" : "mechanism",
+          "role" : "core",
+          "text" : "authorization still happens per action\/resource."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The process of verifying who a user or service is.",
+          "key" : "authentication",
+          "name" : "Authentication"
+        },
+        {
+          "definition" : "Server-recognized state that ties a sequence of requests to an authenticated user or interaction.",
+          "key" : "session",
+          "name" : "Session"
+        },
+        {
+          "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
+          "key" : "access token",
+          "name" : "Access token"
+        },
+        {
+          "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
+          "key" : "cookie",
+          "name" : "Cookie"
+        }
+      ],
+      "question" : "Explain Authorization in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "ok so authorization = deciding what you're allowed to do once the system already knows who you are. authentication has to go first"
+        },
+        {
+          "n" : 2,
+          "text" : "I think that's for speed: checking a password is quick and cheap, permission checks are the heavy part"
+        },
+        {
+          "n" : 3,
+          "text" : "you run the cheap filter first to save server load."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Authorization",
+      "targetName" : "Authorization",
+      "wordCount" : 53
+    },
+    {
+      "caseID" : "X-06",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-3cff5a115409d946",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A React boundary that catches certain render\/ lifecycle errors in descendants and renders fallback UI."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-292398af00220b23",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "One broken widget should not necessarily blank an entire application."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-cbcd0b59e7c2d25",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "Error boundaries isolate render-time failures in a subtree."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The explicit UI states around remote data: loading, success, empty, and error, often plus refreshing\/stale.",
+          "key" : "api loading state",
+          "name" : "API loading states"
+        },
+        {
+          "definition" : "React executing components to compute the next UI description.",
+          "key" : "render",
+          "name" : "Render"
+        },
+        {
+          "definition" : "The phase where an event triggered on a descendant propagates upward through its ancestors.",
+          "key" : "event bubbling",
+          "name" : "Event bubbling"
+        },
+        {
+          "definition" : "Handling events on a common ancestor and determining which descendant triggered them.",
+          "key" : "event delegation",
+          "name" : "Event delegation"
+        }
+      ],
+      "question" : "Explain Error boundary in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "An error boundary catches errors from the components inside it and renders a fallback UI instead."
+        },
+        {
+          "n" : 2,
+          "text" : "So once your components are wrapped, nothing can crash the app anymore: even a failed fetch in a click handler or an error in a setTimeout just ends up in the fallback."
+        },
+        {
+          "n" : 3,
+          "text" : "Every error gets handled for you."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Error boundary",
+      "targetName" : "Error boundary",
+      "wordCount" : 54
+    },
+    {
+      "caseID" : "X-07",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-3cff5a115409d946",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A React boundary that catches certain render\/ lifecycle errors in descendants and renders fallback UI."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-292398af00220b23",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "One broken widget should not necessarily blank an entire application."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-cbcd0b59e7c2d25",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "Error boundaries isolate render-time failures in a subtree."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The explicit UI states around remote data: loading, success, empty, and error, often plus refreshing\/stale.",
+          "key" : "api loading state",
+          "name" : "API loading states"
+        },
+        {
+          "definition" : "React executing components to compute the next UI description.",
+          "key" : "render",
+          "name" : "Render"
+        },
+        {
+          "definition" : "The phase where an event triggered on a descendant propagates upward through its ancestors.",
+          "key" : "event bubbling",
+          "name" : "Event bubbling"
+        },
+        {
+          "definition" : "Handling events on a common ancestor and determining which descendant triggered them.",
+          "key" : "event delegation",
+          "name" : "Event delegation"
+        }
+      ],
+      "question" : "Explain Error boundary in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Error boundaries work like fuses in a house: one circuit shorts, that room goes dark, not the whole building."
+        },
+        {
+          "n" : 2,
+          "text" : "Wrap part of the React tree in one, and if something in there throws while rendering, only that part shows a fallback."
+        },
+        {
+          "n" : 3,
+          "text" : "They won't catch every error though, just certain render or lifecycle ones."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Error boundary",
+      "targetName" : "Error boundary",
+      "wordCount" : 53
+    },
+    {
+      "caseID" : "X-08",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-a6c2747df725a1b3",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A focused test of a small behavior, usually with controlled dependencies."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-ffbbea0ea7f1173e",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It gives fast feedback on logic and edge cases."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-ca7e68c56fad75f7",
+          "kind" : "property",
+          "role" : "supporting",
+          "text" : "Unit tests are fast and focused."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A test double that simulates a dependency and often records interactions.",
+          "key" : "mock",
+          "name" : "Mock"
+        },
+        {
+          "definition" : "Providing dependencies from outside a module\/class instead of constructing concrete dependencies internally.",
+          "key" : "dependency injection",
+          "name" : "Dependency injection"
+        },
+        {
+          "definition" : "A test that exercises a realistic user flow through the application stack.",
+          "key" : "end-to-end test",
+          "name" : "End-to-end test"
+        },
+        {
+          "definition" : "A test that verifies multiple real components work together across a boundary.",
+          "key" : "integration test",
+          "name" : "Integration test"
+        }
+      ],
+      "question" : "Explain Unit test in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Unit test is when you test one small function alone"
+        },
+        {
+          "n" : 2,
+          "text" : "it never can touch a real dependancy: every thing it uses must be always mocked, the database, the clock, other classes, everything."
+        },
+        {
+          "n" : 3,
+          "text" : "If not, is not a unit test anymore."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Unit test",
+      "targetName" : "Unit test",
+      "wordCount" : 41
+    },
+    {
+      "caseID" : "X-09",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-a6c2747df725a1b3",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A focused test of a small behavior, usually with controlled dependencies."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-ffbbea0ea7f1173e",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It gives fast feedback on logic and edge cases."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-ca7e68c56fad75f7",
+          "kind" : "property",
+          "role" : "supporting",
+          "text" : "Unit tests are fast and focused."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A test double that simulates a dependency and often records interactions.",
+          "key" : "mock",
+          "name" : "Mock"
+        },
+        {
+          "definition" : "Providing dependencies from outside a module\/class instead of constructing concrete dependencies internally.",
+          "key" : "dependency injection",
+          "name" : "Dependency injection"
+        },
+        {
+          "definition" : "A test that exercises a realistic user flow through the application stack.",
+          "key" : "end-to-end test",
+          "name" : "End-to-end test"
+        },
+        {
+          "definition" : "A test that verifies multiple real components work together across a boundary.",
+          "key" : "integration test",
+          "name" : "Integration test"
+        }
+      ],
+      "question" : "Explain Unit test in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Its a test for one small peice of behaviour, like checking calculateTotal([10,5]) gives 15."
+        },
+        {
+          "n" : 2,
+          "text" : "You usually swap the real dependencies (db, network) for fakes so you're only testing that bit of logic in isolation."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Unit test",
+      "targetName" : "Unit test",
+      "wordCount" : 34
+    },
+    {
+      "caseID" : "X-10",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-7c30b2cec9501506",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Prefer designs that allow new behavior through extension without repeatedly modifying fragile central logic."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-e9f5d11c30f4f962",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It can reduce regression risk in frequently extended systems."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Architecture where core logic exposes\/consumes ports and external systems connect through adapters.",
+          "key" : "ports and adapter",
+          "name" : "Ports and adapters"
+        },
+        {
+          "definition" : "A symptom suggesting design trouble, not proof of a bug.",
+          "key" : "code smell",
+          "name" : "Code smell"
+        },
+        {
+          "definition" : "Change internal structure while preserving externally observable behavior.",
+          "key" : "refactoring",
+          "name" : "Refactoring"
+        },
+        {
+          "definition" : "Wrap an incompatible or vendor-specific interface behind the interface your application wants.",
+          "key" : "adapter pattern",
+          "name" : "Adapter pattern"
+        }
+      ],
+      "question" : "Explain Open\/Closed Principle in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Open\/closed means adding new behaviour by extending, like plugging in a new class, instead of editing the core switch again and again."
+        },
+        {
+          "n" : 2,
+          "text" : "People say it lowers regression risk"
+        },
+        {
+          "n" : 3,
+          "text" : "I reckon that's just correlation: teams using it are more senior and would have fewer regressions anyway."
+        },
+        {
+          "n" : 4,
+          "text" : "The principle itself doesn't reduce anything."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Open\/Closed Principle",
+      "targetName" : "Open\/Closed Principle",
+      "wordCount" : 52
+    },
+    {
+      "caseID" : "X-11",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-ee632a6b8778f100",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Hide internal state\/implementation and expose only the operations consumers need."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-e57d40088f6b5036",
+          "kind" : "constraint",
+          "role" : "core",
+          "text" : "It prevents distant code from depending on fragile details."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-9247716a0900ec39",
+          "kind" : "purpose",
+          "role" : "supporting",
+          "text" : "Encapsulation protects invariants by controlling how state and behavior are accessed."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "A cohesive unit that exposes a public interface while hiding internal implementation details.",
+          "key" : "module",
+          "name" : "Module"
+        },
+        {
+          "definition" : "A simplified model\/interface that hides irrelevant detail for a particular task.",
+          "key" : "abstraction",
+          "name" : "Abstraction"
+        },
+        {
+          "definition" : "High-level business logic depends on abstractions\/ capabilities rather than concrete infrastructure details.",
+          "key" : "dependency inversion",
+          "name" : "Dependency inversion"
+        },
+        {
+          "definition" : "The behavior, inputs, outputs, errors, and guarantees that callers may rely on.",
+          "key" : "contract",
+          "name" : "Contract"
+        }
+      ],
+      "question" : "Explain Encapsulation in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Think of a vending machine: you get a coin slot and some buttons"
+        },
+        {
+          "n" : 2,
+          "text" : "you can't reach in and rearrange the snacks."
+        },
+        {
+          "n" : 3,
+          "text" : "Encapsulation is that for code: the class keeps its guts private and only offers the few actions callers need, like cart.addItem() instead of pushing into cart.items directly."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Encapsulation",
+      "targetName" : "Encapsulation",
+      "wordCount" : 49
+    },
+    {
+      "caseID" : "X-12",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-2c2c23204c4c4aec",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "How strongly the responsibilities inside one module belong together."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-7251556bb5e54696",
+          "kind" : "consequence",
+          "role" : "core",
+          "text" : "High cohesion makes modules easier to understand and maintain."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-d4158fc3c2fffb5d",
+          "kind" : "mechanism",
+          "role" : "supporting",
+          "text" : "Good modules have high cohesion and low unnecessary coupling: related responsibilities together, unrelated responsibilities separated."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "The degree to which one module depends on details of another.",
+          "key" : "coupling",
+          "name" : "Coupling"
+        },
+        {
+          "definition" : "Providing dependencies from outside a module\/class instead of constructing concrete dependencies internally.",
+          "key" : "dependency injection",
+          "name" : "Dependency injection"
+        },
+        {
+          "definition" : "A test that verifies multiple real components work together across a boundary.",
+          "key" : "integration test",
+          "name" : "Integration test"
+        },
+        {
+          "definition" : "An application deployed as one main unit, even if internally modular.",
+          "key" : "monolith",
+          "name" : "Monolith"
+        }
+      ],
+      "question" : "Explain Cohesion in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Cohesion is how well the jobs inside one module fit together."
+        },
+        {
+          "n" : 2,
+          "text" : "When they fit, the module is easier to read and maintain."
+        },
+        {
+          "n" : 3,
+          "text" : "I know that from my old job: our cohesive modules were also the ones with the fewest bugs"
+        },
+        {
+          "n" : 4,
+          "text" : "clearly the cohesion is what made them easy to work with."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Cohesion",
+      "targetName" : "Cohesion",
+      "wordCount" : 52
+    },
+    {
+      "caseID" : "X-13",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-a0c38adb78c8560e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A file containing TypeScript type declarations without runtime implementation."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-e6c36623f11c4a6f",
+          "kind" : "property",
+          "role" : "core",
+          "text" : "It describes JavaScript libraries, globals, and module APIs to the compiler."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-e999f211b089b9ae",
+          "kind" : "property",
+          "role" : "supporting",
+          "text" : "Declaration files describe runtime APIs to TypeScript and are how many JavaScript libraries become typesafe to consume."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "JavaScript plus a static type system checked before runtime.",
+          "key" : "typescript",
+          "name" : "TypeScript"
+        },
+        {
+          "definition" : "TypeScript checks code before execution;",
+          "key" : "runtime validation vs static type",
+          "name" : "Runtime validation vs static types"
+        },
+        {
+          "definition" : "A developer instruction telling TypeScript to treat a value as a particular type.",
+          "key" : "type assertion",
+          "name" : "Type assertion"
+        },
+        {
+          "definition" : "A type-level if\/else based on assignability.",
+          "key" : "conditional type",
+          "name" : "Conditional type"
+        }
+      ],
+      "question" : "Explain Declaration file (.d.ts) in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "The .d.ts is a file for TypeScript where are the types of one library."
+        },
+        {
+          "n" : 2,
+          "text" : "When you install a library of JavaScript you need also this file"
+        },
+        {
+          "n" : 3,
+          "text" : "then it works better with the compiler."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Declaration file (.d.ts)",
+      "targetName" : "Declaration file (.d.ts)",
+      "wordCount" : 34
+    },
+    {
+      "caseID" : "X-14",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-a0c38adb78c8560e",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "A file containing TypeScript type declarations without runtime implementation."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-e6c36623f11c4a6f",
+          "kind" : "property",
+          "role" : "core",
+          "text" : "It describes JavaScript libraries, globals, and module APIs to the compiler."
+        },
+        {
+          "alias" : "s1",
+          "id" : "claim-e999f211b089b9ae",
+          "kind" : "property",
+          "role" : "supporting",
+          "text" : "Declaration files describe runtime APIs to TypeScript and are how many JavaScript libraries become typesafe to consume."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "JavaScript plus a static type system checked before runtime.",
+          "key" : "typescript",
+          "name" : "TypeScript"
+        },
+        {
+          "definition" : "TypeScript checks code before execution;",
+          "key" : "runtime validation vs static type",
+          "name" : "Runtime validation vs static types"
+        },
+        {
+          "definition" : "A developer instruction telling TypeScript to treat a value as a particular type.",
+          "key" : "type assertion",
+          "name" : "Type assertion"
+        },
+        {
+          "definition" : "A type-level if\/else based on assignability.",
+          "key" : "conditional type",
+          "name" : "Conditional type"
+        }
+      ],
+      "question" : "Explain Declaration file (.d.ts) in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "A .d.ts file just has type declerations, no real implementation inside."
+        },
+        {
+          "n" : 2,
+          "text" : "Thats because the bundler strips the function bodies out when minifying, to keep the bundle small"
+        },
+        {
+          "n" : 3,
+          "text" : "only the types are left for the compiler."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Declaration file (.d.ts)",
+      "targetName" : "Declaration file (.d.ts)",
+      "wordCount" : 36
+    },
+    {
+      "caseID" : "X-15",
+      "claims" : [
+        {
+          "alias" : "c1",
+          "id" : "claim-7c30b2cec9501506",
+          "kind" : "definition",
+          "role" : "core",
+          "text" : "Prefer designs that allow new behavior through extension without repeatedly modifying fragile central logic."
+        },
+        {
+          "alias" : "c2",
+          "id" : "claim-e9f5d11c30f4f962",
+          "kind" : "purpose",
+          "role" : "core",
+          "text" : "It can reduce regression risk in frequently extended systems."
+        }
+      ],
+      "neighbours" : [
+        {
+          "definition" : "Architecture where core logic exposes\/consumes ports and external systems connect through adapters.",
+          "key" : "ports and adapter",
+          "name" : "Ports and adapters"
+        },
+        {
+          "definition" : "A symptom suggesting design trouble, not proof of a bug.",
+          "key" : "code smell",
+          "name" : "Code smell"
+        },
+        {
+          "definition" : "Change internal structure while preserving externally observable behavior.",
+          "key" : "refactoring",
+          "name" : "Refactoring"
+        },
+        {
+          "definition" : "Wrap an incompatible or vendor-specific interface behind the interface your application wants.",
+          "key" : "adapter pattern",
+          "name" : "Adapter pattern"
+        }
+      ],
+      "question" : "Explain Open\/Closed Principle in your own words.",
+      "segments" : [
+        {
+          "n" : 1,
+          "text" : "Open\/closed is just the O in SOLID."
+        }
+      ],
+      "set" : "P",
+      "targetKey" : "Mobile Mastery|Open\/Closed Principle",
+      "targetName" : "Open\/Closed Principle",
+      "wordCount" : 7
+    }
+  ],
+  "set" : "P"
+}

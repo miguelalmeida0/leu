@@ -1,1 +1,12 @@
 __pycache__/
+
+# Blind outputs (gate, sealed36) never enter git in plain form.
+**/blind/
+inputs/PG*
+inputs/S36*
+answer-keys/PG*
+answer-keys/S36*
+readings/PG*
+readings/S36*
+scores/PG*
+scores/S36*
