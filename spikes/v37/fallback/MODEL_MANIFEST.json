@@ -1,0 +1,80 @@
+{
+  "status": "experimental_not_device_approved",
+  "runtime": {
+    "repository": "https://github.com/ggml-org/llama.cpp",
+    "commit": "4c9233c034fc450dcf34c7c0988aebe6da5cdf1a",
+    "archive_sha256": "bb545c88df2d7e20732863cc676118e609a9d3ac5448f65134a2e6ac75e5df7d",
+    "license": "MIT"
+  },
+  "candidates": [
+    {
+      "upstream": "Qwen/Qwen3.5-2B",
+      "upstream_revision_observed": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+      "quantization_repository": "unsloth/Qwen3.5-2B-GGUF",
+      "quantization_revision": "f6d5376be1edb4d416d56da11e5397a961aca8ae",
+      "filename": "Qwen3.5-2B-Q4_K_M.gguf",
+      "bytes": 1280835840,
+      "sha256": "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223",
+      "license": "Apache-2.0",
+      "provenance_limit": "Quantizer names official post-trained upstream; exact conversion source revision and command not published in reviewed card. Observed upstream revision is not proof of conversion revision.",
+      "downloaded_and_hash_verified": true,
+      "executed": true,
+      "metadata_file": "metadata-2B.json",
+      "tokenizer_chat_template_sha256": "7f0e529032c25183bcd66c7f238da2d377f43be754a94e2725a58c4e16d2ed67",
+      "execution_scope": "Mac CPU through embedded native runtime and Swift provider; physical iPhone PENDING",
+      "execution_evidence": "final-dev-2b-2048.jsonl",
+      "primary_comparison": {
+        "attempts": 100,
+        "native_responses": 100,
+        "interrupted": 0,
+        "retries": 0
+      }
+    },
+    {
+      "upstream": "Qwen/Qwen3.5-0.8B",
+      "upstream_revision_observed": "2fc06364715b967f1860aea9cf38778875588b17",
+      "quantization_repository": "unsloth/Qwen3.5-0.8B-GGUF",
+      "quantization_revision": "6ab461498e2023f6e3c1baea90a8f0fe38ab64d0",
+      "filename": "Qwen3.5-0.8B-Q4_K_M.gguf",
+      "bytes": 532517120,
+      "sha256": "bd258782e35f7f458f8aced1adc053e6e92e89bc735ba3be89d38a06121dc517",
+      "license": "Apache-2.0",
+      "provenance_limit": "Quantizer names official post-trained upstream; exact conversion source revision and command not published in reviewed card. Observed upstream revision is not proof of conversion revision.",
+      "downloaded_and_hash_verified": true,
+      "executed": true,
+      "metadata_file": "metadata-0.8B.json",
+      "tokenizer_chat_template_sha256": "7f0e529032c25183bcd66c7f238da2d377f43be754a94e2725a58c4e16d2ed67",
+      "execution_scope": "Mac CPU through embedded native runtime and Swift provider; physical iPhone PENDING",
+      "execution_evidence": "final-dev-0.8b-2048.jsonl",
+      "primary_comparison": {
+        "attempts": 100,
+        "native_responses": 100,
+        "interrupted": 0,
+        "retries": 0
+      }
+    },
+    {
+      "upstream": "Qwen/Qwen3.5-4B",
+      "upstream_revision_observed": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "quantization_repository": "unsloth/Qwen3.5-4B-GGUF",
+      "quantization_revision": "e87f176479d0855a907a41277aca2f8ee7a09523",
+      "filename": "Qwen3.5-4B-Q4_K_M.gguf",
+      "bytes": 2740937888,
+      "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "license": "Apache-2.0",
+      "provenance_limit": "Quantizer names official post-trained upstream; exact conversion source revision and command not published in reviewed card. Observed upstream revision is not proof of conversion revision.",
+      "downloaded_and_hash_verified": true,
+      "executed": true,
+      "metadata_file": "metadata-4B.json",
+      "tokenizer_chat_template_sha256": "7f0e529032c25183bcd66c7f238da2d377f43be754a94e2725a58c4e16d2ed67",
+      "execution_scope": "Mac CPU through embedded native runtime and Swift provider; physical iPhone PENDING",
+      "execution_evidence": "final-dev-4b-2048.jsonl",
+      "primary_comparison": {
+        "attempts": 100,
+        "native_responses": 99,
+        "interrupted": 1,
+        "retries": 0
+      }
+    }
+  ]
+}

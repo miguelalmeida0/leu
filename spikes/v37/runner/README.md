@@ -1,7 +1,8 @@
 # V37 spike runner (throwaway)
 
 Calls Apple's on-device model for the V37 capability spike. It is used **only on the Mac** (and,
-after the Mac freeze, from the iPhone host app). Branch `claude/v37-capability-spike`, never merged.
+after the Mac freeze, from the iPhone host app). Branch `test` (the spike branch
+`claude/v37-capability-spike`, renamed in the 2026-09-29 branch cleanup); never merged.
 The method is fixed by [`../SPIKE_SPEC.md`](../SPIKE_SPEC.md) and
 [`../PREREGISTRATION.md`](../PREREGISTRATION.md). This README only says how to run things.
 
@@ -46,7 +47,7 @@ Run from the repository root. The expected results are the Linux results from St
 
 ```
 # 1. Branch and machine
-git fetch origin claude/v37-capability-spike && git checkout claude/v37-capability-spike && git pull --ff-only
+git fetch origin test && git checkout test && git pull --ff-only   # the spike branch, renamed `test` in the branch cleanup
 git log -1 --oneline
 sw_vers; xcodebuild -version; sysctl -n hw.model; swift --version
 
