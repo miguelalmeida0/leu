@@ -1,0 +1,234 @@
+{
+  "split": "v37-p3",
+  "cases": [
+    {
+      "id": "X-01",
+      "document": "Mobile Mastery",
+      "concept": "Authentication",
+      "page": null,
+      "text": "Authentication is when the system confirm who you are, a person or also a service that call the API. It must be sure your identity is real and can be trusted before to give you any access. Is like passport control in airport: before anything else, they check that you are really you.",
+      "state": "understood",
+      "misconceptions": [],
+      "credits": [
+        "verifying who a user or service is",
+        "the system needs a trustworthy identity"
+      ],
+      "categories": ["themeAuthnAuthz", "nonNativeEnglish", "analogy", "novelExample", "paraphrase", "novelVocabulary"],
+      "paraphraseGroup": null,
+      "notes": "Both rubric ideas, verifying who a user or service is and needing a trusted identity before any access, are stated correctly in non-native English with a passport-control analogy, and nothing is wrong."
+    },
+    {
+      "id": "X-02",
+      "document": "Mobile Mastery",
+      "concept": "Authorization",
+      "page": null,
+      "text": "Authorization is the step after a successful login. Once the password and MFA check passes, the server knows exactly who the user is, and a verified identity can be trusted, so the user is cleared for any action. Later requests don't need re-checking either, since the login already settled permissions.",
+      "state": "misconception",
+      "misconceptions": [
+        {"kind": "contradiction", "claim": "Identity alone is not permission", "confusedWith": null},
+        {"kind": "contradiction", "claim": "authorization still happens per action/resource", "confusedWith": null}
+      ],
+      "credits": [],
+      "categories": ["themeAuthnAuthz", "wrongConclusionPlausibleReason", "fluentButWrong", "confidentlyWrong", "multipleMisconceptions", "misconceptionParaphrase", "negation", "multipleConcepts", "novelVocabulary"],
+      "paraphraseGroup": null,
+      "notes": "From the true premise that login verifies identity it wrongly concludes the user may do any action and that later requests need no check, contradicting 'identity alone is not permission' and per-action authorization."
+    },
+    {
+      "id": "X-03",
+      "document": "Mobile Mastery",
+      "concept": "Authentication",
+      "page": null,
+      "text": "Authentification is when the system decide what the user have the right to do. For exemple a normal user can read the reports but the admin can also delete acounts, so it depends of the role that you have.",
+      "state": "misconception",
+      "misconceptions": [
+        {"kind": "confusion", "claim": "verifying who a user or service is", "confusedWith": "Authorization"}
+      ],
+      "credits": [],
+      "categories": ["themeAuthnAuthz", "nonNativeEnglish", "typos", "misconceptionParaphrase"],
+      "paraphraseGroup": null,
+      "notes": "It gives authorization's meaning (deciding what a user may do by role, with the reports/admin example) as the definition of authentication and never mentions verifying identity, a confusion with Authorization."
+    },
+    {
+      "id": "X-04",
+      "document": "Mobile Mastery",
+      "concept": "Authorization",
+      "page": null,
+      "text": "Hotel version: the front desk checking your ID is authentication. Authorization is what your key card then opens, your room but not the staff office. Knowing who you are doesn't get you in everywhere, and each door checks the card again. So: deciding what an identified person may do, door by door.",
+      "state": "understood",
+      "misconceptions": [],
+      "credits": [
+        "deciding what an authenticated identity is allowed",
+        "Identity alone is not permission",
+        "authorization still happens per action/resource"
+      ],
+      "categories": ["themeAuthnAuthz", "analogy", "novelExample", "paraphrase", "novelVocabulary", "multipleConcepts", "negation"],
+      "paraphraseGroup": null,
+      "notes": "Through a hotel key-card analogy it states that authorization decides what an identified person may do, that knowing who you are does not open every door, and that each door is checked, with nothing wrong."
+    },
+    {
+      "id": "X-05",
+      "document": "Mobile Mastery",
+      "concept": "Authorization",
+      "page": null,
+      "text": "ok so authorization = deciding what you're allowed to do once the system already knows who you are. authentication has to go first, and I think that's for speed: checking a password is quick and cheap, permission checks are the heavy part, so you run the cheap filter first to save server load.",
+      "state": "weakReasoning",
+      "misconceptions": [],
+      "credits": [
+        "deciding what an authenticated identity is allowed"
+      ],
+      "categories": ["themeAuthnAuthz", "rightConclusionWrongReasoning", "multipleConcepts", "paraphrase", "novelVocabulary", "partiallyCorrect"],
+      "paraphraseGroup": null,
+      "notes": "The definition and the order (authentication first) are right, but the order is justified by server cost instead of authorization needing an authenticated identity, a reason the source does not support, so weak reasoning rather than understood."
+    },
+    {
+      "id": "X-06",
+      "document": "Mobile Mastery",
+      "concept": "Error boundary",
+      "page": null,
+      "text": "An error boundary catches errors from the components inside it and renders a fallback UI instead. So once your components are wrapped, nothing can crash the app anymore: even a failed fetch in a click handler or an error in a setTimeout just ends up in the fallback. Every error gets handled for you.",
+      "state": "misconception",
+      "misconceptions": [
+        {"kind": "overgeneralization", "claim": "catches certain render/ lifecycle errors in descendants", "confusedWith": null}
+      ],
+      "credits": [],
+      "categories": ["wrongConclusionPlausibleReason", "absoluteVsQualified", "fluentButWrong", "confidentlyWrong", "misconceptionParaphrase", "negation", "novelVocabulary"],
+      "paraphraseGroup": null,
+      "notes": "From the true premise that a boundary catches its children's errors it concludes that every error, even in click handlers and timers, is caught and nothing can crash the app, overgeneralizing 'certain render/lifecycle errors'."
+    },
+    {
+      "id": "X-07",
+      "document": "Mobile Mastery",
+      "concept": "Error boundary",
+      "page": null,
+      "text": "Error boundaries work like fuses in a house: one circuit shorts, that room goes dark, not the whole building. Wrap part of the React tree in one, and if something in there throws while rendering, only that part shows a fallback. They won't catch every error though, just certain render or lifecycle ones.",
+      "state": "understood",
+      "misconceptions": [],
+      "credits": [
+        "catches certain render/ lifecycle errors in descendants",
+        "One broken widget should not necessarily"
+      ],
+      "categories": ["analogy", "novelExample", "paraphrase", "novelVocabulary", "absoluteVsQualified", "negation"],
+      "paraphraseGroup": null,
+      "notes": "A fuse-box analogy plus a plain statement cover both rubric ideas, that only the failing subtree shows a fallback instead of the whole app and that only certain rendering/lifecycle errors are caught, with nothing wrong."
+    },
+    {
+      "id": "X-08",
+      "document": "Mobile Mastery",
+      "concept": "Unit test",
+      "page": null,
+      "text": "Unit test is when you test one small function alone, so it never can touch a real dependancy: every thing it uses must be always mocked, the database, the clock, other classes, everything. If not, is not a unit test anymore.",
+      "state": "misconception",
+      "misconceptions": [
+        {"kind": "overgeneralization", "claim": "small behavior, usually with controlled dependencies", "confusedWith": null}
+      ],
+      "credits": [],
+      "categories": ["wrongConclusionPlausibleReason", "absoluteVsQualified", "confidentlyWrong", "misconceptionParaphrase", "negation", "typos", "nonNativeEnglish", "novelVocabulary"],
+      "paraphraseGroup": null,
+      "notes": "It reasons from 'one small function alone' to the rule that every dependency must always be mocked, turning the source's 'usually with controlled dependencies' into an absolute."
+    },
+    {
+      "id": "X-09",
+      "document": "Mobile Mastery",
+      "concept": "Unit test",
+      "page": null,
+      "text": "Its a test for one small peice of behaviour, like checking calculateTotal([10,5]) gives 15. You usually swap the real dependencies (db, network) for fakes so you're only testing that bit of logic in isolation.",
+      "state": "mostlyUnderstood",
+      "misconceptions": [],
+      "credits": [
+        "A focused test of a small behavior"
+      ],
+      "categories": ["typos", "paraphrase", "novelVocabulary", "absoluteVsQualified", "partiallyCorrect"],
+      "paraphraseGroup": null,
+      "notes": "The focused test of one small behaviour with dependencies usually faked is right, but the purpose (fast feedback on logic and edge cases) is never given, so it stops at mostly understood."
+    },
+    {
+      "id": "X-10",
+      "document": "Mobile Mastery",
+      "concept": "Open/Closed Principle",
+      "page": null,
+      "text": "Open/closed means adding new behaviour by extending, like plugging in a new class, instead of editing the core switch again and again. People say it lowers regression risk, but I reckon that's just correlation: teams using it are more senior and would have fewer regressions anyway. The principle itself doesn't reduce anything.",
+      "state": "misconception",
+      "misconceptions": [
+        {"kind": "contradiction", "claim": "It can reduce regression risk", "confusedWith": null}
+      ],
+      "credits": [
+        "new behavior through extension without repeatedly modifying"
+      ],
+      "categories": ["causeVsCorrelation", "misconceptionParaphrase", "negation", "paraphrase", "novelVocabulary"],
+      "paraphraseGroup": null,
+      "notes": "Extension instead of repeatedly editing central logic is right, but it recasts the source's causal claim that the principle can reduce regression risk as mere correlation with senior teams and denies any effect."
+    },
+    {
+      "id": "X-11",
+      "document": "Mobile Mastery",
+      "concept": "Encapsulation",
+      "page": null,
+      "text": "Think of a vending machine: you get a coin slot and some buttons, but you can't reach in and rearrange the snacks. Encapsulation is that for code: the class keeps its guts private and only offers the few actions callers need, like cart.addItem() instead of pushing into cart.items directly.",
+      "state": "mostlyUnderstood",
+      "misconceptions": [],
+      "credits": [
+        "expose only the operations consumers need"
+      ],
+      "categories": ["analogy", "novelExample", "paraphrase", "novelVocabulary", "partiallyCorrect", "negation"],
+      "paraphraseGroup": null,
+      "notes": "Hiding internals and offering only the operations callers need is right (vending-machine analogy), but it never says why, i.e. keeping distant code from depending on fragile details, so the purpose is missing."
+    },
+    {
+      "id": "X-12",
+      "document": "Mobile Mastery",
+      "concept": "Cohesion",
+      "page": null,
+      "text": "Cohesion is how well the jobs inside one module fit together. When they fit, the module is easier to read and maintain. I know that from my old job: our cohesive modules were also the ones with the fewest bugs, so clearly the cohesion is what made them easy to work with.",
+      "state": "weakReasoning",
+      "misconceptions": [],
+      "credits": [
+        "responsibilities inside one module belong together",
+        "High cohesion makes modules easier to understand"
+      ],
+      "categories": ["causeVsCorrelation", "rightConclusionWrongReasoning", "paraphrase", "novelVocabulary"],
+      "paraphraseGroup": null,
+      "notes": "The definition and the maintainability conclusion are right, but the only support is that cohesive modules also had fewer bugs, a co-occurrence taken as proof of cause, so weak reasoning is the less generous and fitting label."
+    },
+    {
+      "id": "X-13",
+      "document": "Mobile Mastery",
+      "concept": "Declaration file (.d.ts)",
+      "page": null,
+      "text": "The .d.ts is a file for TypeScript where are the types of one library. When you install a library of JavaScript you need also this file, and then it works better with the compiler.",
+      "state": "fragile",
+      "misconceptions": [],
+      "credits": [],
+      "categories": ["nonNativeEnglish", "pronounAmbiguity", "partiallyCorrect"],
+      "paraphraseGroup": null,
+      "notes": "It links the file to a JavaScript library's types and the compiler but never says it holds declarations without implementation or what it describes, and 'it works better' is vague, so the central idea is only gestured at."
+    },
+    {
+      "id": "X-14",
+      "document": "Mobile Mastery",
+      "concept": "Declaration file (.d.ts)",
+      "page": null,
+      "text": "A .d.ts file just has type declerations, no real implementation inside. Thats because the bundler strips the function bodies out when minifying, to keep the bundle small, so only the types are left for the compiler.",
+      "state": "weakReasoning",
+      "misconceptions": [],
+      "credits": [
+        "type declarations without runtime implementation"
+      ],
+      "categories": ["rightConclusionWrongReasoning", "typos", "novelVocabulary", "negation", "partiallyCorrect"],
+      "paraphraseGroup": null,
+      "notes": "Right that a .d.ts holds only type declarations with no implementation, but the reason given, a bundler stripping function bodies when minifying, is invented and unsupported by the source."
+    },
+    {
+      "id": "X-15",
+      "document": "Mobile Mastery",
+      "concept": "Open/Closed Principle",
+      "page": null,
+      "text": "Open/closed is just the O in SOLID.",
+      "state": "insufficient",
+      "misconceptions": [],
+      "credits": [],
+      "categories": ["terse", "irrelevantPlausible"],
+      "paraphraseGroup": null,
+      "notes": "Placing the principle in SOLID is true but not what the source teaches here, so nothing shows whether the learner knows about extending instead of modifying central logic."
+    }
+  ]
+}
