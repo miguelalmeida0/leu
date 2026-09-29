@@ -44,15 +44,17 @@ final class ZZSpikeAdapterTests: XCTestCase {
         XCTAssertTrue(failed.contains("reading") && failed.contains("state"), "\(failed)")
     }
 
-    /// C4 (amended): whether the check confirms the wrong reason (committed weak reasoning) or not (asked),
+    /// C4 (amended): whether the check confirms the wrong reason or not, it is asked about (dev12),
     /// the next question asks how the conclusion's claim works — the access mechanism's family — never the
     /// purpose claim, and no mastery is recorded.
     func testC4NextQuestionTargetsTheBrokenMechanism() throws {
         let careful = S.canonicalRecords()["C4"]!
-        let (committed, failedCommitted) = try check("C4", careful, .d)
-        XCTAssertEqual(failedCommitted, [])
-        XCTAssertFalse(committed.judged.asksProbe)
-        XCTAssertEqual(committed.nextClaims, [S.closureDefinition])
+        let (confirmed, failedConfirmed) = try check("C4", careful, .d)
+        XCTAssertEqual(failedConfirmed, [])
+        XCTAssertEqual(confirmed.judged.state, "weakReasoning")
+        XCTAssertTrue(confirmed.judged.asksProbe, "a wrong reason is asked about, never committed (dev12)")
+        XCTAssertEqual(confirmed.judged.probeClaims, [S.closureDefinition])
+        XCTAssertFalse(confirmed.judged.recordsMastery)
         let unconfirmed = S.record("C4", [S.label(1, S.closureDefinition, "entails"), S.label(2, S.closureRetain, "contradicts", role: "reason", misconception: "m1")],
                                    links: [SpikeLink(reason: 2, conclusion: 1)], opinion: S.check("correct"))
         let (asked, failed) = try check("C4", unconfirmed, .d)

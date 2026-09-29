@@ -330,4 +330,33 @@ sections they name.
 
 ## Deviations log
 
-None.
+Recorded during the Mac development loop (2026-09-29), before any freeze and before any look at a blind
+set. Each was made on P and C only; the evidence is in `dev-log/`.
+
+* **D1 — Harness defect fixed (§10).** Foundation Models rejects an array schema bounded `0…1`, so every
+  one-segment reading failed (`ModelManagerError 1032`). `links` is bounded `0…max(k, 2)` (dev01).
+* **D2 — The second opinion is redesigned** (§2 "a differently worded second opinion"). The approved
+  pairwise prompt answered "opposite" to nearly every pair on the real model (dev01). D's second opinion
+  is now a **whole-answer check** (correct · vague · mistaken · flawedReason) and, when it finds the answer
+  wrong, a **locator** (segment, what the source says instead, likely mistake, kind, claim; may answer
+  "none"). The pairwise prompt is no longer called. A third, differently worded credit check was tried
+  and rejected (dev10).
+* **D3 — The reading is two model calls.** The row call (relation spelled correct · vague · mistaken ·
+  unrelated on the wire, mapped back to the contract; polarity first) and the locator's placement merged
+  into the recorded reading; the raw rows are kept in `rows`. Calls run in sequence.
+* **D4 — Reason → conclusion links come from the answer's discourse markers** (because · since · due to ·
+  so · therefore · thus · hence · consequently · which means · that's why · as a result), exported with
+  the input; C and D use only these (the model's own links linked everything to everything).
+* **D5 — Checks added** (DEV_LOOP allowed pruning only): V11 (partial entailment is never firm), P1 (a
+  premise of a wrong conclusion earns nothing), F1 (claim families), V3–V6 verified against the claim
+  family's core claim, and D's agreement rules. At the owner's instruction (risks 1–4, 2026-09-29).
+* **D6 — The adapter records credit on claim families and caps the level** when the essential idea (the
+  definition's family) is not fully covered. The judge, planner and evidence mapper are unchanged; the
+  sealed36 baselines reproduce exactly after every change.
+* **D7 — Answer keys:** kind before sentence; a candidate restating a claim is dropped; the self-check is
+  the whole-answer check reading the candidate as a student answer (the pairwise check kept 22 true claims
+  as "mistakes" on P).
+* **D8 — Misconception memory** (`ZZSpikeMemory.swift`) is new, in the spike write path only.
+
+**Known risks to the gates from development evidence:** greedy decoding is not deterministic on this
+runtime (G14), and latency swings 2–3× with Apple Intelligence background work on the same machine (G16).

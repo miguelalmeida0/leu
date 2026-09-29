@@ -120,6 +120,28 @@ cd ../.. && python3 spikes/v37/score/stats.py summary spikes/v37/scores/P-mac-de
 C (canonical) is the same with `cases/canonical.json`, set `C`, and inputs `inputs/C.json`. The
 score prints `SPIKE-CANONICAL|<config>|C1…C5|PASS/FAIL` lines.
 
+## The Mac development loop as run (2026-09-29)
+
+The pipeline changed during development (PREREGISTRATION, deviations D1–D8). One answer is read in
+sequence: the row reading, then the whole-answer check, then — only when the check finds the answer wrong —
+the locator. Scripts, run from the repository root:
+
+```
+spikes/v37/runner/iterate.sh NN      # read P once and C three times, score, print B/C/D and canonical
+spikes/v37/runner/evaluate.sh NN     # the same configuration: P three times and C three times, with a load log
+spikes/v37/runner/score.sh P|C LABEL # score one run (ZZSpikeScoreRun)
+python3 spikes/v37/score/devlog.py NN          # the metrics block of dev-log/NN.md
+python3 spikes/v37/score/repeat.py LABEL…      # repeated runs: per run, mean, run-to-run consistency, latency
+python3 spikes/v37/score/classes.py LABEL      # D's outcomes by gold, check verdict and locator
+python3 spikes/v37/score/diagnose.py P LABEL D --wrong   # per-case labels (open sets only)
+python3 spikes/v37/score/freeze.py             # writes FREEZE.txt (clean tree, at the frozen commit)
+```
+
+* `SPIKE_DEBUG_ERRORS=1` prints the SDK's own error text on stderr (never learner text).
+* `SPIKE_PARALLEL=1` runs the reading alongside the check and locator (slower: the calls contend).
+* **Latency depends on the machine's own Apple Intelligence work** (`textunderstandingd`,
+  `mediaanalysisd`, `mobileassetd`): measure on a quiet machine and keep the load log.
+
 ## Blind sets (the gate and sealed36): Steps 4–5 only, never before the freeze
 
 * **Decryption and export.** The gate is decrypted only at the frozen-run step, into a temporary

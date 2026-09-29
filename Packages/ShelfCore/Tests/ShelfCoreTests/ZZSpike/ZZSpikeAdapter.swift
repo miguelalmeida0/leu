@@ -25,9 +25,6 @@ enum SpikeAdapter {
         let nextClaims: [String]
     }
 
-    /// The same words the judge's own weak-reasoning rule looks for (`JudgementReading.reason`, private there).
-    static let judgeReasonMarker = try! NSRegularExpression(pattern: #"(?i)\b(?:because|since|as a result|that's why|which means|due to)\b"#)
-
     static func judge(_ input: GeneralizationEvaluation.Input, spike: SpikeInput, record: SpikeRecord?, key: SpikeAnswerKey?,
                       config: SpikeConfig) -> Outcome {
         func tier0(_ reason: Fallback) -> Outcome {
@@ -111,18 +108,11 @@ enum SpikeAdapter {
             // A premise offered for a wrong conclusion (risk 3) is evidence of nothing on its own.
             if s.premiseOf != nil { emit(s.text, .noise); continue }
             if s.reasonOf != nil {
-                if s.reasonConfirmed {
-                    // A wrong reason behind a credited conclusion: an unsupported clause that gives a reason,
-                    // which the judge's own rule commits as weak reasoning. A reason marked only by ", so" or
-                    // by its role has no marker of its own, so its signal carries "because".
-                    let range = NSRange(s.text.startIndex..., in: s.text)
-                    let marked = judgeReasonMarker.firstMatch(in: s.text, range: range) != nil
-                    issues.append(UnderstandingIssue(kind: .unsupported, learnerText: s.text))
-                    emit(s.text, .unsupported, signalText: marked ? s.text : "because " + s.text)
-                } else {
-                    // Not confirmed: unless both readers take it to be true, the reason is not settled and the judge asks.
-                    emit(s.text, .noise, reason: ReasonReading(text: s.text, supported: s.reasonSupported))
-                }
+                // A reason given for a credited conclusion (dev12). Unless both readers take it to be true, it is
+                // an unsettled reason: the judge states weak reasoning and asks where it breaks (C4: no mastery, a
+                // mechanism-targeted question). Confirmed wrong or merely unconfirmed, it is asked, never committed:
+                // committed, it wrote weak reasoning over three misconceptions whose false premise was the reason.
+                emit(s.text, .noise, reason: ReasonReading(text: s.text, supported: s.reasonSupported))
                 continue
             }
             if let coverage = s.credit, let claim {
