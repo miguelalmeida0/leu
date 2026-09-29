@@ -25,10 +25,17 @@ struct SpikeChecked {
         /// D: both readers take this reason to be true (the row reads it as correct and the check calls the
         /// answer correct), so it is a settled reason, not one to ask about.
         var reasonSupported = false
+        /// The heuristic checks (lexical V3–V7, self-reported confidence V10) that made this label tentative or
+        /// doubtful. D restores the label when the independent readers agree (dev13): these heuristics and the
+        /// row's self-reports were the least stable and least informative evidence.
+        var softDowngrades: Set<String> = []
         /// The claim the model tied the segment to (its claim, or the claim its mistake contradicts),
         /// kept when a wrong reason is folded into its conclusion: the claim a repair question asks about.
         var named: String?
         var confidence = "high"
+        /// The segment restates the negated claim it names without the negation ("it is encrypted" for "not
+        /// automatically encrypted"): contradiction evidence, never credit (dev14; V35's unexpressed negation).
+        var omittedNegation = false
         /// The core claim whose family `claimID` belongs to (risk 1): what coverage and credit count for.
         var familyID: String?
         /// The conclusion this segment was offered as a premise for, when that conclusion is wrong (risk 3).
@@ -145,6 +152,13 @@ enum SpikeChecks {
             if s.credit != nil, ["hedge", "filler"].contains(s.role) {
                 s.credit = nil; s.creditFirm = false; s.claimID = nil; checked.fired.append("V2")
             }
+            // V3a (dev14): an affirmative segment credited with a negated claim restates what the source denies.
+            // Checked against the named claim itself: no family member rescues it, and agreement does not override it.
+            if s.credit != nil, let id = s.claimID, let claim = claims[id], profile.negationCount == 0,
+               claim.negated || LexicalProfile(claim.evidence.text).negationCount > 0 {
+                s.omittedNegation = true; s.credit = nil; s.creditFirm = false
+                checked.fired.append("V3a")
+            }
             if s.credit != nil, let id = s.claimID, claims[id] != nil {
                 // V3–V6 against the claim's family (risk 1): a credit on a supporting claim stands when the
                 // family's core claim — the authoritative wording — raises no conflict, even if the supporting
@@ -175,14 +189,16 @@ enum SpikeChecks {
             // V10: what the model itself calls a low-confidence label is never written firmly.
             if s.confidence == "low" {
                 if s.creditFirm { mark(&s, "V10", &checked) }
-                if s.wrong != nil, s.wrongFirm { s.wrongFirm = false; checked.fired.append("V10") }
+                if s.wrong != nil, s.wrongFirm { s.wrongFirm = false; s.softDowngrades.insert("V10"); checked.fired.append("V10") }
             }
             checked.segments[index] = s
         }
         // V7: credit resting only on vague or very short (≤ 3 content words) segments is tentative.
         for index in checked.segments.indices {
             let s = checked.segments[index]
-            guard let id = s.claimID, s.credit != nil, s.creditFirm, !strongSupport.contains(id) else { continue }
+            guard let id = s.claimID, s.credit != nil, !strongSupport.contains(id) else { continue }
+            checked.segments[index].softDowngrades.insert("V7")
+            guard s.creditFirm else { continue }
             checked.segments[index].creditFirm = false
             checked.fired.append("V7")
         }
@@ -230,6 +246,7 @@ enum SpikeChecks {
     }
 
     static func mark(_ segment: inout SpikeChecked.Segment, _ check: String, _ checked: inout SpikeChecked) {
+        if segment.credit != nil { segment.softDowngrades.insert(check) }
         guard segment.creditFirm else { return }
         segment.creditFirm = false
         checked.fired.append(check)

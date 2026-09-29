@@ -126,10 +126,15 @@ enum SpikeRows {
             for (name, cases) in tally.judged {
                 guard let judged = cases[item.id] else { continue }
                 var entry: [String: Any] = ["state": judged.state, "asks": judged.asksProbe, "mastery": judged.recordsMastery,
-                                            "misconception": judged.recordsMisconception, "probeClaims": judged.probeClaims]
+                                            "misconception": judged.recordsMisconception, "credit": judged.recordsCredit,
+                                            "probeClaims": judged.probeClaims]
                 if let outcome = tally.outcomes[name]?[item.id] {
                     entry["fallback"] = outcome.fallback.rawValue
                     entry["fired"] = outcome.checked?.fired ?? []
+                    if let facets = outcome.facets {
+                        entry["reasoningFacet"] = facets.reasoning.rawValue
+                        entry["misconceptionFacet"] = facets.misconceptions
+                    }
                 }
                 row[name] = entry
             }

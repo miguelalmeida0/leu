@@ -81,6 +81,17 @@ enum SpikeComposition {
         let locate = opinion?.items.first { $0.kind == "locate" }
         let placed = (locate?.segment ?? 0) > 0 ? locate!.segment : nil
         let wrongAnswer = answer == "mistaken" || answer == "flawedReason"
+        // Agreement outranks heuristics (dev13): a label the independent check agrees with is not held back by
+        // the lexical checks or the row's self-reported confidence, the least stable evidence across runs.
+        // V2, V9 (grounding) and V11 (partial) still bind.
+        let heuristics: Set<String> = ["V3", "V4", "V5", "V6", "V7", "V10"]
+        for index in checked.segments.indices {
+            var s = checked.segments[index]
+            guard !s.softDowngrades.isEmpty, s.softDowngrades.isSubset(of: heuristics) else { continue }
+            if answer == "correct", s.credit == .covered, !s.creditFirm { s.creditFirm = true; checked.fired.append("D-agree") }
+            if wrongAnswer, s.n == placed, s.wrong != nil, !s.wrongFirm { s.wrongFirm = true; checked.fired.append("D-agree") }
+            checked.segments[index] = s
+        }
         let wrongReasonPlaced = wrongAnswer && placed.map { checked.segments[$0 - 1].reasonOf != nil } == true
         for index in checked.segments.indices {
             var s = checked.segments[index]

@@ -23,6 +23,8 @@ enum SpikeAdapter {
         let assessment: UnderstandingAssessment?
         /// The claims the one next question asks about, whether or not the judgement waits for it.
         let nextClaims: [String]
+        /// Claim, reasoning and misconception state, kept apart (dev13).
+        var facets: SpikeFacets? { checked.map(SpikeFacets.init) }
     }
 
     static func judge(_ input: GeneralizationEvaluation.Input, spike: SpikeInput, record: SpikeRecord?, key: SpikeAnswerKey?,
@@ -88,14 +90,15 @@ enum SpikeAdapter {
             best[id] = (coverage, text)
         }
         func emit(_ text: String, _ verdict: StatementVerdict, claim: String? = nil, recall: Double = 0, distinctive: Int = 0,
-                  conflict: Double = 0, rival: ConceptKey? = nil, reason: ReasonReading? = nil, signalText: String? = nil) {
+                  conflict: Double = 0, rival: ConceptKey? = nil, reason: ReasonReading? = nil, signalText: String? = nil,
+                  negationOmitted: Bool = false) {
             let tier: EvidenceTier? = claim == nil ? nil : .lexical
             statements.append(StatementDiagnosis(learnerText: text, verdict: verdict, claimID: claim, tier: tier, matchedTerms: [], missingTerms: []))
             var signal = ClauseSignal(text: signalText ?? text, verdict: verdict, claimID: claim, recall: recall, precision: recall > 0 ? 1 : 0,
                                       distinctive: distinctive, rival: rival, rivalPrecision: rival == nil ? 0 : 0.6,
                                       rivalMatched: rival == nil ? 0 : 2, ownPrecision: rival == nil ? 1 : 0.1, conflictOverlap: conflict,
-                                      unexpressedNegation: false, words: LexicalProfile(text).words.count)
-            if let claim, [.supports, .partiallySupports, .restates, .overgeneralizes].contains(verdict) {
+                                      unexpressedNegation: negationOmitted, words: LexicalProfile(text).words.count)
+            if let claim, !negationOmitted, [.supports, .partiallySupports, .restates, .overgeneralizes].contains(verdict) {
                 signal.credited[claim] = (recall, distinctive)
             }
             signal.reason = reason
@@ -113,6 +116,19 @@ enum SpikeAdapter {
                 // mechanism-targeted question). Confirmed wrong or merely unconfirmed, it is asked, never committed:
                 // committed, it wrote weak reasoning over three misconceptions whose false premise was the reason.
                 emit(s.text, .noise, reason: ReasonReading(text: s.text, supported: s.reasonSupported))
+                continue
+            }
+            // A reason clause the reading could not credit — unmatched, or restating a negated claim — is a reason
+            // to ask about (dev14): the row's claim choice for it varied by run, and either way it is the reasoning
+            // that is in doubt. As an unsupported clause it was also committed by the judge's own rule (P2-22).
+            let reasonClause = SpikeSegmenter.leadingMarker(s.text).map(SpikeSegmenter.introducesReason.contains) ?? false
+            if reasonClause, s.credit == nil, s.wrong == nil {  // not folded: handled above when it is
+                emit(s.text, .noise, reason: ReasonReading(text: s.text, supported: false)); continue
+            }
+            // An omitted negation: the judge's own rule weighs it as a possible misconception and asks (dev14).
+            if s.omittedNegation, let named = s.claimID {
+                issues.append(UnderstandingIssue(kind: .unsupported, learnerText: s.text))
+                emit(s.text, .partiallySupports, claim: named, recall: 0.5, distinctive: 1, negationOmitted: true)
                 continue
             }
             if let coverage = s.credit, let claim {

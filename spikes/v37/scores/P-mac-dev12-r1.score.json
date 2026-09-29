@@ -4618,6 +4618,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4627,6 +4628,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4636,6 +4638,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -4649,6 +4652,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -4666,6 +4670,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -4685,6 +4690,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4694,6 +4700,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4703,6 +4710,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -4716,6 +4724,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -4734,6 +4743,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -4753,6 +4763,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4763,6 +4774,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4772,6 +4784,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -4785,6 +4798,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -4801,6 +4815,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -4820,6 +4835,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4829,6 +4845,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4838,6 +4855,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -4851,6 +4869,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -4872,6 +4891,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -4894,6 +4914,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4903,6 +4924,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4912,6 +4934,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -4925,6 +4948,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3"
@@ -4943,6 +4967,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -4965,6 +4990,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4974,6 +5000,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -4983,6 +5010,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -4996,6 +5024,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -5013,6 +5042,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "D-credit"
@@ -5032,6 +5062,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5042,6 +5073,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5052,6 +5084,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -5065,6 +5098,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -5083,6 +5117,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -5102,6 +5137,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5111,6 +5147,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5120,6 +5157,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -5133,6 +5171,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -5152,6 +5191,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -5171,6 +5211,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5180,6 +5221,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5189,6 +5231,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -5202,6 +5245,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -5220,6 +5264,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "D-credit"
@@ -5239,6 +5284,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5248,6 +5294,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5257,6 +5304,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -5270,6 +5318,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -5288,6 +5337,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1",
@@ -5308,6 +5358,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5318,6 +5369,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5328,6 +5380,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -5341,6 +5394,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9"
@@ -5357,6 +5411,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9"
@@ -5376,6 +5431,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5385,6 +5441,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5394,6 +5451,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -5407,6 +5465,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V3"
@@ -5425,6 +5484,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -5445,6 +5505,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5454,6 +5515,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5463,6 +5525,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -5476,6 +5539,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -5497,6 +5561,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -5519,6 +5584,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5529,6 +5595,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5538,6 +5605,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1",
@@ -5553,6 +5621,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -5576,6 +5645,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -5602,6 +5672,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5611,6 +5682,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5620,6 +5692,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -5633,6 +5706,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3"
@@ -5651,6 +5725,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -5673,6 +5748,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5682,6 +5758,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5691,6 +5768,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1",
@@ -5705,6 +5783,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -5726,6 +5805,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -5749,6 +5829,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5758,6 +5839,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5767,6 +5849,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -5780,6 +5863,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9",
@@ -5799,6 +5883,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9",
@@ -5822,6 +5907,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5831,6 +5917,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5840,6 +5927,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -5853,6 +5941,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -5871,6 +5960,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -5894,6 +5984,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5903,6 +5994,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5912,6 +6004,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -5925,6 +6018,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -5944,6 +6038,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -5970,6 +6065,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5979,6 +6075,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -5988,6 +6085,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -6001,6 +6099,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -6018,6 +6117,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -6037,6 +6137,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -6046,6 +6147,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -6055,6 +6157,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -6068,6 +6171,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -6085,6 +6189,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -6104,6 +6209,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6114,6 +6220,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6124,6 +6231,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -6137,6 +6245,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -6153,6 +6262,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -6172,6 +6282,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6181,6 +6292,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6190,6 +6302,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -6203,6 +6316,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -6222,6 +6336,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -6241,6 +6356,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6251,6 +6367,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6260,6 +6377,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -6273,6 +6391,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -6293,6 +6412,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -6317,6 +6437,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6326,6 +6447,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6335,6 +6457,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "P1"
@@ -6348,6 +6471,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -6366,6 +6490,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -6388,6 +6513,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6397,6 +6523,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6406,6 +6533,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -6419,6 +6547,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -6439,6 +6568,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -6462,6 +6592,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6472,6 +6603,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6482,6 +6614,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -6495,6 +6628,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -6515,6 +6649,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -6539,6 +6674,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6548,6 +6684,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6557,6 +6694,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -6570,6 +6708,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8"
@@ -6587,6 +6726,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -6609,6 +6749,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6618,6 +6759,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6627,6 +6769,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -6640,6 +6783,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9"
@@ -6657,6 +6801,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9",
@@ -6677,6 +6822,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6686,6 +6832,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6695,6 +6842,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -6708,6 +6856,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -6728,6 +6877,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -6751,6 +6901,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6760,6 +6911,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6769,6 +6921,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -6782,6 +6935,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9"
@@ -6799,6 +6953,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9"
@@ -6818,6 +6973,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6827,6 +6983,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6836,6 +6993,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -6849,6 +7007,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7"
@@ -6865,6 +7024,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7"
@@ -6884,6 +7044,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6893,6 +7054,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6902,6 +7064,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -6915,6 +7078,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3"
@@ -6932,6 +7096,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -6954,6 +7119,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6963,6 +7129,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -6972,6 +7139,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -6985,6 +7153,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9"
@@ -7001,6 +7170,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9"
@@ -7020,6 +7190,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7029,6 +7200,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7038,6 +7210,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7051,6 +7224,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V5",
@@ -7069,6 +7243,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V5",
@@ -7089,6 +7264,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7098,6 +7274,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7107,6 +7284,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7120,6 +7298,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7137,6 +7316,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "D-credit"
@@ -7156,6 +7336,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7165,6 +7346,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7174,6 +7356,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7187,6 +7370,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7205,6 +7389,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "D-credit",
@@ -7228,6 +7413,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7237,6 +7423,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7246,6 +7433,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -7259,6 +7447,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3"
@@ -7275,6 +7464,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -7297,6 +7487,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7306,6 +7497,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7315,6 +7507,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7328,6 +7521,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9"
@@ -7345,6 +7539,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9",
@@ -7365,6 +7560,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7374,6 +7570,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7383,6 +7580,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7396,6 +7594,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7"
@@ -7412,6 +7611,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -7432,6 +7632,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7442,6 +7643,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7452,6 +7654,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7465,6 +7668,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7"
@@ -7485,6 +7689,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -7505,6 +7710,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7514,6 +7720,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7523,6 +7730,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7536,6 +7744,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7554,6 +7763,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7573,6 +7783,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7582,6 +7793,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7591,6 +7803,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -7604,6 +7817,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -7622,6 +7836,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -7641,6 +7856,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : false,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -7650,6 +7866,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : false,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -7659,6 +7876,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -7672,6 +7890,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V10"
@@ -7691,6 +7910,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V10"
@@ -7710,6 +7930,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : false,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -7719,6 +7940,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : false,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -7728,6 +7950,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -7741,6 +7964,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -7757,6 +7981,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -7776,6 +8001,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : false,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -7785,6 +8011,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : false,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -7794,6 +8021,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -7807,6 +8035,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -7824,6 +8053,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -7843,6 +8073,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -7852,6 +8083,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -7861,6 +8093,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -7874,6 +8107,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -7892,6 +8126,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -7911,6 +8146,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -7920,6 +8156,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -7929,6 +8166,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7942,6 +8180,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7961,6 +8200,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -7980,6 +8220,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7989,6 +8230,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -7998,6 +8240,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8011,6 +8254,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V4",
@@ -8032,6 +8276,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V4",
@@ -8054,6 +8299,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8063,6 +8309,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8072,6 +8319,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -8085,6 +8333,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V4",
@@ -8106,6 +8355,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V4",
@@ -8128,6 +8378,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8137,6 +8388,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8146,6 +8398,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8159,6 +8412,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8176,6 +8430,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8195,6 +8450,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -8204,6 +8460,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -8213,6 +8470,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -8226,6 +8484,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -8244,6 +8503,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -8263,6 +8523,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8272,6 +8533,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8281,6 +8543,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8294,6 +8557,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7"
@@ -8311,6 +8575,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -8333,6 +8598,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8342,6 +8608,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8351,6 +8618,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -8364,6 +8632,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -8381,6 +8650,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -8400,6 +8670,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8409,6 +8680,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8418,6 +8690,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8431,6 +8704,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -8451,6 +8725,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -8474,6 +8749,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -8483,6 +8759,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -8492,6 +8769,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8505,6 +8783,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -8525,6 +8804,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -8548,6 +8828,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8557,6 +8838,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8566,6 +8848,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8579,6 +8862,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7"
@@ -8597,6 +8881,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -8617,6 +8902,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8626,6 +8912,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8635,6 +8922,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8648,6 +8936,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8665,6 +8954,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "D-credit"
@@ -8684,6 +8974,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8693,6 +8984,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8702,6 +8994,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -8715,6 +9008,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -8732,6 +9026,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -8751,6 +9046,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8760,6 +9056,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8769,6 +9066,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8782,6 +9080,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8802,6 +9101,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8821,6 +9121,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8830,6 +9131,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8839,6 +9141,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8852,6 +9155,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7"
@@ -8868,6 +9172,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -8888,6 +9193,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -8897,6 +9203,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -8906,6 +9213,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -8919,6 +9227,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8"
@@ -8939,6 +9248,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8"
@@ -8958,6 +9268,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -8967,6 +9278,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : true,
         "probeClaims" : [
@@ -8976,6 +9288,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -8989,6 +9302,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9012,6 +9326,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9039,6 +9354,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9048,6 +9364,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9057,6 +9374,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -9070,6 +9388,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3"
@@ -9086,6 +9405,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -9106,6 +9426,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9115,6 +9436,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9124,6 +9446,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -9137,6 +9460,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7"
@@ -9154,6 +9478,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V7",
@@ -9174,6 +9499,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -9183,6 +9509,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -9192,6 +9519,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -9205,6 +9533,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8"
@@ -9226,6 +9555,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8"
@@ -9245,6 +9575,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9254,6 +9585,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9263,6 +9595,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -9276,6 +9609,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9303,6 +9637,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9330,6 +9665,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9340,6 +9676,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9350,6 +9687,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -9363,6 +9701,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9"
@@ -9382,6 +9721,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9",
@@ -9402,6 +9742,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9411,6 +9752,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9420,6 +9762,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -9433,6 +9776,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9456,6 +9800,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9476,6 +9821,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9486,6 +9832,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9496,6 +9843,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -9509,6 +9857,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9531,6 +9880,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9556,6 +9906,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9565,6 +9916,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9574,6 +9926,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -9587,6 +9940,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9612,6 +9966,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9637,6 +9992,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -9646,6 +10002,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -9655,6 +10012,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -9668,6 +10026,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -9692,6 +10051,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -9714,6 +10074,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9723,6 +10084,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9732,6 +10094,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -9745,6 +10108,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9771,6 +10135,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9796,6 +10161,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9806,6 +10172,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9815,6 +10182,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -9828,6 +10196,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -9848,6 +10217,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -9867,6 +10237,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -9876,6 +10247,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : true,
         "misconception" : false,
         "probeClaims" : [
@@ -9885,6 +10257,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -9898,6 +10271,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8"
@@ -9918,6 +10292,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -9940,6 +10315,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9949,6 +10325,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -9958,6 +10335,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "F1"
@@ -9971,6 +10349,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -9993,6 +10372,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V3",
@@ -10013,6 +10393,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -10023,6 +10404,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -10033,6 +10415,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -10046,6 +10429,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8"
@@ -10065,6 +10449,7 @@
       ],
       "D" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8"
@@ -10084,6 +10469,7 @@
     {
       "A" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -10093,6 +10479,7 @@
       },
       "A0" : {
         "asks" : false,
+        "credit" : true,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -10102,6 +10489,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
 
@@ -10115,6 +10503,7 @@
       },
       "C" : {
         "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V8"
@@ -10133,6 +10522,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -10155,6 +10545,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -10165,6 +10556,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -10175,6 +10567,7 @@
       },
       "B" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -10188,6 +10581,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -10209,6 +10603,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V8",
@@ -10232,6 +10627,7 @@
     {
       "A" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -10241,6 +10637,7 @@
       },
       "A0" : {
         "asks" : true,
+        "credit" : false,
         "mastery" : false,
         "misconception" : false,
         "probeClaims" : [
@@ -10250,6 +10647,7 @@
       },
       "B" : {
         "asks" : false,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
 
@@ -10263,6 +10661,7 @@
       },
       "C" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9"
@@ -10280,6 +10679,7 @@
       ],
       "D" : {
         "asks" : true,
+        "credit" : false,
         "fallback" : "none",
         "fired" : [
           "V9"

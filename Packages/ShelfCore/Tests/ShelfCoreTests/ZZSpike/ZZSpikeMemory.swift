@@ -123,3 +123,34 @@ struct SpikeMisconceptionMemory: Codable, Equatable {
         return try decoder.decode(SpikeMisconceptionMemory.self, from: data)
     }
 }
+
+/// What one answer shows, as three independent facets (dev13): the state of each claim family, the state of
+/// the reasoning, and the wrong ideas held. They coexist: a learner can state a claim correctly, justify it
+/// with an invalid mechanism, and hold a separate misconception, all in one answer. The judge still gives one
+/// state for the scorer; these facets are what a learner model can keep apart.
+struct SpikeFacets: Codable, Equatable {
+    enum Reasoning: String, Codable { case none, sound, unsettled, faulty }
+    /// Core-claim family → covered · partial · contradicted, with whether it may be written now.
+    var claims: [String: String] = [:]
+    var firm: Set<String> = []
+    var reasoning: Reasoning = .none
+    /// Claims a wrong idea is firmly held about (the exact claim, core or supporting).
+    var misconceptions: [String] = []
+
+    init(_ checked: SpikeChecked) {
+        for s in checked.segments {
+            guard let family = s.familyID ?? s.claimID else { continue }
+            if s.wrong != nil {
+                claims[family] = "contradicted"
+                if s.wrongFirm { firm.insert(family); if let claim = s.claimID { misconceptions.append(claim) } }
+            } else if let credit = s.credit, claims[family] != "contradicted" {
+                if claims[family] != "covered" { claims[family] = credit == .covered ? "covered" : "partial" }
+                if s.creditFirm { firm.insert(family) }
+            }
+        }
+        let reasons = checked.segments.filter { $0.reasonOf != nil }
+        if reasons.contains(where: { $0.reasonConfirmed }) { reasoning = .faulty }
+        else if reasons.contains(where: { !$0.reasonSupported }) { reasoning = .unsettled }
+        else if !reasons.isEmpty || checked.links.contains(where: { checked.segments[$0.conclusion - 1].credit != nil }) { reasoning = .sound }
+    }
+}

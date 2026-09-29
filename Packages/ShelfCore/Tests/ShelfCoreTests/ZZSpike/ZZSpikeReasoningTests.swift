@@ -47,22 +47,29 @@ final class ZZSpikeReasoningTests: XCTestCase {
     }
 
     /// V10: a label the model itself calls low-confidence is asked about, never written firmly (C, D);
-    /// B trusts the reading as it is.
+    /// B trusts the reading as it is. D (dev13): the row's self-reported confidence does not veto a label both
+    /// independent readers confirm (it was among the least stable outputs across runs); it still binds otherwise.
     func testV10LowConfidenceIsNeverWrittenFirmly() throws {
         let text = "It checks that the person is really who they claim to be."
         let item = S.adHoc(text, concept: "Authentication")
         let unsure = S.record(item.id, [S.label(1, S.authDefinition, "entails", confidence: "low")], opinion: S.check("correct"))
         XCTAssertFalse(try S.judge(item, record: unsure, config: .b).0.judged.asksProbe)
-        for config in [SpikeConfig.c, .d] {
-            let outcome = try S.judge(item, record: unsure, config: config).0
-            XCTAssertTrue(outcome.checked!.fired.contains("V10"), config.rawValue)
-            XCTAssertTrue(outcome.judged.asksProbe)
-            XCTAssertFalse(outcome.judged.recordsMastery)
-        }
+        let checked = try S.judge(item, record: unsure, config: .c).0
+        XCTAssertTrue(checked.checked!.fired.contains("V10"))
+        XCTAssertTrue(checked.judged.asksProbe)
+        XCTAssertFalse(checked.judged.recordsMastery)
+        let agreed = try S.judge(item, record: unsure, config: .d).0
+        XCTAssertTrue(agreed.checked!.fired.contains("D-agree"))
+        XCTAssertFalse(agreed.judged.asksProbe)
+        let disputed = S.record(item.id, [S.label(1, S.authDefinition, "entails", confidence: "low")], opinion: S.check("vague"))
+        XCTAssertTrue(try S.judge(item, record: disputed, config: .d).0.judged.asksProbe, "without agreement V10 binds")
         let denial = S.adHoc("Authentication does not verify identity.", concept: "Authentication")
         let unsureDenial = S.record(denial.id, [S.label(1, S.authDefinition, "contradicts", polarity: "negated", confidence: "low")],
                                     opinion: S.check("mistaken", locate: (1, S.authDefinition, "wrongIdea")))
-        let doubted = try S.judge(denial, record: unsureDenial, config: .d).0
+        XCTAssertEqual(try S.judge(denial, record: unsureDenial, config: .d).0.judged.state, "misconception", "check and locator agree")
+        let elsewhere = S.record(denial.id, [S.label(1, S.authDefinition, "contradicts", polarity: "negated", confidence: "low")],
+                                 opinion: S.check("mistaken", locate: (0, nil, "none")))
+        let doubted = try S.judge(denial, record: elsewhere, config: .d).0
         XCTAssertTrue(doubted.judged.asksProbe)
         XCTAssertFalse(doubted.judged.recordsMisconception)
         let invalid = S.record(item.id, [S.label(1, S.authDefinition, "entails", confidence: "certain")])

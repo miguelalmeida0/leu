@@ -17,6 +17,7 @@
       "V9" : 13
     },
     "D" : {
+      "D-agree" : 8,
       "D-cap" : 25,
       "D-credit" : 43,
       "D-unplaced" : 1,
@@ -51,7 +52,7 @@
     }
   },
   "inputsMismatched" : 0,
-  "label" : "P-mac-dev12-r3",
+  "label" : "P-mac-dev13h-r3",
   "latency" : [
     {
       "cold" : true,
@@ -3063,7 +3064,7 @@
         "coarseRight" : true,
         "exactRight" : true,
         "reasoningIssue" : false,
-        "signature" : "understood|true|false|false"
+        "signature" : "understood|false|true|false"
       },
       "gd-016" : {
         "coarseRight" : true,
@@ -3249,7 +3250,7 @@
         "coarseRight" : true,
         "exactRight" : true,
         "reasoningIssue" : false,
-        "signature" : "understood|true|false|false"
+        "signature" : "understood|false|true|false"
       },
       "gd-105" : {
         "coarseRight" : false,
@@ -3471,7 +3472,7 @@
         "coarseRight" : true,
         "exactRight" : true,
         "reasoningIssue" : false,
-        "signature" : "understood|true|false|false"
+        "signature" : "understood|false|true|false"
       },
       "X-08" : {
         "coarseRight" : true,
@@ -4400,13 +4401,13 @@
       "weakReasoningDetected" : 1
     },
     "D" : {
-      "brier" : 0.21781249999999991,
+      "brier" : 0.2058124999999999,
       "cases" : 80,
       "coarseRight" : 60,
       "coarseStableGroups" : 0,
-      "committed" : 34,
-      "committedRight" : 30,
-      "ece" : 0.19125,
+      "committed" : 37,
+      "committedRight" : 33,
+      "ece" : 0.17624999999999988,
       "exact" : 39,
       "falseAlarm" : 1,
       "falseMastery" : 3,
@@ -4418,7 +4419,7 @@
       "goldWeakReasoning" : 13,
       "groups" : 1,
       "harmfulWrites" : 5,
-      "masteryCredited" : 13,
+      "masteryCredited" : 16,
       "misconceptionCredited" : 1,
       "misconceptionProbed" : 10,
       "misconceptionRecorded" : 17,
@@ -4594,7 +4595,7 @@
         },
         "understood" : {
           "n" : 11,
-          "probed" : 4,
+          "probed" : 1,
           "right" : 10
         },
         "weakReasoning" : {
@@ -4604,7 +4605,7 @@
         }
       },
       "predictedWeakReasoning" : 3,
-      "probes" : 46,
+      "probes" : 43,
       "stableGroups" : 0,
       "targetedProbes" : 2,
       "unavailable" : 0,
@@ -4643,9 +4644,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -4657,9 +4662,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -4675,9 +4684,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "gold" : "understood",
@@ -4715,9 +4728,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-3cf9b2257ac2f198"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "C" : {
@@ -4729,9 +4746,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-3cf9b2257ac2f198"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "categories" : [
@@ -4748,9 +4769,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "gold" : "understood",
@@ -4789,9 +4814,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-6589842cf9f75b65"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -4803,9 +4832,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-6589842cf9f75b65"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -4820,9 +4853,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-6589842cf9f75b65"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -4860,9 +4897,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "C" : {
@@ -4876,9 +4917,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-caffc41a1629fcff"
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -4887,19 +4932,26 @@
         "novelVocabulary"
       ],
       "D" : {
-        "asks" : true,
-        "credit" : false,
+        "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V3",
           "V3",
-          "V3"
+          "V3",
+          "D-agree",
+          "D-agree",
+          "D-agree"
         ],
-        "mastery" : false,
+        "mastery" : true,
         "misconception" : false,
-        "probeClaims" : [
-          "claim-caffc41a1629fcff"
+        "misconceptionFacet" : [
+
         ],
+        "probeClaims" : [
+
+        ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "gold" : "understood",
@@ -4937,9 +4989,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-caffc41a1629fcff"
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "C" : {
@@ -4951,9 +5007,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-caffc41a1629fcff"
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -4973,9 +5033,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-caffc41a1629fcff"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "fragile",
@@ -5013,9 +5077,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -5027,9 +5095,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -5045,9 +5117,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-7485a5102853e2f4"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "misconception",
@@ -5087,9 +5163,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-508e25d02094b377"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -5101,9 +5181,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-508e25d02094b377"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -5120,9 +5204,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-508e25d02094b377"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -5160,9 +5248,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "C" : {
@@ -5174,9 +5266,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "categories" : [
@@ -5194,9 +5290,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "gold" : "understood",
@@ -5234,9 +5334,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -5248,9 +5352,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -5267,9 +5375,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-7485a5102853e2f4"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "mostlyUnderstood",
@@ -5307,9 +5419,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-f5bcef315510807b"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -5321,9 +5437,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-f5bcef315510807b"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -5341,9 +5461,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-f5bcef315510807b"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -5383,9 +5507,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-21c39a468eba7eca"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -5397,9 +5525,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-21c39a468eba7eca"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "categories" : [
@@ -5414,9 +5546,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-21c39a468eba7eca"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "gold" : "misconception",
@@ -5454,9 +5590,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-ff95fc8d2fc5f02e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -5468,9 +5608,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-ff95fc8d2fc5f02e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -5488,9 +5632,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-ff95fc8d2fc5f02e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -5528,9 +5676,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "C" : {
@@ -5545,9 +5697,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -5563,13 +5719,19 @@
           "V8",
           "V3",
           "V7",
-          "F1"
+          "F1",
+          "D-agree",
+          "D-agree"
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "gold" : "understood",
@@ -5610,9 +5772,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-f8f60f6a0a9d8164"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -5629,9 +5795,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-ff95fc8d2fc5f02e"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "categories" : [
@@ -5655,9 +5825,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-ff95fc8d2fc5f02e"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "weakReasoning",
@@ -5695,9 +5869,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-87d8ccc05b95b511"
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -5709,9 +5887,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-87d8ccc05b95b511"
         ],
+        "reasoningFacet" : "sound",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -5731,9 +5913,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-87d8ccc05b95b511"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "fragile",
@@ -5772,9 +5958,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-5016477d10a96b31"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "C" : {
@@ -5790,9 +5980,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -5808,13 +6002,19 @@
           "V7",
           "V7",
           "F1",
-          "F1"
+          "F1",
+          "D-agree",
+          "D-agree"
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "gold" : "understood",
@@ -5852,9 +6052,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-44228c8f2ef50e5"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -5868,9 +6072,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-44228c8f2ef50e5"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "categories" : [
@@ -5890,9 +6098,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-44228c8f2ef50e5"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "weakReasoning",
@@ -5930,9 +6142,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-63b3e0f7dcdc4888"
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "C" : {
@@ -5945,9 +6161,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-63b3e0f7dcdc4888"
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "categories" : [
@@ -5967,9 +6187,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-63b3e0f7dcdc4888"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "fragile",
@@ -6007,9 +6231,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "C" : {
@@ -6024,9 +6252,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-9c4ec437af71f4b3"
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -6050,9 +6282,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-9c4ec437af71f4b3"
         ],
+        "reasoningFacet" : "sound",
         "state" : "fragile"
       },
       "gold" : "weakReasoning",
@@ -6090,9 +6326,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -6104,9 +6344,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -6122,9 +6366,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "gold" : "mostlyUnderstood",
@@ -6162,9 +6410,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "C" : {
@@ -6176,9 +6428,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -6194,9 +6450,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "gold" : "mostlyUnderstood",
@@ -6236,9 +6496,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-d8f3082a6a6ffb32"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -6250,9 +6514,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-af454f7a895d72ca"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "categories" : [
@@ -6267,9 +6535,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-af454f7a895d72ca"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "gold" : "misconception",
@@ -6307,9 +6579,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-21e932cb7af1b724"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -6321,9 +6597,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-21e932cb7af1b724"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "categories" : [
@@ -6341,9 +6621,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-21e932cb7af1b724"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "gold" : "misconception",
@@ -6382,9 +6666,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-f7d36955ca232d94"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "misconception"
       },
       "C" : {
@@ -6397,9 +6685,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-f7d36955ca232d94"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "misconception"
       },
       "categories" : [
@@ -6420,9 +6712,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-f7d36955ca232d94"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -6460,9 +6756,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-af1e6d60ebd8762e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "misconception"
       },
       "C" : {
@@ -6475,9 +6775,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-af1e6d60ebd8762e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "misconception"
       },
       "categories" : [
@@ -6496,9 +6800,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-af1e6d60ebd8762e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "misconception"
       },
       "gold" : "weakReasoning",
@@ -6536,9 +6844,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-570436823b15dd8a"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "faulty",
         "state" : "misconception"
       },
       "C" : {
@@ -6552,10 +6864,14 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-af1e6d60ebd8762e",
           "claim-ff95fc8d2fc5f02e"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "understood"
       },
       "categories" : [
@@ -6576,10 +6892,14 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-af1e6d60ebd8762e",
           "claim-ff95fc8d2fc5f02e"
         ],
+        "reasoningFacet" : "unsettled",
         "state" : "fragile"
       },
       "gold" : "weakReasoning",
@@ -6619,9 +6939,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-af1e6d60ebd8762e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "misconception"
       },
       "C" : {
@@ -6634,10 +6958,14 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-af1e6d60ebd8762e",
           "claim-791d38113422037b"
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -6658,10 +6986,14 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-af1e6d60ebd8762e",
           "claim-791d38113422037b"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "weakReasoning",
@@ -6699,9 +7031,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -6713,9 +7049,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -6734,9 +7074,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-9524f2c252618c57"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "mostlyUnderstood",
@@ -6774,9 +7118,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-89a4fbe528883dfd"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -6788,9 +7136,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-89a4fbe528883dfd"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "categories" : [
@@ -6807,9 +7159,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-89a4fbe528883dfd"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "weakReasoning",
@@ -6847,9 +7203,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-9f3fca9d4581b27c"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "C" : {
@@ -6863,9 +7223,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-9f3fca9d4581b27c"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -6886,9 +7250,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-9f3fca9d4581b27c"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "fragile"
       },
       "gold" : "misconception",
@@ -6926,9 +7294,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-9f3fca9d4581b27c"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -6940,9 +7312,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-9f3fca9d4581b27c"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "categories" : [
@@ -6958,9 +7334,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-9f3fca9d4581b27c"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "gold" : "insufficient",
@@ -6998,9 +7378,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-6f1a35b9afd390eb"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -7012,9 +7396,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-a8aa9a8b047d32e6"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "fragile"
       },
       "categories" : [
@@ -7029,9 +7417,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-a8aa9a8b047d32e6"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "fragile"
       },
       "gold" : "fragile",
@@ -7069,9 +7461,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-385fd717aab9cf4e"
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "C" : {
@@ -7083,9 +7479,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-385fd717aab9cf4e"
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -7104,9 +7504,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-385fd717aab9cf4e"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "fragile",
@@ -7144,9 +7548,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-cfe36c0ba51fbf76"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -7158,9 +7566,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-cfe36c0ba51fbf76"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "categories" : [
@@ -7175,9 +7587,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-cfe36c0ba51fbf76"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "gold" : "insufficient",
@@ -7215,9 +7631,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "C" : {
@@ -7230,9 +7650,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-47caca453007322f"
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "categories" : [
@@ -7240,18 +7664,24 @@
         "novelVocabulary"
       ],
       "D" : {
-        "asks" : true,
-        "credit" : false,
+        "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V5",
-          "V7"
+          "V7",
+          "D-agree",
+          "D-agree"
         ],
-        "mastery" : false,
+        "mastery" : true,
         "misconception" : false,
-        "probeClaims" : [
-          "claim-47caca453007322f"
+        "misconceptionFacet" : [
+
         ],
+        "probeClaims" : [
+
+        ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "gold" : "understood",
@@ -7289,9 +7719,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -7303,9 +7737,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -7321,9 +7759,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-12dc42a98271b1e4"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "mostlyUnderstood",
@@ -7361,9 +7803,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "C" : {
@@ -7375,9 +7821,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -7398,9 +7848,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-3eca114e9db05d28"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "gold" : "weakReasoning",
@@ -7438,9 +7892,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "C" : {
@@ -7452,9 +7910,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-970758ef43d4440b"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "categories" : [
@@ -7470,9 +7932,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-970758ef43d4440b"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "insufficient",
@@ -7510,9 +7976,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-83cc027fe6836eee"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -7524,9 +7994,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-83cc027fe6836eee"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "categories" : [
@@ -7543,9 +8017,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-83cc027fe6836eee"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "insufficient",
@@ -7583,9 +8061,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "C" : {
@@ -7597,9 +8079,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-d885ca6fb21f330d"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "categories" : [
@@ -7615,9 +8101,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-d885ca6fb21f330d"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "insufficient",
@@ -7657,9 +8147,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -7671,9 +8165,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-63b3e0f7dcdc4888"
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -7693,9 +8191,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-63b3e0f7dcdc4888"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "mostlyUnderstood",
@@ -7733,9 +8235,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -7747,9 +8253,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -7766,9 +8276,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "gold" : "mostlyUnderstood",
@@ -7806,9 +8320,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-32e5f4b79c3317d8"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -7820,9 +8338,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-32e5f4b79c3317d8"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -7839,9 +8361,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-32e5f4b79c3317d8"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -7879,9 +8405,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-ff95fc8d2fc5f02e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -7893,9 +8423,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-ff95fc8d2fc5f02e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -7913,9 +8447,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-ff95fc8d2fc5f02e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -7953,9 +8491,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-cc1271248ced688"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -7967,9 +8509,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-cc1271248ced688"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -7984,9 +8530,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-cc1271248ced688"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -8024,9 +8574,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-6589842cf9f75b65"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -8038,9 +8592,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-6589842cf9f75b65"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -8056,9 +8614,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-6589842cf9f75b65"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -8096,9 +8658,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-c094adde9deaadb6"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -8110,9 +8676,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-c094adde9deaadb6"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -8129,9 +8699,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-c094adde9deaadb6"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -8169,9 +8743,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -8183,9 +8761,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -8203,9 +8785,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "gold" : "mostlyUnderstood",
@@ -8243,9 +8829,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-44228c8f2ef50e5"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -8259,9 +8849,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-44228c8f2ef50e5"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "categories" : [
@@ -8282,9 +8876,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-44228c8f2ef50e5"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "gold" : "misconception",
@@ -8322,9 +8920,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-c094adde9deaadb6"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -8338,9 +8940,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-c094adde9deaadb6"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "categories" : [
@@ -8361,9 +8967,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-c094adde9deaadb6"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "gold" : "misconception",
@@ -8401,9 +9011,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-af1e6d60ebd8762e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -8415,9 +9029,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-af1e6d60ebd8762e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -8433,9 +9051,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-af1e6d60ebd8762e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -8473,9 +9095,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-54d49440ea8daee0"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -8487,9 +9113,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-54d49440ea8daee0"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -8506,9 +9136,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-54d49440ea8daee0"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -8546,9 +9180,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "C" : {
@@ -8560,9 +9198,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-58b0202c8e57fcc1"
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -8581,9 +9223,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-58b0202c8e57fcc1"
         ],
+        "reasoningFacet" : "sound",
         "state" : "fragile"
       },
       "gold" : "weakReasoning",
@@ -8621,9 +9267,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-af1e6d60ebd8762e"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "C" : {
@@ -8635,9 +9285,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-af1e6d60ebd8762e"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "categories" : [
@@ -8653,9 +9307,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-af1e6d60ebd8762e"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "gold" : "weakReasoning",
@@ -8693,9 +9351,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "C" : {
@@ -8708,9 +9370,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-7485a5102853e2f4"
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "categories" : [
@@ -8732,9 +9398,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-7485a5102853e2f4"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "understood",
@@ -8772,9 +9442,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "C" : {
@@ -8787,9 +9461,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-caffc41a1629fcff"
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "categories" : [
@@ -8811,9 +9489,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-caffc41a1629fcff"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "mostlyUnderstood",
@@ -8851,9 +9533,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -8865,9 +9551,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-6589842cf9f75b65"
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -8885,9 +9575,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-6589842cf9f75b65"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "insufficient",
@@ -8925,9 +9619,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -8939,9 +9637,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -8957,9 +9659,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-ff95fc8d2fc5f02e"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "insufficient",
@@ -8997,9 +9703,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-619b002f3f9d424e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -9011,9 +9721,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-619b002f3f9d424e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -9029,9 +9743,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-619b002f3f9d424e"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -9069,9 +9787,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -9083,9 +9805,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -9104,9 +9830,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "gold" : "fragile",
@@ -9144,9 +9874,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -9158,9 +9892,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-58b0202c8e57fcc1"
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -9176,9 +9914,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-58b0202c8e57fcc1"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "insufficient",
@@ -9216,9 +9958,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-ff95fc8d2fc5f02e"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "C" : {
@@ -9232,9 +9978,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "categories" : [
@@ -9251,13 +10001,18 @@
         "fired" : [
           "V8",
           "V3",
-          "F1"
+          "F1",
+          "D-agree"
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "gold" : "misconception",
@@ -9295,9 +10050,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-9c4ec437af71f4b3"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "C" : {
@@ -9312,9 +10071,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-9c4ec437af71f4b3"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "misconception"
       },
       "categories" : [
@@ -9341,9 +10104,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-9c4ec437af71f4b3"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -9381,9 +10148,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -9395,9 +10166,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-62d17be95808ed3e"
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -9413,9 +10188,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-62d17be95808ed3e"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "insufficient",
@@ -9453,9 +10232,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -9467,9 +10250,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-63b3e0f7dcdc4888"
         ],
+        "reasoningFacet" : "none",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -9486,9 +10273,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-63b3e0f7dcdc4888"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "insufficient",
@@ -9526,9 +10317,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "C" : {
@@ -9540,9 +10335,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "categories" : [
@@ -9562,9 +10361,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "gold" : "understood",
@@ -9602,9 +10405,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "C" : {
@@ -9622,9 +10429,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-a1b2f230a4062697"
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -9664,9 +10475,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-a1b2f230a4062697"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "misconception",
@@ -9706,9 +10521,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-508e25d02094b377"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -9720,9 +10539,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-508e25d02094b377"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "categories" : [
@@ -9741,9 +10564,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-508e25d02094b377"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "misconception",
@@ -9781,9 +10608,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "C" : {
@@ -9797,9 +10628,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -9818,13 +10653,19 @@
         "fired" : [
           "V8",
           "V3",
-          "V7"
+          "V7",
+          "D-agree",
+          "D-agree"
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "gold" : "understood",
@@ -9864,9 +10705,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "C" : {
@@ -9879,9 +10724,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -9907,9 +10756,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-a1b2f230a4062697"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "weakReasoning",
@@ -9948,9 +10801,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-3cff5a115409d946"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -9964,9 +10821,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-3cff5a115409d946"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -9992,9 +10853,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-3cff5a115409d946"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -10032,9 +10897,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "C" : {
@@ -10049,9 +10918,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-3cff5a115409d946"
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "categories" : [
@@ -10063,20 +10936,27 @@
         "negation"
       ],
       "D" : {
-        "asks" : true,
-        "credit" : false,
+        "asks" : false,
+        "credit" : true,
         "fallback" : "none",
         "fired" : [
           "V3",
           "V3",
           "V3",
-          "F1"
+          "F1",
+          "D-agree",
+          "D-agree",
+          "D-agree"
         ],
-        "mastery" : false,
+        "mastery" : true,
         "misconception" : false,
-        "probeClaims" : [
-          "claim-3cff5a115409d946"
+        "misconceptionFacet" : [
+
         ],
+        "probeClaims" : [
+
+        ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "gold" : "understood",
@@ -10114,9 +10994,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-a6c2747df725a1b3"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "misconception"
       },
       "C" : {
@@ -10131,9 +11015,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-a6c2747df725a1b3"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -10161,9 +11049,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-a6c2747df725a1b3"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -10202,9 +11094,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "C" : {
@@ -10216,9 +11112,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "categories" : [
@@ -10237,9 +11137,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "understood"
       },
       "gold" : "mostlyUnderstood",
@@ -10277,9 +11181,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-e9f5d11c30f4f962"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "C" : {
@@ -10291,9 +11199,13 @@
         ],
         "mastery" : true,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-e9f5d11c30f4f962"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "categories" : [
@@ -10315,9 +11227,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-e9f5d11c30f4f962"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "gold" : "misconception",
@@ -10355,9 +11271,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "C" : {
@@ -10370,9 +11290,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "categories" : [
@@ -10389,13 +11313,18 @@
         "fallback" : "none",
         "fired" : [
           "V3",
-          "F1"
+          "F1",
+          "D-agree"
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "gold" : "mostlyUnderstood",
@@ -10435,9 +11364,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-2c2c23204c4c4aec"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "C" : {
@@ -10450,9 +11383,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "categories" : [
@@ -10471,9 +11408,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "gold" : "weakReasoning",
@@ -10511,9 +11452,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-a0c38adb78c8560e"
         ],
+        "reasoningFacet" : "faulty",
         "state" : "weakReasoning"
       },
       "C" : {
@@ -10525,9 +11470,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "understood"
       },
       "categories" : [
@@ -10547,9 +11496,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-a0c38adb78c8560e"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "fragile",
@@ -10589,9 +11542,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "mostlyUnderstood"
       },
       "C" : {
@@ -10604,9 +11561,13 @@
         ],
         "mastery" : true,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "sound",
         "state" : "mostlyUnderstood"
       },
       "categories" : [
@@ -10631,9 +11592,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-a0c38adb78c8560e"
         ],
+        "reasoningFacet" : "none",
         "state" : "fragile"
       },
       "gold" : "weakReasoning",
@@ -10671,9 +11636,13 @@
         ],
         "mastery" : false,
         "misconception" : true,
+        "misconceptionFacet" : [
+          "claim-7c30b2cec9501506"
+        ],
         "probeClaims" : [
 
         ],
+        "reasoningFacet" : "none",
         "state" : "misconception"
       },
       "C" : {
@@ -10685,9 +11654,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-7c30b2cec9501506"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "categories" : [
@@ -10703,9 +11676,13 @@
         ],
         "mastery" : false,
         "misconception" : false,
+        "misconceptionFacet" : [
+
+        ],
         "probeClaims" : [
           "claim-7c30b2cec9501506"
         ],
+        "reasoningFacet" : "none",
         "state" : "insufficient"
       },
       "gold" : "insufficient",
