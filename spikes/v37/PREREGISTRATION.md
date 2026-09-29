@@ -358,5 +358,13 @@ set. Each was made on P and C only; the evidence is in `dev-log/`.
   as "mistakes" on P).
 * **D8 — Misconception memory** (`ZZSpikeMemory.swift`) is new, in the spike write path only.
 
+* **D9 — Final narrow pass (dev13–14, reopened at the owner's instruction).** In D, agreement of the
+  independent check outranks the lexical checks V3–V7 and the row's self-reported confidence V10 (V2, V9,
+  V11 still bind); V3 is split and an omitted negation (V3a) feeds the judge's own omitted-negation rule; a
+  reason clause that is unmatched or restates a negated claim is an unsettled reason; outcomes carry
+  independent claim, reasoning and misconception facets. An order-consensus link check was tried and
+  removed. Thresholds, metrics, gold labels and the scorer's definitions are unchanged (the scorer's per-case
+  rows gained reporting-only fields: `credit`, `reasoningFacet`, `misconceptionFacet`).
+
 **Known risks to the gates from development evidence:** greedy decoding is not deterministic on this
 runtime (G14), and latency swings 2–3× with Apple Intelligence background work on the same machine (G16).

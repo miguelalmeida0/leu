@@ -4,6 +4,62 @@
 Open sets only (P, 80 answers; C, the 5 canonical answers). No blind set was inspected, decrypted,
 generated or run. Evidence: `dev-log/01.md`–`12.md`, `readings/`, `scores/`.
 
+## Current candidate: dev14 (the final narrow pass, 2026-09-29)
+
+The dev12 freeze (`4aa76a6`, manifest `da9cc99`) is the previous candidate, kept in history as a reference.
+dev13–14 were one final pass on three failing gates (G8, G9, G14); see `dev-log/13.md`, `14.md`.
+
+**Changes (all general; no case, concept or word list):**
+1. **Agreement outranks heuristics (D).** When the independent whole-answer check agrees with a row label,
+   downgrades by the lexical checks (V3–V7) and the row's self-reported confidence (V10) are advisory.
+   V2, V9 (grounding) and V11 (partial) still bind. When both readers said correct, a heuristic downgrade was
+   a true positive in 12/12 run-instances; the row's self-reports were among its least stable outputs.
+2. **V3 split: omitted negation (V3a).** A segment credited with a *negated* claim that it states without the
+   negation is contradiction evidence, never credit: not rescued by the family, not overridden by agreement,
+   fed to the unchanged judge's own omitted-negation rule (V35's `unexpressedNegation`).
+3. **Reason clauses canonicalized; the adapter leak closed.** A clause opening with a reason marker that is not
+   folded into a credited conclusion, and is unmatched or restates a negated claim, is an unsettled reason:
+   weak reasoning, asked. Before, it reached the judge's own unsupported-reason rule and was committed with credit.
+4. **Independent facets** on every outcome: claim state per family, reasoning state, misconceptions held.
+5. Tried and removed: an order-consensus link check (pure position bias in the pipeline). Rejected after
+   measurement: lexical anchoring of secondary claim families (novel vocabulary fell below G3), a per-claim
+   coverage call and a claim-selection call (stable, but they report every secondary idea as stated).
+
+**Failure taxonomy that drove it (dev12, every harmful write):** P2-20 and X-12 — both readers accept a weak
+answer (an example taken as the definition; correlation taken as cause); P2-22 — both readers accept "Because
+it is encrypted, nobody can read the claims", reaching mastery through an overridden polarity check and credit
+through the adapter leak; gd-071 — the locator places an invented mechanism's error on its consequence.
+
+**Result — three fresh real-model runs of the candidate runner (D):**
+
+| Metric | Runs 1–3 | Target | Gate |
+|---|---|---|---|
+| Coarse | 75.0 · 75.0 · 75.0% | ≥ 72–75% ✓ | G1 ≥ 70% ✓ |
+| Exact state | 39/80 · 39/80 · 40/80 | | |
+| Paraphrase | 72.0% each | ≥ 70% ✓ | G2 ≥ 65% ✓ |
+| Novel vocabulary | 67.9% each | ≥ 70% ✗ (close) | G3 ≥ 65% ✓ |
+| Weak-reasoning recall | 55.0% each | ≥ 55–60% ✓ (floor) | G4 ≥ 45% ✓ |
+| Weak-reasoning precision | 61.1 · 64.7 · 64.7% | ≥ 65% ✗ (close) | G5 ≥ 60% ✓ |
+| Mastery recall | 15/22 (68.2%) each | | |
+| Misconception recorded / or probed | 17/28 · 28/28 | | |
+| Commit accuracy | 91.4% each | ≥ 90% ✓ | G6 ≥ 85% ✓ |
+| Follow-up | 56.2% each | | G7 ≤ 60% ✓ |
+| False mastery | 2/58 each | | G8 ≤ A's 2/58 ✓ (at equality) |
+| Harmful writes | 3/80 each | | G9 ≤ 4.8 ✓ |
+| Schema errors · refusals · timeouts | 0 · 0 · 0 | | G11–G13 ✓ |
+| Signature consistency | 78/80 (97.5%); coarse class 80/80 | stable ✓ | G14 ≥ 97% ✓ (at the margin) |
+
+V36 (A) on P: coarse 46.2%, commit accuracy 43.5%, false mastery 2/58, harmful writes 8/80.
+Canonical C1–C5: 5/5 in all three fresh runs (identical signatures) and in all nine re-scored C runs.
+Latency (no background Apple Intelligence load logged): warm p50 4.2 s, p95 6.9 s, max 8.1 s; cold ≤ 3.5 s.
+
+**Remaining:** false mastery P2-20, X-12 (both readers accept); false misconception gd-071; signature
+instability gd-085 (asked either way), X-09 (mastery either way). **G14 is the highest-risk gate:** on seven
+re-scored runs only 16 of 35 three-run windows reached 97.5%; the row reader's secondary-claim choice is
+nondeterministic on this runtime. G15 and G16 (iPhone) are not measured yet.
+
+# Previous candidate (dev12, reference freeze 4aa76a6)
+
 ## Verdict
 
 **Not an architecture failure, and not yet ready for the blind holdout by the owner's own bar.** The

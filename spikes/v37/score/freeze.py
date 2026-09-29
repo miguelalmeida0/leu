@@ -58,12 +58,13 @@ for name in ("InterventionPlanner.swift", "LearnerEvidenceMapper.swift"):
 
 status = run(["git", "status", "--porcelain"])
 lines = ["# V37 FREEZE (PREREGISTRATION §12; written before any gate run)", "",
+         "previous candidate freeze: 4aa76a6 (manifest commit da9cc99), kept in history as the dev12 reference", "",
          f"frozen code commit: {run(['git', 'rev-parse', 'HEAD'])}",
          f"branch: {run(['git', 'branch', '--show-current'])}",
          f"working tree clean: {'yes' if not status else 'NO'}",
          f"written: {datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds')}", "",
-         "primary configuration: D (rows, then whole-answer check → locator; checks V1–V11; composition; unchanged judge)",
-         "enabled checks: V1 V2 V3 V4 V5 V6 V7 V8(marker links) V9 V10 V11; P1 (premise), F1 (family), D-rules (credit, cap, wrong, reason, unplaced)",
+         "primary configuration: D, dev14 (rows, then whole-answer check → locator; checks V1–V11 with V3a; composition; unchanged judge)",
+         "enabled checks: V1 V2 V3 V3a(omitted negation) V4 V5 V6 V7 V8(marker links) V9 V10 V11; P1 (premise), F1 (family), D-rules (agree, credit, cap, wrong, reason, unplaced); reason clauses probed",
          f"prompt-set SHA-256 (spike-runner hash): {run([V + 'runner/.build/release/spike-runner', 'hash', '--prompts', V + 'prompts'])}", ""]
 for name, files in COMPONENTS:
     hashes = [sha(f) for f in files]
