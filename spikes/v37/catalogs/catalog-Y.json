@@ -1,0 +1,506 @@
+{
+ "concepts": [
+  {
+   "concept": "Authentication",
+   "contrastPartner": "Authorization",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Password + MFA creates an authenticated session for user 42."
+   ],
+   "key": "authentication",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "CORS",
+    "Cookie",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 41,
+   "rubric": [
+    {
+     "id": "claim-7485a5102853e2f4",
+     "kind": "definition",
+     "text": "The process of verifying who a user or service is."
+    },
+    {
+     "id": "claim-508e25d02094b377",
+     "kind": "constraint",
+     "text": "Before granting access, the system needs a trustworthy identity."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authorization",
+   "contrastPartner": "Authentication",
+   "document": "Mobile Mastery",
+   "examples": [
+    "user role can read reports; admin role can delete accounts."
+   ],
+   "key": "authorization",
+   "neighbours": [
+    "Access token",
+    "Authentication",
+    "Cookie",
+    "Database constraint",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 42,
+   "rubric": [
+    {
+     "id": "claim-a1b2f230a4062697",
+     "kind": "definition",
+     "text": "The process of deciding what an authenticated identity is allowed to do."
+    },
+    {
+     "id": "claim-54d49440ea8daee0",
+     "kind": "property",
+     "text": "Identity alone is not permission."
+    },
+    {
+     "id": "claim-a9d2e28b3dc2414a",
+     "kind": "mechanism",
+     "text": "authorization still happens per action/resource."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Closure",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "createCounter() returns a function that keeps access to count after createCounter returns."
+   ],
+   "key": "closure",
+   "neighbours": [
+    "Encapsulation",
+    "Hoisting",
+    "Mutation",
+    "Primitive values",
+    "Reference semantics",
+    "Scope",
+    "State",
+    "async / await",
+    "try / catch",
+    "var, let, const"
+   ],
+   "page": 83,
+   "rubric": [
+    {
+     "id": "claim-63b3e0f7dcdc4888",
+     "kind": "definition",
+     "text": "A function plus access to the lexical variables from the scope where it was created."
+    },
+    {
+     "id": "claim-ea1f1e097d9c8eab",
+     "kind": "purpose",
+     "text": "Closures power encapsulation, callbacks, hooks, and private state patterns."
+    }
+   ],
+   "section": "JAVASCRIPT CORE MENTAL MODELS",
+   "supporting": [
+    "A closure lets a function retain access to its lexical environment after the outer function has finished."
+   ],
+   "supportingIDs": [
+    "claim-329d5dceec7cb700"
+   ]
+  },
+  {
+   "concept": "Database index",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "CREATE INDEX idx_users_email ON users(email);",
+    "speeds email lookups."
+   ],
+   "key": "database index",
+   "neighbours": [
+    "ACID",
+    "Database",
+    "Foreign key",
+    "Primary key",
+    "Race condition",
+    "Relational database",
+    "SQL JOIN",
+    "Transaction"
+   ],
+   "page": 60,
+   "rubric": [
+    {
+     "id": "claim-58b0202c8e57fcc1",
+     "kind": "definition",
+     "text": "A data structure maintained to make particular lookups or orderings faster."
+    },
+    {
+     "id": "claim-44228c8f2ef50e5",
+     "kind": "mechanism",
+     "text": "Without useful indexes, large queries may scan huge numbers of rows."
+    }
+   ],
+   "section": "DATABASES & DATA INTEGRITY",
+   "supporting": [
+    "Indexes trade additional storage and write cost for faster reads."
+   ],
+   "supportingIDs": [
+    "claim-ef5ef4b37b447038"
+   ]
+  },
+  {
+   "concept": "Debouncing",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Typing \"react\" triggers one search 300 ms after the final keystroke."
+   ],
+   "key": "debouncing",
+   "neighbours": [
+    "Context",
+    "Custom hook",
+    "Prop drilling",
+    "React.memo",
+    "Throttling",
+    "useCallback",
+    "useMemo",
+    "useRef"
+   ],
+   "page": 127,
+   "rubric": [
+    {
+     "id": "claim-caffc41a1629fcff",
+     "kind": "definition",
+     "text": "Delaying an action until a burst of events has been quiet for a chosen interval."
+    },
+    {
+     "id": "claim-9a758b1ddfa496e5",
+     "kind": "purpose",
+     "text": "It avoids firing expensive work for every keystroke."
+    }
+   ],
+   "section": "TYPESCRIPT & REACT FOUNDATIONS",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "HttpOnly cookie",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Set-Cookie: session=abc; HttpOnly; Secure."
+   ],
+   "key": "httponly cookie",
+   "neighbours": [
+    "Access token",
+    "Authentication",
+    "Authorization",
+    "Cookie",
+    "HTTP",
+    "Hashing",
+    "JWT",
+    "Refresh token",
+    "Secret",
+    "Session"
+   ],
+   "page": 45,
+   "rubric": [
+    {
+     "id": "claim-619b002f3f9d424e",
+     "kind": "definition",
+     "text": "A cookie marked so browser JavaScript cannot read it."
+    },
+    {
+     "id": "claim-54e2980209db9210",
+     "kind": "purpose",
+     "text": "It reduces exposure of session secrets to JavaScript during many XSS scenarios."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [
+    "HttpOnly prevents client-side JavaScript from reading a cookie, which is useful for session credentials, though it does not eliminate XSS impact."
+   ],
+   "supportingIDs": [
+    "claim-5ec5d150bad06858"
+   ]
+  },
+  {
+   "concept": "Idempotency",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Payment request includes Idempotency-Key so a retry returns the same payment instead of charging twice."
+   ],
+   "key": "idempotency",
+   "neighbours": [
+    "Coupling",
+    "Exponential backoff",
+    "Message queue",
+    "Microservices",
+    "Monolith",
+    "Retry",
+    "Separation of concerns",
+    "Worker"
+   ],
+   "page": 156,
+   "rubric": [
+    {
+     "id": "claim-6589842cf9f75b65",
+     "kind": "definition",
+     "text": "The property that repeating an operation has the same intended effect as performing it once."
+    },
+    {
+     "id": "claim-3cf9b2257ac2f198",
+     "kind": "mechanism",
+     "text": "Networks retry, users double-click, and clients time out after servers already committed work."
+    }
+   ],
+   "section": "RELIABILITY, ARCHITECTURE & DELIVERY",
+   "supporting": [
+    "Idempotency makes retries safe."
+   ],
+   "supportingIDs": [
+    "claim-32e5f4b79c3317d8"
+   ]
+  },
+  {
+   "concept": "JWT",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Authorization: Bearer <jwt> containing sub, exp, and roles."
+   ],
+   "key": "jwt",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "Cookie",
+    "Database",
+    "Encryption",
+    "Hashing",
+    "Headers",
+    "HttpOnly cookie",
+    "Refresh token",
+    "Session",
+    "Token"
+   ],
+   "page": 46,
+   "rubric": [
+    {
+     "id": "claim-ff95fc8d2fc5f02e",
+     "kind": "definition",
+     "text": "A compact signed token format containing claims, represented as header.payload.signature."
+    },
+    {
+     "id": "claim-b6c3668d41921be7",
+     "kind": "purpose",
+     "text": "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [
+    "JWTs are signed claim containers, not automatically encrypted."
+   ],
+   "supportingIDs": [
+    "claim-f8f60f6a0a9d8164"
+   ]
+  },
+  {
+   "concept": "Refresh token",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "When access token expires, client sends refresh token to auth server for a new access token."
+   ],
+   "key": "refresh token",
+   "neighbours": [
+    "Access token",
+    "CSRF",
+    "Cookie",
+    "Encryption",
+    "Hashing",
+    "HttpOnly cookie",
+    "JWT",
+    "XSS"
+   ],
+   "page": 48,
+   "rubric": [
+    {
+     "id": "claim-af1e6d60ebd8762e",
+     "kind": "definition",
+     "text": "A longer-lived credential used to obtain new access tokens without asking the user to sign in again."
+    },
+    {
+     "id": "claim-570436823b15dd8a",
+     "kind": "mechanism",
+     "text": "It balances user convenience with short-lived access credentials."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Retry",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Retry 503/timeouts; do not blindly retry a 400 validation error."
+   ],
+   "key": "retry",
+   "neighbours": [
+    "Coupling",
+    "Exponential backoff",
+    "Idempotency",
+    "Message queue",
+    "Microservices",
+    "Monolith",
+    "Separation of concerns",
+    "Worker"
+   ],
+   "page": 154,
+   "rubric": [
+    {
+     "id": "claim-c094adde9deaadb6",
+     "kind": "definition",
+     "text": "Attempting a failed operation again when the failure may be temporary."
+    },
+    {
+     "id": "claim-d0c558277aa2f6bc",
+     "kind": "mechanism",
+     "text": "Transient network/service errors often succeed later."
+    }
+   ],
+   "section": "RELIABILITY, ARCHITECTURE & DELIVERY",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Stateless server",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Auth info comes from a token or shared session store instead of process memory."
+   ],
+   "key": "stateless server",
+   "neighbours": [
+    "Cache",
+    "Cache hit",
+    "Cache invalidation",
+    "Cache miss",
+    "Horizontal scaling",
+    "Load balancer",
+    "Request",
+    "State",
+    "TTL",
+    "Vertical scaling"
+   ],
+   "page": 38,
+   "rubric": [
+    {
+     "id": "claim-9c4ec437af71f4b3",
+     "kind": "definition",
+     "text": "A server that can handle each request without relying on request-specific state stored only in its own local memory."
+    },
+    {
+     "id": "claim-15ec2ba7e4119df4",
+     "kind": "mechanism",
+     "text": "Any replica can serve the next request, which simplifies horizontal scaling and failover."
+    }
+   ],
+   "section": "WEB, NETWORKING & DELIVERY",
+   "supporting": [
+    "Stateless application servers keep request state outside a specific instance, making load balancing and horizontal scaling easier."
+   ],
+   "supportingIDs": [
+    "claim-faa4a24dc4125a94"
+   ]
+  },
+  {
+   "concept": "Throttling",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Scroll handler updates position at most every 100 ms."
+   ],
+   "key": "throttling",
+   "neighbours": [
+    "Context",
+    "Custom hook",
+    "Debouncing",
+    "Prop drilling",
+    "React.memo",
+    "useCallback",
+    "useMemo",
+    "useRef"
+   ],
+   "page": 128,
+   "rubric": [
+    {
+     "id": "claim-cc1271248ced688",
+     "kind": "definition",
+     "text": "Limiting an action so it runs at most once per time window while events continue."
+    },
+    {
+     "id": "claim-9f979f8aff4557c6",
+     "kind": "purpose",
+     "text": "It protects expensive handlers during scroll, resize, or pointer movement."
+    }
+   ],
+   "section": "TYPESCRIPT & REACT FOUNDATIONS",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "useCallback",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "const onSave=useCallback(()=>save(id),[id])."
+   ],
+   "key": "usecallback",
+   "neighbours": [
+    "Cache",
+    "Context",
+    "Controlled component",
+    "Custom hook",
+    "Prop drilling",
+    "React.memo",
+    "Uncontrolled component",
+    "useMemo",
+    "useRef"
+   ],
+   "page": 122,
+   "rubric": [
+    {
+     "id": "claim-62d17be95808ed3e",
+     "kind": "definition",
+     "text": "A React hook that caches a function reference until dependencies change."
+    },
+    {
+     "id": "claim-64f4d267eed605a2",
+     "kind": "mechanism",
+     "text": "Stable function identity can matter for memoized children or effect dependencies."
+    }
+   ],
+   "section": "TYPESCRIPT & REACT FOUNDATIONS",
+   "supporting": [
+    "useCallback memoizes function identity."
+   ],
+   "supportingIDs": [
+    "claim-aa5be10153a30fd1"
+   ]
+  }
+ ],
+ "passages": []
+}

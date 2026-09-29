@@ -1,0 +1,361 @@
+{
+ "concepts": [
+  {
+   "concept": "closure",
+   "contrastPartner": "-",
+   "document": "JavaScript Deep Dive",
+   "examples": [],
+   "key": "closure",
+   "neighbours": [],
+   "page": 2,
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    }
+   ],
+   "section": "",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authentication",
+   "contrastPartner": "Authorization",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Password + MFA creates an authenticated session for user 42."
+   ],
+   "key": "authentication",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "CORS",
+    "Cookie",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 41,
+   "rubric": [
+    {
+     "id": "claim-7485a5102853e2f4",
+     "kind": "definition",
+     "text": "The process of verifying who a user or service is."
+    },
+    {
+     "id": "claim-508e25d02094b377",
+     "kind": "constraint",
+     "text": "Before granting access, the system needs a trustworthy identity."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authorization",
+   "contrastPartner": "Authentication",
+   "document": "Mobile Mastery",
+   "examples": [
+    "user role can read reports; admin role can delete accounts."
+   ],
+   "key": "authorization",
+   "neighbours": [
+    "Access token",
+    "Authentication",
+    "Cookie",
+    "Database constraint",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 42,
+   "rubric": [
+    {
+     "id": "claim-a1b2f230a4062697",
+     "kind": "definition",
+     "text": "The process of deciding what an authenticated identity is allowed to do."
+    },
+    {
+     "id": "claim-54d49440ea8daee0",
+     "kind": "property",
+     "text": "Identity alone is not permission."
+    },
+    {
+     "id": "claim-a9d2e28b3dc2414a",
+     "kind": "mechanism",
+     "text": "authorization still happens per action/resource."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Closure",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "createCounter() returns a function that keeps access to count after createCounter returns."
+   ],
+   "key": "closure",
+   "neighbours": [
+    "Encapsulation",
+    "Hoisting",
+    "Mutation",
+    "Primitive values",
+    "Reference semantics",
+    "Scope",
+    "State",
+    "async / await",
+    "try / catch",
+    "var, let, const"
+   ],
+   "page": 83,
+   "rubric": [
+    {
+     "id": "claim-63b3e0f7dcdc4888",
+     "kind": "definition",
+     "text": "A function plus access to the lexical variables from the scope where it was created."
+    },
+    {
+     "id": "claim-ea1f1e097d9c8eab",
+     "kind": "purpose",
+     "text": "Closures power encapsulation, callbacks, hooks, and private state patterns."
+    }
+   ],
+   "section": "JAVASCRIPT CORE MENTAL MODELS",
+   "supporting": [
+    "A closure lets a function retain access to its lexical environment after the outer function has finished."
+   ],
+   "supportingIDs": [
+    "claim-329d5dceec7cb700"
+   ]
+  },
+  {
+   "concept": "JWT",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Authorization: Bearer <jwt> containing sub, exp, and roles."
+   ],
+   "key": "jwt",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "Cookie",
+    "Database",
+    "Encryption",
+    "Hashing",
+    "Headers",
+    "HttpOnly cookie",
+    "Refresh token",
+    "Session",
+    "Token"
+   ],
+   "page": 46,
+   "rubric": [
+    {
+     "id": "claim-ff95fc8d2fc5f02e",
+     "kind": "definition",
+     "text": "A compact signed token format containing claims, represented as header.payload.signature."
+    },
+    {
+     "id": "claim-b6c3668d41921be7",
+     "kind": "purpose",
+     "text": "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [
+    "JWTs are signed claim containers, not automatically encrypted."
+   ],
+   "supportingIDs": [
+    "claim-f8f60f6a0a9d8164"
+   ]
+  },
+  {
+   "concept": "Suspense",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "<Suspense fallback={<Skeleton/>}><LazyPanel/></ Suspense>"
+   ],
+   "key": "suspense",
+   "neighbours": [
+    "Component composition",
+    "Compound component",
+    "Headless component",
+    "Memoization boundary",
+    "Portal",
+    "Referential stability",
+    "Transition",
+    "useDeferredValue"
+   ],
+   "page": 234,
+   "rubric": [
+    {
+     "id": "claim-e978bd60d7327047",
+     "kind": "definition",
+     "text": "A React mechanism for showing fallback UI while a compatible child is not ready."
+    },
+    {
+     "id": "claim-35efe88a98507cb0",
+     "kind": "mechanism",
+     "text": "It coordinates loading boundaries and streaming experiences."
+    }
+   ],
+   "section": "REACT: STATE, IDENTITY & ARCHITECTURE",
+   "supporting": [
+    "Suspense defines a loading boundary for compatible asynchronous resources or lazy components."
+   ],
+   "supportingIDs": [
+    "claim-abfdd38dc3a3b3fe"
+   ]
+  },
+  {
+   "concept": "Cookie",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Set-Cookie: session=abc; HttpOnly; Secure;",
+    "SameSite=Lax."
+   ],
+   "key": "cookie",
+   "neighbours": [
+    "Access token",
+    "Authentication",
+    "Authorization",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Scope",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 44,
+   "rubric": [
+    {
+     "id": "claim-6817e7af7e1680d1",
+     "kind": "definition",
+     "text": "Small browser-managed data associated with a domain and sent according to cookie rules."
+    },
+    {
+     "id": "claim-fb04918b1b53a70a",
+     "kind": "definition",
+     "text": "Cookies are the standard mechanism for sessions, preferences, and some tracking."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [
+    "Cookies are browser-managed key-value data with security and scope attributes;"
+   ],
+   "supportingIDs": [
+    "claim-a289e5d65da61992"
+   ]
+  }
+ ],
+ "passages": [
+  {
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 A closure keeps access A closure is a function together with access to its surrounding lexical environment. The function can keep accessing that environment after the outer call has returned. function counter() { let value = 0; return () => { value += 1; return value; }; } const next = counter(); next(); // 1 next(); // 2 Two separate calls to counter() create two independent environments. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    },
+    {
+     "id": "claim-ee55517299423231",
+     "kind": "mechanism",
+     "text": "The function can keep accessing that environment after the outer call has returned."
+    },
+    {
+     "id": "claim-ad61d3ae9c591c48",
+     "kind": "consequence",
+     "text": "Two separate calls to counter() create two independent environments."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Coding Interviews",
+   "page": 1,
+   "pageText": "SHELF SAMPLES / 02 Trace the program Read a short program in execution order. Track the value produced by each expression and the value returned by each function. const numbers = [1, 2, 3]; const kept = numbers.filter(n => n > 1); const doubled = kept.map(n => n * 2); console.log(doubled); // [4, 6] A useful trace records both type and value. A result can look semantically related to the task while having the wrong shape for the next operation. Try the same reasoning with no matching numbers. Does your chain still work? SHELF / ORIGINAL SAMPLE NOTES 2",
+   "rubric": [
+    {
+     "id": "claim-25643f3863318fa8",
+     "kind": "mechanism",
+     "text": "A useful trace records both type and value."
+    },
+    {
+     "id": "claim-1ddd81a6103e3a7a",
+     "kind": "contrast",
+     "text": "A result can look semantically related to the task while having the wrong shape for the next operation."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Computer Science Essentials",
+   "page": 1,
+   "pageText": "SHELF SAMPLES / 02 Growth, not a stopwatch Time complexity describes how work grows with input size under a stated model. It does not predict the exact time on a particular device. A linear scan may inspect every element. A binary search repeatedly narrows a sorted search space. The latter relies on a precondition: the data must have a compatible ordering. Ask whether preparation and sorting costs are included in the analysis. SHELF / ORIGINAL SAMPLE NOTES 2",
+   "rubric": [
+    {
+     "id": "claim-625f5f758c73269d",
+     "kind": "property",
+     "text": "Time complexity describes how work grows with input size under a stated model."
+    },
+    {
+     "id": "claim-d7b697e831126b2c",
+     "kind": "mechanism",
+     "text": "A linear scan may inspect every element."
+    },
+    {
+     "id": "claim-393cd302c49c1e71",
+     "kind": "mechanism",
+     "text": "A binary search repeatedly narrows a sorted search space."
+    },
+    {
+     "id": "claim-d777ff0bbbf22535",
+     "kind": "mechanism",
+     "text": "The latter relies on a precondition: the data must have a compatible ordering."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Design Patterns",
+   "page": 3,
+   "pageText": "SHELF SAMPLES / 04 Use patterns sparingly Every abstraction introduces a concept that the next engineer must learn. Add the boundary when it protects a responsibility, enables an important test or isolates a volatile dependency. Keep the simplest implementation that meets the real constraints. An offline personal library does not need a distributed backend to look or feel well made. This sample explains the design approach used in Shelf. The architecture and decision records in the source package describe the actual implementation. What can you remove without weakening a guarantee the user depends on? SHELF / ORIGINAL SAMPLE NOTES 4",
+   "rubric": [
+    {
+     "id": "claim-751e4c4b4edb3a55",
+     "kind": "mechanism",
+     "text": "Every abstraction introduces a concept that the next engineer must learn."
+    },
+    {
+     "id": "claim-6c4118771d829651",
+     "kind": "constraint",
+     "text": "An offline personal library does not need a distributed backend to look or feel well made."
+    },
+    {
+     "id": "claim-48f633b64f995c53",
+     "kind": "mechanism",
+     "text": "This sample explains the design approach used in Shelf."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  }
+ ]
+}

@@ -1,0 +1,363 @@
+{
+ "concepts": [
+  {
+   "concept": "closure",
+   "contrastPartner": "-",
+   "document": "JavaScript Deep Dive",
+   "examples": [],
+   "key": "closure",
+   "neighbours": [],
+   "page": 2,
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    }
+   ],
+   "section": "",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authentication",
+   "contrastPartner": "Authorization",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Password + MFA creates an authenticated session for user 42."
+   ],
+   "key": "authentication",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "CORS",
+    "Cookie",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 41,
+   "rubric": [
+    {
+     "id": "claim-7485a5102853e2f4",
+     "kind": "definition",
+     "text": "The process of verifying who a user or service is."
+    },
+    {
+     "id": "claim-508e25d02094b377",
+     "kind": "constraint",
+     "text": "Before granting access, the system needs a trustworthy identity."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authorization",
+   "contrastPartner": "Authentication",
+   "document": "Mobile Mastery",
+   "examples": [
+    "user role can read reports; admin role can delete accounts."
+   ],
+   "key": "authorization",
+   "neighbours": [
+    "Access token",
+    "Authentication",
+    "Cookie",
+    "Database constraint",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 42,
+   "rubric": [
+    {
+     "id": "claim-a1b2f230a4062697",
+     "kind": "definition",
+     "text": "The process of deciding what an authenticated identity is allowed to do."
+    },
+    {
+     "id": "claim-54d49440ea8daee0",
+     "kind": "property",
+     "text": "Identity alone is not permission."
+    },
+    {
+     "id": "claim-a9d2e28b3dc2414a",
+     "kind": "mechanism",
+     "text": "authorization still happens per action/resource."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Closure",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "createCounter() returns a function that keeps access to count after createCounter returns."
+   ],
+   "key": "closure",
+   "neighbours": [
+    "Encapsulation",
+    "Hoisting",
+    "Mutation",
+    "Primitive values",
+    "Reference semantics",
+    "Scope",
+    "State",
+    "async / await",
+    "try / catch",
+    "var, let, const"
+   ],
+   "page": 83,
+   "rubric": [
+    {
+     "id": "claim-63b3e0f7dcdc4888",
+     "kind": "definition",
+     "text": "A function plus access to the lexical variables from the scope where it was created."
+    },
+    {
+     "id": "claim-ea1f1e097d9c8eab",
+     "kind": "purpose",
+     "text": "Closures power encapsulation, callbacks, hooks, and private state patterns."
+    }
+   ],
+   "section": "JAVASCRIPT CORE MENTAL MODELS",
+   "supporting": [
+    "A closure lets a function retain access to its lexical environment after the outer function has finished."
+   ],
+   "supportingIDs": [
+    "claim-329d5dceec7cb700"
+   ]
+  },
+  {
+   "concept": "JWT",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Authorization: Bearer <jwt> containing sub, exp, and roles."
+   ],
+   "key": "jwt",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "Cookie",
+    "Database",
+    "Encryption",
+    "Hashing",
+    "Headers",
+    "HttpOnly cookie",
+    "Refresh token",
+    "Session",
+    "Token"
+   ],
+   "page": 46,
+   "rubric": [
+    {
+     "id": "claim-ff95fc8d2fc5f02e",
+     "kind": "definition",
+     "text": "A compact signed token format containing claims, represented as header.payload.signature."
+    },
+    {
+     "id": "claim-b6c3668d41921be7",
+     "kind": "purpose",
+     "text": "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [
+    "JWTs are signed claim containers, not automatically encrypted."
+   ],
+   "supportingIDs": [
+    "claim-f8f60f6a0a9d8164"
+   ]
+  },
+  {
+   "concept": "React.memo",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "const Row = memo(function Row({item}) { ... })."
+   ],
+   "key": "react.memo",
+   "neighbours": [
+    "Context",
+    "Custom hook",
+    "Debouncing",
+    "Prop drilling",
+    "Props",
+    "Render",
+    "Uncontrolled component",
+    "useCallback",
+    "useMemo",
+    "useRef"
+   ],
+   "page": 123,
+   "rubric": [
+    {
+     "id": "claim-fc6f9abd796ed641",
+     "kind": "definition",
+     "text": "A wrapper that can skip rerendering a component when its props are shallowly equal."
+    },
+    {
+     "id": "claim-637a131d60ea22bc",
+     "kind": "purpose",
+     "text": "It can reduce expensive child renders when props are stable."
+    }
+   ],
+   "section": "TYPESCRIPT & REACT FOUNDATIONS",
+   "supporting": [
+    "React.memo is a targeted optimization.",
+    "It only helps when rerender cost and prop stability make the comparison worthwhile."
+   ],
+   "supportingIDs": [
+    "claim-371d205670327a4d",
+    "claim-a0187f45070cd93"
+   ]
+  },
+  {
+   "concept": "Regression test",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Bug: empty search crashed. Add test for empty query after fixing it."
+   ],
+   "key": "regression test",
+   "neighbours": [
+    "CD",
+    "CI",
+    "Docker",
+    "Docker image",
+    "End-to-end test",
+    "Integration test",
+    "Mock",
+    "Unit test"
+   ],
+   "page": 169,
+   "rubric": [
+    {
+     "id": "claim-abd59a6c12e4e95d",
+     "kind": "definition",
+     "text": "A test added or maintained specifically to prevent a previously observed bug from returning."
+    },
+    {
+     "id": "claim-e5fd468fb8519019",
+     "kind": "mechanism",
+     "text": "It turns a production lesson into permanent automated protection."
+    }
+   ],
+   "section": "RELIABILITY, ARCHITECTURE & DELIVERY",
+   "supporting": [
+    "It is valuable because the test explains a real risk, not a hypothetical one."
+   ],
+   "supportingIDs": [
+    "claim-79117faf549782cf"
+   ]
+  }
+ ],
+ "passages": [
+  {
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 A closure keeps access A closure is a function together with access to its surrounding lexical environment. The function can keep accessing that environment after the outer call has returned. function counter() { let value = 0; return () => { value += 1; return value; }; } const next = counter(); next(); // 1 next(); // 2 Two separate calls to counter() create two independent environments. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    },
+    {
+     "id": "claim-ee55517299423231",
+     "kind": "mechanism",
+     "text": "The function can keep accessing that environment after the outer call has returned."
+    },
+    {
+     "id": "claim-ad61d3ae9c591c48",
+     "kind": "consequence",
+     "text": "Two separate calls to counter() create two independent environments."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "System Design",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 Caching is a tradeoff A cache avoids repeating work, but introduces a second representation that can become stale. Decide what is authoritative, how entries are invalidated and how much memory the cache may use. PDF thumbnails are derived data. If a thumbnail disappears, recreate it. Original documents and private annotations are not disposable caches. Original Thumbnail Display Ask: can this information be recreated without asking the user to do the work again? SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-1971206b161b7ef4",
+     "kind": "tradeoff",
+     "text": "A cache avoids repeating work, but introduces a second representation that can become stale."
+    },
+    {
+     "id": "claim-80c412094639a331",
+     "kind": "mechanism",
+     "text": "PDF thumbnails are derived data."
+    },
+    {
+     "id": "claim-8f12f84148e3e82",
+     "kind": "property",
+     "text": "Original documents and private annotations are not disposable caches."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Coding Interviews",
+   "page": 3,
+   "pageText": "SHELF SAMPLES / 04 Explain the tradeoff A technically correct solution is only part of the conversation. Explain the assumptions, the chosen approach and the cost as the input grows. Avoid claiming that one implementation is faster without defining the input, runtime and measurement. Simpler code can be the better default until a demonstrated bottleneck requires more work. These are original sample practice notes. No scoring, generated questions or interview simulation is running inside Shelf. Write one note: what would make you change your chosen solution? SHELF / ORIGINAL SAMPLE NOTES 4",
+   "rubric": [
+    {
+     "id": "claim-ea60004bc65ba0ba",
+     "kind": "property",
+     "text": "A technically correct solution is only part of the conversation."
+    },
+    {
+     "id": "claim-4915efb345003c3e",
+     "kind": "definition",
+     "text": "Simpler code can be the better default until a demonstrated bottleneck requires more work."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Computer Science Essentials",
+   "page": 3,
+   "pageText": "SHELF SAMPLES / 04 Use the right structure The important question is not which data structure is most sophisticated. It is which operations must be cheap, which ordering matters and what guarantees the caller needs. A library may keep its original files by stable identifier while maintaining a separate searchable metadata representation. Different representations serve different operations. Original sample material. JavaScript reference semantics: developer.mozilla. org/en-US/docs/Web/JavaScript/Guide/Working_with_objects Before optimizing, list the three operations your application performs most often. SHELF / ORIGINAL SAMPLE NOTES 4",
+   "rubric": [
+    {
+     "id": "claim-1e262f035115b4e3",
+     "kind": "property",
+     "text": "The important question is not which data structure is most sophisticated."
+    },
+    {
+     "id": "claim-6d80f18bb2d59a3",
+     "kind": "contrast",
+     "text": "A library may keep its original files by stable identifier while maintaining a separate searchable metadata representation."
+    },
+    {
+     "id": "claim-40742fed28743ad7",
+     "kind": "mechanism",
+     "text": "Different representations serve different operations."
+    },
+    {
+     "id": "claim-9c294ad45f1350ed",
+     "kind": "mechanism",
+     "text": "Before optimizing, list the three operations your application performs most often."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  }
+ ]
+}

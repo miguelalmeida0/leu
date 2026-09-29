@@ -1,0 +1,261 @@
+{
+ "split": "v37-p2-input",
+ "cases": [
+  {
+   "id": "P2-01",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "A closure remembers its surrounding bindings.",
+   "suggestedCategories": [
+    "paraphrase",
+    "novelVocabulary"
+   ]
+  },
+  {
+   "id": "P2-02",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "A refresh token is a longer-lasting credential that gets you new access tokens without logging in again.",
+   "suggestedCategories": [
+    "paraphrase",
+    "novelVocabulary"
+   ]
+  },
+  {
+   "id": "P2-03",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Idempotency makes retries dangerous.",
+   "suggestedCategories": [
+    "oppositeMeaningSameWords"
+   ]
+  },
+  {
+   "id": "P2-04",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "Nobody holding a JWT can read the claims in its payload.",
+   "suggestedCategories": [
+    "oppositeMeaningSameWords"
+   ]
+  },
+  {
+   "id": "P2-05",
+   "document": "Mobile Mastery",
+   "concept": "Throttling",
+   "page": null,
+   "text": "Throttling waits until the events stop coming and only then runs the handler once.",
+   "suggestedCategories": [
+    "oppositeMeaningSameWords"
+   ]
+  },
+  {
+   "id": "P2-06",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Repeating an idempotent operation does not have the same effect as doing it once.",
+   "suggestedCategories": [
+    "negation"
+   ]
+  },
+  {
+   "id": "P2-07",
+   "document": "Mobile Mastery",
+   "concept": "Retry",
+   "page": null,
+   "text": "Retrying a failed call always makes it succeed eventually, whatever the error.",
+   "suggestedCategories": [
+    "absoluteVsQualified"
+   ]
+  },
+  {
+   "id": "P2-08",
+   "document": "Mobile Mastery",
+   "concept": "Retry",
+   "page": null,
+   "text": "You try a failed call again when the failure might only be temporary.",
+   "suggestedCategories": [
+    "absoluteVsQualified",
+    "paraphrase"
+   ]
+  },
+  {
+   "id": "P2-09",
+   "document": "Mobile Mastery",
+   "concept": "Database index",
+   "page": null,
+   "text": "Big tables are usually the slow ones, so a table's size is what an index shrinks to make lookups fast.",
+   "suggestedCategories": [
+    "causeVsCorrelation"
+   ]
+  },
+  {
+   "id": "P2-10",
+   "document": "Mobile Mastery",
+   "concept": "Retry",
+   "page": null,
+   "text": "Calls that fail at night tend to succeed in the morning, so the time of day is what makes a retry work.",
+   "suggestedCategories": [
+    "causeVsCorrelation"
+   ]
+  },
+  {
+   "id": "P2-11",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "An access token is a longer-lived credential used to obtain new refresh tokens.",
+   "suggestedCategories": [
+    "subjectObjectReversal"
+   ]
+  },
+  {
+   "id": "P2-12",
+   "document": "Mobile Mastery",
+   "concept": "Authorization",
+   "page": null,
+   "text": "Authorization is what an allowed identity uses to decide who it is.",
+   "suggestedCategories": [
+    "subjectObjectReversal"
+   ]
+  },
+  {
+   "id": "P2-13",
+   "document": "Mobile Mastery",
+   "concept": "Database index",
+   "page": null,
+   "text": "An index speeds up lookups on a column, because the database keeps the results of earlier queries and hands them back.",
+   "suggestedCategories": [
+    "rightConclusionWrongReasoning"
+   ]
+  },
+  {
+   "id": "P2-14",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "A refresh token gets you a new access token without logging in again, because your password is stored inside it.",
+   "suggestedCategories": [
+    "rightConclusionWrongReasoning"
+   ]
+  },
+  {
+   "id": "P2-15",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Authentication checks who you are; authorization then decides what you may do.",
+   "suggestedCategories": [
+    "multipleConcepts"
+   ]
+  },
+  {
+   "id": "P2-16",
+   "document": "Mobile Mastery",
+   "concept": "Debouncing",
+   "page": null,
+   "text": "Debouncing waits for a pause in the events, while throttling runs at most once per window.",
+   "suggestedCategories": [
+    "multipleConcepts"
+   ]
+  },
+  {
+   "id": "P2-17",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Idempotency is about retries.",
+   "suggestedCategories": [
+    "partiallyCorrect",
+    "terse"
+   ]
+  },
+  {
+   "id": "P2-18",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "JWTs are really popular and lots of web frameworks support them.",
+   "suggestedCategories": [
+    "irrelevantPlausible"
+   ]
+  },
+  {
+   "id": "P2-19",
+   "document": "Mobile Mastery",
+   "concept": "HttpOnly cookie",
+   "page": null,
+   "text": "Marking a cookie HttpOnly makes XSS attacks harmless.",
+   "suggestedCategories": [
+    "misconceptionParaphrase"
+   ]
+  },
+  {
+   "id": "P2-20",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Pressing an elevator call button five times still brings just one elevator.",
+   "suggestedCategories": [
+    "exampleInsteadOfDefinition"
+   ]
+  },
+  {
+   "id": "P2-21",
+   "document": "Mobile Mastery",
+   "concept": "Database index",
+   "page": null,
+   "text": "It's fast.",
+   "suggestedCategories": [
+    "veryShort"
+   ]
+  },
+  {
+   "id": "P2-22",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "A JWT is a compact token with a header, a payload and a signature. The signature lets the API check who issued it without looking anything up in a database. Because it is encrypted, nobody can read the claims inside.",
+   "suggestedCategories": [
+    "verboseOneWrongClause",
+    "verbose"
+   ]
+  },
+  {
+   "id": "P2-23",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "A stateless server handles each request without relying on anything kept in its own memory, so any replica can take the next request, which makes horizontal scaling easier; that is also why stateless servers never need a database.",
+   "suggestedCategories": [
+    "verboseOneWrongClause",
+    "verbose"
+   ]
+  },
+  {
+   "id": "P2-24",
+   "document": "Mobile Mastery",
+   "concept": "useCallback",
+   "page": null,
+   "text": "It keeps it so that it doesn't have to make it again.",
+   "suggestedCategories": [
+    "pronounAmbiguity"
+   ]
+  },
+  {
+   "id": "P2-25",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "It keeps them around after it finishes so that it can use them.",
+   "suggestedCategories": [
+    "pronounAmbiguity"
+   ]
+  }
+ ]
+}

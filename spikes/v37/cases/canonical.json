@@ -1,0 +1,114 @@
+{
+ "split": "v37-canonical",
+ "note": "The five mandatory canonical cases (PREREGISTRATION G10). The pass criteria are checked automatically on every required run. Claim ids come from catalogs/catalog-full.json (exported from ShelfCore at the V36 commit).",
+ "claimIDs": {
+  "authenticationDefinition": "claim-7485a5102853e2f4",
+  "closureDefinition": "claim-63b3e0f7dcdc4888",
+  "closureRetainAccess": "claim-329d5dceec7cb700",
+  "jwtNotEncrypted": "claim-f8f60f6a0a9d8164"
+ },
+ "cases": [
+  {
+   "id": "C1",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "It checks that the person is really who they claim to be.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": ["verifying who a user or service is"],
+   "categories": ["paraphrase", "novelVocabulary", "themeAuthnAuthz"],
+   "paraphraseGroup": null,
+   "notes": "The definition, in other words; the trustworthy-identity constraint is not mentioned.",
+   "passCriteria": {
+    "reading": {"claimIDs": ["claim-7485a5102853e2f4"], "relations": ["entails", "partiallyEntails"]},
+    "states": ["understood", "mostlyUnderstood"],
+    "recordsCredit": true,
+    "asksProbe": false,
+    "recordsMisconception": false
+   }
+  },
+  {
+   "id": "C2",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Authentication does not verify identity.",
+   "state": "misconception",
+   "misconceptions": [{"kind": "contradiction", "claim": "verifying who a user or service is", "confusedWith": null}],
+   "credits": [],
+   "categories": ["negation", "oppositeMeaningSameWords", "terse", "themeAuthnAuthz"],
+   "paraphraseGroup": null,
+   "notes": "Denies the definition.",
+   "passCriteria": {
+    "reading": {"claimIDs": ["claim-7485a5102853e2f4"], "relations": ["contradicts"], "polarity": "negated"},
+    "states": ["misconception"],
+    "misconceptionRecordedOrMisconceptionCheckAsked": true,
+    "recordsCredit": false,
+    "recordsMastery": false
+   }
+  },
+  {
+   "id": "C3",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "The inner function can still use variables from the function that created it.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": ["access to the lexical variables from the scope"],
+   "categories": ["paraphrase", "novelVocabulary", "themeClosure"],
+   "paraphraseGroup": null,
+   "notes": "Retained access to the enclosing variables, in other words; the purpose is not mentioned.",
+   "passCriteria": {
+    "reading": {"claimIDs": ["claim-63b3e0f7dcdc4888", "claim-329d5dceec7cb700"], "relations": ["entails", "partiallyEntails"]},
+    "states": ["understood", "mostlyUnderstood"],
+    "recordsCredit": true,
+    "asksProbe": false,
+    "recordsMisconception": false
+   }
+  },
+  {
+   "id": "C4",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "The inner function can still access the outer variable because JavaScript copies all outer variables into it.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": ["access to the lexical variables from the scope"],
+   "categories": ["rightConclusionWrongReasoning", "themeClosure"],
+   "paraphraseGroup": null,
+   "notes": "The conclusion (it keeps access) is right; the mechanism (copying) is wrong and unsupported.",
+   "passCriteria": {
+    "conclusion": {"claimIDs": ["claim-63b3e0f7dcdc4888", "claim-329d5dceec7cb700"], "relations": ["entails", "partiallyEntails"]},
+    "reasonLinkedToConclusion": true,
+    "reason": {"relations": ["contradicts", "unrelated"], "orMisconceptionAbout": "copying values", "secondOpinionMustNotBe": "same"},
+    "states": ["weakReasoning"],
+    "recordsMastery": false,
+    "ifAskedClaimIDsInclude": ["claim-63b3e0f7dcdc4888", "claim-329d5dceec7cb700"]
+   }
+  },
+  {
+   "id": "C5",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "JWTs are signed so nobody can read them.",
+   "state": "misconception",
+   "misconceptions": [{"kind": "contradiction", "claim": "signed claim containers, not automatically encrypted", "confusedWith": null}],
+   "credits": [],
+   "categories": ["misconceptionParaphrase", "wrongConclusionPlausibleReason", "terse", "themeJWT"],
+   "paraphraseGroup": null,
+   "notes": "True premise (signed), false conclusion (unreadable): confuses signing with encryption.",
+   "passCriteria": {
+    "segmentContaining": "nobody can read them",
+    "reading": {"claimIDs": ["claim-f8f60f6a0a9d8164"], "relations": ["contradicts"], "orMisconceptionAbout": "signing versus encryption"},
+    "states": ["misconception"],
+    "misconceptionRecordedOrMisconceptionCheckAsked": true,
+    "recordsCredit": false,
+    "recordsMastery": false
+   }
+  }
+ ]
+}

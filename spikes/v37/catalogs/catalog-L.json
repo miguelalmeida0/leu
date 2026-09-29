@@ -1,0 +1,343 @@
+{
+ "concepts": [
+  {
+   "concept": "closure",
+   "contrastPartner": "-",
+   "document": "JavaScript Deep Dive",
+   "examples": [],
+   "key": "closure",
+   "neighbours": [],
+   "page": 2,
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    }
+   ],
+   "section": "",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authentication",
+   "contrastPartner": "Authorization",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Password + MFA creates an authenticated session for user 42."
+   ],
+   "key": "authentication",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "CORS",
+    "Cookie",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 41,
+   "rubric": [
+    {
+     "id": "claim-7485a5102853e2f4",
+     "kind": "definition",
+     "text": "The process of verifying who a user or service is."
+    },
+    {
+     "id": "claim-508e25d02094b377",
+     "kind": "constraint",
+     "text": "Before granting access, the system needs a trustworthy identity."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authorization",
+   "contrastPartner": "Authentication",
+   "document": "Mobile Mastery",
+   "examples": [
+    "user role can read reports; admin role can delete accounts."
+   ],
+   "key": "authorization",
+   "neighbours": [
+    "Access token",
+    "Authentication",
+    "Cookie",
+    "Database constraint",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 42,
+   "rubric": [
+    {
+     "id": "claim-a1b2f230a4062697",
+     "kind": "definition",
+     "text": "The process of deciding what an authenticated identity is allowed to do."
+    },
+    {
+     "id": "claim-54d49440ea8daee0",
+     "kind": "property",
+     "text": "Identity alone is not permission."
+    },
+    {
+     "id": "claim-a9d2e28b3dc2414a",
+     "kind": "mechanism",
+     "text": "authorization still happens per action/resource."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Closure",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "createCounter() returns a function that keeps access to count after createCounter returns."
+   ],
+   "key": "closure",
+   "neighbours": [
+    "Encapsulation",
+    "Hoisting",
+    "Mutation",
+    "Primitive values",
+    "Reference semantics",
+    "Scope",
+    "State",
+    "async / await",
+    "try / catch",
+    "var, let, const"
+   ],
+   "page": 83,
+   "rubric": [
+    {
+     "id": "claim-63b3e0f7dcdc4888",
+     "kind": "definition",
+     "text": "A function plus access to the lexical variables from the scope where it was created."
+    },
+    {
+     "id": "claim-ea1f1e097d9c8eab",
+     "kind": "purpose",
+     "text": "Closures power encapsulation, callbacks, hooks, and private state patterns."
+    }
+   ],
+   "section": "JAVASCRIPT CORE MENTAL MODELS",
+   "supporting": [
+    "A closure lets a function retain access to its lexical environment after the outer function has finished."
+   ],
+   "supportingIDs": [
+    "claim-329d5dceec7cb700"
+   ]
+  },
+  {
+   "concept": "JWT",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Authorization: Bearer <jwt> containing sub, exp, and roles."
+   ],
+   "key": "jwt",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "Cookie",
+    "Database",
+    "Encryption",
+    "Hashing",
+    "Headers",
+    "HttpOnly cookie",
+    "Refresh token",
+    "Session",
+    "Token"
+   ],
+   "page": 46,
+   "rubric": [
+    {
+     "id": "claim-ff95fc8d2fc5f02e",
+     "kind": "definition",
+     "text": "A compact signed token format containing claims, represented as header.payload.signature."
+    },
+    {
+     "id": "claim-b6c3668d41921be7",
+     "kind": "purpose",
+     "text": "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [
+    "JWTs are signed claim containers, not automatically encrypted."
+   ],
+   "supportingIDs": [
+    "claim-f8f60f6a0a9d8164"
+   ]
+  },
+  {
+   "concept": "Event bubbling",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Click button inside <li>; click can be observed by li, ul, body unless propagation is stopped."
+   ],
+   "key": "event bubbling",
+   "neighbours": [
+    "API loading states",
+    "ARIA",
+    "Accessibility",
+    "DOM",
+    "Error boundary",
+    "Event delegation",
+    "Optimistic UI",
+    "Semantic HTML"
+   ],
+   "page": 148,
+   "rubric": [
+    {
+     "id": "claim-d6ee5561530feacf",
+     "kind": "definition",
+     "text": "The phase where an event triggered on a descendant propagates upward through its ancestors."
+    },
+    {
+     "id": "claim-c1e37eef1bf6179d",
+     "kind": "purpose",
+     "text": "It enables parent handlers and event delegation."
+    }
+   ],
+   "section": "FRONTEND PLATFORM, UX & PERFORMANCE",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "async / await",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "const r = await fetch(url); const data = await",
+    "r.json();"
+   ],
+   "key": "async / await",
+   "neighbours": [
+    "Closure",
+    "Hoisting",
+    "Mutation",
+    "Primitive values",
+    "Promise",
+    "Reference semantics",
+    "Scope",
+    "Suspense",
+    "try / catch",
+    "var, let, const"
+   ],
+   "page": 81,
+   "rubric": [
+    {
+     "id": "claim-376a88e1474ed068",
+     "kind": "definition",
+     "text": "Syntax for writing Promise-based asynchronous code in a sequential-looking style."
+    },
+    {
+     "id": "claim-b82d3c33d728eac",
+     "kind": "consequence",
+     "text": "It makes async control flow and error handling easier to read."
+    }
+   ],
+   "section": "JAVASCRIPT CORE MENTAL MODELS",
+   "supporting": [
+    "async/await is syntax over Promises. await suspends the async function until settlement;"
+   ],
+   "supportingIDs": [
+    "claim-a1e0eac700f33a5d"
+   ]
+  }
+ ],
+ "passages": [
+  {
+   "document": "JavaScript Deep Dive",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 A closure keeps access A closure is a function together with access to its surrounding lexical environment. The function can keep accessing that environment after the outer call has returned. function counter() { let value = 0; return () => { value += 1; return value; }; } const next = counter(); next(); // 1 next(); // 2 Two separate calls to counter() create two independent environments. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-c9dfd7c9dc3fb33d",
+     "kind": "definition",
+     "text": "A closure is a function together with access to its surrounding lexical environment."
+    },
+    {
+     "id": "claim-ee55517299423231",
+     "kind": "mechanism",
+     "text": "The function can keep accessing that environment after the outer call has returned."
+    },
+    {
+     "id": "claim-ad61d3ae9c591c48",
+     "kind": "consequence",
+     "text": "Two separate calls to counter() create two independent environments."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "System Design",
+   "page": 0,
+   "pageText": "SHELF SAMPLES / 01 System Design Start with the job Before drawing components, establish who uses the system, what they need to do, and what failure would mean. An architecture solves a particular set of constraints. Need Constraint Decision For a personal PDF reader, local access, data integrity and fast navigation may matter more than multi-region availability. Do not pay for complexity that the task does not require. A useful question: what must still work when the internet does not? SHELF / ORIGINAL SAMPLE NOTES 1",
+   "rubric": [
+    {
+     "id": "claim-6cdcf11a35a9cb3b",
+     "kind": "mechanism",
+     "text": "An architecture solves a particular set of constraints."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Coding Interviews",
+   "page": 0,
+   "pageText": "SHELF SAMPLES / 01 Coding Interviews Reason before typing State the expected input and output. Ask about empty input, duplicates, ordering and invalid values before choosing an algorithm. Clarify Example Implement A small example is useful because it makes hidden assumptions visible. It is easier to correct the contract before coding than to retrofit it into a finished implementation. What does a successful result look like for an empty input? SHELF / ORIGINAL SAMPLE NOTES 1",
+   "rubric": [
+    {
+     "id": "claim-433cee912105d6c7",
+     "kind": "cause",
+     "text": "A small example is useful because it makes hidden assumptions visible."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "document": "Computer Science Essentials",
+   "page": 2,
+   "pageText": "SHELF SAMPLES / 03 References and copies Two variables can refer to the same mutable object. Changing that object through one variable is visible through the other reference. const a = { score: 1 }; const b = a; b.score = 2; console.log(a.score); // 2 Copying an outer object with spread does not automatically copy its nested objects. The boundary between shared and copied data matters. Draw two arrows pointing to the same object. The bug becomes easier to see. SHELF / ORIGINAL SAMPLE NOTES 3",
+   "rubric": [
+    {
+     "id": "claim-ff729a2d5aabb886",
+     "kind": "property",
+     "text": "Two variables can refer to the same mutable object."
+    },
+    {
+     "id": "claim-7eeaa2c57a8c30fc",
+     "kind": "property",
+     "text": "Changing that object through one variable is visible through the other reference."
+    },
+    {
+     "id": "claim-35eb847c10c9039d",
+     "kind": "mechanism",
+     "text": "Copying an outer object with spread does not automatically copy its nested objects."
+    },
+    {
+     "id": "claim-229e2b7a2a2155d0",
+     "kind": "consequence",
+     "text": "The bug becomes easier to see."
+    }
+   ],
+   "supporting": [],
+   "supportingIDs": []
+  }
+ ]
+}

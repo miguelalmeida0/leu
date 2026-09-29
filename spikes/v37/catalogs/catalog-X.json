@@ -1,0 +1,317 @@
+{
+ "concepts": [
+  {
+   "concept": "Authentication",
+   "contrastPartner": "Authorization",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Password + MFA creates an authenticated session for user 42."
+   ],
+   "key": "authentication",
+   "neighbours": [
+    "Access token",
+    "Authorization",
+    "CORS",
+    "Cookie",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 41,
+   "rubric": [
+    {
+     "id": "claim-7485a5102853e2f4",
+     "kind": "definition",
+     "text": "The process of verifying who a user or service is."
+    },
+    {
+     "id": "claim-508e25d02094b377",
+     "kind": "constraint",
+     "text": "Before granting access, the system needs a trustworthy identity."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Authorization",
+   "contrastPartner": "Authentication",
+   "document": "Mobile Mastery",
+   "examples": [
+    "user role can read reports; admin role can delete accounts."
+   ],
+   "key": "authorization",
+   "neighbours": [
+    "Access token",
+    "Authentication",
+    "Cookie",
+    "Database constraint",
+    "HttpOnly cookie",
+    "JWT",
+    "Refresh token",
+    "Session",
+    "Stateful system"
+   ],
+   "page": 42,
+   "rubric": [
+    {
+     "id": "claim-a1b2f230a4062697",
+     "kind": "definition",
+     "text": "The process of deciding what an authenticated identity is allowed to do."
+    },
+    {
+     "id": "claim-54d49440ea8daee0",
+     "kind": "property",
+     "text": "Identity alone is not permission."
+    },
+    {
+     "id": "claim-a9d2e28b3dc2414a",
+     "kind": "mechanism",
+     "text": "authorization still happens per action/resource."
+    }
+   ],
+   "section": "SECURITY, IDENTITY & TRUST",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Encapsulation",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Cart exposes addItem(); callers do not mutate cart.items internals directly."
+   ],
+   "key": "encapsulation",
+   "neighbours": [
+    "Abstraction",
+    "Contract",
+    "Dependency inversion",
+    "Layered architecture",
+    "Module",
+    "Ports and adapters",
+    "Pure core, imperative shell",
+    "Single Responsibility Principle",
+    "State"
+   ],
+   "page": 249,
+   "rubric": [
+    {
+     "id": "claim-ee632a6b8778f100",
+     "kind": "definition",
+     "text": "Hide internal state/implementation and expose only the operations consumers need."
+    },
+    {
+     "id": "claim-e57d40088f6b5036",
+     "kind": "constraint",
+     "text": "It prevents distant code from depending on fragile details."
+    }
+   ],
+   "section": "MODULARITY & MAINTAINABILITY",
+   "supporting": [
+    "Encapsulation protects invariants by controlling how state and behavior are accessed."
+   ],
+   "supportingIDs": [
+    "claim-9247716a0900ec39"
+   ]
+  },
+  {
+   "concept": "Declaration file (.d.ts)",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "declare module \"legacy-lib\" { export function parse(x:string): Result }"
+   ],
+   "key": "declaration file",
+   "neighbours": [
+    "Conditional type",
+    "Generic constraint",
+    "Mapped type",
+    "Module",
+    "Readonly",
+    "Runtime validation vs static types",
+    "Type assertion",
+    "TypeScript",
+    "Utility types",
+    "satisfies operator"
+   ],
+   "page": 219,
+   "rubric": [
+    {
+     "id": "claim-a0c38adb78c8560e",
+     "kind": "definition",
+     "text": "A file containing TypeScript type declarations without runtime implementation."
+    },
+    {
+     "id": "claim-e6c36623f11c4a6f",
+     "kind": "property",
+     "text": "It describes JavaScript libraries, globals, and module APIs to the compiler."
+    }
+   ],
+   "section": "TYPESCRIPT: THINKING IN TYPES",
+   "supporting": [
+    "Declaration files describe runtime APIs to TypeScript and are how many JavaScript libraries become typesafe to consume."
+   ],
+   "supportingIDs": [
+    "claim-e999f211b089b9ae"
+   ]
+  },
+  {
+   "concept": "Unit test",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "expect(calculateTotal([10,5])).toBe(15)."
+   ],
+   "key": "unit test",
+   "neighbours": [
+    "Cohesion",
+    "Coupling",
+    "Dependency injection",
+    "End-to-end test",
+    "Integration test",
+    "Mock",
+    "Regression test",
+    "Separation of concerns"
+   ],
+   "page": 165,
+   "rubric": [
+    {
+     "id": "claim-a6c2747df725a1b3",
+     "kind": "definition",
+     "text": "A focused test of a small behavior, usually with controlled dependencies."
+    },
+    {
+     "id": "claim-ffbbea0ea7f1173e",
+     "kind": "purpose",
+     "text": "It gives fast feedback on logic and edge cases."
+    }
+   ],
+   "section": "RELIABILITY, ARCHITECTURE & DELIVERY",
+   "supporting": [
+    "Unit tests are fast and focused."
+   ],
+   "supportingIDs": [
+    "claim-ca7e68c56fad75f7"
+   ]
+  },
+  {
+   "concept": "Open/Closed Principle",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "Renderer registry maps type -> renderer instead of a 500-line switch edited by every feature."
+   ],
+   "key": "open/closed principle",
+   "neighbours": [
+    "Adapter pattern",
+    "Code smell",
+    "Layered architecture",
+    "Ports and adapters",
+    "Pure core, imperative shell",
+    "Refactoring",
+    "Repository pattern",
+    "Single Responsibility Principle"
+   ],
+   "page": 257,
+   "rubric": [
+    {
+     "id": "claim-7c30b2cec9501506",
+     "kind": "definition",
+     "text": "Prefer designs that allow new behavior through extension without repeatedly modifying fragile central logic."
+    },
+    {
+     "id": "claim-e9f5d11c30f4f962",
+     "kind": "purpose",
+     "text": "It can reduce regression risk in frequently extended systems."
+    }
+   ],
+   "section": "MODULARITY & MAINTAINABILITY",
+   "supporting": [],
+   "supportingIDs": []
+  },
+  {
+   "concept": "Error boundary",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "<ErrorBoundary fallback={<CrashCard/>} ><Dashboard/></ErrorBoundary>."
+   ],
+   "key": "error boundary",
+   "neighbours": [
+    "API loading states",
+    "ARIA",
+    "Accessibility",
+    "DOM",
+    "Event bubbling",
+    "Event delegation",
+    "Optimistic UI",
+    "Render",
+    "Semantic HTML"
+   ],
+   "page": 152,
+   "rubric": [
+    {
+     "id": "claim-3cff5a115409d946",
+     "kind": "definition",
+     "text": "A React boundary that catches certain render/ lifecycle errors in descendants and renders fallback UI."
+    },
+    {
+     "id": "claim-292398af00220b23",
+     "kind": "constraint",
+     "text": "One broken widget should not necessarily blank an entire application."
+    }
+   ],
+   "section": "FRONTEND PLATFORM, UX & PERFORMANCE",
+   "supporting": [
+    "Error boundaries isolate render-time failures in a subtree."
+   ],
+   "supportingIDs": [
+    "claim-cbcd0b59e7c2d25"
+   ]
+  },
+  {
+   "concept": "Cohesion",
+   "contrastPartner": "-",
+   "document": "Mobile Mastery",
+   "examples": [
+    "UserService contains user operations instead of a giant utils.ts containing unrelated behavior."
+   ],
+   "key": "cohesion",
+   "neighbours": [
+    "Coupling",
+    "Dependency injection",
+    "End-to-end test",
+    "Integration test",
+    "Microservices",
+    "Module",
+    "Monolith",
+    "Separation of concerns",
+    "Unit test"
+   ],
+   "page": 163,
+   "rubric": [
+    {
+     "id": "claim-2c2c23204c4c4aec",
+     "kind": "definition",
+     "text": "How strongly the responsibilities inside one module belong together."
+    },
+    {
+     "id": "claim-7251556bb5e54696",
+     "kind": "consequence",
+     "text": "High cohesion makes modules easier to understand and maintain."
+    }
+   ],
+   "section": "RELIABILITY, ARCHITECTURE & DELIVERY",
+   "supporting": [
+    "Good modules have high cohesion and low unnecessary coupling: related responsibilities together, unrelated responsibilities separated."
+   ],
+   "supportingIDs": [
+    "claim-d4158fc3c2fffb5d"
+   ]
+  }
+ ],
+ "passages": []
+}

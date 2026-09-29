@@ -1,0 +1,830 @@
+{
+ "split": "v37-p1",
+ "cases": [
+  {
+   "id": "gd-002",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "If the same request lands twice - say the app retried after a timeout even though the server had actually finished, or someone tapped Pay two times - the end result should be as if it only happened once.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "repeating an operation has the same intended effect",
+    "users double-click, and clients time out"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Same-effect-as-once plus the real-world sources of duplicates (retry after timeout, double tap), in own words.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-003",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Think of a lift call button: mash it five times and one lift still comes. An API call should work the same way, because in real life stuff gets sent twice all the time - flaky wifi resends, impatient people double-tap, a client gives up waiting after the server already did the job.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "repeating an operation has the same intended effect",
+    "users double-click, and clients time out"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Lift-button analogy carries the same-effect idea and the learner names retries, double taps and timeouts as the reason.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-005",
+   "document": "Mobile Mastery",
+   "concept": "Idempotency",
+   "page": null,
+   "text": "Idempotency is when the client automatically sends the request again if it fails, and keeps trying until the server finally answers.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "repeating an operation has the same intended effect",
+     "confusedWith": "Retry"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes the act of retrying instead of the property that a repeat has the same effect as one call - a confusion with Retry.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-015",
+   "document": "Mobile Mastery",
+   "concept": "Debouncing",
+   "page": null,
+   "text": "It's like an elevator door: each time someone else steps in, the countdown restarts, and it only shuts once nobody has come in for a few seconds. Same with a search box - you fire the lookup after the person pauses typing, not on every letter, so the heavy work doesn't run constantly.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "until a burst of events has been quiet",
+    "avoids firing expensive work for every keystroke"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Elevator analogy captures the reset-until-quiet delay, and the search-box part gives the purpose of not doing heavy work per keystroke.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-016",
+   "document": "Mobile Mastery",
+   "concept": "Debouncing",
+   "page": null,
+   "text": "i think it's something about waiting a little before running a function? like so it doesn't do too much work maybe",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gestures at waiting and saving work but never says the wait is until events stop; too vague to trust.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-017",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Authentication is where the app checks what you're allowed to do, like whether you can edit a post or only look at it.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "verifying who a user or service is",
+     "confusedWith": "Authorization"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary",
+    "themeAuthnAuthz"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes deciding permissions, which is authorization, not verifying identity.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-019",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Obviously authentication is the permissions layer: once the system has your role, it works out exactly which actions and resources you're allowed.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "verifying who a user or service is",
+     "confusedWith": "Authorization"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "confidentlyWrong",
+    "novelVocabulary",
+    "themeAuthnAuthz"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Confidently equates authentication with the permission check (authorization).",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-020",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Think of a bouncer checking your ID at the door: it's only about proving you really are who you claim to be - password, face scan, a code texted to your phone. The app has to be sure of that before it lets you near anything.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "verifying who a user or service is",
+    "the system needs a trustworthy identity"
+   ],
+   "categories": [
+    "novelExample",
+    "paraphrase",
+    "novelVocabulary",
+    "themeAuthnAuthz"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Bouncer analogy gives identity verification and that a trustworthy identity must come before any access.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-021",
+   "document": "Mobile Mastery",
+   "concept": "Authentication",
+   "page": null,
+   "text": "Proving you are who you say you are, e.g. logging in with a password.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "verifying who a user or service is"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "themeAuthnAuthz"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Identity verification is right, but it does not say a trusted identity is needed before access is granted.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-030",
+   "document": "Mobile Mastery",
+   "concept": "CORS",
+   "page": null,
+   "text": "CORS is a firewall on the server that blocks requests coming from other domains, and it stops everything - browsers, curl, Postman, mobile apps - from calling your API unless you whitelist them.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "A browser-enforced policy that controls whether",
+     "confusedWith": null
+    },
+    {
+     "kind": "overgeneralization",
+     "claim": "does not stop non-browser clients",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Two wrong ideas: it is a server-side request blocker rather than browser-enforced read control, and it supposedly stops non-browser clients too.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-031",
+   "document": "Mobile Mastery",
+   "concept": "CORS",
+   "page": null,
+   "text": "CORS is how the backend checks who is calling it - it verifies the user's identity before it agrees to send the data back.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "controls whether frontend JavaScript can read responses",
+     "confusedWith": "Authentication"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Treats CORS as identity verification; the source says it is browser read control and explicitly not authentication.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-034",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "it's a login token that's encrypted, which keeps the info inside private from the browser and from anyone snooping on the traffic i believe",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "claim containers, not automatically encrypted",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "novelVocabulary",
+    "themeJWT"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Hedged, but still asserts the token's contents are encrypted and private.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-035",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "It's a small token in three dot-separated chunks - header, payload, signature. Because of the signature, whoever receives it can check the data really came from the issuer it trusts and wasn't changed, without hitting the database every time. Anyone can still decode and read the middle bit, though.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "compact signed token format containing claims",
+    "claims were issued by a trusted signer"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary",
+    "themeJWT"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Gives the signed three-part format and the verify-without-lookup purpose, and correctly notes it is readable (not encrypted).",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-036",
+   "document": "Mobile Mastery",
+   "concept": "JWT",
+   "page": null,
+   "text": "A JWT is a signed token carrying claims like the user id and expiry, and the API doesn't need a DB lookup to trust it - because it's encrypted, so the client can't read or fake anything inside.",
+   "state": "weakReasoning",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "claim containers, not automatically encrypted",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "compact signed token format containing claims"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary",
+    "themeJWT"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Conclusion (signed claims, trusted without a lookup) is right, but the reason offered is encryption, which contradicts the source; the signature is what makes it trustworthy.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-041",
+   "document": "Mobile Mastery",
+   "concept": "Hashing",
+   "page": null,
+   "text": "it's the thing where the password gets turned into a random-looking string so it isn't stored as is. i think you can't really get it back? not totally sure",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Right direction (not stored as-is, maybe irreversible) but one-way is only guessed at and fixed-length output and slow salting are absent.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-042",
+   "document": "Mobile Mastery",
+   "concept": "Encryption",
+   "page": null,
+   "text": "You lock the data up with a key so it's gibberish to everyone else, and whoever holds the right key can unlock it back to exactly what it was - unlike a hash, which you can't undo.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "A reversible transformation that protects data"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Keyed, reversible protection of data, contrasted correctly with one-way hashing.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-047",
+   "document": "Mobile Mastery",
+   "concept": "Database index",
+   "page": null,
+   "text": "Indexes = quicker searches. How it works: the DB remembers the results of previous queries, so the second time you ask it just returns the saved result.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "make particular lookups or orderings faster"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Same right conclusion with the same wrong caching mechanism.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-050",
+   "document": "Mobile Mastery",
+   "concept": "Closure",
+   "page": null,
+   "text": "A closure is when you have a function inside another function. It has something to do with scope.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "themeClosure"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Names nesting and scope but not the key relationship: keeping access to the variables where the function was created.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-058",
+   "document": "Mobile Mastery",
+   "concept": "Stateless server",
+   "page": null,
+   "text": "Any instance can answer the next request, and that's because stateless servers are lighter and faster since they basically don't use memory.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "Any replica can serve the next request"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Any-instance conclusion is right, but the reason (lighter, faster, no memory use) is wrong; it works because request state lives outside the instance.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-060",
+   "document": "Mobile Mastery",
+   "concept": "Horizontal scaling",
+   "page": null,
+   "text": "Instead of making one server beefier, you just add more servers running the same app.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "capacity by adding more instances or machines"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Adding machines is right, but nothing about higher throughput or redundancy beyond one box.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-062",
+   "document": "Mobile Mastery",
+   "concept": "Horizontal scaling",
+   "page": null,
+   "text": "You grow by adding more machines to the pool - so you might go from a handful of instances to dozens of them.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "capacity by adding more instances or machines"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Adds machines to grow capacity; no mention of throughput or resilience beyond one box.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-063",
+   "document": "Mobile Mastery",
+   "concept": "Horizontal scaling",
+   "page": null,
+   "text": "Horizontal scaling means upgrading your server - more RAM, a faster CPU - so the same machine can handle more users.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "capacity by adding more instances or machines",
+     "confusedWith": "Vertical scaling"
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Upgrading one machine's RAM/CPU is vertical scaling; horizontal adds more instances.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-065",
+   "document": "Mobile Mastery",
+   "concept": "Vertical scaling",
+   "page": null,
+   "text": "Vertical scaling is just upgrading your server's hardware, and it's the best approach because there's no ceiling - you can keep adding RAM forever - and having one really powerful machine gets rid of the single point of failure.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "overgeneralization",
+     "claim": "has hardware and availability limits",
+     "confusedWith": null
+    },
+    {
+     "kind": "contradiction",
+     "claim": "can preserve a single point of failure",
+     "confusedWith": null
+    }
+   ],
+   "credits": [
+    "Increasing the CPU, RAM, or resources"
+   ],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "partiallyCorrect",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Definition right, but claims no limits and that one big box removes the single point of failure - both contradict the source.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-069",
+   "document": "Mobile Mastery",
+   "concept": "Access token",
+   "page": null,
+   "text": "An access token is the long-lasting one you keep for weeks and use to get new tokens without logging in again. Making it last longer is actually safer, since you're not sending your password around.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "confusion",
+     "claim": "usually with a relatively short lifetime",
+     "confusedWith": "Refresh token"
+    },
+    {
+     "kind": "contradiction",
+     "claim": "reduce damage if the token is stolen",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Describes the refresh token (long-lived, used to get new tokens) and claims longer lifetimes are safer, the opposite of the source.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-071",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "A refresh token lets the app grab a fresh access token without making you log in again - it works because your password is saved inside it, so the server just logs you in again automatically.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "used to obtain new access tokens"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-14",
+   "notes": "Getting new access tokens without a new sign-in is right, but the mechanism (it contains your password) is invented.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-072",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "When the access token dies, the refresh token gets you a new one with no login screen. That's possible because the refresh token is basically your password in encrypted form, which the auth server re-checks each time.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "used to obtain new access tokens"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-14",
+   "notes": "Same right conclusion; same wrong reason (it is the user's stored password).",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-073",
+   "document": "Mobile Mastery",
+   "concept": "Refresh token",
+   "page": null,
+   "text": "It's what quietly gets you a new access token so you're not kicked back to sign-in; my understanding is it holds your username and password and just replays them.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "used to obtain new access tokens"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "hedged",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": "pgd-14",
+   "notes": "Hedged version: right outcome, wrong credential-replay mechanism.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-076",
+   "document": "Mobile Mastery",
+   "concept": "Rate limiting",
+   "page": null,
+   "text": "each client only gets so many requests per time period; go over and you're blocked for a bit",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "how frequently a client, identity, or key"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Same definition in casual words, still no purpose.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-084",
+   "document": "Mobile Mastery",
+   "concept": "Circuit breaker",
+   "page": null,
+   "text": "It stops calling a dependency that keeps failing and tries it again later. The point is that otherwise the failed responses would get cached and served to users.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "Stop calling a failing dependency temporarily"
+   ],
+   "categories": [
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "The behaviour is right, but the reason (avoiding cached error responses) is not the source's reason of protecting resources from repeated slow failures.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-085",
+   "document": "Mobile Mastery",
+   "concept": "Exponential backoff",
+   "page": null,
+   "text": "You retry after the same fixed wait every time, like 2 seconds, 2 seconds, 2 seconds. And the jitter is what makes all the clients retry at exactly the same moment, so the server can deal with them in one go.",
+   "state": "misconception",
+   "misconceptions": [
+    {
+     "kind": "contradiction",
+     "claim": "where delays grow after consecutive failures,",
+     "confusedWith": null
+    },
+    {
+     "kind": "reversal",
+     "claim": "prevents many clients from retrying in lockstep.",
+     "confusedWith": null
+    }
+   ],
+   "credits": [],
+   "categories": [
+    "multipleMisconceptions",
+    "confidentlyWrong",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Two wrong ideas: delays stay fixed instead of growing, and jitter is said to synchronize clients, the reverse of what it does.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-088",
+   "document": "Mobile Mastery",
+   "concept": "Exponential backoff",
+   "page": null,
+   "text": "Exponential growth is when something keeps doubling, like compound interest or bacteria splitting in a petri dish.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "True statement about exponential growth in general; nothing about retries, delays or protecting a recovering service.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-089",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "useMemo is for performance, it memoizes things so the app is faster.",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Knows it is a performance tool but not what is cached (a calculation result) or when it is recomputed (dependencies change).",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-091",
+   "document": "Mobile Mastery",
+   "concept": "useMemo",
+   "page": null,
+   "text": "i think it's used to speed up components, like memoization? so things don't slow down",
+   "state": "fragile",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "partiallyCorrect",
+    "hedged"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Hedged version of the same vague speed-up idea.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-101",
+   "document": "Mobile Mastery",
+   "concept": "Controlled component",
+   "page": null,
+   "text": "Controlled components are considered better practice than class components and they make your code cleaner and easier to test.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Plausible-sounding opinion mixing in class components; nothing about state driving the element's value.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-102",
+   "document": "Mobile Mastery",
+   "concept": "Uncontrolled component",
+   "page": null,
+   "text": "The browser's own input holds whatever the user typed, and you only peek at it through a ref when you need it, like on submit. Less wiring for a quick little form, and handy when some non-React script is also poking at the field.",
+   "state": "understood",
+   "misconceptions": [],
+   "credits": [
+    "keeps its current value primarily in the DOM,",
+    "reduce plumbing for simple forms"
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Value lives in the DOM and is read through a ref, plus both purposes: less plumbing for simple forms and non-React integration.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-105",
+   "document": "Mobile Mastery",
+   "concept": "Message queue",
+   "page": null,
+   "text": "One part of the system drops jobs into a line and some other worker picks them up and does them whenever it gets to them.",
+   "state": "mostlyUnderstood",
+   "misconceptions": [],
+   "credits": [
+    "producers enqueue messages/jobs and consumers process them later."
+   ],
+   "categories": [
+    "paraphrase",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Producer/consumer buffering is right, but not why: decoupling request latency from background work and smoothing bursts.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-107",
+   "document": "Mobile Mastery",
+   "concept": "Message queue",
+   "page": null,
+   "text": "The API just drops the task onto the queue and a worker handles it later, so the user gets a quick response instead of waiting for the email to go out. The reason that's faster, as far as I know, is that queues talk over a special binary protocol that's way lighter than HTTP, so the work itself takes less time to do - which is why every big company uses them.",
+   "state": "weakReasoning",
+   "misconceptions": [],
+   "credits": [
+    "producers enqueue messages/jobs and consumers process them later."
+   ],
+   "categories": [
+    "verbose",
+    "rightConclusionWrongReasoning",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Enqueue-then-worker and the quick response are right, but the explanation (a lighter binary protocol makes the work faster) is a non-sequitur; the gain comes from decoupling.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-111",
+   "document": "Computer Science Essentials",
+   "concept": null,
+   "page": 0,
+   "text": "The page is about how a model is a simpler version of something, which I guess matters a lot in computer science generally.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "hedged"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Hedged restatement of the title; no rubric idea is expressed.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-119",
+   "document": "React Notes",
+   "concept": null,
+   "page": 0,
+   "text": "React uses a virtual DOM and was made by Facebook; it's the most popular front-end library out there.",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "irrelevantPlausible",
+    "novelVocabulary"
+   ],
+   "paraphraseGroup": null,
+   "notes": "General React trivia; nothing about components, rendering or committing as this page teaches them.",
+   "origin": "v35-dev"
+  },
+  {
+   "id": "gd-120",
+   "document": "React Notes",
+   "concept": null,
+   "page": 0,
+   "text": "components and rendering stuff",
+   "state": "insufficient",
+   "misconceptions": [],
+   "credits": [],
+   "categories": [
+    "terse"
+   ],
+   "paraphraseGroup": null,
+   "notes": "Just names topics from the page; no understanding shown.",
+   "origin": "v35-dev"
+  }
+ ]
+}
