@@ -1,0 +1,63 @@
+# V37 primary gate: aggregate profile (counts only; no case text)
+cases 240
+
+## States by author
+author understood mostlyUnderstood fragile misconception weakReasoning insufficient
+J 8 5 4 12 7 4
+K 9 4 4 12 6 5
+L 8 4 3 15 7 3
+M 9 5 4 11 7 4
+N 4 2 1 11 21 1
+O 8 5 5 12 6 4
+ALL 46 25 21 73 54 21
+
+## Gold coarse labels (harness mapping)
+positive=71 misconception=87 weak=82
+weakReasoning cases that also list a misconception (coarse = misconception): 14
+
+## Categories (cases carrying the tag)
+absoluteVsQualified 35
+analogy 48
+causeVsCorrelation 21
+confidentlyWrong 52
+exampleInsteadOfDefinition 10
+fluentButWrong 33
+hedged 20
+irrelevantPlausible 12
+misconceptionParaphrase 88
+multipleConcepts 16
+multipleMisconceptions 30
+negation 96
+nonNativeEnglish 81
+novelExample 48
+novelVocabulary 116
+oppositeMeaningSameWords 9
+paraphrase 78
+partiallyCorrect 57
+pronounAmbiguity 5
+rightConclusionWrongReasoning 54
+subjectObjectReversal 22
+terse 36
+terse|veryShort 36
+themeAuthnAuthz 35
+themeClosure 50
+themeJWT 28
+typos 48
+verbose 31
+verboseOneWrongClause 22
+veryShort 17
+wrongConclusionPlausibleReason 27
+
+## Documents
+Coding Interviews 18
+Computer Science Essentials 15
+Design Patterns 18
+JavaScript Deep Dive 47
+Mobile Mastery 119
+React Notes 9
+System Design 14
+
+## Target kinds: concept=137 page=103 distinctTargets=36
+
+## Length: <=80 words 230, >80 words 10, min 3, median 37, max 99
+paraphrase groups: cases in groups 106, groups 35
