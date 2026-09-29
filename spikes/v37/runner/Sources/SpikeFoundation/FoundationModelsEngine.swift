@@ -76,6 +76,10 @@ public struct FoundationModelsEngine: SpikeModel {
     /// Named by the error's own description, so the classification survives SDK changes.
     static func classify(_ error: Error) -> String {
         let text = String(describing: error)
+        // Diagnostics only (stderr, opt-in): the SDK's own error text, never learner text.
+        if ProcessInfo.processInfo.environment["SPIKE_DEBUG_ERRORS"] != nil {
+            FileHandle.standardError.write(Data(("SPIKE-ERROR " + text.prefix(600) + "\n").utf8))
+        }
         if text.contains("exceededContextWindowSize") { return "contextOverflow" }
         if text.contains("guardrailViolation") || text.contains("refusal") { return "refused" }
         if text.contains("rateLimited") { return "rateLimited" }

@@ -13,6 +13,8 @@ public struct SpikeInput: Codable, Equatable, Sendable {
     public let neighbours: [Neighbour]
     public let segments: [Segment]
     public let wordCount: Int
+    /// V37: reason → conclusion links fixed by the answer's own discourse markers (exported by ShelfCore).
+    public var links: [SpikeLink]?
 }
 
 public struct SpikeInputFile: Codable, Sendable {
@@ -45,6 +47,8 @@ public struct SpikeSegmentLabel: Codable, Equatable, Sendable {
     public let role, claim, relation, misconception, polarity, specificity, describes: String
     /// high · medium · low: the model's own confidence in this label.
     public var confidence: String?
+    /// The model's few-word gist of the segment (a scratch field that anchors the row; never judged).
+    public var says: String?
     public init(n: Int, role: String, claim: String, relation: String, misconception: String, polarity: String,
                 specificity: String, describes: String, confidence: String? = nil) {
         self.n = n; self.role = role; self.claim = claim; self.relation = relation; self.misconception = misconception
@@ -60,7 +64,11 @@ public struct SpikeLink: Codable, Equatable, Sendable {
 public struct SpikeReading: Codable, Equatable, Sendable {
     public let segments: [SpikeSegmentLabel]
     public let links: [SpikeLink]
-    public init(segments: [SpikeSegmentLabel], links: [SpikeLink]) { self.segments = segments; self.links = links }
+    /// V37: the row call's own labels, before the locator's placement was merged in (audit only).
+    public var rows: [SpikeSegmentLabel]?
+    public init(segments: [SpikeSegmentLabel], links: [SpikeLink], rows: [SpikeSegmentLabel]? = nil) {
+        self.segments = segments; self.links = links; self.rows = rows
+    }
 }
 
 /// One second-opinion item, and the verdict it got.

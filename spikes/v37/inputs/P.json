@@ -25,6 +25,9 @@
           "text" : "Idempotency makes retries safe."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
@@ -82,6 +85,12 @@
           "kind" : "consequence",
           "role" : "supporting",
           "text" : "Idempotency makes retries safe."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 3
         }
       ],
       "neighbours" : [
@@ -151,6 +160,9 @@
           "text" : "Idempotency makes retries safe."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
@@ -201,6 +213,12 @@
           "kind" : "purpose",
           "role" : "core",
           "text" : "It avoids firing expensive work for every keystroke."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 3,
+          "reason" : 2
         }
       ],
       "neighbours" : [
@@ -263,6 +281,12 @@
           "text" : "It avoids firing expensive work for every keystroke."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "Limiting an action so it runs at most once per time window while events continue.",
@@ -289,7 +313,11 @@
       "segments" : [
         {
           "n" : 1,
-          "text" : "i think it's something about waiting a little before running a function? like so it doesn't do too much work maybe"
+          "text" : "i think it's something about waiting a little before running a function? like"
+        },
+        {
+          "n" : 2,
+          "text" : "so it doesn't do too much work maybe"
         }
       ],
       "set" : "P",
@@ -314,6 +342,9 @@
           "role" : "core",
           "text" : "Before granting access, the system needs a trustworthy identity."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -367,6 +398,9 @@
           "text" : "Before granting access, the system needs a trustworthy identity."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "The process of deciding what an authenticated identity is allowed to do.",
@@ -418,6 +452,9 @@
           "role" : "core",
           "text" : "Before granting access, the system needs a trustworthy identity."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -474,6 +511,9 @@
           "role" : "core",
           "text" : "Before granting access, the system needs a trustworthy identity."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -540,6 +580,9 @@
           "role" : "supporting",
           "text" : "It is not authentication and it does not stop non-browser clients."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -611,6 +654,9 @@
           "text" : "It is not authentication and it does not stop non-browser clients."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "The process of verifying who a user or service is.",
@@ -669,6 +715,9 @@
           "role" : "supporting",
           "text" : "JWTs are signed claim containers, not automatically encrypted."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -731,6 +780,12 @@
           "kind" : "mechanism",
           "role" : "supporting",
           "text" : "JWTs are signed claim containers, not automatically encrypted."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 3,
+          "reason" : 2
         }
       ],
       "neighbours" : [
@@ -802,6 +857,16 @@
           "kind" : "mechanism",
           "role" : "supporting",
           "text" : "JWTs are signed claim containers, not automatically encrypted."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 3
+        },
+        {
+          "conclusion" : 4,
+          "reason" : 3
         }
       ],
       "neighbours" : [
@@ -882,6 +947,12 @@
           "text" : "hashing is intended to be one-way."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "A reversible transformation that protects data using cryptographic keys.",
@@ -908,7 +979,11 @@
       "segments" : [
         {
           "n" : 1,
-          "text" : "it's the thing where the password gets turned into a random-looking string so it isn't stored as is. i think you can't really get it back? not totally sure"
+          "text" : "it's the thing where the password gets turned into a random-looking string"
+        },
+        {
+          "n" : 2,
+          "text" : "so it isn't stored as is. i think you can't really get it back? not totally sure"
         }
       ],
       "set" : "P",
@@ -941,6 +1016,12 @@
           "text" : "hashing is intended to be one-way."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "A one-way transformation that maps input to a fixedlength digest;",
@@ -967,14 +1048,18 @@
       "segments" : [
         {
           "n" : 1,
-          "text" : "You lock the data up with a key so it's gibberish to everyone else"
+          "text" : "You lock the data up with a key"
         },
         {
           "n" : 2,
-          "text" : "whoever holds the right key can unlock it back to exactly what it was - unlike a hash"
+          "text" : "so it's gibberish to everyone else"
         },
         {
           "n" : 3,
+          "text" : "whoever holds the right key can unlock it back to exactly what it was - unlike a hash"
+        },
+        {
+          "n" : 4,
           "text" : "you can't undo."
         }
       ],
@@ -1006,6 +1091,12 @@
           "kind" : "tradeoff",
           "role" : "supporting",
           "text" : "Indexes trade additional storage and write cost for faster reads."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 3,
+          "reason" : 2
         }
       ],
       "neighbours" : [
@@ -1075,6 +1166,9 @@
           "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "Objects are accessed through references, so multiple variables can refer to the same underlying object.",
@@ -1136,6 +1230,16 @@
           "kind" : "mechanism",
           "role" : "supporting",
           "text" : "Stateless application servers keep request state outside a specific instance, making load balancing and horizontal scaling easier."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 1,
+          "reason" : 2
+        },
+        {
+          "conclusion" : 2,
+          "reason" : 3
         }
       ],
       "neighbours" : [
@@ -1212,6 +1316,9 @@
           "text" : "It improves capacity and resilience but requires shared state, coordination, and distributed-system thinking."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "Increasing the CPU, RAM, or resources of one machine.",
@@ -1278,6 +1385,12 @@
           "text" : "It improves capacity and resilience but requires shared state, coordination, and distributed-system thinking."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "Increasing the CPU, RAM, or resources of one machine.",
@@ -1304,7 +1417,11 @@
       "segments" : [
         {
           "n" : 1,
-          "text" : "You grow by adding more machines to the pool - so you might go from a handful of instances to dozens of them."
+          "text" : "You grow by adding more machines to the pool -"
+        },
+        {
+          "n" : 2,
+          "text" : "so you might go from a handful of instances to dozens of them."
         }
       ],
       "set" : "P",
@@ -1344,6 +1461,12 @@
           "text" : "It improves capacity and resilience but requires shared state, coordination, and distributed-system thinking."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "Increasing the CPU, RAM, or resources of one machine.",
@@ -1370,7 +1493,11 @@
       "segments" : [
         {
           "n" : 1,
-          "text" : "Horizontal scaling means upgrading your server - more RAM, a faster CPU - so the same machine can handle more users."
+          "text" : "Horizontal scaling means upgrading your server - more RAM, a faster CPU -"
+        },
+        {
+          "n" : 2,
+          "text" : "so the same machine can handle more users."
         }
       ],
       "set" : "P",
@@ -1408,6 +1535,12 @@
           "kind" : "property",
           "role" : "supporting",
           "text" : "It is simple but eventually hits limits and can preserve a single point of failure."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 1,
+          "reason" : 2
         }
       ],
       "neighbours" : [
@@ -1480,6 +1613,12 @@
           "text" : "scopes\/claims limit what it can do."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 3
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "The rules that determine where a variable name is visible and accessible.",
@@ -1540,6 +1679,16 @@
           "text" : "It balances user convenience with short-lived access credentials."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 1,
+          "reason" : 2
+        },
+        {
+          "conclusion" : 3,
+          "reason" : 2
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
@@ -1598,6 +1747,12 @@
           "kind" : "mechanism",
           "role" : "core",
           "text" : "It balances user convenience with short-lived access credentials."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 3
         }
       ],
       "neighbours" : [
@@ -1664,6 +1819,12 @@
           "text" : "It balances user convenience with short-lived access credentials."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "A credential presented to an API to authorize requests, usually with a relatively short lifetime.",
@@ -1690,10 +1851,14 @@
       "segments" : [
         {
           "n" : 1,
-          "text" : "It's what quietly gets you a new access token so you're not kicked back to sign-in"
+          "text" : "It's what quietly gets you a new access token"
         },
         {
           "n" : 2,
+          "text" : "so you're not kicked back to sign-in"
+        },
+        {
+          "n" : 3,
           "text" : "my understanding is it holds your username and password and just replays them."
         }
       ],
@@ -1726,6 +1891,9 @@
           "role" : "supporting",
           "text" : "Rate limiting limits request volume by identity, key, IP, or resource."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -1789,6 +1957,9 @@
           "role" : "supporting",
           "text" : "Circuit breakers fail fast when a dependency is unhealthy and give it time to recover."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -1858,6 +2029,12 @@
           "kind" : "constraint",
           "role" : "supporting",
           "text" : "jitter prevents many clients from retrying in lockstep."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 3,
+          "reason" : 2
         }
       ],
       "neighbours" : [
@@ -1934,6 +2111,9 @@
           "text" : "jitter prevents many clients from retrying in lockstep."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
@@ -1993,6 +2173,12 @@
           "text" : "useMemo is a performance optimization, not a semantic guarantee."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "A React hook that caches a function reference until dependencies change.",
@@ -2019,7 +2205,11 @@
       "segments" : [
         {
           "n" : 1,
-          "text" : "useMemo is for performance, it memoizes things so the app is faster."
+          "text" : "useMemo is for performance, it memoizes things"
+        },
+        {
+          "n" : 2,
+          "text" : "so the app is faster."
         }
       ],
       "set" : "P",
@@ -2052,6 +2242,12 @@
           "text" : "useMemo is a performance optimization, not a semantic guarantee."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "A React hook that caches a function reference until dependencies change.",
@@ -2078,7 +2274,11 @@
       "segments" : [
         {
           "n" : 1,
-          "text" : "i think it's used to speed up components, like memoization? so things don't slow down"
+          "text" : "i think it's used to speed up components, like memoization?"
+        },
+        {
+          "n" : 2,
+          "text" : "so things don't slow down"
         }
       ],
       "set" : "P",
@@ -2110,6 +2310,9 @@
           "role" : "supporting",
           "text" : "A controlled input gets its value from React state and reports changes back through events, keeping UI state explicit."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -2170,6 +2373,9 @@
           "text" : "An uncontrolled input lets the DOM own the current value."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "A form element whose current value is driven by React state\/props.",
@@ -2226,6 +2432,9 @@
           "text" : "It decouples request latency from background work and smooths bursts."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "The time required for an operation or request to complete.",
@@ -2276,6 +2485,16 @@
           "kind" : "mechanism",
           "role" : "core",
           "text" : "It decouples request latency from background work and smooths bursts."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        },
+        {
+          "conclusion" : 4,
+          "reason" : 3
         }
       ],
       "neighbours" : [
@@ -2349,6 +2568,9 @@
           "text" : "The description is useful before deciding how to store the stack."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
 
       ],
@@ -2392,6 +2614,9 @@
           "role" : "core",
           "text" : "committing applies the necessary changes to the screen."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
 
@@ -2437,6 +2662,9 @@
           "text" : "committing applies the necessary changes to the screen."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
 
       ],
@@ -2476,6 +2704,9 @@
           "role" : "supporting",
           "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -2528,6 +2759,9 @@
           "role" : "core",
           "text" : "It balances user convenience with short-lived access credentials."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -2588,6 +2822,9 @@
           "text" : "Idempotency makes retries safe."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
@@ -2647,6 +2884,9 @@
           "text" : "JWTs are signed claim containers, not automatically encrypted."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
@@ -2698,6 +2938,9 @@
           "role" : "core",
           "text" : "It protects expensive handlers during scroll, resize, or pointer movement."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -2758,6 +3001,9 @@
           "text" : "Idempotency makes retries safe."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
@@ -2810,6 +3056,9 @@
           "text" : "Transient network\/service errors often succeed later."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "An architecture where business capabilities are split into independently deployable networked services.",
@@ -2861,6 +3110,9 @@
           "role" : "core",
           "text" : "Transient network\/service errors often succeed later."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -2921,6 +3173,12 @@
           "text" : "Indexes trade additional storage and write cost for faster reads."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "A system for persistently storing, querying, and updating application data.",
@@ -2975,6 +3233,12 @@
           "kind" : "mechanism",
           "role" : "core",
           "text" : "Transient network\/service errors often succeed later."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
         }
       ],
       "neighbours" : [
@@ -3032,6 +3296,9 @@
           "role" : "core",
           "text" : "It balances user convenience with short-lived access credentials."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -3092,6 +3359,9 @@
           "text" : "authorization still happens per action\/resource."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "The process of verifying who a user or service is.",
@@ -3151,6 +3421,12 @@
           "text" : "Indexes trade additional storage and write cost for faster reads."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 1,
+          "reason" : 2
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "A system for persistently storing, querying, and updating application data.",
@@ -3205,6 +3481,12 @@
           "kind" : "mechanism",
           "role" : "core",
           "text" : "It balances user convenience with short-lived access credentials."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 1,
+          "reason" : 2
         }
       ],
       "neighbours" : [
@@ -3263,6 +3545,9 @@
           "text" : "Before granting access, the system needs a trustworthy identity."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "The process of deciding what an authenticated identity is allowed to do.",
@@ -3318,6 +3603,9 @@
           "role" : "core",
           "text" : "It avoids firing expensive work for every keystroke."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -3382,6 +3670,9 @@
           "text" : "Idempotency makes retries safe."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "A retry strategy where delays grow after consecutive failures, often with random jitter.",
@@ -3440,6 +3731,9 @@
           "role" : "supporting",
           "text" : "JWTs are signed claim containers, not automatically encrypted."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -3500,6 +3794,9 @@
           "text" : "HttpOnly prevents client-side JavaScript from reading a cookie, which is useful for session credentials, though it does not eliminate XSS impact."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "Small browser-managed data associated with a domain and sent according to cookie rules.",
@@ -3558,6 +3855,9 @@
           "role" : "supporting",
           "text" : "Idempotency makes retries safe."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -3618,6 +3918,9 @@
           "text" : "Indexes trade additional storage and write cost for faster reads."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "A system for persistently storing, querying, and updating application data.",
@@ -3675,6 +3978,12 @@
           "kind" : "mechanism",
           "role" : "supporting",
           "text" : "JWTs are signed claim containers, not automatically encrypted."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 4,
+          "reason" : 3
         }
       ],
       "neighbours" : [
@@ -3748,6 +4057,12 @@
           "text" : "Stateless application servers keep request state outside a specific instance, making load balancing and horizontal scaling easier."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "Data owned by a component or store that can change over time and trigger UI updates.",
@@ -3819,6 +4134,9 @@
           "text" : "useCallback memoizes function identity."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "A React hook that caches a calculation result between renders until dependencies change.",
@@ -3878,6 +4196,9 @@
           "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "Objects are accessed through references, so multiple variables can refer to the same underlying object.",
@@ -3929,6 +4250,9 @@
           "role" : "core",
           "text" : "Before granting access, the system needs a trustworthy identity."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -3995,6 +4319,16 @@
           "kind" : "mechanism",
           "role" : "core",
           "text" : "authorization still happens per action\/resource."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 4,
+          "reason" : 3
+        },
+        {
+          "conclusion" : 5,
+          "reason" : 6
         }
       ],
       "neighbours" : [
@@ -4069,6 +4403,12 @@
           "text" : "Before granting access, the system needs a trustworthy identity."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 4,
+          "reason" : 3
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "The process of deciding what an authenticated identity is allowed to do.",
@@ -4140,6 +4480,12 @@
           "text" : "authorization still happens per action\/resource."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 6,
+          "reason" : 5
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "The process of verifying who a user or service is.",
@@ -4186,7 +4532,11 @@
         },
         {
           "n" : 6,
-          "text" : "So: deciding what an identified person may do, door by door."
+          "text" : "So: deciding what an identified person may do"
+        },
+        {
+          "n" : 7,
+          "text" : "door by door."
         }
       ],
       "set" : "P",
@@ -4217,6 +4567,12 @@
           "kind" : "mechanism",
           "role" : "core",
           "text" : "authorization still happens per action\/resource."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 3,
+          "reason" : 2
         }
       ],
       "neighbours" : [
@@ -4286,6 +4642,12 @@
           "text" : "Error boundaries isolate render-time failures in a subtree."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "The explicit UI states around remote data: loading, success, empty, and error, often plus refreshing\/stale.",
@@ -4316,10 +4678,14 @@
         },
         {
           "n" : 2,
-          "text" : "So once your components are wrapped, nothing can crash the app anymore: even a failed fetch in a click handler or an error in a setTimeout just ends up in the fallback."
+          "text" : "So once your components are wrapped"
         },
         {
           "n" : 3,
+          "text" : "nothing can crash the app anymore: even a failed fetch in a click handler or an error in a setTimeout just ends up in the fallback."
+        },
+        {
+          "n" : 4,
           "text" : "Every error gets handled for you."
         }
       ],
@@ -4352,6 +4718,9 @@
           "role" : "supporting",
           "text" : "Error boundaries isolate render-time failures in a subtree."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -4418,6 +4787,12 @@
           "kind" : "property",
           "role" : "supporting",
           "text" : "Unit tests are fast and focused."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
         }
       ],
       "neighbours" : [
@@ -4487,6 +4862,12 @@
           "text" : "Unit tests are fast and focused."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 3,
+          "reason" : 2
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "A test double that simulates a dependency and often records interactions.",
@@ -4517,7 +4898,11 @@
         },
         {
           "n" : 2,
-          "text" : "You usually swap the real dependencies (db, network) for fakes so you're only testing that bit of logic in isolation."
+          "text" : "You usually swap the real dependencies (db, network) for fakes"
+        },
+        {
+          "n" : 3,
+          "text" : "so you're only testing that bit of logic in isolation."
         }
       ],
       "set" : "P",
@@ -4542,6 +4927,9 @@
           "role" : "core",
           "text" : "It can reduce regression risk in frequently extended systems."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -4614,6 +5002,9 @@
           "text" : "Encapsulation protects invariants by controlling how state and behavior are accessed."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "A cohesive unit that exposes a public interface while hiding internal implementation details.",
@@ -4679,6 +5070,12 @@
           "kind" : "mechanism",
           "role" : "supporting",
           "text" : "Good modules have high cohesion and low unnecessary coupling: related responsibilities together, unrelated responsibilities separated."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 4,
+          "reason" : 3
         }
       ],
       "neighbours" : [
@@ -4752,6 +5149,9 @@
           "text" : "Declaration files describe runtime APIs to TypeScript and are how many JavaScript libraries become typesafe to consume."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "JavaScript plus a static type system checked before runtime.",
@@ -4819,6 +5219,12 @@
           "text" : "Declaration files describe runtime APIs to TypeScript and are how many JavaScript libraries become typesafe to consume."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 3,
+          "reason" : 2
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "JavaScript plus a static type system checked before runtime.",
@@ -4878,6 +5284,9 @@
           "role" : "core",
           "text" : "It can reduce regression risk in frequently extended systems."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {

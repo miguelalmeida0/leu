@@ -30,6 +30,18 @@ enum SpikeSynthetic {
                                  verdicts: verdicts.enumerated().map { SpikeVerdict(item: $0.offset + 1, verdict: $0.element.2) })
     }
 
+    /// V37's second opinion: the whole-answer check and, when it finds the answer wrong, the locator
+    /// (segment, claim id, kind; segment 0 for "none").
+    static func check(_ verdict: String, locate: (Int, String?, String)? = nil) -> SpikeSecondOpinionOutput {
+        var items = [SpikeOpinionItem(item: 1, kind: "answer", segment: 0, claimID: nil, neighbour: nil)]
+        var verdicts = [SpikeVerdict(item: 1, verdict: verdict)]
+        if let (segment, claim, kind) = locate {
+            items.append(SpikeOpinionItem(item: 2, kind: "locate", segment: segment, claimID: claim, neighbour: nil))
+            verdicts.append(SpikeVerdict(item: 2, verdict: segment == 0 ? "none" : kind))
+        }
+        return SpikeSecondOpinionOutput(items: items, verdicts: verdicts)
+    }
+
     static func record(_ id: String, _ labels: [SpikeSegmentLabel], links: [SpikeLink] = [], opinion: SpikeSecondOpinionOutput? = nil,
                        status: String = "ok", opinionStatus: String = "ok") -> SpikeRecord {
         let reading = SpikeCall(status: status, latencyMs: 900, retries: 0,
@@ -54,18 +66,22 @@ enum SpikeSynthetic {
     static let authDefinition = "claim-7485a5102853e2f4", closureDefinition = "claim-63b3e0f7dcdc4888"
     static let closureRetain = "claim-329d5dceec7cb700", jwtNotEncrypted = "claim-f8f60f6a0a9d8164"
 
-    /// What a careful reader would say about each canonical answer, with D's verdicts.
+    static let jwtDefinition = "claim-ff95fc8d2fc5f02e"
+
+    /// What a careful reader would say about each canonical answer, with D's check and locator. The
+    /// links are the answer's own marker links, as the runner records them.
     static func canonicalRecords() -> [String: SpikeRecord] {
         [
-            "C1": record("C1", [label(1, authDefinition, "entails")], opinion: opinion([("credit", 1, "same")])),
+            "C1": record("C1", [label(1, authDefinition, "entails")], opinion: check("correct")),
             "C2": record("C2", [label(1, authDefinition, "contradicts", polarity: "negated")],
-                         opinion: opinion([("contradiction", 1, "opposite")])),
-            "C3": record("C3", [label(1, closureDefinition, "entails")], opinion: opinion([("credit", 1, "same")])),
+                         opinion: check("mistaken", locate: (1, authDefinition, "wrongIdea"))),
+            "C3": record("C3", [label(1, closureDefinition, "entails")], opinion: check("correct")),
             "C4": record("C4", [label(1, closureDefinition, "entails"), label(2, closureRetain, "contradicts", role: "reason", misconception: "m1")],
                          links: [SpikeLink(reason: 2, conclusion: 1)],
-                         opinion: opinion([("credit", 1, "same"), ("contradiction", 2, "opposite"), ("reason", 2, "opposite")])),
-            "C5": record("C5", [label(1, jwtNotEncrypted, "contradicts", misconception: "m1")],
-                         opinion: opinion([("contradiction", 1, "opposite")]))
+                         opinion: check("mistaken", locate: (2, closureRetain, "wrongReason"))),
+            "C5": record("C5", [label(1, jwtDefinition, "entails"), label(2, jwtNotEncrypted, "contradicts", misconception: "m1")],
+                         links: [SpikeLink(reason: 1, conclusion: 2)],
+                         opinion: check("mistaken", locate: (2, jwtNotEncrypted, "wrongIdea")))
         ]
     }
 
@@ -80,8 +96,9 @@ enum SpikeSynthetic {
 
     /// A one-off case against a concept target, for check tests.
     static func adHoc(_ text: String, concept: String, state: String = "understood", document: String = "Mobile Mastery") -> GeneralizationEvaluation.Case {
+        let quoted = String(decoding: try! JSONEncoder().encode(text), as: UTF8.self)
         let json = """
-        {"id": "t-\(abs(text.hashValue))", "document": "\(document)", "concept": "\(concept)", "page": null, "text": \(String(reflecting: text)),
+        {"id": "t-\(abs(text.hashValue))", "document": "\(document)", "concept": "\(concept)", "page": null, "text": \(quoted),
          "state": "\(state)", "misconceptions": [], "credits": [], "categories": [], "paraphraseGroup": null}
         """
         return try! JSONDecoder().decode(GeneralizationEvaluation.Case.self, from: Data(json.utf8))

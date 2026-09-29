@@ -15,6 +15,8 @@ struct SpikeInput: Codable, Equatable {
     let neighbours: [Neighbour]
     let segments: [Segment]
     let wordCount: Int
+    /// V37: reason → conclusion links fixed by the answer's own discourse markers (`SpikeSegmenter.links`).
+    var links: [SpikeLink]? = nil
 }
 
 struct SpikeInputFile: Codable { let set: String; let cases: [SpikeInput] }
@@ -35,7 +37,8 @@ struct SpikeSegmentLabel: Codable, Equatable {
     let n: Int
     let role, claim, relation, misconception, polarity, specificity, describes: String
     /// high · medium · low (the model's own confidence in this label).
-    var confidence: String? = nil
+    var confidence: String? = nil    /// The model's few-word gist of the segment (V37): a scratch field, never judged.
+    var says: String? = nil
 }
 
 struct SpikeLink: Codable, Equatable { let reason, conclusion: Int }
@@ -43,6 +46,8 @@ struct SpikeLink: Codable, Equatable { let reason, conclusion: Int }
 struct SpikeReading: Codable, Equatable {
     let segments: [SpikeSegmentLabel]
     let links: [SpikeLink]
+    /// V37: the row call's own labels before the locator's placement was merged in (audit only).
+    var rows: [SpikeSegmentLabel]? = nil
 }
 
 /// One second-opinion item the runner selected, and the verdict it got.
@@ -109,7 +114,8 @@ extension SpikeInput {
         let key = item.concept.map { "\(item.document)|\($0)" } ?? "\(item.document)|p\(item.page ?? -1)"
         return SpikeInput(caseID: item.id, set: set, targetKey: key, targetName: name, question: question, claims: claims,
                           neighbours: neighbours(of: target), segments: segments,
-                          wordCount: item.text.split(whereSeparator: \.isWhitespace).count)
+                          wordCount: item.text.split(whereSeparator: \.isWhitespace).count,
+                          links: SpikeSegmenter.links(segments.map(\.text), text: item.text).map { SpikeLink(reason: $0.reason, conclusion: $0.conclusion) })
     }
 
     /// Up to four neighbouring concepts, each with its definition: the contrast partner first, then

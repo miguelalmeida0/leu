@@ -26,6 +26,10 @@ struct SpikeChecked {
         /// kept when a wrong reason is folded into its conclusion: the claim a repair question asks about.
         var named: String?
         var confidence = "high"
+        /// The core claim whose family `claimID` belongs to (risk 1): what coverage and credit count for.
+        var familyID: String?
+        /// The conclusion this segment was offered as a premise for, when that conclusion is wrong (risk 3).
+        var premiseOf: Int?
     }
     var segments: [Segment]
     /// Reason → conclusion links that survived V1 and, in C and D, V8.
@@ -76,15 +80,21 @@ enum SpikeChecks {
         var links = reading.links.filter { (1...k).contains($0.reason) && (1...k).contains($0.conclusion) && $0.reason != $0.conclusion }
         links = links.filter { link in !links.contains { $0.reason == link.conclusion && $0.conclusion == link.reason } }
         if config != .b {
-            let kept = links.filter { markerSupports($0, checked: checked, text: text) }
-            if kept.count < links.count { checked.fired.append("V8") }
-            links = kept
+            // V8, V37 form: the links are the ones the answer's own markers fix; model links are not used.
+            let marked = SpikeComposition.markerLinks(input, text: text)
+            if links.contains(where: { !marked.contains($0) }) { checked.fired.append("V8") }
+            links = marked
         }
         checked.links = links
         applyLinks(links, to: &checked)
-        guard config != .b else { return checked }
-        verify(&checked, target: target, input: input, key: key)
-        if config == .d { applyOpinion(opinion, to: &checked) }
+        if config != .b { verify(&checked, target: target, input: input, key: key) }
+        SpikeComposition.canonicalize(&checked, target: target)
+        if config == .d {
+            let definition = (target.rubric.first { $0.role == .core && $0.kind == .definition } ?? target.rubric.first)?.id
+            SpikeComposition.applyAnswerCheck(opinion, definition: definition, to: &checked)
+            SpikeComposition.canonicalize(&checked, target: target)   // doubtful wrong ideas D placed
+        }
+        SpikeComposition.withholdPremises(&checked)
         return checked
     }
 
@@ -125,20 +135,21 @@ enum SpikeChecks {
         let claims = Dictionary((target.rubric + target.supporting).map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
         let nameStems = Set((target.concept.flatMap { target.names[$0] } ?? []).flatMap { LexicalProfile($0).terms.map(\.stem) })
         var strongSupport = Set<String>()   // claims credited by at least one specific, non-trivial segment
+        let families = SpikeClaimFamily.families(target)
         for index in checked.segments.indices {
             var s = checked.segments[index]
             let profile = LexicalProfile(s.text)
             if s.credit != nil, ["hedge", "filler"].contains(s.role) {
                 s.credit = nil; s.creditFirm = false; s.claimID = nil; checked.fired.append("V2")
             }
-            if s.credit != nil, let id = s.claimID, let claim = claims[id] {
-                let claimProfile = LexicalProfile(claim.evidence.text)
-                let segmentNegative = profile.negationCount > 0
-                let claimNegative = claim.negated || claimProfile.negationCount > 0
-                if segmentNegative != claimNegative || (s.polarity == "negated") != segmentNegative { mark(&s, "V3", &checked) }
-                if antonym(profile, claimProfile) { mark(&s, "V4", &checked) }
-                if !profile.universals.isEmpty, !claimProfile.hedges.isEmpty { mark(&s, "V5", &checked) }
-                if reversedOrder(profile, claim: claim) { mark(&s, "V6", &checked) }
+            if s.credit != nil, let id = s.claimID, claims[id] != nil {
+                // V3–V6 against the claim's family (risk 1): a credit on a supporting claim stands when the
+                // family's core claim — the authoritative wording — raises no conflict, even if the supporting
+                // sentence's own wording does. Other members never rescue a conflict with the core.
+                let family = families[id] ?? id
+                let members = family == id ? [id] : [id, family]
+                let conflicts = members.compactMap { claims[$0] }.map { conflictChecks(profile, polarity: s.polarity, claim: $0) }
+                if !conflicts.contains(where: \.isEmpty) { for check in conflicts[0] { mark(&s, check, &checked) } }
                 if s.specificity == "specific", contentWords(s.text, excluding: nameStems) > 3 { strongSupport.insert(id) }
             }
             if s.wrong != nil, s.wrongFirm {
@@ -156,6 +167,8 @@ enum SpikeChecks {
                 } ?? false
                 if !grounded && !backed { s.wrongFirm = false; checked.fired.append("V9") }
             }
+            // V11 (risk 2): a partial entailment is never firm credit; it is weighed as partial and asked about.
+            if s.credit == .partial { mark(&s, "V11", &checked) }
             // V10: what the model itself calls a low-confidence label is never written firmly.
             if s.confidence == "low" {
                 if s.creditFirm { mark(&s, "V10", &checked) }
@@ -185,6 +198,19 @@ enum SpikeChecks {
         }.count
     }
 
+    /// V3–V6 for one segment against one claim: the checks that would make its credit tentative.
+    static func conflictChecks(_ profile: LexicalProfile, polarity: String, claim: LearningClaim) -> [String] {
+        let claimProfile = LexicalProfile(claim.evidence.text)
+        let segmentNegative = profile.negationCount > 0
+        let claimNegative = claim.negated || claimProfile.negationCount > 0
+        var fired: [String] = []
+        if segmentNegative != claimNegative || (polarity == "negated") != segmentNegative { fired.append("V3") }
+        if antonym(profile, claimProfile) { fired.append("V4") }
+        if !profile.universals.isEmpty, !claimProfile.hedges.isEmpty { fired.append("V5") }
+        if reversedOrder(profile, claim: claim) { fired.append("V6") }
+        return fired
+    }
+
     static func antonym(_ segment: LexicalProfile, _ claim: LexicalProfile) -> Bool {
         segment.terms.contains { term in
             !claim.stems.contains(term.stem) && claim.terms.contains { SemanticAntonyms.opposed(term.stem, $0.stem) }
@@ -204,32 +230,5 @@ enum SpikeChecks {
         guard segment.creditFirm else { return }
         segment.creditFirm = false
         checked.fired.append(check)
-    }
-
-    /// The second opinion (D): firm only where it agrees; anything unchecked or disputed is asked about.
-    static func applyOpinion(_ opinion: SpikeSecondOpinionOutput?, to checked: inout SpikeChecked) {
-        let verdicts = Dictionary((opinion?.verdicts ?? []).map { ($0.item, $0.verdict) }, uniquingKeysWith: { a, _ in a })
-        func verdict(_ kind: String, _ n: Int) -> String? {
-            opinion?.items.first { $0.kind == kind && $0.segment == n }.flatMap { verdicts[$0.item] }
-        }
-        for index in checked.segments.indices {
-            var s = checked.segments[index]
-            if s.credit != nil {
-                switch verdict("credit", s.n) {
-                case "same"?: break
-                case "part"? where s.credit == .partial: break
-                case "opposite"?:
-                    s.wrong = .contradiction; s.wrongFirm = false; s.credit = nil; s.creditFirm = false
-                default: s.creditFirm = false
-                }
-            }
-            if let wrong = s.wrong, s.wrongFirm {
-                let agreed = wrong == .confusion ? ["same", "part"].contains(verdict("confusion", s.n) ?? "")
-                    : verdict("contradiction", s.n) == "opposite"
-                if !agreed { s.wrongFirm = false }
-            }
-            if s.reasonOf != nil { s.reasonConfirmed = ["opposite", "different"].contains(verdict("reason", s.n) ?? "") }
-            checked.segments[index] = s
-        }
     }
 }

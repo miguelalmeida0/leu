@@ -18,6 +18,9 @@
           "text" : "Before granting access, the system needs a trustworthy identity."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "The process of deciding what an authenticated identity is allowed to do.",
@@ -69,6 +72,9 @@
           "role" : "core",
           "text" : "Before granting access, the system needs a trustworthy identity."
         }
+      ],
+      "links" : [
+
       ],
       "neighbours" : [
         {
@@ -129,6 +135,9 @@
           "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
         }
       ],
+      "links" : [
+
+      ],
       "neighbours" : [
         {
           "definition" : "Objects are accessed through references, so multiple variables can refer to the same underlying object.",
@@ -186,6 +195,12 @@
           "kind" : "purpose",
           "role" : "supporting",
           "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
+        }
+      ],
+      "links" : [
+        {
+          "conclusion" : 1,
+          "reason" : 2
         }
       ],
       "neighbours" : [
@@ -251,6 +266,12 @@
           "text" : "JWTs are signed claim containers, not automatically encrypted."
         }
       ],
+      "links" : [
+        {
+          "conclusion" : 2,
+          "reason" : 1
+        }
+      ],
       "neighbours" : [
         {
           "definition" : "A longer-lived credential used to obtain new access tokens without asking the user to sign in again.",
@@ -277,7 +298,11 @@
       "segments" : [
         {
           "n" : 1,
-          "text" : "JWTs are signed so nobody can read them."
+          "text" : "JWTs are signed"
+        },
+        {
+          "n" : 2,
+          "text" : "so nobody can read them."
         }
       ],
       "set" : "C",

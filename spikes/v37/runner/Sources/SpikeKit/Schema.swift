@@ -35,6 +35,12 @@ public indirect enum SchemaNode: Equatable, Sendable {
 public enum SpikeSchemas {
     public static let roles = ["statement", "reason", "example", "analogy", "hedge", "filler"]
     public static let relations = ["entails", "partiallyEntails", "contradicts", "unrelated"]
+    /// The relation as the model sees it. Short, everyday words with distinct first tokens: the on-device
+    /// model pools probability over a shared prefix ("partially…"/"entails"), and read the contract's
+    /// words as "partly true" for nearly everything (dev01). Mapped back to `relations` by position.
+    public static let relationWords = ["correct", "vague", "mistaken", "unrelated"]
+    /// The whole-answer check's labels (distinct first tokens, defined in `answer-check.txt`).
+    public static let answerLabels = ["correct", "vague", "mistaken", "flawedReason"]
     public static let polarities = ["affirmed", "negated"]
     public static let specificities = ["specific", "vague"]
     public static let confidences = ["high", "medium", "low"]
@@ -55,12 +61,12 @@ public enum SpikeSchemas {
         let segment = SchemaNode.object(name: "SegmentLabel", properties: [
             .init("n", .choice(name: "SegmentNumber", values: numbers(k))),
             .init("role", .choice(name: "SegmentRole", values: roles)),
+            .init("relation", .choice(name: "Relation", values: relationWords)),
             .init("claim", .choice(name: "ClaimID", values: unique(input.claims.map(\.alias) + ["none"]))),
-            .init("relation", .choice(name: "Relation", values: relations)),
             .init("misconception", .choice(name: "MistakeID", values: unique((key?.mistakes.map(\.id) ?? []) + ["none"]))),
+            .init("describes", .choice(name: "Describes", values: unique(["target"] + input.neighbours.map(\.name) + ["unclear"]))),
             .init("polarity", .choice(name: "Polarity", values: polarities)),
             .init("specificity", .choice(name: "Specificity", values: specificities)),
-            .init("describes", .choice(name: "Describes", values: unique(["target"] + input.neighbours.map(\.name) + ["unclear"]))),
             .init("confidence", .choice(name: "Confidence", values: confidences))
         ])
         let link = SchemaNode.object(name: "ReasonLink", properties: [
@@ -69,7 +75,9 @@ public enum SpikeSchemas {
         ])
         return .object(name: "Reading", properties: [
             .init("segments", .array(of: segment, min: k, max: k)),
-            .init("links", .array(of: link, min: 0, max: k))
+            // Foundation Models (macOS 26.6) rejects an array bounded 0…1 (ModelManagerError 1032), which
+            // is every one-segment answer; a one-segment answer has no valid link, and V1 drops self-links.
+            .init("links", .array(of: link, min: 0, max: max(k, 2)))
         ])
     }
 
@@ -80,6 +88,22 @@ public enum SpikeSchemas {
             .init("verdict", .choice(name: "Verdict", values: verdicts))
         ])
         return .object(name: "SecondOpinion", properties: [.init("verdicts", .array(of: verdict, min: items, max: items))])
+    }
+
+    /// The independent whole-answer check (configuration D's second opinion): one label.
+    public static func answerCheck() -> SchemaNode {
+        .object(name: "AnswerCheck", properties: [.init("verdict", .choice(name: "AnswerVerdict", values: answerLabels))])
+    }
+
+    public static let locateKinds = ["wrongIdea", "wrongReason", "otherConcept"]
+
+    /// The locator: one segment (or none), what kind of error, and the claim it gets wrong.
+    public static func locate(_ input: SpikeInput) -> SchemaNode {
+        .object(name: "Locate", properties: [
+            .init("segment", .choice(name: "FalseSegment", values: numbers(input.segments.count) + ["none"])),
+            .init("kind", .choice(name: "ErrorKind", values: locateKinds)),
+            .init("claim", .choice(name: "WrongClaim", values: unique(input.claims.map(\.alias) + ["none"])))
+        ])
     }
 
     /// The answer key: 3–6 mistakes, each tied to a claim by its alias. No field descriptions: the

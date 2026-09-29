@@ -4,11 +4,15 @@ import Foundation
 
 /// The raw guided-generation outputs, before aliases and numbers are mapped back.
 struct RawReading: Decodable {
-    struct Segment: Decodable { let n, role, claim, relation, misconception, polarity, specificity, describes, confidence: String }
+    struct Segment: Decodable { let n, role, claim, relation, misconception, polarity, specificity, describes, confidence: String; let says: String? }
     struct Link: Decodable { let reason, conclusion: String }
     let segments: [Segment]
     let links: [Link]
 }
+
+struct RawAnswerCheck: Decodable { let verdict: String }
+
+struct RawLocate: Decodable { let segment, kind, claim: String }
 
 struct RawOpinion: Decodable {
     struct Verdict: Decodable { let item, verdict: String }
@@ -25,12 +29,36 @@ public enum Selection {
     /// structural check (V1) rejects the reading.
     static func map(_ raw: RawReading, input: SpikeInput) -> SpikeReading {
         let ids = Dictionary(input.claims.map { ($0.alias, $0.id) }, uniquingKeysWith: { a, _ in a })
+        let relations = Dictionary(uniqueKeysWithValues: zip(SpikeSchemas.relationWords, SpikeSchemas.relations))
         let segments = raw.segments.map { s in
-            SpikeSegmentLabel(n: Int(s.n) ?? -1, role: s.role, claim: s.claim == "none" ? "none" : ids[s.claim] ?? s.claim,
-                              relation: s.relation, misconception: s.misconception, polarity: s.polarity,
-                              specificity: s.specificity, describes: s.describes, confidence: s.confidence)
+            var label = SpikeSegmentLabel(n: Int(s.n) ?? -1, role: s.role, claim: s.claim == "none" ? "none" : ids[s.claim] ?? s.claim,
+                                          relation: relations[s.relation] ?? s.relation, misconception: s.misconception, polarity: s.polarity,
+                                          specificity: s.specificity, describes: s.describes, confidence: s.confidence)
+            label.says = s.says
+            return label
         }
         return SpikeReading(segments: segments, links: raw.links.map { SpikeLink(reason: Int($0.reason) ?? -1, conclusion: Int($0.conclusion) ?? -1) })
+    }
+
+    /// V37: the locator's placement merged into the rows. The located segment reads as contradicting the
+    /// claim the locator names (or the row's own claim when it names none); "otherConcept" keeps a
+    /// neighbour the row named. Every other label is the row call's. Nothing is placed for "none".
+    /// The reading's links are the answer's marker links first, then the model's own (deduplicated).
+    public static func refine(_ reading: SpikeReading, locate: SpikeOpinionItem?, input: SpikeInput) -> SpikeReading {
+        var links = input.links ?? []
+        for link in reading.links where !links.contains(link) { links.append(link) }
+        guard let locate, locate.segment > 0, let index = reading.segments.firstIndex(where: { $0.n == locate.segment }) else {
+            return SpikeReading(segments: reading.segments, links: links, rows: reading.segments)
+        }
+        var segments = reading.segments
+        let row = segments[index]
+        var label = SpikeSegmentLabel(n: row.n, role: row.role, claim: locate.claimID ?? (row.claim), relation: "contradicts",
+                                      misconception: row.misconception, polarity: row.polarity, specificity: row.specificity,
+                                      describes: locate.neighbour ?? (row.describes == "target" ? "target" : row.describes),
+                                      confidence: row.confidence)
+        label.says = row.says
+        segments[index] = label
+        return SpikeReading(segments: segments, links: links, rows: reading.segments)
     }
 
     /// A pair for the second opinion: the item as recorded, and the two statements it compares.

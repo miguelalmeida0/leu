@@ -1,0 +1,825 @@
+[
+  {
+    "compileLatencyMs" : 3163,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "A useful model keeps the details that affect a decision and leaves out those that do not."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "For example, describing a stack as last-in, first-out helps predict which item is removed next."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "The description is useful before deciding how to store the stack."
+      }
+    ],
+    "proposed" : 3,
+    "selfCheckLatencyMs" : 878,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Computer Science Essentials|p0"
+  },
+  {
+    "compileLatencyMs" : 3239,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Short lifetimes reduce damage if the token is stolen."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "An access token is a short-lived credential used to call protected APIs."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Scopes\/claims limit what it can do."
+      }
+    ],
+    "proposed" : 4,
+    "selfCheckLatencyMs" : 945,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Access token"
+  },
+  {
+    "compileLatencyMs" : 4019,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Before granting access, the system needs a trustworthy identity."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Authentication is the process of verifying who a user or service is."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Before granting access, the system needs a trustworthy identity."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Authentication is the process of verifying who a user or service is."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Before granting access, the system needs a trustworthy identity."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1248,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Authentication"
+  },
+  {
+    "compileLatencyMs" : 4354,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Identity alone is not permission."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Authorization still happens per action\/resource."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Authorization is the process of deciding what an authenticated identity is allowed to do."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Identity alone is not permission."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Authorization still happens per action\/resource."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1220,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Authorization"
+  },
+  {
+    "compileLatencyMs" : 4725,
+    "compileStatus" : "ok",
+    "dropped" : [
+
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1364,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|CORS"
+  },
+  {
+    "compileLatencyMs" : 2454,
+    "compileStatus" : "ok",
+    "dropped" : [
+
+    ],
+    "proposed" : 3,
+    "selfCheckLatencyMs" : 838,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Circuit breaker"
+  },
+  {
+    "compileLatencyMs" : 4149,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "A function plus access to the lexical variables from the scope where it was created."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Closures power encapsulation, callbacks, hooks, and private state patterns."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "A function plus access to the lexical variables from the scope where it was created."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Closures power encapsulation, callbacks, hooks, and private state patterns."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1257,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Mobile Mastery|Closure"
+  },
+  {
+    "compileLatencyMs" : 3876,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "ungrounded",
+        "text" : "High cohesion makes modules harder to understand and maintain."
+      },
+      {
+        "reason" : "ungrounded",
+        "text" : "Low cohesion makes modules easier to understand and maintain."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1027,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Cohesion"
+  },
+  {
+    "compileLatencyMs" : 4097,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "A form element whose current value is driven by React state\/props."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It gives React explicit control for validation, formatting, and coordinated UI."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "A controlled input gets its value from React state and reports changes back through events, keeping UI state explicit."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "A form element whose current value is driven by React state\/props."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It gives React explicit control for validation, formatting, and coordinated UI."
+      }
+    ],
+    "proposed" : 5,
+    "selfCheckLatencyMs" : 1085,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Mobile Mastery|Controlled component"
+  },
+  {
+    "compileLatencyMs" : 3619,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "ungrounded",
+        "text" : "An index is a table."
+      },
+      {
+        "reason" : "ungrounded",
+        "text" : "An index is a database."
+      },
+      {
+        "reason" : "ungrounded",
+        "text" : "An index is a query."
+      },
+      {
+        "reason" : "ungrounded",
+        "text" : "An index is a table."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 669,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Database index"
+  },
+  {
+    "compileLatencyMs" : 3859,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Delaying an action until a burst of events has been quiet for a chosen interval."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It avoids firing expensive work for every keystroke."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Delaying an action until a burst of events has been quiet for a chosen interval."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It avoids firing expensive work for every keystroke."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Delaying an action until a burst of events has been quiet for a chosen interval."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It avoids firing expensive work for every keystroke."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1283,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Mobile Mastery|Debouncing"
+  },
+  {
+    "compileLatencyMs" : 2514,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "ungrounded",
+        "text" : "Declaration files are used to define JavaScript libraries."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Declaration files describe runtime APIs to TypeScript and are how many JavaScript libraries become typesafe to consume."
+      }
+    ],
+    "proposed" : 3,
+    "selfCheckLatencyMs" : 680,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Declaration file (.d.ts)"
+  },
+  {
+    "compileLatencyMs" : 2411,
+    "compileStatus" : "ok",
+    "dropped" : [
+
+    ],
+    "proposed" : 3,
+    "selfCheckLatencyMs" : 848,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Encapsulation"
+  },
+  {
+    "compileLatencyMs" : 3709,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Encryption is reversible with a key."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Encryption is reversible with a key."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Hashing is intended to be one-way."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Hashing is intended to be one-way."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1219,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Encryption"
+  },
+  {
+    "compileLatencyMs" : 2490,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "One broken widget should not necessarily blank an entire application."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Error boundaries isolate render-time failures in a subtree."
+      }
+    ],
+    "proposed" : 3,
+    "selfCheckLatencyMs" : 792,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Error boundary"
+  },
+  {
+    "compileLatencyMs" : 3154,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Exponential backoff gives a recovering service breathing room and avoids synchronized retry storms."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Exponential backoff reduces pressure during outages."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Jitter prevents many clients from retrying in lockstep."
+      }
+    ],
+    "proposed" : 4,
+    "selfCheckLatencyMs" : 1013,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Exponential backoff"
+  },
+  {
+    "compileLatencyMs" : 2791,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Password hashing uses deliberately slow, salted algorithms."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Passwords should be verified without storing recoverable plaintext."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Hashing is intended to be one-way."
+      }
+    ],
+    "proposed" : 4,
+    "selfCheckLatencyMs" : 944,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Hashing"
+  },
+  {
+    "compileLatencyMs" : 3247,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Horizontal scaling is about adding more machines to a system."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Horizontal scaling involves adding nodes to a system."
+      }
+    ],
+    "proposed" : 4,
+    "selfCheckLatencyMs" : 898,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Horizontal scaling"
+  },
+  {
+    "compileLatencyMs" : 2408,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "A cookie marked so browser JavaScript cannot read it."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It reduces exposure of session secrets to JavaScript during many XSS scenarios."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "HttpOnly prevents client-side JavaScript from reading a cookie, which is useful for session credentials, though it does not eliminate XSS impact."
+      }
+    ],
+    "proposed" : 3,
+    "selfCheckLatencyMs" : 779,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Mobile Mastery|HttpOnly cookie"
+  },
+  {
+    "compileLatencyMs" : 3738,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "ungrounded",
+        "text" : "Retries are always safe."
+      },
+      {
+        "reason" : "ungrounded",
+        "text" : "Retries are always safe."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Idempotency makes retries safe."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Idempotency makes retries safe."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 922,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Idempotency"
+  },
+  {
+    "compileLatencyMs" : 4152,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "A compact signed token format containing claims, represented as header.payload.signature."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "JWTs are signed claim containers, not automatically encrypted."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "A compact signed token format containing claims, represented as header.payload.signature."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "JWTs are signed claim containers, not automatically encrypted."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1371,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Mobile Mastery|JWT"
+  },
+  {
+    "compileLatencyMs" : 2831,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "ungrounded",
+        "text" : "Message queues are a type of request."
+      }
+    ],
+    "proposed" : 4,
+    "selfCheckLatencyMs" : 790,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Message queue"
+  },
+  {
+    "compileLatencyMs" : 4517,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Prefer designs that allow new behavior through extension without repeatedly modifying fragile central logic."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It can reduce regression risk in frequently extended systems."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Prefer designs that allow new behavior through extension without repeatedly modifying fragile central logic."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It can reduce regression risk in frequently extended systems."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Prefer designs that allow new behavior through extension without repeatedly modifying fragile central logic."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It can reduce regression risk in frequently extended systems."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1278,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Mobile Mastery|Open\/Closed Principle"
+  },
+  {
+    "compileLatencyMs" : 3971,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Rate limiting restricts how frequently a client, identity, or key may perform an operation."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It protects availability, cost, and abuse-sensitive endpoints."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Rate limiting limits request volume by identity, key, IP, or resource."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Rate limiting restricts how frequently a client, identity, or key may perform an operation."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It protects availability, cost, and abuse-sensitive endpoints."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Rate limiting limits request volume by identity, key, IP, or resource."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1287,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Mobile Mastery|Rate limiting"
+  },
+  {
+    "compileLatencyMs" : 2848,
+    "compileStatus" : "ok",
+    "dropped" : [
+
+    ],
+    "proposed" : 4,
+    "selfCheckLatencyMs" : 983,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Refresh token"
+  },
+  {
+    "compileLatencyMs" : 4010,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "ungrounded",
+        "text" : "Retry is when you try again after a failure."
+      },
+      {
+        "reason" : "ungrounded",
+        "text" : "Retry is when you try again after a failure."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 995,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Retry"
+  },
+  {
+    "compileLatencyMs" : 2577,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "A server that can handle each request without relying on request-specific state stored only in its own local memory."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Any replica can serve the next request, which simplifies horizontal scaling and failover."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Stateless application servers keep request state outside a specific instance, making load balancing and horizontal scaling easier."
+      }
+    ],
+    "proposed" : 3,
+    "selfCheckLatencyMs" : 818,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Mobile Mastery|Stateless server"
+  },
+  {
+    "compileLatencyMs" : 4920,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Throttling is a React hook that delays an action until a burst of events has been quiet for a chosen interval."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Throttling is a React hook that delays an action until a burst of events has been quiet for a chosen interval."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Throttling is a React hook that delays an action until a burst of events has been quiet for a chosen interval."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Throttling is a React hook that delays an action until a burst of events has been quiet for a chosen interval."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1341,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Throttling"
+  },
+  {
+    "compileLatencyMs" : 4352,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "An uncontrolled component can reduce plumbing for simple forms or integrate with non-React behavior."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "An uncontrolled input lets the DOM own the current value."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "An uncontrolled component can reduce plumbing for simple forms or integrate with non-React behavior."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "An uncontrolled input lets the DOM own the current value."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1413,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Uncontrolled component"
+  },
+  {
+    "compileLatencyMs" : 4180,
+    "compileStatus" : "ok",
+    "dropped" : [
+
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1271,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Unit test"
+  },
+  {
+    "compileLatencyMs" : 3105,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "ungrounded",
+        "text" : "Vertical scaling is the same as horizontal scaling."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Vertical scaling makes a single node stronger."
+      }
+    ],
+    "proposed" : 4,
+    "selfCheckLatencyMs" : 753,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Vertical scaling"
+  },
+  {
+    "compileLatencyMs" : 3756,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "useCallback caches a function reference until dependencies change."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Stable function identity can matter for memoized children or effect dependencies."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "useCallback memoizes function identity."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "useCallback caches a function reference until dependencies change."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Stable function identity can matter for memoized children or effect dependencies."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "useCallback memoizes function identity."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1155,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Mobile Mastery|useCallback"
+  },
+  {
+    "compileLatencyMs" : 3844,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "ungrounded",
+        "text" : "useMemo is a semantic guarantee."
+      },
+      {
+        "reason" : "ungrounded",
+        "text" : "useMemo is always faster than recalculating."
+      },
+      {
+        "reason" : "ungrounded",
+        "text" : "useMemo is a cache."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 844,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|useMemo"
+  },
+  {
+    "compileLatencyMs" : 3356,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "A component describes the interface for a particular set of props, state and context."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Rendering calculates that description."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "committing applies the necessary changes to the screen."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "A component describes the interface for a particular set of props, state and context."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Rendering calculates that description."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "committing applies the necessary changes to the screen."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1186,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "React Notes|p0"
+  }
+]

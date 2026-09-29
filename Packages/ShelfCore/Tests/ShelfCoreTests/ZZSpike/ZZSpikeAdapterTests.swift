@@ -34,47 +34,31 @@ final class ZZSpikeAdapterTests: XCTestCase {
 
     /// Careless readings fail the criteria they should.
     func testCanonicalCheckerRejectsWrongReadings() throws {
-        let credited = S.record("C2", [S.label(1, S.authDefinition, "entails")], opinion: S.opinion([("credit", 1, "same")]))
+        let credited = S.record("C2", [S.label(1, S.authDefinition, "entails")], opinion: S.check("correct"))
         XCTAssertTrue(try check("C2", credited, .b).1.contains("reading"))
-        let copyingAgreed = S.record("C4", [S.label(1, S.closureDefinition, "entails"), S.label(2, S.closureRetain, "contradicts", role: "reason", misconception: "m1")],
-                                     links: [SpikeLink(reason: 2, conclusion: 1)],
-                                     opinion: S.opinion([("credit", 1, "same"), ("contradiction", 2, "opposite"), ("reason", 2, "same")]))
-        XCTAssertTrue(try check("C4", copyingAgreed, .d).1.contains("secondOpinion"))
         let unlinked = S.record("C4", [S.label(1, S.closureDefinition, "entails"), S.label(2, "none", "unrelated", role: "reason")])
         XCTAssertTrue(try check("C4", unlinked, .b).1.contains("link"))
-        let fooled = S.record("C5", [S.label(1, "claim-ff95fc8d2fc5f02e", "entails")], opinion: S.opinion([("credit", 1, "same")]))
+        let fooled = S.record("C5", [S.label(1, S.jwtDefinition, "entails"), S.label(2, S.jwtDefinition, "entails")],
+                              links: [SpikeLink(reason: 1, conclusion: 2)], opinion: S.check("correct"))
         let (_, failed) = try check("C5", fooled, .d)
         XCTAssertTrue(failed.contains("reading") && failed.contains("state"), "\(failed)")
     }
 
-    /// Found while building the harness and reported (the judge is unchanged): it credits core claims
-    /// only, so C3 read against Closure's supporting "retain access" claim — which §3.2 allows — is asked
-    /// about, not credited; and C1/C3 read as partial entailment reach only "fragile".
-    func testCanonicalTensionsWithTheUnchangedJudge() throws {
-        let supportingOnly = S.record("C3", [S.label(1, S.closureRetain, "entails")])
-        let (supporting, failedSupporting) = try check("C3", supportingOnly, .b)
-        XCTAssertEqual(supporting.judged.state, "fragile")
-        XCTAssertTrue(failedSupporting.contains("state") && failedSupporting.contains("asksProbe"))
-        let partial = S.record("C3", [S.label(1, S.closureDefinition, "partiallyEntails")])
-        XCTAssertEqual(try check("C3", partial, .b).0.judged.state, "fragile")
-    }
-
-    /// C4 (amended): whether the wrong reason is confirmed (committed weak reasoning) or not (asked),
-    /// the next question targets the access mechanism the reason breaks — never the purpose claim the
-    /// judge would otherwise ask about — and no mastery is recorded.
+    /// C4 (amended): whether the check confirms the wrong reason (committed weak reasoning) or not (asked),
+    /// the next question asks how the conclusion's claim works — the access mechanism's family — never the
+    /// purpose claim, and no mastery is recorded.
     func testC4NextQuestionTargetsTheBrokenMechanism() throws {
         let careful = S.canonicalRecords()["C4"]!
         let (committed, failedCommitted) = try check("C4", careful, .d)
         XCTAssertEqual(failedCommitted, [])
         XCTAssertFalse(committed.judged.asksProbe)
-        XCTAssertEqual(committed.nextClaims, [S.closureRetain])
-        let part = S.record("C4", [S.label(1, S.closureDefinition, "entails"), S.label(2, S.closureRetain, "contradicts", role: "reason", misconception: "m1")],
-                            links: [SpikeLink(reason: 2, conclusion: 1)],
-                            opinion: S.opinion([("credit", 1, "same"), ("contradiction", 2, "opposite"), ("reason", 2, "part")]))
-        let (asked, failed) = try check("C4", part, .d)
+        XCTAssertEqual(committed.nextClaims, [S.closureDefinition])
+        let unconfirmed = S.record("C4", [S.label(1, S.closureDefinition, "entails"), S.label(2, S.closureRetain, "contradicts", role: "reason", misconception: "m1")],
+                                   links: [SpikeLink(reason: 2, conclusion: 1)], opinion: S.check("correct"))
+        let (asked, failed) = try check("C4", unconfirmed, .d)
         XCTAssertEqual(asked.judged.state, "weakReasoning")
         XCTAssertTrue(asked.judged.asksProbe)
-        XCTAssertEqual(asked.judged.probeClaims, [S.closureRetain])
+        XCTAssertEqual(asked.judged.probeClaims, [S.closureDefinition])
         XCTAssertFalse(asked.judged.recordsMastery)
         XCTAssertEqual(failed, [])
     }
@@ -189,28 +173,34 @@ final class ZZSpikeAdapterTests: XCTestCase {
         XCTAssertFalse(checked.judged.recordsMisconception)
     }
 
-    // MARK: - Second opinion (D)
+    // MARK: - Second opinion (D): the whole-answer check and the locator
 
     func testSecondOpinionKeepsOnlyWhatItAgreesWith() throws {
         let text = "It checks that the person is really who they claim to be."
         let credit = [S.label(1, S.authDefinition, "entails")]
-        func d(_ labels: [SpikeSegmentLabel], _ verdicts: [(String, Int, String)], _ text: String, _ concept: String = "Authentication") throws -> SpikeAdapter.Outcome {
-            try run(text, concept: concept, labels, opinion: S.opinion(verdicts), .d)
+        func d(_ labels: [SpikeSegmentLabel], _ opinion: SpikeSecondOpinionOutput, _ text: String) throws -> SpikeAdapter.Outcome {
+            try run(text, concept: "Authentication", labels, opinion: opinion, .d)
         }
-        XCTAssertFalse(try d(credit, [("credit", 1, "same")], text).judged.asksProbe)
-        XCTAssertTrue(try d(credit, [("credit", 1, "different")], text).judged.asksProbe)
-        XCTAssertTrue(try d(credit, [], text).judged.asksProbe, "an unchecked credit is asked about")
-        let opposite = try d(credit, [("credit", 1, "opposite")], text)
-        XCTAssertTrue(opposite.judged.asksProbe)
-        XCTAssertFalse(opposite.judged.recordsMastery)
+        XCTAssertFalse(try d(credit, S.check("correct"), text).judged.asksProbe)
+        let vague = try d(credit, S.check("vague"), text)
+        XCTAssertTrue(vague.judged.asksProbe, "credit the check calls vague is partial and asked about")
+        XCTAssertFalse(vague.judged.recordsMastery)
+        let unplaced = try d(credit, S.check("mistaken", locate: (0, nil, "none")), text)
+        XCTAssertTrue(unplaced.checked!.fired.contains("D-unplaced"))
+        XCTAssertTrue(unplaced.judged.asksProbe)
+        XCTAssertFalse(unplaced.judged.recordsMastery)
+        let denialText = "Authentication does not verify identity."
         let denial = [S.label(1, S.authDefinition, "contradicts", polarity: "negated")]
-        XCTAssertTrue(try d(denial, [("contradiction", 1, "same")], "Authentication does not verify identity.").judged.asksProbe)
+        XCTAssertTrue(try d(denial, S.check("correct"), denialText).judged.asksProbe, "a wrong idea the check does not share is asked")
+        let agreed = try d(denial, S.check("mistaken", locate: (1, S.authDefinition, "wrongIdea")), denialText)
+        XCTAssertEqual(agreed.judged.state, "misconception")
+        XCTAssertFalse(agreed.judged.asksProbe)
         let confusion = [S.label(1, "none", "contradicts", describes: "Authorization")]
         let mixedUp = "Authentication decides what an authenticated user is allowed to do."
-        let firm = try d(confusion, [("confusion", 1, "same")], mixedUp)
+        let firm = try d(confusion, S.check("mistaken", locate: (1, nil, "otherConcept")), mixedUp)
         XCTAssertEqual(firm.judged.state, "misconception")
         XCTAssertTrue(firm.judged.recordsMisconception)
-        let doubtful = try d(confusion, [("confusion", 1, "different")], mixedUp)
+        let doubtful = try d(confusion, S.check("vague"), mixedUp)
         XCTAssertTrue(doubtful.judged.asksProbe)
         XCTAssertEqual(doubtful.judged.probeConcept, ConceptKey("Authorization"))
     }
@@ -263,9 +253,9 @@ final class ZZSpikeAdapterTests: XCTestCase {
         XCTAssertEqual((result["perCase"] as? [String: Any])?.count, 5, "A0, A, B, C, D")
         XCTAssertEqual((result["latency"] as? [Any])?.count, 5)
         // C4 (weak reasoning) and C5 (a wrong conclusion from a plausible reason) are both gold reasoning
-        // issues; the careful C5 reading has one segment and no link, so only C4 is found.
+        // issues; C5's "so" now links its premise to its wrong conclusion, so both are found.
         let reasoning = try XCTUnwrap(result["reasoning"] as? [String: [String: Int]])
-        XCTAssertEqual(reasoning["D"], ["gold": 2, "predicted": 1, "detected": 1])
+        XCTAssertEqual(reasoning["D"], ["gold": 2, "predicted": 2, "detected": 2])
         XCTAssertThrowsError(try ZZSpikeScoreRun.score(env.merging(["LEU_SPIKE_SCORE_BLIND": "1"]) { $1 }), "blind output outside blind/ is refused")
     }
 }

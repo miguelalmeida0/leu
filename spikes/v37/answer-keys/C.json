@@ -1,0 +1,29 @@
+{
+  "keys" : {
+    "Mobile Mastery|Authentication" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Authorization",
+          "contradicts" : "claim-7485a5102853e2f4",
+          "id" : "m1",
+          "kind" : "confused",
+          "question" : "What is the main purpose of authentication?",
+          "text" : "Authentication is the process of deciding what an authenticated identity is allowed to do."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Closure" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    },
+    "Mobile Mastery|JWT" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    }
+  }
+}

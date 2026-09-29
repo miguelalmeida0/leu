@@ -34,14 +34,15 @@ final class ZZSpikeReasoningTests: XCTestCase {
         let labels = [S.label(1, "claim-ff95fc8d2fc5f02e", "partiallyEntails", role: "reason"),
                       S.label(2, S.jwtNotEncrypted, "contradicts", misconception: "m1")]
         for config in SpikeConfig.allCases {
-            let record = S.record(jwt.id, labels, links: [SpikeLink(reason: 1, conclusion: 2)],
-                                  opinion: S.opinion([("contradiction", 2, "opposite")]))
+            let located = S.check("mistaken", locate: (2, S.jwtNotEncrypted, "wrongIdea"))
+            let record = S.record(jwt.id, labels, links: [SpikeLink(reason: 1, conclusion: 2)], opinion: located)
             let (linked, spike) = try S.judge(jwt, record: record, config: config)
             XCTAssertEqual(spike.segments.count, 2, "V35's clause splitter separates \", so\"")
             XCTAssertEqual(linked.judged.state, "misconception", config.rawValue)
             XCTAssertTrue(SpikeReasoning.predicted(linked.judged, checked: linked.checked), config.rawValue)
-            let (unlinked, _) = try S.judge(jwt, record: S.record(jwt.id, labels, opinion: S.opinion([("contradiction", 2, "opposite")])), config: config)
-            XCTAssertFalse(SpikeReasoning.predicted(unlinked.judged, checked: unlinked.checked), "no link, no reasoning claim")
+            // B reads the model's own links only; C and D take the link from the answer's "so" (V37).
+            let (unlinked, _) = try S.judge(jwt, record: S.record(jwt.id, labels, opinion: located), config: config)
+            XCTAssertEqual(SpikeReasoning.predicted(unlinked.judged, checked: unlinked.checked), config != .b, config.rawValue)
         }
     }
 
@@ -50,7 +51,7 @@ final class ZZSpikeReasoningTests: XCTestCase {
     func testV10LowConfidenceIsNeverWrittenFirmly() throws {
         let text = "It checks that the person is really who they claim to be."
         let item = S.adHoc(text, concept: "Authentication")
-        let unsure = S.record(item.id, [S.label(1, S.authDefinition, "entails", confidence: "low")], opinion: S.opinion([("credit", 1, "same")]))
+        let unsure = S.record(item.id, [S.label(1, S.authDefinition, "entails", confidence: "low")], opinion: S.check("correct"))
         XCTAssertFalse(try S.judge(item, record: unsure, config: .b).0.judged.asksProbe)
         for config in [SpikeConfig.c, .d] {
             let outcome = try S.judge(item, record: unsure, config: config).0
@@ -60,7 +61,7 @@ final class ZZSpikeReasoningTests: XCTestCase {
         }
         let denial = S.adHoc("Authentication does not verify identity.", concept: "Authentication")
         let unsureDenial = S.record(denial.id, [S.label(1, S.authDefinition, "contradicts", polarity: "negated", confidence: "low")],
-                                    opinion: S.opinion([("contradiction", 1, "opposite")]))
+                                    opinion: S.check("mistaken", locate: (1, S.authDefinition, "wrongIdea")))
         let doubted = try S.judge(denial, record: unsureDenial, config: .d).0
         XCTAssertTrue(doubted.judged.asksProbe)
         XCTAssertFalse(doubted.judged.recordsMisconception)

@@ -7,13 +7,21 @@ import XCTest
 /// Answers each call from a script keyed by what the request asks for.
 struct ScriptedModel: SpikeModel {
     let reading: String?, opinion: String?, answerKey: String?
+    var check: String? = #"{"verdict": "mistaken"}"#
+    var locate: String? = #"{"segment": "2", "kind": "wrongReason", "claim": "s1"}"#
     var status = "ok"
 
     func respond(_ request: ModelRequest) async -> ModelResponse {
         guard status == "ok" else { return ModelResponse(status: status, latencyMs: 5, retries: 0, json: nil) }
         let json: String?
         if case let .object(name, _) = request.schema {
-            json = name == "Reading" ? reading : name == "SecondOpinion" ? opinion : answerKey
+            switch name {
+            case "Reading": json = reading
+            case "SecondOpinion": json = opinion
+            case "AnswerCheck": json = check
+            case "Locate": json = locate
+            default: json = answerKey
+            }
         } else { json = nil }
         return ModelResponse(status: "ok", latencyMs: 10, retries: 0, json: json)
     }
@@ -43,8 +51,8 @@ final class SpikeKitTests: XCTestCase {
 
     let careful = """
     {"segments": [
-      {"n": "1", "role": "statement", "claim": "c1", "relation": "entails", "misconception": "none", "polarity": "affirmed", "specificity": "specific", "describes": "target", "confidence": "high"},
-      {"n": "2", "role": "reason", "claim": "s1", "relation": "contradicts", "misconception": "m1", "polarity": "affirmed", "specificity": "specific", "describes": "target", "confidence": "medium"}],
+      {"n": "1", "role": "statement", "claim": "c1", "relation": "correct", "misconception": "none", "polarity": "affirmed", "specificity": "specific", "describes": "target", "confidence": "high"},
+      {"n": "2", "role": "reason", "claim": "c1", "relation": "correct", "misconception": "none", "polarity": "affirmed", "specificity": "specific", "describes": "target", "confidence": "medium"}],
      "links": [{"reason": "2", "conclusion": "1"}]}
     """
 
@@ -79,21 +87,30 @@ final class SpikeKitTests: XCTestCase {
         XCTAssertEqual(values("confidence"), ["high", "medium", "low"])
     }
 
-    func testCarefulReadingMapsBackAndAsksCreditContradictionAndReason() async throws {
-        let model = ScriptedModel(reading: careful, opinion: #"{"verdicts": [{"item": "1", "verdict": "same"}, {"item": "2", "verdict": "opposite"}, {"item": "3", "verdict": "different"}]}"#,
-                                  answerKey: nil)
-        let record = await SpikePipeline(model: model, prompts: prompts).read(closure, key: key, device: "linux", run: 1, processCallIndex: 0, osBuild: "-")
+    /// V37: the rows map back from the wire words; the check finds the answer wrong, the locator places
+    /// the error in segment 2 against s1, and that placement is merged into the recorded reading.
+    func testReadingCheckAndLocatorMergeIntoTheRecordedReading() async throws {
+        let model = ScriptedModel(reading: careful, opinion: nil, answerKey: nil)
+        var input = closure
+        input.links = [SpikeLink(reason: 2, conclusion: 1)]
+        let record = await SpikePipeline(model: model, prompts: prompts).read(input, key: key, device: "linux", run: 1, processCallIndex: 0, osBuild: "-")
         XCTAssertEqual(record.reading.status, "ok")
         XCTAssertTrue(record.cold)
         let reading = try XCTUnwrap(record.reading.output)
+        XCTAssertEqual(reading.rows?.map(\.relation), ["entails", "entails"], "wire words map back to the contract's")
+        XCTAssertEqual(reading.segments.map(\.relation), ["entails", "contradicts"])
         XCTAssertEqual(reading.segments.map(\.claim), ["claim-63b3e0f7dcdc4888", "claim-329d5dceec7cb700"])
-        XCTAssertEqual(reading.links, [SpikeLink(reason: 2, conclusion: 1)])
+        XCTAssertEqual(reading.links, [SpikeLink(reason: 2, conclusion: 1)], "the marker link first; the model's duplicate is dropped")
         XCTAssertEqual(reading.segments.map(\.confidence), ["high", "medium"])
         let opinion = try XCTUnwrap(record.secondOpinion?.output)
-        XCTAssertEqual(opinion.items.map(\.kind), ["credit", "contradiction", "reason"])
-        XCTAssertEqual(opinion.items.map(\.segment), [1, 2, 2])
-        XCTAssertEqual(opinion.items[2].claimID, "claim-ea1f1e097d9c8eab", "a reason is compared with the how/why claim")
-        XCTAssertEqual(opinion.verdicts.map(\.verdict), ["same", "opposite", "different"])
+        XCTAssertEqual(opinion.items.map(\.kind), ["answer", "locate"])
+        XCTAssertEqual(opinion.items[1].segment, 2)
+        XCTAssertEqual(opinion.verdicts.map(\.verdict), ["mistaken", "wrongReason"])
+        // A correct answer: no locator call, the rows stand.
+        var right = model; right.check = #"{"verdict": "correct"}"#
+        let credited = await SpikePipeline(model: right, prompts: prompts).read(closure, key: key, device: "linux", run: 1, processCallIndex: 1, osBuild: "-")
+        XCTAssertEqual(credited.secondOpinion?.output?.items.map(\.kind), ["answer"])
+        XCTAssertEqual(credited.reading.output?.segments.map(\.relation), ["entails", "entails"])
         // The JSONL line decodes with the same keys the harness reads.
         let line = try JSONEncoder().encode(record)
         XCTAssertEqual(try JSONDecoder().decode(SpikeRecord.self, from: line), record)
@@ -115,7 +132,7 @@ final class SpikeKitTests: XCTestCase {
         let failing = SpikePipeline(model: ScriptedModel(reading: nil, opinion: nil, answerKey: nil, status: "timeout"), prompts: prompts)
         let timedOut = await failing.read(closure, key: key, device: "linux", run: 1, processCallIndex: 3, osBuild: "-")
         XCTAssertEqual(timedOut.reading.status, "timeout")
-        XCTAssertNil(timedOut.secondOpinion)
+        XCTAssertEqual(timedOut.secondOpinion?.status, "timeout", "the check runs alongside the reading and is recorded")
         XCTAssertFalse(timedOut.cold)
         let garbled = SpikePipeline(model: ScriptedModel(reading: "{\"segments\": 3}", opinion: nil, answerKey: nil), prompts: prompts)
         let invalid = await garbled.read(closure, key: key, device: "linux", run: 1, processCallIndex: 1, osBuild: "-")

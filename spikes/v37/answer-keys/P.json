@@ -1,0 +1,641 @@
+{
+  "keys" : {
+    "Computer Science Essentials|p0" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    },
+    "Mobile Mastery|Access token" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Refresh token",
+          "contradicts" : "claim-f7d36955ca232d94",
+          "id" : "m1",
+          "kind" : "overgeneralized",
+          "question" : "What is the difference between an access token and a refresh token?",
+          "text" : "An access token is a long-lived credential."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Authentication" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Authorization",
+          "contradicts" : "claim-7485a5102853e2f4",
+          "id" : "m1",
+          "kind" : "confused",
+          "question" : "What is the main purpose of authentication?",
+          "text" : "Authentication is the process of deciding what an authenticated identity is allowed to do."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Authorization" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Authentication",
+          "contradicts" : "claim-a1b2f230a4062697",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What is the process of verifying who a user or service is called?",
+          "text" : "Authorization is the process of verifying who a user or service is."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|CORS" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-1106c4957af6b798",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What is the role of CORS in controlling access to resources?",
+          "text" : "CORS is a server-enforced policy that controls whether frontend JavaScript can read responses from another origin."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-21c39a468eba7eca",
+          "id" : "m2",
+          "kind" : "opposite",
+          "question" : "Does CORS allow websites to read sensitive data from other origins?",
+          "text" : "CORS prevents arbitrary websites from freely reading sensitive cross-origin responses."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-914894bd0a3bdd3c",
+          "id" : "m3",
+          "kind" : "reversed",
+          "question" : "Where does CORS operate in the web environment?",
+          "text" : "CORS is a browser security mechanism based on server response headers."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-f5bcef315510807b",
+          "id" : "m4",
+          "kind" : "overgeneralized",
+          "question" : "Can CORS be used to authenticate users?",
+          "text" : "It is not authentication and it does not stop non-browser clients."
+        },
+        {
+          "confusedWith" : "Authentication",
+          "contradicts" : "claim-1106c4957af6b798",
+          "id" : "m5",
+          "kind" : "confused",
+          "question" : "What is the difference between CORS and authentication?",
+          "text" : "CORS is a browser-enforced policy that controls whether frontend JavaScript can read responses from another origin."
+        },
+        {
+          "confusedWith" : "Origin",
+          "contradicts" : "claim-21c39a468eba7eca",
+          "id" : "m6",
+          "kind" : "confused",
+          "question" : "How does CORS relate to the concept of origin?",
+          "text" : "CORS prevents arbitrary websites from freely reading sensitive cross-origin responses."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Circuit breaker" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-996dae7aeb8dd79c",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What does a circuit breaker do when a dependency is healthy?",
+          "text" : "Circuit breakers stop calling a failing dependency temporarily after a failure threshold, then probe recovery."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-89a4fbe528883dfd",
+          "id" : "m2",
+          "kind" : "opposite",
+          "question" : "What is the primary purpose of a circuit breaker?",
+          "text" : "It prevents repeated slow failures from consuming all resources."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-5ce55c11527978f5",
+          "id" : "m3",
+          "kind" : "opposite",
+          "question" : "How do circuit breakers handle unhealthy dependencies?",
+          "text" : "Circuit breakers fail fast when a dependency is unhealthy and give it time to recover."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Closure" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    },
+    "Mobile Mastery|Cohesion" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-7251556bb5e54696",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "How does cohesion affect the maintainability of modules?",
+          "text" : "Low cohesion makes modules easier to understand and maintain."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-d4158fc3c2fffb5d",
+          "id" : "m2",
+          "kind" : "reversed",
+          "question" : "What is the relationship between cohesion and coupling in modules?",
+          "text" : "Good modules have low unnecessary coupling."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-7251556bb5e54696",
+          "id" : "m3",
+          "kind" : "overgeneralized",
+          "question" : "Can cohesion be generalized to all modules?",
+          "text" : "High cohesion makes modules harder to understand and maintain."
+        },
+        {
+          "confusedWith" : "Coupling",
+          "contradicts" : "claim-d4158fc3c2fffb5d",
+          "id" : "m4",
+          "kind" : "confused",
+          "question" : "What is the difference between cohesion and coupling in modules?",
+          "text" : "Unrelated responsibilities should be separated."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Controlled component" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    },
+    "Mobile Mastery|Database index" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Primary key",
+          "contradicts" : "claim-44228c8f2ef50e5",
+          "id" : "m1",
+          "kind" : "overgeneralized",
+          "question" : "What is the difference between a column and an index?",
+          "text" : "An index is a column."
+        },
+        {
+          "confusedWith" : "Primary key",
+          "contradicts" : "claim-ef5ef4b37b447038",
+          "id" : "m2",
+          "kind" : "confused",
+          "question" : "What is the difference between a column and an index?",
+          "text" : "An index is a column."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Debouncing" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    },
+    "Mobile Mastery|Declaration file (.d.ts)" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-e6c36623f11c4a6f",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What does a declaration file NOT describe?",
+          "text" : "Declaration files describe JavaScript libraries, globals, and module APIs to the compiler."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Encapsulation" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Module",
+          "contradicts" : "claim-ee632a6b8778f100",
+          "id" : "m1",
+          "kind" : "overgeneralized",
+          "question" : "What is the purpose of encapsulation?",
+          "text" : "Encapsulation is about exposing all the internal details of a class."
+        },
+        {
+          "confusedWith" : "Dependency inversion",
+          "contradicts" : "claim-e57d40088f6b5036",
+          "id" : "m2",
+          "kind" : "opposite",
+          "question" : "What is the purpose of dependency inversion?",
+          "text" : "Encapsulation prevents distant code from depending on fragile details."
+        },
+        {
+          "confusedWith" : "Abstraction",
+          "contradicts" : "claim-9247716a0900ec39",
+          "id" : "m3",
+          "kind" : "reversed",
+          "question" : "What is the purpose of abstraction?",
+          "text" : "Encapsulation protects invariants by controlling how state and behavior are accessed."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Encryption" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Hashing",
+          "contradicts" : "claim-5016477d10a96b31",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What is the key property of encryption?",
+          "text" : "Encryption is a one-way transformation."
+        },
+        {
+          "confusedWith" : "CSRF",
+          "contradicts" : "claim-b5a5968c73ad3121",
+          "id" : "m2",
+          "kind" : "overgeneralized",
+          "question" : "What is the key property of hashing?",
+          "text" : "Hashing is intended to be one-way."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Error boundary" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "API loading states",
+          "contradicts" : "claim-3cff5a115409d946",
+          "id" : "m1",
+          "kind" : "overgeneralized",
+          "question" : "What is the role of error boundaries in React?",
+          "text" : "Error boundaries catch errors in the entire application."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Exponential backoff" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Retry",
+          "contradicts" : "claim-9f3fca9d4581b27c",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What is the purpose of exponential backoff?",
+          "text" : "Exponential backoff is a retry strategy where delays grow after consecutive failures."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Hashing" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Encryption",
+          "contradicts" : "claim-87d8ccc05b95b511",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "Is hashing reversible?",
+          "text" : "Password hashing is a reversible transformation."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Horizontal scaling" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Throughput",
+          "contradicts" : "claim-af454f7a895d72ca",
+          "id" : "m1",
+          "kind" : "reversed",
+          "question" : "How does horizontal scaling affect throughput?",
+          "text" : "Horizontal scaling improves throughput and redundancy."
+        },
+        {
+          "confusedWith" : "Stateless server",
+          "contradicts" : "claim-2bed1a1659df6649",
+          "id" : "m2",
+          "kind" : "confused",
+          "question" : "How does horizontal scaling differ from stateless servers?",
+          "text" : "Horizontal scaling requires shared state and distributed-system thinking."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|HttpOnly cookie" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    },
+    "Mobile Mastery|Idempotency" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-6589842cf9f75b65",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What happens if an operation fails?",
+          "text" : "Repeating an operation always has the same effect."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-6589842cf9f75b65",
+          "id" : "m2",
+          "kind" : "overgeneralized",
+          "question" : "Does idempotency apply to all operations?",
+          "text" : "Repeating an operation always has the same effect."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|JWT" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    },
+    "Mobile Mastery|Message queue" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Latency",
+          "contradicts" : "claim-3eca114e9db05d28",
+          "id" : "m1",
+          "kind" : "reversed",
+          "question" : "How do message queues affect request latency?",
+          "text" : "Message queues decouple request latency from background work."
+        },
+        {
+          "confusedWith" : "Worker",
+          "contradicts" : "claim-12dc42a98271b1e4",
+          "id" : "m2",
+          "kind" : "overgeneralized",
+          "question" : "What is the role of a worker in a message queue?",
+          "text" : "Message queues are a type of worker."
+        },
+        {
+          "confusedWith" : "Coupling",
+          "contradicts" : "claim-3eca114e9db05d28",
+          "id" : "m3",
+          "kind" : "opposite",
+          "question" : "How do message queues influence coupling between modules?",
+          "text" : "Message queues smooth out bursts of requests."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Open\/Closed Principle" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    },
+    "Mobile Mastery|Rate limiting" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    },
+    "Mobile Mastery|Refresh token" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Access token",
+          "contradicts" : "claim-af1e6d60ebd8762e",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What is the difference between a refresh token and an access token?",
+          "text" : "A refresh token is a short-lived credential."
+        },
+        {
+          "confusedWith" : "Cookie",
+          "contradicts" : "claim-570436823b15dd8a",
+          "id" : "m2",
+          "kind" : "reversed",
+          "question" : "What is the role of a cookie in authentication?",
+          "text" : "A refresh token is used to obtain new access tokens."
+        },
+        {
+          "confusedWith" : "CSRF",
+          "contradicts" : "claim-af1e6d60ebd8762e",
+          "id" : "m3",
+          "kind" : "overgeneralized",
+          "question" : "What is the difference between a refresh token and CSRF?",
+          "text" : "A refresh token is used to obtain new access tokens."
+        },
+        {
+          "confusedWith" : "JWT",
+          "contradicts" : "claim-570436823b15dd8a",
+          "id" : "m4",
+          "kind" : "confused",
+          "question" : "What is the difference between a refresh token and a JWT?",
+          "text" : "A refresh token is used to obtain new access tokens."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Retry" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-c094adde9deaadb6",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What is the opposite of retrying after a failure?",
+          "text" : "Retry is when you try again after a failure."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-c094adde9deaadb6",
+          "id" : "m2",
+          "kind" : "overgeneralized",
+          "question" : "What is the opposite of retrying after a failure?",
+          "text" : "Retry is when you try again after a failure."
+        },
+        {
+          "confusedWith" : "Microservices",
+          "contradicts" : "claim-c094adde9deaadb6",
+          "id" : "m3",
+          "kind" : "confused",
+          "question" : "What is the opposite of retrying after a failure?",
+          "text" : "Retry is when you try again after a failure."
+        },
+        {
+          "confusedWith" : "Exponential backoff",
+          "contradicts" : "claim-d0c558277aa2f6bc",
+          "id" : "m4",
+          "kind" : "confused",
+          "question" : "What is the opposite of retrying after a failure?",
+          "text" : "Retry is when you try again after a failure."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Stateless server" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    },
+    "Mobile Mastery|Throttling" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Debouncing",
+          "contradicts" : "claim-9f979f8aff4557c6",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What is the purpose of throttling?",
+          "text" : "Throttling is a React hook that delays an action until a burst of events has been quiet for a chosen interval."
+        },
+        {
+          "confusedWith" : "Context",
+          "contradicts" : "claim-9f979f8aff4557c6",
+          "id" : "m2",
+          "kind" : "opposite",
+          "question" : "What is the purpose of throttling?",
+          "text" : "Throttling is a React hook that delays an action until a burst of events has been quiet for a chosen interval."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Uncontrolled component" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "Controlled component",
+          "contradicts" : "claim-47caca453007322f",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What is the opposite of an uncontrolled component?",
+          "text" : "An uncontrolled component is a form element that keeps its current value in the DOM."
+        },
+        {
+          "confusedWith" : "Controlled component",
+          "contradicts" : "claim-47caca453007322f",
+          "id" : "m2",
+          "kind" : "reversed",
+          "question" : "What is the opposite of an uncontrolled component?",
+          "text" : "An uncontrolled component is a form element that keeps its current value primarily in the DOM, often accessed with a ref."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Unit test" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-a6c2747df725a1b3",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "How fast are unit tests?",
+          "text" : "Unit tests are slow and not focused."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-ffbbea0ea7f1173e",
+          "id" : "m2",
+          "kind" : "reversed",
+          "question" : "Do unit tests give fast feedback on logic and edge cases?",
+          "text" : "Unit tests don't give fast feedback on logic and edge cases."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-ca7e68c56fad75f7",
+          "id" : "m3",
+          "kind" : "overgeneralized",
+          "question" : "Are unit tests fast and focused?",
+          "text" : "Unit tests are not fast and not focused."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-a6c2747df725a1b3",
+          "id" : "m4",
+          "kind" : "opposite",
+          "question" : "Are unit tests focused on a small behavior?",
+          "text" : "Unit tests are not focused on a small behavior."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-ffbbea0ea7f1173e",
+          "id" : "m5",
+          "kind" : "reversed",
+          "question" : "Do unit tests give fast feedback on logic and edge cases?",
+          "text" : "Unit tests don't give fast feedback on logic and edge cases."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-ca7e68c56fad75f7",
+          "id" : "m6",
+          "kind" : "overgeneralized",
+          "question" : "Are unit tests fast and focused?",
+          "text" : "Unit tests are not fast and not focused."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|Vertical scaling" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-cb2cacb590c85f62",
+          "id" : "m1",
+          "kind" : "overgeneralized",
+          "question" : "Can vertical scaling be the simplest first scaling move in all situations?",
+          "text" : "Vertical scaling is always the simplest first scaling move."
+        },
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-22120386de1ed292",
+          "id" : "m2",
+          "kind" : "overgeneralized",
+          "question" : "Does vertical scaling always preserve a single point of failure?",
+          "text" : "Vertical scaling eventually hits limits and can preserve a single point of failure."
+        }
+      ],
+      "status" : "ok"
+    },
+    "Mobile Mastery|useCallback" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    },
+    "Mobile Mastery|useMemo" : {
+      "mistakes" : [
+        {
+          "confusedWith" : "none",
+          "contradicts" : "claim-6f1a35b9afd390eb",
+          "id" : "m1",
+          "kind" : "opposite",
+          "question" : "What is the purpose of useMemo?",
+          "text" : "useMemo is not a performance optimization."
+        },
+        {
+          "confusedWith" : "useCallback",
+          "contradicts" : "claim-385fd717aab9cf4e",
+          "id" : "m2",
+          "kind" : "confused",
+          "question" : "What is the purpose of useCallback?",
+          "text" : "useMemo is a React hook."
+        },
+        {
+          "confusedWith" : "useRef",
+          "contradicts" : "claim-a8aa9a8b047d32e6",
+          "id" : "m3",
+          "kind" : "confused",
+          "question" : "What is the purpose of useRef?",
+          "text" : "useMemo stabilizes identity."
+        }
+      ],
+      "status" : "ok"
+    },
+    "React Notes|p0" : {
+      "mistakes" : [
+
+      ],
+      "status" : "empty"
+    }
+  }
+}

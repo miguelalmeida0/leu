@@ -58,11 +58,14 @@ enum SpikeAdapter {
     /// the judgement is weak reasoning and the model tied the wrong reason to a claim, the question asks
     /// about that claim (C4: the access mechanism, not the concept's purpose); otherwise it is the
     /// planner's own next question. What is recorded is unchanged: that stays the judge's and mapper's.
+    /// V37: the fault is where the reason meets its conclusion, so the question asks how the conclusion's
+    /// claim works: the claim (canonical family) of the conclusion the wrong reason was given for.
     static func nextClaims(_ checked: SpikeChecked, state: String, assessment: UnderstandingAssessment, target: DiagnosisTarget) -> [String] {
         let known = Set(target.allClaims.map(\.id))
-        if state == "weakReasoning",
-           let broken = checked.segments.first(where: { $0.reasonOf != nil && $0.named.map(known.contains) == true })?.named {
-            return [broken]
+        if state == "weakReasoning", let reason = checked.segments.first(where: { $0.reasonOf != nil }), let c = reason.reasonOf {
+            let conclusion = checked.segments[c - 1]
+            if let claim = conclusion.familyID ?? conclusion.claimID, known.contains(claim) { return [claim] }
+            if let named = reason.named, known.contains(named) { return [named] }
         }
         return assessment.diagnosis.intervention.followUp?.rubricClaimIDs ?? []
     }
@@ -103,7 +106,10 @@ enum SpikeAdapter {
         }
 
         for s in checked.segments {
-            let claim = s.claimID.flatMap { known.contains($0) ? $0 : nil }
+            // Recorded against the claim's family (risk 1): a supporting claim counts for its core claim.
+            let claim = (s.familyID ?? s.claimID).flatMap { known.contains($0) ? $0 : nil }
+            // A premise offered for a wrong conclusion (risk 3) is evidence of nothing on its own.
+            if s.premiseOf != nil { emit(s.text, .noise); continue }
             if s.reasonOf != nil {
                 if s.reasonConfirmed {
                     // A wrong reason behind a credited conclusion: an unsupported clause that gives a reason,
@@ -184,7 +190,12 @@ enum SpikeAdapter {
         for assessment in assessments where assessment.coverage == .missing {
             issues.append(UnderstandingIssue(kind: .missingKeyIdea, claimID: assessment.claimID))
         }
-        let level = UnderstandingDiagnoser.level(issues: issues, coverage: coverage, statements: statements)
+        var level = UnderstandingDiagnoser.level(issues: issues, coverage: coverage, statements: statements)
+        // Risk 2 (V37): mastery needs the essential idea — the definition's claim family — fully covered.
+        // Partial pieces, or secondary claims without it, never add up to "mostly" or "solid": they are
+        // partial but meaningful (fragile), and the judge weighs them as such.
+        let definition = (core.first { $0.kind == .definition } ?? core.first)?.id
+        if let definition, best[definition]?.coverage != .covered, [.solid, .mostly].contains(level) { level = .partial }
         let draft = UnderstandingDiagnosis(version: UnderstandingDiagnosis.version, concept: target.concept, conceptName: target.conceptName,
             statements: statements, claims: assessments, issues: issues, level: level, coverage: coverage,
             intervention: .placeholder, referencedClaims: target.allClaims)

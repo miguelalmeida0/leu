@@ -30,6 +30,8 @@ public enum Settings {
     public static let readingTimeout = 30.0, opinionTimeout = 15.0, answerKeyTimeout = 60.0
     public static let maxRetries = 2, retryDelay = 2.0
     public static let promptBudget = 3500
+    /// Calls run one after another (SPIKE_SEQUENTIAL=1) or the reading alongside the check and locator.
+    public static var sequential: Bool { ProcessInfo.processInfo.environment["SPIKE_SEQUENTIAL"] == "1" }
 }
 
 public struct SpikePipeline: Sendable {
@@ -41,8 +43,9 @@ public struct SpikePipeline: Sendable {
         Int(duration.components.seconds * 1000 + duration.components.attoseconds / 1_000_000_000_000_000)
     }
 
-    /// Reads one answer: the reading call, then (when anything is decisive) the second opinion. The
-    /// total is wall time from submission to both results decoded. No caching, no prewarming.
+    /// Reads one answer (V37). In parallel: the row reading, and the independent whole-answer check
+    /// followed, when the check finds the answer wrong, by the locator. The locator's placement is merged
+    /// into the rows (the raw rows are kept). The total is wall time from submission to all results decoded.
     public func read(_ input: SpikeInput, key: SpikeAnswerKey?, device: String, run: Int, processCallIndex: Int,
                      osBuild: String) async -> SpikeRecord {
         func record(_ reading: SpikeCall<SpikeReading>, _ opinion: SpikeCall<SpikeSecondOpinionOutput>?, _ total: Int) -> SpikeRecord {
@@ -54,25 +57,62 @@ public struct SpikePipeline: Sendable {
             return record(SpikeCall(status: "empty", latencyMs: 0, retries: 0, output: nil), SpikeCall(status: "none", latencyMs: 0, retries: 0, output: nil), 0)
         }
         let clock = ContinuousClock(), start = clock.now
-        let response = await model.respond(ModelRequest(instructions: prompts.reading, prompt: Requests.reading(input, key: key),
-                                                        schema: SpikeSchemas.reading(input, key: key), maxTokens: Settings.readingTokens,
-                                                        timeout: Settings.readingTimeout))
+        let readingRequest = ModelRequest(instructions: prompts.reading, prompt: Requests.reading(input, key: key),
+                                          schema: SpikeSchemas.reading(input, key: key), maxTokens: Settings.readingTokens,
+                                          timeout: Settings.readingTimeout)
+        let response: ModelResponse, opinion: SpikeCall<SpikeSecondOpinionOutput>
+        if Settings.sequential {
+            // One model call at a time: concurrent sessions contend for the on-device model (dev05 p95).
+            opinion = await checkAndLocate(input)
+            response = await model.respond(readingRequest)
+        } else {
+            async let checked = checkAndLocate(input)
+            response = await model.respond(readingRequest)
+            opinion = await checked
+        }
+        let total = Self.milliseconds(start.duration(to: clock.now))
         guard response.status == "ok", let json = response.json else {
-            return record(SpikeCall(status: response.status, latencyMs: response.latencyMs, retries: response.retries, output: nil), nil,
-                          Self.milliseconds(start.duration(to: clock.now)))
+            return record(SpikeCall(status: response.status, latencyMs: response.latencyMs, retries: response.retries, output: nil), opinion, total)
         }
         guard let raw = try? JSONDecoder().decode(RawReading.self, from: Data(json.utf8)) else {
-            return record(SpikeCall(status: "schemaError", latencyMs: response.latencyMs, retries: response.retries, output: nil), nil,
-                          Self.milliseconds(start.duration(to: clock.now)))
+            return record(SpikeCall(status: "schemaError", latencyMs: response.latencyMs, retries: response.retries, output: nil), opinion, total)
         }
-        let reading = Selection.map(raw, input: input)
-        let readingCall = SpikeCall(status: "ok", latencyMs: response.latencyMs, retries: response.retries, output: reading)
-        let pairs = Selection.items(reading, input: input, key: key)
-        guard !pairs.isEmpty else {
-            return record(readingCall, SpikeCall(status: "none", latencyMs: 0, retries: 0, output: nil), Self.milliseconds(start.duration(to: clock.now)))
+        let rows = Selection.map(raw, input: input)
+        let reading = Selection.refine(rows, locate: opinion.output?.items.first { $0.kind == "locate" }, input: input)
+        return record(SpikeCall(status: "ok", latencyMs: response.latencyMs, retries: response.retries, output: reading), opinion, total)
+    }
+
+    /// The whole-answer check (item 1, kind "answer"), then — only when it finds the answer wrong — the
+    /// locator (item 2, kind "locate": its segment, claim id and kind; segment 0 for "none").
+    func checkAndLocate(_ input: SpikeInput) async -> SpikeCall<SpikeSecondOpinionOutput> {
+        let check = await model.respond(ModelRequest(instructions: prompts.answerCheck, prompt: Requests.answerCheck(input),
+                                                     schema: SpikeSchemas.answerCheck(), maxTokens: Settings.opinionTokens,
+                                                     timeout: Settings.opinionTimeout))
+        guard check.status == "ok", let json = check.json else {
+            return SpikeCall(status: check.status, latencyMs: check.latencyMs, retries: check.retries, output: nil)
         }
-        let opinion = await secondOpinion(pairs)
-        return record(readingCall, opinion, Self.milliseconds(start.duration(to: clock.now)))
+        guard let verdict = try? JSONDecoder().decode(RawAnswerCheck.self, from: Data(json.utf8)).verdict else {
+            return SpikeCall(status: "schemaError", latencyMs: check.latencyMs, retries: check.retries, output: nil)
+        }
+        var items = [SpikeOpinionItem(item: 1, kind: "answer", segment: 0, claimID: nil, neighbour: nil)]
+        var verdicts = [SpikeVerdict(item: 1, verdict: verdict)]
+        var latency = check.latencyMs, retries = check.retries
+        if verdict == "mistaken" || verdict == "flawedReason" {
+            let located = await model.respond(ModelRequest(instructions: prompts.locate, prompt: Requests.locate(input),
+                                                           schema: SpikeSchemas.locate(input), maxTokens: Settings.opinionTokens,
+                                                           timeout: Settings.opinionTimeout))
+            latency += located.latencyMs; retries += located.retries
+            guard located.status == "ok", let json = located.json else {
+                return SpikeCall(status: located.status, latencyMs: latency, retries: retries, output: nil)
+            }
+            guard let raw = try? JSONDecoder().decode(RawLocate.self, from: Data(json.utf8)) else {
+                return SpikeCall(status: "schemaError", latencyMs: latency, retries: retries, output: nil)
+            }
+            let ids = Dictionary(input.claims.map { ($0.alias, $0.id) }, uniquingKeysWith: { a, _ in a })
+            items.append(SpikeOpinionItem(item: 2, kind: "locate", segment: Int(raw.segment) ?? 0, claimID: ids[raw.claim], neighbour: nil))
+            verdicts.append(SpikeVerdict(item: 2, verdict: raw.segment == "none" ? "none" : raw.kind))
+        }
+        return SpikeCall(status: "ok", latencyMs: latency, retries: retries, output: SpikeSecondOpinionOutput(items: items, verdicts: verdicts))
     }
 
     /// A fresh session comparing numbered statement pairs; exactly one verdict per pair.

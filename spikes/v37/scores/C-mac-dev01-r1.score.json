@@ -1,0 +1,1274 @@
+{
+  "blind" : false,
+  "canonical" : {
+    "B" : {
+      "cases" : 5,
+      "failures" : {
+        "C1" : [
+          "state"
+        ],
+        "C2" : [
+
+        ],
+        "C3" : [
+          "state"
+        ],
+        "C4" : [
+          "reason",
+          "state"
+        ],
+        "C5" : [
+          "reading",
+          "state",
+          "recordsCredit"
+        ]
+      },
+      "passed" : 1
+    },
+    "C" : {
+      "cases" : 5,
+      "failures" : {
+        "C1" : [
+          "state",
+          "recordsCredit",
+          "asksProbe"
+        ],
+        "C2" : [
+
+        ],
+        "C3" : [
+          "state",
+          "recordsCredit",
+          "asksProbe"
+        ],
+        "C4" : [
+          "reason",
+          "state"
+        ],
+        "C5" : [
+          "reading"
+        ]
+      },
+      "passed" : 1
+    },
+    "D" : {
+      "cases" : 5,
+      "failures" : {
+        "C1" : [
+          "state",
+          "recordsCredit",
+          "asksProbe"
+        ],
+        "C2" : [
+
+        ],
+        "C3" : [
+          "state",
+          "recordsCredit",
+          "asksProbe"
+        ],
+        "C4" : [
+          "reason",
+          "state"
+        ],
+        "C5" : [
+          "reading"
+        ]
+      },
+      "passed" : 1
+    }
+  },
+  "cases" : 5,
+  "checksFired" : {
+    "B" : {
+
+    },
+    "C" : {
+      "V3" : 1,
+      "V7" : 3,
+      "V10" : 1
+    },
+    "D" : {
+      "V3" : 1,
+      "V7" : 3,
+      "V10" : 1
+    }
+  },
+  "failures" : {
+    "cases" : 5,
+    "empty" : 0,
+    "missing" : 0,
+    "other" : 0,
+    "refused" : 0,
+    "schemaError" : 0,
+    "timeout" : 0
+  },
+  "fallbacks" : {
+    "B" : {
+      "none" : 5
+    },
+    "C" : {
+      "none" : 5
+    },
+    "D" : {
+      "none" : 5
+    }
+  },
+  "inputsMismatched" : 0,
+  "label" : "C-mac-dev00-r1",
+  "latency" : [
+    {
+      "cold" : true,
+      "device" : "mac",
+      "opinionMs" : 536,
+      "opinionStatus" : "ok",
+      "processCallIndex" : 0,
+      "readingMs" : 2635,
+      "readingRetries" : 0,
+      "readingStatus" : "ok",
+      "run" : 1,
+      "totalMs" : 3171,
+      "words" : 12
+    },
+    {
+      "cold" : false,
+      "device" : "mac",
+      "opinionMs" : 510,
+      "opinionStatus" : "ok",
+      "processCallIndex" : 2,
+      "readingMs" : 2018,
+      "readingRetries" : 0,
+      "readingStatus" : "ok",
+      "run" : 1,
+      "totalMs" : 2529,
+      "words" : 5
+    },
+    {
+      "cold" : false,
+      "device" : "mac",
+      "opinionMs" : 777,
+      "opinionStatus" : "ok",
+      "processCallIndex" : 4,
+      "readingMs" : 2143,
+      "readingRetries" : 0,
+      "readingStatus" : "ok",
+      "run" : 1,
+      "totalMs" : 2921,
+      "words" : 13
+    },
+    {
+      "cold" : false,
+      "device" : "mac",
+      "opinionMs" : 684,
+      "opinionStatus" : "ok",
+      "processCallIndex" : 6,
+      "readingMs" : 3073,
+      "readingRetries" : 0,
+      "readingStatus" : "ok",
+      "run" : 1,
+      "totalMs" : 3757,
+      "words" : 17
+    },
+    {
+      "cold" : false,
+      "device" : "mac",
+      "opinionMs" : 733,
+      "opinionStatus" : "ok",
+      "processCallIndex" : 8,
+      "readingMs" : 1897,
+      "readingRetries" : 0,
+      "readingStatus" : "ok",
+      "run" : 1,
+      "totalMs" : 2631,
+      "words" : 8
+    }
+  ],
+  "opinion" : {
+    "agreeing" : 0,
+    "byKind" : {
+      "confusion" : {
+        "opposite" : 1
+      },
+      "credit" : {
+        "opposite" : 5
+      }
+    },
+    "items" : 6
+  },
+  "perCase" : {
+    "A" : {
+      "C1" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "insufficient|true|false|false"
+      },
+      "C2" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|true|false|false"
+      },
+      "C3" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|false|false|false"
+      },
+      "C4" : {
+        "coarseRight" : true,
+        "exactRight" : true,
+        "reasoningIssue" : true,
+        "signature" : "weakReasoning|true|false|false"
+      },
+      "C5" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|true|false|false"
+      }
+    },
+    "A0" : {
+      "C1" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "insufficient|true|false|false"
+      },
+      "C2" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|true|false|false"
+      },
+      "C3" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|false|false|false"
+      },
+      "C4" : {
+        "coarseRight" : true,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|false|false|false"
+      },
+      "C5" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|true|false|false"
+      }
+    },
+    "B" : {
+      "C1" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|false|false|false"
+      },
+      "C2" : {
+        "coarseRight" : true,
+        "exactRight" : true,
+        "reasoningIssue" : false,
+        "signature" : "misconception|false|false|true"
+      },
+      "C3" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|false|false|false"
+      },
+      "C4" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "mostlyUnderstood|false|false|false"
+      },
+      "C5" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|false|false|false"
+      }
+    },
+    "C" : {
+      "C1" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|true|false|false"
+      },
+      "C2" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "insufficient|true|false|false"
+      },
+      "C3" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|true|false|false"
+      },
+      "C4" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "mostlyUnderstood|true|false|false"
+      },
+      "C5" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "fragile|true|false|false"
+      }
+    },
+    "D" : {
+      "C1" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "insufficient|true|false|false"
+      },
+      "C2" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "insufficient|true|false|false"
+      },
+      "C3" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "insufficient|true|false|false"
+      },
+      "C4" : {
+        "coarseRight" : true,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "insufficient|true|false|false"
+      },
+      "C5" : {
+        "coarseRight" : false,
+        "exactRight" : false,
+        "reasoningIssue" : false,
+        "signature" : "insufficient|true|false|false"
+      }
+    }
+  },
+  "reasoning" : {
+    "A" : {
+      "detected" : 1,
+      "gold" : 2,
+      "predicted" : 1
+    },
+    "A0" : {
+      "detected" : 0,
+      "gold" : 2,
+      "predicted" : 0
+    },
+    "B" : {
+      "detected" : 0,
+      "gold" : 2,
+      "predicted" : 0
+    },
+    "C" : {
+      "detected" : 0,
+      "gold" : 2,
+      "predicted" : 0
+    },
+    "D" : {
+      "detected" : 0,
+      "gold" : 2,
+      "predicted" : 0
+    }
+  },
+  "reports" : {
+    "A" : {
+      "brier" : 0.17600000000000002,
+      "cases" : 5,
+      "coarseRight" : 1,
+      "coarseStableGroups" : 0,
+      "committed" : 1,
+      "committedRight" : 0,
+      "ece" : 0.16000000000000003,
+      "exact" : 1,
+      "falseAlarm" : 0,
+      "falseMastery" : 0,
+      "falseMisconception" : 0,
+      "goldMisconception" : 2,
+      "goldNoMisconception" : 3,
+      "goldNotPositive" : 3,
+      "goldPositive" : 2,
+      "goldWeakReasoning" : 1,
+      "groups" : 0,
+      "harmfulWrites" : 0,
+      "masteryCredited" : 0,
+      "misconceptionCredited" : 0,
+      "misconceptionProbed" : 2,
+      "misconceptionRecorded" : 0,
+      "missedMisconception" : 0,
+      "overCredit" : 0,
+      "perCategory" : {
+        "misconceptionParaphrase" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "negation" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "novelVocabulary" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "oppositeMeaningSameWords" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "paraphrase" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "rightConclusionWrongReasoning" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 1
+        },
+        "terse" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "themeAuthnAuthz" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "themeClosure" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 1
+        },
+        "themeJWT" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "wrongConclusionPlausibleReason" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        }
+      },
+      "perState" : {
+        "misconception" : {
+          "n" : 2,
+          "probed" : 2,
+          "right" : 0
+        },
+        "mostlyUnderstood" : {
+          "n" : 2,
+          "probed" : 1,
+          "right" : 0
+        },
+        "weakReasoning" : {
+          "n" : 1,
+          "probed" : 1,
+          "right" : 1
+        }
+      },
+      "predictedWeakReasoning" : 1,
+      "probes" : 4,
+      "stableGroups" : 0,
+      "targetedProbes" : 1,
+      "unavailable" : 0,
+      "underCredit" : 1,
+      "weakReasoningDetected" : 1
+    },
+    "A0" : {
+      "brier" : 0.23200000000000004,
+      "cases" : 5,
+      "coarseRight" : 1,
+      "coarseStableGroups" : 0,
+      "committed" : 2,
+      "committedRight" : 1,
+      "ece" : 0.36000000000000004,
+      "exact" : 0,
+      "falseAlarm" : 0,
+      "falseMastery" : 0,
+      "falseMisconception" : 0,
+      "goldMisconception" : 2,
+      "goldNoMisconception" : 3,
+      "goldNotPositive" : 3,
+      "goldPositive" : 2,
+      "goldWeakReasoning" : 1,
+      "groups" : 0,
+      "harmfulWrites" : 0,
+      "masteryCredited" : 0,
+      "misconceptionCredited" : 0,
+      "misconceptionProbed" : 2,
+      "misconceptionRecorded" : 0,
+      "missedMisconception" : 0,
+      "overCredit" : 0,
+      "perCategory" : {
+        "misconceptionParaphrase" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "negation" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "novelVocabulary" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "oppositeMeaningSameWords" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "paraphrase" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "rightConclusionWrongReasoning" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 1
+        },
+        "terse" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "themeAuthnAuthz" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "themeClosure" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 1
+        },
+        "themeJWT" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "wrongConclusionPlausibleReason" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        }
+      },
+      "perState" : {
+        "misconception" : {
+          "n" : 2,
+          "probed" : 2,
+          "right" : 0
+        },
+        "mostlyUnderstood" : {
+          "n" : 2,
+          "probed" : 1,
+          "right" : 0
+        },
+        "weakReasoning" : {
+          "n" : 1,
+          "probed" : 0,
+          "right" : 1
+        }
+      },
+      "predictedWeakReasoning" : 0,
+      "probes" : 3,
+      "stableGroups" : 0,
+      "targetedProbes" : 1,
+      "unavailable" : 0,
+      "underCredit" : 1,
+      "weakReasoningDetected" : 0
+    },
+    "B" : {
+      "brier" : 0.16450000000000004,
+      "cases" : 5,
+      "coarseRight" : 1,
+      "coarseStableGroups" : 0,
+      "committed" : 5,
+      "committedRight" : 1,
+      "ece" : 0.33000000000000007,
+      "exact" : 1,
+      "falseAlarm" : 0,
+      "falseMastery" : 0,
+      "falseMisconception" : 0,
+      "goldMisconception" : 2,
+      "goldNoMisconception" : 3,
+      "goldNotPositive" : 3,
+      "goldPositive" : 2,
+      "goldWeakReasoning" : 1,
+      "groups" : 0,
+      "harmfulWrites" : 1,
+      "masteryCredited" : 0,
+      "misconceptionCredited" : 1,
+      "misconceptionProbed" : 0,
+      "misconceptionRecorded" : 1,
+      "missedMisconception" : 1,
+      "overCredit" : 1,
+      "perCategory" : {
+        "misconceptionParaphrase" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "negation" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 1
+        },
+        "novelVocabulary" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "oppositeMeaningSameWords" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 1
+        },
+        "paraphrase" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "rightConclusionWrongReasoning" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "terse" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 1
+        },
+        "themeAuthnAuthz" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 1
+        },
+        "themeClosure" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "themeJWT" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "wrongConclusionPlausibleReason" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        }
+      },
+      "perState" : {
+        "misconception" : {
+          "n" : 2,
+          "probed" : 0,
+          "right" : 1
+        },
+        "mostlyUnderstood" : {
+          "n" : 2,
+          "probed" : 0,
+          "right" : 0
+        },
+        "weakReasoning" : {
+          "n" : 1,
+          "probed" : 0,
+          "right" : 0
+        }
+      },
+      "predictedWeakReasoning" : 0,
+      "probes" : 0,
+      "stableGroups" : 0,
+      "targetedProbes" : 0,
+      "unavailable" : 0,
+      "underCredit" : 2,
+      "weakReasoningDetected" : 0
+    },
+    "C" : {
+      "brier" : 0.16000000000000003,
+      "cases" : 5,
+      "coarseRight" : 0,
+      "coarseStableGroups" : 0,
+      "committed" : 0,
+      "committedRight" : 0,
+      "ece" : 0.40000000000000002,
+      "exact" : 0,
+      "falseAlarm" : 0,
+      "falseMastery" : 0,
+      "falseMisconception" : 0,
+      "goldMisconception" : 2,
+      "goldNoMisconception" : 3,
+      "goldNotPositive" : 3,
+      "goldPositive" : 2,
+      "goldWeakReasoning" : 1,
+      "groups" : 0,
+      "harmfulWrites" : 0,
+      "masteryCredited" : 0,
+      "misconceptionCredited" : 0,
+      "misconceptionProbed" : 2,
+      "misconceptionRecorded" : 0,
+      "missedMisconception" : 0,
+      "overCredit" : 0,
+      "perCategory" : {
+        "misconceptionParaphrase" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "negation" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "novelVocabulary" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "oppositeMeaningSameWords" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "paraphrase" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "rightConclusionWrongReasoning" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "terse" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "themeAuthnAuthz" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "themeClosure" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "themeJWT" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "wrongConclusionPlausibleReason" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        }
+      },
+      "perState" : {
+        "misconception" : {
+          "n" : 2,
+          "probed" : 2,
+          "right" : 0
+        },
+        "mostlyUnderstood" : {
+          "n" : 2,
+          "probed" : 2,
+          "right" : 0
+        },
+        "weakReasoning" : {
+          "n" : 1,
+          "probed" : 1,
+          "right" : 0
+        }
+      },
+      "predictedWeakReasoning" : 0,
+      "probes" : 5,
+      "stableGroups" : 0,
+      "targetedProbes" : 1,
+      "unavailable" : 0,
+      "underCredit" : 0,
+      "weakReasoningDetected" : 0
+    },
+    "D" : {
+      "brier" : 0.20000000000000001,
+      "cases" : 5,
+      "coarseRight" : 1,
+      "coarseStableGroups" : 0,
+      "committed" : 0,
+      "committedRight" : 0,
+      "ece" : 0.20000000000000001,
+      "exact" : 0,
+      "falseAlarm" : 0,
+      "falseMastery" : 0,
+      "falseMisconception" : 0,
+      "goldMisconception" : 2,
+      "goldNoMisconception" : 3,
+      "goldNotPositive" : 3,
+      "goldPositive" : 2,
+      "goldWeakReasoning" : 1,
+      "groups" : 0,
+      "harmfulWrites" : 0,
+      "masteryCredited" : 0,
+      "misconceptionCredited" : 0,
+      "misconceptionProbed" : 2,
+      "misconceptionRecorded" : 0,
+      "missedMisconception" : 0,
+      "overCredit" : 0,
+      "perCategory" : {
+        "misconceptionParaphrase" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "negation" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "novelVocabulary" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "oppositeMeaningSameWords" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "paraphrase" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "rightConclusionWrongReasoning" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 1
+        },
+        "terse" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "themeAuthnAuthz" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 0
+        },
+        "themeClosure" : {
+          "falseMastery" : 0,
+          "n" : 2,
+          "right" : 1
+        },
+        "themeJWT" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        },
+        "wrongConclusionPlausibleReason" : {
+          "falseMastery" : 0,
+          "n" : 1,
+          "right" : 0
+        }
+      },
+      "perState" : {
+        "misconception" : {
+          "n" : 2,
+          "probed" : 2,
+          "right" : 0
+        },
+        "mostlyUnderstood" : {
+          "n" : 2,
+          "probed" : 2,
+          "right" : 0
+        },
+        "weakReasoning" : {
+          "n" : 1,
+          "probed" : 1,
+          "right" : 1
+        }
+      },
+      "predictedWeakReasoning" : 0,
+      "probes" : 5,
+      "stableGroups" : 0,
+      "targetedProbes" : 1,
+      "unavailable" : 0,
+      "underCredit" : 0,
+      "weakReasoningDetected" : 0
+    }
+  },
+  "rows" : [
+    {
+      "A" : {
+        "asks" : true,
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-7485a5102853e2f4",
+          "claim-ff95fc8d2fc5f02e"
+        ],
+        "state" : "insufficient"
+      },
+      "A0" : {
+        "asks" : true,
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-7485a5102853e2f4",
+          "claim-ff95fc8d2fc5f02e"
+        ],
+        "state" : "insufficient"
+      },
+      "B" : {
+        "asks" : false,
+        "fallback" : "none",
+        "fired" : [
+
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+
+        ],
+        "state" : "fragile"
+      },
+      "C" : {
+        "asks" : true,
+        "fallback" : "none",
+        "fired" : [
+          "V7"
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-7485a5102853e2f4"
+        ],
+        "state" : "fragile"
+      },
+      "categories" : [
+        "paraphrase",
+        "novelVocabulary",
+        "themeAuthnAuthz"
+      ],
+      "D" : {
+        "asks" : true,
+        "fallback" : "none",
+        "fired" : [
+          "V7"
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-7485a5102853e2f4"
+        ],
+        "state" : "insufficient"
+      },
+      "gold" : "mostlyUnderstood",
+      "goldCoarse" : "positive",
+      "id" : "C1",
+      "readingStatus" : "ok"
+    },
+    {
+      "A" : {
+        "asks" : true,
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-7485a5102853e2f4"
+        ],
+        "state" : "fragile"
+      },
+      "A0" : {
+        "asks" : true,
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-7485a5102853e2f4"
+        ],
+        "state" : "fragile"
+      },
+      "B" : {
+        "asks" : false,
+        "fallback" : "none",
+        "fired" : [
+
+        ],
+        "mastery" : false,
+        "misconception" : true,
+        "probeClaims" : [
+
+        ],
+        "state" : "misconception"
+      },
+      "C" : {
+        "asks" : true,
+        "fallback" : "none",
+        "fired" : [
+          "V10"
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-7485a5102853e2f4",
+          "claim-a1b2f230a4062697"
+        ],
+        "state" : "insufficient"
+      },
+      "categories" : [
+        "negation",
+        "oppositeMeaningSameWords",
+        "terse",
+        "themeAuthnAuthz"
+      ],
+      "D" : {
+        "asks" : true,
+        "fallback" : "none",
+        "fired" : [
+          "V10"
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-7485a5102853e2f4",
+          "claim-a1b2f230a4062697"
+        ],
+        "state" : "insufficient"
+      },
+      "gold" : "misconception",
+      "goldCoarse" : "misconception",
+      "id" : "C2",
+      "readingStatus" : "ok"
+    },
+    {
+      "A" : {
+        "asks" : false,
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+
+        ],
+        "state" : "fragile"
+      },
+      "A0" : {
+        "asks" : false,
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+
+        ],
+        "state" : "fragile"
+      },
+      "B" : {
+        "asks" : false,
+        "fallback" : "none",
+        "fired" : [
+
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+
+        ],
+        "state" : "fragile"
+      },
+      "C" : {
+        "asks" : true,
+        "fallback" : "none",
+        "fired" : [
+          "V7"
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-63b3e0f7dcdc4888"
+        ],
+        "state" : "fragile"
+      },
+      "categories" : [
+        "paraphrase",
+        "novelVocabulary",
+        "themeClosure"
+      ],
+      "D" : {
+        "asks" : true,
+        "fallback" : "none",
+        "fired" : [
+          "V7"
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-63b3e0f7dcdc4888"
+        ],
+        "state" : "insufficient"
+      },
+      "gold" : "mostlyUnderstood",
+      "goldCoarse" : "positive",
+      "id" : "C3",
+      "readingStatus" : "ok"
+    },
+    {
+      "A" : {
+        "asks" : true,
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-ea1f1e097d9c8eab"
+        ],
+        "state" : "weakReasoning"
+      },
+      "A0" : {
+        "asks" : false,
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+
+        ],
+        "state" : "fragile"
+      },
+      "B" : {
+        "asks" : false,
+        "fallback" : "none",
+        "fired" : [
+
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+
+        ],
+        "state" : "mostlyUnderstood"
+      },
+      "C" : {
+        "asks" : true,
+        "fallback" : "none",
+        "fired" : [
+          "V7",
+          "V7"
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-63b3e0f7dcdc4888"
+        ],
+        "state" : "mostlyUnderstood"
+      },
+      "categories" : [
+        "rightConclusionWrongReasoning",
+        "themeClosure"
+      ],
+      "D" : {
+        "asks" : true,
+        "fallback" : "none",
+        "fired" : [
+          "V7",
+          "V7"
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-63b3e0f7dcdc4888"
+        ],
+        "state" : "insufficient"
+      },
+      "gold" : "weakReasoning",
+      "goldCoarse" : "weak",
+      "id" : "C4",
+      "readingStatus" : "ok"
+    },
+    {
+      "A" : {
+        "asks" : true,
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-ff95fc8d2fc5f02e"
+        ],
+        "state" : "fragile"
+      },
+      "A0" : {
+        "asks" : true,
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-ff95fc8d2fc5f02e"
+        ],
+        "state" : "fragile"
+      },
+      "B" : {
+        "asks" : false,
+        "fallback" : "none",
+        "fired" : [
+
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+
+        ],
+        "state" : "fragile"
+      },
+      "C" : {
+        "asks" : true,
+        "fallback" : "none",
+        "fired" : [
+          "V3"
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-ff95fc8d2fc5f02e"
+        ],
+        "state" : "fragile"
+      },
+      "categories" : [
+        "misconceptionParaphrase",
+        "wrongConclusionPlausibleReason",
+        "terse",
+        "themeJWT"
+      ],
+      "D" : {
+        "asks" : true,
+        "fallback" : "none",
+        "fired" : [
+          "V3"
+        ],
+        "mastery" : false,
+        "misconception" : false,
+        "probeClaims" : [
+          "claim-ff95fc8d2fc5f02e"
+        ],
+        "state" : "insufficient"
+      },
+      "gold" : "misconception",
+      "goldCoarse" : "misconception",
+      "id" : "C5",
+      "readingStatus" : "ok"
+    }
+  ],
+  "set" : "C"
+}

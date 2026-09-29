@@ -1,0 +1,103 @@
+[
+  {
+    "compileLatencyMs" : 5839,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "Before granting access, the system needs a trustworthy identity."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Authentication is the process of verifying who a user or service is."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Before granting access, the system needs a trustworthy identity."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Authentication is the process of verifying who a user or service is."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Before granting access, the system needs a trustworthy identity."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1252,
+    "selfCheckStatus" : "ok",
+    "status" : "ok",
+    "targetKey" : "Mobile Mastery|Authentication"
+  },
+  {
+    "compileLatencyMs" : 4556,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "A function plus access to the lexical variables from the scope where it was created."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Closures power encapsulation, callbacks, hooks, and private state patterns."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "A function plus access to the lexical variables from the scope where it was created."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "Closures power encapsulation, callbacks, hooks, and private state patterns."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "A closure lets a function retain access to its lexical environment after the outer function has finished."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1266,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Mobile Mastery|Closure"
+  },
+  {
+    "compileLatencyMs" : 3990,
+    "compileStatus" : "ok",
+    "dropped" : [
+      {
+        "reason" : "notOpposite",
+        "text" : "A compact signed token format containing claims, represented as header.payload.signature."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "JWTs are signed claim containers, not automatically encrypted."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "A compact signed token format containing claims, represented as header.payload.signature."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "It lets a recipient verify that claims were issued by a trusted signer without a database lookup for every verification."
+      },
+      {
+        "reason" : "notOpposite",
+        "text" : "JWTs are signed claim containers, not automatically encrypted."
+      }
+    ],
+    "proposed" : 6,
+    "selfCheckLatencyMs" : 1247,
+    "selfCheckStatus" : "ok",
+    "status" : "empty",
+    "targetKey" : "Mobile Mastery|JWT"
+  }
+]
