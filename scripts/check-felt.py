@@ -75,13 +75,13 @@ for screen in ['Shelf/Learning/StudyLandingScreen.swift', 'Shelf/Learning/Trails
 
 # --- Preserved invariants from the previous gate ----------------------------
 library = (ROOT / 'Shelf/Features/Library/Components/LibraryHeader.swift').read_text()
-hero_start = library.find('struct ContinueReadingHero')
-hero = library[hero_start:] if hero_start >= 0 else ''
-require(hero_start >= 0, 'ContinueReadingHero missing')
+needle_start = library.find('struct OnTheNeedle')
+needle = library[needle_start:] if needle_start >= 0 else ''
+require(needle_start >= 0, 'OnTheNeedle resume strip missing')
 for forbidden in ['tree', 'foliage', 'leaf.fill', 'leaf.circle', 'OpeningScene']:
-    require(forbidden.lower() not in hero.lower(),
+    require(forbidden.lower() not in needle.lower(),
             f'resume surface must never use tree/foliage imagery: {forbidden}')
-require('You were in the middle' in hero, 'cognitive resume headline missing')
+require('Pick it back up' in needle and 'You stopped on p.' in needle, 'resume line must name the real book and page')
 
 reader_top = (ROOT / 'Shelf/Features/Reader/Components/ReaderTopBar.swift').read_text()
 reader_bottom = (ROOT / 'Shelf/Features/Reader/Components/ReaderBottomBar.swift').read_text()

@@ -14,16 +14,19 @@ struct LibraryScreen: View {
     @State private var activeRelationshipBookID: UUID?
     @State private var knowledgeSearchPresented = false
 
-    private var columnCount: Int {
-        if typeSize.isAccessibilitySize { return 1 }
-        return sizeClass == .regular ? 3 : 2
-    }
+    @ScaledMetric(relativeTo: .headline) private var patchHeight: CGFloat = 112
+    /// The quilt unfolds in handfuls so a large library never builds every patch at once.
+    @State private var visibleCount = 24
+
+    private var wide: Bool { sizeClass == .regular && !typeSize.isAccessibilitySize }
 
     var body: some View {
         content
+            .background(LeuDesign.felt)
             .scrollDismissesKeyboard(.interactively)
             .onChange(of: model.query) { _, _ in model.updateSearch() }
-            .onChange(of: model.selectedCollectionID) { _, _ in model.updateSearch() }
+            .onChange(of: model.selectedCollectionID) { _, _ in model.updateSearch(); visibleCount = 24 }
+            .onChange(of: model.selectedTab) { _, _ in visibleCount = 24 }
             .sheet(isPresented: $knowledgeSearchPresented) { KnowledgeSearchSheet(knowledge: knowledge) }
             .sheet(isPresented: $showingPDFPicker) {
                 PDFDocumentPickerView(
@@ -37,38 +40,57 @@ struct LibraryScreen: View {
     }
 
     private var content: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 22) {
-                header
-                LibraryScopeBar(model: model)
-                if let recentBook, model.selectedTab == .library, model.query.isEmpty {
-                    ContinueReadingHero(book: recentBook, model: model)
-                }
-                searchSection
-                selectedTag
-                recoveryNotice
-                operationProgress
-                documentArea
+        HStack(alignment: .top, spacing: 0) {
+            if wide {
+                ShelfIndex(model: model)
+                    .frame(width: 270)
             }
-            .padding(.horizontal, ShelfTheme.gutter)
-            .padding(.top, 16)
-            .padding(.bottom, 26)
-            .frame(maxWidth: 1100)
-            .frame(maxWidth: .infinity)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 22) {
+                    if !wide {
+                        LibraryScopeBar(model: model)
+                    }
+                    if showNeedle {
+                        OnTheNeedle(books: needleBooks, model: model, knowledge: knowledge)
+                    }
+                    header
+                    searchSection
+                    selectedTag
+                    recoveryNotice
+                    operationProgress
+                    documentArea
+                }
+                .padding(.horizontal, wide ? 28 : ShelfTheme.gutter)
+                .padding(.top, 16)
+                .padding(.bottom, 26)
+                .frame(maxWidth: 1180)
+                .frame(maxWidth: .infinity)
+            }
         }
     }
 
     private var header: some View {
-        LibraryHeader(model: model) {
+        LibraryHeader(model: model, preferences: preferences) {
             presentPDFPicker()
         }
+    }
+
+    private var showNeedle: Bool {
+        model.selectedTab == .library && model.selectedCollectionID == nil && model.query.isEmpty && !needleBooks.isEmpty
+    }
+
+    /// Books you are in the middle of, most recently touched first.
+    private var needleBooks: [Book] {
+        model.snapshot.activeBooks
+            .filter { $0.lastOpenedAt != nil && $0.currentPageNumber < $0.pageCount }
+            .sorted { ($0.lastOpenedAt ?? .distantPast) > ($1.lastOpenedAt ?? .distantPast) }
     }
 
     private var searchSection: some View {
         VStack(alignment: .leading, spacing: 14) {
             LibrarySearchBar(text: $model.query)
-            if model.selectedTab == .library && !model.collections.isEmpty {
-                Text("COLLECTIONS")
+            if !wide && model.selectedTab == .library && !model.collections.isEmpty {
+                Text("SHELVES")
                     .font(ShelfTheme.eyebrow())
                     .tracking(1.8)
                     .foregroundStyle(ShelfTheme.secondary)
@@ -142,25 +164,38 @@ struct LibraryScreen: View {
 
     @ViewBuilder
     private var populatedLibrary: some View {
+        let books = model.filteredBooks
         if preferences.compactLibrary {
             LazyVStack(spacing: 0) {
-                ForEach(model.filteredBooks) { book in
+                ForEach(books) { book in
                     BookListRow(book: book, model: model, knowledge: knowledge)
                 }
             }
         } else {
-            LazyVGrid(columns: gridColumns, spacing: 18) {
-                ForEach(model.filteredBooks) { book in
-                    BookTile(
+            QuiltLayout(rowHeight: patchHeight, spacing: 12, idealUnitWidth: wide ? 210 : 160) {
+                ForEach(books.prefix(visibleCount)) { book in
+                    FeltBookPatch(
                         book: book,
                         model: model,
-                        preferences: preferences,
-                        thumbnails: thumbnails,
                         knowledge: knowledge,
+                        cover: preferences.usePDFCovers ? (model.originalURL(book), thumbnails) : nil,
                         relationshipLift: relationshipLift(for: book),
                         onRelationshipProbe: { activateRelationships(from: book) }
                     )
+                    .quiltWeight(Self.weight(for: book))
                 }
+            }
+            if books.count > visibleCount {
+                Button {
+                    visibleCount += 24
+                    ShelfHaptics.shared.play(.selectionChanged)
+                } label: {
+                    Text("Unfold \(min(24, books.count - visibleCount)) more")
+                }
+                .buttonStyle(LeuPrimaryButtonStyle(filled: true, pill: true))
+                .frame(maxWidth: .infinity)
+                .padding(.top, 6)
+                .accessibilityIdentifier("library-unfold-more")
             }
         }
 
@@ -168,8 +203,8 @@ struct LibraryScreen: View {
             PassageResultsView(model: model)
         }
 
-        if model.query.isEmpty && !model.filteredBooks.isEmpty {
-            Text("\(model.filteredBooks.count) PDFs · stored on this iPhone")
+        if model.query.isEmpty && !books.isEmpty {
+            Text("\(books.count) PDFs · stored on this device")
                 .font(.leu(.footnote))
                 .foregroundStyle(ShelfTheme.secondary)
                 .frame(maxWidth: .infinity)
@@ -177,11 +212,10 @@ struct LibraryScreen: View {
         }
     }
 
-    private var gridColumns: [GridItem] {
-        Array(
-            repeating: GridItem(.flexible(), spacing: 14),
-            count: columnCount
-        )
+    /// Longer books are wider patches, gently: 1.0 for a short paper, up to 1.7 for a tome.
+    static func weight(for book: Book) -> CGFloat {
+        let pages = Double(max(book.pageCount, 1))
+        return CGFloat(min(1.7, max(1.0, 0.75 + log10(pages) * 0.42)))
     }
 
     @ViewBuilder
@@ -190,8 +224,8 @@ struct LibraryScreen: View {
             EmptyLibraryState(
                 symbol: model.selectedTab.symbol,
                 title: emptyTitle,
-                message: "Import a PDF. Give it a place. Pick up where you left off.",
-                actionTitle: "Import PDFs",
+                message: "Sew in a PDF. Give it a shelf. Pick up where you left off.",
+                actionTitle: "Sew in a PDF",
                 action: { presentPDFPicker() }
             )
         } else if model.selectedTab == .favorites {
@@ -240,12 +274,6 @@ struct LibraryScreen: View {
             guard !Task.isCancelled, activeRelationshipBookID == book.id else { return }
             activeRelationshipBookID = nil
         }
-    }
-
-    private var recentBook: Book? {
-        model.snapshot.activeBooks
-            .filter { $0.lastOpenedAt != nil }
-            .max { ($0.lastOpenedAt ?? .distantPast) < ($1.lastOpenedAt ?? .distantPast) }
     }
 
     private func presentPDFPicker() {

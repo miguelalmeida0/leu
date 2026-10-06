@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4100B4B7C0140381EA60163F /* ShelfIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FEC60096C322468E95BC6 /* ShelfIndex.swift */; };
+		389D68BF10C502D435CC5C8F /* FeltBookPatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC774B02009B926777863D9 /* FeltBookPatch.swift */; };
+		A53CC4CFC789CE8768E4565D /* QuiltLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE6F6CF81EA002F260DE19 /* QuiltLayout.swift */; };
 		C3AF11A837A1E88634D7DEC2 /* FeltDesignTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC3B4E03AD013C6BF2E5B6C /* FeltDesignTests.swift */; };
 		CA4A174098168F485BCFCD1C /* RainSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2AE4D91C4DCACD65D90DF1 /* RainSound.swift */; };
 		65265A933D7D214E1B01E7EE /* TeaSteam.swift in Sources */ = {isa = PBXBuildFile; fileRef = B553351B7A935BE09434924D /* TeaSteam.swift */; };
@@ -261,6 +264,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		230FEC60096C322468E95BC6 /* ShelfIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfIndex.swift; sourceTree = "<group>"; };
+		FEC774B02009B926777863D9 /* FeltBookPatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeltBookPatch.swift; sourceTree = "<group>"; };
+		9ADE6F6CF81EA002F260DE19 /* QuiltLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiltLayout.swift; sourceTree = "<group>"; };
 		CAC3B4E03AD013C6BF2E5B6C /* FeltDesignTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeltDesignTests.swift; sourceTree = "<group>"; };
 		FC2AE4D91C4DCACD65D90DF1 /* RainSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainSound.swift; sourceTree = "<group>"; };
 		B553351B7A935BE09434924D /* TeaSteam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaSteam.swift; sourceTree = "<group>"; };
@@ -685,6 +691,9 @@
 		36A0789AAFFCF46361BEBAFA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				230FEC60096C322468E95BC6 /* ShelfIndex.swift */,
+				FEC774B02009B926777863D9 /* FeltBookPatch.swift */,
+				9ADE6F6CF81EA002F260DE19 /* QuiltLayout.swift */,
 				52859C3BDE3FCCF440258876 /* BookActionsMenu.swift */,
 				6E9D5D5EF4ED2C77DDE68E0E /* BookTile.swift */,
 				A4E3B44F3A20A258B82A0E3C /* CollectionFilterBar.swift */,
@@ -1345,6 +1354,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4100B4B7C0140381EA60163F /* ShelfIndex.swift in Sources */,
+				389D68BF10C502D435CC5C8F /* FeltBookPatch.swift in Sources */,
+				A53CC4CFC789CE8768E4565D /* QuiltLayout.swift in Sources */,
 				CA4A174098168F485BCFCD1C /* RainSound.swift in Sources */,
 				65265A933D7D214E1B01E7EE /* TeaSteam.swift in Sources */,
 				275E91715F3352832E6475F2 /* FoggedWindow.swift in Sources */,
