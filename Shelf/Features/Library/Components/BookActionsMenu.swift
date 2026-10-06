@@ -10,6 +10,7 @@ struct BookActionsMenu: View {
     var body: some View {
         LeuMenu {
             Button("Open", systemImage: "book") { model.open(book) }
+            Button("The whole book", systemImage: "book.pages") { model.overviewBook = book }
             Button(book.isFavorite ? "Remove favorite" : "Add to favorites", systemImage: book.isFavorite ? "heart.slash" : "heart") {
                 Task { await model.favorite(book) }
             }

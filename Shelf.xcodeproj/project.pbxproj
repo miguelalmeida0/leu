@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14163E4D9F8BD393EB827CDA /* BookOverview/ChapterStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EB8D161368C293DCCAC325 /* BookOverview/ChapterStrip.swift */; };
+		56ADBA3F765DEAF1228DCDE2 /* BookOverview/BookOverviewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4A093A66D22656DD8F96E8 /* BookOverview/BookOverviewScreen.swift */; };
+		A7F662DE0DEFCDD6E6BDFFFA /* BookOverview/BookOverviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12260C2410C41DA867ED17 /* BookOverview/BookOverviewModel.swift */; };
+		0548043BF02274CCC7E7BA36 /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1302B8E758C8418B377C52 /* WelcomeScreen.swift */; };
 		1C29D7EE948121407D305661 /* FeltScreensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC427FA6F0814BE86EDBDBC /* FeltScreensTests.swift */; };
 		6960EB101314C1A59E9FAF49 /* Trails/TrailWalkMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059FDFE569546B5BB1DB297D /* Trails/TrailWalkMap.swift */; };
 		1C827CA7995360EAF361E7E6 /* Explore/ExploreScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462B28B848EA4B8AB4994AEC /* Explore/ExploreScreen.swift */; };
@@ -281,6 +285,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F5EB8D161368C293DCCAC325 /* BookOverview/ChapterStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookOverview/ChapterStrip.swift; sourceTree = "<group>"; };
+		7B4A093A66D22656DD8F96E8 /* BookOverview/BookOverviewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookOverview/BookOverviewScreen.swift; sourceTree = "<group>"; };
+		EC12260C2410C41DA867ED17 /* BookOverview/BookOverviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookOverview/BookOverviewModel.swift; sourceTree = "<group>"; };
+		3C1302B8E758C8418B377C52 /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
 		9CC427FA6F0814BE86EDBDBC /* FeltScreensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeltScreensTests.swift; sourceTree = "<group>"; };
 		059FDFE569546B5BB1DB297D /* Trails/TrailWalkMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trails/TrailWalkMap.swift; sourceTree = "<group>"; };
 		462B28B848EA4B8AB4994AEC /* Explore/ExploreScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore/ExploreScreen.swift; sourceTree = "<group>"; };
@@ -616,6 +624,7 @@
 		C4CB93F4B24E182DC8F7E024 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				3C1302B8E758C8418B377C52 /* WelcomeScreen.swift */,
 				FC2AE4D91C4DCACD65D90DF1 /* RainSound.swift */,
 				B553351B7A935BE09434924D /* TeaSteam.swift */,
 				9D8D0A5CF9B2F873E4BBBBF1 /* FoggedWindow.swift */,
@@ -714,6 +723,9 @@
 		2E08661D98E9E3D52566CCF3 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				F5EB8D161368C293DCCAC325 /* BookOverview/ChapterStrip.swift */,
+				7B4A093A66D22656DD8F96E8 /* BookOverview/BookOverviewScreen.swift */,
+				EC12260C2410C41DA867ED17 /* BookOverview/BookOverviewModel.swift */,
 				F803F6E326C97C072B3B9DBF /* Notes/NotesScreen.swift */,
 				7FAF29AB8064D245D6D6706C /* Notes/NotebookModel.swift */,
 				C4CB93F4B24E182DC8F7E024 /* Home */,
@@ -1405,6 +1417,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14163E4D9F8BD393EB827CDA /* BookOverview/ChapterStrip.swift in Sources */,
+				56ADBA3F765DEAF1228DCDE2 /* BookOverview/BookOverviewScreen.swift in Sources */,
+				A7F662DE0DEFCDD6E6BDFFFA /* BookOverview/BookOverviewModel.swift in Sources */,
+				0548043BF02274CCC7E7BA36 /* WelcomeScreen.swift in Sources */,
 				6960EB101314C1A59E9FAF49 /* Trails/TrailWalkMap.swift in Sources */,
 				1C827CA7995360EAF361E7E6 /* Explore/ExploreScreen.swift in Sources */,
 				302FA70DD548BB55C83B488A /* Explore/ExploreMap.swift in Sources */,

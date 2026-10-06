@@ -94,6 +94,7 @@ struct RootView: View {
                 ReaderScreen(model: container.reader(for: route), thumbnails: container.thumbnails)
             }
             .sheet(item: $model.editingBook) { book in BookDetailsSheet(book: book, model: model) }
+            .sheet(item: $model.overviewBook) { BookOverviewScreen(book: $0, library: model, learning: container.learning) { primaryArea = .learn } }
             .sheet(isPresented: $model.showCollections) { CollectionsSheet(model: model) }
             .sheet(item: $model.shareFile) { file in ShareSheet(file: file) }
             .sheet(isPresented: $showSearch) { KnowledgeSearchSheet(knowledge: container.knowledge) }
