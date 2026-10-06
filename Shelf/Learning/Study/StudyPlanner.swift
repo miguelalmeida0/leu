@@ -108,5 +108,5 @@ struct StudyPlanner: View {
 }
 
 extension ReaderIntelligenceModel: Identifiable {
-    var id: ObjectIdentifier { ObjectIdentifier(self) }
+    nonisolated var id: ObjectIdentifier { ObjectIdentifier(self) }
 }

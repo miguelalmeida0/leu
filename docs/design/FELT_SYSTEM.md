@@ -53,8 +53,26 @@ iPad portrait and accessibility text sizes reflow into one scrolling column.
 
 UI suites launched with `--uitesting` still start in Library; pass `--start-home` to test Home.
 
-## Next slices (in overview order)
+## Slices 2–7: every screen in the overview
 
-2. Library, Bring a PDF, A book. 3. Reading, Explain, Teach. 4. Study and Ask me (snow globe on
-09b/10b). 5. Notes, Explore, Trails, Search. 6. Welcome (knitting basket). Notes and Explore join
-the top bar when their screens land, so the navigation never points at an empty place.
+| Screen | Where | Notes |
+|---|---|---|
+| 01 Welcome | `Features/Home/WelcomeScreen.swift` | Empty library. Knitting basket render + live yarn (still under Reduce Motion). Optional intention kept on device, shown on Home until dismissed. Sample book via the normal import path. |
+| 02b Bring a PDF | `Features/Library/SewnScreen.swift` | After one new PDF. Red running stitch while indexing; neighbours from `documentRelationshipStrengths`, joins named by a shared concept. Not shown under `--uitesting`. |
+| 03 Home | slice 1 | |
+| 04 Library | `Features/Library` | Felt quilt (`QuiltLayout`), shelf index on iPad, "On the needle". |
+| 05 A book | `Features/BookOverview` | From a book's actions ("The whole book"). Chapter strip from the PDF outline (even parts without one), filled by understanding or reading, always said in words. |
+| 06 Reading | `Reader/Components/ReaderChapterRail`, `ReaderMarginPanel` | Wide iPad (≥ 1100 pt): rail, page as paper, margin. Narrower widths unchanged. |
+| 07 Explain | `ExplainLikeTen/ExplainLikeTenSheet.swift` | Butter felt card; provenance copy unchanged. |
+| 08 / 10b Teach, In your own words | `Learning/Intelligence/TeachLeuSheet.swift`, `Globe/` | Snow globe: each idea got across lights a window; only every idea lights the third. Verified comparison unchanged. |
+| 09b Study | `Learning/Study` | The session as one sentence of felt patches (`SentenceFlow`, `LeuMenu`); every way maps to an existing session. |
+| 11b Notes | `Features/Notes` | Notebook spread from annotations; each note opens its page. |
+| 12 Explore | `Knowledge/Explore` | Concepts and their bound passages only; "Make it a trail" writes page-range stops. |
+| 13 Trails | `Learning/Trails/TrailWalkMap.swift` | Walk of felt patches joined by thread; wide iPad shows list + walk. |
+| 14 Search | `Knowledge/Components/KnowledgeSearchSheet.swift` | Best answer first, searched words marked, Return opens it. |
+
+09a, 10a and 11a were alternatives to 09b, 10b and 11b in the reference and are not built. The
+bookshelf animation from the exploration is intentionally excluded.
+
+Navigation is now Home, Library, Reading (opens the last book), Study, Notes, Explore, Trails.
+iPhone keeps one floating pill with all six places, icon above word.
