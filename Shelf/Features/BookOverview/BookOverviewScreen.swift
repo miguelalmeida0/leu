@@ -80,7 +80,8 @@ struct BookOverviewScreen: View {
         let url = library.vault.originalURL(for: book.id)
         guard let loaded = try? await PDFDocumentLoader().load(url: url) else { return }
         outline = loaded.outline
-        let text = loaded.document.page(at: currentPage)?.string?
+        let page = currentPage < loaded.document.pageCount ? loaded.document.page(at: currentPage) : nil
+        let text = page?.string?
             .split(whereSeparator: \.isNewline).joined(separator: " ")
             .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         leftOff = text.isEmpty ? nil : String(text.prefix(220))

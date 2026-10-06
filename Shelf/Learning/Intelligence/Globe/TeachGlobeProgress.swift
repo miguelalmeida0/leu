@@ -54,7 +54,7 @@ enum TeachGlobeProgress {
     /// What Leu is listening for, in one plain sentence.
     static func listening(ideaCount: Int, page: Int) -> String {
         let ideas = ideaWord(ideaCount).capitalizedFirst
-        switch ideaCount {
+        return switch ideaCount {
         case 0: "Page \(page) has no idea Leu can check yet. Your words are still kept."
         case 1: "One idea from page \(page). Get it across and the whole cottage lights up."
         case 3: "Three ideas from page \(page). Each one you get across lights a window."
