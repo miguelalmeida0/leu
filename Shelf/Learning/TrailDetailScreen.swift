@@ -30,25 +30,39 @@ struct TrailDetailScreen: View {
     private func content(_ trail: LearningTrail) -> some View {
         ScrollViewReader { proxy in
             List {
-                Text("An ordered path through material you want to understand.")
-                    .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary).listRowBackground(Color.clear)
+                walk(trail)
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20))
                 if let confirmation { Text(confirmation).accessibilityIdentifier("trail-add-confirmation") }
                 if trail.nodes.isEmpty {
-                    Text("Add a passage, a page range, or a practice lab to begin your path.")
+                    Text("Add a passage, a page range, or a practice lab to begin your walk.")
                         .foregroundStyle(ShelfTheme.secondary).listRowBackground(Color.clear)
                 }
                 if let current = TrailNavigation.resumeNode(in: trail, availableIDs: availableIDs(trail)) {
-                    Button("Continue · \(current.title)") { open(current) }
-                        .frame(minHeight: 44).accessibilityIdentifier("trail-continue")
+                    let stop = (trail.nodes.firstIndex { $0.id == current.id } ?? 0) + 1
+                    Button("Continue at stop \(stop) · \(current.title)") { open(current) }
+                        .buttonStyle(LeuPrimaryButtonStyle(filled: true, pill: true))
+                        .listRowBackground(Color.clear).listRowSeparator(.hidden)
+                        .accessibilityIdentifier("trail-continue")
                     if let index = trail.nodes.firstIndex(where: { $0.id == current.id }),
                        let next = trail.nodes.dropFirst(index + 1).first(where: { availableIDs(trail).contains($0.id) }) {
-                        Button("Next stop · \(next.title)") { open(next) }.frame(minHeight: 44)
+                        Button("Next stop · \(next.title)") { open(next) }
+                            .buttonStyle(LeuPrimaryButtonStyle(filled: false, pill: true))
+                            .listRowBackground(Color.clear).listRowSeparator(.hidden)
                     }
+                }
+                if !trail.nodes.isEmpty {
+                    Text("STOPS · HOLD ONE TO MOVE OR REMOVE IT")
+                        .font(LeuDesign.eyebrow(10)).tracking(LeuDesign.eyebrowTracking)
+                        .foregroundStyle(LeuDesign.eyebrowOnFelt)
+                        .listRowBackground(Color.clear).listRowSeparator(.hidden)
+                        .padding(.top, 14)
                 }
                 ForEach(Array(trail.nodes.enumerated()), id: \.element.id) { index, node in
                     Button { open(node) } label: {
                         HStack(alignment: .top, spacing: 12) {
-                            Text("\(index + 1)").monospacedDigit().foregroundStyle(ShelfTheme.accent).frame(width: 24)
+                            Text("\(index + 1)").font(.leu(.subheadline, weight: .bold).monospacedDigit()).foregroundStyle(LeuDesign.ink).frame(width: 24)
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(node.title).foregroundStyle(ShelfTheme.text)
                                 Text(kindTitle(node.kind)).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
@@ -69,6 +83,37 @@ struct TrailDetailScreen: View {
             .scrollContentBackground(.hidden).background(ShelfTheme.background)
             .onAppear { if let id = trail.currentNodeID { proxy.scrollTo(id, anchor: .center) } }
         }
+    }
+
+    /// The trail as a walk: its name, where you are, and every stop on the felt.
+    private func walk(_ trail: LearningTrail) -> some View {
+        let available = availableIDs(trail)
+        let current = trail.nodes.firstIndex { $0.id == trail.currentNodeID }
+        return VStack(alignment: .leading, spacing: 18) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(trail.title)
+                    .font(LeuDesign.display(34)).tracking(-0.9)
+                    .foregroundStyle(LeuDesign.ink)
+                    .accessibilityAddTraits(.isHeader)
+                Text(summary(trail, current: current))
+                    .font(.leu(.subheadline))
+                    .foregroundStyle(LeuDesign.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            if !trail.nodes.isEmpty {
+                TrailWalkMap(stops: trail.nodes.map { node in
+                    TrailWalkMap.Stop(id: node.id, title: node.title, caption: sourceCaption(node), available: available.contains(node.id))
+                }, currentIndex: current) { index in open(trail.nodes[index]) }
+            }
+        }
+    }
+
+    private func summary(_ trail: LearningTrail, current: Int?) -> String {
+        let made = trail.createdAt.formatted(.dateTime.day().month(.wide))
+        guard !trail.nodes.isEmpty else { return "Made on \(made). A walk through pages you choose, in an order that makes sense to you." }
+        let stops = trail.nodes.count == 1 ? "1 stop" : "\(trail.nodes.count) stops"
+        let place = current.map { "You're at stop \($0 + 1)." } ?? "Not started yet."
+        return "\(stops), made on \(made). \(place) Each stop opens at its exact page."
     }
 
     private func availableIDs(_ trail: LearningTrail) -> Set<UUID> {

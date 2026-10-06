@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C29D7EE948121407D305661 /* FeltScreensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC427FA6F0814BE86EDBDBC /* FeltScreensTests.swift */; };
+		6960EB101314C1A59E9FAF49 /* Trails/TrailWalkMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059FDFE569546B5BB1DB297D /* Trails/TrailWalkMap.swift */; };
+		1C827CA7995360EAF361E7E6 /* Explore/ExploreScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462B28B848EA4B8AB4994AEC /* Explore/ExploreScreen.swift */; };
+		302FA70DD548BB55C83B488A /* Explore/ExploreMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D1546FDDDFD0B249A6ADD /* Explore/ExploreMap.swift */; };
+		2642420417E8BDE663C94D3D /* Notes/NotesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F803F6E326C97C072B3B9DBF /* Notes/NotesScreen.swift */; };
+		2C412548DE5D7A602A8AB09B /* Notes/NotebookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAF29AB8064D245D6D6706C /* Notes/NotebookModel.swift */; };
 		05286898F5E97B6E89F59CA5 /* ReaderMarginPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BF8BBE6B7B1FC804427665 /* ReaderMarginPanel.swift */; };
 		7D1E8FFF950E6E47E83ED83A /* ReaderChapterRail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFFED1B5F34099DEC60B17A /* ReaderChapterRail.swift */; };
 		361F2926BFEFCDA4B31DF32E /* Study/StudyNextPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8ECE413820E520BD0DCDB1 /* Study/StudyNextPanel.swift */; };
@@ -275,6 +281,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9CC427FA6F0814BE86EDBDBC /* FeltScreensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeltScreensTests.swift; sourceTree = "<group>"; };
+		059FDFE569546B5BB1DB297D /* Trails/TrailWalkMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trails/TrailWalkMap.swift; sourceTree = "<group>"; };
+		462B28B848EA4B8AB4994AEC /* Explore/ExploreScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore/ExploreScreen.swift; sourceTree = "<group>"; };
+		6B5D1546FDDDFD0B249A6ADD /* Explore/ExploreMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore/ExploreMap.swift; sourceTree = "<group>"; };
+		F803F6E326C97C072B3B9DBF /* Notes/NotesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes/NotesScreen.swift; sourceTree = "<group>"; };
+		7FAF29AB8064D245D6D6706C /* Notes/NotebookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes/NotebookModel.swift; sourceTree = "<group>"; };
 		E8BF8BBE6B7B1FC804427665 /* ReaderMarginPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderMarginPanel.swift; sourceTree = "<group>"; };
 		6CFFED1B5F34099DEC60B17A /* ReaderChapterRail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderChapterRail.swift; sourceTree = "<group>"; };
 		FD8ECE413820E520BD0DCDB1 /* Study/StudyNextPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Study/StudyNextPanel.swift; sourceTree = "<group>"; };
@@ -702,6 +714,8 @@
 		2E08661D98E9E3D52566CCF3 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				F803F6E326C97C072B3B9DBF /* Notes/NotesScreen.swift */,
+				7FAF29AB8064D245D6D6706C /* Notes/NotebookModel.swift */,
 				C4CB93F4B24E182DC8F7E024 /* Home */,
 				AEA13A10CCD7CA6ADFD4E62E /* Opening */,
 				9E1B091A27CCB59B8102D332 /* Collections */,
@@ -879,6 +893,7 @@
 		A20A1E4F9C7731B2D7F0C001 /* Learning */ = {
 			isa = PBXGroup;
 			children = (
+				059FDFE569546B5BB1DB297D /* Trails/TrailWalkMap.swift */,
 				FD8ECE413820E520BD0DCDB1 /* Study/StudyNextPanel.swift */,
 				E94348F6EB437748C2255320 /* Study/StudyPlanner.swift */,
 				5552AB9FFF246E25CEA26C12 /* Study/StudySentence.swift */,
@@ -956,6 +971,8 @@
 		A21A1E4F9C7731B2D7F0C002 /* Knowledge */ = {
 			isa = PBXGroup;
 			children = (
+				462B28B848EA4B8AB4994AEC /* Explore/ExploreScreen.swift */,
+				6B5D1546FDDDFD0B249A6ADD /* Explore/ExploreMap.swift */,
 				25581E2EFA7A144C0EBBA541 /* Components/BookConnectionsSheet.swift */,
 				E4D440516BED68437E16559B /* Components/ConceptDetailSheet.swift */,
 				E2FD5A8E515DA31B823FC337 /* Components/ConnectedPassageSheet.swift */,
@@ -1080,6 +1097,7 @@
 		B6982961E289F33EEC3B17F4 /* ShelfTests */ = {
 			isa = PBXGroup;
 			children = (
+				9CC427FA6F0814BE86EDBDBC /* FeltScreensTests.swift */,
 				CAC3B4E03AD013C6BF2E5B6C /* FeltDesignTests.swift */,
 				2B86B1A097E5C5E245637412 /* PDFIntegrationTests.swift */,
 				99A20CDA229C4B86F740F556 /* PDFViewportGeometryTests.swift */,
@@ -1387,6 +1405,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6960EB101314C1A59E9FAF49 /* Trails/TrailWalkMap.swift in Sources */,
+				1C827CA7995360EAF361E7E6 /* Explore/ExploreScreen.swift in Sources */,
+				302FA70DD548BB55C83B488A /* Explore/ExploreMap.swift in Sources */,
+				2642420417E8BDE663C94D3D /* Notes/NotesScreen.swift in Sources */,
+				2C412548DE5D7A602A8AB09B /* Notes/NotebookModel.swift in Sources */,
 				05286898F5E97B6E89F59CA5 /* ReaderMarginPanel.swift in Sources */,
 				7D1E8FFF950E6E47E83ED83A /* ReaderChapterRail.swift in Sources */,
 				361F2926BFEFCDA4B31DF32E /* Study/StudyNextPanel.swift in Sources */,
@@ -1627,6 +1650,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C29D7EE948121407D305661 /* FeltScreensTests.swift in Sources */,
 				C3AF11A837A1E88634D7DEC2 /* FeltDesignTests.swift in Sources */,
 				F1F5E4F783B57AA6E083FEAE /* PDFIntegrationTests.swift in Sources */,
 				69325DBD5CBE58A40CD4AE74 /* PDFViewportGeometryTests.swift in Sources */,

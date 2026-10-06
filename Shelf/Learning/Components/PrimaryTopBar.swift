@@ -22,10 +22,12 @@ struct PrimaryTopBar: View {
                 Spacer(minLength: 24)
                 searchPill
             }
-            HStack(spacing: 30) {
+            HStack(spacing: 26) {
                 item(.shelf)
                 readingItem
                 item(.learn)
+                item(.notes)
+                item(.explore)
                 item(.trails)
             }
         }
