@@ -180,10 +180,17 @@
     "Shelf/Voice/Voices/VoiceCatalog.swift",
     "Shelf/Voice/Voices/VoiceDescriptor.swift",
     "Shelf/Voice/Voices/VoicePreferenceStore.swift",
-    "Shelf/Voice/Voices/VoiceQualityRanker.swift"
+    "Shelf/Voice/Voices/VoiceQualityRanker.swift",
+    "Shelf/Learning/Intelligence/AppleLearningIntelligenceProvider+TeachLeu.swift",
+    "Shelf/Learning/Intelligence/PassageQuestionSheet.swift",
+    "Shelf/Learning/Intelligence/RabbitHoleSheet.swift",
+    "Shelf/Learning/Intelligence/ReaderIntelligenceModel.swift",
+    "Shelf/Learning/Intelligence/TeachLeuSheet.swift",
+    "Shelf/Learning/Intelligence/ThoughtContinuationView.swift",
+    "Shelf/Learning/Intelligence/TryItSheet.swift"
   ],
   "externalPackages": [],
-  "generatedWith": "scripts/sync-xcode-sources.py \u00b7 Shelf Connected Learning + Voice V21",
+  "generatedWith": "scripts/sync-xcode-sources.py · Shelf Connected Learning + Voice V21",
   "localPackage": "Packages/ShelfCore",
   "resources": [
     "Shelf/Resources/Assets.xcassets",
@@ -217,7 +224,8 @@
     "ShelfUITests/ShelfUITests.swift",
     "ShelfUITests/ShelfWorldClassUITests.swift",
     "ShelfUITests/StudyInteractionSupport.swift",
-    "ShelfUITests/V24InteractionSupport.swift"
+    "ShelfUITests/V24InteractionSupport.swift",
+    "ShelfUITests/ShelfV27IntelligenceUITests.swift"
   ],
   "unitTestSources": [
     "ShelfTests/BugfixIntegrationTests.swift",
