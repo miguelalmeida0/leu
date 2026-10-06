@@ -53,4 +53,35 @@ final class FeltScreensTests: XCTestCase {
             }
         }
     }
+
+    func testBookOverviewChaptersFollowTheOutlineAndTellTheTruth() {
+        let outline = [
+            OutlineEntry(id: "a", title: "White light", pageIndex: 2, depth: 0, source: .embedded),
+            OutlineEntry(id: "a1", title: "Prisms", pageIndex: 4, depth: 1, source: .embedded),
+            OutlineEntry(id: "b", title: "Why the sky is blue", pageIndex: 20, depth: 0, source: .embedded),
+            OutlineEntry(id: "b1", title: "Tiny obstacles", pageIndex: 22, depth: 1, source: .embedded),
+            OutlineEntry(id: "b2", title: "Why not violet?", pageIndex: 26, depth: 1, source: .embedded),
+            OutlineEntry(id: "x", title: "Figure 3", pageIndex: 23, depth: 0, source: .landmark)
+        ]
+        let chapters = BookOverviewModel.chapters(outline: outline, pageCount: 40, currentPage: 24) { pages in
+            pages.lowerBound == 0 ? 1 : nil
+        }
+        XCTAssertEqual(chapters.map(\.title), ["White light", "Why the sky is blue"])
+        XCTAssertEqual(chapters[0].pages, 0..<20, "the first chapter starts at the first page")
+        XCTAssertEqual(chapters[0].caption, "understood")
+        XCTAssertTrue(chapters[1].isCurrent)
+        XCTAssertEqual(chapters[1].caption, "reading now · 25% read")
+        let sections = BookOverviewModel.sections(outline: outline, chapter: chapters[1], currentPage: 24, looseEndPages: [27])
+        XCTAssertEqual(sections.map(\.title), ["Tiny obstacles", "Why not violet?"])
+        XCTAssertEqual(sections.map(\.read), [true, false])
+        XCTAssertEqual(sections.map(\.looseEnd), [false, true])
+    }
+
+    func testBookWithoutOutlineIsCutIntoEvenParts() {
+        let chapters = BookOverviewModel.chapters(outline: [], pageCount: 96, currentPage: 0) { _ in nil }
+        XCTAssertEqual(chapters.count, 8)
+        XCTAssertEqual(chapters.first?.title, "pp. 1–12")
+        XCTAssertEqual(chapters.last?.pages.upperBound, 96)
+        XCTAssertEqual(BookOverviewModel.fractionWords(0.4), "about two fifths")
+    }
 }

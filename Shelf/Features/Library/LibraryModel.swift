@@ -32,6 +32,8 @@ final class LibraryModel {
     var notice: String?
     var readerRoute: ReaderRoute?
     var editingBook: Book?
+    /// The book whose overview (05) is open.
+    var overviewBook: Book?
     var shareFile: ShareFile?
     var pendingBackupURL: URL?
     var showCollections = false

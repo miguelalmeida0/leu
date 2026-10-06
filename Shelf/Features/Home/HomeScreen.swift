@@ -12,15 +12,22 @@ struct HomeScreen: View {
     let library: LibraryModel
     let openLibrary: () -> Void
     @State private var rain = RainSound()
+    @AppStorage(WelcomeScreen.intentionKey) private var intention = ""
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
-        GeometryReader { proxy in
-            let size = proxy.size
-            if size.width >= 820, size.width > size.height * 1.05, !dynamicTypeSize.isAccessibilitySize {
-                wide(size)
+        Group {
+            if library.snapshot.activeBooks.isEmpty && library.importLabel == nil {
+                WelcomeScreen(library: library)
             } else {
-                stacked(size)
+                GeometryReader { proxy in
+                    let size = proxy.size
+                    if size.width >= 820, size.width > size.height * 1.05, !dynamicTypeSize.isAccessibilitySize {
+                        wide(size)
+                    } else {
+                        stacked(size)
+                    }
+                }
             }
         }
         .background(LeuDesign.felt.ignoresSafeArea())
@@ -111,6 +118,9 @@ struct HomeScreen: View {
                 bookLine(book).padding(.top, 34)
             }
             actions.padding(.top, 30)
+            if !intention.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                intentionLine.padding(.top, 26)
+            }
         }
     }
 
@@ -164,6 +174,22 @@ struct HomeScreen: View {
                 Button("Bring a PDF", action: openLibrary)
                     .buttonStyle(LeuPrimaryButtonStyle(filled: true, pill: true))
             }
+        }
+    }
+
+    /// What you said on the welcome screen you came to understand, until you say you're done.
+    private var intentionLine: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Text("You came to understand \(Text(intention).font(.leu(.footnote, serif: true)).italic()).")
+                .font(.leu(.footnote, weight: .medium))
+                .foregroundStyle(LeuDesign.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            Button("Got it") { withAnimation(.easeInOut(duration: 0.6)) { intention = "" } }
+                .font(.leu(.footnote, weight: .bold))
+                .underline()
+                .foregroundStyle(LeuDesign.ink)
+                .frame(minHeight: LeuDesign.touchTarget)
+                .accessibilityHint("Stops showing this reminder")
         }
     }
 
