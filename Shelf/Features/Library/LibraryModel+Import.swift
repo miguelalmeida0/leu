@@ -17,6 +17,7 @@ extension LibraryModel {
         guard phase == .ready, importLabel == nil, operationLabel == nil else { return }
         var added = 0, matched = 0
         var failures: [String] = []
+        var arrived: Book?
         while !queuedURLs.isEmpty {
             let source = queuedURLs.removeFirst()
             importLabel = source.lastPathComponent
@@ -24,7 +25,7 @@ extension LibraryModel {
                 let staged = try await incoming.stage(source)
                 defer { staged.discard() }
                 let result = try await importer.importDocument(at: staged.url, originalFilename: staged.originalFilename)
-                if result.wasDuplicate { matched += 1 } else { added += 1 }
+                if result.wasDuplicate { matched += 1 } else { added += 1; arrived = result.book }
                 try await reload()
             } catch { failures.append("\(source.lastPathComponent): \(error.localizedDescription)") }
         }
@@ -33,6 +34,10 @@ extension LibraryModel {
             announce("\(added) saved on this iPhone" + (matched > 0 ? " · \(matched) already in your library" : ""))
         }
         if !failures.isEmpty { errorMessage = failures.joined(separator: "\n\n") }
+        // One new book gets its moment; UI suites keep their existing import flow.
+        if added == 1, failures.isEmpty, let arrived, !ProcessInfo.processInfo.arguments.contains("--uitesting") {
+            justSewn = snapshot.books.first { $0.id == arrived.id } ?? arrived
+        }
         updateSearch()
     }
 

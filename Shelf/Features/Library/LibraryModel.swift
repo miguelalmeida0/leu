@@ -34,6 +34,8 @@ final class LibraryModel {
     var editingBook: Book?
     /// The book whose overview (05) is open.
     var overviewBook: Book?
+    /// A single book that just arrived, shown being sewn onto its shelf (02b).
+    var justSewn: Book?
     var shareFile: ShareFile?
     var pendingBackupURL: URL?
     var showCollections = false
