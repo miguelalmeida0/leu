@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05286898F5E97B6E89F59CA5 /* ReaderMarginPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BF8BBE6B7B1FC804427665 /* ReaderMarginPanel.swift */; };
+		7D1E8FFF950E6E47E83ED83A /* ReaderChapterRail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFFED1B5F34099DEC60B17A /* ReaderChapterRail.swift */; };
 		361F2926BFEFCDA4B31DF32E /* Study/StudyNextPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8ECE413820E520BD0DCDB1 /* Study/StudyNextPanel.swift */; };
 		6BC19CF7450AC4CA06419077 /* Study/StudyPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94348F6EB437748C2255320 /* Study/StudyPlanner.swift */; };
 		5B45F15407ED1837100BF238 /* Study/StudySentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5552AB9FFF246E25CEA26C12 /* Study/StudySentence.swift */; };
@@ -273,6 +275,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E8BF8BBE6B7B1FC804427665 /* ReaderMarginPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderMarginPanel.swift; sourceTree = "<group>"; };
+		6CFFED1B5F34099DEC60B17A /* ReaderChapterRail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderChapterRail.swift; sourceTree = "<group>"; };
 		FD8ECE413820E520BD0DCDB1 /* Study/StudyNextPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Study/StudyNextPanel.swift; sourceTree = "<group>"; };
 		E94348F6EB437748C2255320 /* Study/StudyPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Study/StudyPlanner.swift; sourceTree = "<group>"; };
 		5552AB9FFF246E25CEA26C12 /* Study/StudySentence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Study/StudySentence.swift; sourceTree = "<group>"; };
@@ -645,6 +649,8 @@
 		238F67040B36075AA6524B7F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E8BF8BBE6B7B1FC804427665 /* ReaderMarginPanel.swift */,
+				6CFFED1B5F34099DEC60B17A /* ReaderChapterRail.swift */,
 				0683965D6C097984E04E5BF0 /* SemanticZoomSurface.swift */,
 				14A315214D0851BB16BA84C3 /* TimedReadingSheet.swift */,
 				7C35E960612C8DEB23153060 /* ReaderStateSheet.swift */,
@@ -1381,6 +1387,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05286898F5E97B6E89F59CA5 /* ReaderMarginPanel.swift in Sources */,
+				7D1E8FFF950E6E47E83ED83A /* ReaderChapterRail.swift in Sources */,
 				361F2926BFEFCDA4B31DF32E /* Study/StudyNextPanel.swift in Sources */,
 				6BC19CF7450AC4CA06419077 /* Study/StudyPlanner.swift in Sources */,
 				5B45F15407ED1837100BF238 /* Study/StudySentence.swift in Sources */,

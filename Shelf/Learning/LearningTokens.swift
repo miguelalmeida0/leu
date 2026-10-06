@@ -22,11 +22,11 @@ enum LearningTokens {
 
 
     enum Typography {
-        // Text-style based fonts scale with Dynamic Type while retaining Leu's serif voice.
-        static let hero = Font.system(.largeTitle, design: .serif, weight: .regular)
-        static let title = Font.system(.title, design: .serif, weight: .regular)
-        static let section = Font.system(.title2, design: .serif, weight: .medium)
-        static let compactTitle = Font.system(.title3, design: .serif, weight: .semibold)
+        // Felt: Gabarito for the headings people scan, scaled with Dynamic Type.
+        static let hero = Font.leu(.largeTitle, weight: .heavy)
+        static let title = Font.leu(.title, weight: .heavy)
+        static let section = Font.leu(.title2, weight: .bold)
+        static let compactTitle = Font.leu(.title3, weight: .bold)
     }
 
     enum Motion {

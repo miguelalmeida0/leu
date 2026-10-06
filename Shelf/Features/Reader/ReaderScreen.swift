@@ -16,7 +16,26 @@ struct ReaderScreen: View {
     var body: some View {
         ZStack {
             ShelfTheme.background.ignoresSafeArea()
-            content.clipped()
+            GeometryReader { proxy in
+                if showsMargins(in: proxy.size) {
+                    // Wide iPad: the chapter rail, the page as paper on the felt, the margin.
+                    HStack(spacing: 0) {
+                        ReaderChapterRail(model: model).frame(width: 250)
+                        content
+                            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                            .shadow(color: LeuDesign.ink.opacity(0.14), radius: 18, x: 0, y: 10)
+                            .padding(.vertical, 14)
+                            .frame(maxWidth: 700)
+                            .frame(maxWidth: .infinity)
+                        ReaderMarginPanel(model: model).frame(width: 320)
+                    }
+                } else {
+                    content.clipped()
+                        .overlay(alignment: .trailing) {
+                            if model.isLoaded { MemoryMarginMarkers(reader: model, learning: model.learning) }
+                        }
+                }
+            }
         }
         .safeAreaInset(edge: .top, spacing: 0) {
             Group {
@@ -34,9 +53,6 @@ struct ReaderScreen: View {
             }
         }
         .overlay(alignment: .trailing) { regularWidthStudyInspector }
-        .overlay(alignment: .trailing) {
-            if model.isLoaded { MemoryMarginMarkers(reader: model, learning: model.learning) }
-        }
         .animation(reduceMotion ? nil : ShelfMotion.gentle, value: model.showStudyDrawer)
         .task { await model.load(); model.restoreInitialLens(); explanation.runHarnessIfRequested() }
         .onAppear { StudyInteractionTrace.record("reader.appeared document=\(model.book.id)") }
@@ -158,6 +174,12 @@ struct ReaderScreen: View {
             }
         }
     }
+    /// Margins appear only when the page keeps a comfortable measure beside them.
+    private func showsMargins(in size: CGSize) -> Bool {
+        horizontalSizeClass == .regular && size.width >= 1_100 && model.isLoaded
+            && !model.focusMode && model.semanticLevel == .page
+    }
+
     private func close() {
         if model.initialKnowledgeTravel && model.knowledge.canNavigateBack && model.knowledge.pendingDestination == nil {
             model.knowledge.queueBackNavigation()
