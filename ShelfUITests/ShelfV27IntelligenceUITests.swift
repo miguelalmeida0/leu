@@ -29,7 +29,7 @@ final class ShelfV27IntelligenceUITests: ShelfUITestCase {
         capture("v27-teach-exact-source")
         tapReady("reader-context-return")
         XCTAssertTrue(element("teach-leu-screen").waitForExistence(timeout: 10))
-        app.navigationBars["Teach Leu"].buttons["Done"].tap()
+        app.navigationBars["In your own words"].buttons["Done"].tap()
         app.navigationBars["Learn from this"].buttons["Done"].tap()
         tapReady("resume-understanding-thought")
         XCTAssertEqual(app.textViews["teach-leu-explanation"].value as? String,
