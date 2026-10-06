@@ -172,8 +172,9 @@ struct RootView: View {
                     studySurface = .landing
                 }
             }
-        case .trails:
-            TrailsScreen(model: container.learning, knowledge: container.knowledge)
+        case .notes: NotesScreen(library: model, knowledge: container.knowledge)
+        case .explore: ExploreScreen(knowledge: container.knowledge, learning: container.learning) { primaryArea = .trails }
+        case .trails: TrailsScreen(model: container.learning, knowledge: container.knowledge)
         }
     }
 
@@ -227,14 +228,12 @@ struct RootView: View {
     }
 
     private func scenePhaseChanged(_ phase: ScenePhase) {
-        if phase != .active && container.learning.activeSession != nil {
-            container.learning.persistStudyState()
-        }
+        if phase != .active && container.learning.activeSession != nil { container.learning.persistStudyState() }
     }
 
     private func primaryAreaChanged(_ area: PrimaryArea) {
         if area != .learn { studySurface = .landing }
-        if area == .learn || area == .trails {
+        if [.learn, .explore, .trails].contains(area) {
             Task { await synchronizeLibraryIndexes() }
         }
     }

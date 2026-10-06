@@ -9,34 +9,45 @@ struct TrailsScreen: View {
     @State private var creating = false
     @State private var selectedTrail: LearningTrail?
 
+    @State private var wide = false
+    @State private var shownTrailID: UUID?
+
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 28) {
-                    header
-                    if model.snapshot.trails.isEmpty && knowledge.snapshot.topicChains.isEmpty {
-                        emptyState
-                    } else {
-                        if !model.snapshot.trails.isEmpty { trailList }
-                        TopicChainsSection(knowledge: knowledge)
+            Group {
+                if wide, let shown = shownTrail {
+                    HStack(alignment: .top, spacing: 0) {
+                        ScrollView { sidebar.padding(.horizontal, 20).padding(.vertical, 24) }
+                            .frame(width: 330)
+                        TrailDetailScreen(model: model, trailID: shown.id).id(shown.id)
                     }
-                    Button { creating = true } label: {
-                        HStack {
-                            Text("New trail")
-                            Spacer()
-                            Image(systemName: "plus")
+                } else {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 28) {
+                            header
+                            if model.snapshot.trails.isEmpty && knowledge.snapshot.topicChains.isEmpty {
+                                emptyState
+                            } else {
+                                if !model.snapshot.trails.isEmpty { trailList }
+                                TopicChainsSection(knowledge: knowledge)
+                            }
+                            newTrailButton
                         }
-                        .frame(maxWidth: .infinity)
+                        .padding(ShelfTheme.gutter)
+                        .padding(.top, 22)
+                        .padding(.bottom, 40)
+                        .frame(maxWidth: 760).frame(maxWidth: .infinity)
                     }
-                    .accessibilityIdentifier("new-learning-trail")
-                    .buttonStyle(ShelfButtonStyle(filled: true))
                 }
-                .padding(ShelfTheme.gutter)
-                .padding(.top, 22)
-                .padding(.bottom, 40)
-                .frame(maxWidth: 760).frame(maxWidth: .infinity)
             }
             .background(ShelfTheme.background)
+            .background {
+                GeometryReader { proxy in
+                    Color.clear
+                        .onAppear { wide = proxy.size.width >= 900 }
+                        .onChange(of: proxy.size.width) { _, width in wide = width >= 900 }
+                }
+            }
             .navigationDestination(item: $selectedTrail) { trail in TrailDetailScreen(model: model, trailID: trail.id) }
         }
         .task { await model.bootstrap() }
@@ -50,58 +61,99 @@ struct TrailsScreen: View {
         .accessibilityIdentifier("trails-screen")
     }
 
+    private var shownTrail: LearningTrail? {
+        model.snapshot.trails.first { $0.id == shownTrailID } ?? model.snapshot.trails.first
+    }
+
+    private var newTrailButton: some View {
+        Button { creating = true } label: { Label("Make a trail", systemImage: "plus") }
+            .buttonStyle(LeuPrimaryButtonStyle(filled: !wide, pill: true))
+            .accessibilityIdentifier("new-learning-trail")
+    }
+
+    /// Wide iPad: every trail down the left, the chosen one walked out on the right.
+    private var sidebar: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            trailList
+            newTrailButton
+            Text("Explore is wandering. A trail is a walk you chose, in an order that makes sense to you.")
+                .font(.leu(.footnote)).foregroundStyle(LeuDesign.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            TopicChainsSection(knowledge: knowledge)
+        }
+    }
+
     private var header: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("TRAILS")
-                .font(ShelfTheme.eyebrow()).tracking(2.8).foregroundStyle(ShelfTheme.olive)
-            Text("Ideas, across time.")
-                .leuScaledFont(36, weight: .regular, design: .serif)
-            Text("Keep related passages in an order that helps you think through them.")
-                .font(.leu(.callout, serif: true).italic())
-                .foregroundStyle(ShelfTheme.secondary)
-            Rectangle().fill(ShelfTheme.line).frame(height: 0.5).padding(.top, 6)
+                .font(LeuDesign.eyebrow(11)).tracking(LeuDesign.eyebrowTracking).foregroundStyle(LeuDesign.eyebrowOnFelt)
+            Text("Walks through your books.")
+                .font(LeuDesign.display(36)).tracking(-1)
+                .foregroundStyle(LeuDesign.ink)
+                .accessibilityAddTraits(.isHeader)
+            Text("A trail is a walk you chose, through exact pages, in an order that makes sense to you.")
+                .font(.leu(.callout))
+                .foregroundStyle(LeuDesign.secondary)
+            StitchDivider().padding(.top, 6)
         }
     }
 
     private var emptyState: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("No trails yet.").leuScaledFont(24, weight: .regular, design: .serif)
-            Text("Save a path when one idea leads naturally into another. The underlying PDFs stay untouched.")
-                .font(.leu(.body, serif: true)).foregroundStyle(ShelfTheme.secondary)
+            Text("No trails yet.").font(LeuDesign.display(24)).foregroundStyle(LeuDesign.ink)
+            Text("Make one when one idea leads naturally into another. Your PDFs stay untouched.")
+                .font(.leu(.body)).foregroundStyle(LeuDesign.secondary)
         }
         .padding(.vertical, 10)
     }
 
     private var trailList: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 4) {
             Text("YOUR TRAILS")
-                .font(ShelfTheme.eyebrow(10)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
+                .font(LeuDesign.eyebrow(10)).tracking(LeuDesign.eyebrowTracking).foregroundStyle(LeuDesign.eyebrowOnFelt)
                 .padding(.bottom, 8)
-            ForEach(model.snapshot.trails) { trail in
-                Button { selectedTrail = trail } label: {
-                    HStack(alignment: .top, spacing: 14) {
-                        Text(String(format: "%02d", max(1, trail.nodes.count)))
-                            .font(.leu(.caption).monospacedDigit())
-                            .foregroundStyle(ShelfTheme.accent)
-                            .frame(width: 28)
-                        VStack(alignment: .leading, spacing: 5) {
+                .accessibilityAddTraits(.isHeader)
+            ForEach(Array(model.snapshot.trails.enumerated()), id: \.element.id) { index, trail in
+                let chosen = wide && trail.id == shownTrail?.id
+                Button {
+                    if wide { shownTrailID = trail.id } else { selectedTrail = trail }
+                } label: {
+                    HStack(alignment: .top, spacing: 12) {
+                        Rectangle()
+                            .fill(.clear)
+                            .frame(width: 3)
+                            .overlay {
+                                GeometryReader { proxy in
+                                    Path { path in
+                                        path.move(to: CGPoint(x: 1.5, y: 0))
+                                        path.addLine(to: CGPoint(x: 1.5, y: proxy.size.height))
+                                    }
+                                    .stroke(Self.threads[index % Self.threads.count], style: StrokeStyle(lineWidth: 3, dash: [5, 3]))
+                                }
+                            }
+                            .accessibilityHidden(true)
+                        VStack(alignment: .leading, spacing: 4) {
                             Text(trail.title)
-                                .font(.leu(.body, serif: true, weight: .medium))
-                                .foregroundStyle(ShelfTheme.text)
+                                .font(.leu(.body, weight: .bold))
+                                .foregroundStyle(LeuDesign.ink)
                             Text("\(trail.nodes.count) stops · \(trailState(trail))")
-                                .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
+                                .font(.leu(.caption)).foregroundStyle(LeuDesign.secondary)
                         }
-                        Spacer()
-                        Image(systemName: "chevron.right").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
+                        Spacer(minLength: 8)
+                        if !wide { Image(systemName: "chevron.right").font(.leu(.caption)).foregroundStyle(LeuDesign.secondary) }
                     }
-                    .padding(.vertical, 14)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 12)
+                    .background(chosen ? LeuDesign.feltLight : .clear, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                Divider().overlay(ShelfTheme.line)
+                .accessibilityAddTraits(chosen ? .isSelected : [])
             }
         }
     }
+
+    private static let threads: [Color] = [LeuDesign.redThread, LeuDesign.denim, LeuDesign.held, LeuDesign.butter, LeuDesign.tomato]
 
     private func trailState(_ trail: LearningTrail) -> String {
         let objectIDs = trail.nodes.compactMap { $0.kind == .learningObject ? $0.referenceID : nil }
