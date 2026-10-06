@@ -41,7 +41,7 @@ struct BookDetailsSheet: View {
                     LabeledContent("Pages", value: String(book.pageCount))
                     LabeledContent("Size", value: ByteCountFormatter.string(fromByteCount: book.byteCount, countStyle: .file))
                     Text("The original PDF is never renamed or overwritten. Your title and cover live in Leu.")
-                        .font(.footnote).foregroundStyle(ShelfTheme.secondary)
+                        .font(.leu(.footnote)).foregroundStyle(ShelfTheme.secondary)
                 }
                 if let error = model.errorMessage { Text(error).foregroundStyle(ShelfTheme.danger) }
             }.scrollContentBackground(.hidden).background(ShelfTheme.background)
@@ -57,6 +57,6 @@ struct BookDetailsSheet: View {
                             .accessibilityIdentifier("save-book-details")
                     }
                 }
-        }.tint(ShelfTheme.accent).preferredColorScheme(.dark).onAppear { model.errorMessage = nil }
+        }.tint(ShelfTheme.accent).preferredColorScheme(.light).onAppear { model.errorMessage = nil }
     }
 }

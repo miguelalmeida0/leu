@@ -8,7 +8,7 @@ struct LeuPrimaryButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.body.weight(.semibold))
+            .font(.leu(.body, weight: .semibold))
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
             .foregroundStyle(enabled ? (filled ? LeuDesign.onSignal : LeuDesign.textPrimary) : LeuDesign.disabledForeground)
@@ -39,9 +39,9 @@ struct LeuStepIndicator: View {
             Circle().fill(LeuDesign.surfaceRaised)
             Circle().stroke(confirmed ? LeuDesign.success : LeuDesign.separator, lineWidth: 2)
             if confirmed {
-                Image(systemName: "checkmark").font(.body.bold()).foregroundStyle(LeuDesign.success)
+                Image(systemName: "checkmark").font(.leu(.body, weight: .bold)).foregroundStyle(LeuDesign.success)
             } else {
-                Text("\(number)").font(.body.monospacedDigit()).foregroundStyle(LeuDesign.textSecondary)
+                Text("\(number)").font(.leu(.body).monospacedDigit()).foregroundStyle(LeuDesign.textSecondary)
             }
         }
         .frame(width: diameter, height: diameter)
@@ -62,8 +62,15 @@ private struct LeuScaledFont: ViewModifier {
         self.design = design
     }
 
+    /// The size is already scaled by `@ScaledMetric`, so the face is applied at a fixed size.
+    /// Serif means Literata, monospaced stays the system mono (code and coordinates), and
+    /// everything else is Gabarito.
     func body(content: Content) -> some View {
-        content.font(.system(size: size, weight: weight, design: design))
+        switch design {
+        case .serif: content.font(LeuType.fixed(serif: true, size: size, weight: weight))
+        case .monospaced: content.font(.system(size: size, weight: weight, design: .monospaced))
+        default: content.font(LeuType.fixed(serif: false, size: size, weight: weight))
+        }
     }
 }
 

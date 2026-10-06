@@ -19,13 +19,13 @@ struct TopicChainsSection: View {
                                 Image(systemName: "link").foregroundStyle(ShelfTheme.accent).frame(width: 28)
                                 VStack(alignment: .leading, spacing: 3) {
                                     Text(chain.title)
-                                        .font(.system(.body, design: .serif).weight(.medium))
+                                        .font(.leu(.body, serif: true, weight: .medium))
                                         .foregroundStyle(ShelfTheme.text)
                                     Text("\(chain.items.count) stops")
-                                        .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                        .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                                 }
                                 Spacer()
-                                Image(systemName: "chevron.right").font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                Image(systemName: "chevron.right").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                             }
                             .padding(.vertical, 12).contentShape(Rectangle())
                         }
@@ -70,10 +70,10 @@ struct TopicChainDetailSheet: View {
         VStack(spacing: 0) {
             ForEach(chain.items.sorted { $0.position < $1.position }) { item in
                 HStack(alignment: .top, spacing: 12) {
-                    Text(String(format: "%02d", item.position + 1)).font(.caption.monospacedDigit()).foregroundStyle(ShelfTheme.accent).frame(width: 26)
+                    Text(String(format: "%02d", item.position + 1)).font(.leu(.caption).monospacedDigit()).foregroundStyle(ShelfTheme.accent).frame(width: 26)
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(itemTitle(item)).font(.system(.body, design: .serif)).lineLimit(3)
-                        Text(provenance(item)).font(.caption).foregroundStyle(ShelfTheme.secondary)
+                        Text(itemTitle(item)).font(.leu(.body, serif: true)).lineLimit(3)
+                        Text(provenance(item)).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                     }
                     Spacer()
                     LeuMenu {
@@ -142,7 +142,7 @@ struct ReadTopicChainScreen: View {
             .navigationTitle(chain.title).navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
         }
-        .preferredColorScheme(.dark)
+        .preferredColorScheme(.light)
     }
 
     private var readableItems: [TopicChainItem] { chain.items.sorted { $0.position < $1.position }.filter { knowledge.passage($0.passageID) != nil } }
@@ -152,14 +152,14 @@ struct ReadTopicChainScreen: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 if let passage = knowledge.passage(item.passageID) {
-                    Text(knowledge.title(for: passage.documentID).uppercased()).font(.caption.weight(.bold)).tracking(1.6).foregroundStyle(ShelfTheme.accent)
-                    Text(passage.sectionTitle ?? "Passage").font(.system(.title2, design: .serif))
-                    Text(passage.text).font(.system(size: 22, weight: .regular, design: .serif)).lineSpacing(7)
-                    Text("p. \(passage.pageIndex + 1)").font(.caption.monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
+                    Text(knowledge.title(for: passage.documentID).uppercased()).font(.leu(.caption, weight: .bold)).tracking(1.6).foregroundStyle(ShelfTheme.accent)
+                    Text(passage.sectionTitle ?? "Passage").font(.leu(.title2, serif: true))
+                    Text(passage.text).font(LeuDesign.editorial(22, weight: .regular)).lineSpacing(7)
+                    Text("p. \(passage.pageIndex + 1)").font(.leu(.caption).monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
                     Button("Open original page") { knowledge.queueNavigation(to: passage); dismiss() }
                         .buttonStyle(ShelfButtonStyle())
                 }
-                if let note = item.annotation { Text(note).font(.callout).foregroundStyle(ShelfTheme.secondary) }
+                if let note = item.annotation { Text(note).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary) }
             }.padding(28).frame(maxWidth: 700).frame(maxWidth: .infinity)
         }
     }
@@ -168,7 +168,7 @@ struct ReadTopicChainScreen: View {
         HStack {
             Button { index = max(0, index - 1); ShelfHaptics.shared.play(.selectionChanged) } label: { Image(systemName: "chevron.left").frame(width: 48, height: 48) }
                 .disabled(index == 0).accessibilityLabel("Previous chain item")
-            Spacer(); Text("\(min(index + 1, max(1, readableItems.count))) / \(readableItems.count)").font(.callout.monospacedDigit())
+            Spacer(); Text("\(min(index + 1, max(1, readableItems.count))) / \(readableItems.count)").font(.leu(.callout).monospacedDigit())
             Spacer()
             Button { index = min(max(0, readableItems.count - 1), index + 1); ShelfHaptics.shared.play(.selectionChanged) } label: { Image(systemName: "chevron.right").frame(width: 48, height: 48) }
                 .disabled(index + 1 >= readableItems.count).accessibilityLabel("Next chain item")

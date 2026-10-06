@@ -33,14 +33,14 @@ struct ReleaseSurface: View {
                 .accessibilityIdentifier("release-heading")
             if interaction.phase == .released {
                 Text("The surface is clear. Your study record is unchanged.")
-                    .font(.body).foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.body)).foregroundStyle(ShelfTheme.secondary)
                     .accessibilityIdentifier("release-completed-message")
             } else {
                 Text("Scribble here, or use Release without drawing. You can leave at any time.")
-                    .font(.body).foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.body)).foregroundStyle(ShelfTheme.secondary)
                 drawingArea
                 Text("Nothing you draw is saved.")
-                    .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
             }
         }
     }
@@ -82,7 +82,7 @@ struct ReleaseSurface: View {
             }
             secondaryActions
         }
-        .font(.body)
+        .font(.leu(.body))
         .foregroundStyle(ShelfTheme.text)
         .padding(.horizontal, ShelfTheme.gutter)
         .padding(.top, 12)

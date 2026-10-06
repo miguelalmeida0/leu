@@ -29,7 +29,7 @@ struct ReaderStudyDrawer: View {
                 Text("Your Marks")
                     .leuScaledFont(28, weight: .regular, design: .serif)
                 Text("Highlights, notes and passages worth returning to.")
-                    .font(.caption)
+                    .font(.leu(.caption))
                     .foregroundStyle(ShelfTheme.secondary)
             }
             Spacer()
@@ -82,30 +82,30 @@ struct ReaderStudyDrawer: View {
                 VStack(alignment: .leading, spacing: 9) {
                     HStack(alignment: .firstTextBaseline) {
                         Text(mark.kind.title)
-                            .font(.caption.weight(.semibold))
+                            .font(.leu(.caption, weight: .semibold))
                             .foregroundStyle(accent(for: mark.kind))
                         Spacer()
                         Text("p. \(mark.pageIndex + 1)")
-                            .font(.caption.monospacedDigit())
+                            .font(.leu(.caption).monospacedDigit())
                             .foregroundStyle(ShelfTheme.secondary)
                             .padding(.trailing, 34)
                     }
 
                     if let section = model.sectionTitle(for: mark.pageIndex) {
                         Text(section)
-                            .font(.caption.weight(.semibold))
+                            .font(.leu(.caption, weight: .semibold))
                             .foregroundStyle(ShelfTheme.secondary)
                             .lineLimit(2)
                     }
 
                     Text(mark.quote.isEmpty ? "Page \(mark.pageIndex + 1) saved" : mark.quote)
-                        .font(.system(.body, design: .serif))
+                        .font(.leu(.body, serif: true))
                         .foregroundStyle(mark.quote.isEmpty ? ShelfTheme.secondary : ShelfTheme.text)
                         .lineLimit(mark.quote.isEmpty ? 2 : 6)
 
                     if !mark.note.isEmpty {
                         Text(mark.note)
-                            .font(.callout)
+                            .font(.leu(.callout))
                             .foregroundStyle(ShelfTheme.secondary)
                             .lineLimit(4)
                     }
@@ -143,7 +143,7 @@ struct ReaderStudyDrawer: View {
     private func chip(_ title: String, _ kind: AnnotationKind?) -> some View {
         Button { filter = kind } label: {
             Text(title)
-                .font(.caption.weight(.semibold))
+                .font(.leu(.caption, weight: .semibold))
                 .lineLimit(1)
                 .minimumScaleFactor(0.82)
                 .frame(maxWidth: .infinity, minHeight: 44)

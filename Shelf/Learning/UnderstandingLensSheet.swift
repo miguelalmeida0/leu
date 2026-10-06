@@ -29,7 +29,7 @@ struct UnderstandingLensSheet: View {
             sourceContext
             originPassage
             if source.sourceText.count > 260 {
-                Button(sourceExpanded ? "Show excerpt" : "Read full passage") { sourceExpanded.toggle() }.font(.caption)
+                Button(sourceExpanded ? "Show excerpt" : "Read full passage") { sourceExpanded.toggle() }.font(.leu(.caption))
             }
             meaningContent
             factContent
@@ -41,7 +41,7 @@ struct UnderstandingLensSheet: View {
     private var sourceContext: some View {
         Button { showSource(source) } label: {
             Label("\(model.library.snapshot.activeBooks.first(where: { $0.id == source.documentID })?.title ?? "Source") · p. \(source.pageIndex + 1)", systemImage: "doc.text.magnifyingglass")
-                .font(.callout).frame(minHeight: 44)
+                .font(.leu(.callout)).frame(minHeight: 44)
         }.accessibilityIdentifier("lens-view-source")
     }
 
@@ -55,16 +55,16 @@ struct UnderstandingLensSheet: View {
             $0.modelProvenance != nil && $0.source.documentID == source.documentID &&
                 $0.source.pageIndex == source.pageIndex && source.sourceText.contains($0.source.sourceText)
         }), let explanation = learned.modelProvenance?.explanation {
-            Text("From this source").font(.headline)
+            Text("From this source").font(.leu(.headline))
             Text(explanation).accessibilityIdentifier(learned.modelProvenance?.backend == "apple-on-device" ? "lens-model-explanation" : "lens-local-explanation")
                 .background {
                     if learned.modelProvenance?.schemaVersion == 3 { UITestFrameProbe(identifier: "lens-v3-explanation") }
                 }
         }
         if !projection.sentences.isEmpty {
-            Text("What this says").font(.headline)
+            Text("What this says").font(.leu(.headline))
             ForEach(projection.sentences, id: \.propositionID) { sentence in
-                Text(sentence.text).font(.system(.body, design: .serif))
+                Text(sentence.text).font(.leu(.body, serif: true))
             }
         }
         keyIdeaContent
@@ -74,11 +74,11 @@ struct UnderstandingLensSheet: View {
     @ViewBuilder private var keyIdeaContent: some View {
         let projection = meaning
         if let idea = projection.keyIdea {
-            Text("Key idea").font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.secondary)
+            Text("Key idea").font(.leu(.caption, weight: .semibold)).foregroundStyle(ShelfTheme.secondary)
             Text(idea).leuScaledFont(26, weight: .regular, design: .serif)
         }
         if projection.terms.count > 1 {
-            Text(projection.terms.joined(separator: " · ")).font(.callout).foregroundStyle(ShelfTheme.secondary)
+            Text(projection.terms.joined(separator: " · ")).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
         }
     }
 
@@ -100,7 +100,7 @@ struct UnderstandingLensSheet: View {
         Text(verbatim: source.sourceText)
             .lineLimit(sourceExpanded ? nil : 4)
             .accessibilityIdentifier("lens-origin-passage")
-            .font(.system(.body, design: .serif))
+            .font(.leu(.body, serif: true))
             .foregroundStyle(ShelfTheme.secondary)
             .padding(.leading, 12)
             .overlay(alignment: .leading) { originRule }
@@ -153,7 +153,7 @@ struct UnderstandingLensSheet: View {
 
     private var emptyDetail: some View {
         Text("Nothing is generated to fill the gap.")
-            .font(.callout)
+            .font(.leu(.callout))
             .foregroundStyle(ShelfTheme.secondary)
     }
 

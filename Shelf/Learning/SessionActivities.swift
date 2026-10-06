@@ -7,7 +7,7 @@ struct SessionLabActivity: View {
     @State private var selectedLab = LabCatalog.defaultLab
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Text("Reconstruct").font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
+            Text("Reconstruct").font(.leu(.caption, weight: .semibold)).foregroundStyle(ShelfTheme.accent)
             Text(selectedLab.title).font(LearningTokens.Typography.title)
             Text(selectedLab.instruction).foregroundStyle(ShelfTheme.secondary)
             MiniLabSequence(lab: selectedLab)
@@ -30,7 +30,7 @@ struct ContinueReadingActivity: View {
     @Bindable var model: LearningModel
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Text("Continue reading").font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
+            Text("Continue reading").font(.leu(.caption, weight: .semibold)).foregroundStyle(ShelfTheme.accent)
             Text("Finish with the source, not another card.").font(LearningTokens.Typography.title)
             Text("Open the material you were studying, read until the idea settles, then return to complete the session.")
                 .foregroundStyle(ShelfTheme.secondary)

@@ -23,8 +23,8 @@ struct TimedReadingSheet: View {
                         ForEach([3, 7, 15], id: \.self) { value in
                             Button { minutes = value } label: {
                                 VStack(spacing: 2) {
-                                    Text("\(value)").font(.title2.weight(.semibold))
-                                    Text("min").font(.caption)
+                                    Text("\(value)").font(.leu(.title2, weight: .semibold))
+                                    Text("min").font(.leu(.caption))
                                 }
                                 .frame(maxWidth: .infinity, minHeight: 64)
                                 .foregroundStyle(minutes == value ? ShelfTheme.background : ShelfTheme.text)
@@ -39,17 +39,17 @@ struct TimedReadingSheet: View {
                     if let plan {
                         VStack(alignment: .leading, spacing: 10) {
                             Text(plan.summary)
-                                .font(.title3.weight(.semibold))
+                                .font(.leu(.title3, weight: .semibold))
                             Text("Estimated from text length at a 220 wpm baseline.")
-                                .font(.caption)
+                                .font(.leu(.caption))
                                 .foregroundStyle(ShelfTheme.secondary)
                             if let boundary = plan.boundaryTitle {
                                 Label("Ends before \"\(boundary)\"", systemImage: "bookmark")
-                                    .font(.callout)
+                                    .font(.leu(.callout))
                                     .foregroundStyle(ShelfTheme.secondary)
                             } else {
                                 Text("Ends at a complete PDF page near your target time.")
-                                    .font(.callout)
+                                    .font(.leu(.callout))
                                     .foregroundStyle(ShelfTheme.secondary)
                             }
                             Button("Start reading session") {

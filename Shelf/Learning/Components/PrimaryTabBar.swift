@@ -1,10 +1,10 @@
 import SwiftUI
 
-/// Leu's single persistent navigation level, as a floating pill.
+/// Leu's single persistent navigation level on compact widths (iPhone), as a felt pill.
 ///
 /// RootView reserves its measured height below the clipped content viewport.
 /// The capsule floats within that opaque reserved region, without covering scroll content.
-/// Library filters and Settings stay inside Library: there is no second global nav.
+/// Regular widths (iPad) use `PrimaryTopBar` instead; there is never a second global nav.
 @MainActor
 struct PrimaryTabBar: View {
     @Binding var selection: PrimaryArea
@@ -13,17 +13,18 @@ struct PrimaryTabBar: View {
     @Namespace private var indicator
 
     var body: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 2) {
             ForEach(PrimaryArea.allCases) { area in
                 tab(area)
             }
         }
-        .padding(4)
-        .background(LeuDesign.surface, in: Capsule(style: .continuous))
+        .padding(5)
+        .background(LeuDesign.cream, in: Capsule(style: .continuous))
         .overlay { Capsule(style: .continuous).stroke(LeuDesign.line, lineWidth: LeuDesign.hairline) }
-        .padding(.horizontal, LeuDesign.gutter)
+        .shadow(color: LeuDesign.ink.opacity(0.14), radius: 16, x: 0, y: 10)
+        .padding(.horizontal, 16)
         .padding(.bottom, 8)
-        .padding(.top, 6)
+        .padding(.top, 8)
     }
 
     private func tab(_ area: PrimaryArea) -> some View {
@@ -35,20 +36,22 @@ struct PrimaryTabBar: View {
             }
             ShelfHaptics.shared.play(.selectionChanged)
         } label: {
-            let layout = dynamicTypeSize.isAccessibilitySize
-                ? AnyLayout(VStackLayout(spacing: 4)) : AnyLayout(HStackLayout(spacing: 7))
-            layout {
+            // Four places fit a 320pt iPhone only with the icon above the word. The label
+            // stays at every size: an icon alone is not a sufficient affordance.
+            VStack(spacing: 2) {
                 Image(systemName: area.symbol)
-                    .font(.subheadline.weight(isOn ? .semibold : .regular))
-                // The label stays at every size: an icon alone is not a sufficient
-                // affordance, so the row is allowed to grow instead of dropping text.
+                    .font(.leu(.footnote, weight: isOn ? .bold : .medium))
+                    .imageScale(.medium)
+                    .accessibilityHidden(true)
                 Text(area.title)
-                    .font(.subheadline.weight(isOn ? .semibold : .medium))
-                    .fixedSize(horizontal: false, vertical: true)
+                    .font(.leu(.caption, weight: isOn ? .bold : .semibold))
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? 2 : 1)
+                    .minimumScaleFactor(0.85)
             }
             .foregroundStyle(isOn ? LeuDesign.onSignal : LeuDesign.secondary)
+            .padding(.vertical, 5)
             .frame(maxWidth: .infinity)
-            .frame(minHeight: LeuDesign.touchTarget)
+            .frame(minHeight: LeuDesign.touchTarget + 6)
             .background {
                 if isOn {
                     Capsule(style: .continuous)
@@ -59,6 +62,7 @@ struct PrimaryTabBar: View {
             .contentShape([.interaction, .accessibility], Capsule(style: .continuous))
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(area.title)
         .accessibilityIdentifier("primary-" + area.rawValue)
         .accessibilityAddTraits(isOn ? .isSelected : [])
     }

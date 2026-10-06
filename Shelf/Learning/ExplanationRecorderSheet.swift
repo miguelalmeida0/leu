@@ -27,7 +27,7 @@ struct ExplanationRecorderSheet: View {
             }
             .background(ShelfTheme.background).navigationTitle("Explain").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Close") { if recorder.isRecording { _ = recorder.stop() }; dismiss() } } }
-        }.preferredColorScheme(.dark).tint(ShelfTheme.accent)
+        }.preferredColorScheme(.light).tint(ShelfTheme.accent)
             .leuDialog("Recording", isPresented: Binding(get: { recorder.errorMessage != nil }, set: { if !$0 { recorder.errorMessage = nil } })) {
                 Button("OK") { recorder.errorMessage = nil }
             } message: { Text(recorder.errorMessage ?? "") }
@@ -51,7 +51,7 @@ struct ExplanationRecorderSheet: View {
 
     private func ratingSection(duration: TimeInterval) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("How did that explanation feel?").font(.headline)
+            Text("How did that explanation feel?").font(.leu(.headline))
             HStack(spacing: 8) {
                 ForEach(ExplanationRecording.SelfRating.allCases, id: \.self) { rating in
                     Button(rating.rawValue.capitalized) { selfRating = rating }
@@ -71,7 +71,7 @@ struct ExplanationRecorderSheet: View {
                 Text("Previous explanations").font(LearningTokens.Typography.compactTitle)
                 ForEach(recordings) { recording in
                     Button { play(recording) } label: {
-                        HStack { Image(systemName: "play.circle"); VStack(alignment: .leading) { Text(recording.createdAt.formatted(date: .abbreviated, time: .shortened)); Text("\(format(recording.duration)) · \(recording.selfRating?.rawValue.capitalized ?? "Unrated")").font(.caption).foregroundStyle(ShelfTheme.secondary) }; Spacer() }
+                        HStack { Image(systemName: "play.circle"); VStack(alignment: .leading) { Text(recording.createdAt.formatted(date: .abbreviated, time: .shortened)); Text("\(format(recording.duration)) · \(recording.selfRating?.rawValue.capitalized ?? "Unrated")").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary) }; Spacer() }
                             .foregroundStyle(ShelfTheme.text).padding(.vertical, 7)
                     }.buttonStyle(.plain)
                     Divider().overlay(ShelfTheme.line)

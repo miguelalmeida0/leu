@@ -10,7 +10,7 @@ struct NoteEditorSheet: View {
         NavigationStack {
             Form {
                 if !draft.quote.isEmpty {
-                    Section("Selected passage") { Text(draft.quote).font(.system(.body, design: .serif)).lineLimit(8) }
+                    Section("Selected passage") { Text(draft.quote).font(.leu(.body, serif: true)).lineLimit(8) }
                 } else {
                     Section { Text("Page \(draft.fragments.first.map { $0.pageIndex + 1 } ?? model.pageNumber)") }
                 }
@@ -30,7 +30,7 @@ struct NoteEditorSheet: View {
                 if let error = model.errorMessage { Text(error).foregroundStyle(ShelfTheme.danger) }
                 Section {
                     Text("Saved locally, separate from the original PDF. You can export an annotated copy at any time.")
-                        .font(.footnote).foregroundStyle(ShelfTheme.secondary)
+                        .font(.leu(.footnote)).foregroundStyle(ShelfTheme.secondary)
                 }
             }.scrollContentBackground(.hidden).background(ShelfTheme.background)
                 .navigationTitle(draft.kind.isStudyMarker ? "Study marker" : "Make a note")
@@ -42,7 +42,7 @@ struct NoteEditorSheet: View {
                             .disabled(model.isSaving).accessibilityIdentifier("save-note")
                     }
                 }
-        }.preferredColorScheme(.dark).tint(ShelfTheme.accent)
+        }.preferredColorScheme(.light).tint(ShelfTheme.accent)
             .interactiveDismissDisabled(model.isSaving)
             .onAppear { model.errorMessage = nil }
     }

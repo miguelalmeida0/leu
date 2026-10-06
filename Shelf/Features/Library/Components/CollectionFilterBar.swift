@@ -20,7 +20,7 @@ struct CollectionFilterBar: View {
                     }
                     Button { model.showCollections = true } label: {
                         Label("Edit", systemImage: "plus")
-                            .font(.system(.subheadline, design: .serif))
+                            .font(.leu(.subheadline, serif: true))
                             .padding(.horizontal, 12)
                             .frame(minHeight: 38)
                             .foregroundStyle(ShelfTheme.secondary)
@@ -44,7 +44,7 @@ struct CollectionFilterBar: View {
     private func chip(_ name: String, id: String, selected: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(name)
-                .font(.system(.subheadline, design: .serif).weight(selected ? .semibold : .regular))
+                .font(.leu(.subheadline, serif: true, weight: selected ? .semibold : .regular))
                 .lineLimit(1)
                 .padding(.horizontal, 13)
                 .frame(minHeight: 38)

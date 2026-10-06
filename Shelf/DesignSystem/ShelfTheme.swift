@@ -1,7 +1,7 @@
 import SwiftUI
 import ShelfCore
 
-/// Compatibility names resolved by the semantic Night Field system.
+/// Compatibility names resolved by the semantic Felt system (`LeuDesign`).
 enum ShelfTheme {
     static let background = LeuDesign.void
     static let surface = LeuDesign.surface
@@ -10,7 +10,7 @@ enum ShelfTheme {
     static let text = LeuDesign.text
     static let secondary = LeuDesign.secondary
 
-    /// Reader appearance stays a reader decision. Night Field is the product shell;
+    /// Reader appearance stays a reader decision. Felt is the product shell;
     /// a book is still allowed to be paper. Reading wins over shell consistency.
     static let nightSurface = LeuDesign.surfaceSecondary
     static let nightText = LeuDesign.textPrimary
@@ -29,13 +29,13 @@ enum ShelfTheme {
     static let ink = LeuDesign.readingForeground
     static let paperSecondary = LeuDesign.readingSecondary
 
-    static let importantBackground = Color(hex: 0x241F12)
-    static let importantAccent = LeuDesign.signal
-    static let reviewBackground = Color(hex: 0x14201A)
+    static let importantBackground = Color(hex: 0xF3E3B4)
+    static let importantAccent = LeuDesign.eyebrowOnPaper
+    static let reviewBackground = Color(hex: 0xD6E2BC)
     static let reviewAccent = LeuDesign.held
-    static let confusingBackground = Color(hex: 0x241612)
-    static let confusingAccent = LeuDesign.fading
-    static let spokenHighlight = LeuDesign.signal
+    static let confusingBackground = Color(hex: 0xF4D2C4)
+    static let confusingAccent = LeuDesign.danger
+    static let spokenHighlight = LeuDesign.butter
 
     static let gutter = LeuDesign.gutter
     static let radius = LeuDesign.radius
@@ -46,7 +46,7 @@ enum ShelfTheme {
         LeuDesign.editorial(size, weight: weight)
     }
 
-    /// Section labels are monospace and uppercase in Night Field.
+    /// Section labels are small, bold and uppercase in Felt.
     static func eyebrow(_ size: CGFloat = 11) -> Font {
         LeuDesign.eyebrow(size)
     }

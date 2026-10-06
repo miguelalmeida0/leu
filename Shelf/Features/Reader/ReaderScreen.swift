@@ -102,14 +102,14 @@ struct ReaderScreen: View {
                 Button("OK") { model.errorMessage = nil }
             } message: { Text(model.errorMessage ?? "") }
         .background { UITestFrameProbe(identifier: "reader-screen") }
-        .preferredColorScheme(.dark)
+        .preferredColorScheme(.light)
         .interactiveDismissDisabled(model.isSaving)
     }
     @ViewBuilder
     private var content: some View {
         if let failure = model.loadFailure {
             VStack(spacing: 18) {
-                Text("This PDF could not open.").font(.title2)
+                Text("This PDF could not open.").font(.leu(.title2))
                 Text(failure).multilineTextAlignment(.center)
                 Button("Back to library", action: close).buttonStyle(ShelfButtonStyle(filled: true))
             }.padding(24)

@@ -24,7 +24,7 @@ struct InterviewSetupSheet: View {
                 }
                 Section {
                     Text("Answers stay hidden until you commit. Confidence is sampled more often, and source links appear after answering.")
-                        .font(.callout).foregroundStyle(ShelfTheme.secondary)
+                        .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                 }
             }.scrollContentBackground(.hidden)
                 .safeAreaInset(edge: .bottom, spacing: 0) {

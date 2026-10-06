@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C3AF11A837A1E88634D7DEC2 /* FeltDesignTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC3B4E03AD013C6BF2E5B6C /* FeltDesignTests.swift */; };
+		CA4A174098168F485BCFCD1C /* RainSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2AE4D91C4DCACD65D90DF1 /* RainSound.swift */; };
+		65265A933D7D214E1B01E7EE /* TeaSteam.swift in Sources */ = {isa = PBXBuildFile; fileRef = B553351B7A935BE09434924D /* TeaSteam.swift */; };
+		275E91715F3352832E6475F2 /* FoggedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8D0A5CF9B2F873E4BBBBF1 /* FoggedWindow.swift */; };
+		1EB9F83492A291BCFE2E25FD /* HomeNookScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD5FBF3628ED92763926D69 /* HomeNookScene.swift */; };
+		12D4DB61599DAB2D196E6924 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F984FC58D3028EDEF620DCA2 /* HomeScreen.swift */; };
+		EE6632B0CEE63F68AAB4590A /* Components/PrimaryTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C1D3665BD62A47BB3C57E /* Components/PrimaryTopBar.swift */; };
+		99FF30CD50459845C6466A87 /* LeuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824F880CA337A02AEEFE3093 /* LeuType.swift */; };
 		00CC5956ADB5DDCC1CD3616C /* Voices/VoicePreferenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767B90BCDA98A558E014263 /* Voices/VoicePreferenceStore.swift */; };
 		047444310EA2C9FABCFFC5A3 /* ShelfTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A57F937448B4F2EE2802A6F /* ShelfTheme.swift */; };
 		054CF584BE18F24ACC8A903D /* Coding Interviews.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A295621DA3FF1BA98EA2519B /* Coding Interviews.pdf */; };
@@ -253,6 +261,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CAC3B4E03AD013C6BF2E5B6C /* FeltDesignTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeltDesignTests.swift; sourceTree = "<group>"; };
+		FC2AE4D91C4DCACD65D90DF1 /* RainSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainSound.swift; sourceTree = "<group>"; };
+		B553351B7A935BE09434924D /* TeaSteam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaSteam.swift; sourceTree = "<group>"; };
+		9D8D0A5CF9B2F873E4BBBBF1 /* FoggedWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoggedWindow.swift; sourceTree = "<group>"; };
+		DFD5FBF3628ED92763926D69 /* HomeNookScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNookScene.swift; sourceTree = "<group>"; };
+		F984FC58D3028EDEF620DCA2 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		748C1D3665BD62A47BB3C57E /* Components/PrimaryTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components/PrimaryTopBar.swift; sourceTree = "<group>"; };
+		824F880CA337A02AEEFE3093 /* LeuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeuType.swift; sourceTree = "<group>"; };
 		003DEB28C74D59F0D5B6400D /* PDFThumbnailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFThumbnailService.swift; sourceTree = "<group>"; };
 		00BFD227671852F6BBC2A67C /* ShelfExplainLikeTenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfExplainLikeTenUITests.swift; sourceTree = "<group>"; };
 		00FD4EB12FB40EE1B93C5CE0 /* ReaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderModel.swift; sourceTree = "<group>"; };
@@ -557,6 +573,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C4CB93F4B24E182DC8F7E024 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FC2AE4D91C4DCACD65D90DF1 /* RainSound.swift */,
+				B553351B7A935BE09434924D /* TeaSteam.swift */,
+				9D8D0A5CF9B2F873E4BBBBF1 /* FoggedWindow.swift */,
+				DFD5FBF3628ED92763926D69 /* HomeNookScene.swift */,
+				F984FC58D3028EDEF620DCA2 /* HomeScreen.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		00C45FD35CB0F9C5F764F070 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -644,6 +672,7 @@
 		2E08661D98E9E3D52566CCF3 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				C4CB93F4B24E182DC8F7E024 /* Home */,
 				AEA13A10CCD7CA6ADFD4E62E /* Opening */,
 				9E1B091A27CCB59B8102D332 /* Collections */,
 				69B9AABFC5F01BC22CE07F07 /* Library */,
@@ -742,6 +771,7 @@
 		919A3B1BFCD57D44EF6E1DB7 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				824F880CA337A02AEEFE3093 /* LeuType.swift */,
 				9505C3CD58E98DEC95003C40 /* ShelfMotion.swift */,
 				5A141C2F63353DC4C831F8D2 /* CoverIllustration.swift */,
 				6BA54544DA7650AE0DE75F2A /* ShelfControls.swift */,
@@ -816,6 +846,7 @@
 		A20A1E4F9C7731B2D7F0C001 /* Learning */ = {
 			isa = PBXGroup;
 			children = (
+				748C1D3665BD62A47BB3C57E /* Components/PrimaryTopBar.swift */,
 				A5E19233D1B8B7728AD9EB56 /* ActiveRecallSetupSheet.swift */,
 				972DE49CAFB410D7BF735F79 /* BlindPageSheet.swift */,
 				F7A6407D87CDFEF3F28F7A4B /* Components/PrimaryTabBar.swift */,
@@ -1007,6 +1038,7 @@
 		B6982961E289F33EEC3B17F4 /* ShelfTests */ = {
 			isa = PBXGroup;
 			children = (
+				CAC3B4E03AD013C6BF2E5B6C /* FeltDesignTests.swift */,
 				2B86B1A097E5C5E245637412 /* PDFIntegrationTests.swift */,
 				99A20CDA229C4B86F740F556 /* PDFViewportGeometryTests.swift */,
 				D6B441CE7B04FD972C9F1AE2 /* LearningIndexIntegrationTests.swift */,
@@ -1313,6 +1345,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA4A174098168F485BCFCD1C /* RainSound.swift in Sources */,
+				65265A933D7D214E1B01E7EE /* TeaSteam.swift in Sources */,
+				275E91715F3352832E6475F2 /* FoggedWindow.swift in Sources */,
+				1EB9F83492A291BCFE2E25FD /* HomeNookScene.swift in Sources */,
+				12D4DB61599DAB2D196E6924 /* HomeScreen.swift in Sources */,
+				EE6632B0CEE63F68AAB4590A /* Components/PrimaryTopBar.swift in Sources */,
+				99FF30CD50459845C6466A87 /* LeuType.swift in Sources */,
 				D3F6454106CA900AC36F9BC8 /* SemanticZoomSurface.swift in Sources */,
 				6EE29DADAEFCF034C18058CC /* TimedReadingSheet.swift in Sources */,
 				5B1AD854F05D6ABBB628649A /* ReaderStateSheet.swift in Sources */,
@@ -1532,6 +1571,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3AF11A837A1E88634D7DEC2 /* FeltDesignTests.swift in Sources */,
 				F1F5E4F783B57AA6E083FEAE /* PDFIntegrationTests.swift in Sources */,
 				69325DBD5CBE58A40CD4AE74 /* PDFViewportGeometryTests.swift in Sources */,
 				75C417291F94239C0B058D5D /* LearningIndexIntegrationTests.swift in Sources */,

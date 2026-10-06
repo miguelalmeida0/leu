@@ -16,7 +16,7 @@ struct TrashSheet: View {
                     if model.trashedBooks.isEmpty { Text("Nothing in Trash.").foregroundStyle(ShelfTheme.secondary) }
                     ForEach(model.trashedBooks) { book in
                         VStack(alignment: .leading, spacing: 12) {
-                            Text(book.title).font(.system(.headline, design: .serif))
+                            Text(book.title).font(.leu(.headline, serif: true))
                             HStack {
                                 Button("Restore") { Task { await model.restore(book) } }.buttonStyle(.borderless)
                                 Spacer()

@@ -44,9 +44,9 @@ struct KnowledgeSearchSheet: View {
 
     private var prompt: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Search across the ideas inside your library.").font(.system(.title3, design: .serif))
+            Text("Search across the ideas inside your library.").font(.leu(.title3, serif: true))
             Text("Exact technical terms stay intact: useEffect, React.memo, Promise.all, HTTP/2 and Big O notation.")
-                .font(.callout).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
         }.padding(.vertical, 10)
     }
 
@@ -54,10 +54,10 @@ struct KnowledgeSearchSheet: View {
         if knowledge.searchResult.concepts.isEmpty && knowledge.searchResult.passages.isEmpty && knowledge.searchResult.chains.isEmpty && knowledge.matchingHighlights.isEmpty {
             VStack(alignment: .leading, spacing: 6) {
                 Text(knowledge.isIndexing ? "Connecting your library…" : "No strong matches.")
-                    .font(.headline).foregroundStyle(ShelfTheme.text)
+                    .font(.leu(.headline)).foregroundStyle(ShelfTheme.text)
                 if knowledge.isIndexing {
                     Text("Results update automatically as local passage indexing completes.")
-                        .font(.callout).foregroundStyle(ShelfTheme.secondary)
+                        .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                 }
             }
             .padding(.vertical, 24)
@@ -84,9 +84,9 @@ struct KnowledgeSearchSheet: View {
                 ForEach(knowledge.matchingHighlights.prefix(20)) { annotation in
                     Button { knowledge.queueNavigation(to: annotation); dismiss() } label: {
                         VStack(alignment: .leading, spacing: 5) {
-                            Text(annotation.quote).font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.text).lineLimit(3)
+                            Text(annotation.quote).font(.leu(.callout, serif: true)).foregroundStyle(ShelfTheme.text).lineLimit(3)
                             Text("\(knowledge.title(for: annotation.bookID)) · p. \(annotation.pageIndex + 1)")
-                                .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                         }.padding(.vertical, 7).contentShape(Rectangle())
                     }.buttonStyle(.plain)
                 }
@@ -97,8 +97,8 @@ struct KnowledgeSearchSheet: View {
                 ForEach(knowledge.searchResult.passages.prefix(30)) { passage in
                     Button { knowledge.queueNavigation(to: passage); dismiss() } label: {
                         VStack(alignment: .leading, spacing: 5) {
-                            HStack { Text(knowledge.title(for: passage.documentID)).font(.headline); Spacer(); Text("p. \(passage.pageIndex + 1)").font(.caption.monospacedDigit()) }
-                            Text(passage.text).font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.secondary).lineLimit(3)
+                            HStack { Text(knowledge.title(for: passage.documentID)).font(.leu(.headline)); Spacer(); Text("p. \(passage.pageIndex + 1)").font(.leu(.caption).monospacedDigit()) }
+                            Text(passage.text).font(.leu(.callout, serif: true)).foregroundStyle(ShelfTheme.secondary).lineLimit(3)
                         }.padding(.vertical, 8).contentShape(Rectangle())
                     }.buttonStyle(.plain)
                     Divider().overlay(ShelfTheme.line)
@@ -120,7 +120,7 @@ struct KnowledgeSearchSheet: View {
 
     private func group<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(title).font(.caption.weight(.bold)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
+            Text(title).font(.leu(.caption, weight: .bold)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
             content()
         }
     }
@@ -128,7 +128,7 @@ struct KnowledgeSearchSheet: View {
     private func row(_ title: String, detail: String, symbol: String) -> some View {
         HStack(spacing: 12) {
             Image(systemName: symbol).foregroundStyle(ShelfTheme.accent).frame(width: 28)
-            VStack(alignment: .leading, spacing: 2) { Text(title).foregroundStyle(ShelfTheme.text); Text(detail).font(.caption).foregroundStyle(ShelfTheme.secondary) }
+            VStack(alignment: .leading, spacing: 2) { Text(title).foregroundStyle(ShelfTheme.text); Text(detail).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary) }
             Spacer(); Image(systemName: "chevron.right").foregroundStyle(ShelfTheme.secondary)
         }.padding(.vertical, 8).contentShape(Rectangle())
     }

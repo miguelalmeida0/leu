@@ -10,15 +10,15 @@ import ShelfCore
         ShelfSheet(title: "Try it") {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    Text(definition.title).font(.system(.title, design: .serif))
+                    Text(definition.title).font(.leu(.title, serif: true))
                     Text(definition.premise).foregroundStyle(ShelfTheme.secondary)
                     if definition.contract == .stableKeys { keys } else { cache }
-                    Text(state.lastAction).font(.headline).accessibilityIdentifier("try-it-outcome")
+                    Text(state.lastAction).font(.leu(.headline)).accessibilityIdentifier("try-it-outcome")
                     Button("Reset the illustration") { apply(.reset); moved = false }
                     Divider()
-                    Text("FROM YOUR SOURCE").font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
-                    Text(model.sourceLabel).font(.headline)
-                    Text(definition.source.passage.sourceText).font(.system(.body, design: .serif))
+                    Text("FROM YOUR SOURCE").font(.leu(.caption, weight: .semibold)).foregroundStyle(ShelfTheme.accent)
+                    Text(model.sourceLabel).font(.leu(.headline))
+                    Text(definition.source.passage.sourceText).font(.leu(.body, serif: true))
                     Button("View source") { model.viewSource(definition.source, returningTo: "Try it") }.accessibilityIdentifier("try-it-view-source")
                     if let message = model.message { Text(message) }
                 }.padding(22).frame(maxWidth: 680).frame(maxWidth: .infinity, alignment: .leading)
@@ -37,7 +37,7 @@ import ShelfCore
                     Image(systemName: moved && state.keys == .stableIDs ? "checkmark.circle.fill" : "circle")
                         .foregroundStyle(moved && state.keys == .stableIDs ? Color.green : ShelfTheme.secondary)
                         .accessibilityLabel(moved && state.keys == .stableIDs ? "Identity preserved" : "Item")
-                    Text(item).font(.system(.title, design: .serif))
+                    Text(item).font(.leu(.title, serif: true))
                     Spacer()
                     Text("State \(state.rowState[index])").monospacedDigit()
                     Button("Edit \(item)") { apply(.edit(item)) }.frame(minHeight: 44)
@@ -50,8 +50,8 @@ import ShelfCore
     }
     private var cache: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Original: \(state.original)").font(.title2).accessibilityIdentifier("try-it-original")
-            Text("Stored copy: \(state.cached.map(String.init) ?? "none")").font(.title2).accessibilityIdentifier("try-it-copy")
+            Text("Original: \(state.original)").font(.leu(.title2)).accessibilityIdentifier("try-it-original")
+            Text("Stored copy: \(state.cached.map(String.init) ?? "none")").font(.leu(.title2)).accessibilityIdentifier("try-it-copy")
             Text("Work performed: \(state.computations) computations").foregroundStyle(ShelfTheme.secondary)
             Button("Reuse copy") { apply(.reuse) }.buttonStyle(ShelfButtonStyle(filled: true)).accessibilityIdentifier("try-it-reuse")
             Button("Change original") { apply(.changeOriginal) }.accessibilityIdentifier("try-it-change-original")

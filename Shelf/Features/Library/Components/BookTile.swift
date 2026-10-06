@@ -29,16 +29,16 @@ struct BookTile: View {
                         PDFCoverImage(url: model.originalURL(book), service: thumbnails)
                     }
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(book.title).font(.system(.title3, design: .serif)).fontWeight(.medium)
+                        Text(book.title).font(.leu(.title3, serif: true)).fontWeight(.medium)
                             .lineLimit(3).fixedSize(horizontal: false, vertical: true)
                             .padding(.trailing, 16)
                         Text("\(book.pageCount) pages" + (book.isSample ? " · Sample" : ""))
-                            .font(.caption).foregroundStyle(colors.muted)
+                            .font(.leu(.caption)).foregroundStyle(colors.muted)
                         Spacer(minLength: 6)
                         if book.lastOpenedAt != nil {
                             HStack(spacing: 5) {
-                                Image(systemName: "bookmark.fill").font(.caption2)
-                                Text("Page \(book.currentPageNumber)").font(.caption)
+                                Image(systemName: "bookmark.fill").font(.leu(.caption2))
+                                Text("Page \(book.currentPageNumber)").font(.leu(.caption))
                             }
                             .padding(.horizontal, 8).padding(.vertical, 5)
                             .background(colors.background, in: Capsule())

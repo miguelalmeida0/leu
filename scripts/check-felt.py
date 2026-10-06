@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Leu Night Field design-system contract.
+"""Leu Felt design-system contract.
 
-Replaces check-gallery-minimalism.py. The palette moved, so the palette assertions
-moved with it; every behavioural invariant the old gate protected is preserved below,
+Replaces check-night-field.py. The palette moved from Night Field to Felt, so the palette
+assertions moved with it; every behavioural invariant the old gate protected is preserved below,
 and the locked design rules from docs/internal/redesign-handoff/04_LOCKED_DESIGN_RULES.md are now
 enforced rather than left to review.
 """
@@ -19,8 +19,11 @@ def require(cond, msg):
 
 # --- Design system ownership -------------------------------------------------
 design = (ROOT / 'Shelf/DesignSystem/LeuDesign.swift').read_text()
-for token in ['0x0B0B0C', '0x141416', '0xC8F135', '0xE8734A', 'design: .monospaced', 'design: .serif']:
-    require(token in design, f'Night Field token missing: {token}')
+for token in ['0xB6C690', '0xC3D19F', '0xF8F1DE', '0x24301F', '0xB3261E', 'LeuType.sans', 'LeuType.serif']:
+    require(token in design, f'Felt token missing: {token}')
+type_system = (ROOT / 'Shelf/DesignSystem/LeuType.swift').read_text()
+for face in ['Gabarito-ExtraBold', 'Literata-Regular', 'relativeTo:', 'CTFontManagerRegisterGraphicsFont']:
+    require(face in type_system, f'Felt type system missing: {face}')
 require('static let touchTarget: CGFloat = 44' in design, '44pt minimum target must stay in the system')
 
 theme = (ROOT / 'Shelf/DesignSystem/ShelfTheme.swift').read_text()
@@ -36,7 +39,9 @@ def strip_comments(text):
     return '\n'.join(out)
 
 all_swift_paths = list((ROOT / 'Shelf').rglob('*.swift'))
-all_swift = '\n'.join(strip_comments(p.read_text(errors='replace')) for p in all_swift_paths)
+# LeuType is the one owner of custom faces; everything else goes through it.
+typed_paths = [p for p in all_swift_paths if p.name != 'LeuType.swift']
+all_swift = '\n'.join(strip_comments(p.read_text(errors='replace')) for p in typed_paths)
 
 # --- Locked rule: never handwritten / script typography ----------------------
 # This is a rule about type, not about vocabulary: the Release canvas is legitimately
@@ -45,9 +50,9 @@ for family in ['SnellRoundhand', 'Zapfino', 'BradleyHand', 'MarkerFelt', 'Chalkd
                'Noteworthy', 'HomemadeApple', 'Caveat', 'DancingScript']:
     require(family not in all_swift, f'handwritten/script typeface is locked out: {family}')
 require('.custom(' not in all_swift,
-        'custom typefaces must go through LeuDesign so the three-voice ramp stays enforced')
+        'custom typefaces must go through LeuType so the two-voice ramp stays enforced')
 require('design: .rounded' not in all_swift,
-        'rounded system type reads as consumer-toy; Night Field uses sans, serif and mono only')
+        'rounded system type reads as consumer-toy; Felt uses Gabarito and Literata only')
 
 # --- Locked rule: no generic AI slop ----------------------------------------
 for forbidden in ['ultraThinMaterial', 'thinMaterial', 'regularMaterial', 'thickMaterial', 'ultraThickMaterial']:
@@ -60,7 +65,7 @@ root_view = (ROOT / 'Shelf/App/RootView.swift').read_text()
 require('ShelfSectionSwitcher(' not in root_view, 'legacy two-tier navigation returned')
 require('PrimaryTabBar(selection:' in root_view, 'the single persistent navigation level must be PrimaryTabBar')
 tab_bar = (ROOT / 'Shelf/Learning/Components/PrimaryTabBar.swift').read_text()
-require('Capsule' in tab_bar, 'primary navigation is a floating pill in Night Field')
+require('Capsule' in tab_bar, 'compact primary navigation is a floating felt pill')
 require('minHeight: LeuDesign.touchTarget' in tab_bar, 'primary navigation must keep 44pt targets')
 for screen in ['Shelf/Learning/StudyLandingScreen.swift', 'Shelf/Learning/TrailsScreen.swift']:
     path = ROOT / screen
@@ -100,7 +105,8 @@ for path in all_swift_paths:
     name = str(path.relative_to(ROOT))
     require(not re.search(r'\.\s*material\b|\bMaterial\s*[.(]', code),
             f'{name}: material surface needs removal')
-    require(not re.search(r'\bMenu\s*[({]|\.contextMenu\b|\.pickerStyle\(\.menu\)', code),
+    # Only SwiftUI files can present a system menu; a model type named Menu is not one.
+    require('import SwiftUI' not in code or not re.search(r'\bMenu\s*[({]|\.contextMenu\b|\.pickerStyle\(\.menu\)', code),
             f'{name}: use an opaque Leu menu/inline picker')
     for number, line in enumerate(code.splitlines(), 1):
         require(not re.search(r'foreground(?:Style|Color)\([^\n]*\.opacity\(', line),
@@ -121,8 +127,8 @@ for token in ['surfacePrimary', 'surfaceSecondary', 'surfaceRaised', 'textPrimar
     require(f'static let {token} =' in design, f'Semantic contrast token missing: {token}')
 
 if problems:
-    print('FAIL: Leu Night Field design contract')
+    print('FAIL: Leu Felt design contract')
     for p in problems: print(' -', p)
     sys.exit(1)
-print('PASS: Night Field system, semantic state colour, one-tier floating IA, locked-out '
+print('PASS: Felt system, semantic state colour, one-tier IA, locked-out '
       'script/glass/sparkle tropes, and preserved return paths.')

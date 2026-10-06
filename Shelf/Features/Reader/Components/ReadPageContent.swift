@@ -11,9 +11,9 @@ struct ReadPageContent: View {
         VStack(alignment: .leading, spacing: 0) {
             if page.blocks.isEmpty {
                 Text("This page has no selectable text.")
-                    .font(.headline).padding(.bottom, 12)
+                    .font(.leu(.headline)).padding(.bottom, 12)
                 Text("Use Original to see the page. The arrows can still move to the next page.")
-                    .font(.body)
+                    .font(.leu(.body))
             }
             ForEach(Array(page.blocks.enumerated()), id: \.element.id) { index, block in
                 blockView(block, index: index)

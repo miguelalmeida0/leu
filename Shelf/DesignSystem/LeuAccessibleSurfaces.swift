@@ -24,7 +24,7 @@ struct LeuMenu<Content: View, Label: View>: View {
                 .tint(LeuDesign.signal)
                 .buttonStyle(LeuMenuActionStyle())
                 .pickerStyle(.inline)
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(.light)
                 .presentationBackground(LeuDesign.menuSurface)
                 .presentationCompactAdaptation(.popover)
                 .accessibilityAction(.escape) { presented = false }
@@ -50,7 +50,7 @@ private struct LeuMenuActionStyle: PrimitiveButtonStyle {
             dismiss()
         } label: {
             configuration.label
-                .font(.body)
+                .font(.leu(.body))
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
@@ -110,7 +110,7 @@ extension View {
         sheet(isPresented: isPresented) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text(title).font(.title2.bold()).accessibilityAddTraits(.isHeader)
+                    Text(title).font(.leu(.title2, weight: .bold)).accessibilityAddTraits(.isHeader)
                     message().foregroundStyle(LeuDesign.menuSecondary)
                     actions()
                     Button("Close", role: .cancel) { isPresented.wrappedValue = false }
@@ -120,7 +120,7 @@ extension View {
             .background(LeuDesign.menuSurface)
             .buttonStyle(LeuMenuActionStyle())
             .tint(LeuDesign.signal)
-            .preferredColorScheme(.dark)
+            .preferredColorScheme(.light)
             .presentationBackground(LeuDesign.menuSurface)
             .presentationDetents([.medium, .large])
             .accessibilityAction(.escape) { isPresented.wrappedValue = false }

@@ -9,17 +9,17 @@ import ShelfCore
         ShelfSheet(title: "Follow this idea") {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    Text("CURRENT IDEA").font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
-                    Text(model.sourceLabel).font(.headline)
-                    Text(model.source.passage.sourceText).font(.system(.body, design: .serif))
+                    Text("CURRENT IDEA").font(.leu(.caption, weight: .semibold)).foregroundStyle(ShelfTheme.accent)
+                    Text(model.sourceLabel).font(.leu(.headline))
+                    Text(model.source.passage.sourceText).font(.leu(.body, serif: true))
                     Button("View current source") { model.viewSource(returningTo: "Follow this idea") }
                     ForEach(model.connections.filter { !visited.contains($0.connected.id) }) { connection in
                         Divider()
-                        Text("CONNECTED IDEA").font(.caption.weight(.semibold))
-                        Text(title(connection.connected)).font(.headline)
-                        Text(connection.connected.passage.sourceText).font(.system(.body, design: .serif))
+                        Text("CONNECTED IDEA").font(.leu(.caption, weight: .semibold))
+                        Text(title(connection.connected)).font(.leu(.headline))
+                        Text(connection.connected.passage.sourceText).font(.leu(.body, serif: true))
                             .accessibilityIdentifier("connection-source-quote")
-                        Text("WHY THEY CONNECT").font(.caption.weight(.semibold))
+                        Text("WHY THEY CONNECT").font(.leu(.caption, weight: .semibold))
                         Text(connection.label).foregroundStyle(ShelfTheme.accent)
                         Text(connection.explanation)
                         Button("View in PDF") { model.viewSource(connection.connected, returningTo: "Follow this idea") }

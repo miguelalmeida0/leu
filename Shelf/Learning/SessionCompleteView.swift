@@ -64,9 +64,9 @@ struct SessionCompleteView: View {
     private func overviewRow(symbol: String, title: String, value: String) -> some View {
         HStack(spacing: 14) {
             Image(systemName: symbol).frame(width: 28).foregroundStyle(ShelfTheme.accent)
-            Text(title).font(.system(.body)).foregroundStyle(ShelfTheme.text)
+            Text(title).font(.leu(.body)).foregroundStyle(ShelfTheme.text)
             Spacer()
-            Text(value).font(.system(.callout).monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
+            Text(value).font(.leu(.callout).monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
         }
         .frame(minHeight: 54)
         .accessibilityElement(children: .combine)
@@ -105,13 +105,13 @@ struct SessionCompleteView: View {
                         .padding(.top, 2)
                     VStack(alignment: .leading, spacing: 3) {
                         Text(objectTitle(attempt.learningObjectID))
-                            .font(.system(.body)).lineLimit(2)
+                            .font(.leu(.body)).lineLimit(2)
                         Text(topicLabel(attempt.learningObjectID))
-                            .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                            .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                     }
                     Spacer(minLength: 10)
                     Text(stateLabel(attempt))
-                        .font(.caption.weight(.semibold))
+                        .font(.leu(.caption, weight: .semibold))
                         .foregroundStyle(stateColor(attempt))
                         .multilineTextAlignment(.trailing)
                 }
@@ -142,7 +142,7 @@ struct SessionCompleteView: View {
                 // The shape goes on the label: a bare Text in a .plain button exports its
                 // glyph box as the accessibility frame, which is smaller than the target.
                 Text("Back to Study")
-                    .font(.system(.callout))
+                    .font(.leu(.callout))
                     .foregroundStyle(ShelfTheme.secondary)
                     .frame(maxWidth: .infinity, minHeight: 44)
                     .contentShape([.interaction, .accessibility], Rectangle())
@@ -160,7 +160,7 @@ struct SessionCompleteView: View {
                 Text("How did that one feel?")
                     .leuScaledFont(28, weight: .regular, design: .serif)
                 Text("Optional. Leu only stores the feeling you choose on this device.")
-                    .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                     ForEach(StudyFeeling.allCases, id: \.self) { feeling in
                         Button(feeling.displayName) { Task { await model.recordFeeling(feeling) } }

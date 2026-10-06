@@ -14,7 +14,7 @@ struct TagsScreen: View {
                         model.selectedTab = .library
                     } label: {
                         Label("Library", systemImage: "chevron.left")
-                            .font(.system(.subheadline, design: .serif))
+                            .font(.leu(.subheadline, serif: true))
                             .foregroundStyle(ShelfTheme.secondary)
                     }
                     .buttonStyle(.plain)
@@ -29,7 +29,7 @@ struct TagsScreen: View {
                     Text("LEU").font(ShelfTheme.eyebrow()).tracking(3).foregroundStyle(ShelfTheme.secondary)
                     Text("Tags & Marks").leuScaledFont(36, weight: .regular, design: .serif)
                     Text("Labels for books, and passages worth returning to.")
-                        .font(.system(.subheadline, design: .serif).italic())
+                        .font(.leu(.subheadline, serif: true).italic())
                         .foregroundStyle(ShelfTheme.secondary)
                 }
 
@@ -38,11 +38,11 @@ struct TagsScreen: View {
                 Button { showReview = true } label: {
                     HStack(alignment: .top, spacing: 14) {
                         Image(systemName: "bookmark")
-                            .font(.title3).foregroundStyle(ShelfTheme.accent).frame(width: 28)
+                            .font(.leu(.title3)).foregroundStyle(ShelfTheme.accent).frame(width: 28)
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Your Marks").leuScaledFont(21, weight: .regular, design: .serif).foregroundStyle(ShelfTheme.text)
                             Text("\(model.studyMarks.count) important, review or confusing passages")
-                                .font(.subheadline).foregroundStyle(ShelfTheme.secondary)
+                                .font(.leu(.subheadline)).foregroundStyle(ShelfTheme.secondary)
                         }
                         Spacer(); Image(systemName: "arrow.right").foregroundStyle(ShelfTheme.secondary)
                     }
@@ -59,11 +59,11 @@ struct TagsScreen: View {
                         ForEach(model.allTags, id: \.self) { tag in
                             Button { model.chooseTag(tag) } label: {
                                 HStack {
-                                    Text(tag).font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.text)
+                                    Text(tag).font(.leu(.body, serif: true)).foregroundStyle(ShelfTheme.text)
                                     Spacer()
                                     Text(String(model.snapshot.activeBooks.filter { $0.tags.contains(tag) }.count))
-                                        .font(.callout.monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
-                                    Image(systemName: "chevron.right").font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                        .font(.leu(.callout).monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
+                                    Image(systemName: "chevron.right").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                                 }
                                 .frame(minHeight: 52).contentShape(Rectangle())
                             }
@@ -104,9 +104,9 @@ struct StudyReviewSheet: View {
                                     Spacer(); Text("p. \(mark.pageIndex + 1)").foregroundStyle(ShelfTheme.secondary)
                                 }
                                 Text(mark.quote.isEmpty ? book.title : mark.quote)
-                                    .font(.system(.body, design: .serif)).lineLimit(4)
-                                Text(book.title).font(.caption).foregroundStyle(ShelfTheme.secondary)
-                                if !mark.note.isEmpty { Text(mark.note).lineLimit(2).font(.caption).foregroundStyle(ShelfTheme.secondary) }
+                                    .font(.leu(.body, serif: true)).lineLimit(4)
+                                Text(book.title).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
+                                if !mark.note.isEmpty { Text(mark.note).lineLimit(2).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary) }
                             }.padding(.vertical, 8)
                         }.foregroundStyle(ShelfTheme.text)
                     }

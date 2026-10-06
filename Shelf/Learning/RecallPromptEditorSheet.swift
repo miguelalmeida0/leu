@@ -23,7 +23,7 @@ struct RecallPromptEditorSheet: View {
                         dividerLabel("or write your own recall prompt")
                     } else {
                         Text("Leu could not construct a reliable multiple-choice question from this exact source. Write a recall prompt instead; the answer remains the passage you selected.")
-                            .font(.callout)
+                            .font(.leu(.callout))
                             .foregroundStyle(ShelfTheme.secondary)
                     }
                     manualPrompt
@@ -41,9 +41,9 @@ struct RecallPromptEditorSheet: View {
 
     private var sourceBlock: some View {
         VStack(alignment: .leading, spacing: 7) {
-            Text("SOURCE").font(.caption.weight(.bold)).tracking(1.6).foregroundStyle(ShelfTheme.accent)
+            Text("SOURCE").font(.leu(.caption, weight: .bold)).tracking(1.6).foregroundStyle(ShelfTheme.accent)
             Text(source.sourceText)
-                .font(.system(.body, design: .serif))
+                .font(.leu(.body, serif: true))
                 .foregroundStyle(ShelfTheme.secondary)
                 .lineLimit(9)
                 .padding(.leading, 13)
@@ -54,9 +54,9 @@ struct RecallPromptEditorSheet: View {
     private func deterministicQuestion(_ question: LearningQuestion) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Source question available").font(LearningTokens.Typography.compactTitle)
-            Text(question.prompt).font(.body).foregroundStyle(ShelfTheme.text)
+            Text(question.prompt).font(.leu(.body)).foregroundStyle(ShelfTheme.text)
             Text("Every option was extracted from this PDF. Leu will keep the question linked to page \(question.source.pageIndex + 1).")
-                .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
             Button("Save source question") {
                 save(type: .question, prompt: question.prompt)
             }
@@ -67,7 +67,7 @@ struct RecallPromptEditorSheet: View {
 
     private var manualPrompt: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Recall prompt").font(.headline)
+            Text("Recall prompt").font(.leu(.headline))
             TextEditor(text: $prompt)
                 .frame(minHeight: 112)
                 .padding(10)
@@ -85,7 +85,7 @@ struct RecallPromptEditorSheet: View {
     private func dividerLabel(_ title: String) -> some View {
         HStack(spacing: 10) {
             Rectangle().fill(ShelfTheme.line).frame(height: 1)
-            Text(title.uppercased()).font(.caption2.weight(.semibold)).tracking(1).foregroundStyle(ShelfTheme.secondary)
+            Text(title.uppercased()).font(.leu(.caption2, weight: .semibold)).tracking(1).foregroundStyle(ShelfTheme.secondary)
             Rectangle().fill(ShelfTheme.line).frame(height: 1)
         }
     }

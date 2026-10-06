@@ -48,7 +48,7 @@ struct LearnTodayScreen: View {
                 labsSection
                 if model.isIndexing { indexingStatus }
                 if let notice = model.notice {
-                    Text(notice).font(.callout).foregroundStyle(ShelfTheme.secondary)
+                    Text(notice).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                         .accessibilityIdentifier("learning-index-notice")
                 }
             }
@@ -80,7 +80,7 @@ struct LearnTodayScreen: View {
                     Spacer(minLength: 8)
                     Image(systemName: composerExpanded ? "chevron.up" : "chevron.down")
                 }
-                .font(.subheadline.weight(.semibold))
+                .font(.leu(.subheadline, weight: .semibold))
                 .foregroundStyle(LeuDesign.studyContinueForeground)
                 .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                 .contentShape(Rectangle())
@@ -112,7 +112,7 @@ struct LearnTodayScreen: View {
     private var topicPicker: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("SUBJECT")
-                .font(.caption.weight(.semibold)).tracking(1.8).foregroundStyle(LeuDesign.studyContinueSecondary)
+                .font(.leu(.caption, weight: .semibold)).tracking(1.8).foregroundStyle(LeuDesign.studyContinueSecondary)
             LazyVGrid(columns: dynamicTypeSize.isAccessibilitySize ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
                 ForEach(model.visibleTopics) { topic in topicButton(topic) }
                 Button {
@@ -142,14 +142,14 @@ struct LearnTodayScreen: View {
     private func topicLabel(_ title: String, subtitle: String?, selected: Bool) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 3) {
-                Text(title).font(.subheadline.weight(.medium))
+                Text(title).font(.leu(.subheadline, weight: .medium))
                 if let subtitle {
-                    Text(subtitle.uppercased()).font(.caption2.weight(.semibold)).tracking(1.1)
+                    Text(subtitle.uppercased()).font(.leu(.caption2, weight: .semibold)).tracking(1.1)
                         
                 }
             }
             Spacer(minLength: 8)
-            if selected { Image(systemName: "checkmark").font(.caption.weight(.bold)) }
+            if selected { Image(systemName: "checkmark").font(.leu(.caption, weight: .bold)) }
         }
         .padding(.horizontal, 14)
         .frame(minHeight: 55)
@@ -172,7 +172,7 @@ struct LearnTodayScreen: View {
     private var timePicker: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("TIME")
-                .font(.caption.weight(.semibold)).tracking(1.8).foregroundStyle(LeuDesign.studyContinueSecondary)
+                .font(.leu(.caption, weight: .semibold)).tracking(1.8).foregroundStyle(LeuDesign.studyContinueSecondary)
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: dynamicTypeSize.isAccessibilitySize ? 2 : 4), spacing: 8) {
                 ForEach([5, 10, 20, 30], id: \.self) { minutes in
                     let selected = selectedMinutes == minutes
@@ -182,7 +182,7 @@ struct LearnTodayScreen: View {
                     } label: {
                         VStack(spacing: 1) {
                             Text("\(minutes)").leuScaledFont(21, weight: .medium, design: .serif).monospacedDigit()
-                            Text("MIN").font(.caption2.weight(.semibold)).tracking(1.2)
+                            Text("MIN").font(.leu(.caption2, weight: .semibold)).tracking(1.2)
                         }
                         .frame(maxWidth: .infinity, minHeight: 52)
                         .foregroundStyle(selected ? LeuDesign.onSignal : LeuDesign.textPrimary)
@@ -205,7 +205,7 @@ struct LearnTodayScreen: View {
                 HStack {
                     Text("Start study session").fixedSize(horizontal: false, vertical: true)
                     Spacer()
-                    if !dynamicTypeSize.isAccessibilitySize { Text("~\(selectedMinutes) min").font(.callout.monospacedDigit()) }
+                    if !dynamicTypeSize.isAccessibilitySize { Text("~\(selectedMinutes) min").font(.leu(.callout).monospacedDigit()) }
                     Image(systemName: "arrow.right")
                 }
                 .frame(maxWidth: .infinity)
@@ -216,7 +216,7 @@ struct LearnTodayScreen: View {
 
             if !hasStudyMaterial {
                 Text(model.isIndexing ? "Preparing source-bound study material…" : "No reliable study material matches this subject yet.")
-                    .font(.footnote).foregroundStyle(LeuDesign.studyContinueSecondary)
+                    .font(.leu(.footnote)).foregroundStyle(LeuDesign.studyContinueSecondary)
             }
         }
     }
@@ -230,7 +230,7 @@ struct LearnTodayScreen: View {
     private var indexingStatus: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text(model.indexingLabel ?? "Preparing study material").font(.callout)
+                Text(model.indexingLabel ?? "Preparing study material").font(.leu(.callout))
                 Spacer()
                 Text("\(Int(model.indexingProgress * 100))%").monospacedDigit()
             }
@@ -242,10 +242,10 @@ struct LearnTodayScreen: View {
     private var labsSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("RECONSTRUCTION LABS")
-                .font(.caption.weight(.bold)).tracking(1.4)
+                .font(.leu(.caption, weight: .bold)).tracking(1.4)
                 .foregroundStyle(LeuDesign.studyLabsSecondary)
             Text("Rebuild a system from memory.")
-                .font(.title2.weight(.bold))
+                .font(.leu(.title2, weight: .bold))
                 .foregroundStyle(LeuDesign.studyLabsForeground)
                 .fixedSize(horizontal: false, vertical: true)
             VStack(spacing: 0) {
@@ -253,13 +253,13 @@ struct LearnTodayScreen: View {
                     Button { model.activeLab = lab } label: {
                         HStack(alignment: .firstTextBaseline, spacing: 12) {
                             Text(String(format: "%02d", index + 1))
-                                .font(.callout.monospacedDigit().weight(.semibold))
+                                .font(.leu(.callout).monospacedDigit().weight(.semibold))
                                 .foregroundStyle(LeuDesign.signal)
-                            Text(lab.title).font(.body.weight(.medium))
+                            Text(lab.title).font(.leu(.body, weight: .medium))
                                 .foregroundStyle(LeuDesign.studyLabsForeground)
                                 .fixedSize(horizontal: false, vertical: true)
                             Spacer(minLength: 0)
-                            Image(systemName: "arrow.right").font(.callout)
+                            Image(systemName: "arrow.right").font(.leu(.callout))
                                 .foregroundStyle(LeuDesign.studyLabsSecondary)
                         }
                         .padding(.vertical, 15)

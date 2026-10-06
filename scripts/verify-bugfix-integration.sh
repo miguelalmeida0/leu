@@ -62,7 +62,7 @@ assert re.search(r'Ran 55 tests? in ',log) and log.rstrip().endswith('OK'), 'Sav
 print('Reusing saved 55/55 contrast result.')
 PY
 else
-  python3 scripts/test-night-field-contrast.py > "$run/contrast.log" 2>&1
+  python3 scripts/test-felt-contrast.py > "$run/contrast.log" 2>&1
 fi
 core_current() {
   python3 - "$run" <<'PY'

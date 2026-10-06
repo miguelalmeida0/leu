@@ -27,42 +27,42 @@ struct VoiceSettingsSheet: View {
 
     private var intro: some View {
         VStack(alignment: .leading, spacing: 7) {
-            Text("TECHNICAL READING").font(.caption.weight(.bold)).tracking(1.7).foregroundStyle(ShelfTheme.accent)
-            Text("Leu speaks the material, not the PDF artifacts.").font(.system(.title2, design: .serif))
+            Text("TECHNICAL READING").font(.leu(.caption, weight: .bold)).tracking(1.7).foregroundStyle(ShelfTheme.accent)
+            Text("Leu speaks the material, not the PDF artifacts.").font(.leu(.title2, serif: true))
             Text("Your PDF stays unchanged. Leu quietly cleans extraction noise and compiles symbols, code and technical terms into a separate spoken representation.")
-                .font(.callout).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
         }
     }
 
     private var voices: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Voice").font(.headline)
+            Text("Voice").font(.leu(.headline))
             Button("Automatic · best installed voice") { speech.selectAutomaticVoice() }.frame(minHeight: 44)
             ForEach(speech.availableVoices.prefix(16)) { voice in
                 HStack(spacing: 12) {
                     Button { speech.selectVoice(voice) } label: {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(voice.name).foregroundStyle(ShelfTheme.text)
-                            Text("\(voice.quality.title) · \(voice.language)").font(.caption).foregroundStyle(ShelfTheme.secondary)
+                            Text("\(voice.quality.title) · \(voice.language)").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                         }
                         Spacer()
                         if speech.selectedVoice?.id == voice.id { Image(systemName: "checkmark").foregroundStyle(ShelfTheme.accent) }
                     }.buttonStyle(.plain)
-                    Button("Preview") { speech.previewVoice(voice) }.font(.callout).foregroundStyle(ShelfTheme.accent)
+                    Button("Preview") { speech.previewVoice(voice) }.font(.leu(.callout)).foregroundStyle(ShelfTheme.accent)
                 }
                 .frame(minHeight: 48)
                 Divider().overlay(ShelfTheme.line)
             }
             if !speech.availableVoices.contains(where: { $0.quality != .standard }) {
                 Text("Only Standard English voices are currently installed. Enhanced or Premium Apple voices, when installed in iOS, are preferred automatically.")
-                    .font(.footnote).foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.footnote)).foregroundStyle(ShelfTheme.secondary)
             }
         }
     }
 
     private var speed: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Speed").font(.headline)
+            Text("Speed").font(.leu(.headline))
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach([0.8, 0.9, 1.0, 1.1, 1.25, 1.5, 1.75, 2.0], id: \.self) { value in
@@ -72,14 +72,14 @@ struct VoiceSettingsSheet: View {
                 }
             }
             Text("Dense code and formulas are automatically read slightly more deliberately than ordinary prose.")
-                .font(.footnote).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.footnote)).foregroundStyle(ShelfTheme.secondary)
         }
     }
 
     private var pronunciation: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Pronunciation overrides").font(.headline)
-            Text("Your overrides win everywhere and stay on this iPhone.").font(.footnote).foregroundStyle(ShelfTheme.secondary)
+            Text("Pronunciation overrides").font(.leu(.headline))
+            Text("Your overrides win everywhere and stay on this iPhone.").font(.leu(.footnote)).foregroundStyle(ShelfTheme.secondary)
             LeuTextField("Written term, e.g. PostgreSQL", text: $pronunciationDisplay).textInputAutocapitalization(.never)
             LeuTextField("Speak as…", text: $pronunciationSpoken)
             Button("Save pronunciation") {
@@ -96,14 +96,14 @@ struct VoiceSettingsSheet: View {
 
     private var diagnostics: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text("Playback").font(.headline)
-            if let error = speech.playbackError { Text(error).font(.callout) }
+            Text("Playback").font(.leu(.headline))
+            if let error = speech.playbackError { Text(error).font(.leu(.callout)) }
             if let latency = speech.lastStartLatencyMilliseconds {
-                Text(String(format: "Last measured request → synthesizer-start: %.0f ms", latency)).font(.footnote).monospacedDigit().foregroundStyle(ShelfTheme.secondary)
+                Text(String(format: "Last measured request → synthesizer-start: %.0f ms", latency)).font(.leu(.footnote)).monospacedDigit().foregroundStyle(ShelfTheme.secondary)
             } else {
-                Text("Playback-start latency is measured when speech begins on this device.").font(.footnote).foregroundStyle(ShelfTheme.secondary)
+                Text("Playback-start latency is measured when speech begins on this device.").font(.leu(.footnote)).foregroundStyle(ShelfTheme.secondary)
             }
-            Text("No paid speech API or cloud voice service is required.").font(.footnote).foregroundStyle(ShelfTheme.secondary)
+            Text("No paid speech API or cloud voice service is required.").font(.leu(.footnote)).foregroundStyle(ShelfTheme.secondary)
         }
     }
 

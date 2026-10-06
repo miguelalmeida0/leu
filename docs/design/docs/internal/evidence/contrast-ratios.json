@@ -1,0 +1,738 @@
+[
+  {
+    "foreground": "textPrimary",
+    "surface": "surfacePrimary",
+    "minimum": 7.0,
+    "foregroundRGB": [
+      36,
+      48,
+      31
+    ],
+    "surfaceRGB": [
+      182,
+      198,
+      144
+    ],
+    "ratio": 7.557671218617704
+  },
+  {
+    "foreground": "textPrimary",
+    "surface": "surfaceSecondary",
+    "minimum": 7.0,
+    "foregroundRGB": [
+      36,
+      48,
+      31
+    ],
+    "surfaceRGB": [
+      195,
+      209,
+      159
+    ],
+    "ratio": 8.527552879015044
+  },
+  {
+    "foreground": "textPrimary",
+    "surface": "surfaceRaised",
+    "minimum": 7.0,
+    "foregroundRGB": [
+      36,
+      48,
+      31
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 12.274932059104383
+  },
+  {
+    "foreground": "textSecondary",
+    "surface": "surfacePrimary",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      60,
+      74,
+      51
+    ],
+    "surfaceRGB": [
+      182,
+      198,
+      144
+    ],
+    "ratio": 5.167672220742713
+  },
+  {
+    "foreground": "textSecondary",
+    "surface": "surfaceSecondary",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      60,
+      74,
+      51
+    ],
+    "surfaceRGB": [
+      195,
+      209,
+      159
+    ],
+    "ratio": 5.830843503120863
+  },
+  {
+    "foreground": "textSecondary",
+    "surface": "surfaceRaised",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      60,
+      74,
+      51
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 8.393170803339034
+  },
+  {
+    "foreground": "textTertiary",
+    "surface": "surfacePrimary",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      68,
+      83,
+      58
+    ],
+    "surfaceRGB": [
+      182,
+      198,
+      144
+    ],
+    "ratio": 4.508066620630467
+  },
+  {
+    "foreground": "textTertiary",
+    "surface": "surfaceSecondary",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      68,
+      83,
+      58
+    ],
+    "surfaceRGB": [
+      195,
+      209,
+      159
+    ],
+    "ratio": 5.086590217744367
+  },
+  {
+    "foreground": "textTertiary",
+    "surface": "surfaceRaised",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      68,
+      83,
+      58
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 7.321860118741214
+  },
+  {
+    "foreground": "onSignal",
+    "surface": "signal",
+    "minimum": 7,
+    "foregroundRGB": [
+      248,
+      241,
+      222
+    ],
+    "surfaceRGB": [
+      36,
+      48,
+      31
+    ],
+    "ratio": 12.274932059104383
+  },
+  {
+    "foreground": "onSignal",
+    "surface": "signalPressed",
+    "minimum": 7,
+    "foregroundRGB": [
+      248,
+      241,
+      222
+    ],
+    "surfaceRGB": [
+      52,
+      66,
+      44
+    ],
+    "ratio": 9.496097449490051
+  },
+  {
+    "foreground": "menuForeground",
+    "surface": "menuSurface",
+    "minimum": 7,
+    "foregroundRGB": [
+      36,
+      48,
+      31
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 12.274932059104383
+  },
+  {
+    "foreground": "menuSecondary",
+    "surface": "menuSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      60,
+      74,
+      51
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 8.393170803339034
+  },
+  {
+    "foreground": "fieldForeground",
+    "surface": "fieldSurface",
+    "minimum": 7,
+    "foregroundRGB": [
+      36,
+      48,
+      31
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 12.274932059104383
+  },
+  {
+    "foreground": "fieldPlaceholder",
+    "surface": "fieldSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      86,
+      101,
+      63
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 5.595842192793025
+  },
+  {
+    "foreground": "disabledForeground",
+    "surface": "disabledSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      79,
+      94,
+      65
+    ],
+    "surfaceRGB": [
+      203,
+      214,
+      174
+    ],
+    "ratio": 4.574665906311178
+  },
+  {
+    "foreground": "successForeground",
+    "surface": "success",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      248,
+      241,
+      222
+    ],
+    "surfaceRGB": [
+      77,
+      106,
+      60
+    ],
+    "ratio": 5.411368532621242
+  },
+  {
+    "foreground": "warningForeground",
+    "surface": "warning",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      36,
+      48,
+      31
+    ],
+    "surfaceRGB": [
+      231,
+      184,
+      67
+    ],
+    "ratio": 7.469146671193635
+  },
+  {
+    "foreground": "dangerForeground",
+    "surface": "danger",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      248,
+      241,
+      222
+    ],
+    "surfaceRGB": [
+      163,
+      52,
+      42
+    ],
+    "ratio": 6.044316048089677
+  },
+  {
+    "foreground": "readingForeground",
+    "surface": "readingSurface",
+    "minimum": 7,
+    "foregroundRGB": [
+      31,
+      30,
+      27
+    ],
+    "surfaceRGB": [
+      251,
+      248,
+      242
+    ],
+    "ratio": 15.725524595207514
+  },
+  {
+    "foreground": "readingSecondary",
+    "surface": "readingSurface",
+    "minimum": 7,
+    "foregroundRGB": [
+      86,
+      83,
+      75
+    ],
+    "surfaceRGB": [
+      251,
+      248,
+      242
+    ],
+    "ratio": 7.244586084116668
+  },
+  {
+    "foreground": "signalText",
+    "surface": "readingSurface",
+    "minimum": 7,
+    "foregroundRGB": [
+      36,
+      48,
+      31
+    ],
+    "surfaceRGB": [
+      251,
+      248,
+      242
+    ],
+    "ratio": 13.054312057375975
+  },
+  {
+    "foreground": "redThreadText",
+    "surface": "surfacePrimary",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      142,
+      31,
+      23
+    ],
+    "surfaceRGB": [
+      182,
+      198,
+      144
+    ],
+    "ratio": 4.862946255231617
+  },
+  {
+    "foreground": "redThread",
+    "surface": "surfaceRaised",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      179,
+      38,
+      30
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 5.798237933178023
+  },
+  {
+    "foreground": "eyebrowOnPaper",
+    "surface": "surfaceRaised",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      122,
+      94,
+      28
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 5.406741594002876
+  },
+  {
+    "foreground": "eyebrowOnFelt",
+    "surface": "surfacePrimary",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      94,
+      71,
+      20
+    ],
+    "surfaceRGB": [
+      182,
+      198,
+      144
+    ],
+    "ratio": 4.804261375906663
+  },
+  {
+    "foreground": "signal",
+    "surface": "fieldSurface",
+    "minimum": 3,
+    "foregroundRGB": [
+      36,
+      48,
+      31
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 12.274932059104383
+  },
+  {
+    "foreground": "held",
+    "surface": "surfaceRaised",
+    "minimum": 3,
+    "foregroundRGB": [
+      77,
+      106,
+      60
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 5.411368532621242
+  },
+  {
+    "foreground": "held",
+    "surface": "surfacePrimary",
+    "minimum": 3,
+    "foregroundRGB": [
+      77,
+      106,
+      60
+    ],
+    "surfaceRGB": [
+      182,
+      198,
+      144
+    ],
+    "ratio": 3.331777643688977
+  },
+  {
+    "foreground": "fading",
+    "surface": "surfaceRaised",
+    "minimum": 3,
+    "foregroundRGB": [
+      198,
+      90,
+      62
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 3.7761036213784878
+  },
+  {
+    "foreground": "untested",
+    "surface": "surfaceRaised",
+    "minimum": 3,
+    "foregroundRGB": [
+      125,
+      138,
+      102
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 3.268535626976462
+  },
+  {
+    "foreground": "separator",
+    "surface": "fieldSurface",
+    "minimum": 3,
+    "foregroundRGB": [
+      92,
+      107,
+      71
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 5.104836642824148
+  },
+  {
+    "foreground": "separator",
+    "surface": "surfacePrimary",
+    "minimum": 3,
+    "foregroundRGB": [
+      92,
+      107,
+      71
+    ],
+    "surfaceRGB": [
+      182,
+      198,
+      144
+    ],
+    "ratio": 3.143046070271452
+  },
+  {
+    "foreground": "separator",
+    "surface": "surfaceSecondary",
+    "minimum": 3,
+    "foregroundRGB": [
+      92,
+      107,
+      71
+    ],
+    "surfaceRGB": [
+      195,
+      209,
+      159
+    ],
+    "ratio": 3.5463955483263807
+  },
+  {
+    "foreground": "separator",
+    "surface": "menuSurface",
+    "minimum": 3,
+    "foregroundRGB": [
+      92,
+      107,
+      71
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 5.104836642824148
+  },
+  {
+    "foreground": "danger",
+    "surface": "menuSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      163,
+      52,
+      42
+    ],
+    "surfaceRGB": [
+      248,
+      241,
+      222
+    ],
+    "ratio": 6.044316048089677
+  },
+  {
+    "foreground": "studyContinueForeground",
+    "surface": "studyContinueSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      248,
+      241,
+      222
+    ],
+    "surfaceRGB": [
+      74,
+      106,
+      138
+    ],
+    "ratio": 5.007877765798585
+  },
+  {
+    "foreground": "studyContinueSecondary",
+    "surface": "studyContinueSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      241,
+      234,
+      218
+    ],
+    "surfaceRGB": [
+      74,
+      106,
+      138
+    ],
+    "ratio": 4.710407684775516
+  },
+  {
+    "foreground": "studyFadingForeground",
+    "surface": "studyFadingSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      248,
+      241,
+      222
+    ],
+    "surfaceRGB": [
+      169,
+      75,
+      53
+    ],
+    "ratio": 4.974360482303148
+  },
+  {
+    "foreground": "studyFadingSecondary",
+    "surface": "studyFadingSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      246,
+      235,
+      221
+    ],
+    "surfaceRGB": [
+      169,
+      75,
+      53
+    ],
+    "ratio": 4.765484983168501
+  },
+  {
+    "foreground": "studyBlindSpotForeground",
+    "surface": "studyBlindSpotSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      36,
+      48,
+      31
+    ],
+    "surfaceRGB": [
+      235,
+      181,
+      163
+    ],
+    "ratio": 7.690434054486908
+  },
+  {
+    "foreground": "studyBlindSpotSecondary",
+    "surface": "studyBlindSpotSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      60,
+      74,
+      51
+    ],
+    "surfaceRGB": [
+      235,
+      181,
+      163
+    ],
+    "ratio": 5.258450821587139
+  },
+  {
+    "foreground": "studyLabsForeground",
+    "surface": "studyLabsSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      36,
+      48,
+      31
+    ],
+    "surfaceRGB": [
+      200,
+      214,
+      166
+    ],
+    "ratio": 8.978195873903655
+  },
+  {
+    "foreground": "studyLabsSecondary",
+    "surface": "studyLabsSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      60,
+      74,
+      51
+    ],
+    "surfaceRGB": [
+      200,
+      214,
+      166
+    ],
+    "ratio": 6.138977479685155
+  },
+  {
+    "foreground": "signal",
+    "surface": "studyLabsSurface",
+    "minimum": 4.5,
+    "foregroundRGB": [
+      36,
+      48,
+      31
+    ],
+    "surfaceRGB": [
+      200,
+      214,
+      166
+    ],
+    "ratio": 8.978195873903655
+  },
+  {
+    "foreground": "separator",
+    "surface": "studyLabsSurface",
+    "minimum": 3,
+    "foregroundRGB": [
+      92,
+      107,
+      71
+    ],
+    "surfaceRGB": [
+      200,
+      214,
+      166
+    ],
+    "ratio": 3.7338066771263265
+  }
+]

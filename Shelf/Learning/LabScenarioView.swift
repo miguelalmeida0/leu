@@ -9,7 +9,7 @@ struct LabScenarioView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("PREDICT").font(.caption.weight(.bold)).tracking(1.8).foregroundStyle(ShelfTheme.accent)
+            Text("PREDICT").font(.leu(.caption, weight: .bold)).tracking(1.8).foregroundStyle(ShelfTheme.accent)
             setup
             Text(lab.scenario.prompt).font(LearningTokens.Typography.compactTitle)
             VStack(spacing: 9) {
@@ -72,11 +72,11 @@ struct LabScenarioView: View {
     private var reveal: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(selectedID == lab.scenario.correctChoiceID ? "Prediction holds" : "Compare the mechanism")
-                .font(.headline)
+                .font(.leu(.headline))
                 .foregroundStyle(selectedID == lab.scenario.correctChoiceID ? ShelfTheme.reviewAccent : ShelfTheme.text)
-            Text(lab.scenario.explanation).font(.callout).foregroundStyle(ShelfTheme.secondary)
+            Text(lab.scenario.explanation).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
             if let correct = lab.scenario.choices.first(where: { $0.id == lab.scenario.correctChoiceID }) {
-                Text("Correct outcome: \(correct.text)").font(.callout.weight(.semibold)).foregroundStyle(ShelfTheme.text)
+                Text("Correct outcome: \(correct.text)").font(.leu(.callout, weight: .semibold)).foregroundStyle(ShelfTheme.text)
             }
         }
         .transition(reduceMotion ? .opacity : .opacity.combined(with: .move(edge: .top)))

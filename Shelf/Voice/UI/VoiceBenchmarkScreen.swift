@@ -36,7 +36,7 @@ struct VoiceBenchmarkScreen: View {
                         Spacer()
                         Button("Stop") { stop(); status = "Stopped" }.frame(minHeight: 44)
                     }
-                    Text(status).font(.footnote)
+                    Text(status).font(.leu(.footnote))
                     if voiceID == "supertonic" {
                         Text("Supertonic 3 · F1 · model-defined sample rate · actual speed \(synthesisSpeed, specifier: "%.2f")×")
                     } else if let voice = voices.first(where: { $0.id == voiceID }) {

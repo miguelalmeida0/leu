@@ -68,10 +68,10 @@ struct ReaderBottomBar: View {
             } label: {
                 VStack(spacing: 1) {
                     Text("\(scrubbing ? Int(scrubValue.rounded()) + 1 : model.pageNumber) / \(model.book.pageCount)")
-                        .font(.callout.monospacedDigit().weight(.semibold))
+                        .font(.leu(.callout).monospacedDigit().weight(.semibold))
                     if let section = scrubbing ? previewSectionTitle : model.currentOutlineTitle {
                         Text(section)
-                            .font(.caption2)
+                            .font(.leu(.caption2))
                             .foregroundStyle(ShelfTheme.secondary)
                             .lineLimit(1)
                     }
@@ -182,9 +182,9 @@ struct ReaderBottomBar: View {
         HStack(spacing: 8) {
             Image(systemName: "clock.fill").foregroundStyle(ShelfTheme.accent)
             Text("\(plan.requestedMinutes) min · through p. \(plan.endPage + 1)")
-                .font(.caption.weight(.semibold))
+                .font(.leu(.caption, weight: .semibold))
             Spacer()
-            Button("End") { model.activeTimedPlan = nil }.font(.caption)
+            Button("End") { model.activeTimedPlan = nil }.font(.leu(.caption))
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
@@ -196,10 +196,10 @@ struct ReaderBottomBar: View {
             HStack(spacing: 9) {
                 Image(systemName: "arrow.uturn.backward")
                 Text("Back to p. \(page + 1)")
-                    .font(.system(.caption, design: .serif).weight(.semibold))
+                    .font(.leu(.caption, serif: true, weight: .semibold))
                 Spacer()
                 Text("Return")
-                    .font(.caption.weight(.medium))
+                    .font(.leu(.caption, weight: .medium))
             }
             .foregroundStyle(ShelfTheme.action)
             .padding(.horizontal, 12)
@@ -214,12 +214,12 @@ struct ReaderBottomBar: View {
     private func savedStatus(_ message: String) -> some View {
         HStack {
             Text(message)
-                .font(.caption)
+                .font(.leu(.caption))
                 .foregroundStyle(ShelfTheme.accent)
             Spacer()
             if model.canUndo {
                 Button("Undo") { Task { await model.undo() } }
-                    .font(.caption)
+                    .font(.leu(.caption))
             }
             Button { model.savedMessage = nil } label: {
                 Image(systemName: "xmark").frame(width: 44, height: 44)
@@ -239,7 +239,7 @@ struct ReaderBottomBar: View {
     private func toolLabel(_ symbol: String, _ title: String, active: Bool) -> some View {
         VStack(spacing: 5) {
             Image(systemName: symbol).font(.system(size: 18))
-            Text(title).font(.system(size: 11, weight: .medium, design: .serif))
+            Text(title).font(LeuDesign.editorial(11, weight: .medium))
         }
         .frame(maxWidth: .infinity)
         .frame(minHeight: 53)

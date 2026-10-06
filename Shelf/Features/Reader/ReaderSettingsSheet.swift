@@ -53,20 +53,20 @@ struct ReaderSettingsSheet: View {
     private var typography: some View {
         settingGroup("READ MODE TEXT", note: "Read text size is independent from Original PDF zoom.") {
             HStack(alignment: .center, spacing: 10) {
-                Text("Aa").font(.system(size: 15, design: .serif)).foregroundStyle(ShelfTheme.secondary)
+                Text("Aa").font(LeuDesign.editorial(15)).foregroundStyle(ShelfTheme.secondary)
                 ReaderTrackingSlider(value: $textSize, range: 0.8...1.6, step: 0.1,
                     label: "Read text size", identifier: "settings-read-text-slider",
                     valueDescription: { "\(Int(($0 * 100).rounded()))%" }) { editing in
                         editingSlider = editing
                         if !editing { preferences.readTextScale = textSize }
                     }
-                Text("Aa").font(.system(size: 23, design: .serif)).foregroundStyle(ShelfTheme.text)
+                Text("Aa").font(LeuDesign.editorial(23)).foregroundStyle(ShelfTheme.text)
             }
             HStack {
-                Text("Text size").font(.system(.subheadline, design: .serif))
+                Text("Text size").font(.leu(.subheadline, serif: true))
                 Spacer()
                 Text("\(Int((textSize * 100).rounded()))%")
-                    .font(.caption.monospacedDigit())
+                    .font(.leu(.caption).monospacedDigit())
                     .foregroundStyle(ShelfTheme.secondary)
                     .accessibilityIdentifier("settings-read-text-value")
             }
@@ -90,8 +90,8 @@ struct ReaderSettingsSheet: View {
 
             HStack(spacing: 12) {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("Keep screen awake").font(.system(.body, design: .serif))
-                    Text("Useful during long reading sessions.").font(.caption).foregroundStyle(ShelfTheme.secondary)
+                    Text("Keep screen awake").font(.leu(.body, serif: true))
+                    Text("Useful during long reading sessions.").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                 }
                 Spacer(minLength: 12)
                 ShelfSwitch(isOn: $preferences.keepAwake, identifier: "settings-keep-awake", label: "Keep screen awake") { value in
@@ -111,11 +111,11 @@ struct ReaderSettingsSheet: View {
                     .overlay { RoundedRectangle(cornerRadius: 5).stroke(preferences.readerSurround == surround ? ShelfTheme.accent : ShelfTheme.line, lineWidth: preferences.readerSurround == surround ? 1.5 : 0.7) }
                     .overlay(alignment: .topTrailing) {
                         if preferences.readerSurround == surround {
-                            Image(systemName: "checkmark.circle.fill").font(.caption).foregroundStyle(ShelfTheme.accent).padding(6)
+                            Image(systemName: "checkmark.circle.fill").font(.leu(.caption)).foregroundStyle(ShelfTheme.accent).padding(6)
                         }
                     }
                 Text(surround.title.replacingOccurrences(of: " surround", with: ""))
-                    .font(.caption)
+                    .font(.leu(.caption))
                     .foregroundStyle(preferences.readerSurround == surround ? ShelfTheme.text : ShelfTheme.secondary)
             }
         }
@@ -128,7 +128,7 @@ struct ReaderSettingsSheet: View {
         VStack(alignment: .leading, spacing: 13) {
             Text(title).font(ShelfTheme.eyebrow()).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
             content()
-            Text(note).font(.caption).foregroundStyle(ShelfTheme.secondary).fixedSize(horizontal: false, vertical: true)
+            Text(note).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary).fixedSize(horizontal: false, vertical: true)
         }
         .padding(.bottom, 22)
         .overlay(alignment: .bottom) { ShelfTheme.line.frame(height: 0.5) }

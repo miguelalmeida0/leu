@@ -65,7 +65,7 @@ private struct ContinuousReadPage: View {
             }
             Spacer(minLength: 12)
             Text("Page \(index + 1) of \(model.book.pageCount)")
-                .font(.caption.monospacedDigit())
+                .font(.leu(.caption).monospacedDigit())
                 .foregroundStyle(LeuDesign.readingSecondary)
                 .padding(.horizontal, 24).padding(.bottom, 16)
                 .accessibilityIdentifier("read-boundary-\(index)")

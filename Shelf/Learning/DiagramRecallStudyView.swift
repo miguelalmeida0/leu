@@ -10,7 +10,7 @@ struct DiagramRecallStudyView: View {
         if let object = model.currentObject,
            let mask = model.snapshot.masks.first(where: { $0.learningObjectID == object.id }) {
             VStack(alignment: .leading, spacing: 18) {
-                Text("Diagram recall").font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
+                Text("Diagram recall").font(.leu(.caption, weight: .semibold)).foregroundStyle(ShelfTheme.accent)
                 Text(mask.label ?? object.title).font(LearningTokens.Typography.title)
                 Text(revealed ? "Regions revealed. Compare what you predicted." : "Recall what belongs in the masked regions before revealing.")
                     .foregroundStyle(ShelfTheme.secondary)

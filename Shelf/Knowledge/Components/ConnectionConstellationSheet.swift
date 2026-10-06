@@ -12,9 +12,9 @@ struct ConnectionConstellationSheet: View {
     var body: some View {
         ShelfSheet(title: "Connections") {
             VStack(spacing: 18) {
-                Text("Follow an idea").font(.system(.title2, design: .serif))
+                Text("Follow an idea").font(.leu(.title2, serif: true))
                 Text(source.sectionTitle ?? String(source.text.prefix(56)))
-                    .font(.callout.weight(.semibold)).foregroundStyle(ShelfTheme.accent).lineLimit(2)
+                    .font(.leu(.callout, weight: .semibold)).foregroundStyle(ShelfTheme.accent).lineLimit(2)
                 GeometryReader { proxy in
                     ZStack {
                         Canvas { context, size in
@@ -33,7 +33,7 @@ struct ConnectionConstellationSheet: View {
                 }
                 .frame(minHeight: 360)
                 Text("The list in Connections remains the accessible equivalent of this view.")
-                    .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
             }
             .padding(ShelfTheme.gutter)
         }
@@ -41,7 +41,7 @@ struct ConnectionConstellationSheet: View {
 
     private var anchor: some View {
         Text(source.sectionTitle ?? "Current passage")
-            .font(.system(.headline, design: .serif)).multilineTextAlignment(.center).lineLimit(3)
+            .font(.leu(.headline, serif: true)).multilineTextAlignment(.center).lineLimit(3)
             .padding(14).frame(width: 150).frame(minHeight: 78)
             .background(ShelfTheme.raised, in: RoundedRectangle(cornerRadius: 18))
             .overlay { RoundedRectangle(cornerRadius: 18).stroke(ShelfTheme.accent) }
@@ -53,8 +53,8 @@ struct ConnectionConstellationSheet: View {
         } label: {
             VStack(spacing: 4) {
                 Text(item.passage.sectionTitle ?? knowledge.title(for: item.passage.documentID))
-                    .font(.caption.weight(.semibold)).multilineTextAlignment(.center).lineLimit(2)
-                Text(knowledge.title(for: item.passage.documentID)).font(.caption2).foregroundStyle(ShelfTheme.secondary).lineLimit(1)
+                    .font(.leu(.caption, weight: .semibold)).multilineTextAlignment(.center).lineLimit(2)
+                Text(knowledge.title(for: item.passage.documentID)).font(.leu(.caption2)).foregroundStyle(ShelfTheme.secondary).lineLimit(1)
             }
             .padding(9).frame(width: 126).frame(minHeight: 62)
             .background(ShelfTheme.surface, in: RoundedRectangle(cornerRadius: 14))

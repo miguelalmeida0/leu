@@ -17,12 +17,12 @@ struct ReaderTopBar: View {
 
                 VStack(spacing: 1) {
                     Text(model.book.title)
-                        .font(.system(size: 14, weight: .medium, design: .serif))
+                        .font(LeuDesign.editorial(14, weight: .medium))
                         .lineLimit(1)
                         .foregroundStyle(ShelfTheme.text)
                     if let section = model.currentOutlineTitle {
                         Text(section)
-                            .font(.caption2)
+                            .font(.leu(.caption2))
                             .foregroundStyle(ShelfTheme.secondary)
                             .lineLimit(1)
                     }
@@ -77,10 +77,10 @@ struct ReaderTopBar: View {
                     HStack(spacing: 7) {
                         Image(systemName: "arrow.uturn.backward")
                         Text(model.returnLabel)
-                            .font(.system(.caption, design: .serif).weight(.semibold))
+                            .font(.leu(.caption, serif: true, weight: .semibold))
                         Spacer()
                         Text("Return")
-                            .font(.caption2.weight(.medium))
+                            .font(.leu(.caption2, weight: .medium))
                             .foregroundStyle(ShelfTheme.secondary)
                     }
                     .foregroundStyle(ShelfTheme.action)

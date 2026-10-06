@@ -12,7 +12,7 @@ printf '\n=== Leu Connected Knowledge + Voice privacy boundary ===\n'; python3 s
 printf '\n=== Leu V24 semantic/emotional/neural release contract ===\n'; python3 scripts/check-v24-contract.py
 printf '\n=== Leu native UI test contract audit ===\n'; python3 scripts/check-ui-test-contract.py; python3 scripts/check-study-interactions.py; python3 scripts/test-study-repair-tools.py
 printf '\n=== Leu SwiftUI compile-contract audit ===\n'; python3 scripts/check-swiftui-compile-contract.py; python3 scripts/test-settings-compile-repair.py
-printf '\n=== Leu Night Field design contract ===\n'; python3 scripts/check-night-field.py
+printf '\n=== Leu Felt design contract ===\n'; python3 scripts/check-felt.py
 printf '\n=== Leu V24.2 interaction and recovery source contracts ===\n'; python3 scripts/check-v242-interactions.py; python3 scripts/test-v242-interactions.py
 printf '\n=== Leu V24.3 root compile source checks ===\n'; python3 scripts/check-v243-root-compile.py; python3 scripts/test-v243-root-compile.py
 printf '\n=== Leu V24.4 Lens compile source checks ===\n'; python3 scripts/check-v244-lens-compile.py; python3 scripts/test-v244-lens-compile.py
