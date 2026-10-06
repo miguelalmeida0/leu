@@ -15,14 +15,16 @@ struct ExplainLikeTenSheet: View {
     var body: some View {
         ShelfSheet(title: "Explain like I'm 10") {
             ScrollView {
-                VStack(alignment: .leading, spacing: 18) {
+                VStack(alignment: .leading, spacing: 22) {
                     header
                     passageDisclosure
                     body(for: controller.state)
                     diagnostics
                 }
-                .padding(ShelfTheme.gutter)
-                .frame(maxWidth: 660, alignment: .leading)
+                .padding(.horizontal, 24)
+                .padding(.vertical, 22)
+                .frame(maxWidth: 680, alignment: .leading)
+                .frame(maxWidth: .infinity)
             }
         }
         .onDisappear { onClose() }
@@ -30,9 +32,9 @@ struct ExplainLikeTenSheet: View {
     }
 
     private var header: some View {
-        Text(sourceLabel)
-            .font(ShelfTheme.eyebrow(10)).tracking(1.2)
-            .foregroundStyle(ShelfTheme.secondary)
+        Text(sourceLabel.uppercased())
+            .font(LeuDesign.eyebrow(11)).tracking(LeuDesign.eyebrowTracking)
+            .foregroundStyle(LeuDesign.eyebrowOnFelt)
             .accessibilityIdentifier("explain-source-label")
     }
 
@@ -47,7 +49,8 @@ struct ExplainLikeTenSheet: View {
                     Image(systemName: showingPassage ? "chevron.up" : "chevron.down").font(.leu(.caption2))
                 }
                 .font(.leu(.footnote, weight: .semibold))
-                .foregroundStyle(ShelfTheme.accent)
+                .foregroundStyle(LeuDesign.ink)
+                .underline()
                 .frame(minHeight: 44)
                 .contentShape([.interaction, .accessibility], Rectangle())
             }
@@ -55,11 +58,14 @@ struct ExplainLikeTenSheet: View {
             .accessibilityIdentifier("explain-toggle-passage")
             if showingPassage, let packet = controller.packet {
                 Text(verbatim: packet.selectionText)
-                    .font(.leu(.footnote, serif: true))
-                    .foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.body, serif: true))
+                    .lineSpacing(4)
+                    .foregroundStyle(LeuDesign.readingForeground)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.leading, 12)
-                    .overlay(alignment: .leading) { Rectangle().fill(ShelfTheme.line).frame(width: 2) }
+                    .padding(18)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(LeuDesign.readingSurface, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .shadow(color: LeuDesign.ink.opacity(0.10), radius: 8, x: 0, y: 4)
                     .accessibilityIdentifier("explain-original-passage")
             }
         }
@@ -100,26 +106,63 @@ struct ExplainLikeTenSheet: View {
     }
 
     private func explanation(_ record: ExplanationRecord) -> some View {
-        VStack(alignment: .leading, spacing: 16) {
-            ForEach(Array(record.candidate.blocks.enumerated()), id: \.offset) { index, block in
-                if block.kind == .example { Text("Illustration").font(.leu(.caption, weight: .semibold)) }
-                Text(verbatim: block.text)
-                    .font(blockFont(block.kind))
-                    .foregroundStyle(ShelfTheme.text)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .accessibilityIdentifier("explain-block-\(index)")
-            }
-            if let term = record.candidate.preservedTerm,
-               let meaning = record.candidate.preservedTermMeaning {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(verbatim: term).font(.leu(.callout, weight: .semibold)).foregroundStyle(ShelfTheme.text)
-                    Text(verbatim: meaning).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+        VStack(alignment: .leading, spacing: 18) {
+            VStack(alignment: .leading, spacing: 18) {
+                HStack(alignment: .center, spacing: 10) {
+                    Text("EXPLAINED LIKE YOU'RE")
+                        .font(LeuDesign.eyebrow(11)).tracking(LeuDesign.eyebrowTracking)
+                        .foregroundStyle(LeuDesign.ink)
+                    Spacer(minLength: 8)
+                    Text(level(record.mode))
+                        .font(.leu(.caption, weight: .bold))
+                        .foregroundStyle(LeuDesign.cream)
+                        .padding(.horizontal, 12).padding(.vertical, 6)
+                        .background(LeuDesign.ink, in: Capsule())
                 }
-                .accessibilityIdentifier("explain-term")
+                .accessibilityElement(children: .combine)
+                ForEach(Array(record.candidate.blocks.enumerated()), id: \.offset) { index, block in
+                    if block.kind == .example {
+                        StitchDivider()
+                        Text("Illustration").font(.leu(.caption, weight: .bold)).foregroundStyle(LeuDesign.ink)
+                    }
+                    Text(verbatim: block.text)
+                        .font(blockFont(block.kind))
+                        .tracking(block.kind == .plainMeaning ? -0.4 : 0)
+                        .foregroundStyle(LeuDesign.ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("explain-block-\(index)")
+                }
+                if let term = record.candidate.preservedTerm,
+                   let meaning = record.candidate.preservedTermMeaning {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(verbatim: term).font(.leu(.callout, weight: .bold)).foregroundStyle(LeuDesign.ink)
+                        Text(verbatim: meaning).font(.leu(.callout)).foregroundStyle(LeuDesign.ink)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .accessibilityIdentifier("explain-term")
+                }
             }
-            refinements
+            .padding(26)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(LeuDesign.butter, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .strokeBorder(LeuDesign.ink.opacity(0.4), style: StrokeStyle(lineWidth: 1.2, dash: [5, 4]))
+                    .padding(8)
+                    .accessibilityHidden(true)
+            }
+            .shadow(color: LeuDesign.ink.opacity(0.16), radius: 16, x: 0, y: 9)
             provenance(record)
+            refinements
+        }
+    }
+
+    /// The level the explanation is written at, said plainly.
+    private func level(_ mode: ExplanationMode) -> String {
+        switch mode {
+        case .standard: return "10"
+        case .evenSimpler: return "even simpler"
+        case .withExample: return "10, with an example"
         }
     }
 
@@ -144,43 +187,62 @@ struct ExplainLikeTenSheet: View {
 
     private func blockFont(_ kind: ExplanationBlock.Kind) -> Font {
         switch kind {
-        case .plainMeaning: return .system(.title3, design: .serif)
-        case .mechanism, .example: return .system(.body, design: .serif)
-        case .caveat: return .callout
+        case .plainMeaning: return LeuDesign.display(26)
+        case .mechanism, .example: return .leu(.body, weight: .semibold)
+        case .caveat: return .leu(.callout)
         }
     }
 
     private var refinements: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Button("Even simpler") { controller.evenSimpler() }
-                .buttonStyle(ShelfButtonStyle(filled: true))
-                .disabled(controller.isBusy)
-                .accessibilityIdentifier("explain-even-simpler")
-            Button("Show an example") { controller.showExample() }
-                .buttonStyle(.plain)
-                .font(.leu(.callout, weight: .semibold))
-                .foregroundStyle(ShelfTheme.accent)
-                .frame(minHeight: 44)
-                .contentShape([.interaction, .accessibility], Rectangle())
-                .disabled(controller.isBusy)
-                .accessibilityIdentifier("explain-show-example")
+            Text("WHAT NEXT")
+                .font(LeuDesign.eyebrow(11)).tracking(LeuDesign.eyebrowTracking)
+                .foregroundStyle(LeuDesign.eyebrowOnFelt)
+                .accessibilityAddTraits(.isHeader)
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 10) { refinementButtons }
+                VStack(alignment: .leading, spacing: 10) { refinementButtons }
+            }
         }
+    }
+
+    @ViewBuilder private var refinementButtons: some View {
+        Button("Even simpler") { controller.evenSimpler() }
+            .buttonStyle(LeuPrimaryButtonStyle(filled: true, pill: true))
+            .disabled(controller.isBusy)
+            .accessibilityIdentifier("explain-even-simpler")
+        Button("Show an example") { controller.showExample() }
+            .buttonStyle(LeuPrimaryButtonStyle(filled: false, pill: true))
+            .disabled(controller.isBusy)
+            .accessibilityIdentifier("explain-show-example")
+        Button("Back to reading", action: onClose)
+            .buttonStyle(LeuPrimaryButtonStyle(filled: false, pill: true))
     }
 
     /// Honest labelling. No confidence percentage and no "verified" badge.
     private func provenance(_ record: ExplanationRecord) -> some View {
-        Text(record.servedFromCache
-             ? "Saved on this iPhone from an earlier reading of this passage."
-             : "Written from this passage only, on this iPhone.")
-            .font(.leu(.caption))
-            .foregroundStyle(ShelfTheme.secondary)
-            .accessibilityIdentifier("explain-provenance")
-            .accessibilityValue(record.mode.rawValue)
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.leu(.subheadline))
+                .foregroundStyle(LeuDesign.ink)
+                .accessibilityHidden(true)
+            Text(record.servedFromCache
+                 ? "Saved on this iPhone from an earlier reading of this passage."
+                 : "Written from this passage only, on this iPhone.")
+                .font(.leu(.footnote, weight: .medium))
+                .foregroundStyle(LeuDesign.ink)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("explain-provenance")
+                .accessibilityValue(record.mode.rawValue)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(LeuDesign.feltLight, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
     }
 
     private func notice(title: String, detail: String, id: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(title).leuScaledFont(24, weight: .regular, design: .serif).foregroundStyle(ShelfTheme.text)
+            Text(title).font(LeuDesign.display(24)).foregroundStyle(LeuDesign.ink)
             Text(detail).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
