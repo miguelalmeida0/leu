@@ -4,6 +4,12 @@ import SwiftUI
 @MainActor
 struct ShelfApp: App {
     @State private var container = AppContainer()
+
+    init() {
+        // Gabarito and Literata must exist before the first frame resolves a font.
+        LeuType.registerFonts()
+    }
+
     var body: some Scene {
         WindowGroup {
             #if DEBUG
@@ -20,7 +26,8 @@ struct ShelfApp: App {
 
     private var application: some View {
             RootView(container: container)
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(.light)
+                .font(.leu(.body))
                 .tint(ShelfTheme.accent)
                 .onOpenURL { container.library.receive($0) }
     }

@@ -29,15 +29,15 @@ struct StudySessionScreen: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(model.activeSession?.mode == .interview ? "INTERVIEW" : "STUDY")
                     .font(ShelfTheme.eyebrow(9)).tracking(1.6).foregroundStyle(ShelfTheme.secondary)
-                Text(progressText).font(.system(.callout, design: .serif).monospacedDigit().weight(.medium))
+                Text(progressText).font(.leu(.callout, serif: true).monospacedDigit().weight(.medium))
                     .accessibilityIdentifier("study-progress")
                 Text(model.studySaveError != nil ? "Not saved" : (model.isSavingStudyState ? "Saving…" : "Saved"))
-                    .font(.caption2).foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.caption2)).foregroundStyle(ShelfTheme.secondary)
                     .accessibilityIdentifier("study-save-status")
             }
             Spacer()
             if let session = model.activeSession {
-                Text("~\(session.requestedMinutes) min").font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.secondary)
+                Text("~\(session.requestedMinutes) min").font(.leu(.callout, serif: true)).foregroundStyle(ShelfTheme.secondary)
             }
         }.padding(.horizontal, 12).frame(minHeight: 58)
     }

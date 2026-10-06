@@ -10,10 +10,10 @@ mkdir -p "$run"
 echo "Convergence evidence: $run"
 python3 scripts/sync-xcode-sources.py > "$run/membership.log" 2>&1
 python3 scripts/validate.py > "$run/validate.log" 2>&1
-python3 scripts/check-night-field.py > "$run/night-field.log" 2>&1
+python3 scripts/check-felt.py > "$run/felt.log" 2>&1
 python3 scripts/check-study-interactions.py > "$run/interactions.log" 2>&1
 python3 scripts/check-ui-test-contract.py > "$run/ui-contract.log" 2>&1
-python3 scripts/test-night-field-contrast.py > "$run/contrast.log" 2>&1
+python3 scripts/test-felt-contrast.py > "$run/contrast.log" 2>&1
 python3 - "$run" <<'PY'
 from pathlib import Path
 import hashlib,json,sys

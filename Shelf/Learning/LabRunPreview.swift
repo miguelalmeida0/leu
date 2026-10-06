@@ -18,7 +18,7 @@ struct LabRunPreview: View {
                         HStack(alignment: .top, spacing: 12) {
                             LeuStepIndicator(number: index + 1,
                                 confirmed: runToken > 0 && lab.correctOrder.indices.contains(index) && lab.correctOrder[index] == element.id)
-                            Text(element.title).font(.body).foregroundStyle(LeuDesign.textPrimary)
+                            Text(element.title).font(.leu(.body)).foregroundStyle(LeuDesign.textPrimary)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
@@ -30,7 +30,7 @@ struct LabRunPreview: View {
                         LeuStepIndicator(number: index + 1,
                             confirmed: runToken > 0 && lab.correctOrder.indices.contains(index) && lab.correctOrder[index] == element.id)
                         Text(short(element.title))
-                            .font(.caption2.weight(activeIndex == index ? .semibold : .regular))
+                            .font(.leu(.caption2, weight: activeIndex == index ? .semibold : .regular))
                             .foregroundStyle(activeIndex == index ? ShelfTheme.text : ShelfTheme.secondary)
                             .multilineTextAlignment(.center)
                             .lineLimit(2)
@@ -46,7 +46,7 @@ struct LabRunPreview: View {
             }
 
             Text(isSolved ? insight : "The sequence is not coherent yet. Rearrange it and run again.")
-                .font(.callout)
+                .font(.leu(.callout))
                 .foregroundStyle(ShelfTheme.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }

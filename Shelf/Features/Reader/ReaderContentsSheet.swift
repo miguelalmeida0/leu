@@ -37,7 +37,7 @@ struct ReaderContentsSheet: View {
                         ProgressView("Detecting headings locally…")
                     } else {
                         Text("No reliable section index was found.")
-                            .font(.headline)
+                            .font(.leu(.headline))
                         Text("Page thumbnails remain the reliable navigation fallback for this PDF.")
                             .foregroundStyle(ShelfTheme.secondary)
                     }
@@ -56,7 +56,7 @@ struct ReaderContentsSheet: View {
                                         .padding(.leading, CGFloat(min(entry.depth, 3)) * 12)
                                     if entry.id == activeEntryID {
                                         Text("Current location")
-                                            .font(.caption.weight(.semibold))
+                                            .font(.leu(.caption, weight: .semibold))
                                             .foregroundStyle(ShelfTheme.accent)
                                     }
                                 }
@@ -138,7 +138,7 @@ struct ReaderContentsSheet: View {
             if model.bookmarks.isEmpty {
                 VStack(alignment: .leading, spacing: 14) {
                     Text("No bookmarked pages yet.")
-                        .font(.headline)
+                        .font(.leu(.headline))
                     Text("Bookmark your current page to return to it quickly.")
                         .foregroundStyle(ShelfTheme.secondary)
                     Button("Bookmark current page") {
@@ -159,7 +159,7 @@ struct ReaderContentsSheet: View {
                                 .foregroundStyle(ShelfTheme.text)
                                 .lineLimit(2)
                             Text("Page \(bookmark.pageIndex + 1)")
-                                .font(.caption)
+                                .font(.leu(.caption))
                                 .foregroundStyle(ShelfTheme.secondary)
                         }
                     }
@@ -201,7 +201,7 @@ struct PDFPageThumbnail: View {
                         if marked { Image(systemName: "highlighter") }
                         if bookmarked { Image(systemName: "bookmark.fill") }
                     }
-                    .font(.caption2.weight(.bold))
+                    .font(.leu(.caption2, weight: .bold))
                     .foregroundStyle(ShelfTheme.background)
                     .padding(6)
                     .background(ShelfTheme.accent, in: Capsule())
@@ -219,7 +219,7 @@ struct PDFPageThumbnail: View {
                 Text(String(index + 1)).monospacedDigit()
                 if selected { Text("Current") }
             }
-            .font(.caption.weight(selected ? .semibold : .regular))
+            .font(.leu(.caption, weight: selected ? .semibold : .regular))
             .foregroundStyle(selected ? ShelfTheme.accent : ShelfTheme.secondary)
         }
         .task(id: index) {

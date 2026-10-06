@@ -85,7 +85,7 @@ struct LibraryScreen: View {
                         Text("Search concepts, passages and Topic Chains")
                         Spacer(); Image(systemName: "arrow.up.right")
                     }
-                    .font(.callout.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
+                    .font(.leu(.callout, weight: .semibold)).foregroundStyle(ShelfTheme.accent)
                     .frame(minHeight: 44).contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
@@ -99,7 +99,7 @@ struct LibraryScreen: View {
         if let tag = model.selectedTag {
             HStack {
                 Label(tag, systemImage: "tag")
-                    .font(.callout)
+                    .font(.leu(.callout))
                 Button("Clear") {
                     model.selectedTag = nil
                     model.updateSearch()
@@ -113,7 +113,7 @@ struct LibraryScreen: View {
     private var recoveryNotice: some View {
         if model.recoveredMetadata {
             Text("Leu recovered its previous metadata checkpoint. Recent changes may need review. Original PDFs were preserved.")
-                .font(.callout)
+                .font(.leu(.callout))
                 .foregroundStyle(ShelfTheme.accent)
         }
     }
@@ -124,7 +124,7 @@ struct LibraryScreen: View {
             HStack(spacing: 12) {
                 ProgressView()
                 Text(label)
-                    .font(.callout)
+                    .font(.leu(.callout))
                     .lineLimit(2)
             }
             .accessibilityLabel("Working: \(label)")
@@ -170,7 +170,7 @@ struct LibraryScreen: View {
 
         if model.query.isEmpty && !model.filteredBooks.isEmpty {
             Text("\(model.filteredBooks.count) PDFs · stored on this iPhone")
-                .font(.footnote)
+                .font(.leu(.footnote))
                 .foregroundStyle(ShelfTheme.secondary)
                 .frame(maxWidth: .infinity)
                 .padding(.top, 8)

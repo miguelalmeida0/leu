@@ -31,7 +31,7 @@ struct TrailDetailScreen: View {
         ScrollViewReader { proxy in
             List {
                 Text("An ordered path through material you want to understand.")
-                    .font(.callout).foregroundStyle(ShelfTheme.secondary).listRowBackground(Color.clear)
+                    .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary).listRowBackground(Color.clear)
                 if let confirmation { Text(confirmation).accessibilityIdentifier("trail-add-confirmation") }
                 if trail.nodes.isEmpty {
                     Text("Add a passage, a page range, or a practice lab to begin your path.")
@@ -51,9 +51,9 @@ struct TrailDetailScreen: View {
                             Text("\(index + 1)").monospacedDigit().foregroundStyle(ShelfTheme.accent).frame(width: 24)
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(node.title).foregroundStyle(ShelfTheme.text)
-                                Text(kindTitle(node.kind)).font(.caption).foregroundStyle(ShelfTheme.secondary)
-                                Text(sourceCaption(node)).font(.caption).foregroundStyle(ShelfTheme.secondary)
-                                if node.id == trail.currentNodeID { Text("Your place").font(.caption.weight(.semibold)) }
+                                Text(kindTitle(node.kind)).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
+                                Text(sourceCaption(node)).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
+                                if node.id == trail.currentNodeID { Text("Your place").font(.leu(.caption, weight: .semibold)) }
                             }
                         }.frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                     }

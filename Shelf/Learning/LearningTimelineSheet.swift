@@ -15,7 +15,7 @@ struct LearningTimelineSheet: View {
                         Text("See how your thinking evolves.")
                             .leuScaledFont(27, weight: .regular, design: .serif)
                         Text("Earlier attempts and notes stay attached to the source that shaped them.")
-                            .font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.secondary)
+                            .font(.leu(.callout, serif: true)).foregroundStyle(ShelfTheme.secondary)
                     }
                     .padding(.top, 18).padding(.bottom, 16)
                     ForEach(groupedDays) { group in
@@ -38,12 +38,12 @@ struct LearningTimelineSheet: View {
                                             .foregroundStyle(ShelfTheme.text)
                                             .lineLimit(2)
                                         Text(event.kind.rawValue.replacingOccurrences(of: "_", with: " ").capitalized)
-                                            .font(.caption)
+                                            .font(.leu(.caption))
                                             .foregroundStyle(ShelfTheme.secondary)
                                     }
                                     Spacer()
                                     Text(event.occurredAt, style: .time)
-                                        .font(.caption)
+                                        .font(.leu(.caption))
                                         .foregroundStyle(ShelfTheme.secondary)
                                 }
                                 .padding(.vertical, 10)

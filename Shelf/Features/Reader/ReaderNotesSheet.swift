@@ -29,12 +29,12 @@ struct ReaderNotesSheet: View {
                     ForEach(notes) { note in
                         VStack(alignment: .leading, spacing: 10) {
                             HStack {
-                                Text(note.kind.title).font(.caption.weight(.semibold)).foregroundStyle(markerAccent(note.kind))
+                                Text(note.kind.title).font(.leu(.caption, weight: .semibold)).foregroundStyle(markerAccent(note.kind))
                                 Spacer()
-                                Text("p. \(note.pageIndex + 1)").font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                Text("p. \(note.pageIndex + 1)").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                             }
-                            if !note.quote.isEmpty { Text(note.quote).font(.system(.body, design: .serif)).lineLimit(5) }
-                            if !note.note.isEmpty { Text(note.note).font(.callout).foregroundStyle(ShelfTheme.secondary) }
+                            if !note.quote.isEmpty { Text(note.quote).font(.leu(.body, serif: true)).lineLimit(5) }
+                            if !note.note.isEmpty { Text(note.note).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary) }
                             HStack {
                                 Button("Go to page") { model.go(to: note.pageIndex); dismiss() }.buttonStyle(.borderless)
                                 if !note.quote.isEmpty {

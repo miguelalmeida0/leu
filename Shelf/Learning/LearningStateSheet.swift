@@ -26,7 +26,7 @@ struct LearningStateSheet: View {
                 }
                 Spacer()
                 Button("Done", action: onDone)
-                    .font(.system(.callout, design: .serif).weight(.semibold))
+                    .font(.leu(.callout, serif: true, weight: .semibold))
                     .foregroundStyle(ShelfTheme.action)
                     .frame(minWidth: 52, minHeight: 44)
                     .contentShape(Rectangle())
@@ -59,7 +59,7 @@ struct LearningStateSheet: View {
             ShelfHaptics.shared.play(.selectionChanged)
         } label: {
             Text(tab.rawValue)
-                .font(.system(.callout, design: .serif).weight(.semibold))
+                .font(.leu(.callout, serif: true, weight: .semibold))
                 .frame(maxWidth: .infinity, minHeight: 42)
                 .foregroundStyle(selected ? LeuDesign.onSignal : ShelfTheme.text)
                 .background(selected ? ShelfTheme.olive : ShelfTheme.surface,
@@ -82,12 +82,12 @@ struct LearningStateSheet: View {
                         .font(LearningTokens.Typography.title)
                         .accessibilityIdentifier("progress-now-view")
                     Text("Your own study attempts determine what should return next. No public scoring or ranking is used.")
-                        .font(.callout)
+                        .font(.leu(.callout))
                         .foregroundStyle(ShelfTheme.secondary)
                 }
                 if model.visibleTopics.isEmpty {
                     Text("Study a PDF and Leu will build this view from your local learning history.")
-                        .font(.body)
+                        .font(.leu(.body))
                         .foregroundStyle(ShelfTheme.secondary)
                 } else {
                     ForEach(model.visibleTopics) { topic in
@@ -113,12 +113,12 @@ struct LearningStateSheet: View {
                     Text("See how your thinking evolves.")
                         .leuScaledFont(27, weight: .regular, design: .serif)
                     Text("Earlier attempts and notes stay attached to the source that shaped them.")
-                        .font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.secondary)
+                        .font(.leu(.callout, serif: true)).foregroundStyle(ShelfTheme.secondary)
                 }
                 .padding(.top, 18).padding(.bottom, 16)
                 if groupedDays.isEmpty {
                     Text("Your learning history will appear here after you study or mark source material.")
-                        .font(.callout)
+                        .font(.leu(.callout))
                         .foregroundStyle(ShelfTheme.secondary)
                         .padding(.vertical, 18)
                 } else {
@@ -136,11 +136,11 @@ struct LearningStateSheet: View {
                                     VStack(alignment: .leading, spacing: 3) {
                                         Text(event.title).foregroundStyle(ShelfTheme.text).lineLimit(2)
                                         Text(event.kind.rawValue.replacingOccurrences(of: "_", with: " ").capitalized)
-                                            .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                            .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                                     }
                                     Spacer()
                                     Text(event.occurredAt, style: .time)
-                                        .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                        .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                                 }
                                 .padding(.vertical, 10)
                                 .contentShape(Rectangle())
@@ -169,7 +169,7 @@ struct LearningStateSheet: View {
                 HStack(alignment: .firstTextBaseline) {
                     Text(topic.name).font(LearningTokens.Typography.compactTitle).foregroundStyle(ShelfTheme.text)
                     Spacer()
-                    Text(stateLabel(state.state)).font(.callout.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
+                    Text(stateLabel(state.state)).font(.leu(.callout, weight: .semibold)).foregroundStyle(ShelfTheme.accent)
                 }
                 HStack(spacing: 14) {
                     metric("Objects", state.encounters)
@@ -178,10 +178,10 @@ struct LearningStateSheet: View {
                     if state.failedRecalls > 0 { metric("Forgot", state.failedRecalls) }
                 }
                 if let calibration = calibrationCopy(state), state.attempts > 0 {
-                    Text(calibration).font(.caption).foregroundStyle(ShelfTheme.secondary)
+                    Text(calibration).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                 }
                 if let due = state.nextReviewAt {
-                    Text(dueCopy(due)).font(.caption).foregroundStyle(ShelfTheme.secondary)
+                    Text(dueCopy(due)).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                 }
             }
             .padding(.vertical, 7)
@@ -195,8 +195,8 @@ struct LearningStateSheet: View {
     }
     private func metric(_ title: String, _ value: Int) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text("\(value)").font(.callout.monospacedDigit().weight(.semibold)).foregroundStyle(ShelfTheme.text)
-            Text(title).font(.caption2).foregroundStyle(ShelfTheme.secondary)
+            Text("\(value)").font(.leu(.callout).monospacedDigit().weight(.semibold)).foregroundStyle(ShelfTheme.text)
+            Text(title).font(.leu(.caption2)).foregroundStyle(ShelfTheme.secondary)
         }
     }
     private func stateLabel(_ state: MasteryState) -> String {

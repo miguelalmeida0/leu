@@ -23,10 +23,10 @@ struct BlindPageSheet: View {
                         Button("Reveal previous page") { phase = .revealed; model.playHaptic(.sourceRevealed) }
                             .buttonStyle(ShelfButtonStyle(filled: true))
                     } else if phase == .revealed {
-                        Text(model.blindPageSourceText()).font(.system(.body, design: .serif)).lineSpacing(4)
+                        Text(model.blindPageSourceText()).font(.leu(.body, serif: true)).lineSpacing(4)
                         if !model.blindPageDraft.isEmpty {
                             Divider().overlay(ShelfTheme.line)
-                            Text("What you wrote").font(.headline)
+                            Text("What you wrote").font(.leu(.headline))
                             Text(model.blindPageDraft).foregroundStyle(ShelfTheme.secondary)
                         }
                         Button("Continue reading") { model.completeBlindPage() }.buttonStyle(ShelfButtonStyle(filled: true))

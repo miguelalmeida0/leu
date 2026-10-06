@@ -18,7 +18,7 @@ struct ShelfSectionSwitcher: View {
                             .font(.system(size: 16, weight: selection == tab ? .semibold : .regular))
                             .frame(height: 20)
                         Text(tab.title)
-                            .font(.caption.weight(selection == tab ? .semibold : .regular))
+                            .font(.leu(.caption, weight: selection == tab ? .semibold : .regular))
                             .lineLimit(1)
                             .minimumScaleFactor(0.88)
                     }

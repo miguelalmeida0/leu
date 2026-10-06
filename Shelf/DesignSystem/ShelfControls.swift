@@ -133,7 +133,7 @@ struct EmptyLibraryState: View {
             Image(systemName: symbol).font(.system(size: 37, weight: .ultraLight))
                 .foregroundStyle(ShelfTheme.accent).padding(.bottom, 8)
             Text(title).leuScaledFont(27, weight: .regular, design: .serif).multilineTextAlignment(.center)
-            Text(message).font(.body).foregroundStyle(ShelfTheme.secondary)
+            Text(message).font(.leu(.body)).foregroundStyle(ShelfTheme.secondary)
                 .multilineTextAlignment(.center).frame(maxWidth: 300)
             if let actionTitle, let action {
                 Button(actionTitle, action: action).buttonStyle(ShelfButtonStyle(filled: true)).padding(.top, 8)
@@ -158,7 +158,7 @@ struct ShelfSheet<Content: View>: View {
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
                 }
-        }.tint(ShelfTheme.accent).preferredColorScheme(.dark)
+        }.tint(ShelfTheme.accent).preferredColorScheme(.light)
             .presentationBackground(LeuDesign.surfacePrimary)
     }
 }

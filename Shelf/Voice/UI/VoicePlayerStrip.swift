@@ -34,7 +34,7 @@ struct VoicePlayerStrip: View {
                 Button(speedLabel(speed)) { speech.setSpeed(speed) }
             }
         } label: {
-            Text(speedLabel(speech.speed)).font(.caption.weight(.semibold)).frame(maxWidth: .infinity, minHeight: 44)
+            Text(speedLabel(speech.speed)).font(.leu(.caption, weight: .semibold)).frame(maxWidth: .infinity, minHeight: 44)
         }
         .accessibilityLabel("Reading speed")
         .accessibilityValue(speedLabel(speech.speed))

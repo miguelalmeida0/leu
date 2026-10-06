@@ -47,10 +47,10 @@ struct ConnectedPassageSheet: View {
 
     private var sourceBlock: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("FROM THIS PASSAGE").font(.caption.weight(.bold)).tracking(1.8).foregroundStyle(ShelfTheme.accent)
-            Text(source.sourceText).font(.system(.body, design: .serif)).lineLimit(8)
+            Text("FROM THIS PASSAGE").font(.leu(.caption, weight: .bold)).tracking(1.8).foregroundStyle(ShelfTheme.accent)
+            Text(source.sourceText).font(.leu(.body, serif: true)).lineLimit(8)
             HStack { Text(knowledge.title(for: source.documentID)); Spacer(); Text("p. \(source.pageIndex + 1)") }
-                .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
             if sourcePassage != nil {
                 Text("Source anchored")
                     .font(ShelfTheme.eyebrow(9)).tracking(1.3)
@@ -80,7 +80,7 @@ struct ConnectedPassageSheet: View {
             HStack {
                 VStack(alignment: .leading, spacing: 3) {
                     Text("RELATED IN YOUR LIBRARY").font(ShelfTheme.eyebrow(10)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
-                    Text("Only strong local matches are shown.").font(.caption).foregroundStyle(ShelfTheme.secondary)
+                    Text("Only strong local matches are shown.").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                 }
                 Spacer()
                 if related.count >= 3 {
@@ -91,7 +91,7 @@ struct ConnectedPassageSheet: View {
             }
             if related.isEmpty {
                 Text(knowledge.isIndexing ? "Connecting this book to your library…" : "No strong connections yet.")
-                    .font(.body).foregroundStyle(ShelfTheme.secondary).padding(.vertical, 16)
+                    .font(.leu(.body)).foregroundStyle(ShelfTheme.secondary).padding(.vertical, 16)
             } else {
                 ForEach(related, id: \.passage.id) { item in
                     passageRow(item.passage, reason: item.reason.explanation, sourcePassage: passage,
@@ -108,18 +108,18 @@ struct ConnectedPassageSheet: View {
             } label: {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack(alignment: .firstTextBaseline) {
-                        Text(knowledge.title(for: passage.documentID)).font(.headline).foregroundStyle(ShelfTheme.text).lineLimit(1)
-                        Spacer(); Text("p. \(passage.pageIndex + 1)").font(.caption.monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
+                        Text(knowledge.title(for: passage.documentID)).font(.leu(.headline)).foregroundStyle(ShelfTheme.text).lineLimit(1)
+                        Spacer(); Text("p. \(passage.pageIndex + 1)").font(.leu(.caption).monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
                     }
-                    if let section = passage.sectionTitle { Text(section).font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent).lineLimit(1) }
-                    Text(passage.text).font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.secondary).lineLimit(4)
-                    Text(reason).font(.caption).foregroundStyle(LeuDesign.textSecondary)
+                    if let section = passage.sectionTitle { Text(section).font(.leu(.caption, weight: .semibold)).foregroundStyle(ShelfTheme.accent).lineLimit(1) }
+                    Text(passage.text).font(.leu(.callout, serif: true)).foregroundStyle(ShelfTheme.secondary).lineLimit(4)
+                    Text(reason).font(.leu(.caption)).foregroundStyle(LeuDesign.textSecondary)
                 }.contentShape(Rectangle())
             }.buttonStyle(.plain)
             HStack(spacing: 10) {
                 if let existingConnection {
                     Label("Saved", systemImage: "link")
-                        .font(.caption.weight(.semibold))
+                        .font(.leu(.caption, weight: .semibold))
                         .foregroundStyle(ShelfTheme.olive)
                     Spacer()
                     LeuMenu {
@@ -142,7 +142,7 @@ struct ConnectedPassageSheet: View {
                         }
                     } label: {
                         Label("Refine", systemImage: "ellipsis")
-                            .font(.caption.weight(.semibold))
+                            .font(.leu(.caption, weight: .semibold))
                     }
                     .foregroundStyle(ShelfTheme.secondary)
                     .accessibilityLabel("Saved connection options")
@@ -155,7 +155,7 @@ struct ConnectedPassageSheet: View {
                         }
                     } label: {
                         Label("Save connection", systemImage: "link.badge.plus")
-                            .font(.caption.weight(.semibold))
+                            .font(.leu(.caption, weight: .semibold))
                             .foregroundStyle(ShelfTheme.action)
                             .frame(minHeight: 38)
                     }
@@ -177,7 +177,7 @@ struct ConnectedPassageSheet: View {
             if !knowledge.snapshot.topicChains.isEmpty { Divider() }
             Button("New trail…") { chainCandidate = passage; newChainTitle = passage.sectionTitle ?? "New trail" }
         }
-        .font(.caption.weight(.semibold))
+        .font(.leu(.caption, weight: .semibold))
         .foregroundStyle(ShelfTheme.accent)
     }
 
@@ -194,7 +194,7 @@ struct ConnectedPassageSheet: View {
                 newChainTitle = sourcePassage.sectionTitle ?? destination.sectionTitle ?? "New trail"
             }
         }
-        .font(.caption)
+        .font(.leu(.caption))
     }
 
     private func connection(between first: UUID, and second: UUID) -> KnowledgeConnection? {
@@ -212,9 +212,9 @@ struct ConnectedPassageSheet: View {
     private var unavailableState: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("RELATED IN YOUR LIBRARY")
-                .font(.caption.weight(.bold)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.caption, weight: .bold)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
             Text(knowledge.isIndexing ? "Connecting this book to your library…" : "No strong connections yet.")
-                .font(.headline)
+                .font(.leu(.headline))
             Text(knowledge.isIndexing
                  ? "Results appear here as the local index becomes available. Reading stays fully usable while Leu works."
                  : "Leu only shows relationships that clear its relevance floor. You can still create a Concept or connect another passage manually.")

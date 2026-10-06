@@ -43,7 +43,7 @@ extension LearnTodayScreen {
                             Text(event.title).fixedSize(horizontal: false, vertical: true)
                         }
                     }
-                } label: { Text("Recent activity").font(.subheadline.weight(.semibold)) }
+                } label: { Text("Recent activity").font(.leu(.subheadline, weight: .semibold)) }
                 .foregroundStyle(LeuDesign.studyContinueForeground)
                 .tint(LeuDesign.studyContinueForeground)
             }
@@ -85,23 +85,23 @@ extension LearnTodayScreen {
 
     private func continueLabel(title: String, excerpt: String? = nil, detail: String, action: String) -> some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("CONTINUE LEARNING").font(.caption.weight(.bold)).tracking(1.4)
+            Text("CONTINUE LEARNING").font(.leu(.caption, weight: .bold)).tracking(1.4)
                 .foregroundStyle(LeuDesign.studyContinueSecondary)
             Text(title).leuScaledFont(28, weight: .bold, relativeTo: .title)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier("study-continue-title")
             if let excerpt {
-                Text(excerpt).font(.callout)
+                Text(excerpt).font(.leu(.callout))
                     .foregroundStyle(LeuDesign.studyContinueSecondary)
                     .lineLimit(3).fixedSize(horizontal: false, vertical: true)
                     .accessibilityIdentifier("study-continue-excerpt")
             }
-            Text(detail).font(.subheadline)
+            Text(detail).font(.leu(.subheadline))
                 .foregroundStyle(LeuDesign.studyContinueSecondary)
                 .fixedSize(horizontal: false, vertical: true)
             HStack {
-                Text(action).font(.body.weight(.semibold))
+                Text(action).font(.leu(.body, weight: .semibold))
                 Spacer()
                 Image(systemName: "arrow.right")
             }.padding(.top, 8)
@@ -154,27 +154,27 @@ extension LearnTodayScreen {
     private func reviewLabel(title: String, items: [LearningObject], empty: String,
                              summary: String, action: String, foreground: Color, secondary: Color) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(title).font(.caption.weight(.bold)).tracking(1.2)
+            Text(title).font(.leu(.caption, weight: .bold)).tracking(1.2)
                 .foregroundStyle(secondary)
             if items.isEmpty {
-                Text(empty).font(.title2.weight(.bold))
+                Text(empty).font(.leu(.title2, weight: .bold))
                     .fixedSize(horizontal: false, vertical: true)
                 Image(systemName: title == "FADING" ? "clock" : "checkmark")
-                    .font(.title2).foregroundStyle(secondary).accessibilityHidden(true)
+                    .font(.leu(.title2)).foregroundStyle(secondary).accessibilityHidden(true)
             } else {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("\(items.count)").leuScaledFont(42, weight: .bold, relativeTo: .largeTitle)
                     Text(items.count == 1 ? summary.replacingOccurrences(of: "ideas", with: "idea").replacingOccurrences(of: "need ", with: "needs ") : summary)
-                        .font(.subheadline.weight(.semibold))
+                        .font(.leu(.subheadline, weight: .semibold))
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 ForEach(Array(items.prefix(3))) { object in
-                    Text(object.title).font(.subheadline)
+                    Text(object.title).font(.leu(.subheadline))
                         .foregroundStyle(secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 HStack {
-                    Text(action).font(.subheadline.weight(.bold))
+                    Text(action).font(.leu(.subheadline, weight: .bold))
                     Spacer(minLength: 4)
                     Image(systemName: "arrow.right")
                 }.padding(.top, 6)

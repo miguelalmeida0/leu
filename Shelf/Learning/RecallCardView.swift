@@ -64,12 +64,12 @@ struct RecallCardView: View {
     private var attempt: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text("Reconstruct the idea in your own words before you look.")
-                .font(.callout).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 
             TextEditor(text: $model.recallDraft)
                 .focused($typing)
-                .font(.system(.body, design: .serif))
+                .font(.leu(.body, serif: true))
                 .foregroundStyle(ShelfTheme.text)
                 .scrollContentBackground(.hidden)
                 .frame(minHeight: 120)
@@ -90,7 +90,7 @@ struct RecallCardView: View {
             } label: {
                 HStack(spacing: 10) {
                     Image(systemName: model.recallMarkedUnknown ? "checkmark.circle.fill" : "circle")
-                    Text("I don't know yet").font(.callout.weight(.semibold))
+                    Text("I don't know yet").font(.leu(.callout, weight: .semibold))
                     Spacer(minLength: 0)
                 }
                 .foregroundStyle(model.recallMarkedUnknown ? ShelfTheme.accent : ShelfTheme.secondary)
@@ -123,7 +123,7 @@ struct RecallCardView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     label("Your answer")
                     Text(model.recallMarkedUnknown ? "You marked this one as not known yet." : model.recallDraft)
-                        .font(.system(.body)).foregroundStyle(ShelfTheme.text)
+                        .font(.leu(.body)).foregroundStyle(ShelfTheme.text)
                         .fixedSize(horizontal: false, vertical: true)
                         .accessibilityIdentifier("recall-your-answer")
                 }
@@ -132,7 +132,7 @@ struct RecallCardView: View {
                 label("From your source")
                 Text(object.source.sourceText)
                     .accessibilityIdentifier("recall-source-quote")
-                    .font(.system(.title3, design: .serif)).lineSpacing(5)
+                    .font(.leu(.title3, serif: true)).lineSpacing(5)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.leading, 14)
                     .overlay(alignment: .leading) { Rectangle().fill(ShelfTheme.accent).frame(width: 2) }
@@ -143,7 +143,7 @@ struct RecallCardView: View {
             VStack(alignment: .leading, spacing: 10) {
                 label("How did recall feel?")
                 Text("Your own read on it. This schedules the next visit; it does not mark the answer.")
-                    .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 HStack(spacing: 8) {
                     rate("Forgot", .forgot); rate("Difficult", .difficult); rate("Knew it", .knewIt)

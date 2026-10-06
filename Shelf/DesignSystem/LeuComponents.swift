@@ -10,7 +10,7 @@ struct LeuEyebrow: View {
     }
     var body: some View {
         Text(text.uppercased())
-            .leuScaledFont(11, weight: .semibold, design: .monospaced, relativeTo: .caption)
+            .leuScaledFont(11, weight: .bold, relativeTo: .caption)
             .tracking(LeuDesign.eyebrowTracking)
             .foregroundStyle(tint)
     }
@@ -26,7 +26,7 @@ struct LeuMeta: View {
         self.tint = tint
     }
     var body: some View {
-        Text(text).leuScaledFont(12, weight: .medium, design: .monospaced, relativeTo: .caption).foregroundStyle(tint)
+        Text(text).leuScaledFont(13, weight: .medium, relativeTo: .caption).foregroundStyle(tint)
     }
 }
 
@@ -147,7 +147,7 @@ struct LeuFilterPill: View {
             withAnimation(LeuDesign.motion(LeuDesign.snap, reduced: reduceMotion)) { action() }
         } label: {
             Text(title)
-                .font(.subheadline.weight(.semibold))
+                .font(.leu(.subheadline, weight: .semibold))
                 .foregroundStyle(isOn ? LeuDesign.onSignal : LeuDesign.secondary)
                 .padding(.horizontal, 14)
                 .frame(minHeight: LeuDesign.touchTarget)
@@ -173,7 +173,7 @@ struct LeuSignalButton: ButtonStyle {
 }
 
 /// Compact transient notice used above the primary navigation.
-/// Flat Night Field treatment: semantic signal, no glass, no shadow.
+/// Flat felt treatment: semantic signal, no glass.
 @MainActor
 struct NoticeBar: View {
     let text: String
@@ -195,7 +195,7 @@ struct NoticeBar: View {
 
             Button(action: dismiss) {
                 Image(systemName: "xmark")
-                    .font(.subheadline.weight(.semibold))
+                    .font(.leu(.subheadline, weight: .semibold))
                     .foregroundStyle(LeuDesign.secondary)
                     .frame(
                         width: LeuDesign.touchTarget,

@@ -17,7 +17,7 @@ struct ReaderSearchSheet: View {
                 } else if !model.searchResults.isEmpty {
                     HStack {
                         Text("\(model.searchResults.count) matches")
-                            .font(.caption.weight(.semibold))
+                            .font(.leu(.caption, weight: .semibold))
                             .foregroundStyle(ShelfTheme.secondary)
                         Spacer()
                     }
@@ -84,17 +84,17 @@ struct ReaderSearchSheet: View {
                     VStack(alignment: .leading, spacing: 7) {
                         HStack(spacing: 8) {
                             Text("Page \(match.pageIndex + 1)")
-                                .font(.caption.weight(.semibold))
+                                .font(.leu(.caption, weight: .semibold))
                                 .foregroundStyle(ShelfTheme.accent)
                             if let section = model.sectionTitle(for: match.pageIndex) {
                                 Text(section)
-                                    .font(.caption)
+                                    .font(.leu(.caption))
                                     .foregroundStyle(ShelfTheme.secondary)
                                     .lineLimit(1)
                             }
                         }
                         Text(highlighted(match.excerpt, query: model.searchText))
-                            .font(.body)
+                            .font(.leu(.body))
                             .lineLimit(3)
                             .foregroundStyle(ShelfTheme.text)
                     }
@@ -105,7 +105,7 @@ struct ReaderSearchSheet: View {
 
             if model.searchResults.count == 200 {
                 Text("First 200 matches. Refine your search.")
-                    .font(.footnote)
+                    .font(.leu(.footnote))
                     .foregroundStyle(ShelfTheme.secondary)
             }
         }

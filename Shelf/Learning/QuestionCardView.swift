@@ -61,9 +61,9 @@ struct QuestionCardView: View {
     private var confidencePicker: some View {
         if shouldAskConfidence && model.selectedAnswerID != nil && !model.answerCommitted {
             VStack(alignment: .leading, spacing: 8) {
-                Text("How sure are you?").font(.callout.weight(.semibold))
+                Text("How sure are you?").font(.leu(.callout, weight: .semibold))
                 Text("Your prediction before you commit. It is not a grade.")
-                    .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 confidenceOptions
             }
@@ -114,17 +114,17 @@ struct QuestionCardView: View {
                 Button { model.selectAnswer(option.id) } label: {
                     HStack(alignment: .top, spacing: 13) {
                         Text(optionLetter(index))
-                            .font(.system(.callout, design: .serif).weight(.semibold))
+                            .font(.leu(.callout, serif: true, weight: .semibold))
                             .foregroundStyle(optionAccent(option, question: question))
                             .frame(width: optionDiameter, height: optionDiameter)
                             .background(Color.clear, in: Circle())
                             .overlay { Circle().stroke(optionAccent(option, question: question), lineWidth: 0.8) }
                         VStack(alignment: .leading, spacing: 5) {
-                            Text(option.text).font(.system(.body))
+                            Text(option.text).font(.leu(.body))
                                 .multilineTextAlignment(.leading).foregroundStyle(ShelfTheme.text)
                                 .fixedSize(horizontal: false, vertical: true)
                             if let word = outcomeWord(option, question: question) {
-                                Text(word).font(.caption.weight(.semibold))
+                                Text(word).font(.leu(.caption, weight: .semibold))
                                     .foregroundStyle(optionAccent(option, question: question))
                             }
                         }
@@ -171,7 +171,7 @@ struct QuestionCardView: View {
     private var hintStack: some View {
         VStack(alignment: .leading, spacing: 8) {
             ForEach(model.progressiveHints()) { hint in
-                Text(hint.text).font(.callout).foregroundStyle(ShelfTheme.secondary)
+                Text(hint.text).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                     .padding(.vertical, 4)
             }
         }
@@ -212,7 +212,7 @@ private struct ConfidenceChipStyle: ButtonStyle {
     let selected: Bool
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.callout.weight(.semibold))
+            .font(.leu(.callout, weight: .semibold))
             .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, 8)
             .frame(maxWidth: .infinity, minHeight: 44)

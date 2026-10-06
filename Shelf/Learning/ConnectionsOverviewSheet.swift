@@ -30,10 +30,10 @@ struct ConnectionsOverviewSheet: View {
 
     private var intro: some View {
         VStack(alignment: .leading, spacing: 7) {
-            Text("YOUR LIBRARY, BETWEEN THE BOOKS").font(.caption.weight(.bold)).tracking(1.8).foregroundStyle(ShelfTheme.accent)
-            Text("Follow ideas instead of files.").font(.system(.title2, design: .serif))
+            Text("YOUR LIBRARY, BETWEEN THE BOOKS").font(.leu(.caption, weight: .bold)).tracking(1.8).foregroundStyle(ShelfTheme.accent)
+            Text("Follow ideas instead of files.").font(.leu(.title2, serif: true))
             Text("Suggested relationships come from local lexical retrieval. Connections you confirm are permanent personal knowledge and survive index rebuilding.")
-                .font(.callout).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
         }
     }
 
@@ -41,14 +41,14 @@ struct ConnectionsOverviewSheet: View {
 
     private var confirmedSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("CONNECTED BY YOU").font(.caption.weight(.bold)).tracking(1.6).foregroundStyle(ShelfTheme.secondary)
+            Text("CONNECTED BY YOU").font(.leu(.caption, weight: .bold)).tracking(1.6).foregroundStyle(ShelfTheme.secondary)
             ForEach(confirmed.prefix(12)) { link in
                 if let source = knowledge.passage(link.sourcePassageID), let target = knowledge.passage(link.destinationPassageID) {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text(source.sectionTitle ?? knowledge.title(for: source.documentID)).font(.headline)
+                        Text(source.sectionTitle ?? knowledge.title(for: source.documentID)).font(.leu(.headline))
                         Text("\(knowledge.title(for: source.documentID)) → \(knowledge.title(for: target.documentID))")
-                            .font(.caption).foregroundStyle(ShelfTheme.secondary)
-                        Text(target.text).font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.secondary).lineLimit(2)
+                            .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
+                        Text(target.text).font(.leu(.callout, serif: true)).foregroundStyle(ShelfTheme.secondary).lineLimit(2)
                     }.padding(.vertical, 8)
                     Divider().overlay(ShelfTheme.line)
                 }
@@ -58,7 +58,7 @@ struct ConnectionsOverviewSheet: View {
 
     private var conceptsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("CONCEPTS").font(.caption.weight(.bold)).tracking(1.6).foregroundStyle(ShelfTheme.secondary)
+            Text("CONCEPTS").font(.leu(.caption, weight: .bold)).tracking(1.6).foregroundStyle(ShelfTheme.secondary)
             ForEach(importantConcepts) { concept in
                 Button { selectedConcept = concept } label: {
                     HStack { Text(concept.name).foregroundStyle(ShelfTheme.text); Spacer(); Image(systemName: "chevron.right").foregroundStyle(ShelfTheme.secondary) }

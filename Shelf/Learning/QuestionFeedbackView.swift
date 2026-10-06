@@ -37,12 +37,12 @@ struct QuestionFeedbackView: View {
         return VStack(alignment: .leading, spacing: 8) {
             sectionLabel("Your answer")
             Text(chosen?.text ?? "No answer was chosen.")
-                .font(.system(.body)).foregroundStyle(ShelfTheme.text)
+                .font(.leu(.body)).foregroundStyle(ShelfTheme.text)
                 .fixedSize(horizontal: false, vertical: true)
             Text(matchesSource
                  ? "This is the answer the page supports."
                  : "The page supports a different answer. Compare the two below.")
-                .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .accessibilityIdentifier("question-your-answer")
@@ -53,7 +53,7 @@ struct QuestionFeedbackView: View {
             sectionLabel("From your source")
             Text(question.source.sourceText)
                 .accessibilityIdentifier("question-supporting-quote")
-                .font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.text)
+                .font(.leu(.body, serif: true)).foregroundStyle(ShelfTheme.text)
                 .lineSpacing(4)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.leading, 14)
@@ -65,7 +65,7 @@ struct QuestionFeedbackView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     sectionLabel("Why this is the answer")
                     Text(explanation).accessibilityIdentifier("question-explanation")
-                        .font(.callout).foregroundStyle(ShelfTheme.secondary)
+                        .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(.top, 4)
@@ -85,7 +85,7 @@ struct QuestionFeedbackView: View {
         VStack(alignment: .leading, spacing: 10) {
             sectionLabel("How did recall feel?")
             Text("Your own read on it. This schedules the next visit; it does not mark the answer.")
-                .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             HStack(spacing: 8) {
                 rating("Forgot", .forgot)

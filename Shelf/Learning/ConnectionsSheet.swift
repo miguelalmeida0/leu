@@ -44,7 +44,7 @@ struct ConnectionsSheet: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(target.title).foregroundStyle(ShelfTheme.text).lineLimit(2)
                             Text(target.source.sectionTitle ?? documentTitle(target.source.documentID))
-                                .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                         }.padding(.vertical, 5)
                     }
                     .buttonStyle(.plain)

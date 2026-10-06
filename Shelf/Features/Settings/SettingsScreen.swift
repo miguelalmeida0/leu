@@ -62,7 +62,7 @@ struct SettingsScreen: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Text("Connected library")
                             Text(knowledge.isIndexing ? (knowledge.status ?? "Connecting your books…") : "Passages, connections and trails stay on this iPhone.")
-                                .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                         }
                         Spacer()
                         if knowledge.isIndexing { ProgressView().controlSize(.small) }
@@ -78,7 +78,7 @@ struct SettingsScreen: View {
                         .disabled(model.busy).accessibilityIdentifier("export-backup")
                     Button { model.showBackupImporter = true } label: { Label("Restore a Leu backup", systemImage: "arrow.counterclockwise") }
                         .disabled(model.busy)
-                    if let label = model.operationLabel { HStack { ProgressView(); Text(label).font(.callout) } }
+                    if let label = model.operationLabel { HStack { ProgressView(); Text(label).font(.leu(.callout)) } }
                 } header: { Text("Backup & ownership") } footer: {
                     Text("Leu backup files contain PDFs, collections, reading positions, bookmarks and notes, including Trash. Learning sessions, connected-library knowledge, memory state and explanation recordings remain in local app data in this release and are not yet included in this export. Backups are not encrypted.")
                 }
@@ -97,7 +97,7 @@ struct SettingsScreen: View {
                     .disabled(voiceInstalling || SupertonicAssets.isInstalled)
                     .accessibilityIdentifier("settings-install-voice")
                     if let voiceInstallError {
-                        Text(voiceInstallError).font(.caption).foregroundStyle(ShelfTheme.danger)
+                        Text(voiceInstallError).font(.leu(.caption)).foregroundStyle(ShelfTheme.danger)
                     }
                 } header: {
                     Text("Voice")
@@ -125,7 +125,7 @@ struct SettingsScreen: View {
                     Button("Privacy & data ownership") { showPrivacy = true }
                     LabeledContent("Version", value: "24.5 · Semantic & Emotional Learning")
                     Text("No account. No ads. No subscription. No generative AI. Learning and reading data stay local unless you export a file yourself.")
-                        .font(.footnote).foregroundStyle(ShelfTheme.secondary)
+                        .font(.leu(.footnote)).foregroundStyle(ShelfTheme.secondary)
                 }
             }.scrollContentBackground(.hidden).background(ShelfTheme.background)
                 .background { UITestFrameProbe(identifier: "settings-form-frame") }

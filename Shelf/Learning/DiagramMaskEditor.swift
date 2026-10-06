@@ -16,7 +16,7 @@ struct DiagramMaskEditor: View {
         NavigationStack {
             VStack(spacing: 16) {
                 Text("Drag over one or more regions you want hidden during recall.")
-                    .font(.callout).foregroundStyle(ShelfTheme.secondary).padding(.horizontal, ShelfTheme.gutter)
+                    .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary).padding(.horizontal, ShelfTheme.gutter)
                 pageCanvas
                 LeuTextField("Optional label", text: $label).textFieldStyle(.roundedBorder)
                     .padding(.horizontal, ShelfTheme.gutter)
@@ -28,7 +28,7 @@ struct DiagramMaskEditor: View {
             }
             .background(ShelfTheme.background).navigationTitle("Diagram Mask").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } } }
-        }.preferredColorScheme(.dark).tint(ShelfTheme.accent)
+        }.preferredColorScheme(.light).tint(ShelfTheme.accent)
     }
 
     private var pageCanvas: some View {

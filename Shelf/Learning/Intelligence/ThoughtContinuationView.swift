@@ -12,8 +12,8 @@ import ShelfCore
             attempts: learning.snapshot.understandingAttempts, analyses: learning.snapshot.analyses) {
             HStack(alignment: .top, spacing: 14) {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("A thought you left here").font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
-                    Text(thought.learnerExplanation).font(.system(.callout, design: .serif)).lineLimit(2)
+                    Text("A thought you left here").font(.leu(.caption, weight: .semibold)).foregroundStyle(ShelfTheme.accent)
+                    Text(thought.learnerExplanation).font(.leu(.callout, serif: true)).lineLimit(2)
                 }
                 Spacer(minLength: 8)
                 Button("Resume") {

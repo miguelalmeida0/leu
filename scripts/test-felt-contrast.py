@@ -39,23 +39,28 @@ def palette():
     return {name: resolve(name) for name in literals.keys() | aliases.keys()}
 
 
+# Felt is a light textile system: body text clears AA (4.5:1) everywhere and primary text
+# clears AAA (7:1) on every surface it sits on. Meaning-carrying graphics clear 3:1.
 PAIRS = [
-    (foreground, surface, 4.5 if foreground == 'textTertiary' else 7.0)
+    (foreground, surface, 7.0 if foreground == 'textPrimary' else 4.5)
     for foreground in ('textPrimary', 'textSecondary', 'textTertiary')
     for surface in ('surfacePrimary', 'surfaceSecondary', 'surfaceRaised')
 ] + [
     ('onSignal', 'signal', 7), ('onSignal', 'signalPressed', 7),
-    ('menuForeground', 'menuSurface', 7), ('menuSecondary', 'menuSurface', 7),
-    ('fieldForeground', 'fieldSurface', 7), ('fieldPlaceholder', 'fieldSurface', 7),
+    ('menuForeground', 'menuSurface', 7), ('menuSecondary', 'menuSurface', 4.5),
+    ('fieldForeground', 'fieldSurface', 7), ('fieldPlaceholder', 'fieldSurface', 4.5),
     ('disabledForeground', 'disabledSurface', 4.5),
-    ('successForeground', 'success', 7), ('warningForeground', 'warning', 7),
-    ('dangerForeground', 'danger', 7),
+    ('successForeground', 'success', 4.5), ('warningForeground', 'warning', 4.5),
+    ('dangerForeground', 'danger', 4.5),
     ('readingForeground', 'readingSurface', 7), ('readingSecondary', 'readingSurface', 7),
     ('signalText', 'readingSurface', 7),
-    ('signal', 'fieldSurface', 3), ('success', 'surfaceRaised', 3),
+    ('redThreadText', 'surfacePrimary', 4.5), ('redThread', 'surfaceRaised', 4.5),
+    ('eyebrowOnPaper', 'surfaceRaised', 4.5), ('eyebrowOnFelt', 'surfacePrimary', 4.5),
+    ('signal', 'fieldSurface', 3), ('held', 'surfaceRaised', 3), ('held', 'surfacePrimary', 3),
+    ('fading', 'surfaceRaised', 3), ('untested', 'surfaceRaised', 3),
     ('separator', 'fieldSurface', 3), ('separator', 'surfacePrimary', 3),
     ('separator', 'surfaceSecondary', 3), ('separator', 'menuSurface', 3),
-    ('danger', 'menuSurface', 4.5), ('untested', 'surfaceRaised', 3),
+    ('danger', 'menuSurface', 4.5),
 ]
 
 PAIRS += [
@@ -82,7 +87,7 @@ class ContrastMathTests(unittest.TestCase):
         self.assertEqual(contrast((0, 20, 90), (100, 230, 240)), contrast((100, 230, 240), (0, 20, 90)))
 
 
-class NightFieldPairTests(unittest.TestCase):
+class FeltPairTests(unittest.TestCase):
     pass
 
 
@@ -99,7 +104,7 @@ def pair_test(foreground, surface, minimum):
 
 
 for foreground, surface, minimum in PAIRS:
-    setattr(NightFieldPairTests, f'test_{foreground}_on_{surface}', pair_test(foreground, surface, minimum))
+    setattr(FeltPairTests, f'test_{foreground}_on_{surface}', pair_test(foreground, surface, minimum))
 
 
 def cover_test(name, foreground):

@@ -39,9 +39,9 @@ struct BookListRow: View {
                         .background(CoverColors(book.palette).background)
                         .frame(width: 52, height: 68).clipShape(RoundedRectangle(cornerRadius: 6))
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(book.title).font(.system(.headline, design: .serif)).foregroundStyle(ShelfTheme.text)
+                        Text(book.title).font(.leu(.headline, serif: true)).foregroundStyle(ShelfTheme.text)
                         Text("\(book.pageCount) pages" + (book.lastOpenedAt != nil ? " · Page \(book.currentPageNumber)" : ""))
-                            .font(.subheadline).foregroundStyle(ShelfTheme.secondary)
+                            .font(.leu(.subheadline)).foregroundStyle(ShelfTheme.secondary)
                     }
                     Spacer(minLength: 0)
                 }.contentShape(Rectangle())

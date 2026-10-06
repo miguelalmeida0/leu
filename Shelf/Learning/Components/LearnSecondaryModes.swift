@@ -101,12 +101,12 @@ struct LearnSecondaryModes: View {
 
     private func modeLabel(_ title: String, detail: String, symbol: String) -> some View {
         HStack(alignment: .center, spacing: 10) {
-            Image(systemName: symbol).font(.body.weight(.medium))
+            Image(systemName: symbol).font(.leu(.body, weight: .medium))
                 .frame(width: 24).foregroundStyle(LeuDesign.signal)
             VStack(alignment: .leading, spacing: 3) {
-                Text(title).font(.subheadline.weight(.semibold))
+                Text(title).font(.leu(.subheadline, weight: .semibold))
                     .foregroundStyle(LeuDesign.textPrimary)
-                Text(detail).font(.caption).foregroundStyle(LeuDesign.textSecondary)
+                Text(detail).font(.leu(.caption)).foregroundStyle(LeuDesign.textSecondary)
             }
             .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 0)
@@ -132,10 +132,10 @@ struct LearnSecondaryModes: View {
                     .foregroundStyle(ShelfTheme.olive)
                 VStack(alignment: .leading, spacing: 3) {
                     Text(title)
-                        .font(.callout.weight(.medium))
+                        .font(.leu(.callout, weight: .medium))
                         .foregroundStyle(ShelfTheme.text)
                     Text(detail)
-                        .font(.caption)
+                        .font(.leu(.caption))
                         .foregroundStyle(ShelfTheme.secondary)
                 }
                 Spacer(minLength: 12)

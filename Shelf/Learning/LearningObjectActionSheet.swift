@@ -27,7 +27,7 @@ struct LearningObjectActionSheet: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     if let source {
-                        Text(source.sourceText).font(.system(.body, design: .serif)).lineLimit(8)
+                        Text(source.sourceText).font(.leu(.body, serif: true)).lineLimit(8)
                             .foregroundStyle(ShelfTheme.secondary)
                             .padding(.leading, 14)
                             .overlay(alignment: .leading) { Rectangle().fill(ShelfTheme.accent).frame(width: 2) }
@@ -121,10 +121,10 @@ struct LearningObjectActionSheet: View {
                         perform: @escaping () -> Void) -> some View {
         Button(action: perform) {
             HStack(spacing: 14) {
-                Image(systemName: symbol).font(.title3).foregroundStyle(ShelfTheme.accent).frame(width: 30)
+                Image(systemName: symbol).font(.leu(.title3)).foregroundStyle(ShelfTheme.accent).frame(width: 30)
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(title).font(.headline).foregroundStyle(ShelfTheme.text)
-                    Text(detail).font(.caption).foregroundStyle(ShelfTheme.secondary).multilineTextAlignment(.leading)
+                    Text(title).font(.leu(.headline)).foregroundStyle(ShelfTheme.text)
+                    Text(detail).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary).multilineTextAlignment(.leading)
                 }
                 Spacer(); Image(systemName: "chevron.right").foregroundStyle(ShelfTheme.secondary)
             }.padding(15)

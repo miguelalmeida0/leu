@@ -7,7 +7,7 @@ import SwiftUI
                 LabeledContent("Backend", value: model.intelligenceProvider.backend)
                 LabeledContent("Availability", value: model.modelAvailability.rawValue)
                 LabeledContent("Capability", value: model.intelligenceCapability.foundationModels.rawValue)
-                Text(model.intelligenceCapability.reason).font(.caption)
+                Text(model.intelligenceCapability.reason).font(.leu(.caption))
                 LabeledContent("Generation verified", value: model.intelligenceCapability.generationVerified ? "YES" : "NO")
                 ForEach(model.intelligenceCapability.errorChain, id: \.self) { Text($0).font(.caption.monospaced()) }
                 LabeledContent("Last operation", value: model.modelState.rawValue)
@@ -25,12 +25,12 @@ import SwiftUI
                     LabeledContent(key, value: String(model.modelRejections[key] ?? 0))
                 }
                 if let date = model.lastModelGeneration { Text(date, style: .time) }
-                if let error = model.lastModelError { Text(error).font(.caption).textSelection(.enabled) }
+                if let error = model.lastModelError { Text(error).font(.leu(.caption)).textSelection(.enabled) }
                 if let packet = model.lastModelPacket {
                     DisclosureGroup("Last attempted source packet") { json(packet) }
                 }
                 Section("Source migration") {
-                    ForEach(model.migrationDiagnostics, id: \.self) { Text($0).font(.caption).textSelection(.enabled) }
+                    ForEach(model.migrationDiagnostics, id: \.self) { Text($0).font(.leu(.caption)).textSelection(.enabled) }
                 }
                 ForEach(model.modelGenerations, id: \.cacheKey) { record in
                     Section("Page \((record.sourcePacket?.pageIndex ?? -1) + 1) · \(record.backend)") {

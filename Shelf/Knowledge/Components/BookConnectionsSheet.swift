@@ -11,8 +11,8 @@ struct BookConnectionsSheet: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(book.title).font(.system(.title2, design: .serif))
-                        Text("THIS BOOK CONNECTS TO").font(.caption.weight(.bold)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
+                        Text(book.title).font(.leu(.title2, serif: true))
+                        Text("THIS BOOK CONNECTS TO").font(.leu(.caption, weight: .bold)).tracking(1.8).foregroundStyle(ShelfTheme.secondary)
                     }
                     if relatedBooks.isEmpty {
                         Text(knowledge.isIndexing ? "Connecting this book to your library…" : "No strong book-level connections yet.")
@@ -20,8 +20,8 @@ struct BookConnectionsSheet: View {
                     } else {
                         ForEach(relatedBooks, id: \.book.id) { item in
                             VStack(alignment: .leading, spacing: 5) {
-                                Text(item.book.title).font(.headline)
-                                Text(item.detail).font(.callout).foregroundStyle(ShelfTheme.secondary)
+                                Text(item.book.title).font(.leu(.headline))
+                                Text(item.detail).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                             }.padding(.vertical, 10)
                             Divider().overlay(ShelfTheme.line)
                         }

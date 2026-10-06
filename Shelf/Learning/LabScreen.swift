@@ -14,11 +14,11 @@ struct LabScreen: View {
             VStack(alignment: .leading, spacing: 18) {
                 Text(lab.instruction).foregroundStyle(ShelfTheme.secondary)
                 Text("Drag each row into the order that makes the system work. A step turns green as soon as it is in the right place.")
-                    .font(.callout).foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 // A count, not a score, and it never names the steps still missing.
                 Text("\(confirmedCount) of \(order.count) in place")
-                    .font(.callout.monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
+                    .font(.leu(.callout).monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
                     .accessibilityIdentifier("lab-progress")
                 List {
                     ForEach(order) { element in
@@ -43,12 +43,12 @@ struct LabScreen: View {
                 }.padding(.horizontal, 4)
                 if revealed {
                     Text(isSolved ? "The system is reconstructed. Now predict what it does in a concrete scenario." : "Compare the order, then try again. The correct relationships are deterministic.")
-                        .font(.callout).foregroundStyle(ShelfTheme.secondary)
+                        .font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                 }
             }.padding(.horizontal, 18).padding(.bottom, 18)
                 .background(ShelfTheme.background).navigationTitle(lab.title).navigationBarTitleDisplayMode(.inline)
                 .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Close") { dismiss() } } }
-        }.preferredColorScheme(.dark).tint(ShelfTheme.accent)
+        }.preferredColorScheme(.light).tint(ShelfTheme.accent)
     }
 
     private var isSolved: Bool { order.map(\.id) == lab.correctOrder }
@@ -104,7 +104,7 @@ struct MiniLabSequence: View {
     var body: some View {
         VStack(spacing: 8) {
             Text("\(confirmedCount) of \(order.count) in place")
-                .font(.callout.monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.callout).monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .accessibilityIdentifier("mini-lab-progress")
             ForEach(Array(order.enumerated()), id: \.element.id) { index, item in

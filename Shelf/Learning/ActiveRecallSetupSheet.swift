@@ -39,7 +39,7 @@ struct ActiveRecallSetupSheet: View {
                     }.buttonStyle(ShelfButtonStyle(filled: true))
                         .disabled(!selectionReady)
                     if scope == .due && model.dueObjects.isEmpty {
-                        Text("Nothing is due yet. Choose All passages to practise now.").font(.callout)
+                        Text("Nothing is due yet. Choose All passages to practise now.").font(.leu(.callout))
                     }
                 }
             }.scrollContentBackground(.hidden)

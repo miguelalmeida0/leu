@@ -20,8 +20,8 @@ common=(-project Shelf.xcodeproj -scheme Shelf -configuration Debug
   -destination "platform=iOS Simulator,id=$device"
   -derivedDataPath .build/study-home CODE_SIGNING_ALLOWED=NO)
 if [ "$resume" = false ]; then
-  python3 scripts/test-night-field-contrast.py > "$run/contrast.log" 2>&1
-  python3 scripts/check-night-field.py > "$run/night-field.log"
+  python3 scripts/test-felt-contrast.py > "$run/contrast.log" 2>&1
+  python3 scripts/check-felt.py > "$run/felt.log"
   python3 scripts/check-study-interactions.py > "$run/interactions.log"
   python3 scripts/validate.py > "$run/validate.log"
   xcodebuild "${common[@]}" build > "$run/build.log" 2>&1

@@ -9,12 +9,12 @@ struct SemanticZoomSurface: View {
             VStack(alignment: .leading, spacing: 18) {
                 HStack {
                     Text(model.semanticLevel.title)
-                        .font(.caption.weight(.bold))
+                        .font(.leu(.caption, weight: .bold))
                         .tracking(2)
                         .foregroundStyle(ShelfTheme.accent)
                     Spacer()
                     Button("Back to page") { model.semanticLevel = .page }
-                        .font(.caption.weight(.semibold))
+                        .font(.leu(.caption, weight: .semibold))
                         .foregroundStyle(ShelfTheme.accent)
                 }
 
@@ -44,7 +44,7 @@ struct SemanticZoomSurface: View {
         switch model.semanticLevel {
         case .sentence:
             Text(model.readingAnchor?.sentence ?? model.readablePage.blocks.first?.text ?? "No sentence is available on this page.")
-                .font(.system(size: 25, design: .serif))
+                .font(LeuDesign.editorial(25))
                 .lineSpacing(8)
                 .foregroundStyle(ShelfTheme.text)
         case .page:
@@ -69,11 +69,11 @@ struct SemanticZoomSurface: View {
                         } label: {
                             HStack(spacing: 12) {
                                 VStack(alignment: .leading, spacing: 3) {
-                                    Text(entry.title).font(.body.weight(.medium)).lineLimit(2)
-                                    Text("Page \(entry.pageIndex + 1)").font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                    Text(entry.title).font(.leu(.body, weight: .medium)).lineLimit(2)
+                                    Text("Page \(entry.pageIndex + 1)").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                                 }
                                 Spacer()
-                                Image(systemName: "chevron.right").font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                Image(systemName: "chevron.right").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                             }
                             .padding(14)
                             .background(entry.pageIndex <= model.pageIndex ? ShelfTheme.raised : ShelfTheme.surface,

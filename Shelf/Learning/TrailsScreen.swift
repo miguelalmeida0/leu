@@ -57,7 +57,7 @@ struct TrailsScreen: View {
             Text("Ideas, across time.")
                 .leuScaledFont(36, weight: .regular, design: .serif)
             Text("Keep related passages in an order that helps you think through them.")
-                .font(.system(.callout, design: .serif).italic())
+                .font(.leu(.callout, serif: true).italic())
                 .foregroundStyle(ShelfTheme.secondary)
             Rectangle().fill(ShelfTheme.line).frame(height: 0.5).padding(.top, 6)
         }
@@ -67,7 +67,7 @@ struct TrailsScreen: View {
         VStack(alignment: .leading, spacing: 10) {
             Text("No trails yet.").leuScaledFont(24, weight: .regular, design: .serif)
             Text("Save a path when one idea leads naturally into another. The underlying PDFs stay untouched.")
-                .font(.system(.body, design: .serif)).foregroundStyle(ShelfTheme.secondary)
+                .font(.leu(.body, serif: true)).foregroundStyle(ShelfTheme.secondary)
         }
         .padding(.vertical, 10)
     }
@@ -81,18 +81,18 @@ struct TrailsScreen: View {
                 Button { selectedTrail = trail } label: {
                     HStack(alignment: .top, spacing: 14) {
                         Text(String(format: "%02d", max(1, trail.nodes.count)))
-                            .font(.caption.monospacedDigit())
+                            .font(.leu(.caption).monospacedDigit())
                             .foregroundStyle(ShelfTheme.accent)
                             .frame(width: 28)
                         VStack(alignment: .leading, spacing: 5) {
                             Text(trail.title)
-                                .font(.system(.body, design: .serif).weight(.medium))
+                                .font(.leu(.body, serif: true, weight: .medium))
                                 .foregroundStyle(ShelfTheme.text)
                             Text("\(trail.nodes.count) stops · \(trailState(trail))")
-                                .font(.caption).foregroundStyle(ShelfTheme.secondary)
+                                .font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                         }
                         Spacer()
-                        Image(systemName: "chevron.right").font(.caption).foregroundStyle(ShelfTheme.secondary)
+                        Image(systemName: "chevron.right").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                     }
                     .padding(.vertical, 14)
                     .contentShape(Rectangle())

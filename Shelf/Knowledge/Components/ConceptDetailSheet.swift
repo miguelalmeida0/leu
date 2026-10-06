@@ -50,15 +50,15 @@ struct ConceptDetailSheet: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(concept.name).font(.system(size: 36, weight: .regular, design: .serif))
+            Text(concept.name).font(LeuDesign.editorial(36, weight: .regular))
             HStack(spacing: 16) {
                 Text("\(documentCount) books"); Text("\(highlights.count) passages"); Text("\(connectionCount) connections")
-            }.font(.caption.monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
-            if let pack = concept.pack { Text(pack).font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent) }
+            }.font(.leu(.caption).monospacedDigit()).foregroundStyle(ShelfTheme.secondary)
+            if let pack = concept.pack { Text(pack).font(.leu(.caption, weight: .semibold)).foregroundStyle(ShelfTheme.accent) }
             let aliases = knowledge.snapshot.aliases.filter { $0.conceptID == concept.id }.map(\.value)
-            if !aliases.isEmpty { Text(aliases.joined(separator: " · ")).font(.caption).foregroundStyle(ShelfTheme.secondary) }
+            if !aliases.isEmpty { Text(aliases.joined(separator: " · ")).font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary) }
             if concept.isUserCreated {
-                Button("Add alias") { aliasPresented = true }.font(.caption.weight(.semibold)).foregroundStyle(ShelfTheme.accent)
+                Button("Add alias") { aliasPresented = true }.font(.leu(.caption, weight: .semibold)).foregroundStyle(ShelfTheme.accent)
             }
         }
     }
@@ -77,12 +77,12 @@ struct ConceptDetailSheet: View {
 
     private func passageGroup(_ title: String, passages: [KnowledgePassage]) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(title).font(.headline)
+            Text(title).font(.leu(.headline))
             ForEach(passages) { passage in
                 Button { knowledge.queueNavigation(to: passage); dismiss() } label: {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(passage.text).font(.system(.callout, design: .serif)).foregroundStyle(ShelfTheme.text).lineLimit(3)
-                        Text("\(knowledge.title(for: passage.documentID)) · p. \(passage.pageIndex + 1)").font(.caption).foregroundStyle(ShelfTheme.secondary)
+                        Text(passage.text).font(.leu(.callout, serif: true)).foregroundStyle(ShelfTheme.text).lineLimit(3)
+                        Text("\(knowledge.title(for: passage.documentID)) · p. \(passage.pageIndex + 1)").font(.leu(.caption)).foregroundStyle(ShelfTheme.secondary)
                     }.padding(.vertical, 6).contentShape(Rectangle())
                 }.buttonStyle(.plain)
             }
@@ -91,14 +91,14 @@ struct ConceptDetailSheet: View {
 
     private var conceptGroup: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Connected concepts").font(.headline)
+            Text("Connected concepts").font(.leu(.headline))
             ForEach(connectedConcepts) { item in Text(item.name).foregroundStyle(ShelfTheme.secondary).padding(.vertical, 3) }
         }
     }
 
     private var chainGroup: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Appears in Topic Chains").font(.headline)
+            Text("Appears in Topic Chains").font(.leu(.headline))
             ForEach(chains) { chain in Text(chain.title).foregroundStyle(ShelfTheme.secondary).padding(.vertical, 3) }
         }
     }

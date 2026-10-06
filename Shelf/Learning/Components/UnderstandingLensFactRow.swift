@@ -28,19 +28,19 @@ struct UnderstandingLensFactRow: View {
 
     private var conceptTitle: some View {
         Text(verbatim: fact.conceptName)
-            .font(.headline)
+            .font(.leu(.headline))
             .foregroundStyle(ShelfTheme.text)
     }
 
     private var relationship: some View {
         Text(verbatim: fact.relationshipText)
-            .font(.system(.body, design: .serif))
+            .font(.leu(.body, serif: true))
             .foregroundStyle(ShelfTheme.text)
     }
 
     private var sourceCaption: some View {
         Text(verbatim: fact.displaySourceCaption)
-            .font(.caption)
+            .font(.leu(.caption))
             .foregroundStyle(ShelfTheme.secondary)
     }
 

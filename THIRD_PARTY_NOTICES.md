@@ -18,4 +18,15 @@ The portable SHA-256 fallback is project source validated against standard SHA-2
 
 The six small bundled PDFs are original study samples written for this project. Their diagrams and code illustrations are project resources, not copied commercial books. They cite relevant primary documentation in their pages. ReportLab was used during artifact production; it is not an app runtime dependency.
 
-The launch icon and cover illustrations are original local drawings. The user's approved screenshot in `docs/approved-visual-reference.png` is retained as a private design reference, not advertised as a screenshot of this running build. Review its suitability before redistributing that reference publicly. System typefaces are requested by name/style from iOS; no font files are redistributed.
+The launch icon and cover illustrations are original local drawings. The user's approved screenshot in `docs/approved-visual-reference.png` is retained as a private design reference, not advertised as a screenshot of this running build. Review its suitability before redistributing that reference publicly.
+
+The Home scene (the daybed, quilt and tea) is an original Blender render made for this project, and the rainy city behind the window is an original procedural painting. Neither is derived from third-party artwork.
+
+## Typefaces
+
+Leu bundles static instances of two typefaces as data assets in `Shelf/Resources/Assets.xcassets/Fonts`, cut from the upstream variable fonts and subset to Latin:
+
+- **Gabarito** (Regular through Black), Copyright 2023 The Gabarito Project Authors (https://github.com/naipefoundry/gabarito).
+- **Literata** (Regular, Medium, SemiBold, Italic), Copyright 2017 The Literata Project Authors (https://github.com/googlefonts/literata).
+
+Both are licensed under the SIL Open Font License, Version 1.1 (https://openfontlicense.org). The fonts are bundled with the app and are not sold on their own, and neither licence declares a Reserved Font Name. The full licence text ships alongside them in `docs/licenses/OFL-Gabarito.txt` and `docs/licenses/OFL-Literata.txt`. System monospace is still requested from iOS for code and coordinates.

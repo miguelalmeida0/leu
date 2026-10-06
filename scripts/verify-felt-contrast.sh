@@ -4,12 +4,12 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 run="$PWD/docs/design/docs/internal/evidence/native-$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$run"
-python3 scripts/check-night-field.py | tee "$run/night-field.log"
-python3 scripts/test-night-field-contrast.py > "$run/contrast.log" 2>&1
+python3 scripts/check-felt.py | tee "$run/felt.log"
+python3 scripts/test-felt-contrast.py > "$run/contrast.log" 2>&1
 python3 scripts/validate.py | tee "$run/validate.log"
 common=(-project Shelf.xcodeproj -scheme Shelf -configuration Debug
   -destination 'platform=iOS Simulator,id=A248FB9E-B969-4CF6-A0ED-B2013A3C60A6'
-  -derivedDataPath .build/night-field-contrast CODE_SIGNING_ALLOWED=NO)
+  -derivedDataPath .build/felt-contrast CODE_SIGNING_ALLOWED=NO)
 xcodebuild "${common[@]}" build > "$run/build.log" 2>&1
 set +e
 xcodebuild "${common[@]}" -parallel-testing-enabled NO -resultBundlePath "$run/ui.xcresult" test \

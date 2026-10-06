@@ -44,9 +44,9 @@ struct ExplainLikeTenSheet: View {
             } label: {
                 HStack(spacing: 6) {
                     Text(showingPassage ? "Hide original passage" : "Show original passage")
-                    Image(systemName: showingPassage ? "chevron.up" : "chevron.down").font(.caption2)
+                    Image(systemName: showingPassage ? "chevron.up" : "chevron.down").font(.leu(.caption2))
                 }
-                .font(.footnote.weight(.semibold))
+                .font(.leu(.footnote, weight: .semibold))
                 .foregroundStyle(ShelfTheme.accent)
                 .frame(minHeight: 44)
                 .contentShape([.interaction, .accessibility], Rectangle())
@@ -55,7 +55,7 @@ struct ExplainLikeTenSheet: View {
             .accessibilityIdentifier("explain-toggle-passage")
             if showingPassage, let packet = controller.packet {
                 Text(verbatim: packet.selectionText)
-                    .font(.system(.footnote, design: .serif))
+                    .font(.leu(.footnote, serif: true))
                     .foregroundStyle(ShelfTheme.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.leading, 12)
@@ -93,7 +93,7 @@ struct ExplainLikeTenSheet: View {
     private func progress(_ label: String) -> some View {
         HStack(spacing: 10) {
             ProgressView()
-            Text(label).font(.callout).foregroundStyle(ShelfTheme.secondary)
+            Text(label).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
         }
         .frame(minHeight: 44)
         .accessibilityIdentifier("explain-progress")
@@ -102,7 +102,7 @@ struct ExplainLikeTenSheet: View {
     private func explanation(_ record: ExplanationRecord) -> some View {
         VStack(alignment: .leading, spacing: 16) {
             ForEach(Array(record.candidate.blocks.enumerated()), id: \.offset) { index, block in
-                if block.kind == .example { Text("Illustration").font(.caption.weight(.semibold)) }
+                if block.kind == .example { Text("Illustration").font(.leu(.caption, weight: .semibold)) }
                 Text(verbatim: block.text)
                     .font(blockFont(block.kind))
                     .foregroundStyle(ShelfTheme.text)
@@ -112,8 +112,8 @@ struct ExplainLikeTenSheet: View {
             if let term = record.candidate.preservedTerm,
                let meaning = record.candidate.preservedTermMeaning {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(verbatim: term).font(.callout.weight(.semibold)).foregroundStyle(ShelfTheme.text)
-                    Text(verbatim: meaning).font(.callout).foregroundStyle(ShelfTheme.secondary)
+                    Text(verbatim: term).font(.leu(.callout, weight: .semibold)).foregroundStyle(ShelfTheme.text)
+                    Text(verbatim: meaning).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .accessibilityIdentifier("explain-term")
@@ -127,12 +127,12 @@ struct ExplainLikeTenSheet: View {
         #if DEBUG
         DisclosureGroup("Development diagnostics") {
             let value = controller.diagnostics
-            Text("Backend: \(controller.backend) · Availability: \(value.availability?.rawValue ?? "not checked")").font(.caption)
+            Text("Backend: \(controller.backend) · Availability: \(value.availability?.rawValue ?? "not checked")").font(.leu(.caption))
             Text("Calls: \(value.attempts) · Responses: \(value.responses) · Accepted: \(value.accepted) · Rejected: \(value.rejections)")
                 .font(.caption.monospaced()).accessibilityIdentifier("explain-diagnostics")
             if let error = value.lastError { Text(verbatim: error).font(.caption.monospaced()) }
-            Text("Last validation failures: " + value.lastValidationFailures.joined(separator: ", ")).font(.caption)
-            Text("Last validation warnings: " + value.lastValidationWarnings.joined(separator: ", ")).font(.caption)
+            Text("Last validation failures: " + value.lastValidationFailures.joined(separator: ", ")).font(.leu(.caption))
+            Text("Last validation warnings: " + value.lastValidationWarnings.joined(separator: ", ")).font(.leu(.caption))
             let trace = ExplanationAttemptTrace.summary(for: controller.packet)
             if !trace.isEmpty {
                 Text(verbatim: trace).font(.caption2.monospaced())
@@ -158,7 +158,7 @@ struct ExplainLikeTenSheet: View {
                 .accessibilityIdentifier("explain-even-simpler")
             Button("Show an example") { controller.showExample() }
                 .buttonStyle(.plain)
-                .font(.callout.weight(.semibold))
+                .font(.leu(.callout, weight: .semibold))
                 .foregroundStyle(ShelfTheme.accent)
                 .frame(minHeight: 44)
                 .contentShape([.interaction, .accessibility], Rectangle())
@@ -172,7 +172,7 @@ struct ExplainLikeTenSheet: View {
         Text(record.servedFromCache
              ? "Saved on this iPhone from an earlier reading of this passage."
              : "Written from this passage only, on this iPhone.")
-            .font(.caption)
+            .font(.leu(.caption))
             .foregroundStyle(ShelfTheme.secondary)
             .accessibilityIdentifier("explain-provenance")
             .accessibilityValue(record.mode.rawValue)
@@ -181,7 +181,7 @@ struct ExplainLikeTenSheet: View {
     private func notice(title: String, detail: String, id: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title).leuScaledFont(24, weight: .regular, design: .serif).foregroundStyle(ShelfTheme.text)
-            Text(detail).font(.callout).foregroundStyle(ShelfTheme.secondary)
+            Text(detail).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .accessibilityIdentifier(id)

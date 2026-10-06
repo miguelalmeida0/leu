@@ -1,4 +1,5 @@
 import Foundation
+import ShelfCore
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -7,8 +8,10 @@ struct RootView: View {
     let container: AppContainer
     @Environment(\.scenePhase) private var scenePhase
     @State private var didRestoreStudyOnLaunch = false
-    @State private var primaryArea: PrimaryArea = .shelf
+    @State private var primaryArea: PrimaryArea = RootView.launchArea
     @State private var studySurface: StudySurface = .landing
+    @State private var showSearch = false
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     // Opaque subexpressions bound inference without adding a new state owner or container.
     var body: some View {
@@ -20,6 +23,10 @@ struct RootView: View {
 
     private var rootContent: some View {
         VStack(spacing: 0) {
+            if horizontalSizeClass == .regular {
+                PrimaryTopBar(selection: $primaryArea, readingTitle: lastOpenedBook?.title,
+                              openReading: openLastBook, openSearch: { showSearch = true })
+            }
             phaseContent
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .contentShape(Rectangle())
@@ -55,7 +62,9 @@ struct RootView: View {
             if let notice = container.learning.notice {
                 NoticeBar(text: notice) { container.learning.notice = nil }
             }
-            PrimaryTabBar(selection: $primaryArea)
+            if horizontalSizeClass != .regular {
+                PrimaryTabBar(selection: $primaryArea)
+            }
         }
         .background(ShelfTheme.background)
         .background { UITestFrameProbe(identifier: "root-bottom-chrome-frame") }
@@ -87,6 +96,7 @@ struct RootView: View {
             .sheet(item: $model.editingBook) { book in BookDetailsSheet(book: book, model: model) }
             .sheet(isPresented: $model.showCollections) { CollectionsSheet(model: model) }
             .sheet(item: $model.shareFile) { file in ShareSheet(file: file) }
+            .sheet(isPresented: $showSearch) { KnowledgeSearchSheet(knowledge: container.knowledge) }
     }
 
     private var backupPresentation: some View {
@@ -103,6 +113,25 @@ struct RootView: View {
             } message: { _ in
                 Text("Existing PDFs and edits are preserved. New documents and notes are added. Every PDF is checked before changes are committed.")
             }
+    }
+
+    /// You arrive at Home. The existing UI suites were written against a Library launch, so
+    /// they keep it unless a test opts into Home with `--start-home`.
+    static var launchArea: PrimaryArea {
+        let arguments = ProcessInfo.processInfo.arguments
+        return arguments.contains("--uitesting") && !arguments.contains("--start-home") ? .shelf : .home
+    }
+
+    /// The book you were last in: what "Reading" and Home's "Keep reading" open.
+    private var lastOpenedBook: Book? {
+        container.library.snapshot.activeBooks
+            .filter { $0.lastOpenedAt != nil }
+            .max { ($0.lastOpenedAt ?? .distantPast) < ($1.lastOpenedAt ?? .distantPast) }
+    }
+
+    private func openLastBook() {
+        guard let book = lastOpenedBook else { return }
+        container.library.open(book)
     }
 
     private var activeBookVersions: [String] {
@@ -126,6 +155,8 @@ struct RootView: View {
     @ViewBuilder
     private func primaryContent(_ model: LibraryModel) -> some View {
         switch primaryArea {
+        case .home:
+            HomeScreen(library: model) { primaryArea = .shelf }
         case .shelf:
             shelfContent(model)
         case .learn:
