@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		401C6CD7A16FFF2C6C9C35FA /* Intelligence/Globe/TeachLeuReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF0A8FAE9C2495F01BB6E37 /* Intelligence/Globe/TeachLeuReply.swift */; };
+		D1749490C824BFEDB8A43914 /* Intelligence/Globe/TeachLeuIdeas.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0754FF4530F34B98272EF5 /* Intelligence/Globe/TeachLeuIdeas.swift */; };
+		FDE25885D3F3A06DD4D45A35 /* Intelligence/Globe/TeachGlobeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D803B9FB606198103796D31 /* Intelligence/Globe/TeachGlobeProgress.swift */; };
+		1972A50475DD7EC9AF5BB6E3 /* Intelligence/Globe/SnowGlobe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408D8FB19B5FB7AA03B6508 /* Intelligence/Globe/SnowGlobe.swift */; };
+		89B11F2C96A4F3BE7B83F8ED /* Intelligence/Globe/GlobeSnow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3CEF9F6963715EB3CB4394 /* Intelligence/Globe/GlobeSnow.swift */; };
 		4100B4B7C0140381EA60163F /* ShelfIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230FEC60096C322468E95BC6 /* ShelfIndex.swift */; };
 		389D68BF10C502D435CC5C8F /* FeltBookPatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC774B02009B926777863D9 /* FeltBookPatch.swift */; };
 		A53CC4CFC789CE8768E4565D /* QuiltLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE6F6CF81EA002F260DE19 /* QuiltLayout.swift */; };
@@ -264,6 +269,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CBF0A8FAE9C2495F01BB6E37 /* Intelligence/Globe/TeachLeuReply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intelligence/Globe/TeachLeuReply.swift; sourceTree = "<group>"; };
+		CC0754FF4530F34B98272EF5 /* Intelligence/Globe/TeachLeuIdeas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intelligence/Globe/TeachLeuIdeas.swift; sourceTree = "<group>"; };
+		3D803B9FB606198103796D31 /* Intelligence/Globe/TeachGlobeProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intelligence/Globe/TeachGlobeProgress.swift; sourceTree = "<group>"; };
+		D408D8FB19B5FB7AA03B6508 /* Intelligence/Globe/SnowGlobe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intelligence/Globe/SnowGlobe.swift; sourceTree = "<group>"; };
+		6A3CEF9F6963715EB3CB4394 /* Intelligence/Globe/GlobeSnow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intelligence/Globe/GlobeSnow.swift; sourceTree = "<group>"; };
 		230FEC60096C322468E95BC6 /* ShelfIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfIndex.swift; sourceTree = "<group>"; };
 		FEC774B02009B926777863D9 /* FeltBookPatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeltBookPatch.swift; sourceTree = "<group>"; };
 		9ADE6F6CF81EA002F260DE19 /* QuiltLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiltLayout.swift; sourceTree = "<group>"; };
@@ -855,6 +865,11 @@
 		A20A1E4F9C7731B2D7F0C001 /* Learning */ = {
 			isa = PBXGroup;
 			children = (
+				CBF0A8FAE9C2495F01BB6E37 /* Intelligence/Globe/TeachLeuReply.swift */,
+				CC0754FF4530F34B98272EF5 /* Intelligence/Globe/TeachLeuIdeas.swift */,
+				3D803B9FB606198103796D31 /* Intelligence/Globe/TeachGlobeProgress.swift */,
+				D408D8FB19B5FB7AA03B6508 /* Intelligence/Globe/SnowGlobe.swift */,
+				6A3CEF9F6963715EB3CB4394 /* Intelligence/Globe/GlobeSnow.swift */,
 				748C1D3665BD62A47BB3C57E /* Components/PrimaryTopBar.swift */,
 				A5E19233D1B8B7728AD9EB56 /* ActiveRecallSetupSheet.swift */,
 				972DE49CAFB410D7BF735F79 /* BlindPageSheet.swift */,
@@ -1354,6 +1369,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				401C6CD7A16FFF2C6C9C35FA /* Intelligence/Globe/TeachLeuReply.swift in Sources */,
+				D1749490C824BFEDB8A43914 /* Intelligence/Globe/TeachLeuIdeas.swift in Sources */,
+				FDE25885D3F3A06DD4D45A35 /* Intelligence/Globe/TeachGlobeProgress.swift in Sources */,
+				1972A50475DD7EC9AF5BB6E3 /* Intelligence/Globe/SnowGlobe.swift in Sources */,
+				89B11F2C96A4F3BE7B83F8ED /* Intelligence/Globe/GlobeSnow.swift in Sources */,
 				4100B4B7C0140381EA60163F /* ShelfIndex.swift in Sources */,
 				389D68BF10C502D435CC5C8F /* FeltBookPatch.swift in Sources */,
 				A53CC4CFC789CE8768E4565D /* QuiltLayout.swift in Sources */,

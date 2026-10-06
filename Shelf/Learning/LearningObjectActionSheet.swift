@@ -89,7 +89,7 @@ struct LearningObjectActionSheet: View {
             }
             if let intelligence, intelligence.canTeach {
                 Divider().overlay(ShelfTheme.line)
-                action("Teach Leu", "text.bubble", "Compare your explanation with this source.", id: "learning-action-teach-leu") { destination = .teach }
+                action("In your own words", "text.bubble", "Explain this page the way you would tell a friend.", id: "learning-action-teach-leu") { destination = .teach }
                 if intelligence.activity != nil {
                     Divider().overlay(ShelfTheme.line)
                     action("Try it", "hand.draw", "Manipulate an idea from this passage.", id: "learning-action-try-it") { destination = .activity }

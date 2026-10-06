@@ -61,4 +61,37 @@ final class FeltDesignTests: XCTestCase {
         XCTAssertGreaterThan(audible, 0.001)
         XCTAssertLessThan(audible, 1, "rain must never clip")
     }
+
+    func testEveryIdeaAcrossLightsTheLastWindowOnly() {
+        XCTAssertEqual(TeachGlobeProgress.windows(captured: 0, of: 3), 0)
+        XCTAssertEqual(TeachGlobeProgress.windows(captured: 1, of: 3), 1)
+        XCTAssertEqual(TeachGlobeProgress.windows(captured: 2, of: 3), 2)
+        XCTAssertEqual(TeachGlobeProgress.windows(captured: 3, of: 3), 3)
+        XCTAssertEqual(TeachGlobeProgress.windows(captured: 1, of: 7), 1, "any idea across lights a window")
+        XCTAssertEqual(TeachGlobeProgress.windows(captured: 6, of: 7), 2, "only every idea lights the third")
+        XCTAssertEqual(TeachGlobeProgress.windows(captured: 1, of: 1), 3)
+        XCTAssertEqual(TeachGlobeProgress.windows(captured: 0, of: 0), 0)
+    }
+
+    func testGlobeWordsMatchTheWindows() {
+        XCTAssertEqual(TeachGlobeProgress.heading(windows: 2), "Two windows lit")
+        XCTAssertEqual(TeachGlobeProgress.heading(windows: 3), "Every window lit")
+        XCTAssertEqual(TeachGlobeProgress.listening(ideaCount: 3, page: 87),
+                       "Three ideas from page 87. Each one you get across lights a window.")
+    }
+
+    func testSnowSettlesOnTheHillAndStaysInsideTheGlass() {
+        let snow = GlobeSnow(count: 60, lit: 0)
+        for frame in 0..<900 { snow.advance(to: Double(frame) / 30, reduced: false) }
+        for flake in snow.flakes {
+            let r = (flake.x * flake.x + flake.y * flake.y + pow(flake.z - GlobeSnow.centreZ, 2)).squareRoot()
+            XCTAssertLessThanOrEqual(r, GlobeSnow.radius * 0.9 + 0.000_1)
+        }
+        snow.light(3, reduced: true)
+        snow.advance(to: 31, reduced: true)
+        XCTAssertEqual(snow.shown, 3, "Reduce Motion lights windows at once")
+        let centre = GlobeSnow.project(0, 0, GlobeSnow.centreZ)
+        XCTAssertEqual(centre.x, Double(GlobeArt.centre.x), accuracy: 2)
+        XCTAssertEqual(centre.y, Double(GlobeArt.centre.y), accuracy: 2)
+    }
 }
