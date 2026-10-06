@@ -94,4 +94,16 @@ final class FeltDesignTests: XCTestCase {
         XCTAssertEqual(centre.x, Double(GlobeArt.centre.x), accuracy: 2)
         XCTAssertEqual(centre.y, Double(GlobeArt.centre.y), accuracy: 2)
     }
+
+    func testStudyWaysSayWhatTheyDo() {
+        XCTAssertEqual(StudyWay.allCases.map(\.phrase), ["ask me a few things", "test my memory", "talk it through", "explain it my way"])
+        XCTAssertTrue(StudyWay.learn.usesMinutes && StudyWay.interview.usesMinutes)
+        XCTAssertFalse(StudyWay.recall.usesMinutes || StudyWay.explain.usesMinutes)
+        XCTAssertEqual(StudyWay.interviewQuestions(minutes: 5), 3)
+        XCTAssertEqual(StudyWay.interviewQuestions(minutes: 10), 5)
+        XCTAssertEqual(StudyWay.interviewQuestions(minutes: 30), 12)
+        XCTAssertEqual(TeachGlobeProgress.ideaWord(1), "one idea")
+        XCTAssertEqual(TeachGlobeProgress.ideaWord(3), "three ideas")
+        XCTAssertEqual(TeachGlobeProgress.ideaWord(9), "9 ideas")
+    }
 }
