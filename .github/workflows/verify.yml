@@ -12,9 +12,11 @@ concurrency:
 
 permissions:
   contents: read
+
 jobs:
   portable-core:
     runs-on: macos-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
       - name: Toolchain
@@ -23,21 +25,42 @@ jobs:
         run: ./scripts/test-core.sh
       - name: Structural checks
         run: python3 scripts/validate.py
+
   apple-platform:
     runs-on: macos-latest
-    timeout-minutes: 35
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7
       - name: Xcode and installed simulators
         run: |
           xcodebuild -version
           xcrun simctl list devices available
-      - name: Build and run PDFKit and UI tests
-        run: ./scripts/test-ios.sh
-      - name: Save actual Xcode test evidence
+      - name: Compile app plus all native test targets, then run native unit tests
+        run: |
+          set -euo pipefail
+          source scripts/common.sh
+          require_xcode
+          choose_simulator
+          boot_simulator
+          mkdir -p .build/results
+          COMMON=(
+            -project Shelf.xcodeproj
+            -scheme Shelf
+            -configuration Debug
+            -destination "platform=iOS Simulator,id=$SHELF_DEVICE"
+            -destination-timeout 120
+            -derivedDataPath .build/ios-ci
+            -parallel-testing-enabled NO
+            CODE_SIGNING_ALLOWED=NO
+          )
+          xcodebuild "${COMMON[@]}" build-for-testing
+          RESULT=".build/results/Shelf-unit-$(date '+%Y%m%d-%H%M%S')-$$.xcresult"
+          xcodebuild "${COMMON[@]}" -resultBundlePath "$RESULT" test-without-building -only-testing:ShelfTests
+      - name: Save native test evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: Shelf-xcresults
+          name: Shelf-native-results
           path: .build/results/*.xcresult
           if-no-files-found: warn
+          retention-days: 7

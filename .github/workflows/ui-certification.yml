@@ -1,0 +1,32 @@
+name: Leu full UI certification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: leu-full-ui-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  full-ui:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - name: Xcode and installed simulators
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices available
+      - name: Run full PDFKit and UI certification suite
+        run: ./scripts/test-ios.sh
+      - name: Save full Xcode test evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: Shelf-full-ui-xcresults
+          path: .build/results/*.xcresult
+          if-no-files-found: warn
+          retention-days: 7
