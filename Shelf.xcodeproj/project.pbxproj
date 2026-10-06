@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		361F2926BFEFCDA4B31DF32E /* Study/StudyNextPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8ECE413820E520BD0DCDB1 /* Study/StudyNextPanel.swift */; };
+		6BC19CF7450AC4CA06419077 /* Study/StudyPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94348F6EB437748C2255320 /* Study/StudyPlanner.swift */; };
+		5B45F15407ED1837100BF238 /* Study/StudySentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5552AB9FFF246E25CEA26C12 /* Study/StudySentence.swift */; };
+		AAFF39781466D518E87D78D9 /* Study/StudyWay.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7E591C30C8D8DE532B96C /* Study/StudyWay.swift */; };
 		401C6CD7A16FFF2C6C9C35FA /* Intelligence/Globe/TeachLeuReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF0A8FAE9C2495F01BB6E37 /* Intelligence/Globe/TeachLeuReply.swift */; };
 		D1749490C824BFEDB8A43914 /* Intelligence/Globe/TeachLeuIdeas.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0754FF4530F34B98272EF5 /* Intelligence/Globe/TeachLeuIdeas.swift */; };
 		FDE25885D3F3A06DD4D45A35 /* Intelligence/Globe/TeachGlobeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D803B9FB606198103796D31 /* Intelligence/Globe/TeachGlobeProgress.swift */; };
@@ -269,6 +273,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD8ECE413820E520BD0DCDB1 /* Study/StudyNextPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Study/StudyNextPanel.swift; sourceTree = "<group>"; };
+		E94348F6EB437748C2255320 /* Study/StudyPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Study/StudyPlanner.swift; sourceTree = "<group>"; };
+		5552AB9FFF246E25CEA26C12 /* Study/StudySentence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Study/StudySentence.swift; sourceTree = "<group>"; };
+		EAF7E591C30C8D8DE532B96C /* Study/StudyWay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Study/StudyWay.swift; sourceTree = "<group>"; };
 		CBF0A8FAE9C2495F01BB6E37 /* Intelligence/Globe/TeachLeuReply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intelligence/Globe/TeachLeuReply.swift; sourceTree = "<group>"; };
 		CC0754FF4530F34B98272EF5 /* Intelligence/Globe/TeachLeuIdeas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intelligence/Globe/TeachLeuIdeas.swift; sourceTree = "<group>"; };
 		3D803B9FB606198103796D31 /* Intelligence/Globe/TeachGlobeProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intelligence/Globe/TeachGlobeProgress.swift; sourceTree = "<group>"; };
@@ -865,6 +873,10 @@
 		A20A1E4F9C7731B2D7F0C001 /* Learning */ = {
 			isa = PBXGroup;
 			children = (
+				FD8ECE413820E520BD0DCDB1 /* Study/StudyNextPanel.swift */,
+				E94348F6EB437748C2255320 /* Study/StudyPlanner.swift */,
+				5552AB9FFF246E25CEA26C12 /* Study/StudySentence.swift */,
+				EAF7E591C30C8D8DE532B96C /* Study/StudyWay.swift */,
 				CBF0A8FAE9C2495F01BB6E37 /* Intelligence/Globe/TeachLeuReply.swift */,
 				CC0754FF4530F34B98272EF5 /* Intelligence/Globe/TeachLeuIdeas.swift */,
 				3D803B9FB606198103796D31 /* Intelligence/Globe/TeachGlobeProgress.swift */,
@@ -1369,6 +1381,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				361F2926BFEFCDA4B31DF32E /* Study/StudyNextPanel.swift in Sources */,
+				6BC19CF7450AC4CA06419077 /* Study/StudyPlanner.swift in Sources */,
+				5B45F15407ED1837100BF238 /* Study/StudySentence.swift in Sources */,
+				AAFF39781466D518E87D78D9 /* Study/StudyWay.swift in Sources */,
 				401C6CD7A16FFF2C6C9C35FA /* Intelligence/Globe/TeachLeuReply.swift in Sources */,
 				D1749490C824BFEDB8A43914 /* Intelligence/Globe/TeachLeuIdeas.swift in Sources */,
 				FDE25885D3F3A06DD4D45A35 /* Intelligence/Globe/TeachGlobeProgress.swift in Sources */,

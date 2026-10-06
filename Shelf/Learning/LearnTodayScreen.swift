@@ -28,46 +28,46 @@ struct LearnTodayScreen: View {
 
     private var landing: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 22) {
-                header
-                LearnSecondaryModes(model: model, knowledge: knowledge) {
-                    onOpenProgress()
-                    ShelfHaptics.shared.play(.selectionChanged)
-                }
-                VStack(alignment: .leading, spacing: 16) {
-                    continueField
-                    if dynamicTypeSize.isAccessibilitySize {
-                        VStack(spacing: 12) { fadingSection; blindSpotsSection }
-                    } else {
-                        HStack(alignment: .top, spacing: 12) {
-                            fadingSection
-                            blindSpotsSection.padding(.top, 28)
+            VStack(alignment: .leading, spacing: 40) {
+                StudyPlanner(model: model)
+                VStack(alignment: .leading, spacing: 22) {
+                    Text("More from your shelf")
+                        .leuScaledFont(26, weight: .heavy, relativeTo: .title2)
+                        .foregroundStyle(LeuDesign.textPrimary)
+                        .accessibilityAddTraits(.isHeader)
+                    LearnSecondaryModes(model: model, knowledge: knowledge) {
+                        onOpenProgress()
+                        ShelfHaptics.shared.play(.selectionChanged)
+                    }
+                    VStack(alignment: .leading, spacing: 16) {
+                        continueField
+                        if dynamicTypeSize.isAccessibilitySize {
+                            VStack(spacing: 12) { fadingSection; blindSpotsSection }
+                        } else {
+                            HStack(alignment: .top, spacing: 12) {
+                                fadingSection
+                                blindSpotsSection.padding(.top, 28)
+                            }
                         }
                     }
+                    labsSection
+                    if model.isIndexing { indexingStatus }
+                    if let notice = model.notice {
+                        Text(notice).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
+                            .accessibilityIdentifier("learning-index-notice")
+                    }
                 }
-                labsSection
-                if model.isIndexing { indexingStatus }
-                if let notice = model.notice {
-                    Text(notice).font(.leu(.callout)).foregroundStyle(ShelfTheme.secondary)
-                        .accessibilityIdentifier("learning-index-notice")
-                }
+                .frame(maxWidth: 760, alignment: .leading)
             }
             .padding(.horizontal, ShelfTheme.gutter)
-            .padding(.top, 24).padding(.bottom, 42)
-            .frame(maxWidth: 760).frame(maxWidth: .infinity)
+            .padding(.top, 28).padding(.bottom, 42)
+            .frame(maxWidth: 1240, alignment: .leading).frame(maxWidth: .infinity)
         }
         .clipped()
         .background(ShelfTheme.background)
         .background { UITestFrameProbe(identifier: "learn-screen-frame") }
         .accessibilityIdentifier("learn-screen")
         .onAppear { StudyInteractionTrace.record("surface.study-landing.appeared") }
-    }
-
-    private var header: some View {
-        Text("Study")
-            .leuScaledFont(34, weight: .bold, relativeTo: .largeTitle)
-            .foregroundStyle(LeuDesign.textPrimary)
-            .accessibilityAddTraits(.isHeader)
     }
 
     private var continueField: some View {
