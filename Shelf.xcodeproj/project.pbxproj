@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EDC0F94338CE5071FB572A7C /* SewnScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A2EC0B224F28CAAF64A19 /* SewnScreen.swift */; };
 		14163E4D9F8BD393EB827CDA /* BookOverview/ChapterStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EB8D161368C293DCCAC325 /* BookOverview/ChapterStrip.swift */; };
 		56ADBA3F765DEAF1228DCDE2 /* BookOverview/BookOverviewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4A093A66D22656DD8F96E8 /* BookOverview/BookOverviewScreen.swift */; };
 		A7F662DE0DEFCDD6E6BDFFFA /* BookOverview/BookOverviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC12260C2410C41DA867ED17 /* BookOverview/BookOverviewModel.swift */; };
@@ -285,6 +286,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA5A2EC0B224F28CAAF64A19 /* SewnScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SewnScreen.swift; sourceTree = "<group>"; };
 		F5EB8D161368C293DCCAC325 /* BookOverview/ChapterStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookOverview/ChapterStrip.swift; sourceTree = "<group>"; };
 		7B4A093A66D22656DD8F96E8 /* BookOverview/BookOverviewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookOverview/BookOverviewScreen.swift; sourceTree = "<group>"; };
 		EC12260C2410C41DA867ED17 /* BookOverview/BookOverviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookOverview/BookOverviewModel.swift; sourceTree = "<group>"; };
@@ -775,6 +777,7 @@
 		69B9AABFC5F01BC22CE07F07 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				CA5A2EC0B224F28CAAF64A19 /* SewnScreen.swift */,
 				36A0789AAFFCF46361BEBAFA /* Components */,
 				AE87F9FF6F660DB26B69F0F1 /* BookDetailsSheet.swift */,
 				29F6C639A26E5CA6F761D4D7 /* LibraryModel+Backup.swift */,
@@ -1417,6 +1420,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDC0F94338CE5071FB572A7C /* SewnScreen.swift in Sources */,
 				14163E4D9F8BD393EB827CDA /* BookOverview/ChapterStrip.swift in Sources */,
 				56ADBA3F765DEAF1228DCDE2 /* BookOverview/BookOverviewScreen.swift in Sources */,
 				A7F662DE0DEFCDD6E6BDFFFA /* BookOverview/BookOverviewModel.swift in Sources */,
