@@ -39,8 +39,11 @@
     "Shelf/Features/Library/Components/BookActionsMenu.swift",
     "Shelf/Features/Library/Components/BookTile.swift",
     "Shelf/Features/Library/Components/CollectionFilterBar.swift",
+    "Shelf/Features/Library/Components/FeltBookPatch.swift",
     "Shelf/Features/Library/Components/LibraryHeader.swift",
     "Shelf/Features/Library/Components/PassageResultsView.swift",
+    "Shelf/Features/Library/Components/QuiltLayout.swift",
+    "Shelf/Features/Library/Components/ShelfIndex.swift",
     "Shelf/Features/Library/LibraryModel+Backup.swift",
     "Shelf/Features/Library/LibraryModel+Editing.swift",
     "Shelf/Features/Library/LibraryModel+Import.swift",
@@ -229,10 +232,10 @@
     "ShelfUITests/ShelfStudyInteractionUITests.swift",
     "ShelfUITests/ShelfUITestCase.swift",
     "ShelfUITests/ShelfUITests.swift",
+    "ShelfUITests/ShelfV27IntelligenceUITests.swift",
     "ShelfUITests/ShelfWorldClassUITests.swift",
     "ShelfUITests/StudyInteractionSupport.swift",
-    "ShelfUITests/V24InteractionSupport.swift",
-    "ShelfUITests/ShelfV27IntelligenceUITests.swift"
+    "ShelfUITests/V24InteractionSupport.swift"
   ],
   "unitTestSources": [
     "ShelfTests/BugfixIntegrationTests.swift",

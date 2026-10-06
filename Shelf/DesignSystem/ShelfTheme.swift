@@ -64,6 +64,8 @@ extension Color {
     }
 }
 
+/// A book's dyed felt. Each palette keeps its stored name (they are persisted on `Book`)
+/// but now resolves to one of Leu's felts; foreground and muted type clear 4.5:1 on it.
 struct CoverColors {
     let background: Color
     let foreground: Color
@@ -72,24 +74,24 @@ struct CoverColors {
     let shadow: Color
     init(_ palette: CoverPalette) {
         switch palette {
-        case .ocean:
-            background = Color(hex: 0xB7C2C2); foreground = Color(hex: 0x203033)
-            muted = Color(hex: 0x334746); light = Color(hex: 0xDCE3E1); shadow = Color(hex: 0x819497)
-        case .graphite:
-            background = Color(hex: 0x4B4A46); foreground = Color(hex: 0xF5F1E8)
-            muted = Color(hex: 0xD3CEC3); light = Color(hex: 0x85827B); shadow = Color(hex: 0x343330)
-        case .ivory:
-            background = Color(hex: 0xE9E4D9); foreground = Color(hex: 0x26241F)
-            muted = Color(hex: 0x59544C); light = Color(hex: 0xF9F6EF); shadow = Color(hex: 0xBFB8AA)
-        case .forest:
-            background = Color(hex: 0x4A503D); foreground = Color(hex: 0xFAF6ED)
-            muted = Color(hex: 0xDFE2D7); light = Color(hex: 0x9AA08B); shadow = Color(hex: 0x4E5543)
-        case .sand:
-            background = Color(hex: 0xD8C4A4); foreground = Color(hex: 0x332A22)
-            muted = Color(hex: 0x4D4033); light = Color(hex: 0xF2E7D4); shadow = Color(hex: 0xAE9470)
-        case .slate:
-            background = Color(hex: 0x54534E); foreground = Color(hex: 0xFAF7F0)
-            muted = Color(hex: 0xE0DDD4); light = Color(hex: 0xA7A49D); shadow = Color(hex: 0x57564F)
+        case .ocean:    // denim
+            background = Color(hex: 0x4A6A8A); foreground = Color(hex: 0xF8F1DE)
+            muted = Color(hex: 0xF0E8D6); light = Color(hex: 0x7E9AB6); shadow = Color(hex: 0x34506B)
+        case .graphite: // moss
+            background = Color(hex: 0x4D6A3C); foreground = Color(hex: 0xF8F1DE)
+            muted = Color(hex: 0xEDE6D2); light = Color(hex: 0x7E9A68); shadow = Color(hex: 0x36502A)
+        case .ivory:    // oat
+            background = Color(hex: 0xECDFBF); foreground = Color(hex: 0x24301F)
+            muted = Color(hex: 0x4F5E41); light = Color(hex: 0xF8F1DE); shadow = Color(hex: 0xC9B98F)
+        case .forest:   // teal
+            background = Color(hex: 0x35706A); foreground = Color(hex: 0xF8F1DE)
+            muted = Color(hex: 0xEDE8D8); light = Color(hex: 0x6E9F98); shadow = Color(hex: 0x24534E)
+        case .sand:     // butter
+            background = Color(hex: 0xE7B843); foreground = Color(hex: 0x24301F)
+            muted = Color(hex: 0x4A3A12); light = Color(hex: 0xF3D88E); shadow = Color(hex: 0xB98D24)
+        case .slate:    // tomato
+            background = Color(hex: 0xA94B35); foreground = Color(hex: 0xF8F1DE)
+            muted = Color(hex: 0xF6EBDD); light = Color(hex: 0xD27A5F); shadow = Color(hex: 0x7E3424)
         }
     }
 }
