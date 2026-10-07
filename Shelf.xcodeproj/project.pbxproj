@@ -42,7 +42,6 @@
 		389D68BF10C502D435CC5C8F /* FeltBookPatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC774B02009B926777863D9 /* FeltBookPatch.swift */; };
 		A53CC4CFC789CE8768E4565D /* QuiltLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE6F6CF81EA002F260DE19 /* QuiltLayout.swift */; };
 		C3AF11A837A1E88634D7DEC2 /* FeltDesignTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC3B4E03AD013C6BF2E5B6C /* FeltDesignTests.swift */; };
-		CA4A174098168F485BCFCD1C /* RainSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2AE4D91C4DCACD65D90DF1 /* RainSound.swift */; };
 		65265A933D7D214E1B01E7EE /* TeaSteam.swift in Sources */ = {isa = PBXBuildFile; fileRef = B553351B7A935BE09434924D /* TeaSteam.swift */; };
 		275E91715F3352832E6475F2 /* FoggedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8D0A5CF9B2F873E4BBBBF1 /* FoggedWindow.swift */; };
 		1EB9F83492A291BCFE2E25FD /* HomeNookScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD5FBF3628ED92763926D69 /* HomeNookScene.swift */; };
@@ -330,7 +329,6 @@
 		FEC774B02009B926777863D9 /* FeltBookPatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeltBookPatch.swift; sourceTree = "<group>"; };
 		9ADE6F6CF81EA002F260DE19 /* QuiltLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiltLayout.swift; sourceTree = "<group>"; };
 		CAC3B4E03AD013C6BF2E5B6C /* FeltDesignTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeltDesignTests.swift; sourceTree = "<group>"; };
-		FC2AE4D91C4DCACD65D90DF1 /* RainSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainSound.swift; sourceTree = "<group>"; };
 		B553351B7A935BE09434924D /* TeaSteam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaSteam.swift; sourceTree = "<group>"; };
 		9D8D0A5CF9B2F873E4BBBBF1 /* FoggedWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoggedWindow.swift; sourceTree = "<group>"; };
 		DFD5FBF3628ED92763926D69 /* HomeNookScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNookScene.swift; sourceTree = "<group>"; };
@@ -645,7 +643,6 @@
 			isa = PBXGroup;
 			children = (
 				3C1302B8E758C8418B377C52 /* WelcomeScreen.swift */,
-				FC2AE4D91C4DCACD65D90DF1 /* RainSound.swift */,
 				B553351B7A935BE09434924D /* TeaSteam.swift */,
 				9D8D0A5CF9B2F873E4BBBBF1 /* FoggedWindow.swift */,
 				DFD5FBF3628ED92763926D69 /* HomeNookScene.swift */,
@@ -1479,7 +1476,6 @@
 				4100B4B7C0140381EA60163F /* ShelfIndex.swift in Sources */,
 				389D68BF10C502D435CC5C8F /* FeltBookPatch.swift in Sources */,
 				A53CC4CFC789CE8768E4565D /* QuiltLayout.swift in Sources */,
-				CA4A174098168F485BCFCD1C /* RainSound.swift in Sources */,
 				65265A933D7D214E1B01E7EE /* TeaSteam.swift in Sources */,
 				275E91715F3352832E6475F2 /* FoggedWindow.swift in Sources */,
 				1EB9F83492A291BCFE2E25FD /* HomeNookScene.swift in Sources */,
