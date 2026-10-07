@@ -2,6 +2,7 @@ import { go, href, type Route } from '../lib/router'
 import { useStore } from '../lib/store'
 import { lastBook } from '../lib/library'
 import { Stitch } from './ui'
+import { Wordmark } from './Wordmark'
 
 const places = [
   { name: 'library', label: 'Library' },
@@ -20,7 +21,7 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
   const current = route.name === 'book' ? 'library' : route.name === 'words' ? 'read' : route.name
   return (
     <header className="topbar">
-      <a className="wordmark" href={href({ name: 'home' })} aria-label="Leu, home" aria-current={route.name === 'home' ? 'page' : undefined}>leu</a>
+      <a className="wordmark" href={href({ name: 'home' })} aria-label="Leu, home" aria-current={route.name === 'home' ? 'page' : undefined}><Wordmark /></a>
       <nav aria-label="Places">
         <ul>
           {places.map((p) => {

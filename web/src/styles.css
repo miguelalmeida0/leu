@@ -453,3 +453,71 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
   .stop { width: 30%; }
   .library-head { flex-direction: column; align-items: flex-start; }
 }
+
+/* ---------- reading along ---------- */
+/* While Leu reads, a soft butter marker sweeps under each word as it is heard, so the line
+   being read is always obvious; once the sentence is behind you the marker lifts away. */
+.prose .w { background-image: linear-gradient(rgba(231, 184, 67, .5), rgba(231, 184, 67, .5)); background-repeat: no-repeat; background-position: 0 88%; background-size: 0% 40%; transition: background-size .32s cubic-bezier(.3, .7, .3, 1), color .5s; }
+.prose.reading .s { transition: color .8s; }
+.prose.reading .s:not(.now) { color: #6C6A62; }
+.prose.reading h2 .s:not(.now) { color: #4A5541; }
+.prose .s.now { color: var(--paper-ink); }
+.prose .s.now .w.said { background-size: 100% 40%; }
+.prose .s.heard .w { background-size: 100% 40%; background-image: linear-gradient(rgba(231, 184, 67, 0), rgba(231, 184, 67, 0)); transition: background-image 1.6s, color .8s; }
+.prose .s.marked { background: rgba(231, 184, 67, .28); border-radius: 4px; box-shadow: 0 0 0 3px rgba(231, 184, 67, .28); box-decoration-break: clone; -webkit-box-decoration-break: clone; transition: background .8s; }
+@media (prefers-reduced-motion: reduce) { .prose .w { transition: none; } }
+
+/* ---------- explain, in the margin ---------- */
+.reader-grid { transition: grid-template-columns .6s var(--ease); }
+.reader-grid.explaining { grid-template-columns: 210px minmax(0, 1fr) 380px; }
+.explain-panel { background: var(--cream); border-radius: 22px; padding: 22px 24px 20px; box-shadow: var(--shadow-soft); position: relative; animation: panelIn .6s var(--ease) both; max-height: calc(100vh - 130px); overflow: auto; scrollbar-width: thin; }
+.explain-panel:focus { outline: none; }
+.explain-panel::after { content: ""; position: absolute; inset: 6px; border-radius: 17px; border: 1.5px dashed rgba(36, 48, 31, .2); pointer-events: none; }
+@keyframes panelIn { from { opacity: 0; transform: translateX(14px); } }
+.explain-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.explain-head .eyebrow { display: flex; align-items: center; gap: 8px; margin: 0; }
+.icon-btn.small { width: 32px; height: 32px; background: transparent; box-shadow: none; }
+.icon-btn.small:hover { background: #EFE6CC; }
+.explain-title { font: 800 24px/1.1 var(--sans); letter-spacing: -0.03em; margin: 10px 0 0; }
+.explain-gist { margin-top: 12px; border-left: 2.5px solid var(--butter); padding-left: 14px; font-size: 16.5px; line-height: 1.58; color: var(--paper-ink); }
+.explain-gist p { margin: 0 0 .6em; }
+.explain-gist p:last-child { margin: 0; }
+.explain-where { color: var(--paper-secondary); margin: 10px 0 0; }
+.explain-terms { margin-top: 18px; }
+.explain-terms ul { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 2px; }
+.explain-terms li > button { display: flex; justify-content: space-between; align-items: baseline; width: 100%; min-height: 40px; padding: 0 10px; border-radius: 10px; font-weight: 700; text-align: left; }
+.explain-terms li > button:hover, .explain-terms li > button[aria-expanded="true"] { background: #EFE6CC; }
+.term-line { margin: 4px 10px 10px; font-size: 14.5px; line-height: 1.55; color: var(--paper-secondary); }
+.explain-actions { display: grid; gap: 8px; margin-top: 20px; }
+.explain-actions .btn { width: 100%; }
+.explain-note { margin: 14px 2px 0; color: var(--paper-secondary); line-height: 1.45; }
+.btn.cream .dot { margin-right: 2px; }
+@media (max-width: 1240px) { .reader-grid.explaining { grid-template-columns: 0 minmax(0, 1fr) 340px; } .reader-grid.explaining .rail { visibility: hidden; } }
+@media (max-width: 1100px) { .reader-grid.explaining { grid-template-columns: minmax(0, 1fr); } .reader-grid.explaining .margin { order: 1; } .reader-grid.explaining .rail { visibility: visible; } .explain-panel { max-height: none; } }
+.welcome-art { margin: 0; position: relative; }
+.welcome-art .scene-canvas { aspect-ratio: 1559 / 1147; height: auto; }
+.tug { position: absolute; left: 0; right: 0; bottom: 4%; text-align: center; font-size: 13px; font-weight: 600; color: var(--secondary); opacity: .75; pointer-events: none; }
+
+
+/* ---------- wordmark ---------- */
+.wordmark { display: inline-flex; align-items: flex-end; }
+.wordmark-inner { display: inline-flex; align-items: flex-end; }
+.wm-word { font: 900 30px/1 var(--sans); letter-spacing: -0.06em; }
+.wm-thread { margin-left: -5px; margin-bottom: 2px; overflow: visible; }
+.wm-stitch { fill: none; stroke: var(--red-thread); stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 3.4 2.6; }
+.wm-knot { fill: var(--red-thread); }
+.wm-thread { transform-origin: 54% 60%; }
+.wm-reveal { fill: none; stroke: #fff; stroke-width: 5; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  /* Sewn in once when Leu opens, and again whenever you come near it. */
+  .wm-reveal { animation: wmSew 2.4s cubic-bezier(.45, .1, .25, 1) .4s both; }
+  .wm-knot { animation: wmKnot .5s ease 2.7s both; }
+  .wordmark:hover .wm-reveal, .wordmark:focus-visible .wm-reveal { animation: wmSewAgain 2.2s cubic-bezier(.45, .1, .25, 1) both; }
+  .wordmark:hover .wm-knot, .wordmark:focus-visible .wm-knot { animation: wmKnotAgain .5s ease 2.1s both; }
+  .wordmark:hover .wm-thread, .wordmark:focus-visible .wm-thread { animation: wmBeat 1.6s ease-in-out 2.3s 1; }
+}
+@keyframes wmSew { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes wmSewAgain { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes wmKnot { from { opacity: 0; } to { opacity: 1; } }
+@keyframes wmKnotAgain { from { opacity: 0; } to { opacity: 1; } }
+@keyframes wmBeat { 0%, 100% { transform: scale(1); } 30% { transform: scale(1.09); } 55% { transform: scale(.99); } }

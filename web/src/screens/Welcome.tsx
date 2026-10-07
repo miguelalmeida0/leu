@@ -13,7 +13,7 @@ export function Welcome({ onBring }: { onBring: () => void }) {
   const trimmed = intention.trim()
   return (
     <div className="welcome page fade-in">
-      <div className="welcome-art"><Basket /></div>
+      <figure className="welcome-art"><Basket /><figcaption className="tug" aria-hidden="true">Give the yarn a little tug.</figcaption></figure>
       <div className="welcome-words">
         <p className="eyebrow">Hello, and welcome</p>
         <h1 className="display" style={{ fontSize: 'clamp(40px, 4.4vw, 60px)', marginTop: 12 }}>Make yourself comfortable.</h1>

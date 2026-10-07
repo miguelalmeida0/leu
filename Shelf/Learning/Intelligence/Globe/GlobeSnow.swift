@@ -23,6 +23,7 @@ final class GlobeSnow {
     private var last: Double?
     private var pointer: (x: Double, y: Double)?
     private var push = (dx: 0.0, dy: 0.0)
+    private var pressed = false
 
     static let radius = 0.1, centreZ = 0.138
 
@@ -41,8 +42,26 @@ final class GlobeSnow {
 
     func shake() { swirl = 1 }
 
+    /// A touch on the glass: the whole snowfall lifts, swirls and drifts back down. Snow lying
+    /// on the hill or the roof is lifted back into the water too.
+    func kick(at point: CGPoint) {
+        swirl = max(swirl, 0.75)
+        for index in flakes.indices {
+            var f = flakes[index]
+            if f.settle > 0 { f.settle = 0; f.alpha = max(f.alpha, 0.6); f.z = Self.ground(hypot(f.x, f.y)) + 0.006 }
+            let q = Self.project(f.x, f.y, f.z)
+            let near = max(0, 1 - hypot(q.x - Double(point.x), q.y - Double(point.y)) / 420)
+            let k = 0.55 + near * 0.9
+            f.vz += Double.random(in: 0.035...0.075) * k
+            f.vx += Double.random(in: -1...1) * 0.035 * k + (q.x - Double(point.x)) * 0.000_06 * near
+            f.vy += Double.random(in: -1...1) * 0.035 * k
+            flakes[index] = f
+        }
+    }
+
     /// A finger or pointer moving over the glass, in artwork pixels.
-    func stir(at point: CGPoint) {
+    func stir(at point: CGPoint, pressed: Bool = false) {
+        self.pressed = pressed
         let next = (x: Double(point.x), y: Double(point.y))
         if let pointer {
             push = (dx: min(max(next.x - pointer.x, -40), 40), dy: min(max(next.y - pointer.y, -40), 40))
@@ -50,7 +69,7 @@ final class GlobeSnow {
         pointer = next
     }
 
-    func release() { pointer = nil }
+    func release() { pointer = nil; pressed = false }
 
     func advance(to time: Double, reduced: Bool) {
         let dt = min(max(time - (last ?? time), 0), 1.0 / 15.0)
@@ -77,7 +96,10 @@ final class GlobeSnow {
             f.vz += (-0.0055 - f.vz * 1.4 + spin * 0.016 * (1 - (f.z - cz) / r)) * dt
             if let pointer {
                 let q = Self.project(f.x, f.y, f.z), d = hypot(q.x - pointer.x, q.y - pointer.y)
-                if d < 80 { let k = pow(1 - d / 80, 2) * 0.000_06; f.vx += push.dx * k; f.vz -= push.dy * k }
+                if d < 150 {
+                    let k = pow(1 - d / 150, 2) * (pressed ? 0.000_4 : 0.000_16)
+                    f.vx += push.dx * k; f.vz -= push.dy * k; f.vy += abs(push.dx) * k * 0.3
+                }
             }
             f.x += f.vx * dt; f.y += f.vy * dt; f.z += f.vz * dt
             let distance = (f.x * f.x + f.y * f.y + (f.z - cz) * (f.z - cz)).squareRoot()

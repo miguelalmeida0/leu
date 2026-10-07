@@ -20,15 +20,15 @@ PDF onto the page. `npm run build && npm run preview` serves the production buil
 
 | Screen | What you can do |
 |---|---|
-| Welcome | Knitting basket with live yarn; your intention is remembered and shown on Home. |
+| Welcome | Knitting basket whose loose strand of yarn you can brush, catch and tug; your intention is remembered and shown on Home. |
 | Bring a PDF | Drop a PDF anywhere, ⌘O, or the button. Leu reads it with pdf.js, sews it in, finds books that share its ideas, and lets you shelve it. |
 | Home | The nook: rain on the glass, fog you wipe with the pointer (it fogs back after ~7 s), tea steam, synthesised rain sound. |
 | Library | The felt quilt, shelves, On the needle, find a book. |
 | A book | Chapter strip from the PDF outline (or its headings), sections, where you left off, loose ends. |
 | Reading | The page rebuilt for reading, or the original page drawn by pdf.js. Select text to keep a note, explain it or hear it. ← → turn pages. |
-| Read aloud | Kokoro voices (kokoro-js, in a worker). The 8-bit model (~90 MB) downloads from Hugging Face the first time, then works offline. Until then, or if it can't load, your system voice reads. |
-| Explain | The butter card. There is no model in the browser, so it says so and shows the passage's own key sentences and words to know. |
-| In your own words | The snow globe. Each idea you get across lights a window; all of them light the third. Drag over the glass to stir the snow, click to shake. Chrome and Safari can also take it spoken. |
+| Read aloud | Kokoro voices (kokoro-js, in a worker), with a soft marker sweeping under each word as it is heard. With WebGPU (Chrome, Edge, Safari 26) the full model (~330 MB) runs on the graphics chip, faster than speech; elsewhere the 8-bit model (~90 MB) runs on WebAssembly threads. Sentences are joined with even breaths and playback waits just long enough never to stall. Downloaded once from Hugging Face, then offline; until then your system voice reads. |
+| Explain | A quiet sheet in the margin, beside the page, with the sentences it draws on marked there. There is no model in the browser, so it says so and keeps to the passage's own words. |
+| In your own words | The snow globe. Each idea you get across lights a window; all of them light the third. Every touch on the glass lifts the snow; drag to stir it. Chrome and Safari can also take it spoken. |
 | Study | The sentence planner and a recall session with spaced review. Nothing is scored. |
 | Notes | A notebook spread of what you kept, each opening its page. |
 | Explore / Trails | Ideas shared across your books, the passages that say them, and a walk you can make from them. |
