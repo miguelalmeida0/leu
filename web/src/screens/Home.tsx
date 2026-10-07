@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import { Progress, Swatch } from '../components/ui'
 import { lastBook } from '../lib/library'
 import { go } from '../lib/router'
 import { readFraction, useStore } from '../lib/store'
 import { NookScene } from '../scenes/NookScene'
-import { toggleRain, raining } from '../scenes/rain'
 
 function greeting(d = new Date()) {
   const h = d.getHours()
@@ -15,7 +13,6 @@ function greeting(d = new Date()) {
 export function Home({ onBring }: { onBring: () => void }) {
   const books = useStore((s) => s.books)
   const book = lastBook(books)
-  const [rain, setRain] = useState(raining)
   const progress = book ? readFraction(book) : 0
 
   return (
@@ -24,7 +21,7 @@ export function Home({ onBring }: { onBring: () => void }) {
       <section className="home-words">
         <p className="eyebrow" style={{ color: 'var(--secondary)' }}>{greeting()}</p>
         <h1 className="display home-title">We kept your spot warm.</h1>
-        <p className="home-sub">{book ? 'Quilt, tea and rain.' : 'Bring a PDF and it will be waiting here.'}</p>
+        <p className="home-sub">{book ? 'Quilt, tea and a rainy evening.' : 'Bring a PDF and it will be waiting here.'}</p>
         {book && (
           <div className="home-book" aria-label={`${book.title}, page ${book.page} of ${book.pages}, ${Math.round(progress * 100)} percent read`}>
             <div className="row" style={{ gap: 12, alignItems: 'baseline' }}>
@@ -45,10 +42,6 @@ export function Home({ onBring }: { onBring: () => void }) {
             <button className="btn ink" onClick={onBring}>Bring a PDF</button>
           )}
         </div>
-        <button className="rain-toggle" aria-pressed={rain} onClick={() => setRain(toggleRain())}>
-          <span className="dot" style={{ background: rain ? 'var(--butter)' : 'var(--labs)' }} />
-          Rain sound{rain ? ' · on' : ''}
-        </button>
       </section>
       <div className="home-scene"><NookScene /></div>
     </div>

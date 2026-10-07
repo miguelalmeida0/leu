@@ -3,7 +3,6 @@ import { TopBar } from './components/TopBar'
 import { importFiles, useSewing } from './lib/library'
 import { go, useRoute } from './lib/router'
 import { useStore } from './lib/store'
-import { stopRain } from './scenes/rain'
 import { BookOverview } from './screens/BookOverview'
 import { Explore } from './screens/Explore'
 import { Home } from './screens/Home'
@@ -41,7 +40,6 @@ export default function App() {
     return () => window.removeEventListener('keydown', key)
   }, [])
 
-  useEffect(() => { if (route.name !== 'home') stopRain() }, [route.name])
   useEffect(() => { window.scrollTo(0, 0) }, [route.name])
 
   useEffect(() => {

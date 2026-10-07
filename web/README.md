@@ -22,7 +22,7 @@ PDF onto the page. `npm run build && npm run preview` serves the production buil
 |---|---|
 | Welcome | Knitting basket whose loose strand of yarn drifts softly when you brush it and follows your hand gently when you catch it; your intention is kept in this browser. |
 | Bring a PDF | Drop a PDF anywhere, ⌘O, or the button. Leu reads it with pdf.js, sews it in, finds books that share its ideas, and lets you shelve it. |
-| Home | The nook: rain on the glass, fog you wipe with the pointer (it fogs back after ~7 s), tea steam, synthesised rain sound. |
+| Home | The nook: rain on the glass, fog you wipe with the pointer (it fogs back after ~7 s), tea steam. |
 | Library | The felt quilt, shelves, On the needle, find a book. |
 | A book | Chapter strip from the PDF outline (or its headings), sections, where you left off, loose ends. |
 | Reading | The page rebuilt for reading, or the original page drawn by pdf.js. Select text to keep a note, explain it or hear it. ← → turn pages. |
