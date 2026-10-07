@@ -46,7 +46,6 @@ class Snow {
   flakes = Array.from({ length: 170 }, () => spawn(true))
   target = 0; shown = 0; swirl = 0; now = 0; last = 0
   pointer: { x: number; y: number } | null = null
-  pressed = false
   push = { dx: 0, dy: 0 }
   /** Hovering: how present the hand is (eased 0…1) and where it rests (eased too). */
   hover = 0
@@ -123,10 +122,6 @@ class Snow {
           f.vz += 0.011 * k * dt
           f.vx += this.aim.vx * 0.00006 * k * dt
         }
-      }
-      if (this.pressed && this.pointer) {
-        const q = project(f.x, f.y, f.z), d = Math.hypot(q.x - this.pointer.x, q.y - this.pointer.y)
-        if (d < 150) { const k = (1 - d / 150) ** 2 * 0.00022; f.vx += this.push.dx * k; f.vz -= this.push.dy * k }
       }
       f.x += f.vx * dt; f.y += f.vy * dt; f.z += f.vz * dt
       const dist = Math.hypot(f.x, f.y, f.z - cz)
@@ -236,18 +231,10 @@ export function SnowGlobe({ lit, label }: { lit: number; label?: string }) {
       className="scene-canvas globe"
       role="img"
       tabIndex={0}
-      aria-label={`${label ?? 'A snow globe with a little cottage inside'}. ${value}. Each idea you get across lights a window. Press Enter to shake it.`}
-      style={{ aspectRatio: `${ART.w} / ${ART.h}`, touchAction: 'none' }}
+      aria-label={`${label ?? 'A snow globe with a little cottage inside'}. ${value}. Each idea you get across lights a window. Rest the pointer on the glass to stir the snow, or press Enter.`}
+      style={{ aspectRatio: `${ART.w} / ${ART.h}` }}
       onPointerMove={(e) => { const p = toArt(e); snow.current.stir(p.x, p.y) }}
-      onPointerLeave={() => { snow.current.pointer = null; snow.current.pressed = false }}
-      onPointerDown={(e) => {
-        const p = toArt(e)
-        e.currentTarget.setPointerCapture(e.pointerId)
-        snow.current.pressed = true
-        snow.current.stir(p.x, p.y)
-        snow.current.kick(p.x, p.y, reduced)
-      }}
-      onPointerUp={() => { snow.current.pressed = false }}
+      onPointerLeave={() => { snow.current.pointer = null }}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); snow.current.kick(centre.x, centre.y, reduced) } }}
     />
   )
