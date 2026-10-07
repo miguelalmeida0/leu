@@ -143,8 +143,10 @@ struct WelcomeScreen: View {
 /// It sways a few points over many seconds; Reduce Motion holds it still.
 struct KnittingBasket: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    private static let tip = CGPoint(x: 0.5597, y: 0.0552)
-    private static let ball = CGPoint(x: 0.6853, y: 0.7829)
+    // In the asset's unit space: the right needle's tip, and the upper-left edge of the loose ball.
+    private static let tip = CGPoint(x: 0.5535, y: 0.0356)
+    private static let ball = CGPoint(x: 0.662, y: 0.624)
+    static let aspect: CGFloat = 1559.0 / 1147.0
 
     var body: some View {
         TimelineView(.animation(minimumInterval: 1.0 / 20.0, paused: reduceMotion)) { timeline in
@@ -154,17 +156,17 @@ struct KnittingBasket: View {
                 let t = reduceMotion ? 0 : timeline.date.timeIntervalSinceReferenceDate
                 let sway = CGFloat(sin(t * 0.45) * 0.006 + sin(t * 0.21 + 1.3) * 0.004)
                 let tip = CGPoint(x: Self.tip.x * size.width, y: Self.tip.y * size.height)
-                let ball = CGPoint(x: (Self.ball.x - 0.022) * size.width, y: (Self.ball.y - 0.03) * size.height)
+                let ball = CGPoint(x: Self.ball.x * size.width, y: Self.ball.y * size.height)
                 var yarn = Path()
                 yarn.move(to: tip)
                 yarn.addCurve(to: ball,
-                              control1: CGPoint(x: (Self.tip.x + 0.004 + sway) * size.width, y: 0.48 * size.height),
-                              control2: CGPoint(x: (Self.ball.x - 0.075 - sway * 0.6) * size.width, y: (Self.ball.y + 0.02) * size.height))
+                              control1: CGPoint(x: (Self.tip.x + 0.008 + sway) * size.width, y: 0.42 * size.height),
+                              control2: CGPoint(x: (Self.ball.x - 0.07 - sway * 0.6) * size.width, y: (Self.ball.y + 0.012) * size.height))
                 context.stroke(yarn, with: .color(Color(hex: 0xC98476)), lineWidth: max(1.5, size.width * 0.0024))
                 context.stroke(yarn, with: .color(Color(hex: 0xEBB5A3)), lineWidth: max(0.8, size.width * 0.0012))
             }
         }
-        .aspectRatio(1800.0 / 1120.0, contentMode: .fit)
+        .aspectRatio(Self.aspect, contentMode: .fit)
         .accessibilityElement()
         .accessibilityLabel("A knitting basket with yarn and a half-finished striped blanket")
         .accessibilityAddTraits(.isImage)
