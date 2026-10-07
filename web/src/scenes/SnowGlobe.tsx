@@ -48,6 +48,9 @@ class Snow {
   pointer: { x: number; y: number } | null = null
   pressed = false
   push = { dx: 0, dy: 0 }
+  /** Hovering: how present the hand is (eased 0…1) and where it rests (eased too). */
+  hover = 0
+  aim = { x: 512, y: 300, vx: 0 }
 
   light(n: number, reduced: boolean) {
     const next = Math.min(Math.max(n, 0), 3)
@@ -65,10 +68,10 @@ class Snow {
         f.settle = 0; f.alpha = Math.max(f.alpha, 0.6); f.z = ground(Math.hypot(f.x, f.y)) + 0.006
       }
       const q = project(f.x, f.y, f.z), near = Math.max(0, 1 - Math.hypot(q.x - x, q.y - y) / 420)
-      const k = 0.55 + near * 0.9
-      f.vz += u(0.035, 0.075) * k
-      f.vx += u(-1, 1) * 0.035 * k + (q.x - x) * 0.00006 * near
-      f.vy += u(-1, 1) * 0.035 * k
+      const k = 0.4 + near * 0.6
+      f.vz += u(0.025, 0.05) * k
+      f.vx += u(-1, 1) * 0.022 * k + (q.x - x) * 0.00004 * near
+      f.vy += u(-1, 1) * 0.022 * k
     }
   }
 
@@ -82,11 +85,27 @@ class Snow {
     if (reduced) { this.shown = this.target; this.swirl = 0; return }
     this.push.dx *= Math.exp(-dt * 3); this.push.dy *= Math.exp(-dt * 3)
     this.swirl = Math.max(0, this.swirl - dt * 0.22)
+    // A hand over the glass arrives slowly and leaves more slowly still, and the place it
+    // rests is followed with a lag, so the snow answers like water, never like a cursor.
+    const inside = this.pointer !== null
+    this.hover += ((inside ? 1 : 0) - this.hover) * (1 - Math.exp(-dt / (inside ? 1.4 : 2.6)))
+    if (this.pointer) {
+      const nx = this.aim.x + (this.pointer.x - this.aim.x) * (1 - Math.exp(-dt / 0.6))
+      this.aim.vx = this.aim.vx * 0.9 + ((nx - this.aim.x) / Math.max(dt, 1e-3)) * 0.1
+      this.aim.x = nx
+      this.aim.y += (this.pointer.y - this.aim.y) * (1 - Math.exp(-dt / 0.6))
+    } else this.aim.vx *= Math.exp(-dt * 2)
+    const h = this.hover * this.hover * (3 - 2 * this.hover)
     this.shown = this.shown < this.target ? Math.min(this.target, this.shown + dt / 2.6) : Math.max(this.target, this.shown - dt / 1.2)
-    const spin = this.swirl * this.swirl
+    const spin = Math.max(this.swirl * this.swirl, h * 0.16)
     for (let i = 0; i < this.flakes.length; i++) {
       const f = this.flakes[i]
       if (f.settle > 0) {
+        // Snow lying under a resting hand lifts off again, gently.
+        if (h > 0.6 && f.settle < 0.8) {
+          const q = project(f.x, f.y, f.z)
+          if (Math.hypot(q.x - this.aim.x, q.y - this.aim.y) < 110 && Math.random() < dt * 1.5) { f.settle = 0; f.z += 0.003; f.vz = 0.004; continue }
+        }
         f.settle += dt; f.alpha = Math.max(0, 1 - f.settle / 1.6)
         if (f.settle > 1.6) this.flakes[i] = spawn(false)
         continue
@@ -96,9 +115,18 @@ class Snow {
       f.vx += (n1 * 0.004 - f.y * 1.6 * spin - f.vx * 1.4) * dt
       f.vy += (n2 * 0.004 + f.x * 1.6 * spin - f.vy * 1.4) * dt
       f.vz += (-0.0055 - f.vz * 1.4 + spin * 0.016 * (1 - (f.z - cz) / radius)) * dt
-      if (this.pointer) {
+      if (h > 0.001) {
+        // A soft warm current under the hand: flakes near it rise slowly and drift the way it moves.
+        const q = project(f.x, f.y, f.z), d = Math.hypot(q.x - this.aim.x, q.y - this.aim.y)
+        if (d < 190) {
+          const k = (1 - d / 190) ** 2 * h
+          f.vz += 0.011 * k * dt
+          f.vx += this.aim.vx * 0.00006 * k * dt
+        }
+      }
+      if (this.pressed && this.pointer) {
         const q = project(f.x, f.y, f.z), d = Math.hypot(q.x - this.pointer.x, q.y - this.pointer.y)
-        if (d < 150) { const k = (1 - d / 150) ** 2 * (this.pressed ? 0.0004 : 0.00016); f.vx += this.push.dx * k; f.vz -= this.push.dy * k; f.vy += Math.abs(this.push.dx) * k * 0.3 }
+        if (d < 150) { const k = (1 - d / 150) ** 2 * 0.00022; f.vx += this.push.dx * k; f.vz -= this.push.dy * k }
       }
       f.x += f.vx * dt; f.y += f.vy * dt; f.z += f.vz * dt
       const dist = Math.hypot(f.x, f.y, f.z - cz)

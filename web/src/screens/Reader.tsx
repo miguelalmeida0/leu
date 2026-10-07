@@ -5,7 +5,8 @@ import { openPdf, pageBlocks, renderPage, type Block, type PDFDocumentProxy } fr
 import { go, href } from '../lib/router'
 import { addNote, loadOutline, loadPdf, patchBook, removeNote, upsertMemory, useStore, type Outline } from '../lib/store'
 import { cloze, ideas } from '../lib/text'
-import { chooseVoice, dismissNotice, speak, stop, useVoice, useVoiceId, voices } from '../lib/voice'
+import { Player } from '../components/Player'
+import { chooseVoice, dismissNotice, prefetch, seek, speak, stop, useVoice, useVoiceId, voices, warmVoice } from '../lib/voice'
 import { ExplainPanel, gistOf } from './Explain'
 
 /** Reading (06): the chapter rail, the page as paper (rebuilt for reading, or the original),
@@ -26,6 +27,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const paper = useRef<HTMLDivElement>(null)
   const canvas = useRef<HTMLCanvasElement>(null)
   const voice = useVoice()
+  const continuing = useRef(false)
   const voiceId = useVoiceId()
   const pages = book?.pages ?? 1
   const clamped = Math.min(Math.max(1, page), pages)
@@ -39,6 +41,8 @@ export function Reader({ id, page }: { id: string; page: number }) {
       if (live) setDoc(opened); else void opened.loadingTask.destroy()
       setOutline(await loadOutline(id))
     })()
+    // If you've listened before, the voice wakes up quietly while the book opens.
+    warmVoice()
     return () => { live = false; void opened?.loadingTask.destroy(); stop() }
   }, [id])
 
@@ -65,8 +69,9 @@ export function Reader({ id, page }: { id: string; page: number }) {
     void renderPage(doc, clamped, canvas.current, width)
   }, [mode, doc, clamped])
 
-  const turn = useCallback((to: number) => {
+  const turn = useCallback((to: number, keepReading = false) => {
     stop(); setSelection(null); setDraft(null); setExplain(null)
+    continuing.current = keepReading
     go({ name: 'read', id, page: Math.min(Math.max(1, to), pages) }, true)
     document.querySelector('.reader-paper')?.scrollTo({ top: 0 })
     window.scrollTo({ top: 0 })
@@ -82,6 +87,18 @@ export function Reader({ id, page }: { id: string; page: number }) {
     window.addEventListener('keydown', key)
     return () => window.removeEventListener('keydown', key)
   }, [clamped, turn])
+
+  // Read the page from a sentence; at the end, turn the page and carry on reading.
+  const readPage = useCallback((from: number) => {
+    if (!blocks) return
+    speak(piecesOf(blocks), 'page', from, () => { if (clamped < pages) turn(clamped + 1, true) })
+  }, [blocks, clamped, pages, turn])
+
+  useEffect(() => {
+    if (!blocks) return
+    if (continuing.current) { continuing.current = false; readPage(0) }
+    else prefetch(piecesOf(blocks)) // so Read aloud starts at once
+  }, [blocks]) // runs when a page's text arrives
 
   // The sentences an explanation draws on, marked on the page beside it.
   const marked = useMemo(() => {
@@ -104,10 +121,9 @@ export function Reader({ id, page }: { id: string; page: number }) {
   if (missing || !book) return <div className="page"><Empty title="This book isn't in this browser any more."><a className="link" href={href({ name: 'library' })}>Back to the library</a></Empty></div>
 
   const pageText = (blocks ?? []).map((b) => b.text).join('\n\n')
-  const pieces = blocks ? piecesOf(blocks) : []
   const current = [...outline].reverse().find((o) => o.page <= clamped && o.depth === 0) ?? [...outline].reverse().find((o) => o.page <= clamped)
   const speaking = voice.speakingId === 'page'
-  const voiceLabel = speaking ? (voice.status === 'loading' ? (voice.progress > 0 && voice.progress < 1 ? `Getting the voice ready · ${Math.round(voice.progress * 100)}%` : 'Getting the voice ready…') : 'Stop reading') : 'Read aloud'
+  const voiceLabel = speaking ? 'Stop reading' : 'Read aloud'
 
   return (
     <div className="reader fade-in">
@@ -121,7 +137,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           <button role="radio" aria-checked={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
         </div>
         <div className="row" style={{ gap: 8, position: 'relative' }}>
-          <button className="btn soft small-btn" aria-pressed={speaking} onClick={() => (speaking ? stop() : speak(pieces, 'page'))} disabled={!pageText}>
+          <button className="btn soft small-btn" aria-pressed={speaking} onClick={() => (speaking ? stop() : readPage(0))} disabled={!pageText}>
             <SpeakerIcon on={speaking} /> {voiceLabel}
           </button>
           <button className="icon-btn" aria-label="Choose a voice" aria-expanded={voiceMenu} onClick={() => setVoiceMenu((v) => !v)}>
@@ -169,7 +185,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           ) : blocks.length === 0 ? (
             <p className="muted">This page has no text Leu can read (it may be a picture). Try “Original page”.</p>
           ) : (
-            <Prose blocks={blocks} reading={speaking && voice.status === 'speaking'} marked={marked} />
+            <Prose blocks={blocks} reading={speaking && (voice.status === 'speaking' || voice.status === 'paused')} marked={marked} onSeek={seek} />
           )}
           {selection && (
             <div className="selection-menu" style={{ left: selection.x, top: selection.y }} role="toolbar" aria-label="With this passage">
@@ -208,6 +224,9 @@ export function Reader({ id, page }: { id: string; page: number }) {
         </aside>
       </div>
 
+      {speaking ? (
+        <div className="reader-foot"><Player where={`Page ${clamped} of ${pages}`} /></div>
+      ) : (
       <div className="reader-foot">
         <button className="btn soft small-btn" onClick={() => turn(clamped - 1)} disabled={clamped <= 1} aria-label="Previous page">← Previous</button>
         <label className="page-slider">
@@ -217,6 +236,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
         </label>
         <button className="btn ink small-btn" onClick={() => turn(clamped + 1)} disabled={clamped >= pages} aria-label="Next page">Next →</button>
       </div>
+      )}
 
     </div>
   )
