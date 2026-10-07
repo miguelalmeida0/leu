@@ -96,6 +96,9 @@ struct ShelfSwitch: UIViewRepresentable {
     }
 
     private func configure(_ control: UISwitch) {
+        #if targetEnvironment(macCatalyst)
+        control.preferredStyle = .sliding // a switch on the Mac too, not a checkbox
+        #endif
         control.onTintColor = UIColor(LeuDesign.signal)
         control.thumbTintColor = UIColor(LeuDesign.onSignal)
         control.isAccessibilityElement = true

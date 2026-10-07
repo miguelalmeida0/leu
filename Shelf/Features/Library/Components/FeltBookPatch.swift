@@ -136,14 +136,27 @@ private struct StitchLine: Shape {
     }
 }
 
-/// Felt gives a little under a press and springs back slowly.
+/// Felt gives a little under a press and springs back slowly. Under a pointer (iPad
+/// trackpad, the Mac) it lifts a few points, so you can tell what you are about to open.
 struct FeltPressStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        FeltPressBody(label: configuration.label, pressed: configuration.isPressed)
+    }
+}
+
+private struct FeltPressBody<Label: View>: View {
+    let label: Label
+    let pressed: Bool
+    @State private var hovering = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.975 : 1)
-            .animation(.spring(response: 0.35, dampingFraction: 0.7), value: configuration.isPressed)
+    var body: some View {
+        label
+            .scaleEffect(reduceMotion ? 1 : (pressed ? 0.975 : (hovering ? 1.012 : 1)))
+            .offset(y: hovering && !pressed && !reduceMotion ? -2 : 0)
+            .animation(.spring(response: 0.35, dampingFraction: 0.7), value: pressed)
+            .animation(.easeOut(duration: 0.25), value: hovering)
+            .onHover { hovering = $0 }
     }
 }
 

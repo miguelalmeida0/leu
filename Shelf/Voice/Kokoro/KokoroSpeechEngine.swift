@@ -34,7 +34,7 @@ final class KokoroSpeechEngine: NSObject, AVAudioPlayerDelegate {
 
     deinit { if let memoryObserver { NotificationCenter.default.removeObserver(memoryObserver) } }
 
-    var isAvailable: Bool { KokoroAssets.isInstalled }
+    var isAvailable: Bool { KokoroAssets.isSupported && KokoroAssets.isInstalled }
     var isSpeaking: Bool { !paused && (player?.isPlaying == true || producing) }
     var isPaused: Bool { paused }
 

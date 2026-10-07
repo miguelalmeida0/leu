@@ -35,6 +35,7 @@ struct LibraryScreen: View {
                 )
                 .ignoresSafeArea()
             }
+            .onReceive(NotificationCenter.default.publisher(for: .leuPresentPDFPicker)) { _ in presentPDFPicker() }
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("library-screen")
     }

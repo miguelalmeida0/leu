@@ -59,6 +59,10 @@ final class TrackingSlider: UISlider {
     override init(frame: CGRect) {
         super.init(frame: frame)
         isContinuous = true
+        #if targetEnvironment(macCatalyst)
+        // Mac-style sliders reject custom thumb images; keep the iPad behaviour and look.
+        preferredBehavioralStyle = .pad
+        #endif
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 28, height: 28))
         let thumb = renderer.image { context in
             UIColor(ShelfTheme.paper).setFill()

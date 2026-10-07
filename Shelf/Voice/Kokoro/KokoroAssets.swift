@@ -49,6 +49,15 @@ enum KokoroAssets {
     static func lexiconURL(_ name: String) -> URL { root.appendingPathComponent("lexicon/\(name)") }
     static func voiceURL(_ id: String) -> URL { root.appendingPathComponent("voices/\(id).bin") }
 
+    /// ONNX Runtime ships no Mac Catalyst build, so Kokoro runs on iPhone and iPad only.
+    static var isSupported: Bool {
+        #if canImport(OnnxRuntimeBindings)
+        return true
+        #else
+        return false
+        #endif
+    }
+
     static var isInstalled: Bool {
         let fm = FileManager.default
         return fm.fileExists(atPath: modelURL.path)

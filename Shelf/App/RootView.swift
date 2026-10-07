@@ -79,6 +79,7 @@ struct RootView: View {
                 Task { await synchronizeLibraryIndexes() }
             }
             .onChange(of: primaryArea) { _, area in primaryAreaChanged(area) }
+            .modifier(LeuCommandReceiver(area: $primaryArea))
             .onChange(of: container.learning.activeSession?.id) { _, sessionID in
                 activeSessionChanged(sessionID)
             }

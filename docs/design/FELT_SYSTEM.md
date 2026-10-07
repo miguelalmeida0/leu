@@ -76,3 +76,15 @@ bookshelf animation from the exploration is intentionally excluded.
 
 Navigation is now Home, Library, Reading (opens the last book), Study, Notes, Explore, Trails.
 iPhone keeps one floating pill with five places (Home, Library, Study, Notes, Explore); Trails sit inside Explore behind an Ideas | Trails switch. The current place is ink with a red running stitch.
+
+## Mac
+
+Leu runs on the Mac through Mac Catalyst with the Mac idiom (`TARGETED_DEVICE_FAMILY = 1,2,6`), so
+the regular-width compositions render at the 1440 × 900 size they were drawn at. The felt runs edge
+to edge (no title bar or toolbar strip, `Shelf/App/LeuMac.swift`), the window opens at 1440 × 900 with
+a 1080 × 720 minimum, the top bar and reader bar leave room for the traffic lights, felt patches lift
+under the pointer, and the menu bar has Go › Home…Trails (⌘1–⌘6) and File › Bring a PDF… (⌘O).
+
+ONNX Runtime publishes no Mac Catalyst slice, so its package is linked on iOS only
+(`platformFilter = ios`). On the Mac, Kokoro and Supertonic compile out and Leu reads with the
+system voice; the Voice panel says so and points to Premium and Siri voices.

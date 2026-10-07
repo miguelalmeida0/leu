@@ -95,7 +95,8 @@ struct ReaderTopBar: View {
             }
         }
         .padding(.horizontal, 8)
-        .padding(.top, 2)
+        .padding(.leading, LeuPlatform.isMac ? 72 : 0)
+        .padding(.top, LeuPlatform.isMac ? 8 : 2)
         .padding(.bottom, 7)
         .background(ShelfTheme.background)
         .overlay(alignment: .bottom) { ShelfTheme.line.frame(height: 0.5) }

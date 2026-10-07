@@ -32,7 +32,8 @@ struct PrimaryTopBar: View {
             }
         }
         .padding(.horizontal, 44)
-        .padding(.top, 14)
+        // On the Mac the traffic lights sit on the felt above the bar.
+        .padding(.top, LeuPlatform.isMac ? 36 : 14)
         .padding(.bottom, 10)
         .accessibilityElement(children: .contain)
     }

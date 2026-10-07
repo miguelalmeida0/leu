@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6144686D1B6F4C44BCBF0C7E /* LeuMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB76D362CE3622E13ABE97FD /* LeuMac.swift */; };
 		5EEE6E5DC4CA429199B56551 /* KokoroPhonemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D03EC9306D5B0FC2BFEC3B5 /* KokoroPhonemeTests.swift */; };
 		D720F58A5528F33E67B57D70 /* Kokoro/KokoroVoicesPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3615BA0FC4422BECB9A8E6 /* Kokoro/KokoroVoicesPanel.swift */; };
 		3D3E67CF384E52AD80CA9239 /* Kokoro/KokoroSpeechEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5C0E0A783799059FBD9FDC /* Kokoro/KokoroSpeechEngine.swift */; };
@@ -180,7 +181,7 @@
 		A1174D5C1FF1DE59EF3D4D85 /* TagsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D248CAFC5064D46BD0FEFA1A /* TagsScreen.swift */; };
 		A24000000000000000000002 /* Engine/SupertonicRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24000000000000000000001 /* Engine/SupertonicRuntime.swift */; };
 		A24000000000000000000004 /* Engine/SupertonicSpeechEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24000000000000000000003 /* Engine/SupertonicSpeechEngine.swift */; };
-		A24000000000000000000007 /* onnxruntime in Frameworks */ = {isa = PBXBuildFile; productRef = A24000000000000000000006 /* onnxruntime */; };
+		A24000000000000000000007 /* onnxruntime in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = A24000000000000000000006 /* onnxruntime */; };
 		A2E20E0B96D1736897C3E5CE /* UnderstandingLensSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A7CADF2B28C72682BB6FCB /* UnderstandingLensSheet.swift */; };
 		A554C868E05115D6E31809E1 /* ShelfSessionExperienceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67D0140CA27F74158191861 /* ShelfSessionExperienceUITests.swift */; };
 		A55B953403833CF2E29139FF /* Services/AppleLearningIntelligenceProvider+Explanation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F24D827539B821FA78D8098 /* Services/AppleLearningIntelligenceProvider+Explanation.swift */; };
@@ -294,6 +295,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BB76D362CE3622E13ABE97FD /* LeuMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeuMac.swift; sourceTree = "<group>"; };
 		4D03EC9306D5B0FC2BFEC3B5 /* KokoroPhonemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KokoroPhonemeTests.swift; sourceTree = "<group>"; };
 		4F3615BA0FC4422BECB9A8E6 /* Kokoro/KokoroVoicesPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kokoro/KokoroVoicesPanel.swift; sourceTree = "<group>"; };
 		BB5C0E0A783799059FBD9FDC /* Kokoro/KokoroSpeechEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kokoro/KokoroSpeechEngine.swift; sourceTree = "<group>"; };
@@ -1222,6 +1224,7 @@
 		C6A18B79C53E450B0EBBB27A /* App */ = {
 			isa = PBXGroup;
 			children = (
+				BB76D362CE3622E13ABE97FD /* LeuMac.swift */,
 				55F53807A1537A0939BA3A75 /* AppContainer.swift */,
 				805D4F53644442034E678F05 /* RootView.swift */,
 				F3DDE9C635F982629089924F /* ShelfApp.swift */,
@@ -1444,6 +1447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6144686D1B6F4C44BCBF0C7E /* LeuMac.swift in Sources */,
 				D720F58A5528F33E67B57D70 /* Kokoro/KokoroVoicesPanel.swift in Sources */,
 				3D3E67CF384E52AD80CA9239 /* Kokoro/KokoroSpeechEngine.swift in Sources */,
 				B0AD79D1024A08BF48143FD0 /* Kokoro/KokoroRuntime.swift in Sources */,
@@ -1757,7 +1761,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dev.shelf.v27;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
@@ -1780,7 +1786,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dev.shelf.v27;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Debug;
