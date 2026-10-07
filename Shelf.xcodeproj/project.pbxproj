@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5EEE6E5DC4CA429199B56551 /* KokoroPhonemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D03EC9306D5B0FC2BFEC3B5 /* KokoroPhonemeTests.swift */; };
+		D720F58A5528F33E67B57D70 /* Kokoro/KokoroVoicesPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3615BA0FC4422BECB9A8E6 /* Kokoro/KokoroVoicesPanel.swift */; };
+		3D3E67CF384E52AD80CA9239 /* Kokoro/KokoroSpeechEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5C0E0A783799059FBD9FDC /* Kokoro/KokoroSpeechEngine.swift */; };
+		B0AD79D1024A08BF48143FD0 /* Kokoro/KokoroRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7FB8538F0B6B7D30F4FF04 /* Kokoro/KokoroRuntime.swift */; };
+		FB5F117AFFEA2394E0427CB9 /* Kokoro/KokoroAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D442A8A91E2CC164B519341 /* Kokoro/KokoroAssets.swift */; };
+		613606559477F09E2C4E2A8B /* Kokoro/KokoroLetterSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02737E4A83073FE1837808CF /* Kokoro/KokoroLetterSounds.swift */; };
+		2098935E642F0565061F97D3 /* Kokoro/KokoroPhonemizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E293B30B98C4B4A8A9473C3 /* Kokoro/KokoroPhonemizer.swift */; };
+		B6482E072BA0E81BEEF20C25 /* Kokoro/KokoroLexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0673192D3FEFE93121A7021F /* Kokoro/KokoroLexicon.swift */; };
 		EDC0F94338CE5071FB572A7C /* SewnScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A2EC0B224F28CAAF64A19 /* SewnScreen.swift */; };
 		14163E4D9F8BD393EB827CDA /* BookOverview/ChapterStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EB8D161368C293DCCAC325 /* BookOverview/ChapterStrip.swift */; };
 		56ADBA3F765DEAF1228DCDE2 /* BookOverview/BookOverviewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4A093A66D22656DD8F96E8 /* BookOverview/BookOverviewScreen.swift */; };
@@ -286,6 +294,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D03EC9306D5B0FC2BFEC3B5 /* KokoroPhonemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KokoroPhonemeTests.swift; sourceTree = "<group>"; };
+		4F3615BA0FC4422BECB9A8E6 /* Kokoro/KokoroVoicesPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kokoro/KokoroVoicesPanel.swift; sourceTree = "<group>"; };
+		BB5C0E0A783799059FBD9FDC /* Kokoro/KokoroSpeechEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kokoro/KokoroSpeechEngine.swift; sourceTree = "<group>"; };
+		7C7FB8538F0B6B7D30F4FF04 /* Kokoro/KokoroRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kokoro/KokoroRuntime.swift; sourceTree = "<group>"; };
+		0D442A8A91E2CC164B519341 /* Kokoro/KokoroAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kokoro/KokoroAssets.swift; sourceTree = "<group>"; };
+		02737E4A83073FE1837808CF /* Kokoro/KokoroLetterSounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kokoro/KokoroLetterSounds.swift; sourceTree = "<group>"; };
+		1E293B30B98C4B4A8A9473C3 /* Kokoro/KokoroPhonemizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kokoro/KokoroPhonemizer.swift; sourceTree = "<group>"; };
+		0673192D3FEFE93121A7021F /* Kokoro/KokoroLexicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kokoro/KokoroLexicon.swift; sourceTree = "<group>"; };
 		CA5A2EC0B224F28CAAF64A19 /* SewnScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SewnScreen.swift; sourceTree = "<group>"; };
 		F5EB8D161368C293DCCAC325 /* BookOverview/ChapterStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookOverview/ChapterStrip.swift; sourceTree = "<group>"; };
 		7B4A093A66D22656DD8F96E8 /* BookOverview/BookOverviewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookOverview/BookOverviewScreen.swift; sourceTree = "<group>"; };
@@ -1005,6 +1021,13 @@
 		A21A1E4F9C7731B2D7F0C003 /* Voice */ = {
 			isa = PBXGroup;
 			children = (
+				4F3615BA0FC4422BECB9A8E6 /* Kokoro/KokoroVoicesPanel.swift */,
+				BB5C0E0A783799059FBD9FDC /* Kokoro/KokoroSpeechEngine.swift */,
+				7C7FB8538F0B6B7D30F4FF04 /* Kokoro/KokoroRuntime.swift */,
+				0D442A8A91E2CC164B519341 /* Kokoro/KokoroAssets.swift */,
+				02737E4A83073FE1837808CF /* Kokoro/KokoroLetterSounds.swift */,
+				1E293B30B98C4B4A8A9473C3 /* Kokoro/KokoroPhonemizer.swift */,
+				0673192D3FEFE93121A7021F /* Kokoro/KokoroLexicon.swift */,
 				A24000000000000000000001 /* Engine/SupertonicRuntime.swift */,
 				A24000000000000000000003 /* Engine/SupertonicSpeechEngine.swift */,
 				16FFEBBA00647F25333B2890 /* Engine/AppleSpeechEngine.swift */,
@@ -1112,6 +1135,7 @@
 		B6982961E289F33EEC3B17F4 /* ShelfTests */ = {
 			isa = PBXGroup;
 			children = (
+				4D03EC9306D5B0FC2BFEC3B5 /* KokoroPhonemeTests.swift */,
 				9CC427FA6F0814BE86EDBDBC /* FeltScreensTests.swift */,
 				CAC3B4E03AD013C6BF2E5B6C /* FeltDesignTests.swift */,
 				2B86B1A097E5C5E245637412 /* PDFIntegrationTests.swift */,
@@ -1420,6 +1444,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D720F58A5528F33E67B57D70 /* Kokoro/KokoroVoicesPanel.swift in Sources */,
+				3D3E67CF384E52AD80CA9239 /* Kokoro/KokoroSpeechEngine.swift in Sources */,
+				B0AD79D1024A08BF48143FD0 /* Kokoro/KokoroRuntime.swift in Sources */,
+				FB5F117AFFEA2394E0427CB9 /* Kokoro/KokoroAssets.swift in Sources */,
+				613606559477F09E2C4E2A8B /* Kokoro/KokoroLetterSounds.swift in Sources */,
+				2098935E642F0565061F97D3 /* Kokoro/KokoroPhonemizer.swift in Sources */,
+				B6482E072BA0E81BEEF20C25 /* Kokoro/KokoroLexicon.swift in Sources */,
 				EDC0F94338CE5071FB572A7C /* SewnScreen.swift in Sources */,
 				14163E4D9F8BD393EB827CDA /* BookOverview/ChapterStrip.swift in Sources */,
 				56ADBA3F765DEAF1228DCDE2 /* BookOverview/BookOverviewScreen.swift in Sources */,
@@ -1670,6 +1701,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EEE6E5DC4CA429199B56551 /* KokoroPhonemeTests.swift in Sources */,
 				1C29D7EE948121407D305661 /* FeltScreensTests.swift in Sources */,
 				C3AF11A837A1E88634D7DEC2 /* FeltDesignTests.swift in Sources */,
 				F1F5E4F783B57AA6E083FEAE /* PDFIntegrationTests.swift in Sources */,

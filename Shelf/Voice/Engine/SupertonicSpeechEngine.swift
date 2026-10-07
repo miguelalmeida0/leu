@@ -196,40 +196,100 @@ final class SupertonicSpeechEngine: NSObject, AVAudioPlayerDelegate {
     }
 }
 
+/// Chooses who reads: a Kokoro voice when installed (the default), then Supertonic, then
+/// Apple's synthesizer as the fallback that is always there.
 @MainActor
 final class LeuSpeechEngine {
+    private enum Backend { case apple, supertonic, kokoro }
     private let apple = AppleSpeechEngine()
     private let neural = SupertonicSpeechEngine()
-    private var activeNeural = false
+    private let kokoro = KokoroSpeechEngine()
+    private var active: Backend = .apple
     var onStarted: (() -> Void)? { didSet { wire() } }
     var onFinished: (() -> Void)? { didSet { wire() } }
     var onCancelled: (() -> Void)? { didSet { wire() } }
     var onWillSpeakRange: ((NSRange) -> Void)? { didSet { wire() } }
-    var usesAppleVoices: Bool { isSpeaking || isPaused ? !activeNeural : !neural.isAvailable }
+    private var preferred: Backend { kokoro.isAvailable ? .kokoro : neural.isAvailable ? .supertonic : .apple }
+    private var current: Backend { isSpeaking || isPaused ? active : preferred }
+    var usesAppleVoices: Bool { current == .apple }
     var supportsSentenceRanges: Bool { usesAppleVoices }
-    var backendName: String { usesAppleVoices ? "Apple fallback" : "Leu Neural · Supertonic 3" }
-    var isSpeaking: Bool { activeNeural ? neural.isSpeaking : apple.isSpeaking }
-    var isPaused: Bool { activeNeural ? neural.isPaused : apple.isPaused }
+    var backendName: String {
+        switch current {
+        case .kokoro: "Kokoro · \(KokoroVoice.selected.name)"
+        case .supertonic: "Leu Neural · Supertonic 3"
+        case .apple: "Apple fallback"
+        }
+    }
+    var isSpeaking: Bool {
+        switch active {
+        case .kokoro: return kokoro.isSpeaking
+        case .supertonic: return neural.isSpeaking
+        case .apple: return apple.isSpeaking
+        }
+    }
+    var isPaused: Bool {
+        switch active {
+        case .kokoro: return kokoro.isPaused
+        case .supertonic: return neural.isPaused
+        case .apple: return apple.isPaused
+        }
+    }
 
-    init() { wire() }
+    init() {
+        wire()
+        // Opening a book warms the voice, so the first sentence does not wait for loading.
+        if kokoro.isAvailable {
+            let voice = KokoroVoice.selected
+            Task.detached(priority: .utility) { await KokoroVoiceRuntime.shared.prewarm(voice) }
+        }
+    }
     func speak(_ segment: SpeechSegment, voice: AVSpeechSynthesisVoice?, userSpeed: Double) {
-        activeNeural = neural.isAvailable
-        activeNeural ? neural.speak(segment, userSpeed: userSpeed) : apple.speak(segment, voice: voice, userSpeed: userSpeed)
+        active = preferred
+        switch active {
+        case .kokoro: kokoro.speak(segment.spokenText, userSpeed: userSpeed)
+        case .supertonic: neural.speak(segment, userSpeed: userSpeed)
+        case .apple: apple.speak(segment, voice: voice, userSpeed: userSpeed)
+        }
     }
     func speak(_ paragraph: SpokenParagraph, voice: AVSpeechSynthesisVoice?, userSpeed: Double) {
-        activeNeural = neural.isAvailable
-        if activeNeural, var segment = paragraph.sentences.first?.segment {
-            segment.spokenText = paragraph.spokenText
-            neural.speak(segment, userSpeed: userSpeed)
-        } else { apple.speak(paragraph, voice: voice, userSpeed: userSpeed) }
+        active = preferred
+        guard active != .apple, var segment = paragraph.sentences.first?.segment else {
+            apple.speak(paragraph, voice: voice, userSpeed: userSpeed); return
+        }
+        segment.spokenText = paragraph.spokenText
+        if active == .kokoro { kokoro.speak(segment.spokenText, userSpeed: userSpeed) } else { neural.speak(segment, userSpeed: userSpeed) }
     }
-    @discardableResult func pause() -> Bool { activeNeural ? neural.pause() : apple.pause() }
-    @discardableResult func resume() -> Bool { activeNeural ? neural.resume() : apple.resume() }
-    @discardableResult func stop() -> Bool { activeNeural ? neural.stop() : apple.stop() }
+    @discardableResult func pause() -> Bool {
+        switch active {
+        case .kokoro: return kokoro.pause()
+        case .supertonic: return neural.pause()
+        case .apple: return apple.pause()
+        }
+    }
+    @discardableResult func resume() -> Bool {
+        switch active {
+        case .kokoro: return kokoro.resume()
+        case .supertonic: return neural.resume()
+        case .apple: return apple.resume()
+        }
+    }
+    @discardableResult func stop() -> Bool {
+        switch active {
+        case .kokoro: return kokoro.stop()
+        case .supertonic: return neural.stop()
+        case .apple: return apple.stop()
+        }
+    }
     private func wire() {
         apple.onWillSpeakRange = { [weak self] in self?.onWillSpeakRange?($0) }
-        apple.onStarted = { [weak self] in self?.onStarted?() }; neural.onStarted = { [weak self] in self?.onStarted?() }
-        apple.onFinished = { [weak self] in self?.onFinished?() }; neural.onFinished = { [weak self] in self?.onFinished?() }
-        apple.onCancelled = { [weak self] in self?.onCancelled?() }; neural.onCancelled = { [weak self] in self?.onCancelled?() }
+        apple.onStarted = { [weak self] in self?.onStarted?() }
+        neural.onStarted = { [weak self] in self?.onStarted?() }
+        kokoro.onStarted = { [weak self] in self?.onStarted?() }
+        apple.onFinished = { [weak self] in self?.onFinished?() }
+        neural.onFinished = { [weak self] in self?.onFinished?() }
+        kokoro.onFinished = { [weak self] in self?.onFinished?() }
+        apple.onCancelled = { [weak self] in self?.onCancelled?() }
+        neural.onCancelled = { [weak self] in self?.onCancelled?() }
+        kokoro.onCancelled = { [weak self] in self?.onCancelled?() }
     }
 }

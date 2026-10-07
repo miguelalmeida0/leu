@@ -10,9 +10,6 @@ struct SettingsScreen: View {
     @State private var showTrash = false
     @State private var removeSamples = false
     @State private var showPrivacy = false
-    @State private var voiceInstallProgress: Double = 0
-    @State private var voiceInstallError: String?
-    @State private var voiceInstalling = false
     var body: some View {
         NavigationStack {
             Form {
@@ -88,21 +85,14 @@ struct SettingsScreen: View {
                         .disabled(model.busy || !model.snapshot.activeBooks.contains(where: { $0.isSample }))
                 }
                 Section {
-                    LabeledContent("Reading voice", value: SupertonicAssets.isInstalled ? "Leu Neural · Supertonic 3" : "Apple fallback")
+                    KokoroVoicesPanel()
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
                         .accessibilityIdentifier("settings-voice-status")
-                    if voiceInstalling { ProgressView(value: voiceInstallProgress) }
-                    Button(SupertonicAssets.isInstalled ? "Neural voice installed" : "Install neural voice (~400 MB)") {
-                        installNeuralVoice()
-                    }
-                    .disabled(voiceInstalling || SupertonicAssets.isInstalled)
-                    .accessibilityIdentifier("settings-install-voice")
-                    if let voiceInstallError {
-                        Text(voiceInstallError).font(.leu(.caption)).foregroundStyle(ShelfTheme.danger)
-                    }
                 } header: {
                     Text("Voice")
                 } footer: {
-                    Text("The neural voice is downloaded once from the pinned open-weight Supertonic 3 archive and then runs locally with ONNX Runtime. Reading falls back to Apple speech if the model is not installed.")
+                    Text("Kokoro-82M and its voices are open-weight (Apache-2.0), downloaded once from pinned revisions and run with ONNX Runtime on this device. Until they are installed, reading uses the system voice.")
                 }
                 Section("Emotional check-ins") {
                     Picker("Check-ins", selection: Binding(
@@ -143,16 +133,5 @@ struct SettingsScreen: View {
         }
     }
 
-    private func installNeuralVoice() {
-        voiceInstalling = true; voiceInstallError = nil; voiceInstallProgress = 0
-        Task {
-            do {
-                try await SupertonicAssets.install { value in
-                    Task { @MainActor in voiceInstallProgress = value }
-                }
-            } catch { voiceInstallError = error.localizedDescription }
-            voiceInstalling = false
-        }
-    }
 
 }

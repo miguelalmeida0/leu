@@ -13,8 +13,11 @@ struct VoiceSettingsSheet: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 26) {
                     intro
-                    VoiceQualityNotice(compactOnly: speech.usesAppleVoices && !speech.availableVoices.contains { $0.quality != .standard })
-                    voices
+                    KokoroVoicesPanel()
+                    if !KokoroAssets.isInstalled {
+                        VoiceQualityNotice(compactOnly: speech.usesAppleVoices && !speech.availableVoices.contains { $0.quality != .standard })
+                        voices
+                    }
                     speed
                     pronunciation
                     diagnostics
@@ -36,7 +39,7 @@ struct VoiceSettingsSheet: View {
 
     private var voices: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Voice").font(.leu(.headline))
+            Text("System voices, until then").font(.leu(.headline))
             Button("Automatic · best installed voice") { speech.selectAutomaticVoice() }.frame(minHeight: 44)
             ForEach(speech.availableVoices.prefix(16)) { voice in
                 HStack(spacing: 12) {
