@@ -37,7 +37,6 @@
     "Shelf/Features/Home/FoggedWindow.swift",
     "Shelf/Features/Home/HomeNookScene.swift",
     "Shelf/Features/Home/HomeScreen.swift",
-    "Shelf/Features/Home/RainSound.swift",
     "Shelf/Features/Home/TeaSteam.swift",
     "Shelf/Features/Home/WelcomeScreen.swift",
     "Shelf/Features/Library/BookDetailsSheet.swift",

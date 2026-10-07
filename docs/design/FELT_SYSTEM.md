@@ -46,7 +46,6 @@ Blender render plus live layers drawn in SwiftUI `Canvas`:
   iPad pointer, which returns about seven seconds after you stop. VoiceOver gets a direct-touch
   surface and a "Wipe the glass" action. Reduce Motion stills the rain.
 - `TeaSteam`: wisps from the cup (decorative, hidden from VoiceOver).
-- `RainSound`: rain synthesised on device, off until asked, mixes with other audio.
 
 iPad landscape follows the desktop composition (words left, window and daybed right). iPhone,
 iPad portrait and accessibility text sizes reflow into one scrolling column.

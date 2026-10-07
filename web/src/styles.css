@@ -160,8 +160,6 @@ main { flex: 1; }
 .home-scene { position: relative; width: min(100%, 900px, calc((100vh - 140px) * 1.0896)); justify-self: end; }
 .progress { display: inline-block; height: 3px; border-radius: 3px; background: rgba(36, 48, 31, .12); overflow: hidden; vertical-align: middle; }
 .progress > span { display: block; height: 100%; background: var(--ink); border-radius: 3px; }
-.rain-toggle { margin-top: 44px; display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 16px; border-radius: 999px; background: var(--felt-light); box-shadow: inset 0 0 0 1px var(--line); font-weight: 700; font-size: 13px; }
-.rain-toggle:hover { background: #CDD9AB; }
 .nook { position: relative; width: 100%; aspect-ratio: 900 / 826; }
 .nook > * { position: absolute; }
 .nook-frame { background: #8A6A44; border-radius: 50% 50% 4.4% 4.4% / 59.5% 59.5% 5.2% 5.2%; box-shadow: 0 2.4% 5% rgba(36, 48, 31, .32), 0 20px 44px rgba(36, 48, 31, .28); }

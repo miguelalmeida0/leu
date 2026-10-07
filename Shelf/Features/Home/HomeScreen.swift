@@ -11,8 +11,6 @@ import SwiftUI
 struct HomeScreen: View {
     let library: LibraryModel
     let openLibrary: () -> Void
-    @State private var rain = RainSound()
-    @AppStorage(WelcomeScreen.intentionKey) private var intention = ""
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
@@ -31,7 +29,6 @@ struct HomeScreen: View {
             }
         }
         .background(LeuDesign.felt.ignoresSafeArea())
-        .onDisappear { rain.stop() }
         .accessibilityIdentifier("home-screen")
     }
 
@@ -49,10 +46,6 @@ struct HomeScreen: View {
             intro(titleSize: 46)
                 .frame(width: max(300, 390 * scale), alignment: .leading)
                 .offset(x: inset + max(40, 64 * scale), y: max(24, 96 * scale))
-            rainToggle
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                .padding(.trailing, max(28, 64 * scale))
-                .padding(.bottom, 22)
         }
         .frame(width: size.width, height: size.height, alignment: .topLeading)
     }
@@ -67,8 +60,6 @@ struct HomeScreen: View {
                     .padding(.top, 24)
                 HomeNookScene(scale: scale)
                     .frame(maxWidth: .infinity)
-                rainToggle
-                    .padding(.horizontal, LeuDesign.gutter)
                     .padding(.bottom, 24)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -110,7 +101,7 @@ struct HomeScreen: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 14)
                 .accessibilityAddTraits(.isHeader)
-            Text(lastBook == nil ? "Bring a PDF and it will be waiting here." : "Quilt, tea and rain.")
+            Text(lastBook == nil ? "Bring a PDF and it will be waiting here." : "Quilt, tea and a rainy evening.")
                 .font(LeuType.sans(18, weight: .medium))
                 .foregroundStyle(LeuDesign.secondary)
                 .padding(.top, 16)
@@ -118,9 +109,6 @@ struct HomeScreen: View {
                 bookLine(book).padding(.top, 34)
             }
             actions.padding(.top, 30)
-            if !intention.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                intentionLine.padding(.top, 26)
-            }
         }
     }
 
@@ -175,46 +163,6 @@ struct HomeScreen: View {
                     .buttonStyle(LeuPrimaryButtonStyle(filled: true, pill: true))
             }
         }
-    }
-
-    /// What you said on the welcome screen you came to understand, until you say you're done.
-    private var intentionLine: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
-            Text("You came to understand \(Text(intention).font(.leu(.footnote, serif: true)).italic()).")
-                .font(.leu(.footnote, weight: .medium))
-                .foregroundStyle(LeuDesign.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-            Button("Got it") { withAnimation(.easeInOut(duration: 0.6)) { intention = "" } }
-                .font(.leu(.footnote, weight: .bold))
-                .underline()
-                .foregroundStyle(LeuDesign.ink)
-                .frame(minHeight: LeuDesign.touchTarget)
-                .accessibilityHint("Stops showing this reminder")
-        }
-    }
-
-    private var rainToggle: some View {
-        Button { rain.toggle() } label: {
-            HStack(spacing: 9) {
-                Circle()
-                    .fill(rain.isPlaying ? LeuDesign.butter : LeuDesign.untested)
-                    .frame(width: 8, height: 8)
-                    .overlay { Circle().stroke(LeuDesign.ink.opacity(0.25), lineWidth: 0.5) }
-                Text("Rain sound")
-                    .font(.leu(.footnote, weight: .bold))
-                    .foregroundStyle(LeuDesign.ink)
-            }
-            .padding(.horizontal, 16)
-            .frame(minHeight: LeuDesign.touchTarget)
-            .background(LeuDesign.feltLight, in: Capsule(style: .continuous))
-            .overlay { Capsule(style: .continuous).stroke(LeuDesign.line, lineWidth: LeuDesign.hairline) }
-            .contentShape(Capsule(style: .continuous))
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel("Rain sound")
-        .accessibilityValue(rain.isPlaying ? "On" : "Off")
-        .accessibilityAddTraits(.isToggle)
-        .accessibilityIdentifier("home-rain-sound")
     }
 
     static func greeting(for date: Date) -> String {
