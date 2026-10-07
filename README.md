@@ -2,7 +2,6 @@
 
 **A native iPhone PDF study app that turns reading into active understanding — while staying local-first.**
 
-[**Live app ↗**](https://leu-desktop.vercel.app/)
 
 <p align="center">
   <img src="./docs/readme/previews/study.png" alt="Leu — retained native Study capture" width="360">
