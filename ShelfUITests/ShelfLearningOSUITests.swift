@@ -76,7 +76,7 @@ final class ShelfLearningOSUITests: ShelfUITestCase {
     }
 
     func test37TrailsCanCreatePersistentLearningPath() {
-        app.buttons["primary-trails"].tap()
+        app.buttons["primary-explore"].tap(); app.buttons["primary-trails"].tap()
         XCTAssertTrue(element("trails-screen").waitForExistence(timeout: 6))
         app.buttons["new-learning-trail"].tap()
         let field = app.textFields["Frontend interview"]

@@ -75,4 +75,4 @@ UI suites launched with `--uitesting` still start in Library; pass `--start-home
 bookshelf animation from the exploration is intentionally excluded.
 
 Navigation is now Home, Library, Reading (opens the last book), Study, Notes, Explore, Trails.
-iPhone keeps one floating pill with all six places, icon above word.
+iPhone keeps one floating pill with five places (Home, Library, Study, Notes, Explore); Trails sit inside Explore behind an Ideas | Trails switch. The current place is ink with a red running stitch.
