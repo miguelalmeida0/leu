@@ -14,7 +14,7 @@ struct VoiceSettingsSheet: View {
                 VStack(alignment: .leading, spacing: 26) {
                     intro
                     KokoroVoicesPanel()
-                    if !KokoroAssets.isInstalled {
+                    if !(KokoroAssets.isSupported && KokoroAssets.isInstalled) {
                         VoiceQualityNotice(compactOnly: speech.usesAppleVoices && !speech.availableVoices.contains { $0.quality != .standard })
                         voices
                     }

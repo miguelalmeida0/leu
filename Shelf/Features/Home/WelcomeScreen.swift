@@ -111,7 +111,7 @@ struct WelcomeScreen: View {
                 HStack(spacing: 16) { primary; sample }
                 VStack(alignment: .leading, spacing: 8) { primary; sample }
             }
-            Text("Everything stays on this \(UIDevice.current.localizedModel), including Leu's thinking.")
+            Text("Everything stays on this \(LeuPlatform.deviceName), including Leu's thinking.")
                 .font(.leu(.footnote))
                 .foregroundStyle(LeuDesign.secondary)
         }

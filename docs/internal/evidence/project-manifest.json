@@ -1,6 +1,7 @@
 {
   "appSources": [
     "Shelf/App/AppContainer.swift",
+    "Shelf/App/LeuMac.swift",
     "Shelf/App/RootView.swift",
     "Shelf/App/ShelfApp.swift",
     "Shelf/DesignSystem/CoverIllustration.swift",

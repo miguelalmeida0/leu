@@ -18,13 +18,26 @@ struct KokoroVoicesPanel: View {
                 .font(LeuDesign.eyebrow(11)).tracking(LeuDesign.eyebrowTracking)
                 .foregroundStyle(LeuDesign.eyebrowOnFelt)
                 .accessibilityAddTraits(.isHeader)
-            if installed { voices } else { install }
+            if !KokoroAssets.isSupported { macNote } else if installed { voices } else { install }
         }
         .onAppear {
             player.onFinished = { previewing = nil }
             player.onCancelled = { previewing = nil }
         }
         .onDisappear { _ = player.stop() }
+    }
+
+    private var macNote: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("On this Mac, Leu reads with the system voice.")
+                .font(.leu(.title3, weight: .bold)).foregroundStyle(LeuDesign.ink)
+            Text("Kokoro voices run on iPhone and iPad. For the most natural Mac voice, add a Premium or Siri voice in System Settings › Accessibility › Spoken Content, and Leu picks it up.")
+                .font(.leu(.subheadline)).foregroundStyle(LeuDesign.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(18)
+        .background(LeuDesign.cream, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .accessibilityElement(children: .combine)
     }
 
     private var install: some View {

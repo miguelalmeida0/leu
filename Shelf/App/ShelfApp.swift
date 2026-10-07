@@ -22,6 +22,7 @@ struct ShelfApp: App {
             application
             #endif
         }
+        .commands { LeuCommands() }
     }
 
     private var application: some View {

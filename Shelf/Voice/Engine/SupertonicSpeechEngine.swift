@@ -115,7 +115,7 @@ final class SupertonicSpeechEngine: NSObject, AVAudioPlayerDelegate {
     }
     deinit { if let memoryObserver { NotificationCenter.default.removeObserver(memoryObserver) } }
 
-    var isAvailable: Bool { Self.resources != nil }
+    var isAvailable: Bool { KokoroAssets.isSupported && Self.resources != nil }
     var isSpeaking: Bool { player?.isPlaying == true || (synthesizing && !pauseRequested) }
     var isPaused: Bool { pauseRequested || (player != nil && player?.isPlaying == false) }
 
