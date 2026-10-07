@@ -88,3 +88,11 @@ under the pointer, and the menu bar has Go › Home…Trails (⌘1–⌘6) and F
 ONNX Runtime publishes no Mac Catalyst slice, so its package is linked on iOS only
 (`platformFilter = ios`). On the Mac, Kokoro and Supertonic compile out and Leu reads with the
 system voice; the Voice panel says so and points to Premium and Siri voices.
+
+## In the browser
+
+`web/` is a Vite + React twin of every screen above for testing without Xcode
+(`cd web && npm install && npm run dev`). It reads real PDFs with pdf.js, keeps the library in the
+browser, draws the same live scenes (rain and fog, tea steam, yarn, snow globe) from the same
+renders and maths, and reads aloud with Kokoro via kokoro-js. Its idea checks are word-overlap
+heuristics and are labelled as such; see `web/README.md`.

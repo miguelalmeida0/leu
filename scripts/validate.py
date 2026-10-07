@@ -12,7 +12,7 @@ import tempfile
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
-IGNORE = {".build", ".git", ".swiftpm", "__pycache__"}
+IGNORE = {".build", ".git", ".swiftpm", "__pycache__", "node_modules", "dist"}
 
 
 def require(condition: bool, message: str) -> None:
