@@ -42,30 +42,9 @@ struct KnowledgeSearchSheet: View {
     }
 
     private var searchField: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "magnifyingglass")
-                .font(.leu(.title3, weight: .bold))
-                .foregroundStyle(LeuDesign.ink)
-                .accessibilityHidden(true)
-            LeuTextField("Ask your books anything", text: $knowledge.searchText)
-                .font(.leu(.title3, weight: .semibold))
-                .textInputAutocapitalization(.never).autocorrectionDisabled()
-                .submitLabel(.search)
-                .onSubmit(openBestAnswer)
-                .onChange(of: knowledge.searchText) { _, _ in knowledge.search() }
-                .accessibilityIdentifier("knowledge-search-field")
-            if !knowledge.searchText.isEmpty {
-                Button { knowledge.searchText = ""; knowledge.search() } label: { Image(systemName: "xmark.circle.fill") }
-                    .font(.leu(.body))
-                    .foregroundStyle(LeuDesign.secondary)
-                    .frame(width: 44, height: 44)
-                    .accessibilityLabel("Clear search")
-            }
-        }
-        .padding(.horizontal, 18)
-        .frame(minHeight: 60)
-        .background(LeuDesign.cream, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .overlay { RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(LeuDesign.ink, lineWidth: 2) }
+        LibrarySearchBar(text: $knowledge.searchText, placeholder: "Ask your books anything",
+                         identifier: "knowledge-search-field", large: true, onSubmit: openBestAnswer)
+            .onChange(of: knowledge.searchText) { _, _ in knowledge.search() }
     }
 
     private var scopes: some View {
