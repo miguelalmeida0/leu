@@ -26,7 +26,7 @@ struct RootView: View {
             if horizontalSizeClass == .regular {
                 PrimaryTopBar(selection: $primaryArea, readingTitle: lastOpenedBook?.title,
                               openReading: openLastBook, openSearch: { showSearch = true })
-            }
+            } else if primaryArea.isWalks { WalksSwitch(selection: $primaryArea) }
             phaseContent
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .contentShape(Rectangle())

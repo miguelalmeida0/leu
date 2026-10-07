@@ -49,6 +49,7 @@ final class FeltDesignTests: XCTestCase {
 
     func testHomeLeadsTheNavigation() {
         XCTAssertEqual(PrimaryArea.allCases, [.home, .shelf, .learn, .notes, .explore, .trails])
+        XCTAssertEqual(PrimaryArea.compactTabs, [.home, .shelf, .learn, .notes, .explore], "iPhone keeps five places")
         XCTAssertEqual(PrimaryArea.home.title, "Home")
     }
 

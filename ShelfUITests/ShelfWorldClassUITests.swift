@@ -47,7 +47,7 @@ final class ShelfWorldClassUITests: ShelfUITestCase {
     }
 
     func test46TrailsHaveOneCreationSurface() {
-        app.buttons["primary-trails"].tap()
+        app.buttons["primary-explore"].tap(); app.buttons["primary-trails"].tap()
         XCTAssertTrue(element("trails-screen").waitForExistence(timeout: 8))
         let add = app.buttons["new-learning-trail"]
         XCTAssertTrue(add.waitForExistence(timeout: 5)); add.tap()

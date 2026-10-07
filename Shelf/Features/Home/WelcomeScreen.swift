@@ -67,12 +67,23 @@ struct WelcomeScreen: View {
                 Text("SOMETHING YOU'VE BEEN MEANING TO UNDERSTAND")
                     .font(LeuDesign.eyebrow(10)).tracking(LeuDesign.eyebrowTracking)
                     .foregroundStyle(LeuDesign.eyebrowOnFelt)
-                TextField("", text: $intention, prompt: Text("why the sky is blue").foregroundStyle(LeuDesign.fieldPlaceholder), axis: .vertical)
+                TextField("", text: $intention)
                     .font(.leu(.title3, serif: true))
                     .foregroundStyle(LeuDesign.ink)
+                    .tint(LeuDesign.redThread)
                     .focused($writing)
-                    .lineLimit(1...3)
                     .submitLabel(.done)
+                    .onSubmit { writing = false }
+                    .overlay(alignment: .leading) {
+                        // A drawn placeholder: the system prompt is easy to lose on custom fills.
+                        if intention.isEmpty {
+                            Text("why the sky is blue")
+                                .font(.leu(.title3, serif: true))
+                                .foregroundStyle(LeuDesign.fieldPlaceholder)
+                                .allowsHitTesting(false)
+                                .accessibilityHidden(true)
+                        }
+                    }
                     .padding(.horizontal, 20).padding(.vertical, 16)
                     .background(LeuDesign.cream, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
                     .overlay {

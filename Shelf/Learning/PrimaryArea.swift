@@ -7,6 +7,9 @@ import Foundation
 enum PrimaryArea: String, CaseIterable, Identifiable {
     case home, shelf, learn, notes, explore, trails
     var id: Self { self }
+    /// iPhone keeps five places; Trails sit inside Explore there (ideas, then the walks you make of them).
+    static let compactTabs: [PrimaryArea] = [.home, .shelf, .learn, .notes, .explore]
+    var isWalks: Bool { self == .explore || self == .trails }
     var title: String {
         switch self {
         case .home: return "Home"

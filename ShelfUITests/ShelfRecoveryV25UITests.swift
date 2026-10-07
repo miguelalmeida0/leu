@@ -28,7 +28,7 @@ final class ShelfRecoveryV25UITests: ShelfUITestCase {
     }
 
     func test58TrailContinueReturnsToTheRetainedTrail() throws {
-        app.buttons["primary-trails"].tap()
+        app.buttons["primary-explore"].tap(); app.buttons["primary-trails"].tap()
         app.buttons["new-learning-trail"].tap()
         let title = app.textFields["Frontend interview"]
         XCTAssertTrue(title.waitForExistence(timeout: 5)); title.tap(); title.typeText("V25 route")
