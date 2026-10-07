@@ -5,8 +5,8 @@ import { openPdf, pageBlocks, renderPage, type Block, type PDFDocumentProxy } fr
 import { go, href } from '../lib/router'
 import { addNote, loadOutline, loadPdf, patchBook, removeNote, upsertMemory, useStore, type Outline } from '../lib/store'
 import { cloze, ideas } from '../lib/text'
-import { Player } from '../components/Player'
-import { chooseVoice, dismissNotice, prefetch, seek, speak, stop, useVoice, useVoiceId, voices, warmVoice } from '../lib/voice'
+import { Dock } from '../components/Dock'
+import { dismissNotice, prefetch, seek, speak, stop, useVoice, warmVoice } from '../lib/voice'
 import { ExplainPanel, gistOf } from './Explain'
 
 /** Reading (06): the chapter rail, the page as paper (rebuilt for reading, or the original),
@@ -22,13 +22,11 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const [selection, setSelection] = useState<{ text: string; x: number; y: number } | null>(null)
   const [draft, setDraft] = useState<{ quote: string; note: string } | null>(null)
   const [explain, setExplain] = useState<string | null>(null)
-  const [voiceMenu, setVoiceMenu] = useState(false)
   const [missing, setMissing] = useState(false)
   const paper = useRef<HTMLDivElement>(null)
   const canvas = useRef<HTMLCanvasElement>(null)
   const voice = useVoice()
   const continuing = useRef(false)
-  const voiceId = useVoiceId()
   const pages = book?.pages ?? 1
   const clamped = Math.min(Math.max(1, page), pages)
 
@@ -123,7 +121,6 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const pageText = (blocks ?? []).map((b) => b.text).join('\n\n')
   const current = [...outline].reverse().find((o) => o.page <= clamped && o.depth === 0) ?? [...outline].reverse().find((o) => o.page <= clamped)
   const speaking = voice.speakingId === 'page'
-  const voiceLabel = speaking ? 'Stop reading' : 'Read aloud'
 
   return (
     <div className="reader fade-in">
@@ -136,25 +133,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           <button role="radio" aria-checked={mode === 'rebuilt'} className={mode === 'rebuilt' ? 'on' : ''} onClick={() => setMode('rebuilt')}>For reading</button>
           <button role="radio" aria-checked={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
         </div>
-        <div className="row" style={{ gap: 8, position: 'relative' }}>
-          <button className="btn soft small-btn" aria-pressed={speaking} onClick={() => (speaking ? stop() : readPage(0))} disabled={!pageText}>
-            <SpeakerIcon on={speaking} /> {voiceLabel}
-          </button>
-          <button className="icon-btn" aria-label="Choose a voice" aria-expanded={voiceMenu} onClick={() => setVoiceMenu((v) => !v)}>
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
-          {voiceMenu && (
-            <div className="menu card" role="menu" aria-label="Voices">
-              <p className="eyebrow paper" style={{ padding: '6px 12px 8px' }}>Kokoro voices</p>
-              {voices.map((v) => (
-                <button key={v.id} role="menuitemradio" aria-checked={voiceId === v.id} className={voiceId === v.id ? 'on' : ''} onClick={() => { chooseVoice(v.id); setVoiceMenu(false); speak(`Hello, I'm ${v.name}. I'll read with you.`, 'preview') }}>
-                  <strong>{v.name}</strong><span className="muted small">{v.note}</span>
-                </button>
-              ))}
-              <p className="muted small" style={{ padding: '8px 12px 4px', maxWidth: 260 }}>The voice downloads once, then reads offline: about 330 MB where the browser has WebGPU (fast, no pauses), 90 MB otherwise. Until then, your system voice reads.</p>
-            </div>
-          )}
-        </div>
+        <span aria-hidden="true" />
       </div>
 
       {voice.notice && (
@@ -224,29 +203,10 @@ export function Reader({ id, page }: { id: string; page: number }) {
         </aside>
       </div>
 
-      {speaking ? (
-        <div className="reader-foot"><Player where={`Page ${clamped} of ${pages}`} /></div>
-      ) : (
       <div className="reader-foot">
-        <button className="btn soft small-btn" onClick={() => turn(clamped - 1)} disabled={clamped <= 1} aria-label="Previous page">← Previous</button>
-        <label className="page-slider">
-          <span className="sr-only">Page</span>
-          <input type="range" min={1} max={pages} value={clamped} onChange={(e) => turn(Number(e.target.value))} aria-valuetext={`Page ${clamped} of ${pages}`} />
-          <span className="tabular">page {clamped} of {pages}</span>
-        </label>
-        <button className="btn ink small-btn" onClick={() => turn(clamped + 1)} disabled={clamped >= pages} aria-label="Next page">Next →</button>
+        <Dock page={clamped} pages={pages} canPlay={!!pageText} onPlay={() => readPage(0)} onTurn={(n) => turn(n)} />
       </div>
-      )}
 
     </div>
-  )
-}
-
-function SpeakerIcon({ on }: { on: boolean }) {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" />
-      {on ? <path d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /> : <path d="M16.5 9.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />}
-    </svg>
   )
 }
