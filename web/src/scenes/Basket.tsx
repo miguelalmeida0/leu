@@ -2,9 +2,9 @@ import { useRef } from 'react'
 import { loadImage, useCanvasLoop, useReducedMotion } from '../lib/motion'
 
 /* The knitting basket render with a loose strand of yarn running from the needle to the ball.
-   The strand is a real little rope: brush it with the pointer and it swings away, catch it
-   (press and drag) and you can tug it, let go and it settles back with a slow sway. Keyboard:
-   Enter or Space gives it a pluck. Under reduced motion it hangs still. */
+   The strand is a little rope, as calm as wool: brush past it and it drifts a little, catch it
+   (press and drag) and it follows your hand softly, let go and it settles back slowly.
+   Keyboard: Enter or Space gives it a small sway. Under reduced motion it hangs still. */
 
 const tip = { x: 0.5535, y: 0.0356 }, ball = { x: 0.662, y: 0.624 }
 const N = 26
@@ -31,7 +31,7 @@ export function Basket() {
   const canvas = useRef<HTMLCanvasElement>(null)
   const reduced = useReducedMotion()
   const rope = useRef<{ pts: P[]; w: number; h: number; seg: number }>({ pts: [], w: 0, h: 0, seg: 0 })
-  const hand = useRef<{ x: number; y: number; vx: number; vy: number; down: boolean; grab: number; inside: boolean }>({ x: 0, y: 0, vx: 0, vy: 0, down: false, grab: -1, inside: false })
+  const hand = useRef<{ x: number; y: number; vx: number; vy: number; svx: number; svy: number; down: boolean; grab: number; inside: boolean }>({ x: 0, y: 0, vx: 0, vy: 0, svx: 0, svy: 0, down: false, grab: -1, inside: false })
   const last = useRef(0)
 
   useCanvasLoop(canvas, (ctx, w, h, now) => {
@@ -48,21 +48,25 @@ export function Basket() {
     if (!reduced) {
       for (let i = 1; i < N - 1; i++) {
         const p = pts[i]
-        const vx = (p.x - p.px) * 0.94, vy = (p.y - p.py) * 0.94 // a little air
+        const vx = (p.x - p.px) * 0.9, vy = (p.y - p.py) * 0.9 // wool in still air: calm, no whip
         p.px = p.x; p.py = p.y
-        // A soft pull back toward where the strand hangs, so it always settles.
-        p.x += vx + (target[i].x - p.x) * 2.2 * dt
-        p.y += vy + (target[i].y - p.y) * 2.2 * dt + 18 * dt * dt
-        // Brushing past it pushes the strand along with the pointer.
+        // A soft, slow pull back toward where the strand hangs, so it always settles.
+        p.x += vx + (target[i].x - p.x) * 1.3 * dt
+        p.y += vy + (target[i].y - p.y) * 1.3 * dt + 12 * dt * dt
+        // Brushing past it nudges the strand a little the way the pointer drifts.
         if (H.inside && H.grab < 0) {
-          const d = Math.hypot(p.x - H.x, p.y - H.y), reach = w * 0.045
-          if (d < reach) { const k = (1 - d / reach) ** 2; p.x += H.vx * k * 0.55; p.y += H.vy * k * 0.55 }
+          const d = Math.hypot(p.x - H.x, p.y - H.y), reach = w * 0.07
+          if (d < reach) { const k = (1 - d / reach) ** 3; p.x += H.svx * k * 0.16; p.y += H.svy * k * 0.16 }
         }
       }
       if (H.grab > 0) {
-        // Tug too far and the wool slips out of your fingers and swings back.
-        if (Math.hypot(H.x - target[H.grab].x, H.y - target[H.grab].y) > w * 0.24) H.grab = -1
-        else { pts[H.grab].x = H.x; pts[H.grab].y = H.y }
+        // The held point follows your hand softly, and the wool only stretches so far.
+        const t = target[H.grab], max = w * 0.12
+        let gx = H.x - t.x, gy = H.y - t.y
+        const len = Math.hypot(gx, gy)
+        if (len > max) { const k = max * (1 + Math.log(len / max) * 0.25) / len; gx *= k; gy *= k }
+        const p = pts[H.grab]
+        p.x += (t.x + gx - p.x) * 0.12; p.y += (t.y + gy - p.y) * 0.12
       }
       // Keep the strand's length (wool has plenty of give), ends pinned to needle and ball.
       for (let k = 0; k < 10; k++) {
@@ -79,6 +83,9 @@ export function Basket() {
           b.x -= dx * diff * 2 * (mb / sum); b.y -= dy * diff * 2 * (mb / sum)
         }
       }
+      // The pointer's drift, smoothed and capped, so a flick never yanks the yarn.
+      const cap = (v: number) => Math.max(-4, Math.min(4, v))
+      H.svx += (cap(H.vx) - H.svx) * 0.2; H.svy += (cap(H.vy) - H.svy) * 0.2
       H.vx *= 0.5; H.vy *= 0.5
     } else {
       for (let i = 0; i < N; i++) { pts[i].x = target[i].x; pts[i].y = target[i].y }
@@ -111,7 +118,7 @@ export function Basket() {
   }
   const pluck = () => {
     const pts = rope.current.pts, w = rope.current.w
-    pts.forEach((p, i) => { if (i > 0 && i < N - 1) { const s = Math.sin((i / (N - 1)) * Math.PI); p.px = p.x - s * w * 0.03 } })
+    pts.forEach((p, i) => { if (i > 0 && i < N - 1) { const s = Math.sin((i / (N - 1)) * Math.PI); p.px = p.x - s * w * 0.008 } })
   }
 
   return (
