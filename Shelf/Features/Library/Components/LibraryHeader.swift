@@ -152,29 +152,61 @@ struct LibraryScopeBar: View {
 @MainActor
 struct LibrarySearchBar: View {
     @Binding var text: String
+    var placeholder = "Search your books and passages"
+    var identifier = "library-search"
+    /// The larger field used by Search your books.
+    var large = false
+    var onSubmit: () -> Void = {}
+    @FocusState private var focused: Bool
+
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 12) {
             Image(systemName: "magnifyingglass")
-                .font(.system(size: 15, weight: .regular))
-                .foregroundStyle(ShelfTheme.secondary)
-            LeuTextField("Search books and passages…", text: $text)
-                .font(.leu(.body, serif: true))
+                .font(.leu(.body, weight: .semibold))
+                .foregroundStyle(LeuDesign.ink)
+                .accessibilityHidden(true)
+            // One field, drawn once: no field-inside-a-field.
+            TextField("", text: $text)
+                .textFieldStyle(.plain)
+                .font(.leu(large ? .title3 : .body, weight: .medium))
+                .foregroundStyle(LeuDesign.ink)
+                .tint(LeuDesign.redThread)
+                .focused($focused)
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
                 .submitLabel(.search)
-                .accessibilityIdentifier("library-search")
+                .onSubmit(onSubmit)
+                .overlay(alignment: .leading) {
+                    if text.isEmpty {
+                        Text(placeholder)
+                            .font(.leu(large ? .title3 : .body, weight: .medium))
+                            .foregroundStyle(LeuDesign.fieldPlaceholder)
+                            .lineLimit(1)
+                            .allowsHitTesting(false)
+                            .accessibilityHidden(true)
+                    }
+                }
+                .accessibilityLabel(placeholder)
+                .accessibilityIdentifier(identifier)
             if !text.isEmpty {
                 Button { text = "" } label: {
-                    Image(systemName: "xmark.circle.fill").frame(width: 32, height: 44)
+                    Image(systemName: "xmark.circle.fill").font(.leu(.body)).frame(width: 36, height: 44)
                 }
-                .foregroundStyle(ShelfTheme.secondary)
+                .foregroundStyle(LeuDesign.secondary)
                 .accessibilityLabel("Clear search")
             }
         }
-        .padding(.horizontal, 14)
-        .frame(minHeight: 48)
-        .background(ShelfTheme.surface, in: RoundedRectangle(cornerRadius: ShelfTheme.smallRadius))
-        .overlay { RoundedRectangle(cornerRadius: ShelfTheme.smallRadius).stroke(LeuDesign.separator, lineWidth: 0.7) }
+        .padding(.horizontal, large ? 20 : 16)
+        .frame(minHeight: large ? 60 : 50)
+        .background(LeuDesign.cream, in: Capsule(style: .continuous))
+        .overlay {
+            Capsule(style: .continuous)
+                .strokeBorder(focused ? LeuDesign.ink : LeuDesign.separator, lineWidth: focused ? 1.5 : 0.75)
+        }
+        .shadow(color: LeuDesign.ink.opacity(focused ? 0.10 : 0.05), radius: 8, x: 0, y: 4)
+        .contentShape(Capsule(style: .continuous))
+        .onTapGesture { focused = true }
+        .animation(.easeInOut(duration: 0.25), value: focused)
     }
 }
 

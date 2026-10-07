@@ -77,16 +77,19 @@ struct LeuTextField: View {
     var body: some View {
         TextField(title, text: $text, prompt: Text(title).foregroundStyle(LeuDesign.fieldPlaceholder))
             .textFieldStyle(.plain)
+            .font(.leu(.body, weight: .medium))
             .foregroundStyle(LeuDesign.fieldForeground)
-            .tint(LeuDesign.signal)
+            .tint(LeuDesign.redThread)
             .focused($focused)
-            .padding(10)
-            .frame(minHeight: 44)
-            .background(LeuDesign.fieldSurface, in: RoundedRectangle(cornerRadius: LeuDesign.smallRadius))
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .frame(minHeight: 48)
+            .background(LeuDesign.fieldSurface, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             .overlay {
-                RoundedRectangle(cornerRadius: LeuDesign.smallRadius)
-                    .stroke(focused ? LeuDesign.signal : LeuDesign.separator, lineWidth: focused ? 2 : 1)
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .strokeBorder(focused ? LeuDesign.ink : LeuDesign.separator, lineWidth: focused ? 1.5 : 0.75)
             }
+            .animation(.easeInOut(duration: 0.2), value: focused)
     }
 }
 
