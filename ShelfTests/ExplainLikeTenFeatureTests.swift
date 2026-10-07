@@ -112,7 +112,7 @@ final class ExplainLikeTenFeatureTests: XCTestCase {
         controller.start(packet: packet(passage))
         await settle(controller)
         guard case .unavailable = controller.state else {
-            return XCTFail("Without Codex's explanation capability the feature must report unavailable, not invent text")
+            return XCTFail("Without the shared explanation capability the feature must report unavailable, not invent text")
         }
     }
 
