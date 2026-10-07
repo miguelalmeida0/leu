@@ -20,7 +20,7 @@ PDF onto the page. `npm run build && npm run preview` serves the production buil
 
 | Screen | What you can do |
 |---|---|
-| Welcome | Knitting basket whose loose strand of yarn drifts softly when you brush it and follows your hand gently when you catch it; your intention is remembered and shown on Home. |
+| Welcome | Knitting basket whose loose strand of yarn drifts softly when you brush it and follows your hand gently when you catch it; your intention is kept in this browser. |
 | Bring a PDF | Drop a PDF anywhere, ⌘O, or the button. Leu reads it with pdf.js, sews it in, finds books that share its ideas, and lets you shelve it. |
 | Home | The nook: rain on the glass, fog you wipe with the pointer (it fogs back after ~7 s), tea steam, synthesised rain sound. |
 | Library | The felt quilt, shelves, On the needle, find a book. |
@@ -34,7 +34,7 @@ PDF onto the page. `npm run build && npm run preview` serves the production buil
 | Explore / Trails | Ideas shared across your books, the passages that say them, and a walk you can make from them. |
 | Search | ⌘K / Ctrl K. Best answer first, searched words marked, Return opens it. |
 
-The lockup: an ink tile with an open book beside the word; every few seconds one page lifts and turns, with the light moving across it. Nothing happens on hover.
+The wordmark: “leu” and a red full stop that, every few seconds, gives two small hops and lands with a squash, its shadow tightening under it. Nothing happens on hover.
 
 Keyboard: Space plays or pauses; while Leu reads ← → step a sentence, otherwise they turn the page. ⌘1–⌘6 go to Home, Library, Study, Notes, Explore and Trails, as in the Mac app.
 

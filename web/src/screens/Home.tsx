@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Progress, Swatch } from '../components/ui'
 import { lastBook } from '../lib/library'
 import { go } from '../lib/router'
-import { readFraction, update, useStore } from '../lib/store'
+import { readFraction, useStore } from '../lib/store'
 import { NookScene } from '../scenes/NookScene'
 import { toggleRain, raining } from '../scenes/rain'
 
@@ -14,14 +14,13 @@ function greeting(d = new Date()) {
 /** Home (03): "We kept your spot warm." The book you were in, one way back, and the evening nook. */
 export function Home({ onBring }: { onBring: () => void }) {
   const books = useStore((s) => s.books)
-  const intention = useStore((s) => s.intention)
   const book = lastBook(books)
   const [rain, setRain] = useState(raining)
   const progress = book ? readFraction(book) : 0
 
   return (
+    <div className="home-bleed">
     <div className="home fade-in">
-      <div className="home-glow" aria-hidden="true" />
       <section className="home-words">
         <p className="eyebrow" style={{ color: 'var(--secondary)' }}>{greeting()}</p>
         <h1 className="display home-title">We kept your spot warm.</h1>
@@ -46,18 +45,13 @@ export function Home({ onBring }: { onBring: () => void }) {
             <button className="btn ink" onClick={onBring}>Bring a PDF</button>
           )}
         </div>
-        {intention.trim() && (
-          <p className="home-intention muted small">
-            You came to understand <em className="serif">{intention.trim()}</em>.{' '}
-            <button className="link small" onClick={() => update((s) => ({ ...s, intention: '' }))}>Got it</button>
-          </p>
-        )}
         <button className="rain-toggle" aria-pressed={rain} onClick={() => setRain(toggleRain())}>
           <span className="dot" style={{ background: rain ? 'var(--butter)' : 'var(--labs)' }} />
           Rain sound{rain ? ' · on' : ''}
         </button>
       </section>
       <div className="home-scene"><NookScene /></div>
+    </div>
     </div>
   )
 }

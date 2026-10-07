@@ -150,13 +150,13 @@ main { flex: 1; }
 .intention { font-size: 21px; margin-top: 12px; padding: 16px 20px; border-color: var(--line); border-radius: 18px; }
 
 /* ---------- home ---------- */
-.home { position: relative; display: grid; grid-template-columns: minmax(330px, 410px) minmax(0, 1fr); gap: 24px; align-items: center; max-width: 1440px; margin: 0 auto; padding: 28px 64px 28px; min-height: calc(100vh - 76px); overflow: hidden; }
-.home-glow { position: absolute; left: -200px; top: -230px; width: 940px; height: 940px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 226, 160, .38), rgba(255, 226, 160, 0)); pointer-events: none; }
+.home { position: relative; display: grid; grid-template-columns: minmax(330px, 410px) minmax(0, 1fr); gap: 24px; align-items: center; max-width: 1440px; margin: 0 auto; padding: 28px 64px 28px; min-height: calc(100vh - 76px); }
+/* The lamp's glow belongs to the whole window, not the centred column, so it never stops at an edge. */
+.home-bleed { background: radial-gradient(circle 520px at max(270px, calc(50% - 450px)) 200px, rgba(255, 226, 160, .38), rgba(255, 226, 160, 0)); min-height: calc(100vh - 76px); }
 .home-words { position: relative; padding-bottom: 40px; }
 .home-title { font-size: clamp(40px, 3.6vw, 52px); letter-spacing: -0.045em; margin-top: 14px; }
 .home-sub { font-size: 18px; font-weight: 500; color: var(--secondary); margin: 16px 0 0; }
 .home-book { margin-top: 34px; font-size: 15px; }
-.home-intention { margin-top: 26px; }
 .home-scene { position: relative; width: min(100%, 900px, calc((100vh - 140px) * 1.0896)); justify-self: end; }
 .progress { display: inline-block; height: 3px; border-radius: 3px; background: rgba(36, 48, 31, .12); overflow: hidden; vertical-align: middle; }
 .progress > span { display: block; height: 100%; background: var(--ink); border-radius: 3px; }
@@ -399,6 +399,8 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
 .search-field { display: flex; align-items: center; gap: 14px; padding: 0 22px; height: 74px; border-bottom: 1px solid rgba(92, 107, 71, .25); }
 .search-field input { flex: 1; border: 0; outline: none; background: none; font: 600 22px var(--sans); letter-spacing: -0.01em; }
 .search-field input::placeholder { color: var(--placeholder); }
+.search-close { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: var(--secondary); transition: background .2s, color .2s; flex: none; }
+.search-close:hover { background: #EFE6CC; color: var(--ink); }
 .search-results { padding: 18px 22px 22px; max-height: 62vh; overflow: auto; }
 .search-hint { margin: 6px 0 4px; }
 .best { display: grid; gap: 10px; width: 100%; text-align: left; margin-top: 10px; padding: 20px 22px; border-radius: 18px; background: var(--paper); box-shadow: inset 0 0 0 1px rgba(36, 48, 31, .1); }
@@ -534,35 +536,36 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
 
 
 /* ---------- wordmark ---------- */
-.wordmark { display: inline-flex; align-items: center; }
-.wordmark-inner { display: inline-flex; align-items: center; gap: 10px; }
-.wm-word { font: 900 30px/1 var(--sans); letter-spacing: -0.06em; transform: translateY(-1px); }
-/* The tile: ink felt with a faint top light, like the app icon. */
-.wm-tile { position: relative; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: linear-gradient(180deg, #2E3B28, #1E2819); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06), 0 1px 2px rgba(36, 48, 31, .25); }
-.wm-book { position: relative; width: 22px; height: 15px; perspective: 70px; transform: translateY(1px); }
-.wm-page, .wm-face { position: absolute; top: 0; width: 11px; height: 15px; }
-/* Each page is a slightly curved cream leaf, shaded toward the spine where it bends. */
-.wm-page.wm-left { left: 0; clip-path: path('M0 1 C 3.5 0.1, 7.5 0.3, 11 2 L 11 15 C 7.5 13.6, 3.5 13.4, 0 14.2 Z'); background: linear-gradient(90deg, #F8F1DE 0%, #F1E8D0 70%, #D9CFB4 100%); }
-.wm-page.wm-right { right: 0; clip-path: path('M11 1 C 7.5 0.1, 3.5 0.3, 0 2 L 0 15 C 3.5 13.6, 7.5 13.4, 11 14.2 Z'); background: linear-gradient(270deg, #F8F1DE 0%, #F1E8D0 70%, #D9CFB4 100%); }
-.wm-turn { position: absolute; left: 11px; top: 0; width: 11px; height: 15px; transform-origin: 0 50%; transform-style: preserve-3d; }
-.wm-face { left: 0; backface-visibility: hidden; }
-.wm-front { clip-path: path('M11 1 C 7.5 0.1, 3.5 0.3, 0 2 L 0 15 C 3.5 13.6, 7.5 13.4, 11 14.2 Z'); background: linear-gradient(270deg, #FBF6E8, #F1E8D0 70%, #D9CFB4); }
-.wm-back { clip-path: path('M0 1 C 3.5 0.1, 7.5 0.3, 11 2 L 11 15 C 7.5 13.6, 3.5 13.4, 0 14.2 Z'); transform: rotateY(180deg); background: linear-gradient(90deg, #F8F1DE, #EDE3C8 70%, #D3C8AB); }
-/* A thread of the red bookmark ribbon below the spine. */
-.wm-ribbon { position: absolute; left: 10.4px; top: 10px; width: 1.2px; height: 7.5px; background: var(--red-thread); border-radius: 0 0 .5px .5px; clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%); }
+.wordmark { display: inline-flex; align-items: baseline; }
+.wordmark-inner { display: inline-flex; align-items: baseline; }
+.wm-word { font: 900 31px/1 var(--sans); letter-spacing: -0.06em; }
+/* The full stop sits on the baseline, a hair apart from the u. */
+.wm-stop { position: relative; display: inline-block; width: 6.5px; height: 6.5px; margin-left: 2px; }
+.wm-dot { position: absolute; inset: 0; border-radius: 50%; background: var(--red-thread); transform-origin: 50% 100%; }
+.wm-shadow { position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; border-radius: 50%; background: rgba(36, 48, 31, .28); opacity: 0; transform-origin: 50% 50%; }
 @media (prefers-reduced-motion: no-preference) {
-  .wm-turn { animation: wmTurn 5.5s cubic-bezier(.55, .05, .3, 1) 2s infinite; }
-  .wm-front { animation: wmLight 5.5s cubic-bezier(.55, .05, .3, 1) 2s infinite; }
+  .wm-dot { animation: wmHop 6.5s cubic-bezier(.4, 0, .2, 1) 1.8s infinite; }
+  .wm-shadow { animation: wmShadow 6.5s cubic-bezier(.4, 0, .2, 1) 1.8s infinite; }
 }
-/* Rest, lift, turn, settle; then rest again until the next page. */
-@keyframes wmTurn {
-  0%, 8% { transform: rotateY(0deg); }
-  14% { transform: rotateY(-22deg); }
-  32% { transform: rotateY(-180deg); }
-  33.5% { transform: rotateY(-176deg); }
-  35%, 100% { transform: rotateY(-180deg); opacity: 1; }
+/* Rest, gather, a hop, a squash, a smaller hop, settle. */
+@keyframes wmHop {
+  0%, 70% { transform: translateY(0) scale(1, 1); }
+  73% { transform: translateY(0) scale(1.18, .8); }
+  77% { transform: translateY(-13px) scale(.9, 1.12); animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
+  81% { transform: translateY(0) scale(1.2, .78); }
+  84% { transform: translateY(-5px) scale(.96, 1.05); animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
+  87% { transform: translateY(0) scale(1.08, .92); }
+  90%, 100% { transform: translateY(0) scale(1, 1); }
 }
-@keyframes wmLight { 0%, 8% { filter: brightness(1); } 20% { filter: brightness(.86); } 35%, 100% { filter: brightness(1); } }
+@keyframes wmShadow {
+  0%, 72% { opacity: 0; transform: scaleX(1); }
+  73% { opacity: .9; transform: scaleX(1.1); }
+  77% { opacity: .35; transform: scaleX(.55); }
+  81% { opacity: .9; transform: scaleX(1.15); }
+  84% { opacity: .55; transform: scaleX(.8); }
+  87% { opacity: .8; transform: scaleX(1.05); }
+  92%, 100% { opacity: 0; transform: scaleX(1); }
+}
 @media (max-width: 720px) {
   .dock { gap: 6px; padding: 8px; grid-template-columns: auto 1fr; }
   .dock-controls { gap: 4px; }
