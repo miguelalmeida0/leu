@@ -1,26 +1,18 @@
-import { useId } from 'react'
-
-const THREAD = 'M1 30.5 C 7 31.5, 15 31, 21.5 27.5 C 13 22, 9.5 15.5, 12 11 C 14.5 6.5, 20 7.5, 21.5 12 C 23.5 7.2, 29.5 6.5, 31.5 11 C 34 16, 30 22.5, 21.5 27.5 C 26 30, 31 31.5, 36 30'
-
-/** The leu wordmark: the word, and the red thread running out of its last letter to stitch a
-    small heart. It is sewn in, stitch by stitch, when Leu opens and again whenever you come
-    near it, and the heart gives one slow beat. The link around it says "Leu, home". */
+/** The leu wordmark. Every few seconds a tiny book flutters out of the u, its pages beating
+    like wings, takes a slow loop over the word and settles back in. It never reacts to the
+    pointer, and under reduced motion it stays home. The link around it says "Leu, home". */
 export function Wordmark() {
-  const mask = useId().replace(/:/g, '')
   return (
     <span className="wordmark-inner" aria-hidden="true">
-      <span className="wm-word">leu</span>
-      <svg className="wm-thread" viewBox="0 0 40 34" width="34" height="29">
-        <defs>
-          <mask id={mask} maskUnits="userSpaceOnUse" x="-2" y="0" width="44" height="36">
-            <path className="wm-reveal" d={THREAD} pathLength={1} />
-          </mask>
-        </defs>
-        <g mask={`url(#${mask})`}>
-          <path className="wm-stitch" d={THREAD} />
-        </g>
-        <circle className="wm-knot" cx="36.6" cy="29.9" r="1.5" />
-      </svg>
+      <span className="wm-word">le<span className="wm-u">u
+        <span className="wm-book">
+          <svg viewBox="0 0 20 14" width="13" height="9.5">
+            <g className="wm-wing wm-left"><path d="M10 12.5 C 7.5 11, 4.5 10.6, 1.2 11.2 L 1.2 3.2 C 4.5 2.6, 7.5 3, 10 4.5 Z" /><path className="wm-lines" d="M3.4 6.2 C 5 5.9, 6.6 6.1, 8 6.8 M3.4 8.3 C 5 8, 6.6 8.2, 8 8.9" /></g>
+            <g className="wm-wing wm-right"><path d="M10 12.5 C 12.5 11, 15.5 10.6, 18.8 11.2 L 18.8 3.2 C 15.5 2.6, 12.5 3, 10 4.5 Z" /><path className="wm-lines" d="M16.6 6.2 C 15 5.9, 13.4 6.1, 12 6.8 M16.6 8.3 C 15 8, 13.4 8.2, 12 8.9" /></g>
+            <path className="wm-spine" d="M10 4.5 V 12.5" />
+          </svg>
+        </span>
+      </span></span>
     </span>
   )
 }

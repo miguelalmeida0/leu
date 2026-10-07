@@ -455,17 +455,43 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
 }
 
 /* ---------- reading along ---------- */
-/* While Leu reads, a soft butter marker sweeps under each word as it is heard, so the line
-   being read is always obvious; once the sentence is behind you the marker lifts away. */
-.prose .w { background-image: linear-gradient(rgba(231, 184, 67, .5), rgba(231, 184, 67, .5)); background-repeat: no-repeat; background-position: 0 88%; background-size: 0% 40%; transition: background-size .32s cubic-bezier(.3, .7, .3, 1), color .5s; }
-.prose.reading .s { transition: color .8s; }
-.prose.reading .s:not(.now) { color: #6C6A62; }
-.prose.reading h2 .s:not(.now) { color: #4A5541; }
-.prose .s.now { color: var(--paper-ink); }
-.prose .s.now .w.said { background-size: 100% 40%; }
-.prose .s.heard .w { background-size: 100% 40%; background-image: linear-gradient(rgba(231, 184, 67, 0), rgba(231, 184, 67, 0)); transition: background-image 1.6s, color .8s; }
-.prose .s.marked { background: rgba(231, 184, 67, .28); border-radius: 4px; box-shadow: 0 0 0 3px rgba(231, 184, 67, .28); box-decoration-break: clone; -webkit-box-decoration-break: clone; transition: background .8s; }
-@media (prefers-reduced-motion: reduce) { .prose .w { transition: none; } }
+/* Like synced lyrics: the sentence being heard is full ink and fills word by word; what's been
+   read rests a step lighter; what's ahead waits lighter still. Colour only, so nothing reflows. */
+.prose .s { transition: color .7s cubic-bezier(.3, .7, .3, 1); border-radius: 4px; }
+.prose .w { transition: color .22s linear; }
+.prose.reading .s { color: rgba(31, 30, 27, .34); cursor: pointer; }
+.prose.reading .s.heard { color: rgba(31, 30, 27, .52); }
+.prose.reading .s.now { color: rgba(31, 30, 27, .4); }
+.prose.reading .s.now .w.said { color: var(--paper-ink); }
+.prose.reading h2 .s.now .w.said { color: var(--ink); }
+.prose.reading .s:not(.now):hover { color: rgba(31, 30, 27, .72); }
+.prose .s.marked { background: rgba(231, 184, 67, .28); box-shadow: 0 0 0 3px rgba(231, 184, 67, .28); box-decoration-break: clone; -webkit-box-decoration-break: clone; transition: background .8s; }
+@media (prefers-reduced-motion: reduce) { .prose .s, .prose .w { transition: none; } }
+
+/* ---------- the reading player ---------- */
+.player { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 24px; width: min(860px, 100%); padding: 12px 16px 12px 14px; background: var(--ink); color: var(--cream); border-radius: 22px; box-shadow: 0 18px 40px rgba(36, 48, 31, .3); animation: playerIn .6s var(--ease) both; }
+@keyframes playerIn { from { opacity: 0; transform: translateY(10px); } }
+.player-who { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.player-avatar { width: 40px; height: 40px; border-radius: 12px; flex: none; display: grid; place-items: center; background: var(--butter); color: var(--ink); font-weight: 900; font-size: 18px; }
+.player-text { display: grid; min-width: 0; line-height: 1.25; }
+.player-text strong { font-size: 14px; }
+.player-text .small { color: #C9CFBE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12.5px; }
+.player-main { display: grid; justify-items: center; gap: 8px; }
+.player-controls { display: flex; align-items: center; gap: 14px; }
+.player-btn { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: #DCE2D0; transition: color .2s, background .2s; }
+.player-btn:hover:not(:disabled) { color: var(--cream); background: rgba(248, 241, 222, .1); }
+.player-btn:disabled { opacity: .4; cursor: default; }
+.player-play { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--cream); color: var(--ink); transition: transform .25s var(--ease); }
+.player-play:hover:not(:disabled) { transform: scale(1.05); }
+.player-play:disabled { cursor: default; }
+.player-spin { width: 18px; height: 18px; border-radius: 50%; border: 2.2px solid rgba(36, 48, 31, .25); border-top-color: var(--ink); animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.player-track { display: block; width: 300px; height: 4px; border-radius: 2px; background: rgba(248, 241, 222, .18); overflow: hidden; }
+.player-fill { display: block; height: 100%; background: var(--cream); border-radius: 2px; transform-origin: left; transform: scaleX(0); transition: transform .25s linear; }
+.player-end { display: flex; justify-content: flex-end; align-items: center; gap: 6px; }
+.player-speed { min-width: 52px; height: 32px; border-radius: 999px; font-weight: 800; font-size: 13px; color: var(--cream); box-shadow: inset 0 0 0 1.5px rgba(248, 241, 222, .3); font-variant-numeric: tabular-nums; }
+.player-speed:hover { box-shadow: inset 0 0 0 1.5px var(--cream); }
+@media (max-width: 720px) { .player { grid-template-columns: 1fr auto; } .player-who { display: none; } .player-track { width: 160px; } }
 
 /* ---------- explain, in the margin ---------- */
 .reader-grid { transition: grid-template-columns .6s var(--ease); }
@@ -503,21 +529,32 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
 .wordmark { display: inline-flex; align-items: flex-end; }
 .wordmark-inner { display: inline-flex; align-items: flex-end; }
 .wm-word { font: 900 30px/1 var(--sans); letter-spacing: -0.06em; }
-.wm-thread { margin-left: -5px; margin-bottom: 2px; overflow: visible; }
-.wm-stitch { fill: none; stroke: var(--red-thread); stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 3.4 2.6; }
-.wm-knot { fill: var(--red-thread); }
-.wm-thread { transform-origin: 54% 60%; }
-.wm-reveal { fill: none; stroke: #fff; stroke-width: 5; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+.wm-u { position: relative; display: inline-block; }
+/* The book rests in the cup of the u; its flight is a loop drawn relative to that spot. */
+/* Motion-path coordinates start at the box's corner, so the corner sits just above the u. */
+.wm-book { position: absolute; left: 50%; top: 14%; width: 13px; height: 9.5px; opacity: 0; pointer-events: none; }
+.wm-book svg { display: block; overflow: visible; }
+.wm-wing path:first-child { fill: var(--cream); stroke: var(--ink); stroke-width: 1.1; stroke-linejoin: round; }
+.wm-lines { fill: none; stroke: rgba(36, 48, 31, .45); stroke-width: .8; stroke-linecap: round; }
+.wm-spine { stroke: var(--red-thread); stroke-width: 1.4; stroke-linecap: round; }
+.wm-wing { transform-box: view-box; transform-origin: 10px 8px; }
 @media (prefers-reduced-motion: no-preference) {
-  /* Sewn in once when Leu opens, and again whenever you come near it. */
-  .wm-reveal { animation: wmSew 2.4s cubic-bezier(.45, .1, .25, 1) .4s both; }
-  .wm-knot { animation: wmKnot .5s ease 2.7s both; }
-  .wordmark:hover .wm-reveal, .wordmark:focus-visible .wm-reveal { animation: wmSewAgain 2.2s cubic-bezier(.45, .1, .25, 1) both; }
-  .wordmark:hover .wm-knot, .wordmark:focus-visible .wm-knot { animation: wmKnotAgain .5s ease 2.1s both; }
-  .wordmark:hover .wm-thread, .wordmark:focus-visible .wm-thread { animation: wmBeat 1.6s ease-in-out 2.3s 1; }
+  .wm-book {
+    offset-path: path("M 0 0 C 1 -13, -7 -22, -18 -21 C -30 -20, -37 -11, -31 -5 C -26 0, -19 -8, -13 -14 C -7 -20, 5 -19, 5 -10 C 5 -5, 2 -2, 0 0");
+    offset-rotate: 0deg;
+    offset-distance: 0%;
+    animation: wmFlight 5.2s cubic-bezier(.45, .05, .35, 1) 1.6s infinite;
+  }
+  .wm-left { animation: wmFlapL .34s ease-in-out infinite alternate; }
+  .wm-right { animation: wmFlapR .34s ease-in-out infinite alternate; }
 }
-@keyframes wmSew { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes wmSewAgain { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes wmKnot { from { opacity: 0; } to { opacity: 1; } }
-@keyframes wmKnotAgain { from { opacity: 0; } to { opacity: 1; } }
-@keyframes wmBeat { 0%, 100% { transform: scale(1); } 30% { transform: scale(1.09); } 55% { transform: scale(.99); } }
+@keyframes wmFlight {
+  0% { offset-distance: 0%; opacity: 0; transform: scale(.35) rotate(0deg); }
+  7% { offset-distance: 2%; opacity: 1; transform: scale(1) rotate(-6deg); }
+  30% { transform: scale(1) rotate(-12deg); }
+  50% { transform: scale(1) rotate(8deg); }
+  66% { offset-distance: 97%; opacity: 1; transform: scale(1) rotate(4deg); }
+  74%, 100% { offset-distance: 100%; opacity: 0; transform: scale(.35) rotate(0deg); }
+}
+@keyframes wmFlapL { from { transform: rotate(0deg) scaleY(1); } to { transform: rotate(18deg) scaleY(.55); } }
+@keyframes wmFlapR { from { transform: rotate(0deg) scaleY(1); } to { transform: rotate(-18deg) scaleY(.55); } }
