@@ -44,7 +44,9 @@ export function Search({ onClose }: { onClose: () => void }) {
               if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => Math.max(a - 1, 0)) }
             }}
           />
-          <kbd>esc</kbd>
+          <button className="search-close" onClick={onClose} aria-label="Close search" title="Close (Esc)">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" /></svg>
+          </button>
         </div>
         <div id="search-results" role="listbox" aria-label="Results" className="search-results">
           {!q.trim() && <p className="muted search-hint">Search across the ideas inside your library. Ask it like a question, or use the exact term.</p>}
