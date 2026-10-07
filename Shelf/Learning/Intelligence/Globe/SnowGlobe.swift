@@ -30,9 +30,13 @@ struct SnowGlobe: View {
             }
             .contentShape(Circle().path(in: GlobeArt.glass(scale: scale)))
             .gesture(DragGesture(minimumDistance: 0)
-                .onChanged { value in snow.stir(at: GlobeArt.artwork(value.location, scale: scale)) }
-                .onEnded { value in
-                    if hypot(value.translation.width, value.translation.height) < 6 && !reduceMotion { snow.shake() }
+                .onChanged { value in
+                    let point = GlobeArt.artwork(value.location, scale: scale)
+                    // Every touch moves the snow: it lifts the moment a finger lands, then follows the drag.
+                    if value.translation == .zero && !reduceMotion { snow.kick(at: point) }
+                    snow.stir(at: point, pressed: true)
+                }
+                .onEnded { _ in
                     snow.release()
                 })
             .onContinuousHover { phase in
@@ -48,13 +52,15 @@ struct SnowGlobe: View {
         .accessibilityLabel("A snow globe with a little cottage inside")
         .accessibilityValue(lit == 0 ? "No windows lit yet" : lit == 3 ? "All three windows lit" : "\(lit) of 3 windows lit")
         .accessibilityHint("Each idea you get across lights a window.")
-        .accessibilityAction(named: "Shake the globe") { if !reduceMotion { snow.shake() } }
+        .accessibilityAction(named: "Shake the globe") { if !reduceMotion { snow.kick(at: GlobeArt.centre) } }
     }
 }
 
-/// Where things are in the artwork, in its own pixels (`Globe/Base` is 1155 × 855).
+/// Where things are in the artwork, in its own pixels (`Globe/Base` is 1155 × 1066, the whole
+/// plate; `Globe/Interior` covers its top 1155 × 855).
 enum GlobeArt {
-    static let size = CGSize(width: 1155, height: 855)
+    static let size = CGSize(width: 1155, height: 1066)
+    static let interiorHeight: CGFloat = 855
     /// Offset of the cropped artwork inside the full Blender frame the camera matrix uses.
     static let cropOrigin = (x: 238.0, y: 77.0)
     static let centre = CGPoint(x: 512, y: 315.07)
@@ -90,7 +96,7 @@ enum GlobePainter {
             inside.drawLayer { back in
                 for flake in snow.flakes where flake.y > 0.006 { draw(flake, in: &back, scale: s, now: snow.now, reduced: reduced) }
                 back.blendMode = .destinationOut
-                back.draw(Image("Globe/Interior"), in: CGRect(origin: .zero, size: size))
+                back.draw(Image("Globe/Interior"), in: CGRect(x: 0, y: 0, width: size.width, height: GlobeArt.interiorHeight * s))
             }
             let shown = snow.shown
             // The first two windows are lit in the render: dark glass covers them until earned.

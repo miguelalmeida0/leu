@@ -1,36 +1,141 @@
 import { useRef } from 'react'
 import { loadImage, useCanvasLoop, useReducedMotion } from '../lib/motion'
 
-/* The knitting basket render with a strand of yarn drawn live from the needle to the loose
-   ball (KnittingBasket in WelcomeScreen.swift). It sways a few pixels over many seconds. */
+/* The knitting basket render with a loose strand of yarn running from the needle to the ball.
+   The strand is a real little rope: brush it with the pointer and it swings away, catch it
+   (press and drag) and you can tug it, let go and it settles back with a slow sway. Keyboard:
+   Enter or Space gives it a pluck. Under reduced motion it hangs still. */
 
 const tip = { x: 0.5535, y: 0.0356 }, ball = { x: 0.662, y: 0.624 }
+const N = 26
 let basket: HTMLImageElement | undefined
 void loadImage('/art/basket.webp').then((i) => { basket = i })
+
+interface P { x: number; y: number; px: number; py: number }
+
+/** Where the strand hangs at rest, swaying a little with time. */
+function rest(t: number, w: number, h: number) {
+  const sway = Math.sin(t * 0.45) * 0.006 + Math.sin(t * 0.21 + 1.3) * 0.004
+  const a = { x: tip.x * w, y: tip.y * h }, d = { x: ball.x * w, y: ball.y * h }
+  const b = { x: (tip.x + 0.008 + sway) * w, y: 0.42 * h }, c = { x: (ball.x - 0.07 - sway * 0.6) * w, y: (ball.y + 0.012) * h }
+  return Array.from({ length: N }, (_, i) => {
+    const s = i / (N - 1), r = 1 - s
+    return {
+      x: r * r * r * a.x + 3 * r * r * s * b.x + 3 * r * s * s * c.x + s * s * s * d.x,
+      y: r * r * r * a.y + 3 * r * r * s * b.y + 3 * r * s * s * c.y + s * s * s * d.y,
+    }
+  })
+}
 
 export function Basket() {
   const canvas = useRef<HTMLCanvasElement>(null)
   const reduced = useReducedMotion()
+  const rope = useRef<{ pts: P[]; w: number; h: number; seg: number }>({ pts: [], w: 0, h: 0, seg: 0 })
+  const hand = useRef<{ x: number; y: number; vx: number; vy: number; down: boolean; grab: number; inside: boolean }>({ x: 0, y: 0, vx: 0, vy: 0, down: false, grab: -1, inside: false })
+  const last = useRef(0)
+
   useCanvasLoop(canvas, (ctx, w, h, now) => {
+    const R = rope.current, H = hand.current
+    const t = reduced ? 0 : now
+    const target = rest(t, w, h)
+    if (R.w !== w || R.h !== h || !R.pts.length) {
+      R.pts = target.map((p) => ({ x: p.x, y: p.y, px: p.x, py: p.y }))
+      R.w = w; R.h = h
+      R.seg = target.reduce((n, p, i) => (i ? n + Math.hypot(p.x - target[i - 1].x, p.y - target[i - 1].y) : 0), 0) / (N - 1)
+    }
+    const dt = Math.min(0.05, now - (last.current || now)); last.current = now
+    const pts = R.pts
+    if (!reduced) {
+      for (let i = 1; i < N - 1; i++) {
+        const p = pts[i]
+        const vx = (p.x - p.px) * 0.94, vy = (p.y - p.py) * 0.94 // a little air
+        p.px = p.x; p.py = p.y
+        // A soft pull back toward where the strand hangs, so it always settles.
+        p.x += vx + (target[i].x - p.x) * 2.2 * dt
+        p.y += vy + (target[i].y - p.y) * 2.2 * dt + 18 * dt * dt
+        // Brushing past it pushes the strand along with the pointer.
+        if (H.inside && H.grab < 0) {
+          const d = Math.hypot(p.x - H.x, p.y - H.y), reach = w * 0.045
+          if (d < reach) { const k = (1 - d / reach) ** 2; p.x += H.vx * k * 0.55; p.y += H.vy * k * 0.55 }
+        }
+      }
+      if (H.grab > 0) {
+        // Tug too far and the wool slips out of your fingers and swings back.
+        if (Math.hypot(H.x - target[H.grab].x, H.y - target[H.grab].y) > w * 0.24) H.grab = -1
+        else { pts[H.grab].x = H.x; pts[H.grab].y = H.y }
+      }
+      // Keep the strand's length (wool has plenty of give), ends pinned to needle and ball.
+      for (let k = 0; k < 10; k++) {
+        pts[0].x = target[0].x; pts[0].y = target[0].y; pts[N - 1].x = target[N - 1].x; pts[N - 1].y = target[N - 1].y
+        for (let i = 0; i < N - 1; i++) {
+          const a = pts[i], b = pts[i + 1]
+          const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1
+          const limit = R.seg * 1.32
+          if (d <= limit) continue
+          const diff = (d - limit) / d / 2
+          const ma = i === 0 || i === H.grab ? 0 : 1, mb = i + 1 === N - 1 || i + 1 === H.grab ? 0 : 1
+          const sum = ma + mb || 1
+          a.x += dx * diff * 2 * (ma / sum); a.y += dy * diff * 2 * (ma / sum)
+          b.x -= dx * diff * 2 * (mb / sum); b.y -= dy * diff * 2 * (mb / sum)
+        }
+      }
+      H.vx *= 0.5; H.vy *= 0.5
+    } else {
+      for (let i = 0; i < N; i++) { pts[i].x = target[i].x; pts[i].y = target[i].y }
+    }
+
     ctx.clearRect(0, 0, w, h)
     if (basket) ctx.drawImage(basket, 0, 0, w, h)
-    const t = reduced ? 0 : now
-    const sway = Math.sin(t * 0.45) * 0.006 + Math.sin(t * 0.21 + 1.3) * 0.004
     const path = () => {
       ctx.beginPath()
-      ctx.moveTo(tip.x * w, tip.y * h)
-      ctx.bezierCurveTo((tip.x + 0.008 + sway) * w, 0.42 * h, (ball.x - 0.07 - sway * 0.6) * w, (ball.y + 0.012) * h, ball.x * w, ball.y * h)
+      ctx.moveTo(pts[0].x, pts[0].y)
+      for (let i = 1; i < N - 1; i++) {
+        const mx = (pts[i].x + pts[i + 1].x) / 2, my = (pts[i].y + pts[i + 1].y) / 2
+        ctx.quadraticCurveTo(pts[i].x, pts[i].y, mx, my)
+      }
+      ctx.lineTo(pts[N - 1].x, pts[N - 1].y)
     }
-    ctx.lineCap = 'round'
-    path(); ctx.strokeStyle = '#C98476'; ctx.lineWidth = Math.max(1.5, w * 0.0024); ctx.stroke()
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round'
+    path(); ctx.strokeStyle = '#C98476'; ctx.lineWidth = Math.max(1.6, w * 0.0026); ctx.stroke()
     path(); ctx.strokeStyle = '#EBB5A3'; ctx.lineWidth = Math.max(0.8, w * 0.0012); ctx.stroke()
-  }, { fps: 20, still: reduced })
+  }, { fps: 60, still: reduced })
+
+  const at = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    return { x: e.clientX - r.left, y: e.clientY - r.top }
+  }
+  const nearest = (x: number, y: number) => {
+    let best = -1, bestD = Infinity
+    rope.current.pts.forEach((p, i) => { const d = Math.hypot(p.x - x, p.y - y); if (i > 0 && i < N - 1 && d < bestD) { bestD = d; best = i } })
+    return { index: best, d: bestD }
+  }
+  const pluck = () => {
+    const pts = rope.current.pts, w = rope.current.w
+    pts.forEach((p, i) => { if (i > 0 && i < N - 1) { const s = Math.sin((i / (N - 1)) * Math.PI); p.px = p.x - s * w * 0.03 } })
+  }
+
   return (
     <canvas
       ref={canvas}
       className="scene-canvas basket"
       role="img"
-      aria-label="A knitting basket with yarn and a half-finished striped blanket"
+      tabIndex={0}
+      aria-label="A knitting basket with yarn and a half-finished striped blanket. A loose strand of yarn runs to a ball on the floor; press Enter to give it a pluck."
+      style={{ touchAction: 'none' }}
+      onPointerMove={(e) => {
+        const H = hand.current, p = at(e)
+        H.vx = p.x - H.x; H.vy = p.y - H.y; H.x = p.x; H.y = p.y; H.inside = true
+        const near = nearest(p.x, p.y).d < rope.current.w * 0.03
+        e.currentTarget.style.cursor = H.grab > 0 ? 'grabbing' : near ? 'grab' : 'default'
+      }}
+      onPointerDown={(e) => {
+        const H = hand.current, p = at(e), n = nearest(p.x, p.y)
+        H.x = p.x; H.y = p.y; H.vx = 0; H.vy = 0; H.down = true
+        if (n.d < rope.current.w * 0.035) { H.grab = n.index; e.currentTarget.setPointerCapture(e.pointerId); e.currentTarget.style.cursor = 'grabbing' }
+      }}
+      onPointerUp={(e) => { const H = hand.current; H.down = false; H.grab = -1; e.currentTarget.style.cursor = 'grab' }}
+      onPointerLeave={() => { const H = hand.current; H.inside = false; if (!H.down) H.grab = -1 }}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!reduced) pluck() } }}
     />
   )
 }

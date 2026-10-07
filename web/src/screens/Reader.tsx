@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Prose, piecesOf } from '../components/Prose'
 import { Empty } from '../components/ui'
 import { openPdf, pageBlocks, renderPage, type Block, type PDFDocumentProxy } from '../lib/pdf'
 import { go, href } from '../lib/router'
 import { addNote, loadOutline, loadPdf, patchBook, removeNote, upsertMemory, useStore, type Outline } from '../lib/store'
 import { cloze, ideas } from '../lib/text'
 import { chooseVoice, dismissNotice, speak, stop, useVoice, useVoiceId, voices } from '../lib/voice'
-import { Explain } from './Explain'
+import { ExplainPanel, gistOf } from './Explain'
 
 /** Reading (06): the chapter rail, the page as paper (rebuilt for reading, or the original),
     and the margin with your notes. Select any line to keep a note, explain it, or hear it. */
@@ -65,7 +66,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   }, [mode, doc, clamped])
 
   const turn = useCallback((to: number) => {
-    stop(); setSelection(null); setDraft(null)
+    stop(); setSelection(null); setDraft(null); setExplain(null)
     go({ name: 'read', id, page: Math.min(Math.max(1, to), pages) }, true)
     document.querySelector('.reader-paper')?.scrollTo({ top: 0 })
     window.scrollTo({ top: 0 })
@@ -82,6 +83,16 @@ export function Reader({ id, page }: { id: string; page: number }) {
     return () => window.removeEventListener('keydown', key)
   }, [clamped, turn])
 
+  // The sentences an explanation draws on, marked on the page beside it.
+  const marked = useMemo(() => {
+    if (!explain || !blocks) return undefined
+    const key = (t: string) => t.replace(/\s+/g, ' ').trim().slice(0, 40).toLowerCase()
+    const want = new Set(gistOf(explain).map(key))
+    const set = new Set<number>()
+    piecesOf(blocks).forEach((p, i) => { if (want.has(key(p))) set.add(i) })
+    return set
+  }, [explain, blocks])
+
   const onMouseUp = () => {
     const s = window.getSelection()
     const text = s?.toString().replace(/\s+/g, ' ').trim() ?? ''
@@ -93,6 +104,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   if (missing || !book) return <div className="page"><Empty title="This book isn't in this browser any more."><a className="link" href={href({ name: 'library' })}>Back to the library</a></Empty></div>
 
   const pageText = (blocks ?? []).map((b) => b.text).join('\n\n')
+  const pieces = blocks ? piecesOf(blocks) : []
   const current = [...outline].reverse().find((o) => o.page <= clamped && o.depth === 0) ?? [...outline].reverse().find((o) => o.page <= clamped)
   const speaking = voice.speakingId === 'page'
   const voiceLabel = speaking ? (voice.status === 'loading' ? (voice.progress > 0 && voice.progress < 1 ? `Getting the voice ready · ${Math.round(voice.progress * 100)}%` : 'Getting the voice ready…') : 'Stop reading') : 'Read aloud'
@@ -109,7 +121,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           <button role="radio" aria-checked={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
         </div>
         <div className="row" style={{ gap: 8, position: 'relative' }}>
-          <button className="btn soft small-btn" aria-pressed={speaking} onClick={() => (speaking ? stop() : speak(pageText, 'page'))} disabled={!pageText}>
+          <button className="btn soft small-btn" aria-pressed={speaking} onClick={() => (speaking ? stop() : speak(pieces, 'page'))} disabled={!pageText}>
             <SpeakerIcon on={speaking} /> {voiceLabel}
           </button>
           <button className="icon-btn" aria-label="Choose a voice" aria-expanded={voiceMenu} onClick={() => setVoiceMenu((v) => !v)}>
@@ -123,7 +135,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
                   <strong>{v.name}</strong><span className="muted small">{v.note}</span>
                 </button>
               ))}
-              <p className="muted small" style={{ padding: '8px 12px 4px', maxWidth: 260 }}>The voice downloads once (about 90 MB) and then reads offline. Until then, your system voice reads.</p>
+              <p className="muted small" style={{ padding: '8px 12px 4px', maxWidth: 260 }}>The voice downloads once, then reads offline: about 330 MB where the browser has WebGPU (fast, no pauses), 90 MB otherwise. Until then, your system voice reads.</p>
             </div>
           )}
         </div>
@@ -134,7 +146,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           {voice.notice} <button className="link small" onClick={dismissNotice}>OK</button>
         </p>
       )}
-      <div className="reader-grid">
+      <div className={`reader-grid${explain ? ' explaining' : ''}`}>
         <nav className="rail" aria-label="Chapters">
           <p className="eyebrow">Chapters</p>
           <ol>
@@ -157,20 +169,19 @@ export function Reader({ id, page }: { id: string; page: number }) {
           ) : blocks.length === 0 ? (
             <p className="muted">This page has no text Leu can read (it may be a picture). Try “Original page”.</p>
           ) : (
-            <div className="prose">
-              {blocks.map((b, i) => (b.kind === 'heading' ? <h2 key={i}>{b.text}</h2> : <p key={i}>{b.text}</p>))}
-            </div>
+            <Prose blocks={blocks} reading={speaking && voice.status === 'speaking'} marked={marked} />
           )}
           {selection && (
             <div className="selection-menu" style={{ left: selection.x, top: selection.y }} role="toolbar" aria-label="With this passage">
               <button onMouseDown={(e) => e.preventDefault()} onClick={() => { setDraft({ quote: selection.text, note: '' }); setSelection(null) }}>Keep a note</button>
-              <button onMouseDown={(e) => e.preventDefault()} onClick={() => { setExplain(selection.text); setSelection(null) }}>Explain</button>
+              <button onMouseDown={(e) => e.preventDefault()} onClick={() => { setExplain(selection.text); setSelection(null); window.getSelection()?.removeAllRanges() }}>Explain</button>
               <button onMouseDown={(e) => e.preventDefault()} onClick={() => { speak(selection.text, 'selection'); setSelection(null) }}>Read aloud</button>
             </div>
           )}
         </article>
 
-        <aside className="margin" aria-label="In the margin">
+        <aside className="margin" aria-label={explain ? 'Explained simply' : 'In the margin'}>
+          {explain ? <ExplainPanel key={explain} bookId={id} page={clamped} passage={explain} onClose={() => setExplain(null)} /> : <>
           <p className="eyebrow">In the margin</p>
           {draft && (
             <form className="note-draft card" onSubmit={(e) => { e.preventDefault(); addNote({ bookId: id, page: clamped, quote: draft.quote, note: draft.note.trim() }); setDraft(null) }}>
@@ -191,8 +202,9 @@ export function Reader({ id, page }: { id: string; page: number }) {
           ))}
           {!draft && !notes.length && <p className="muted small">Select any line to keep a note, ask for an explanation, or hear it read.</p>}
           <div className="divider" style={{ margin: '20px 0' }} />
-          <button className="btn butter-btn" style={{ width: '100%' }} onClick={() => setExplain(pageText)} disabled={!pageText}>Explain this page simply</button>
+          <button className="btn cream" style={{ width: '100%' }} onClick={() => setExplain(pageText)} disabled={!pageText}><span className="dot" style={{ background: 'var(--butter)' }} />Explain this page simply</button>
           <button className="btn soft" style={{ width: '100%', marginTop: 10 }} onClick={() => go({ name: 'words', id, page: clamped })}>Say it in your own words</button>
+          </>}
         </aside>
       </div>
 
@@ -206,7 +218,6 @@ export function Reader({ id, page }: { id: string; page: number }) {
         <button className="btn ink small-btn" onClick={() => turn(clamped + 1)} disabled={clamped >= pages} aria-label="Next page">Next →</button>
       </div>
 
-      {explain && <Explain bookId={id} bookTitle={book.title} page={clamped} passage={explain} onClose={() => setExplain(null)} />}
     </div>
   )
 }

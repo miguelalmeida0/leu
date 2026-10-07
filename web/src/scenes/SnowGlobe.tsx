@@ -7,7 +7,8 @@ import { loadImage, useCanvasLoop, useReducedMotion } from '../lib/motion'
    live, projected with the render's own camera matrix. Move across the glass to stir the snow;
    click it (or press Enter) to give it a gentle shake. */
 
-const ART = { w: 1155, h: 855 }
+// The base is the whole render down to the plate's edge; the interior mask covers its top 855 rows.
+const ART = { w: 1155, h: 1066, interior: 855 }
 const crop = { x: 238, y: 77 }
 const centre = { x: 512, y: 315.07 }, R = 301.25 * 0.985
 const litRect = { x: 317, y: 190, w: 382, h: 262 }
@@ -45,6 +46,7 @@ class Snow {
   flakes = Array.from({ length: 170 }, () => spawn(true))
   target = 0; shown = 0; swirl = 0; now = 0; last = 0
   pointer: { x: number; y: number } | null = null
+  pressed = false
   push = { dx: 0, dy: 0 }
 
   light(n: number, reduced: boolean) {
@@ -53,6 +55,23 @@ class Snow {
     this.target = next
     if (reduced) this.shown = next
   }
+  /** A touch on the glass: the whole snowfall lifts, swirls and drifts back down. */
+  kick(x: number, y: number, reduced: boolean) {
+    if (reduced) return
+    this.swirl = Math.max(this.swirl, 0.75)
+    for (let i = 0; i < this.flakes.length; i++) {
+      const f = this.flakes[i]
+      if (f.settle > 0) { // snow lying on the hill or the roof is lifted back into the water
+        f.settle = 0; f.alpha = Math.max(f.alpha, 0.6); f.z = ground(Math.hypot(f.x, f.y)) + 0.006
+      }
+      const q = project(f.x, f.y, f.z), near = Math.max(0, 1 - Math.hypot(q.x - x, q.y - y) / 420)
+      const k = 0.55 + near * 0.9
+      f.vz += u(0.035, 0.075) * k
+      f.vx += u(-1, 1) * 0.035 * k + (q.x - x) * 0.00006 * near
+      f.vy += u(-1, 1) * 0.035 * k
+    }
+  }
+
   stir(x: number, y: number) {
     if (this.pointer) this.push = { dx: Math.max(-40, Math.min(40, x - this.pointer.x)), dy: Math.max(-40, Math.min(40, y - this.pointer.y)) }
     this.pointer = { x, y }
@@ -79,7 +98,7 @@ class Snow {
       f.vz += (-0.0055 - f.vz * 1.4 + spin * 0.016 * (1 - (f.z - cz) / radius)) * dt
       if (this.pointer) {
         const q = project(f.x, f.y, f.z), d = Math.hypot(q.x - this.pointer.x, q.y - this.pointer.y)
-        if (d < 80) { const k = (1 - d / 80) ** 2 * 0.00006; f.vx += this.push.dx * k; f.vz -= this.push.dy * k }
+        if (d < 150) { const k = (1 - d / 150) ** 2 * (this.pressed ? 0.0004 : 0.00016); f.vx += this.push.dx * k; f.vz -= this.push.dy * k; f.vy += Math.abs(this.push.dx) * k * 0.3 }
       }
       f.x += f.vx * dt; f.y += f.vy * dt; f.z += f.vz * dt
       const dist = Math.hypot(f.x, f.y, f.z - cz)
@@ -139,7 +158,7 @@ export function SnowGlobe({ lit, label }: { lit: number; label?: string }) {
     bc.clearRect(0, 0, w, h)
     for (const f of s.flakes) if (f.y > 0.006) flake(bc, f, k, s.now, reduced)
     bc.globalCompositeOperation = 'destination-out'
-    bc.drawImage(art.interior, 0, 0, w, h)
+    bc.drawImage(art.interior, 0, 0, w, ART.interior * k)
     ctx.drawImage(b, 0, 0, w, h)
     // The first two windows are lit in the render: dark glass covers them until earned.
     for (let i = 0; i < 2; i++) {
@@ -181,7 +200,6 @@ export function SnowGlobe({ lit, label }: { lit: number; label?: string }) {
     const r = e.currentTarget.getBoundingClientRect(), k = r.width / ART.w
     return { x: (e.clientX - r.left) / k, y: (e.clientY - r.top) / k }
   }
-  const down = useRef<{ x: number; y: number } | null>(null)
   const value = lit === 0 ? 'No windows lit yet' : lit === 3 ? 'All three windows lit' : `${lit} of 3 windows lit`
 
   return (
@@ -193,14 +211,16 @@ export function SnowGlobe({ lit, label }: { lit: number; label?: string }) {
       aria-label={`${label ?? 'A snow globe with a little cottage inside'}. ${value}. Each idea you get across lights a window. Press Enter to shake it.`}
       style={{ aspectRatio: `${ART.w} / ${ART.h}`, touchAction: 'none' }}
       onPointerMove={(e) => { const p = toArt(e); snow.current.stir(p.x, p.y) }}
-      onPointerLeave={() => { snow.current.pointer = null }}
-      onPointerDown={(e) => { down.current = { x: e.clientX, y: e.clientY } }}
-      onPointerUp={(e) => {
-        const d = down.current
-        if (d && Math.hypot(e.clientX - d.x, e.clientY - d.y) < 6 && !reduced) snow.current.swirl = 1
-        down.current = null
+      onPointerLeave={() => { snow.current.pointer = null; snow.current.pressed = false }}
+      onPointerDown={(e) => {
+        const p = toArt(e)
+        e.currentTarget.setPointerCapture(e.pointerId)
+        snow.current.pressed = true
+        snow.current.stir(p.x, p.y)
+        snow.current.kick(p.x, p.y, reduced)
       }}
-      onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && !reduced) { e.preventDefault(); snow.current.swirl = 1 } }}
+      onPointerUp={() => { snow.current.pressed = false }}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); snow.current.kick(centre.x, centre.y, reduced) } }}
     />
   )
 }
