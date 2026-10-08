@@ -22,3 +22,8 @@ DerivedData/
 docs/v27/docs/internal/evidence/
 docs/v28/docs/internal/evidence/
 docs/design/bugfix-20260914/native-*/
+
+# Python tooling caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
