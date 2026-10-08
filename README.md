@@ -2,8 +2,9 @@
 
 **A native iPhone PDF study app that turns reading into active understanding — while staying local-first.**
 
-[**Live app ↗**](https://leu-desktop.vercel.app/)
+[**Try Leu in your browser ↗**](https://leu-desktop.vercel.app/) · [Browser implementation](web/README.md) · [Native architecture](docs/ARCHITECTURE.md) · [Repository guide](docs/START_HERE.md)
 
+> The live URL runs the browser companion in `web/`, not the native iOS build. It processes locally selected PDFs in the browser; clearing site data removes its locally saved library.
 
 <p align="center">
   <img src="./docs/readme/previews/study.png" alt="Leu — retained native Study capture" width="360">
@@ -114,11 +115,34 @@ Leu is built in **Swift / SwiftUI** with **PDFKit** and a local-first product mo
 - **Phone-native interaction.** The product is designed around one-handed reading, sheets, touch targets, safe areas, Dynamic Type, and iOS conventions.
 - **AI earns its place.** Model features must make a passage easier to understand or a concept easier to retain; “chat with PDF” is not the product.
 
+## Run and verify
+
+Native iOS: requires macOS, full Xcode 16+ and an iOS 17+ simulator. Use `./run.sh --help` for launch, build and device options.
+
+```bash
+./run.sh --build
+./run.sh
+```
+
+Browser companion: runs independently of Xcode.
+
+```bash
+cd web
+npm ci
+npm run build
+npm run dev
+```
+
+Native build success does not certify all simulator journeys; see the [release checklist](docs/RELEASE_CHECKLIST.md) and [architecture](docs/ARCHITECTURE.md). Keep private PDFs and generated simulator output out of commits.
+
 ## Repository shape
 
 ```text
 Shelf/                         primary SwiftUI application
-Packages/LeuReasoningCore/     portable reasoning + learning contracts
+ShelfTests/                    native unit and integration tests
+ShelfUITests/                  simulator user journeys
+web/                           browser companion (Vite + React)
+Packages/ShelfCore/          portable reasoning + learning contracts
 docs/                          design decisions, validation and captures
 scripts/                       QA / native verification tooling
 ```
