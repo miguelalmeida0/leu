@@ -1,25 +1,30 @@
-# Start here
+# Repository guide
 
-[Project overview](../README.md)
+[Project overview](../README.md) · [Contributing](../CONTRIBUTING.md) · [Security and privacy](../SECURITY.md)
 
-## Repository guide
+## Product surfaces
 
-**[Shelf/](../Shelf/)** — Native application.
+| Area | Responsibility |
+| --- | --- |
+| [`Shelf/`](../Shelf/) | Native iOS application: SwiftUI feature screens, PDFKit reader and platform adapters |
+| [`Packages/ShelfCore/`](../Packages/ShelfCore/) | Portable domain, learning contracts, repositories and deterministic tests |
+| [`web/`](../web/) | Vite / React browser companion, independently buildable and served on Vercel |
+| [`ShelfTests/`](../ShelfTests/) | Native test targets |
+| [`ShelfUITests/`](../ShelfUITests/) | Simulator interaction and accessibility tests |
+| [`validation/`](../validation/) | Separate validation fixtures and harnesses |
+| [`scripts/`](../scripts/) | Native QA and verification tooling |
 
-**[Packages/](../Packages/)** — Shared Swift packages.
+## How to start
 
-**[ShelfTests/](../ShelfTests/)** — Unit tests.
+- [Build and launch the iOS application](../run.sh) — `./run.sh --help` on a Mac with Xcode
+- [Run the browser implementation](../web/README.md) — `cd web && npm ci && npm run dev`
+- [Architecture and dependency boundaries](ARCHITECTURE.md)
+- [Release and validation checklist](RELEASE_CHECKLIST.md)
 
-**[ShelfUITests/](../ShelfUITests/)** — UI tests.
+## Design decisions and evidence
 
-**[validation/](../validation/)** — Validation harnesses.
+- [Design records](design/) are historical decisions, reviewed references and simulator captures.
+- [Engineering history](history/ROOT_FILES.md) preserves archived handoffs and relocation notes.
+- Simulator media are evidence of individual runs, **not** proof that a future commit passed those runs.
 
-## Engineering history
-
-[Release notes, handoffs and relocation index](./history/ROOT_FILES.md)
-
-Historical records are retained for traceability; they are not a substitute for current setup instructions.
-
-## Root-directory policy
-
-Keep the root for the README, license/security/contribution files, agent entrypoints, build configuration and application directories. Put release notes, handoffs, design records and validation reports under `docs/`. Do not move source or native project files for cosmetic reasons.
+Keep the repository root for the app, packages, tests, public entrypoints and build configuration. Do not move native source, fixtures, screenshots or historical evidence merely for cosmetic uniformity.
