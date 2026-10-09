@@ -180,3 +180,5 @@ These are retained capture files, not a new device-validation run.
 [Repository guide](./docs/START_HERE.md)
 
 <!-- repository-presentation-repair:1 -->
+
+[Cleanup and preservation record](docs/CLEANUP_2026-10-09.md)
