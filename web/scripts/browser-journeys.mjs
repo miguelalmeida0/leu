@@ -184,7 +184,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.locator('.margin-note').getByText(noteText))
     // Original PDF is readable, but selection requires reconstructed text.
     await page.getByRole('radio', { name: 'Original page' }).click()
-    await visible(page.getByText(/switch to “For reading”/))
+    await visible(page.getByText(/For selectable text and notes|switch to “For reading”/i))
     await page.getByRole('radio', { name: 'For reading' }).click()
     await visible(page.locator('.reader-paper .prose p').first())
     await selectPassage(page)
