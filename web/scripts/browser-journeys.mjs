@@ -9,9 +9,11 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)))
 const evidence = join(root, 'qa-evidence')
 const base = 'http://127.0.0.1:4173'
 await mkdir(evidence, { recursive: true })
-const server = spawn('npm', ['run', 'preview', '--', '--host', '127.0.0.1', '--port', '4173', '--strictPort'], {
-  cwd: root, stdio: ['ignore', 'pipe', 'pipe'],
-})
+// Run Vite directly, not through npm -> shell -> Vite. Otherwise the test process
+// can hang after the suite completes because the orphaned child holds stdio open.
+const server = spawn(process.execPath,
+  ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4173', '--strictPort'],
+  { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] })
 let serverLog = ''
 for (const pipe of [server.stdout, server.stderr]) pipe.on('data', (chunk) => { serverLog += chunk.toString() })
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
