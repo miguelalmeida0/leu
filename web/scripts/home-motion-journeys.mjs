@@ -36,7 +36,8 @@ async function movement(page) {
 
 async function run(engine, label, width, reduced) {
   const browser = await engine.launch({ headless: true })
-  const page = await browser.newPage({ viewport: { width, height: 844 }, deviceScaleFactor: 2, isMobile: width < 600, hasTouch: width < 600, reducedMotion: reduced })
+  const context = await browser.newContext({ viewport: { width, height: 844 }, deviceScaleFactor: 2, isMobile: width < 600, hasTouch: width < 600, reducedMotion: reduced })
+  const page = await context.newPage()
   const errors = []
   page.on('pageerror', (error) => errors.push(error.message))
   try {
@@ -65,7 +66,7 @@ async function run(engine, label, width, reduced) {
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     assert.equal(await page.getByRole('button', { name: 'Pause animation', exact: true }).count(), 1, 'An explicit playback choice must survive reloading')
     assert.ok(await movement(page) > 0.005, 'The scene must resume after reload')
-    const other = await page.context().newPage()
+    const other = await context.newPage()
     await other.goto('about:blank')
     await page.waitForTimeout(600)
     await other.close()
