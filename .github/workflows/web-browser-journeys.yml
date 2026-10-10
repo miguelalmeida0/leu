@@ -1,7 +1,13 @@
 name: Leu browser journeys
 
 on:
+  # Experimental `test` pushes are not release gates. Use PR or manual runs.
   push:
+    branches: [main]
+    paths:
+      - 'web/**'
+      - '.github/workflows/web-browser-journeys.yml'
+  pull_request:
     branches: [main, test]
     paths:
       - 'web/**'
