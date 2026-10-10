@@ -156,7 +156,7 @@ async function runBrowser(browserType, name, mobile, width) {
     }
     await noHorizontalOverflow(page, 'Six sample books ' + name)
     await page.locator('.quilt-cell button').first().click()
-    await visible(page.getByRole('heading', { name: /Essentials|Notes|Patterns|System|JavaScript|Interviews/i }))
+    await visible(page.getByRole('heading', { name: /Essentials|Notes|Patterns|System|JavaScript|Interviews/i }).first())
     await noHorizontalOverflow(page, 'Book overview ' + name)
     await page.getByRole('button', { name: /Read this chapter/i }).click()
     await visible(page.locator('.reader-paper .prose p').first())
