@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en" data-direction="weather" data-playing="true">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#B6C690" />
+<title>Leu — Quiet Weather motion study</title>
+<style>
+:root { color-scheme: light; --cream:#F8F1DE; --ink:#24301F; --felt:#B6C690; --leaf:#536248; --line:rgba(36,48,31,.16); --dust:#e8d1a3; --accent:#AD3C35; --ease:cubic-bezier(.22,.8,.24,1); }
+* { box-sizing:border-box; }
+html { font-family: -apple-system,BlinkMacSystemFont,"Avenir Next","Segoe UI",Arial,sans-serif; -webkit-text-size-adjust:100%; }
+html,body { min-height:100%; margin:0; padding:0; }
+body { background:var(--felt); color:var(--ink); -webkit-font-smoothing:antialiased; }
+button { cursor:pointer; font:inherit; color:inherit; border:0; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+button:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+button:disabled { opacity:.45; cursor:default; }
+.shell { max-width:1460px; margin:0 auto; min-height:100dvh; padding:0 clamp(18px,3vw,48px) 26px; }
+.top { height:77px; display:flex; align-items:center; justify-content:space-between; gap:16px; border-bottom:1px solid var(--line); }
+.wordmark { font-size:36px; font-weight:900; letter-spacing:-.095em; line-height:1; white-space:nowrap; }
+.wordmark span { color:var(--accent); }
+.top-right { display:flex; align-items:center; gap:13px; }
+.top-right small { font-size:11px; letter-spacing:.11em; font-weight:800; text-transform:uppercase; opacity:.68; }
+.live { display:flex; align-items:center; gap:8px; padding:9px 12px; border:1px solid var(--line); border-radius:999px; background:rgba(248,241,222,.6); font-size:11px; font-weight:780; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.live-dot { width:8px; height:8px; border-radius:100%; background:#56744F; animation:livePulse 1.2s ease-in-out infinite alternate; }
+@keyframes livePulse { from { box-shadow:0 0 0 0 rgba(73,121,75,.4); opacity:.8; } to { box-shadow:0 0 0 6px rgba(73,121,75,0); opacity:1; } }
+.layout { display:grid; grid-template-columns:minmax(0,1.18fr) minmax(300px,.82fr); align-items:center; gap:clamp(28px,5vw,100px); min-height:min(810px,calc(100dvh - 112px)); padding:clamp(20px,3vw,48px) 0; }
+.showcase { width:100%; min-width:0; }
+.card { padding:16px; background:rgba(248,241,222,.52); border:1px solid rgba(248,241,222,.74); border-radius:28px; box-shadow:0 22px 65px rgba(36,48,31,.12),0 4px 10px rgba(36,48,31,.03); }
+.card-header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 11px 16px; }
+.card-header strong { font-size:10px; text-transform:uppercase; letter-spacing:.16em; font-weight:850; }
+.card-header small { color:var(--leaf); font-size:11px; font-weight:680; }
+.scene-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; margin:0 0 12px; }
+.scene-tabs button { height:46px; padding:0 9px; border-radius:12px; background:rgba(255,255,255,.18); font-size:12px; font-weight:760; white-space:nowrap; }
+.scene-tabs button[aria-selected=true] { background:var(--ink); color:var(--cream); }
+.scene-tabs button:not([aria-selected=true]):hover { background:rgba(255,255,255,.43); }
+.stage { position:relative; height:clamp(310px,43vw,600px); min-height:310px; overflow:hidden; border-radius:18px; background:radial-gradient(ellipse at 55% 24%,#D7DDB2,transparent 67%),linear-gradient(135deg,#B6C690,#9AAC7C); display:grid; place-items:center; touch-action:pan-y; isolation:isolate; }
+.stage::before { position:absolute; inset:0; z-index:0; content:""; background:radial-gradient(ellipse at center,rgba(245,231,188,.2),transparent 70%); pointer-events:none; }
+.scene { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; visibility:hidden; opacity:0; transform:translateY(4px); transition:opacity .42s var(--ease),transform .42s var(--ease),visibility .42s; overflow:hidden; }
+.scene.current { visibility:visible; opacity:1; transform:none; }
+.ill { position:relative; max-width:100%; max-height:100%; aspect-ratio:900/826; flex-shrink:0; width:min(95%,635px); pointer-events:none; user-select:none; -webkit-user-select:none; }
+.ill img { display:block; pointer-events:none; user-select:none; -webkit-user-drag:none; }
+.nook.ill { aspect-ratio:900/826; }
+.nook-frame { position:absolute; left:22.22%; top:0; width:55.56%; height:50.85%; border:clamp(5px,.9vw,11px) solid #937044; border-bottom:0; border-radius:50% 50% 0 0 / 69% 69% 0 0; background:#303C44; box-shadow:0 1px 5px rgba(20,27,22,.25); }
+.glass { position:absolute; left:24.22%; top:2.18%; width:51.56%; height:46.48%; border-radius:50% 50% 0 0 / 68% 68% 0 0; overflow:hidden; background:#36404a; }
+.glass img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.glass .window-fog { opacity:.34; animation:fogBreathe 16s ease-in-out infinite alternate; }
+.glass .rain-canvas { z-index:3; }
+.wood { position:absolute; background:#8E6B42; z-index:5; box-shadow:inset 0 1px 2px rgba(54,34,18,.4); }
+.wood.vert { left:49.33%; top:2.18%; width:1.35%; height:46.48%; }
+.wood.horiz { left:24.22%; top:21.77%; width:51.56%; height:1.44%; }
+.nook-room { position:absolute; left:0; top:32.2%; width:100%; height:67.8%; object-fit:contain; z-index:6; }
+.room-light { position:absolute; inset:0; z-index:7; pointer-events:none; background:radial-gradient(ellipse at 39% 62%,rgba(255,219,138,.13),transparent 36%); animation:lightBreathe 13s ease-in-out infinite alternate; }
+.steam-canvas { z-index:8; }
+.scene-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; display:block; }
+.rain-canvas { width:100%;height:100%; }
+.basket.ill { aspect-ratio:1559/1147; width:min(100%,760px); }
+.basket-img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+.basket .rope-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+.basket .basket-light { position:absolute; inset:0; background:radial-gradient(ellipse at 54% 32%,rgba(255,235,193,.12),transparent 43%); pointer-events:none; mix-blend-mode:screen; animation:lightBreathe 10s ease-in-out infinite alternate; }
+.globe.ill { aspect-ratio:1155/1066; width:min(95%,640px); }
+.globe-img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+.globe-snow { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+.globe .glass-flare { position:absolute; z-index:5; left:20%; top:3%; width:48%; height:43%; background:radial-gradient(ellipse at 24% 16%,rgba(255,255,255,.15),transparent 61%); pointer-events:none; animation:glassBreathe 13s ease-in-out infinite alternate; }
+.stage .ambient-glow { position:absolute; z-index:8; inset:0; pointer-events:none; mix-blend-mode:screen; background:radial-gradient(ellipse at 30% 32%,rgba(255,235,175,.14),transparent 53%); animation:glowDrift 16s ease-in-out infinite alternate; }
+.card-footer { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:16px 8px 5px; }
+.card-footer small { font-size:11px; font-weight:680; color:var(--leaf); }
+.controls { display:flex; align-items:center; gap:8px; }
+.control { min-height:42px; padding:0 15px; background:var(--cream); border-radius:13px; box-shadow:inset 0 0 0 1px rgba(36,48,31,.14); font-size:12px; font-weight:760; }
+.control:hover { background:#fff6e4; }
+.control.primary { color:var(--cream); background:var(--ink); }
+.copy { min-width:0; }
+.eyebrow { display:flex; align-items:center; gap:12px; font-weight:900; font-size:11px; text-transform:uppercase; letter-spacing:.18em; color:var(--leaf); }
+.eyebrow::before { content:""; width:27px; height:1px; background:var(--accent); }
+.copy h1 { font-size:clamp(46px,5.3vw,88px); letter-spacing:-.067em; line-height:1.03; text-wrap:balance; margin:19px 0 20px; }
+.copy .intro { font-family:Georgia,"Iowan Old Style",serif; font-size:clamp(17px,1.6vw,22px); line-height:1.62; margin:0; max-width:590px; color:var(--leaf); }
+.motion-spec { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:32px; padding-top:20px; border-top:1px solid var(--line); max-width:510px; }
+.motion-spec span { color:var(--leaf); font-size:10px; text-transform:uppercase; font-weight:880; letter-spacing:.15em; }
+.motion-spec p { margin:8px 0 0; font-size:14px; line-height:1.55; font-weight:700; }
+.explain { margin-top:24px; color:var(--leaf); font-size:13px; line-height:1.65; max-width:530px; }
+.explain strong { color:var(--ink); }
+.bottom { display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:11px; color:var(--leaf); padding:18px 4px; border-top:1px solid var(--line); }
+.error { display:none; color:#831f18; font-size:12px; font-weight:750; padding:9px 12px; background:#FFF2E9; }
+.error[data-show=true] { display:block; }
+.visually-hidden { position:absolute!important; left:-10000px; width:1px; height:1px; overflow:hidden; }
+@keyframes fogBreathe { 0%{opacity:.19} 50%{opacity:.46} 100%{opacity:.24} }
+@keyframes lightBreathe { 0%{transform:translate3d(-3%,0,0);opacity:.36} 100%{transform:translate3d(3%,-1%,0);opacity:1} }
+@keyframes glassBreathe { 0%{opacity:.3;transform:translateX(-8px)} 100%{opacity:.73;transform:translateX(13px)} }
+@keyframes glowDrift { 0%{opacity:.42;transform:translateX(-5%)} 100%{opacity:.78;transform:translateX(5%)} }
+[data-playing=false] .ill *,[data-playing=false] .stage *,[data-playing=false] .live-dot { animation-play-state:paused!important; }
+[data-direction=light] { --felt:#75896F; --ink:#22372B; --leaf:#344D3E; --accent:#BB5A3D; }
+[data-direction=light] .stage { background:radial-gradient(ellipse at 48% 15%,#B1B993,transparent 56%),linear-gradient(145deg,#7E9270,#4E6D60); }
+[data-direction=light] .ambient-glow { background:radial-gradient(ellipse at 45% 35%,rgba(255,208,116,.29),transparent 52%); animation-duration:9s; }
+[data-direction=light] .nook .room-light { background:radial-gradient(ellipse at 40% 63%,rgba(255,215,131,.34),transparent 43%); animation-duration:8s; }
+[data-direction=light] .basket-light { background:radial-gradient(ellipse at 50% 28%,rgba(255,209,130,.36),transparent 49%)!important; }
+[data-direction=light] .glass .window-fog { opacity:.20; }
+[data-direction=craft] { --felt:#E7DFC6; --ink:#24372D; --leaf:#5E6958; --accent:#B26249; }
+[data-direction=craft] .stage { background:radial-gradient(ellipse at 53% 36%,#D7DDBD,transparent 62%),linear-gradient(135deg,#D1D8BD,#AEBC9E); }
+[data-direction=craft] .ambient-glow { background:radial-gradient(ellipse at 48% 53%,rgba(255,234,180,.16),transparent 65%); }
+@media (max-width:1000px) {
+  .layout { grid-template-columns:1fr; min-height:0; gap:30px; padding:24px 0; }
+  .showcase { max-width:750px; margin:0 auto; }
+  .copy { max-width:750px; margin:0 auto; }
+}
+@media (max-width:600px) {
+ .shell { padding:0 10px 22px; }
+ .top { height:66px; padding:0 8px; }
+ .wordmark { font-size:31px; }
+ .top-right small { display:none; }
+ .layout { padding:12px 0 25px; gap:25px; }
+ .card { padding:9px; border-radius:23px; }
+ .card-header { padding:5px 6px 11px; }
+ .card-header strong { font-size:9px; }
+ .scene-tabs { gap:4px; margin-bottom:8px; }
+ .scene-tabs button { height:45px; padding:0 4px; border-radius:11px; font-size:11px; }
+ .stage { height:min(51vh,430px); min-height:302px; border-radius:16px; }
+ .ill { width:100%; }
+ .basket.ill { width:100%; }
+ .globe.ill { width:100%; }
+ .card-footer { padding:11px 5px 4px; gap:10px; }
+ .card-footer small { font-size:10px; }
+ .control { min-height:43px; padding:0 13px; }
+ .copy { padding:0 12px; }
+ .copy h1 { font-size:clamp(40px,10.8vw,65px); margin:14px 0 13px; }
+ .copy .intro { font-size:17px; }
+ .motion-spec { margin-top:22px; gap:12px; }
+ .motion-spec p { font-size:12px; }
+ .bottom { flex-wrap:wrap; padding:12px; }
+}
+@media (max-width:350px) {
+ .card-header strong { letter-spacing:.09em; }
+ .scene-tabs button { font-size:10px; }
+ .stage { height:330px; min-height:0; }
+ .card-footer { gap:6px; }
+ .control { padding:0 10px; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="top"><div class="wordmark">leu<span>.</span></div><div class="top-right"><small>Original artwork · motion experiments</small><div class="live" aria-label="Animation runtime"><span class="live-dot"></span><span id="elapsed">0s</span><span>LIVE</span></div></div></header>
+<main class="layout">
+<section class="showcase" aria-label="Animated Leu illustration">
+  <div class="card">
+    <div class="card-header"><strong>LEU / AMBIENT STUDY 01</strong><small id="status" aria-live="polite">Preparing motion…</small></div>
+    <div class="scene-tabs" role="tablist" aria-label="Choose existing Leu artwork">
+      <button type="button" data-select="nook" role="tab" aria-selected="true">Reading nook</button>
+      <button type="button" data-select="basket" role="tab" aria-selected="false">Knitting basket</button>
+      <button type="button" data-select="globe" role="tab" aria-selected="false">Snow globe</button>
+    </div>
+    <div class="stage" aria-label="Animated scenes, no gesture interactions">
+      <div class="scene current" data-scene="nook" aria-hidden="false">
+        <div class="ill nook">
+          <div class="nook-frame"></div>
+          <div class="glass">
+            <img data-art="window-clear.webp" src="/art/window-clear.webp" alt="" draggable="false" />
+            <img class="window-fog" data-art="window-fog.webp" src="/art/window-fog.webp" alt="" draggable="false" />
+            <canvas data-fx="rain" class="scene-canvas rain-canvas" aria-hidden="true"></canvas>
+          </div>
+          <div class="wood vert"></div><div class="wood horiz"></div>
+          <img class="nook-room" data-art="nook.webp" src="/art/nook.webp" alt="Leu's original mustard sofa and patchwork quilt, beside a cup of tea" draggable="false" />
+          <div class="room-light"></div>
+          <canvas data-fx="air" class="scene-canvas steam-canvas" aria-hidden="true"></canvas>
+        </div>
+      </div>
+      <div class="scene" data-scene="basket" aria-hidden="true">
+        <div class="ill basket"><img class="basket-img" data-art="basket.webp" src="/art/basket.webp" alt="Leu's original wicker basket with wool, knitting needles and a loose ball of yarn" draggable="false" />
+          <div class="basket-light"></div><canvas data-fx="basket" class="rope-canvas" aria-hidden="true"></canvas></div>
+      </div>
+      <div class="scene" data-scene="globe" aria-hidden="true">
+        <div class="ill globe"><img class="globe-img" data-art="globe-base.webp" src="/art/globe-base.webp" alt="Leu's original glass snow globe with the warm cottage inside" draggable="false" />
+          <canvas data-fx="globe" class="globe-snow" aria-hidden="true"></canvas><div class="glass-flare"></div></div>
+      </div>
+      <div class="ambient-glow" aria-hidden="true"></div>
+    </div>
+    <p id="asset-error" class="error" role="alert"></p>
+    <div class="card-footer"><small id="current-scene">Rain through the window</small><div class="controls"><button id="motion-toggle" class="control primary" aria-pressed="true">Pause motion</button></div></div>
+  </div>
+</section>
+<section class="copy">
+  <p class="eyebrow">Direction 01 / Quiet Weather</p>
+  <h1>A room that is alive.</h1>
+  <p class="intro">Rain slips down the glass, tea steam wanders upwards, yarn sways gently, and snow falls inside the cottage globe. Constant motion without touching anything.</p>
+  <div class="motion-spec"><div><span>Motion language</span><p>Rain, steam, gravity and quiet weather.</p></div><div><span>On mobile</span><p>Original illustrations; motion only, no gesture effects.</p></div></div>
+  <p class="explain"><strong>What to look for:</strong> Look at the window for falling water; tap Basket for the gently moving yarn, or Globe for continuous snow.</p>
+</section>
+</main>
+<footer class="bottom"><span>Three original Leu illustrations. Three new motion directions. No SVG replacements.</span><span>If motion is paused by your device settings, tap Play motion.</span></footer>
+</div>
+<noscript><p style="padding:24px;background:#fff5e7">This file viewer does not execute JavaScript. Open this preview as an HTTPS page in Safari to see the motion.</p></noscript>
+<script>
+(function () {
+  'use strict';
+  const direction = document.documentElement.dataset.direction;
+  const intensity = direction === 'light' ? 1.3 : direction === 'craft' ? 1.25 : 1;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let playing = !reduced.matches;
+  let manuallyChosen = false;
+  let active = 'nook';
+  let frameCount = 0;
+  let seconds = 0;
+  let startedAt = performance.now();
+  const status = document.getElementById('status');
+  const meter = document.getElementById('elapsed');
+  const toggle = document.getElementById('motion-toggle');
+  const error = document.getElementById('asset-error');
+  const shell = document.querySelector('.stage');
+  const scenes = [...document.querySelectorAll('[data-scene]')];
+  const controls = [...document.querySelectorAll('[data-select]')];
+  const sample = { clear:null, globe:null, basket:null, room:null };
+  const sceneSize = { nook:[900,826], basket:[1559,1147], globe:[1155,1066] };
+
+  // Same-origin, untouched Leu Blender renders. On a downloaded HTML file,
+  // use the public live website. No SVG recreation and no remote script library.
+  const root = location.protocol === 'file:' ? 'https://leu.miguelalmeida.xyz' : '';
+  document.querySelectorAll('img[data-art]').forEach(function(img) {
+    img.addEventListener('error', () => { error.dataset.show='true'; error.textContent = 'This viewer cannot load the original artwork. Open the HTTPS preview in Safari.'; });
+    img.src = root + '/art/' + img.dataset.art;
+  });
+  const canvases = [...document.querySelectorAll('canvas[data-fx]')].map(canvas => ({
+    canvas, ctx:canvas.getContext('2d'), kind:canvas.dataset.fx,
+    virtual: canvas.dataset.fx === 'rain' ? [464,384] : sceneSize[canvas.dataset.fx === 'air' ? 'nook' : canvas.dataset.fx],
+  }));
+  const map = new Map(canvases.map(c=>[c.kind,c]));
+  let sizeObserver = null;
+  function resizeCanvas(c) {
+    const rect = c.canvas.getBoundingClientRect();
+    if (rect.width < 1 || rect.height < 1) return;
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    const width = Math.max(1,Math.floor(rect.width*dpr));
+    const height = Math.max(1,Math.floor(rect.height*dpr));
+    if(c.canvas.width !== width || c.canvas.height !== height) {
+      c.canvas.width=width; c.canvas.height=height;
+    }
+    c.ctx.setTransform(width/c.virtual[0],0,0,height/c.virtual[1],0,0);
+  }
+  function resizeAll() { canvases.forEach(resizeCanvas); }
+  if (typeof ResizeObserver !== 'undefined') {
+    sizeObserver = new ResizeObserver(resizeAll);
+    canvases.forEach(x=>sizeObserver.observe(x.canvas));
+  }
+  addEventListener('resize',resizeAll,{passive:true});
+  resizeAll();
+
+  function setPlaying(value, chosen=false) {
+    playing=value;
+    if (chosen) manuallyChosen=true;
+    document.documentElement.dataset.playing=String(playing);
+    toggle.textContent = playing ? 'Pause motion' : 'Play motion';
+    toggle.setAttribute('aria-pressed',String(playing));
+    status.textContent = playing ? 'Motion is running' : reduced.matches && !manuallyChosen ? 'Reduce Motion is on — tap Play' : 'Motion paused';
+    if (playing) startedAt=performance.now()-seconds*1000;
+  }
+  setPlaying(playing);
+  toggle.addEventListener('click',()=>setPlaying(!playing,true));
+  reduced.addEventListener('change',()=>{if(!manuallyChosen) setPlaying(!reduced.matches)});
+  function chooseScene(scene) {
+    active=scene;
+    scenes.forEach(el=>{const on=el.dataset.scene===scene;el.classList.toggle('current',on);el.setAttribute('aria-hidden',String(!on))});
+    controls.forEach(button=>{const on=button.dataset.select===scene;button.setAttribute('aria-selected',String(on));button.tabIndex=on?0:-1});
+    document.getElementById('current-scene').textContent=scene==='nook'?'Rain through the window':scene==='basket'?'The moving yarn':'Snow inside the glass';
+    resizeAll();
+  }
+  controls.forEach(button=>button.addEventListener('click',()=>chooseScene(button.dataset.select)));
+  chooseScene(active);
+
+  function seeded(i,seed=1) { let x=Math.sin((i+seed)*127.1)*43758.5453123; return x-Math.floor(x); }
+  const rain=Array.from({length:direction==='weather'?130:direction==='light'?65:45},(_,i)=>({
+    x:seeded(i,1)*464, y:seeded(i,2)*384,
+    speed:30+seeded(i,3)*(direction==='weather'?80:55),
+    length:6+seeded(i,4)*20, alpha:.18+seeded(i,5)*.38,
+  }));
+  const motes=Array.from({length:27},(_,i)=>({x:seeded(i,7)*900,y:seeded(i,8)*826,phase:seeded(i,9)*7,r:1+seeded(i,10)*2.3}));
+  const flakes=Array.from({length:direction==='craft'?220:direction==='light'?145:165},(_,i)=>({
+    x:seeded(i,11)*1.9-0.95, y:seeded(i,12)*1.8-0.9,
+    speed:10+seeded(i,13)*27, radius:1+seeded(i,14)*2.3, phase:seeded(i,15)*6.28,
+    alpha:.37+seeded(i,16)*.5,
+  }));
+
+  function clear(ctx, w, h) {ctx.clearRect(0,0,w,h)}
+  function glow(ctx,x,y,r,alpha,color) {
+    const g=ctx.createRadialGradient(x,y,0,x,y,r);
+    g.addColorStop(0,`rgba(${color},${alpha})`);
+    g.addColorStop(.37,`rgba(${color},${alpha*.27})`);
+    g.addColorStop(1,`rgba(${color},0)`);
+    ctx.fillStyle=g;ctx.fillRect(x-r,y-r,2*r,2*r);
+  }
+  function drawRain(t) {
+    const c=map.get('rain'); if(!c) return;const {ctx}=c;
+    clear(ctx,464,384);
+    const wind=Math.sin(t*.34)*3;
+    for (const p of rain) {
+      const x=p.x+wind, y=((p.y+t*p.speed)%445)-35;
+      const alpha=p.alpha * intensity;
+      ctx.strokeStyle=`rgba(232,243,237,${alpha})`;
+      ctx.lineWidth=.8+p.length/16;ctx.lineCap='round';
+      ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-1.3,y+p.length);ctx.stroke();
+      if(p.length>17)glow(ctx,x,y+p.length,3.2,alpha*.4,'241,248,243');
+    }
+    if (direction==='light') {
+      const x=135+Math.sin(t*.65)*140;
+      glow(ctx,x,170,175,.15,'255,218,149');
+    }
+    if (direction==='craft') {
+      for(let i=0;i<22;i++) {
+        const x=35+seeded(i,91)*380, y=((seeded(i,92)*420+t*(8+seeded(i,93)*15))%420)-17;
+        glow(ctx,x,y,4,.08,'255,234,188');
+      }
+    }
+  }
+  function drawAir(t) {
+    const c=map.get('air');if(!c)return;const {ctx}=c;
+    clear(ctx,900,826);
+    // Original cup position as measured from the current NookScene source.
+    for(let i=0;i<(direction==='weather'?5:4);i++) {
+      const phase=(t/5.8+i/5)%1;
+      const rise=phase*130;const fade=Math.sin(Math.PI*phase);
+      const x=679+Math.sin(t*.6+i*1.6)*9+phase*11;
+      const y=656-rise;
+      ctx.beginPath();ctx.moveTo(x-7,y+22);
+      ctx.bezierCurveTo(x-24+Math.sin(t*.35+i)*7,y+7,x+25,y-20,x-10,y-44);
+      ctx.strokeStyle=`rgba(250,246,228,${fade*.31*intensity})`;
+      ctx.lineWidth=4.8+phase*2.7;ctx.lineCap='round';ctx.stroke();
+      glow(ctx,x,y,17+phase*8,fade*.11,'255,246,223');
+    }
+    if (direction!=='weather') {
+      const p=(Math.sin(t*.42)*.5+.5);
+      glow(ctx,240+p*350,260,230,(direction==='light'?.15:.07)*intensity,'255,223,154');
+    }
+    if (direction==='craft') {
+      ctx.save();ctx.beginPath();ctx.moveTo(350,572);ctx.bezierCurveTo(430,558,540,570,656,556);
+      ctx.setLineDash([4,11]);ctx.lineDashOffset=-t*22;ctx.lineWidth=2.8;ctx.strokeStyle='rgba(246,206,167,.48)';ctx.stroke();ctx.restore();
+    }
+    for(let i=0;i<motes.length;i++){
+      const p=motes[i];const x=p.x+Math.sin(t*.31+p.phase)*9;
+      const y=p.y+Math.sin(t*.22+p.phase)*5;
+      if(y<380)continue;
+      glow(ctx,x,y,p.r*3,.045,'255,233,182');
+    }
+  }
+  function drawBasket(t) {
+    const c=map.get('basket');if(!c)return;const {ctx}=c;
+    clear(ctx,1559,1147);
+    const amp=direction==='craft'?48:direction==='light'?24:34;
+    const swing=Math.sin(t*1.1)*amp+Math.sin(t*.37+.4)*amp*.28;
+    // The original needle tip and loose ball locations, not a replacement drawing.
+    const a={x:863,y:41},b={x:1032,y:716};
+    const cp1={x:901+swing*.65,y:238},cp2={x:873-swing,y:579};
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.bezierCurveTo(cp1.x,cp1.y,cp2.x,cp2.y,b.x,b.y);
+    ctx.lineWidth=7;ctx.strokeStyle='rgba(100,58,49,.36)';ctx.lineCap='round';ctx.stroke();
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.bezierCurveTo(cp1.x,cp1.y,cp2.x,cp2.y,b.x,b.y);
+    ctx.lineWidth=3.9;ctx.strokeStyle='#F0C3B3';ctx.stroke();
+    if(direction==='craft') {
+      const m=(t*.3)%1; const y=41+675*m;
+      glow(ctx,895+swing*.4+Math.sin(m*6)*30,y,28,.28,'255,222,194');
+      for(let i=0;i<22;i++) {
+        const x=820+seeded(i,68)*340,y=150+seeded(i,69)*390;
+        glow(ctx,x+Math.sin(t*.23+i)*9,y,10,.05,'255,243,225');
+      }
+    }
+    if(direction==='light'){
+      const x=650+Math.sin(t*.49)*250;
+      glow(ctx,x,392,320,.17,'255,219,148');
+      glow(ctx,1040,705,90,.14+.1*Math.sin(t*.68),'255,203,167');
+    }
+  }
+  function drawGlobe(t) {
+    const c=map.get('globe');if(!c)return;const {ctx}=c;
+    clear(ctx,1155,1066);
+    const cx=512,cy=315.07,R=297;
+    ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
+    for(const p of flakes) {
+      const radial=Math.sqrt(p.x*p.x+p.y*p.y);
+      const x=cx+p.x*R*.91+Math.sin(t*.46+p.phase)*(direction==='craft'?29:10);
+      const y=cy+(((p.y+1)*R + t*p.speed)%(R*2)) -R;
+      if ((x-cx)*(x-cx)+(y-cy)*(y-cy)>(R-9)*(R-9))continue;
+      const r=p.radius*(direction==='craft'?1.4:1.05);
+      ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,248,228,${p.alpha})`;ctx.fill();
+      if(r>2.4)glow(ctx,x,y,r*5,.13,'255,249,237');
+    }
+    if(direction==='light'){
+      const f=.5+.5*Math.sin(t*.65);
+      glow(ctx,454,363,76,.17+f*.17,'255,202,102');
+      glow(ctx,508,363,76,.13+(1-f)*.18,'255,204,111');
+      glow(ctx,560,367,74,.11+f*.16,'255,205,120');
+    }
+    if(direction==='craft'){
+      const x=512+Math.sin(t*.47)*85;
+      glow(ctx,x,252,146,.12,'255,242,213');
+    }
+    ctx.restore();
+  }
+  let lastFrame=0;
+  const fps=matchMedia('(pointer: coarse)').matches?24:30;
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if(!playing||document.hidden)return;
+    if(now-lastFrame<1000/fps-1)return;
+    lastFrame=now;
+    if (active==='nook'){drawRain(now/1000);drawAir(now/1000)}
+    else if(active==='basket')drawBasket(now/1000);
+    else if(active==='globe')drawGlobe(now/1000);
+    frameCount++;
+    seconds=(now-startedAt)/1000;
+    meter.textContent=Math.floor(seconds)+'s';
+  }
+  requestAnimationFrame(frame);
+  window.__LEU_MOTION_TEST = {
+    get frames(){return frameCount}, get playing(){return playing}, get active(){return active},
+    get artwork(){return [...document.querySelectorAll('img[data-art]')].map(i=>({name:i.dataset.art,ready:i.complete&&i.naturalWidth>0}))},
+  };
+})();
+</script>
+</body>
+</html>
