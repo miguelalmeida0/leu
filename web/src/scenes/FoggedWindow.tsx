@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { loadImage, rand, smooth, useCanvasLoop, useReducedMotion } from '../lib/motion'
+import { loadImage, rand, smooth, useCanvasLoop, useReducedMotion, useTouchScreen } from '../lib/motion'
 
 /* The rainy window over the evening city (a port of FoggedWindow.swift).
    Rain lands on the glass and a few drops slip down it. The pane is fogged; drawing on it with
@@ -29,6 +29,9 @@ class Glass {
     this.drops = Array.from({ length: 420 }, () => ({ x: Math.random(), y: Math.random(), r: radius(0.7, 2.8) }))
   }
 
+  /** Rain clears its own trails while the scene is idle, on touch and desktop. */
+  running = false
+
   advance(now: number, reduced: boolean) {
     const dt = Math.min(0.1, now - (this.last || now)); this.last = now
     if (!reduced && Math.random() < dt * 26) {
@@ -38,7 +41,7 @@ class Glass {
     // The fog creeps back seven seconds after the last touch, over about ten seconds.
     const since = performance.now() / 1000 - this.lastWipe
     const m = this.mask.getContext('2d')!
-    const fade = since > 7 ? (reduced ? 1 : (1 - Math.exp(-dt / 9)) * smooth((since - 7) / 3) * 2.2) : dt * 0.004
+    const fade = this.running && !reduced ? 1 - Math.exp(-dt / 2.4) : since > 7 ? (reduced ? 1 : (1 - Math.exp(-dt / 9)) * smooth((since - 7) / 3) * 2.2) : dt * 0.004
     if (fade > 0) {
       m.globalCompositeOperation = 'destination-out'
       m.fillStyle = `rgba(0,0,0,${Math.min(1, fade)})`
@@ -47,9 +50,10 @@ class Glass {
     }
     if (reduced) { this.movers = []; return }
     this.nextMover -= dt
-    if (this.nextMover <= 0 && this.movers.length < 14) {
-      this.movers.push({ d: { x: rand(0.03, 0.97), y: rand(-0.02, 0.55), r: rand(3.6, 7.4) / U }, speed: 0, target: rand(30, 90), pause: rand(0.2, 1.5), travelled: 0, phase: rand(0, 9) })
-      this.nextMover = rand(0.7, 1.8)
+    const many = this.running
+    if (this.nextMover <= 0 && this.movers.length < (many ? 20 : 14)) {
+      this.movers.push({ d: { x: rand(0.03, 0.97), y: rand(-0.02, many ? 0.45 : 0.55), r: rand(many ? 4.6 : 3.6, many ? 8.4 : 7.4) / U }, speed: 0, target: rand(30, 90), pause: rand(0.2, many ? 1.2 : 1.5), travelled: 0, phase: rand(0, 9) })
+      this.nextMover = many ? rand(0.35, 0.9) : rand(0.7, 1.8)
     }
     const aspect = this.w / this.h
     for (let i = this.movers.length - 1; i >= 0; i--) {
@@ -62,6 +66,12 @@ class Glass {
       mv.d.y += dy
       mv.d.x += Math.sin(now * 1.3 + mv.phase) * dt * 3 / U * (mv.speed / 60)
       mv.travelled += dy
+      if (many) {
+        // A running drop clears a trail through the fog, which fills in again behind it.
+        this.stamp(mv.d.x, mv.d.y, mv.d.r * 1.25, 0.5)
+        const reach = mv.d.r * 1.4
+        this.drops = this.drops.filter((d) => !(Math.abs(d.x - mv.d.x) < reach && Math.abs(d.y - mv.d.y) * this.h / this.w < reach))
+      }
       if (mv.travelled > mv.d.r * 1.4 * aspect) {
         mv.travelled = 0
         this.stamp(mv.d.x, mv.d.y, mv.d.r * 2.2, 0.5)
@@ -124,6 +134,7 @@ export function FoggedWindow() {
   const glass = useRef<Glass | null>(null)
   const art = useRef<{ clear?: HTMLImageElement; fog?: HTMLImageElement }>({})
   const reduced = useReducedMotion()
+  const touch = useTouchScreen()
   if (!art.current.clear) {
     void loadImage('/art/window-clear.webp').then((i) => { art.current.clear = i })
     void loadImage('/art/window-fog.webp').then((i) => { art.current.fog = i })
@@ -132,6 +143,7 @@ export function FoggedWindow() {
   useCanvasLoop(canvas, (ctx, w, h, t) => {
     const g = (glass.current ??= new Glass())
     if (g.w !== w || g.h !== h) g.seed(w, h)
+    g.running = touch || g.lastPoint === null
     g.advance(t, reduced)
     const { clear, fog } = art.current
     ctx.clearRect(0, 0, w, h)
@@ -152,7 +164,7 @@ export function FoggedWindow() {
     lamp.addColorStop(0, 'rgba(255,226,160,.22)'); lamp.addColorStop(1, 'rgba(255,226,160,0)')
     ctx.fillStyle = lamp
     ctx.fillRect(0, 0, w, h)
-  }, { fps: reduced ? 2 : matchMedia('(pointer: coarse)').matches ? 22 : 30 })
+  }, { fps: reduced ? 2 : touch ? 22 : 30 })
 
   const point = (e: React.PointerEvent<HTMLCanvasElement>) => {
     // Touch gestures belong to reading, scrolling and selection. The desktop

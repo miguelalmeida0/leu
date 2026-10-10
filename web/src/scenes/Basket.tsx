@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { loadImage, useCanvasLoop, useReducedMotion } from '../lib/motion'
+import { loadImage, useCanvasLoop, useReducedMotion, useTouchScreen } from '../lib/motion'
 
 /* The knitting basket render with a loose strand of yarn running from the needle to the ball.
    The strand is a little rope, as calm as wool: brush past it and it drifts a little, catch it
@@ -30,6 +30,7 @@ function rest(t: number, w: number, h: number) {
 export function Basket() {
   const canvas = useRef<HTMLCanvasElement>(null)
   const reduced = useReducedMotion()
+  const touch = useTouchScreen()
   const rope = useRef<{ pts: P[]; w: number; h: number; seg: number }>({ pts: [], w: 0, h: 0, seg: 0 })
   const hand = useRef<{ x: number; y: number; vx: number; vy: number; svx: number; svy: number; down: boolean; grab: number; inside: boolean }>({ x: 0, y: 0, vx: 0, vy: 0, svx: 0, svy: 0, down: false, grab: -1, inside: false })
   const last = useRef(0)
@@ -46,6 +47,9 @@ export function Basket() {
     const dt = Math.min(0.05, now - (last.current || now)); last.current = now
     const pts = R.pts
     if (!reduced) {
+      // A slow draught moves the strand on every screen; a mouse drag still takes priority.
+      const calm = Math.max(0, Math.sin(now * 0.42) * Math.sin(now * 0.17 + 1))
+      const gust = H.grab < 0 ? (Math.sin(now * 1.53 + 1) * 0.6 + Math.sin(now * 0.66 + 2.1) * 0.4) * 0.5 + calm * calm * 1.6 : 0
       for (let i = 1; i < N - 1; i++) {
         const p = pts[i]
         const vx = (p.x - p.px) * 0.9, vy = (p.y - p.py) * 0.9 // wool in still air: calm, no whip
@@ -53,6 +57,7 @@ export function Basket() {
         // A soft, slow pull back toward where the strand hangs, so it always settles.
         p.x += vx + (target[i].x - p.x) * 1.3 * dt
         p.y += vy + (target[i].y - p.y) * 1.3 * dt + 12 * dt * dt
+        if (gust) { const s = Math.sin(Math.PI * i / (N - 1)); p.x += gust * w * 0.034 * s * dt; p.y += Math.sin(now * 1.3 + i * 0.4) * gust * h * 0.004 * s * dt }
         // Brushing past it nudges the strand a little the way the pointer drifts.
         if (H.inside && H.grab < 0) {
           const d = Math.hypot(p.x - H.x, p.y - H.y), reach = w * 0.07
@@ -105,7 +110,7 @@ export function Basket() {
     ctx.lineCap = 'round'; ctx.lineJoin = 'round'
     path(); ctx.strokeStyle = '#C98476'; ctx.lineWidth = Math.max(1.6, w * 0.0026); ctx.stroke()
     path(); ctx.strokeStyle = '#EBB5A3'; ctx.lineWidth = Math.max(0.8, w * 0.0012); ctx.stroke()
-  }, { fps: matchMedia('(pointer: coarse)').matches ? 24 : 60, still: reduced })
+  }, { fps: touch ? 24 : 60, still: reduced })
 
   const at = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const r = e.currentTarget.getBoundingClientRect()

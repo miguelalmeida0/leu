@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import './DockMotion.css'
 import { chooseVoice, pause, position, preferSystemSpeech, resume, seek, setSpeed, speak, systemVoices, useVoice, useVoiceId, voices } from '../lib/voice'
 
 const speeds = [0.9, 1, 1.15, 1.3]
@@ -94,7 +95,9 @@ export function Dock({ page, pages, canPlay, onPlay, onTurn }: { page: number; p
 
       <div className="dock-voice" ref={menuRef}>
         <button className="dock-chip" aria-haspopup="menu" aria-expanded={menu} onClick={() => setMenu((m) => !m)} aria-label={`Voice: ${name}. Change`}>
-          <span className="dock-avatar" aria-hidden="true">{mobileSpeech ? '♪' : name[0]}</span>
+          <span className={`dock-avatar${playing ? ' speaking' : ''}`} aria-hidden="true">
+            {[10, 18, 13, 7].map((height, i) => <i key={i} style={{ height, animationDelay: `${i * -0.35}s` }} />)}
+          </span>
           <span className="dock-who">
             <strong>{name} <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg></strong>
             <span aria-live="polite">{status}</span>
