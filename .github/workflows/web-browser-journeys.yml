@@ -46,6 +46,7 @@ jobs:
       - name: Run desktop, Android-sized and iPhone-sized journeys
         working-directory: web
         run: |
+          node scripts/home-motion-journeys.mjs
           node scripts/browser-journeys.mjs
           node scripts/scene-journeys.mjs
       - name: Save browser evidence

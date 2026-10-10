@@ -1,0 +1,24 @@
+.scene-motion { width: 100%; min-width: 0; }
+.scene-motion-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 4px 10px 10px; flex-wrap: wrap;
+}
+.scene-motion-label { color: var(--secondary); font-size: 13px; font-weight: 600; }
+.scene-motion-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 10px 16px; border-radius: 999px;
+  background: var(--cream); color: var(--ink); font-size: 13px; font-weight: 700;
+  box-shadow: inset 0 0 0 1px rgba(36, 48, 31, .2);
+}
+.scene-motion-button:hover { background: var(--paper); }
+.scene-motion-button svg { flex: none; }
+.scene-motion-reset {
+  display: block; margin: -4px 10px 4px auto; padding: 5px 0;
+  min-height: 36px; color: var(--secondary); text-decoration: underline;
+  text-underline-offset: 4px; font-size: 12px;
+}
+@media (max-width: 720px) {
+  .scene-motion-controls { padding-left: 0; padding-right: 0; gap: 8px; }
+  .scene-motion-label { font-size: 12px; }
+  .scene-motion-button { padding-left: 12px; padding-right: 12px; font-size: 12px; }
+}
