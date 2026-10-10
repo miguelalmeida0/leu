@@ -10,8 +10,8 @@ import { dismissNotice, prefetch, seek, speak, stop, useVoice, warmVoice } from 
 import { ExplainPanel, gistOf } from './Explain'
 
 const limitZoom = (value: number) => Math.min(2.75, Math.max(0.8, Math.round(value * 20) / 20))
-const pinchDistance = (touches: TouchList) => {
-  const a = touches.item(0), b = touches.item(1)
+const pinchDistance = (touches: ArrayLike<{ clientX: number; clientY: number }>) => {
+  const a = touches[0], b = touches[1]
   return a && b ? Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) : 0
 }
 
