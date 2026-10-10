@@ -155,6 +155,9 @@ export function FoggedWindow() {
   }, { fps: reduced ? 2 : 30 })
 
   const point = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    // Touch gestures belong to reading, scrolling and selection. The desktop
+    // wipe interaction must never hijack iOS Safari touch input.
+    if (e.pointerType !== 'mouse') return
     const r = e.currentTarget.getBoundingClientRect()
     glass.current?.wipe(e.clientX - r.left, e.clientY - r.top)
   }
@@ -165,14 +168,14 @@ export function FoggedWindow() {
       ref={canvas}
       className="scene-canvas"
       role="img"
-      aria-label="A rainy window over the city at night. Move the pointer over the fogged glass to wipe it clear; it slowly fogs up again."
+      aria-label="An ambient rainy evening window with slowly moving raindrops. Mouse users can wipe the fogged glass clear."
       tabIndex={0}
       onPointerMove={point}
       onPointerDown={point}
       onPointerLeave={lift}
       onPointerUp={lift}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); glass.current?.wipeBand() } }}
-      style={{ touchAction: 'none', cursor: 'crosshair' }}
+      style={{ touchAction: 'auto', cursor: 'default' }}
     />
   )
 }
