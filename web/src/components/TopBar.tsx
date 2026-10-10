@@ -85,7 +85,7 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
           <nav id="mobile-nav" aria-label="Mobile places" hidden={!menuOpen}>
             <a href={href({ name: 'home' })} onClick={() => setMenuOpen(false)} aria-current={route.name === 'home' ? 'page' : undefined}>Home</a>
             {places.map((p) => {
-              const to: Route = p.name === 'read' ? (last ? { name: 'read', id: last.id, page: last.page } : { name: p.name }
+              const to: Route = p.name === 'read' ? (last ? { name: 'read', id: last.id, page: last.page } : { name: 'library' }) : { name: p.name }
               return <a key={p.name} href={href(to)} onClick={() => setMenuOpen(false)} aria-current={current === p.name ? 'page' : undefined}>{p.label}</a>
             })}
           </nav>
