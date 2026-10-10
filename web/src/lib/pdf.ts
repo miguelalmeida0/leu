@@ -9,9 +9,17 @@ pdfjs.GlobalWorkerOptions.workerSrc = workerUrl
 
 export type { PDFDocumentProxy }
 
+// Reuse a single parser worker across import/indexing and live reading. Opening a PDF
+// while another one is being indexed must not spawn a competing WebKit module worker.
+// pdf.js does not destroy an externally supplied worker when a document is closed.
+let parserWorker: pdfjs.PDFWorker | undefined
+function sharedWorker(): pdfjs.PDFWorker {
+  return (parserWorker ??= new pdfjs.PDFWorker())
+}
+
 export async function openPdf(data: ArrayBuffer): Promise<PDFDocumentProxy> {
-  // pdf.js takes ownership of the buffer it is given, so it gets a copy.
-  return pdfjs.getDocument({ data: new Uint8Array(data.slice(0)) }).promise
+  // pdf.js transfers the input to the parser; retain IndexedDB's own copy.
+  return pdfjs.getDocument({ data: new Uint8Array(data.slice(0)), worker: sharedWorker() }).promise
 }
 
 export interface Block { kind: 'heading' | 'p'; text: string }
