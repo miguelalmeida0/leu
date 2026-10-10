@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Prose, piecesOf } from '../components/Prose'
-import { Empty } from '../components/ui'
+import { Empty, Modal } from '../components/ui'
 import { openPdf, pageBlocks, pdfDeadline, renderPage, type Block, type PDFDocumentProxy } from '../lib/pdf'
 import { go, href } from '../lib/router'
 import { addNote, loadOutline, loadPdf, patchBook, removeNote, upsertMemory, useStore, type Outline } from '../lib/store'
@@ -27,6 +27,8 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const [originalError, setOriginalError] = useState('')
   const paper = useRef<HTMLDivElement>(null)
   const canvas = useRef<HTMLCanvasElement>(null)
+  const selectionToolbar = useRef<HTMLDivElement>(null)
+  const selectingToolbar = useRef(false)
   const voice = useVoice()
   const continuing = useRef(false)
   const pages = book?.pages ?? 1
@@ -65,11 +67,13 @@ export function Reader({ id, page }: { id: string; page: number }) {
     patchBook(id, { page: clamped, lastOpenedAt: Date.now() })
     if (book) document.title = `${book.title}, p. ${clamped} · Leu`
     // A page you stay on for a while becomes something Leu can ask you about later.
-    const timer = setTimeout(async () => {
-      const b = await pageBlocks(doc, clamped)
-      const text = b.map((x) => x.text).join('\n\n')
-      const cards = ideas(text, 2).map((idea, i) => ({ i, c: cloze(idea.text, text) })).filter((x) => x.c)
-      upsertMemory(cards.map(({ i, c }) => ({ id: `${id}:${clamped}:${i}`, bookId: id, page: clamped, prompt: c!.prompt, answer: c!.answer, due: 0, strength: 0 })))
+    const timer = setTimeout(() => {
+      void pdfDeadline(pageBlocks(doc, clamped), 12000).then((b) => {
+        if (!live) return
+        const text = b.map((x) => x.text).join('\n\n')
+        const cards = ideas(text, 2).map((idea, i) => ({ i, c: cloze(idea.text, text) })).filter((x) => x.c)
+        upsertMemory(cards.map(({ i, c }) => ({ id: `${id}:${clamped}:${i}`, bookId: id, page: clamped, prompt: c!.prompt, answer: c!.answer, due: 0, strength: 0 })))
+      }).catch((error) => console.warn('[leu] Could not prepare page memory:', error))
     }, 6000)
     return () => { live = false; clearTimeout(timer) }
   }, [doc, clamped, id]) // book title read once per page
@@ -85,7 +89,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   }, [mode, doc, clamped])
 
   const turn = useCallback((to: number, keepReading = false) => {
-    stop(); setSelection(null); setDraft(null); setExplain(null)
+    stop(); setSelection(null); setDraft(null); setExplain(null); window.getSelection()?.removeAllRanges()
     continuing.current = keepReading
     go({ name: 'read', id, page: Math.min(Math.max(1, to), pages) }, true)
     document.querySelector('.reader-paper')?.scrollTo({ top: 0 })
@@ -125,12 +129,61 @@ export function Reader({ id, page }: { id: string; page: number }) {
     return set
   }, [explain, blocks])
 
-  const onMouseUp = () => {
-    const s = window.getSelection()
-    const text = s?.toString().replace(/\s+/g, ' ').trim() ?? ''
-    if (!s || text.length < 4 || !paper.current?.contains(s.anchorNode)) { setSelection(null); return }
-    const r = s.getRangeAt(0).getBoundingClientRect(), p = paper.current.getBoundingClientRect()
-    setSelection({ text, x: r.left + r.width / 2 - p.left, y: r.top - p.top })
+  // iOS native long-press updates the Selection asynchronously; mouseup is not reliable.
+  useEffect(() => {
+    const pageElement = paper.current
+    if (!pageElement || mode !== 'rebuilt') { setSelection(null); return }
+    let pending: ReturnType<typeof setTimeout> | undefined
+    const capture = () => {
+      if (selectingToolbar.current) return
+      const selected = window.getSelection()
+      const content = pageElement.querySelector('.prose')
+      if (!selected || selected.isCollapsed || !selected.rangeCount || !content) { setSelection(null); return }
+      const range = selected.getRangeAt(0)
+      if (!content.contains(range.startContainer) || !content.contains(range.endContainer)) { setSelection(null); return }
+      const text = selected.toString().replace(/\s+/g, ' ').trim()
+      if (text.length < 3) { setSelection(null); return }
+      const rect = range.getBoundingClientRect()
+      if (!Number.isFinite(rect.left) || !Number.isFinite(rect.top)) return
+      setSelection({
+        text,
+        x: Math.max(175, Math.min(window.innerWidth - 175, rect.left + rect.width / 2)),
+        y: Math.max(100, rect.top),
+      })
+    }
+    const schedule = () => {
+      if (pending !== undefined) clearTimeout(pending)
+      pending = setTimeout(capture, 110)
+    }
+    const dismissOutside = (event: PointerEvent) => {
+      if (selectionToolbar.current?.contains(event.target as Node)) return
+      if (!pageElement.contains(event.target as Node)) {
+        selectingToolbar.current = false
+        setSelection(null)
+      }
+    }
+    document.addEventListener('selectionchange', schedule)
+    pageElement.addEventListener('pointerup', schedule)
+    pageElement.addEventListener('touchend', schedule)
+    document.addEventListener('pointerdown', dismissOutside, true)
+    return () => {
+      if (pending !== undefined) clearTimeout(pending)
+      document.removeEventListener('selectionchange', schedule)
+      pageElement.removeEventListener('pointerup', schedule)
+      pageElement.removeEventListener('touchend', schedule)
+      document.removeEventListener('pointerdown', dismissOutside, true)
+    }
+  }, [mode, clamped, id, blocks])
+
+  const actOnSelection = (action: 'note' | 'explain' | 'speak') => {
+    if (!selection) return
+    const quote = selection.text
+    selectingToolbar.current = false
+    setSelection(null)
+    window.getSelection()?.removeAllRanges()
+    if (action === 'note') setDraft({ quote, note: '' })
+    if (action === 'explain') setExplain(quote)
+    if (action === 'speak') speak(quote, 'selection')
   }
 
   if (missing || !book || loadError) return <div className="page"><Empty title={loadError || "This book isn't in this browser any more."}><a className="link" href={href({ name: 'library' })}>Back to the library</a></Empty></div>
@@ -172,11 +225,12 @@ export function Reader({ id, page }: { id: string; page: number }) {
           </ol>
         </nav>
 
-        <article className="reader-paper" ref={paper} onMouseUp={onMouseUp} aria-label={`Page ${clamped} of ${pages}`}>
+        <article className="reader-paper" ref={paper} aria-label={`Page ${clamped} of ${pages}`}>
           <p className="eyebrow paper page-eyebrow">{current?.title ?? book.title} · page {clamped}</p>
           {mode === 'original' ? (
             <>
               <canvas ref={canvas} className="original-page" role="img" aria-label={`The original page ${clamped}`} />
+              <p className="muted small original-selection-hint">To select text or keep notes, switch to “For reading”.</p>
               {originalError && <p className="muted" role="alert">{originalError}</p>}
             </>
           ) : blocks === null ? (
@@ -187,10 +241,20 @@ export function Reader({ id, page }: { id: string; page: number }) {
             <Prose blocks={blocks} reading={speaking && (voice.status === 'speaking' || voice.status === 'paused')} marked={marked} onSeek={seek} />
           )}
           {selection && (
-            <div className="selection-menu" style={{ left: selection.x, top: selection.y }} role="toolbar" aria-label="With this passage">
-              <button onMouseDown={(e) => e.preventDefault()} onClick={() => { setDraft({ quote: selection.text, note: '' }); setSelection(null) }}>Keep a note</button>
-              <button onMouseDown={(e) => e.preventDefault()} onClick={() => { setExplain(selection.text); setSelection(null); window.getSelection()?.removeAllRanges() }}>Explain</button>
-              <button onMouseDown={(e) => e.preventDefault()} onClick={() => { speak(selection.text, 'selection'); setSelection(null) }}>Read aloud</button>
+            <div ref={selectionToolbar} className="selection-menu" style={{ left: selection.x, top: selection.y }}
+              role="toolbar" aria-label="Actions for selected text"
+              onPointerDownCapture={(event) => {
+                selectingToolbar.current = true
+                if (event.pointerType === 'mouse') event.preventDefault()
+              }}>
+              <button type="button" onClick={() => actOnSelection('note')}>Keep a note</button>
+              <button type="button" onClick={() => actOnSelection('explain')}>Explain</button>
+              <button type="button" onClick={() => actOnSelection('speak')}>Read aloud</button>
+              <button type="button" className="selection-dismiss" aria-label="Dismiss text actions" onClick={() => {
+                selectingToolbar.current = false
+                setSelection(null)
+                window.getSelection()?.removeAllRanges()
+              }}>×</button>
             </div>
           )}
         </article>
@@ -198,16 +262,6 @@ export function Reader({ id, page }: { id: string; page: number }) {
         <aside className="margin" aria-label={explain ? 'Explained simply' : 'In the margin'}>
           {explain ? <ExplainPanel key={explain} bookId={id} page={clamped} passage={explain} onClose={() => setExplain(null)} /> : <>
           <p className="eyebrow">In the margin</p>
-          {draft && (
-            <form className="note-draft card" onSubmit={(e) => { e.preventDefault(); addNote({ bookId: id, page: clamped, quote: draft.quote, note: draft.note.trim() }); setDraft(null) }}>
-              <blockquote className="serif">“{draft.quote.length > 220 ? draft.quote.slice(0, 220) + '…' : draft.quote}”</blockquote>
-              <textarea className="field" autoFocus rows={3} placeholder="Your thought (optional)" value={draft.note} onChange={(e) => setDraft({ ...draft, note: e.target.value })} aria-label="Your note" />
-              <div className="row" style={{ gap: 10, marginTop: 10 }}>
-                <button className="btn ink small-btn" type="submit">Keep it</button>
-                <button className="quiet-link small" type="button" onClick={() => setDraft(null)}>Cancel</button>
-              </div>
-            </form>
-          )}
           {notes.map((n) => (
             <div key={n.id} className="margin-note">
               <blockquote className="serif">“{n.quote.length > 180 ? n.quote.slice(0, 180) + '…' : n.quote}”</blockquote>
@@ -215,7 +269,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
               <button className="quiet-link small" onClick={() => removeNote(n.id)} aria-label="Remove this note">Remove</button>
             </div>
           ))}
-          {!draft && !notes.length && <p className="muted small">Select any line to keep a note, ask for an explanation, or hear it read.</p>}
+          {!notes.length && <p className="muted small">Select a passage to keep a note, ask for an explanation, or hear it read.</p>}
           <div className="divider" style={{ margin: '20px 0' }} />
           <button className="btn cream" style={{ width: '100%' }} onClick={() => setExplain(pageText)} disabled={!pageText}><span className="dot" style={{ background: 'var(--butter)' }} />Explain this page simply</button>
           <button className="btn soft" style={{ width: '100%', marginTop: 10 }} onClick={() => go({ name: 'words', id, page: clamped })}>Say it in your own words</button>
@@ -226,7 +280,27 @@ export function Reader({ id, page }: { id: string; page: number }) {
       <div className="reader-foot">
         <Dock page={clamped} pages={pages} canPlay={!!pageText} onPlay={() => readPage(0)} onTurn={(n) => turn(n)} />
       </div>
-
+      {draft && (
+        <Modal label={`Keep a note from ${book.title}, page ${clamped}`} onClose={() => setDraft(null)} width={540}>
+          <form className="note-compose" onSubmit={(event) => {
+            event.preventDefault()
+            addNote({ bookId: id, page: clamped, quote: draft.quote, note: draft.note.trim() })
+            setDraft(null)
+          }}>
+            <p className="eyebrow paper">Keep this passage · p. {clamped}</p>
+            <h2 className="display note-compose-title">A note to come back to.</h2>
+            <blockquote className="serif note-quote">“{draft.quote}”</blockquote>
+            <label className="note-label" htmlFor="note-body">Your thought (optional)</label>
+            <textarea id="note-body" className="field" autoFocus rows={4}
+              placeholder="What do you want to remember?"
+              value={draft.note} onChange={(event) => setDraft({ ...draft, note: event.target.value })} />
+            <div className="row note-actions">
+              <button className="btn ink" type="submit">Save note</button>
+              <button className="quiet-link" type="button" onClick={() => setDraft(null)}>Cancel</button>
+            </div>
+          </form>
+        </Modal>
+      )}
     </div>
   )
 }
