@@ -10,6 +10,17 @@ export function Welcome({ onBring }: { onBring: () => void }) {
   const intention = useStore((s) => s.intention)
   const set = (v: string) => update((s) => ({ ...s, intention: v }))
   const [busy, setBusy] = useState(false)
+  const [importError, setImportError] = useState('')
+  const addSamples = async (all: boolean) => {
+    setBusy(true); setImportError('')
+    try {
+      if (all) await importAllSamples()
+      else await importSample('Computer Science Essentials')
+    } catch (error) {
+      console.warn('[leu] Sample import failed:', error)
+      setImportError('Could not add the sample. Check your connection and available device storage, then try again.')
+    } finally { setBusy(false) }
+  }
   const trimmed = intention.trim()
   return (
     <div className="welcome page fade-in">
@@ -33,13 +44,14 @@ export function Welcome({ onBring }: { onBring: () => void }) {
         </div>
         <div className="row" style={{ marginTop: 30, gap: 20 }}>
           <button className="btn ink" onClick={onBring}>{trimmed ? 'Bring a PDF about it' : 'Bring a PDF'}</button>
-          <button className="link" disabled={busy} onClick={async () => { setBusy(true); await importSample('Computer Science Essentials') }}>
+          <button className="link" disabled={busy} onClick={() => void addSamples(false)}>
             {busy ? 'Opening the sample…' : 'or start with a sample book'}
           </button>
         </div>
+        {importError && <p className="import-error" role="alert">{importError}</p>}
         <p className="muted small" style={{ marginTop: 22 }}>
           Everything stays in this browser, including Leu's reading. You can also drop a PDF anywhere on this page, or{' '}
-          <button className="link small" disabled={busy} onClick={async () => { setBusy(true); await importAllSamples() }}>fill the shelf with all six samples</button>.
+          <button className="link small" disabled={busy} onClick={() => void addSamples(true)}>fill the shelf with all six samples</button>.
         </p>
       </div>
     </div>
