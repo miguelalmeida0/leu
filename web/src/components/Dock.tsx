@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { chooseVoice, pause, position, resume, seek, setSpeed, speak, useVoice, useVoiceId, voices } from '../lib/voice'
+import { chooseVoice, pause, position, preferSystemSpeech, resume, seek, setSpeed, speak, systemVoices, useVoice, useVoiceId, voices } from '../lib/voice'
 
 const speeds = [0.9, 1, 1.15, 1.3]
 const mb = (n: number) => Math.round(n / 1e6)
@@ -12,12 +12,34 @@ export function Dock({ page, pages, canPlay, onPlay, onTurn }: { page: number; p
   const voice = useVoice()
   const voiceId = useVoiceId()
   const [menu, setMenu] = useState(false)
+  const [mobileSpeech, setMobileSpeech] = useState(preferSystemSpeech)
+  const [nativeVoices, setNativeVoices] = useState(systemVoices)
   const line = useRef<HTMLSpanElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
-  const name = voices.find((v) => v.id === voiceId)?.name ?? 'Heart'
+  const availableVoices = mobileSpeech
+    ? [{ id: 'system:default', name: 'Device default', note: 'Built-in voice' }, ...nativeVoices]
+    : voices
+  const selected = mobileSpeech
+    ? availableVoices.find((v) => v.id === voiceId)?.name ?? 'Device voice'
+    : voices.find((v) => v.id === voiceId)?.name ?? 'Heart'
+  const name = selected
   const active = voice.status !== 'idle'
   const playing = voice.status === 'speaking'
   const waiting = voice.status === 'loading'
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 900px) and (pointer: coarse)')
+    const refreshMode = () => setMobileSpeech(media.matches)
+    media.addEventListener('change', refreshMode)
+    refreshMode()
+    const refreshVoices = () => setNativeVoices(systemVoices())
+    refreshVoices()
+    if ('speechSynthesis' in window) speechSynthesis.addEventListener('voiceschanged', refreshVoices)
+    return () => {
+      media.removeEventListener('change', refreshMode)
+      if ('speechSynthesis' in window) speechSynthesis.removeEventListener('voiceschanged', refreshVoices)
+    }
+  }, [])
 
   // The listening line along the top of the dock.
   useEffect(() => {
@@ -47,9 +69,14 @@ export function Dock({ page, pages, canPlay, onPlay, onTurn }: { page: number; p
 
   useEffect(() => {
     if (!menu) return
-    const close = (e: MouseEvent) => { if (!menuRef.current?.contains(e.target as Node)) setMenu(false) }
-    window.addEventListener('mousedown', close)
-    return () => window.removeEventListener('mousedown', close)
+    const close = (e: PointerEvent) => { if (!menuRef.current?.contains(e.target as Node)) setMenu(false) }
+    const escape = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenu(false) }
+    window.addEventListener('pointerdown', close, true)
+    window.addEventListener('keydown', escape)
+    return () => {
+      window.removeEventListener('pointerdown', close, true)
+      window.removeEventListener('keydown', escape)
+    }
   }, [menu])
 
   const status = voice.download
@@ -67,7 +94,7 @@ export function Dock({ page, pages, canPlay, onPlay, onTurn }: { page: number; p
 
       <div className="dock-voice" ref={menuRef}>
         <button className="dock-chip" aria-haspopup="menu" aria-expanded={menu} onClick={() => setMenu((m) => !m)} aria-label={`Voice: ${name}. Change`}>
-          <span className="dock-avatar" aria-hidden="true">{name[0]}</span>
+          <span className="dock-avatar" aria-hidden="true">{mobileSpeech ? '♪' : name[0]}</span>
           <span className="dock-who">
             <strong>{name} <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg></strong>
             <span aria-live="polite">{status}</span>
@@ -75,13 +102,19 @@ export function Dock({ page, pages, canPlay, onPlay, onTurn }: { page: number; p
         </button>
         {menu && (
           <div className="dock-menu card" role="menu" aria-label="Voices">
-            <p className="eyebrow paper" style={{ padding: '6px 12px 8px' }}>Kokoro voices</p>
-            {voices.map((v) => (
-              <button key={v.id} role="menuitemradio" aria-checked={voiceId === v.id} className={voiceId === v.id ? 'on' : ''} onClick={() => { chooseVoice(v.id); setMenu(false); speak(`Hello, I'm ${v.name}. I'll read with you.`, 'preview') }}>
+            <p className="eyebrow paper" style={{ padding: '6px 12px 8px' }}>{mobileSpeech ? 'Voices on this device' : 'Kokoro voices'}</p>
+            {availableVoices.map((v) => (
+              <button key={v.id} role="menuitemradio" aria-checked={mobileSpeech ? (voiceId === v.id || (v.id === 'system:default' && !voiceId.startsWith('system:'))) : voiceId === v.id}
+                className={voiceId === v.id ? 'on' : ''} onClick={() => {
+                  chooseVoice(v.id); setMenu(false)
+                  speak(`Hello, I'm ${v.name}. I'll read with you.`, 'preview')
+                }}>
                 <strong>{v.name}</strong><span className="muted small">{v.note}</span>
               </button>
             ))}
-            <p className="muted small" style={{ padding: '8px 12px 4px', maxWidth: 270 }}>Downloaded once, then it reads offline. Until it's ready your system voice reads.</p>
+            <p className="muted small" style={{ padding: '8px 12px 4px', maxWidth: 270 }}>
+              {mobileSpeech ? 'Read aloud uses the voice already installed on your device. No large download.' : 'Downloaded once, then available offline. The system voice is used if needed.'}
+            </p>
           </div>
         )}
       </div>

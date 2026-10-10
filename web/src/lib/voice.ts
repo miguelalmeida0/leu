@@ -40,6 +40,21 @@ export function useVoice() {
   return useSyncExternalStore((l) => { listeners.add(l); return () => listeners.delete(l) }, () => vs)
 }
 export const useVoiceId = () => useStore((s) => s.voice)
+
+/** On touch-sized screens, use the device's built-in speech engine immediately.
+ * This avoids downloading a large model on a phone merely to hear a page. */
+export function preferSystemSpeech() {
+  return typeof window !== 'undefined' && window.matchMedia('(max-width: 900px) and (pointer: coarse)').matches
+}
+
+export function systemVoices() {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return []
+  const all = speechSynthesis.getVoices().filter((voice) => /^en(?:-|$)/i.test(voice.lang))
+  const unique = new Map(all.map((voice) => [voice.voiceURI, voice]))
+  return [...unique.values()].sort((a, b) => Number(b.default) - Number(a.default) || a.name.localeCompare(b.name)).slice(0, 12)
+    .map((voice) => ({ id: `system:${voice.voiceURI}`, name: voice.name, note: voice.lang }))
+}
+
 export function chooseVoice(id: string) { update((s) => ({ ...s, voice: id })) }
 export function dismissNotice() { set({ notice: null }) }
 
@@ -81,6 +96,7 @@ function getWorker() {
 
 /** Load and warm the voice in the background, once you've listened before (or when asked). */
 export function warmVoice(force = false) {
+  if (preferSystemSpeech() || getState().voice.startsWith('system:')) return
   if (vs.kokoro === 'ready' || vs.kokoro === 'loading' || vs.kokoro === 'failed') return
   if (!force && !hasListened()) return
   set({ kokoro: 'loading' })
@@ -89,6 +105,7 @@ export function warmVoice(force = false) {
 
 /** Render the first sentences of a page ahead of time, so Read aloud starts at once. */
 export function prefetch(list: string[]) {
+  if (preferSystemSpeech() || getState().voice.startsWith('system:')) return
   if (!hasListened() || vs.kokoro === 'failed') return
   warmVoice()
   getWorker().postMessage({ type: 'prefetch', pieces: list.slice(0, 2), voice: getState().voice, speed: vs.speed })
@@ -206,9 +223,14 @@ export function speak(text: string | string[], id = 'passage', from = 0, then?: 
   segments = []; pending = []; started = false; finished = false
   made = { seconds: 0, chars: 0, ms: 0 }
   set({ status: 'loading', speakingId: id, count: passage.length })
+  // iOS browsers cannot reliably initialize or cache the large Kokoro model.
+  // Start native speech in the same user-gesture task, without waiting for a download.
+  if (preferSystemSpeech() || getState().voice.startsWith('system:') || vs.kokoro === 'failed') {
+    systemSpeak(job, pieces)
+    return
+  }
   audio ??= new AudioContext()
   void audio.resume()
-  if (vs.kokoro === 'failed') { systemSpeak(job, pieces); return }
   if (vs.kokoro === 'unknown') set({ kokoro: 'loading' })
   getWorker().postMessage({ type: 'speak', id: job, pieces, voice: getState().voice, speed: vs.speed })
 }
@@ -264,7 +286,11 @@ export function position(): { index: number; fraction: number } | null {
 }
 
 function systemSpeak(token: number, list: string[]) {
-  if (!('speechSynthesis' in window) || !list.length) { end(); return }
+  if (!('speechSynthesis' in window) || !list.length) {
+    if (!('speechSynthesis' in window)) set({ notice: 'This browser does not support read aloud.' })
+    end(false)
+    return
+  }
   const first = passage.length - list.length
   let i = 0
   const next = () => {
@@ -272,6 +298,14 @@ function systemSpeak(token: number, list: string[]) {
     if (i >= list.length) { finished = true; end(); return }
     const index = first + i
     const u = new SpeechSynthesisUtterance(list[i++])
+    const selected = getState().voice
+    const installed = speechSynthesis.getVoices()
+    if (selected.startsWith('system:')) {
+      u.voice = installed.find((voice) => voice.voiceURI === selected.slice('system:'.length)) ?? null
+    } else {
+      u.voice = installed.find((voice) => voice.default && /^en(?:-|$)/i.test(voice.lang))
+        ?? installed.find((voice) => /^en(?:-|$)/i.test(voice.lang)) ?? null
+    }
     u.rate = 0.98 * vs.speed
     u.onstart = () => { system = { index, char: 0 }; set({ status: 'speaking' }) }
     u.onboundary = (e) => { if (system) system.char = e.charIndex + (e.charLength || 0) }

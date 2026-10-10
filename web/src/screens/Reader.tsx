@@ -29,6 +29,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const selectionToolbar = useRef<HTMLDivElement>(null)
   const selectingToolbar = useRef(false)
+  const swipeStart = useRef<{ x: number; y: number; at: number } | null>(null)
   const voice = useVoice()
   const continuing = useRef(false)
   const pages = book?.pages ?? 1
@@ -175,6 +176,28 @@ export function Reader({ id, page }: { id: string; page: number }) {
     }
   }, [mode, clamped, id, blocks])
 
+  // Horizontal touch swipes turn pages, but vertical scrolling and native text
+  // selection remain exclusively under the browser's control.
+  const onSwipeStart = (event: React.TouchEvent<HTMLElement>) => {
+    swipeStart.current = null
+    if (event.touches.length !== 1 || selection || draft || explain || window.getSelection()?.toString().trim()) return
+    if ((event.target as HTMLElement).closest('button, a, input, textarea, [contenteditable], .selection-menu')) return
+    const touch = event.touches[0]
+    swipeStart.current = { x: touch.clientX, y: touch.clientY, at: Date.now() }
+  }
+  const onSwipeEnd = (event: React.TouchEvent<HTMLElement>) => {
+    const start = swipeStart.current
+    swipeStart.current = null
+    if (!start || !event.changedTouches.length || selection || window.getSelection()?.toString().trim()) return
+    if (Date.now() - start.at > 650) return
+    const touch = event.changedTouches[0]
+    const dx = touch.clientX - start.x
+    const dy = touch.clientY - start.y
+    if (Math.abs(dx) < 64 || Math.abs(dx) < Math.abs(dy) * 1.6) return
+    if (dx < 0 && clamped < pages) turn(clamped + 1)
+    else if (dx > 0 && clamped > 1) turn(clamped - 1)
+  }
+
   const actOnSelection = (action: 'note' | 'explain' | 'speak') => {
     if (!selection) return
     const quote = selection.text
@@ -203,7 +226,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           <button role="radio" aria-checked={mode === 'rebuilt'} className={mode === 'rebuilt' ? 'on' : ''} onClick={() => setMode('rebuilt')}>For reading</button>
           <button role="radio" aria-checked={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
         </div>
-        <span aria-hidden="true" />
+        <span className="reader-swipe-hint">Swipe horizontally to turn pages</span>
       </div>
 
       {voice.notice && (
@@ -225,7 +248,10 @@ export function Reader({ id, page }: { id: string; page: number }) {
           </ol>
         </nav>
 
-        <article className="reader-paper" ref={paper} aria-label={`Page ${clamped} of ${pages}`}>
+        <article key={clamped} className="reader-paper" ref={paper}
+          onTouchStart={onSwipeStart} onTouchEnd={onSwipeEnd}
+          onTouchCancel={() => { swipeStart.current = null }}
+          aria-label={`Page ${clamped} of ${pages}`}>
           <p className="eyebrow paper page-eyebrow">{current?.title ?? book.title} · page {clamped}</p>
           {mode === 'original' ? (
             <>

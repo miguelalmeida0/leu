@@ -56,6 +56,24 @@ async function selectPassage(page) {
   })
   await visible(page.getByRole('toolbar', { name: 'Actions for selected text' }), 8000)
 }
+/** Dispatch a touch gesture to the real reader handlers; no fake page routes. */
+async function swipeReader(page, dx, dy = 0) {
+  await page.locator('.reader-paper').evaluate((paper, movement) => {
+    const start = { clientX: 190, clientY: 320 }
+    const finish = { clientX: start.clientX + movement.dx, clientY: start.clientY + movement.dy }
+    const dispatch = (type, current, changed) => {
+      const event = new Event(type, { bubbles: true, cancelable: true })
+      Object.defineProperties(event, {
+        touches: { value: current ? [current] : [] },
+        changedTouches: { value: [changed] },
+      })
+      paper.dispatchEvent(event)
+    }
+    dispatch('touchstart', start, start)
+    dispatch('touchend', null, finish)
+  }, { dx, dy })
+}
+
 async function navigateMobile(page, name) {
   const trigger = page.getByRole('button', { name: 'Open navigation' })
   await trigger.click()
@@ -103,6 +121,26 @@ async function runBrowser(browserType, name, mobile, width) {
     }
     await noHorizontalOverflow(page, 'Reader ' + name)
     if (mobile) {
+      const voiceButton = page.getByRole('button', { name: /^Voice: .* Change$/ })
+      await visible(voiceButton)
+      await voiceButton.click()
+      await visible(page.getByRole('menu', { name: 'Voices' }))
+      await visible(page.getByRole('menuitemradio', { name: /Device default/i }))
+      await page.getByRole('menuitemradio', { name: /Device default/i }).click()
+      await visible(page.getByRole('button', { name: /^Reading speed / }))
+      const speedButton = page.getByRole('button', { name: /^Reading speed / })
+      const speedBefore = await speedButton.getAttribute('aria-label')
+      await speedButton.click()
+      assert.notEqual(await speedButton.getAttribute('aria-label'), speedBefore, 'Mobile voice speed must change')
+      // A horizontal swipe turns a page; vertical scrolling must never do so.
+      await swipeReader(page, -140)
+      await visible(page.locator('.reader-paper[aria-label="Page 2 of 4"]'))
+      await swipeReader(page, -12, -150)
+      await visible(page.locator('.reader-paper[aria-label="Page 2 of 4"]'))
+      await swipeReader(page, 140)
+      await visible(page.locator('.reader-paper[aria-label="Page 1 of 4"]'))
+      await noHorizontalOverflow(page, 'Mobile voice and swipes ' + name)
+
       await page.getByRole('button', { name: 'Open navigation' }).click()
       await visible(page.getByRole('navigation', { name: 'Mobile places' }))
       // Tapping the reader (outside the menu) dismisses the menu with one touch.
@@ -194,7 +232,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await noHorizontalOverflow(page, 'Final ' + name)
     assert.deepEqual(pageErrors, [], name + ': browser exceptions')
     await page.screenshot({ path: join(evidence, evidenceName + '-passed.png'), fullPage: false })
-    console.log(`PASS ${evidenceName}: sample import, reader, touch menu, text notes, original PDF, explain, page turns, library, study, explore/trails, search, responsive width`)
+    console.log(`PASS ${evidenceName}: sample import, reader, touch menu, mobile voice selection and speed, horizontal swipe navigation, text notes, original PDF, explain, page turns, library, study, explore/trails, search, responsive width`)
   } catch (error) {
     await page.screenshot({ path: join(evidence, evidenceName + '-failed.png'), fullPage: true, timeout: 12000 }).catch(() => {})
     console.error(`FAIL ${evidenceName}: ${error?.stack ?? error}`)

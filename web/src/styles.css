@@ -699,3 +699,54 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
   .search-results { max-height: 65dvh; padding: 14px; }
   .search .return-hint { display: none; }
 }
+
+/* Reader parity: mobile voice controls, speech speed and horizontal page gestures. */
+.reader-swipe-hint { display: none; }
+@keyframes readerPageEnter {
+  from { opacity: .7; transform: translateY(5px) scale(.995); }
+  to { opacity: 1; transform: none; }
+}
+.reader-paper { animation: readerPageEnter .26s var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  .reader-paper { animation: none; }
+}
+@media (max-width: 900px) {
+  .dock {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "voice voice" "controls pages";
+    column-gap: 10px; row-gap: 6px;
+  }
+  .dock-voice { grid-area: voice; display: block; min-width: 0; }
+  .dock-controls { grid-area: controls; }
+  .dock-pages { grid-area: pages; }
+  .dock-chip { min-height: 40px; width: 100%; }
+  .dock-menu { min-width: min(330px, calc(100vw - 64px)); max-height: min(52dvh, 380px); overflow-y: auto; overscroll-behavior: contain; }
+  .dock-menu button { min-height: 44px; }
+}
+@media (max-width: 720px) {
+  .reader-swipe-hint { display: block; justify-self: start !important; font-size: 12px; color: var(--secondary); }
+  .dock { grid-template-columns: minmax(0, 1fr) auto; padding: 10px 10px 8px; row-gap: 7px; }
+  .dock-voice { display: block; }
+  .dock-avatar { width: 30px; height: 30px; border-radius: 10px; font-size: 16px; }
+  .dock-chip { gap: 9px; padding: 3px 6px 3px 3px; min-height: 36px; }
+  .dock-who strong { font-size: 13px; }
+  .dock-who span { font-size: 11px; }
+  .dock-controls { gap: 2px; }
+  .dock-controls .dock-btn { width: 34px; min-width: 34px; height: 38px; min-height: 38px; }
+  .dock-controls .dock-play { width: 46px; min-width: 46px; height: 46px; min-height: 46px; }
+  .dock-pages { gap: 1px; }
+  .dock-pages .dock-btn { width: 34px; min-width: 34px; height: 38px; min-height: 38px; }
+  .dock-speed { display: block; min-width: 42px; width: 42px; height: 36px; font-size: 12px; }
+  .dock-sep, .dock-range input { display: none; }
+  .dock-range { gap: 0; }
+  .dock-range .tabular { min-width: 34px; }
+  .reader-foot { padding: 10px 0 max(10px, env(safe-area-inset-bottom)); }
+  .selection-menu { bottom: calc(122px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 350px) {
+  .dock { padding: 9px 7px 7px; column-gap: 3px; }
+  .dock-pages .dock-btn { width: 31px; min-width: 31px; }
+  .dock-range .tabular { min-width: 30px; font-size: 12px; }
+  .dock-speed { min-width: 39px; width: 39px; }
+  .dock-menu { min-width: min(280px, calc(100vw - 42px)); }
+}
