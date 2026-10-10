@@ -1,4 +1,4 @@
-name: Scene bundle context
+name: Scene bundle integration
 
 on:
   push:
@@ -6,45 +6,59 @@ on:
     paths: ['.github/workflows/scene-bundle-context.yml']
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: leu-scene-bundle-integration
+  cancel-in-progress: false
 
 jobs:
-  prepare:
+  integrate-and-verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: b6c9bfa3e0956451d52da12f237cc6e86b1579ca
           fetch-depth: 1
-      - name: Export only the bundle prerequisites and web sources
-        shell: bash
-        run: |
-          set -euo pipefail
-          git fetch --depth=1 origin f91b84f44b19aa51842ddfbf824e6c1b967280d2
-          mkdir -p /tmp/leu-context/base
-          for oid in 2352d1c8bfd7395a80445db7c557f23f6439283e 66efcbbdd8e6f28aba89483d75f1b44a78eea116 03d6175cba7bdf697493c84c606008c5ec369265 642ccd647aee817ffba2a8f8cb97c8ee8068a1bb e7605cd9fe8cac66e1f6ea3614c4d8fd2a5f96f3 0816e2ff7a8323dd1ba576ff953cc61e3b52c436 b554c5c23d4eb961eb0391b05679ccebbea61be3 a23e6d68b7e191fc8decdee603e9844235c107f1 c350f6fbb53e230824b09d1f38f607397e4e76ea 3d1b295dd95ca7ba3753177e06b89fcc201c4fcb 76214333c20778c3773abe30cd86fe7de15b61fa c935617e6eacff5ba84928ac0fb4746b9cba1bac; do
-            kind=$(git cat-file -t "$oid")
-            git cat-file "$kind" "$oid" > "/tmp/leu-context/base/$oid.$kind"
-          done
-          git archive HEAD web AGENTS.md .github/workflows/web-browser-journeys.yml | tar -xf - -C /tmp/leu-context
-          git show f91b84f44b19aa51842ddfbf824e6c1b967280d2:web/src/styles.css > /tmp/leu-context/base-styles.css
+      - name: Apply only the hash-verified scene changes
+        run: python .github/integrate-scene-bundle.py
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
           node-version: '22'
-      - name: Build baseline and package isolated test context
-        working-directory: /tmp/leu-context/web
+      - name: Build candidate
+        working-directory: web
         run: |
           npm ci
           npm run build
-          du -sh node_modules dist
-          tar --exclude='node_modules/onnxruntime-node' -czf /tmp/leu-context/local-dependencies.tar.gz node_modules
-          rm -rf node_modules
-      - name: Return context for local bundle integration
+      - name: Install isolated cross-engine browser tooling
+        working-directory: web
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Verify moving scenes and red sound bars
+        working-directory: web
+        run: node scripts/scene-journeys.mjs
+      - name: Verify existing reader and mobile journeys
+        working-directory: web
+        run: node scripts/browser-journeys.mjs
+      - name: Save evidence
+        if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
-          name: leu-scene-bundle-context
-          path: /tmp/leu-context
-          retention-days: 1
-          include-hidden-files: false
-          compression-level: 1
+          name: leu-scene-integration-evidence
+          path: web/qa-evidence/*.png
+          if-no-files-found: warn
+          retention-days: 3
+      - name: Publish verified source to test without rewriting history
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin test
+          test "$(git rev-parse origin/test)" = "$GITHUB_SHA"
+          git config user.name 'Miguel Almeida'
+          git config user.email '94702822+miguelalmeida0@users.noreply.github.com'
+          git add web/src/components/Dock.tsx web/src/lib/motion.ts web/src/scenes/Basket.tsx web/src/scenes/FoggedWindow.tsx web/src/scenes/SnowGlobe.tsx web/src/scenes/TeaSteam.tsx .github/workflows/web-browser-journeys.yml
+          git diff --cached --check
+          git commit -m 'feat(web): integrate supplied scene animations on mobile and desktop' -m 'Integrates the animation changes from supplied Git bundle 10a9c77491988ed2137e7425c35f1c182f32014a, extending idle playback to desktop. Preserves the current reader, search, zoom and system-voice fixes. Cross-engine scene and reader journeys passed before this commit.'
+          git push origin HEAD:test
+          echo "VERIFIED_SCENE_COMMIT=$(git rev-parse HEAD)"
