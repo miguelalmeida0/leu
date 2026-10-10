@@ -152,7 +152,7 @@ export function FoggedWindow() {
     lamp.addColorStop(0, 'rgba(255,226,160,.22)'); lamp.addColorStop(1, 'rgba(255,226,160,0)')
     ctx.fillStyle = lamp
     ctx.fillRect(0, 0, w, h)
-  }, { fps: reduced ? 2 : 30 })
+  }, { fps: reduced ? 2 : matchMedia('(pointer: coarse)').matches ? 22 : 30 })
 
   const point = (e: React.PointerEvent<HTMLCanvasElement>) => {
     // Touch gestures belong to reading, scrolling and selection. The desktop

@@ -217,7 +217,7 @@ export function SnowGlobe({ lit, label }: { lit: number; label?: string }) {
     ctx.globalCompositeOperation = 'source-over'
     for (const f of s.flakes) if (f.y <= 0.006) flake(ctx, f, k, s.now, reduced)
     ctx.restore()
-  })
+  }, { fps: matchMedia('(pointer: coarse)').matches ? 22 : 30 })
 
   const toArt = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const r = e.currentTarget.getBoundingClientRect(), k = r.width / ART.w

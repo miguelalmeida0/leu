@@ -105,7 +105,7 @@ export function Basket() {
     ctx.lineCap = 'round'; ctx.lineJoin = 'round'
     path(); ctx.strokeStyle = '#C98476'; ctx.lineWidth = Math.max(1.6, w * 0.0026); ctx.stroke()
     path(); ctx.strokeStyle = '#EBB5A3'; ctx.lineWidth = Math.max(0.8, w * 0.0012); ctx.stroke()
-  }, { fps: 60, still: reduced })
+  }, { fps: matchMedia('(pointer: coarse)').matches ? 24 : 60, still: reduced })
 
   const at = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const r = e.currentTarget.getBoundingClientRect()
