@@ -1,0 +1,50 @@
+name: Scene bundle context
+
+on:
+  push:
+    branches: [test]
+    paths: ['.github/workflows/scene-bundle-context.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: b6c9bfa3e0956451d52da12f237cc6e86b1579ca
+          fetch-depth: 1
+      - name: Export only the bundle prerequisites and web sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --depth=1 origin f91b84f44b19aa51842ddfbf824e6c1b967280d2
+          mkdir -p /tmp/leu-context/base
+          for oid in 2352d1c8bfd7395a80445db7c557f23f6439283e 66efcbbdd8e6f28aba89483d75f1b44a78eea116 03d6175cba7bdf697493c84c606008c5ec369265 642ccd647aee817ffba2a8f8cb97c8ee8068a1bb e7605cd9fe8cac66e1f6ea3614c4d8fd2a5f96f3 0816e2ff7a8323dd1ba576ff953cc61e3b52c436 b554c5c23d4eb961eb0391b05679ccebbea61be3 a23e6d68b7e191fc8decdee603e9844235c107f1 c350f6fbb53e230824b09d1f38f607397e4e76ea 3d1b295dd95ca7ba3753177e06b89fcc201c4fcb 76214333c20778c3773abe30cd86fe7de15b61fa c935617e6eacff5ba84928ac0fb4746b9cba1bac; do
+            kind=$(git cat-file -t "$oid")
+            git cat-file "$kind" "$oid" > "/tmp/leu-context/base/$oid.$kind"
+          done
+          git archive HEAD web AGENTS.md .github/workflows/web-browser-journeys.yml | tar -xf - -C /tmp/leu-context
+          git show f91b84f44b19aa51842ddfbf824e6c1b967280d2:web/src/styles.css > /tmp/leu-context/base-styles.css
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: '22'
+      - name: Build baseline and package isolated test context
+        working-directory: /tmp/leu-context/web
+        run: |
+          npm ci
+          npm run build
+          du -sh node_modules dist
+          tar --exclude='node_modules/onnxruntime-node' -czf /tmp/leu-context/local-dependencies.tar.gz node_modules
+          rm -rf node_modules
+      - name: Return context for local bundle integration
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: leu-scene-bundle-context
+          path: /tmp/leu-context
+          retention-days: 1
+          include-hidden-files: false
+          compression-level: 1
