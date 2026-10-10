@@ -75,6 +75,10 @@ async function runBrowser(browserType, name, mobile, width) {
     reducedMotion: 'reduce',
   })
   page.on('pageerror', (err) => pageErrors.push(err.message))
+  page.on('console', (message) => {
+    if (message.type() === 'error' || message.type() === 'warning') console.error(`BROWSER ${name} ${message.type()}: ${message.text()}`)
+  })
+  page.on('requestfailed', (request) => console.error(`NETWORK ${name}: ${request.url()} — ${request.failure()?.errorText}`))
   page.setDefaultTimeout(16000)
   const evidenceName = `${name}-${width}`
   try {
@@ -85,7 +89,18 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.getByRole('dialog', { name: /Sewing in Computer Science Essentials/i }))
     await visible(page.locator('.sewn-actions .btn.ink'), 25000)
     await page.locator('.sewn-actions .btn.ink').click()
-    await visible(page.locator('.reader-paper .prose p').first(), 25000)
+    try {
+      await visible(page.locator('.reader-paper .prose p').first(), 25000)
+    } catch (error) {
+      const details = await page.evaluate(() => ({
+        hash: location.hash, text: document.querySelector('.reader-paper')?.textContent?.slice(0,1100),
+        page: document.body.textContent?.slice(0,2000),
+        canvases: document.querySelectorAll('.reader-paper canvas').length,
+        mode: document.querySelector('.segmented [aria-checked="true"]')?.textContent,
+      }))
+      console.error(`READER DIAGNOSTIC ${name}: ${JSON.stringify(details)}`)
+      throw error
+    }
     await noHorizontalOverflow(page, 'Reader ' + name)
     if (mobile) {
       await page.getByRole('button', { name: 'Open navigation' }).click()
