@@ -18,9 +18,11 @@ function Choice<T extends string | number>({ label, value, options, onChange }: 
   const ref = useRef<HTMLSpanElement>(null)
   useEffect(() => {
     if (!open) return
-    const close = (e: MouseEvent) => { if (!ref.current?.contains(e.target as Node)) setOpen(false) }
-    window.addEventListener('mousedown', close)
-    return () => window.removeEventListener('mousedown', close)
+    const close = (e: PointerEvent) => { if (!ref.current?.contains(e.target as Node)) setOpen(false) }
+    const escape = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
+    window.addEventListener('pointerdown', close, true)
+    window.addEventListener('keydown', escape)
+    return () => { window.removeEventListener('pointerdown', close, true); window.removeEventListener('keydown', escape) }
   }, [open])
   const current = options.find((o) => o.id === value)
   return (

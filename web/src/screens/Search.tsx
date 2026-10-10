@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Swatch } from '../components/ui'
 import { go } from '../lib/router'
 import { allText, useStore } from '../lib/store'
@@ -12,7 +12,24 @@ export function Search({ onClose }: { onClose: () => void }) {
   const [q, setQ] = useState('')
   const [lib, setLib] = useState<Map<string, string[]> | null>(null)
   const [active, setActive] = useState(0)
-  useEffect(() => { void allText().then(setLib) }, [])
+  const dialog = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const previous = document.activeElement as HTMLElement | null
+    const oldOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const trap = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab' || !dialog.current) return
+      const controls = [...dialog.current.querySelectorAll<HTMLElement>('input, button, [href]')]
+        .filter((item) => !item.hasAttribute('disabled'))
+      if (!controls.length) return
+      const first = controls[0], last = controls[controls.length - 1]
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus() }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus() }
+    }
+    document.addEventListener('keydown', trap)
+    return () => { document.body.style.overflow = oldOverflow; document.removeEventListener('keydown', trap); previous?.focus() }
+  }, [])
+  useEffect(() => { void allText().then(setLib).catch((error) => { console.warn('[leu] Search unavailable:', error); setLib(new Map()) }) }, [])
   const results = useMemo(() => (lib && q.trim().length > 1 ? search(lib, q) : []), [lib, q])
   useEffect(() => setActive(0), [q])
 
@@ -26,8 +43,8 @@ export function Search({ onClose }: { onClose: () => void }) {
   const bookOf = (id: string) => books.find((b) => b.id === id)
 
   return (
-    <div className="scrim search-scrim" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose() }}>
-      <div className="search" role="dialog" aria-modal="true" aria-label="Search your books">
+    <div className="scrim search-scrim" onPointerDown={(e) => { if (e.target === e.currentTarget) onClose() }}>
+      <div ref={dialog} className="search" role="dialog" aria-modal="true" aria-label="Search your books">
         <div className="search-field">
           <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.2" /><path d="M15.5 15.5 20 20" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
           <input
@@ -40,7 +57,7 @@ export function Search({ onClose }: { onClose: () => void }) {
             aria-activedescendant={results.length ? `result-${active}` : undefined}
             onKeyDown={(e) => {
               if (e.key === 'Enter') open(active)
-              if (e.key === 'ArrowDown') { e.preventDefault(); setActive((a) => Math.min(a + 1, Math.min(results.length, 8) - 1)) }
+              if (e.key === 'ArrowDown') { e.preventDefault(); setActive((a) => Math.min(a + 1, Math.max(0, Math.min(results.length, 8) - 1))) }
               if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => Math.max(a - 1, 0)) }
             }}
           />

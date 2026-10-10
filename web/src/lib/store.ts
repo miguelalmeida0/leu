@@ -102,7 +102,11 @@ export async function removeBook(id: string) {
 export interface Outline { title: string; page: number; depth: number }
 export const savePdf = (id: string, data: ArrayBuffer) => set(`pdf:${id}`, data)
 export const loadPdf = (id: string) => get<ArrayBuffer>(`pdf:${id}`)
-export const saveText = (id: string, pages: string[]) => set(`text:${id}`, pages)
+export const saveText = async (id: string, pages: string[]) => {
+  await set(`text:${id}`, pages)
+  // Indexing may complete after Search/Study cached an empty array.
+  forgetText(id)
+}
 export const loadText = async (id: string) => (await get<string[]>(`text:${id}`)) ?? []
 export const saveOutline = (id: string, outline: Outline[]) => set(`outline:${id}`, outline)
 export const loadOutline = async (id: string) => (await get<Outline[]>(`outline:${id}`)) ?? []
