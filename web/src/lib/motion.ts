@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState, type RefObject } from 'react'
+import { useContext, useEffect, useRef, useState, type RefObject } from 'react'
+import { SceneMotionOverride } from './sceneMotion'
 
 export function useReducedMotion(): boolean {
+  const sceneOverride = useContext(SceneMotionOverride)
   const [reduced, setReduced] = useState(() => matchMedia('(prefers-reduced-motion: reduce)').matches)
   useEffect(() => {
     const q = matchMedia('(prefers-reduced-motion: reduce)')
@@ -8,7 +10,7 @@ export function useReducedMotion(): boolean {
     q.addEventListener('change', on)
     return () => q.removeEventListener('change', on)
   }, [])
-  return reduced
+  return sceneOverride ?? reduced
 }
 
 /** Touch screens: no hover, and a finger on a canvas usually scrolls the page. The scenes
