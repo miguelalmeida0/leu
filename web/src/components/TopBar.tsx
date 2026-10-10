@@ -22,7 +22,7 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
   return (
     <header className="topbar">
       <a className="wordmark" href={href({ name: 'home' })} aria-label="Leu, home" aria-current={route.name === 'home' ? 'page' : undefined}><Wordmark /></a>
-      <nav aria-label="Places">
+      <nav className="desktop-places" aria-label="Places">
         <ul>
           {places.map((p) => {
             const on = current === p.name
@@ -46,11 +46,25 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
           })}
         </ul>
       </nav>
-      <button className="search-pill" onClick={onSearch} aria-keyshortcuts="Meta+K Control+K">
-        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.2" /><path d="M15.5 15.5 20 20" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
-        <span>Search your books</span>
-        <kbd>{navigator.platform.includes('Mac') ? '⌘K' : 'Ctrl K'}</kbd>
-      </button>
+      <div className="topbar-tools">
+        <details className="mobile-places" key={href(route)}>
+          <summary aria-label="Open navigation" title="Places">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
+          </summary>
+          <nav aria-label="Mobile places">
+            <a href={href({ name: 'home' })} aria-current={route.name === 'home' ? 'page' : undefined}>Home</a>
+            {places.map((p) => {
+              const to: Route = p.name === 'read' ? (last ? { name: 'read', id: last.id, page: last.page } : { name: 'library' }) : { name: p.name }
+              return <a key={p.name} href={href(to)} aria-current={current === p.name ? 'page' : undefined}>{p.label}</a>
+            })}
+          </nav>
+        </details>
+        <button className="search-pill" onClick={onSearch} aria-label="Search books" aria-keyshortcuts="Meta+K Control+K">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.2" /><path d="M15.5 15.5 20 20" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
+          <span>Search your books</span>
+          <kbd>{navigator.platform.includes('Mac') ? '⌘K' : 'Ctrl K'}</kbd>
+        </button>
+      </div>
     </header>
   )
 }

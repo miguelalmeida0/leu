@@ -69,17 +69,41 @@ export async function pageBlocks(doc: PDFDocumentProxy, n: number): Promise<Bloc
   return blocks
 }
 
+/** Bound slow or unresolved PDF worker requests without blocking the UI forever. */
+export async function pdfDeadline<T>(work: Promise<T>, milliseconds: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined
+  try {
+    return await Promise.race([
+      work,
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error('PDF operation timed out')), milliseconds)
+      }),
+    ])
+  } finally {
+    if (timer !== undefined) clearTimeout(timer)
+  }
+}
+
 /** Every page as plain text, and the outline (embedded, or found from headings). */
 export async function extract(doc: PDFDocumentProxy, onPage?: (n: number) => void): Promise<{ pages: string[]; outline: Outline[] }> {
   const pages: string[] = []
   const found: Outline[] = []
   for (let n = 1; n <= doc.numPages; n++) {
-    const blocks = await pageBlocks(doc, n)
-    pages.push(blocks.map((b) => b.text).join('\n\n'))
+    try {
+      // On iOS Safari individual pdf.js text requests can stall indefinitely.
+      // Skip a stalled page rather than blocking the entire library import.
+      const blocks = await pdfDeadline(pageBlocks(doc, n), 12000)
+      pages.push(blocks.map((b) => b.text).join('\n\n'))
+      blocks.filter((b) => b.kind === 'heading').slice(0, 3).forEach((b, i) => found.push({ title: b.text, page: n, depth: i === 0 ? 0 : 1 }))
+    } catch (error) {
+      console.warn(`[leu] Could not index page ${n}; original PDF remains available:`, error)
+      pages.push('')
+    }
     onPage?.(n)
-    blocks.filter((b) => b.kind === 'heading').slice(0, 3).forEach((b, i) => found.push({ title: b.text, page: n, depth: i === 0 ? 0 : 1 }))
   }
-  const embedded = await embeddedOutline(doc)
+  let embedded: Outline[] = []
+  try { embedded = await pdfDeadline(embeddedOutline(doc), 12000) }
+  catch (error) { console.warn('[leu] Could not read the PDF outline:', error) }
   return { pages, outline: embedded.length >= 2 ? embedded : found }
 }
 

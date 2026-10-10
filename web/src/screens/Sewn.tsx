@@ -28,11 +28,13 @@ export function Sewn({ sewing }: { sewing: Sewing }) {
           </svg>
         </div>
         <p className="muted" aria-live="polite">
-          {!sewing.done
-            ? `Reading page ${Math.max(1, sewing.read)} of ${sewing.pages}…`
-            : near.length
-              ? `It already shares ideas with ${countWords(near.length, 'of your books', 'of your books').toLowerCase()}.`
-              : books.length > 1 ? "It doesn't share ideas with your other books yet." : 'Your first book. Links to the next ones appear as you bring them.'}
+          {sewing.error
+            ? sewing.error
+            : !sewing.done
+              ? book ? `Saved to your library. Indexing page ${Math.max(1, sewing.read)} of ${sewing.pages} in the background…` : 'Saving your PDF…'
+              : near.length
+                ? `It already shares ideas with ${countWords(near.length, 'of your books', 'of your books').toLowerCase()}.`
+                : books.length > 1 ? "It doesn't share ideas with your other books yet." : 'Your first book. Links to the next ones appear as you bring them.'}
         </p>
         {sewing.done && near.length > 0 && book && (
           <ul className="sewn-near">
@@ -56,12 +58,12 @@ export function Sewn({ sewing }: { sewing: Sewing }) {
                 </form>
               ) : <button className="chip" onClick={() => setNaming(true)}>+ New shelf</button>}
             </div>
-            <div className="row" style={{ marginTop: 30, gap: 18 }}>
-              <button className="btn ink" onClick={() => { closeSewing(); go({ name: 'read', id: book.id, page: 1 }) }}>Open {book.title.length > 28 ? 'it' : book.title}</button>
-              <button className="quiet-link" onClick={() => { closeSewing(); go({ name: 'library' }) }}>Back to the library</button>
-            </div>
           </>
         )}
+        <div className="row sewn-actions">
+          {book && <button className="btn ink" onClick={() => { closeSewing(); go({ name: 'read', id: book.id, page: 1 }) }}>Open {book.title.length > 28 ? 'book' : book.title}</button>}
+          <button className="quiet-link" onClick={() => { closeSewing(); go({ name: 'library' }) }}>Back to the library</button>
+        </div>
       </div>
     </Modal>
   )

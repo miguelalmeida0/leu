@@ -66,6 +66,9 @@ export function Modal({ label, onClose, children, width = 640, tone = 'cream' }:
   return (
     <div className="scrim" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose() }}>
       <div ref={ref} className={`modal ${tone}`} role="dialog" aria-modal="true" aria-label={label} style={{ maxWidth: width }}>
+        <button type="button" className="modal-close" onClick={onClose} aria-label="Close dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+        </button>
         {children}
       </div>
     </div>
