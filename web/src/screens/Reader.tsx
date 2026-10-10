@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Prose, piecesOf } from '../components/Prose'
 import { Empty } from '../components/ui'
-import { openPdf, pageBlocks, renderPage, type Block, type PDFDocumentProxy } from '../lib/pdf'
+import { openPdf, pageBlocks, pdfDeadline, renderPage, type Block, type PDFDocumentProxy } from '../lib/pdf'
 import { go, href } from '../lib/router'
 import { addNote, loadOutline, loadPdf, patchBook, removeNote, upsertMemory, useStore, type Outline } from '../lib/store'
 import { cloze, ideas } from '../lib/text'
@@ -23,6 +23,8 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const [draft, setDraft] = useState<{ quote: string; note: string } | null>(null)
   const [explain, setExplain] = useState<string | null>(null)
   const [missing, setMissing] = useState(false)
+  const [loadError, setLoadError] = useState('')
+  const [originalError, setOriginalError] = useState('')
   const paper = useRef<HTMLDivElement>(null)
   const canvas = useRef<HTMLCanvasElement>(null)
   const voice = useVoice()
@@ -33,11 +35,17 @@ export function Reader({ id, page }: { id: string; page: number }) {
   useEffect(() => {
     let live = true, opened: PDFDocumentProxy | null = null
     void (async () => {
-      const data = await loadPdf(id)
-      if (!data) { if (live) setMissing(true); return }
-      opened = await openPdf(data)
-      if (live) setDoc(opened); else void opened.loadingTask.destroy()
-      setOutline(await loadOutline(id))
+      try {
+        const data = await loadPdf(id)
+        if (!data) { if (live) setMissing(true); return }
+        opened = await openPdf(data)
+        if (live) setDoc(opened); else void opened.loadingTask.destroy()
+        const items = await loadOutline(id)
+        if (live) setOutline(items)
+      } catch (error) {
+        console.warn('[leu] Could not open PDF:', error)
+        if (live) setLoadError('This PDF could not be opened on this device. Try reimporting it from your library.')
+      }
     })()
     // If you've listened before, the voice wakes up quietly while the book opens.
     warmVoice()
@@ -48,7 +56,12 @@ export function Reader({ id, page }: { id: string; page: number }) {
     if (!doc) return
     let live = true
     setBlocks(null)
-    void pageBlocks(doc, clamped).then((b) => { if (live) setBlocks(b) })
+    void pdfDeadline(pageBlocks(doc, clamped), 12000)
+      .then((b) => { if (live) setBlocks(b) })
+      .catch((error) => {
+        console.warn('[leu] Could not rebuild PDF page; switching to the original:', error)
+        if (live) { setBlocks([]); setMode('original') }
+      })
     patchBook(id, { page: clamped, lastOpenedAt: Date.now() })
     if (book) document.title = `${book.title}, p. ${clamped} · Leu`
     // A page you stay on for a while becomes something Leu can ask you about later.
@@ -63,8 +76,12 @@ export function Reader({ id, page }: { id: string; page: number }) {
 
   useEffect(() => {
     if (mode !== 'original' || !doc || !canvas.current || !paper.current) return
-    const width = Math.min(paper.current.clientWidth - 2, 760)
-    void renderPage(doc, clamped, canvas.current, width)
+    const width = Math.max(1, Math.min(paper.current.clientWidth - 2, 760))
+    setOriginalError('')
+    void renderPage(doc, clamped, canvas.current, width).catch((error) => {
+      console.warn('[leu] Could not render original PDF page:', error)
+      setOriginalError('This page could not be displayed. Try another page or reimport the PDF.')
+    })
   }, [mode, doc, clamped])
 
   const turn = useCallback((to: number, keepReading = false) => {
@@ -116,7 +133,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
     setSelection({ text, x: r.left + r.width / 2 - p.left, y: r.top - p.top })
   }
 
-  if (missing || !book) return <div className="page"><Empty title="This book isn't in this browser any more."><a className="link" href={href({ name: 'library' })}>Back to the library</a></Empty></div>
+  if (missing || !book || loadError) return <div className="page"><Empty title={loadError || "This book isn't in this browser any more."}><a className="link" href={href({ name: 'library' })}>Back to the library</a></Empty></div>
 
   const pageText = (blocks ?? []).map((b) => b.text).join('\n\n')
   const current = [...outline].reverse().find((o) => o.page <= clamped && o.depth === 0) ?? [...outline].reverse().find((o) => o.page <= clamped)
@@ -158,7 +175,10 @@ export function Reader({ id, page }: { id: string; page: number }) {
         <article className="reader-paper" ref={paper} onMouseUp={onMouseUp} aria-label={`Page ${clamped} of ${pages}`}>
           <p className="eyebrow paper page-eyebrow">{current?.title ?? book.title} · page {clamped}</p>
           {mode === 'original' ? (
-            <canvas ref={canvas} className="original-page" role="img" aria-label={`The original page ${clamped}`} />
+            <>
+              <canvas ref={canvas} className="original-page" role="img" aria-label={`The original page ${clamped}`} />
+              {originalError && <p className="muted" role="alert">{originalError}</p>}
+            </>
           ) : blocks === null ? (
             <div className="paper-loading" aria-live="polite"><span className="sr-only">Opening the page…</span><i /><i /><i /></div>
           ) : blocks.length === 0 ? (

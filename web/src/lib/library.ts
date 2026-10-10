@@ -36,6 +36,7 @@ export async function importSample(name: string, quiet = false) {
   const existing = getState().books.find((b) => b.title === name)
   if (existing) return existing.id
   const response = await fetch(`/samples/${encodeURIComponent(name)}.pdf`)
+  if (!response.ok) throw new Error(`Could not load the sample book (${response.status})`)
   return importOne(name, await response.arrayBuffer(), quiet, true)
 }
 
@@ -55,12 +56,35 @@ async function importOne(fallbackTitle: string, data: ArrayBuffer, quiet: boolea
     palette: order[count % order.length], shelf: sample ? 'Programming' : 'Unsorted', sample,
   }
   if (!quiet) emit({ bookId: id, title, read: 0, pages: doc.numPages, done: false, neighbours: [] })
-  await savePdf(id, data)
-  const { pages, outline } = await extract(doc, (n) => { if (!quiet && sewing?.bookId === id) emit({ ...sewing, read: n }) })
-  await Promise.all([saveText(id, pages), saveOutline(id, outline)])
+  // Persist the original and publish the book BEFORE extraction: a slow mobile PDF
+  // must never prevent opening it or make it disappear after a refresh.
+  try {
+    await savePdf(id, data)
+  } catch (error) {
+    void doc.loadingTask.destroy()
+    if (!quiet && sewing?.bookId === id) emit({ ...sewing, done: true, error: 'This browser could not save the PDF. Check available storage and try again.' })
+    throw error
+  }
   update((s) => ({ ...s, books: [...s.books, book] }))
-  void doc.loadingTask.destroy()
-  if (!quiet) { const near = await neighbours(id); if (sewing?.bookId === id) emit({ ...sewing, done: true, neighbours: near }) }
+  try {
+    const { pages, outline } = await extract(doc, (n) => {
+      if (!quiet && sewing?.bookId === id) emit({ ...sewing, read: n })
+    })
+    await Promise.all([saveText(id, pages), saveOutline(id, outline)])
+    // Finding related books is optional. Never hold reading hostage to this step.
+    if (!quiet && sewing?.bookId === id) emit({ ...sewing, done: true, read: doc.numPages })
+    try {
+      const near = await neighbours(id)
+      if (!quiet && sewing?.bookId === id) emit({ ...sewing, done: true, neighbours: near })
+    } catch (error) {
+      console.warn('[leu] Could not compare books:', error)
+    }
+  } catch (error) {
+    console.warn('[leu] Background text extraction failed:', error)
+    if (!quiet && sewing?.bookId === id) emit({ ...sewing, done: true, error: 'Some text could not be indexed. You can still open the original PDF.' })
+  } finally {
+    void doc.loadingTask.destroy()
+  }
   return id
 }
 
