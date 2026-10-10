@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
-import { mkdir } from 'node:fs/promises'
+import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { chromium, webkit } from 'playwright'
@@ -38,17 +38,27 @@ async function run(engine, label, width, reduced) {
   const browser = await engine.launch({ headless: true })
   const context = await browser.newContext({ viewport: { width, height: 844 }, deviceScaleFactor: 2, isMobile: width < 600, hasTouch: width < 600, reducedMotion: reduced })
   const page = await context.newPage()
-  const errors = []
-  page.on('pageerror', (error) => errors.push(error.message))
+  const errors = [], diagnostics = []
+  let phase = 'load'
+  const record = (type, detail) => {
+    const entry = { type, phase, detail, url: page.url() }
+    diagnostics.push(entry)
+    console.log('HOME ' + label + ' ' + JSON.stringify(entry))
+  }
+  page.on('pageerror', (error) => { errors.push({ phase, message: error.message }); record('exception', error.message) })
+  page.on('requestfailed', (request) => record('network', { url: request.url(), reason: request.failure()?.errorText }))
+  page.on('console', (message) => { if (message.type() === 'error') record('console', message.text()) })
   try {
     await page.goto(base, { waitUntil: 'domcontentloaded' })
+    phase = 'import'
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
     await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible', timeout: 25000 })
+    phase = 'home'
     await page.getByRole('link', { name: 'Leu, home', exact: true }).click()
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     const initialChange = await movement(page)
-    console.log('DIAGNOSTIC ' + label + ': ' + JSON.stringify({ preference: reduced, changedPercent: initialChange * 100, hasPlay: await page.getByRole('button', { name: 'Play animation', exact: true }).count(), hasPause: await page.getByRole('button', { name: 'Pause animation', exact: true }).count() }))
+    record('initial', { preference: reduced, changedPercent: initialChange * 100, hasPlay: await page.getByRole('button', { name: 'Play animation', exact: true }).count(), hasPause: await page.getByRole('button', { name: 'Pause animation', exact: true }).count() })
     await page.screenshot({ path: join(evidence, 'home-' + label + '-before.png') })
     if (reduced === 'reduce') {
       assert.equal(initialChange, 0, 'Device reduced-motion preference must initially be respected')
@@ -57,15 +67,18 @@ async function run(engine, label, width, reduced) {
     } else {
       assert.ok(initialChange > 0, 'Home must animate automatically without touch')
     }
+    phase = 'play-pause'
     assert.ok(await movement(page) > 0.005, 'Playing must produce visible rain, not only a running timer')
     await page.getByRole('button', { name: 'Pause animation', exact: true }).click()
     assert.equal(await movement(page), 0, 'Pause must stop the actual scene')
     await page.getByRole('button', { name: 'Play animation', exact: true }).click()
     assert.ok(await movement(page) > 0.005, 'Play must restart the actual scene')
+    phase = 'reload'
     await page.reload({ waitUntil: 'domcontentloaded' })
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     assert.equal(await page.getByRole('button', { name: 'Pause animation', exact: true }).count(), 1, 'An explicit playback choice must survive reloading')
     assert.ok(await movement(page) > 0.005, 'The scene must resume after reload')
+    phase = 'other-tab'
     const other = await context.newPage()
     await other.goto('about:blank')
     await page.waitForTimeout(600)
@@ -75,20 +88,27 @@ async function run(engine, label, width, reduced) {
     assert.ok(await movement(page) > 0.005, 'The scene must resume after returning to the page')
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false)
     assert.equal(await page.locator('.nook-glass canvas').evaluate((el) => getComputedStyle(el).touchAction), 'auto')
+    phase = 'reopen-reader'
     await page.getByRole('button', { name: 'Pause animation', exact: true }).click()
     await page.getByRole('button', { name: 'Keep reading', exact: true }).click()
     await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible' })
+    phase = 'return-home'
     await page.getByRole('link', { name: 'Leu, home', exact: true }).click()
     assert.equal(await page.getByRole('button', { name: 'Play animation', exact: true }).count(), 1, 'Pause choice must survive app navigation')
     assert.equal(await movement(page), 0)
     await page.getByRole('button', { name: 'Play animation', exact: true }).click()
     await page.screenshot({ path: join(evidence, 'home-' + label + '-after.png') })
+    record('behaviors-passed', 'Motion, pause, reload and reading navigation passed')
     assert.deepEqual(errors, [], 'Home must not raise browser exceptions')
     console.log('PASS ' + label + ': actual Home rain, explicit reduced-motion override, Pause/Play, reload, return to page, reading and scrolling')
   } catch (error) {
+    record('failure', String(error))
     await page.screenshot({ path: join(evidence, 'home-' + label + '-failed.png'), fullPage: true }).catch(() => {})
     throw error
-  } finally { await browser.close() }
+  } finally {
+    await writeFile(join(evidence, 'home-' + label + '-diagnostics.json'), JSON.stringify(diagnostics, null, 2))
+    await browser.close()
+  }
 }
 try {
   let ready = false
@@ -97,8 +117,14 @@ try {
     await sleep(200)
   }
   assert.ok(ready, 'Preview server did not start')
-  await run(webkit, 'webkit-390-reduced', 390, 'reduce')
-  await run(webkit, 'webkit-390-auto', 390, 'no-preference')
-  await run(webkit, 'webkit-320-auto', 320, 'no-preference')
-  await run(chromium, 'desktop-1440', 1440, 'no-preference')
+  const failed = []
+  for (const args of [
+    [webkit, 'webkit-390-reduced', 390, 'reduce'],
+    [webkit, 'webkit-390-auto', 390, 'no-preference'],
+    [webkit, 'webkit-320-auto', 320, 'no-preference'],
+    [chromium, 'desktop-1440', 1440, 'no-preference'],
+  ]) {
+    try { await run(...args) } catch (error) { failed.push(args[1] + ': ' + error.message) }
+  }
+  assert.deepEqual(failed, [], 'Home browser configurations failed')
 } finally { server.kill('SIGTERM') }
