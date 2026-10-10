@@ -85,7 +85,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.getByRole('dialog', { name: /Sewing in Computer Science Essentials/i }))
     await visible(page.locator('.sewn-actions .btn.ink'), 25000)
     await page.locator('.sewn-actions .btn.ink').click()
-    await visible(page.locator('.reader-paper .prose p'), 25000)
+    await visible(page.locator('.reader-paper .prose p').first(), 25000)
     await noHorizontalOverflow(page, 'Reader ' + name)
     if (mobile) {
       await page.getByRole('button', { name: 'Open navigation' }).click()
@@ -112,12 +112,12 @@ async function runBrowser(browserType, name, mobile, width) {
     await page.getByRole('radio', { name: 'Original page' }).click()
     await visible(page.getByText(/switch to “For reading”/))
     await page.getByRole('radio', { name: 'For reading' }).click()
-    await visible(page.locator('.reader-paper .prose p'))
+    await visible(page.locator('.reader-paper .prose p').first())
     await selectPassage(page)
     await page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Explain', exact: true }).click()
     await visible(page.getByRole('region', { name: 'Explained simply' }).or(page.locator('.explain-panel')))
     await page.getByRole('button', { name: /Close and go back to reading/i }).click()
-    await visible(page.locator('.reader-paper .prose p'))
+    await visible(page.locator('.reader-paper .prose p').first())
 
     await page.getByRole('button', { name: 'Next page' }).click()
     await visible(page.locator('.reader-paper[aria-label="Page 2 of 4"]'))
@@ -128,7 +128,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.getByText(noteText))
     await noHorizontalOverflow(page, 'Notes ' + name)
     await page.getByRole('link', { name: /Open Computer Science Essentials, p. 1/i }).click()
-    await visible(page.locator('.reader-paper .prose p'))
+    await visible(page.locator('.reader-paper .prose p').first())
 
     await goTo(page, mobile, 'Library')
     await visible(page.getByRole('heading', { name: 'Your library' }))
@@ -144,7 +144,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.getByRole('heading', { name: /Essentials|Notes|Patterns|System|JavaScript|Interviews/i }))
     await noHorizontalOverflow(page, 'Book overview ' + name)
     await page.getByRole('button', { name: /Read this chapter/i }).click()
-    await visible(page.locator('.reader-paper .prose p'))
+    await visible(page.locator('.reader-paper .prose p').first())
 
     await goTo(page, mobile, 'Study')
     await visible(page.getByRole('heading', { name: /I'd like to/i }))
