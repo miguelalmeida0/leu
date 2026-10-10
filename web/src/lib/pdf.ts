@@ -24,18 +24,33 @@ export async function openPdf(data: ArrayBuffer): Promise<PDFDocumentProxy> {
 
 export interface Block { kind: 'heading' | 'p'; text: string }
 
+/**
+ * Use the explicit ReadableStream reader. Safari/WebKit versions without
+ * ReadableStream[Symbol.asyncIterator] throw in pdf.js's getTextContent()
+ * despite supporting getReader() and rendering PDFs perfectly.
+ */
+async function readTextItems(page: Awaited<ReturnType<PDFDocumentProxy['getPage']>>): Promise<TextItem[]> {
+  const reader = page.streamTextContent().getReader()
+  const items: TextItem[] = []
+  try {
+    while (true) {
+      const chunk = await reader.read()
+      if (chunk.done) return items
+      for (const item of chunk.value.items) {
+        if ('str' in item && typeof item.str === 'string' && item.str.trim()) items.push(item)
+      }
+    }
+  } finally {
+    reader.releaseLock()
+  }
+}
+
 /** A page rebuilt for reading: lines joined into paragraphs, larger type as headings, and the
     running header, footer and page number left out. */
 export async function pageBlocks(doc: PDFDocumentProxy, n: number): Promise<Block[]> {
-  let stage = 'getPage'
-  try {
   const page = await doc.getPage(n)
-  stage = 'viewport'
   const height = page.getViewport({ scale: 1 }).height
-  stage = 'getTextContent'
-  const content = await page.getTextContent()
-  stage = 'assemble'
-  const items = content.items.filter((i): i is TextItem => 'str' in i && i.str.trim().length > 0)
+  const items = await readTextItems(page)
   if (!items.length) return []
   const lines: { y: number; size: number; text: string }[] = []
   for (const item of items) {
@@ -80,10 +95,6 @@ export async function pageBlocks(doc: PDFDocumentProxy, n: number): Promise<Bloc
     prev = line
   }
   return blocks
-  } catch (error) {
-    console.warn(`[leu] PDF pageBlocks stage=${stage}, page=${n}`, error instanceof Error ? error.stack : error)
-    throw error
-  }
 }
 
 /** Bound slow or unresolved PDF worker requests without blocking the UI forever. */
