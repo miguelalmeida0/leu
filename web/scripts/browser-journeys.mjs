@@ -298,11 +298,86 @@ async function runBrowser(browserType, name, mobile, width) {
   }
 }
 
+
+/**
+ * Static HTTPS previews must visibly animate actual Leu images on mobile.
+ * Compare canvas frames rather than just asserting that a page rendered.
+ */
+async function checkMotionPreviews(browserType, engine, width) {
+  const browser = await browserType.launch({ headless: true })
+  const page = await browser.newPage({
+    viewport: { width, height: 844 },
+    deviceScaleFactor: 2, isMobile: true, hasTouch: true,
+    reducedMotion: 'no-preference',
+  })
+  const errors = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  try {
+    for (const variant of ['quiet-weather', 'afterglow', 'material-rhythm']) {
+      const response = await page.goto(base + '/motion/' + variant + '.html', { waitUntil: 'domcontentloaded', timeout: 25000 })
+      assert.equal(response?.status(), 200, 'Preview ' + variant + ' should load as HTML')
+      await page.waitForFunction(() => window.__LEU_MOTION_TEST?.frames >= 7, null, { timeout: 15000 })
+      await page.waitForFunction(() => [...document.querySelectorAll('img[data-art]')].every((img) => img.complete && img.naturalWidth > 0), null, { timeout: 16000 })
+      assert.equal(await page.locator('[data-playing]').getAttribute('data-playing'), 'true')
+      const dimensions = await page.evaluate(() => ({
+        top: document.querySelector('.stage').getBoundingClientRect().top,
+        canvasWidth: document.querySelector('[data-fx="rain"]').width,
+        horizontalOverflow: document.documentElement.scrollWidth > innerWidth + 3,
+      }))
+      assert.ok(dimensions.top < 250, engine + ': artwork should appear above fold')
+      assert.ok(dimensions.canvasWidth > 120, engine + ': canvas must cover the artwork')
+      assert.equal(dimensions.horizontalOverflow, false, engine + ': horizontal overflow in ' + variant)
+      for (const [scene, label, fx] of [
+        ['nook', 'Reading nook', 'rain'],
+        ['basket', 'Knitting basket', 'basket'],
+        ['globe', 'Snow globe', 'globe'],
+      ]) {
+        await page.getByRole('tab', { name: label }).click()
+        assert.equal(await page.evaluate(() => window.__LEU_MOTION_TEST.active), scene)
+        const canvas = page.locator('canvas[data-fx="' + fx + '"]')
+        await page.waitForTimeout(180)
+        const before = await canvas.evaluate((el) => el.toDataURL())
+        await page.waitForTimeout(500)
+        const after = await canvas.evaluate((el) => el.toDataURL())
+        assert.notEqual(before, after, variant + '/' + scene + ': animation is static')
+        const pointer = await page.locator('[data-scene="' + scene + '"] .ill').evaluate((el) => getComputedStyle(el).pointerEvents)
+        assert.equal(pointer, 'none', 'Artwork must not steal touches')
+      }
+      await page.getByRole('button', { name: 'Pause motion' }).click()
+      const stoppedAt = await page.evaluate(() => window.__LEU_MOTION_TEST.frames)
+      await page.waitForTimeout(230)
+      assert.equal(await page.evaluate(() => window.__LEU_MOTION_TEST.frames), stoppedAt, 'Pause failed in ' + variant)
+      await page.getByRole('button', { name: 'Play motion' }).click()
+      await page.waitForFunction((before) => window.__LEU_MOTION_TEST.frames > before, stoppedAt)
+      await page.getByRole('tab', { name: 'Reading nook' }).click()
+      await page.screenshot({ path: join(evidence, 'motion-' + variant + '-' + engine + '-' + width + '.png') })
+      console.log('PASS ' + engine + '-' + width + ' ' + variant + ': original art loaded, 3 moving scenes, touch-safe controls, Pause/Play')
+    }
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto(base + '/motion/quiet-weather.html', { waitUntil: 'domcontentloaded' })
+    await visible(page.getByRole('button', { name: 'Play motion' }))
+    assert.equal(await page.evaluate(() => window.__LEU_MOTION_TEST.playing), false)
+    await page.getByRole('button', { name: 'Play motion' }).click()
+    await page.waitForFunction(() => window.__LEU_MOTION_TEST.frames >= 4, null, { timeout: 15000 })
+    console.log('PASS ' + engine + '-' + width + ': Reduced Motion respected and user can explicitly start preview')
+    assert.deepEqual(errors, [], engine + ': motion preview browser exceptions')
+  } catch (error) {
+    await page.screenshot({ path: join(evidence, 'motion-failed-' + engine + '-' + width + '.png'), fullPage: true }).catch(() => {})
+    console.error('FAIL ' + engine + '-' + width + ': ' + (error?.stack ?? error))
+    if (errors.length) console.error('Browser errors:', errors)
+    throw error
+  } finally {
+    await browser.close()
+  }
+}
+
 try {
   await runBrowser(webkit, 'webkit-iphone', true, 390)
   await runBrowser(webkit, 'webkit-compact', true, 320)
   await runBrowser(chromium, 'chromium-desktop', false, 1440)
   await runBrowser(chromium, 'chromium-mobile', true, 390)
+  await checkMotionPreviews(webkit, 'webkit-iphone', 390)
+  await checkMotionPreviews(chromium, 'chromium-android', 390)
 } catch {
   process.exitCode = 1
 } finally {
