@@ -153,6 +153,27 @@ async function runBrowser(browserType, name, mobile, width) {
       await unhidden(page.getByRole('navigation', { name: 'Mobile places' }))
     }
 
+    // Full-screen reading should be real immersive layout, with reflowing,
+    // selectable text and high-resolution zoom for original PDF pages.
+    await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
+    await visible(page.locator('.reader.reader-immersive'))
+    const textSize = await page.locator('.reader-immersive .prose').evaluate((element) => parseFloat(getComputedStyle(element).fontSize))
+    await page.getByRole('button', { name: 'Zoom in' }).click()
+    await page.waitForFunction((before) => parseFloat(getComputedStyle(document.querySelector('.reader-immersive .prose')).fontSize) > before, textSize)
+    await page.getByRole('button', { name: 'Reset zoom' }).click()
+    await page.getByRole('radio', { name: 'Original page' }).click()
+    await visible(page.locator('.reader-immersive .original-stage canvas'))
+    await page.waitForFunction(() => Number.parseFloat(document.querySelector('.reader-immersive canvas.original-page')?.style.width ?? '0') > 0)
+    const originalWidth = await page.locator('canvas.original-page').evaluate((el) => Number.parseFloat(el.style.width))
+    await page.getByRole('button', { name: 'Zoom in' }).click()
+    await page.waitForFunction((before) => Number.parseFloat(document.querySelector('canvas.original-page')?.style.width ?? '0') > before, originalWidth)
+    await page.getByRole('radio', { name: 'For reading' }).click()
+    await visible(page.locator('.reader-immersive .prose p').first())
+    await page.getByRole('button', { name: 'Exit full-screen reading' }).click()
+    await unhidden(page.locator('.reader.reader-immersive'))
+    await visible(page.locator('.reader-paper .prose p').first())
+    await noHorizontalOverflow(page, 'After full-screen zoom ' + name)
+
     await selectPassage(page)
     await page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Keep a note' }).click()
     await visible(page.getByRole('dialog', { name: /Keep a note from Computer Science Essentials/i }))
@@ -176,6 +197,36 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.locator('.reader-paper[aria-label="Page 2 of 4"]'))
     await page.getByRole('button', { name: 'Previous page' }).click()
     await visible(page.locator('.reader-paper[aria-label="Page 1 of 4"]'))
+
+    // Simulate an existing Leu user whose indexed text was saved as empty by
+    // an older Safari PDF parser. Search must repair from the saved PDF.
+    const sampleId = await page.evaluate(() => {
+      const state = JSON.parse(localStorage.getItem('leu.web.v1'))
+      return state.books.find((book) => book.title === 'Computer Science Essentials').id
+    })
+    await page.evaluate(async (id) => {
+      await new Promise((resolve, reject) => {
+        const open = indexedDB.open('keyval-store')
+        open.onerror = () => reject(open.error)
+        open.onsuccess = () => {
+          const database = open.result
+          const tx = database.transaction('keyval', 'readwrite')
+          tx.objectStore('keyval').put(['', '', '', ''], `text:${id}`)
+          tx.oncomplete = () => { database.close(); resolve() }
+          tx.onerror = () => reject(tx.error)
+        }
+      })
+    }, sampleId)
+    await page.getByRole('button', { name: 'Search books' }).click()
+    await visible(page.getByRole('dialog', { name: 'Search your books' }))
+    await page.getByRole('textbox', { name: 'Ask your books anything' }).fill('References')
+    await visible(page.locator('#result-0'), 40000)
+    const bestSource = await page.locator('#result-0 .result-place').innerText()
+    assert.ok(bestSource.includes('Computer Science Essentials'), 'Repaired search should find the sample book')
+    assert.ok(bestSource.includes('p. 3'), `References must link to its real source on page 3, got: ${bestSource}`)
+    await page.locator('#result-0').click()
+    await visible(page.locator('.reader-paper[aria-label="Page 3 of 4"]'))
+    await noHorizontalOverflow(page, 'Recovered search result ' + name)
 
     await goTo(page, mobile, 'Notes')
     await visible(page.getByText(noteText))
@@ -232,7 +283,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await noHorizontalOverflow(page, 'Final ' + name)
     assert.deepEqual(pageErrors, [], name + ': browser exceptions')
     await page.screenshot({ path: join(evidence, evidenceName + '-passed.png'), fullPage: false })
-    console.log(`PASS ${evidenceName}: sample import, reader, touch menu, mobile voice selection and speed, horizontal swipe navigation, text notes, original PDF, explain, page turns, library, study, explore/trails, search, responsive width`)
+    console.log(`PASS ${evidenceName}: sample import, reader, touch menu, mobile voice and swipes, text notes, full-screen reflow and PDF zoom, legacy index self-repair, exact source search, page turns, library, study, explore/trails, responsive width`)
   } catch (error) {
     await page.screenshot({ path: join(evidence, evidenceName + '-failed.png'), fullPage: true, timeout: 12000 }).catch(() => {})
     console.error(`FAIL ${evidenceName}: ${error?.stack ?? error}`)

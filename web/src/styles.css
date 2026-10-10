@@ -750,3 +750,121 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
   .dock-speed { min-width: 39px; width: 39px; }
   .dock-menu { min-width: min(280px, calc(100vw - 42px)); }
 }
+
+/* Reliable search: a transparent indexing state instead of a false "no results". */
+.search-progress {
+  display: flex; align-items: center; gap: 12px; margin: 8px 0 18px;
+  padding: 14px 16px; border-radius: 14px; background: var(--paper);
+  border: 1px solid rgba(92,107,71,.24);
+  font-size: 14px; font-weight: 600; line-height: 1.45;
+}
+.search-progress-dot {
+  width: 9px; height: 9px; flex: none; border-radius: 50%;
+  background: var(--held); animation: breathe 1.4s ease-in-out infinite;
+}
+.search-progress-count { display: block; font-size: 12px; color: var(--secondary); font-weight: 500; }
+.search-empty { display: grid; gap: 12px; justify-items: start; padding: 4px 0 12px; }
+.search-empty .link { min-height: 40px; }
+
+/* Immersive reader: native-feeling full-screen presentation on iPhone Safari
+   without relying on Fullscreen API support. Zoomed prose reflows and stays
+   selectable. Original PDF is rerendered at high resolution and can be panned. */
+.reader-view-controls { display: flex; align-items: center; justify-content: flex-end; gap: 10px; min-width: 0; }
+.reader-focus-toggle {
+  display: inline-flex; justify-content: center; align-items: center; gap: 8px;
+  min-height: 42px; padding: 0 13px; border-radius: 12px;
+  color: var(--ink); background: var(--cream);
+  box-shadow: inset 0 0 0 1px rgba(92,107,71,.4);
+  font-size: 13px; font-weight: 750; white-space: nowrap;
+}
+.reader-focus-toggle:hover, .reader-zoom-controls button:hover:not(:disabled) { background: #E9DFC8; }
+.reader-focus-toggle svg { flex: none; }
+.reader-zoom-controls {
+  display: flex; align-items: center; gap: 1px; padding: 3px;
+  border-radius: 12px; background: #EDE5D2; color: var(--ink);
+}
+.reader-zoom-controls button {
+  display: grid; place-items: center; min-width: 38px; min-height: 36px;
+  padding: 0 5px; border-radius: 9px; font-weight: 800; font-size: 20px;
+}
+.reader-zoom-controls button:disabled { opacity: .35; cursor: default; }
+.reader-zoom-controls .reader-zoom-level { font-size: 13px; min-width: 56px; font-variant-numeric: tabular-nums; }
+.original-stage {
+  width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden;
+  overscroll-behavior-x: contain; scrollbar-width: thin;
+}
+.original-stage .original-page { display: block; max-width: 100%; margin: 0 auto; }
+.reader.reader-immersive {
+  position: fixed; inset: 0; z-index: 85; display: flex; flex-direction: column;
+  width: 100%; max-width: none; height: 100dvh; min-height: 0; padding: 0;
+  overflow: hidden; background: var(--paper); animation: none;
+}
+.reader-immersive .reader-bar {
+  flex: none; display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 10px 14px; margin: 0;
+  padding: 12px 22px; background: var(--cream);
+  border-bottom: 1px solid rgba(92,107,71,.22);
+}
+.reader-immersive .reader-bar .reader-back { flex: 1 1 140px; min-width: 0; }
+.reader-immersive .reader-view-controls { flex: 0 0 auto; }
+.reader-immersive .reader-grid {
+  display: block !important; flex: 1 1 auto; min-height: 0; width: 100%;
+  padding: 18px 18px 28px; overflow-y: auto; overflow-x: hidden;
+  overscroll-behavior: contain; background: var(--paper);
+}
+.reader-immersive .rail, .reader-immersive .margin { display: none !important; }
+.reader-immersive .reader-paper {
+  width: 100%; max-width: 960px; min-height: 100%; margin: 0 auto;
+  padding: 40px clamp(22px, 6vw, 90px) 70px; border-radius: 12px;
+  box-shadow: none; background: var(--paper);
+  touch-action: pan-x pan-y;
+}
+.reader-immersive .reader-paper .prose {
+  font-size: calc(19px * var(--reader-zoom, 1)); line-height: 1.7;
+}
+.reader-immersive .reader-paper .prose h2 {
+  font-size: calc(28px * var(--reader-zoom, 1));
+}
+.reader-immersive .original-stage {
+  overflow: auto; max-width: 100%; touch-action: pan-x pan-y;
+}
+.reader-immersive .original-stage .original-page {
+  max-width: none; touch-action: pan-x pan-y;
+}
+.reader-immersive .reader-foot {
+  position: relative; flex: none; bottom: auto; z-index: 22;
+  margin: 0; padding: 10px 20px max(12px, env(safe-area-inset-bottom));
+  background: var(--cream); border-top: 1px solid rgba(92,107,71,.22);
+}
+.reader-immersive .reader-foot .dock { max-width: 940px; }
+.reader-immersive .voice-notice { flex: none; margin: 6px 16px; }
+@media (max-width: 720px) {
+  .reader-focus-toggle { min-height: 44px; }
+  .reader-immersive .reader-bar {
+    padding: max(10px, env(safe-area-inset-top)) 12px 10px;
+    gap: 8px;
+  }
+  .reader-immersive .reader-back { min-height: 38px; max-width: calc(100vw - 150px); }
+  .reader-immersive .segmented { order: 3; }
+  .reader-immersive .reader-view-controls { order: 2; justify-content: flex-end; }
+  .reader-immersive .reader-view-controls .reader-focus-toggle { padding: 0 10px; }
+  .reader-immersive .reader-grid { padding: 0 4px 10px; }
+  .reader-immersive .reader-paper {
+    width: 100%; max-width: 100%; min-height: 100%; padding: 26px 18px 46px;
+    touch-action: pan-x pan-y;
+  }
+  .reader-immersive .reader-paper .prose { font-size: calc(18px * var(--reader-zoom, 1)); }
+  .reader-immersive .reader-paper .prose h2 { font-size: calc(25px * var(--reader-zoom, 1)); }
+  .reader-immersive .reader-foot { padding: 8px 8px max(8px, env(safe-area-inset-bottom)); }
+  .reader-immersive .reader-focus-toggle { font-size: 12px; }
+  .reader-immersive .reader-zoom-controls button { min-width: 35px; }
+}
+@media (max-width: 350px) {
+  .reader-immersive .reader-bar { gap: 6px; }
+  .reader-immersive .reader-view-controls { width: 100%; justify-content: space-between; }
+  .reader-immersive .segmented { order: 2; }
+  .reader-immersive .reader-view-controls { order: 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reader-immersive .reader-paper { animation: none; }
+}
