@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Swatch } from '../components/ui'
 import { go } from '../lib/router'
-import { allText, useStore } from '../lib/store'
+import { useStore } from '../lib/store'
+import { prepareSearchIndex, type SearchIndexProgress } from '../lib/searchIndex'
 import { search } from '../lib/text'
 import { mark } from './Explore'
 
@@ -12,6 +13,11 @@ export function Search({ onClose }: { onClose: () => void }) {
   const [q, setQ] = useState('')
   const [lib, setLib] = useState<Map<string, string[]> | null>(null)
   const [active, setActive] = useState(0)
+  const [retry, setRetry] = useState(0)
+  const [progress, setProgress] = useState<SearchIndexProgress>({
+    completed: 0, total: books.length, checking: null, page: 0,
+    pages: 0, repaired: 0, errors: 0, done: false,
+  })
   const dialog = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null
@@ -29,8 +35,30 @@ export function Search({ onClose }: { onClose: () => void }) {
     document.addEventListener('keydown', trap)
     return () => { document.body.style.overflow = oldOverflow; document.removeEventListener('keydown', trap); previous?.focus() }
   }, [])
-  useEffect(() => { void allText().then(setLib).catch((error) => { console.warn('[leu] Search unavailable:', error); setLib(new Map()) }) }, [])
-  const results = useMemo(() => (lib && q.trim().length > 1 ? search(lib, q) : []), [lib, q])
+  useEffect(() => {
+    const controller = new AbortController()
+    void prepareSearchIndex((index, status) => {
+      if (controller.signal.aborted) return
+      setLib(index)
+      setProgress(status)
+    }, controller.signal).catch((error) => {
+      if (controller.signal.aborted) return
+      console.warn('[leu] Search could not finish indexing:', error)
+      setProgress((old) => ({ ...old, done: true, errors: old.errors + 1 }))
+    })
+    return () => controller.abort()
+  }, [books.length, retry])
+  const results = useMemo(() => {
+    if (!lib || q.trim().length <= 1) return []
+    const found = search(lib, q)
+    // Find a matching book title even when that PDF contains no extractable text.
+    const titleHits = books
+      .filter((book) => book.title.toLocaleLowerCase().includes(q.trim().toLocaleLowerCase()))
+      .filter((book) => !found.some((item) => item.bookId === book.id))
+      .map((book) => ({ bookId: book.id, page: 1, score: 1, snippet: book.title }))
+    return [...found, ...titleHits].slice(0, 30)
+  }, [lib, q, books])
+  const searching = !progress.done
   useEffect(() => setActive(0), [q])
 
   const open = (i: number) => { const r = results[i]; if (!r) return; onClose(); go({ name: 'read', id: r.bookId, page: r.page }) }
@@ -66,8 +94,29 @@ export function Search({ onClose }: { onClose: () => void }) {
           </button>
         </div>
         <div id="search-results" role="listbox" aria-label="Results" className="search-results">
-          {!q.trim() && <p className="muted search-hint">Search across the ideas inside your library. Ask it like a question, or use the exact term.</p>}
-          {q.trim().length > 1 && lib && !results.length && <p className="muted search-hint">Nothing in your books says that yet. Try fewer words, or the word the book would use.</p>}
+          {!q.trim() && <p className="muted search-hint">Find passages, chapters and ideas across your own PDFs. Results always open the original source page.</p>}
+          {searching && (
+            <div className="search-progress" role="status" aria-live="polite">
+              <span className="search-progress-dot" aria-hidden="true" />
+              <span>
+                {progress.checking
+                  ? `Checking ${progress.checking}${progress.pages ? ` · page ${progress.page} of ${progress.pages}` : ''}`
+                  : 'Preparing your searchable library…'}
+                <span className="search-progress-count">{progress.completed} / {progress.total} books</span>
+              </span>
+            </div>
+          )}
+          {q.trim().length > 1 && lib && !results.length && !searching && (
+            <div className="search-empty">
+              <p className="muted search-hint">No matching passage in your indexed books. Try a shorter phrase or check the spelling.</p>
+              <button className="link small" onClick={() => setRetry((n) => n + 1)}>Check the PDFs again</button>
+            </div>
+          )}
+          {!searching && progress.errors > 0 && (
+            <p className="muted small" role="status">
+              Some PDF pages could not be indexed. Text-based PDFs remain searchable; image-only pages need OCR.
+            </p>
+          )}
           {best && (
             <>
               <p className="eyebrow paper">Best answer, from your own library</p>
