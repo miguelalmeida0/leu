@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
-import { mkdir, writeFile } from 'node:fs/promises'
+import { mkdir, writeFile, readdir } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { chromium, webkit } from 'playwright'
@@ -11,6 +11,24 @@ const evidence = join(root, 'qa-evidence')
 await mkdir(evidence, { recursive: true })
 const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4177', '--strictPort'], { cwd: root, stdio: 'ignore' })
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+// A cached worker must retain the same security policy as its initial response.
+// Missing COEP on Vite's 304 responses caused a separate Safari reader fallback
+// after reload; do not hide that browser exception in the Home regression test.
+async function checkRevalidatedWorker() {
+  const name = (await readdir(join(root, 'dist/assets'))).find((item) => /^pdf\.worker.*\.mjs$/.test(item))
+  assert.ok(name, 'Production PDF worker not found')
+  const first = await fetch(base + '/assets/' + name)
+  assert.equal(first.status, 200)
+  const etag = first.headers.get('etag')
+  assert.ok(etag, 'The worker must be cache-revalidated in this check')
+  await first.arrayBuffer()
+  const cached = await fetch(base + '/assets/' + name, { headers: { 'If-None-Match': etag } })
+  assert.equal(cached.status, 304)
+  assert.equal(cached.headers.get('Cross-Origin-Embedder-Policy'), 'require-corp')
+  assert.equal(cached.headers.get('Cross-Origin-Resource-Policy'), 'same-origin')
+  console.log('PASS worker revalidation preserves COEP and CORP')
+}
 
 // Inspect visible canvas pixels on the actual app route, with real elapsed time.
 // No isolated scene fixture, synthetic animation clock, or image-load-only assertion.
@@ -94,6 +112,7 @@ async function run(engine, label, width, reduced) {
     await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible' })
     phase = 'return-home'
     await page.getByRole('link', { name: 'Leu, home', exact: true }).click()
+    await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     assert.equal(await page.getByRole('button', { name: 'Play animation', exact: true }).count(), 1, 'Pause choice must survive app navigation')
     assert.equal(await movement(page), 0)
     await page.getByRole('button', { name: 'Play animation', exact: true }).click()
@@ -117,6 +136,7 @@ try {
     await sleep(200)
   }
   assert.ok(ready, 'Preview server did not start')
+  await checkRevalidatedWorker()
   const failed = []
   for (const args of [
     [webkit, 'webkit-390-reduced', 390, 'reduce'],
