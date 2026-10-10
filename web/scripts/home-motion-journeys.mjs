@@ -12,16 +12,13 @@ await mkdir(evidence, { recursive: true })
 const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4177', '--strictPort'], { cwd: root, stdio: 'ignore' })
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-// A cached worker must retain the same security policy as its initial response.
-// Missing COEP on Vite's 304 responses caused a separate Safari reader fallback
-// after reload; do not hide that browser exception in the Home regression test.
 async function checkRevalidatedWorker() {
   const name = (await readdir(join(root, 'dist/assets'))).find((item) => /^pdf\.worker.*\.mjs$/.test(item))
   assert.ok(name, 'Production PDF worker not found')
   const first = await fetch(base + '/assets/' + name)
   assert.equal(first.status, 200)
   const etag = first.headers.get('etag')
-  assert.ok(etag, 'The worker must be cache-revalidated in this check')
+  assert.ok(etag, 'Worker must be cache-revalidated in this check')
   await first.arrayBuffer()
   const cached = await fetch(base + '/assets/' + name, { headers: { 'If-None-Match': etag } })
   assert.equal(cached.status, 304)
@@ -30,18 +27,19 @@ async function checkRevalidatedWorker() {
   console.log('PASS worker revalidation preserves COEP and CORP')
 }
 
-// Inspect visible canvas pixels on the actual app route, with real elapsed time.
-// No isolated scene fixture, synthetic animation clock, or image-load-only assertion.
-async function movement(page) {
+// Verify the real Home canvas AND the composited pixels the browser displays.
+// A running offscreen canvas or an advancing counter is not a passing animation.
+async function movement(page, label) {
   const canvas = page.locator('.home-scene .nook-glass canvas')
   await canvas.waitFor({ state: 'visible' })
   await canvas.scrollIntoViewIfNeeded()
   await page.waitForTimeout(1600)
+  const screenBefore = await page.locator('.home-scene .nook-glass').screenshot()
   await canvas.evaluate((el) => {
-    window.__homeBefore = Array.from(el.getContext('2d').getImageData(0, 0, el.width, el.height).data)
+    window.__homeBefore = el.getContext('2d').getImageData(0, 0, el.width, el.height).data
   })
   await page.waitForTimeout(1600)
-  return canvas.evaluate((el) => {
+  const fraction = await canvas.evaluate((el) => {
     const pixels = el.getContext('2d').getImageData(0, 0, el.width, el.height).data
     const old = window.__homeBefore
     let changed = 0
@@ -50,6 +48,11 @@ async function movement(page) {
     }
     return changed / (pixels.length / 4)
   })
+  const screenAfter = await page.locator('.home-scene .nook-glass').screenshot()
+  const screenChanged = !screenBefore.equals(screenAfter)
+  console.log('MOTION ' + label + ': ' + JSON.stringify({ changedPercent: fraction * 100, screenChanged }))
+  if (fraction > 0.005) assert.ok(screenChanged, label + ': moving canvas must also change the visible illustration')
+  return fraction
 }
 
 async function run(engine, label, width, reduced) {
@@ -64,8 +67,11 @@ async function run(engine, label, width, reduced) {
     console.log('HOME ' + label + ' ' + JSON.stringify(entry))
   }
   page.on('pageerror', (error) => { errors.push({ phase, message: error.message }); record('exception', error.message) })
+  page.on('crash', () => record('crash', 'Browser page process crashed'))
+  page.on('close', () => record('close', 'Browser page closed'))
   page.on('requestfailed', (request) => record('network', { url: request.url(), reason: request.failure()?.errorText }))
   page.on('console', (message) => { if (message.type() === 'error') record('console', message.text()) })
+  const moves = () => movement(page, label + '/' + phase)
   try {
     await page.goto(base, { waitUntil: 'domcontentloaded' })
     phase = 'import'
@@ -75,27 +81,27 @@ async function run(engine, label, width, reduced) {
     phase = 'home'
     await page.getByRole('link', { name: 'Leu, home', exact: true }).click()
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
-    const initialChange = await movement(page)
+    const initialChange = await moves()
     record('initial', { preference: reduced, changedPercent: initialChange * 100, hasPlay: await page.getByRole('button', { name: 'Play animation', exact: true }).count(), hasPause: await page.getByRole('button', { name: 'Pause animation', exact: true }).count() })
     await page.screenshot({ path: join(evidence, 'home-' + label + '-before.png') })
     if (reduced === 'reduce') {
-      assert.equal(initialChange, 0, 'Device reduced-motion preference must initially be respected')
-      assert.equal(await page.getByRole('button', { name: 'Play animation', exact: true }).count(), 1, 'Home silently disables its illustration: the user needs an explicit Play animation control')
+      assert.equal(initialChange, 0, 'Reduced-motion preference must initially be respected')
+      assert.equal(await page.getByRole('button', { name: 'Play animation', exact: true }).count(), 1, 'A paused Home illustration must have an explicit Play control')
       await page.getByRole('button', { name: 'Play animation', exact: true }).click()
-    } else {
-      assert.ok(initialChange > 0, 'Home must animate automatically without touch')
-    }
-    phase = 'play-pause'
-    assert.ok(await movement(page) > 0.005, 'Playing must produce visible rain, not only a running timer')
+    } else assert.ok(initialChange > 0.005, 'Home must visibly animate automatically without touch')
+    phase = 'play'
+    assert.ok(await moves() > 0.005, 'Playing must produce visible rain')
     await page.getByRole('button', { name: 'Pause animation', exact: true }).click()
-    assert.equal(await movement(page), 0, 'Pause must stop the actual scene')
+    phase = 'pause'
+    assert.equal(await moves(), 0, 'Pause must stop the actual scene')
     await page.getByRole('button', { name: 'Play animation', exact: true }).click()
-    assert.ok(await movement(page) > 0.005, 'Play must restart the actual scene')
+    phase = 'restart'
+    assert.ok(await moves() > 0.005, 'Play must restart the actual scene')
     phase = 'reload'
     await page.reload({ waitUntil: 'domcontentloaded' })
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     assert.equal(await page.getByRole('button', { name: 'Pause animation', exact: true }).count(), 1, 'An explicit playback choice must survive reloading')
-    assert.ok(await movement(page) > 0.005, 'The scene must resume after reload')
+    assert.ok(await moves() > 0.005, 'The scene must resume after reload')
     phase = 'other-tab'
     const other = await context.newPage()
     await other.goto('about:blank')
@@ -103,7 +109,7 @@ async function run(engine, label, width, reduced) {
     await other.close()
     await page.bringToFront()
     await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })))
-    assert.ok(await movement(page) > 0.005, 'The scene must resume after returning to the page')
+    assert.ok(await moves() > 0.005, 'The scene must resume after returning to the page')
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false)
     assert.equal(await page.locator('.nook-glass canvas').evaluate((el) => getComputedStyle(el).touchAction), 'auto')
     phase = 'reopen-reader'
@@ -114,12 +120,11 @@ async function run(engine, label, width, reduced) {
     await page.getByRole('link', { name: 'Leu, home', exact: true }).click()
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     assert.equal(await page.getByRole('button', { name: 'Play animation', exact: true }).count(), 1, 'Pause choice must survive app navigation')
-    assert.equal(await movement(page), 0)
+    assert.equal(await moves(), 0)
     await page.getByRole('button', { name: 'Play animation', exact: true }).click()
     await page.screenshot({ path: join(evidence, 'home-' + label + '-after.png') })
-    record('behaviors-passed', 'Motion, pause, reload and reading navigation passed')
     assert.deepEqual(errors, [], 'Home must not raise browser exceptions')
-    console.log('PASS ' + label + ': actual Home rain, explicit reduced-motion override, Pause/Play, reload, return to page, reading and scrolling')
+    console.log('PASS ' + label + ': actual visible Home rain, reduced-motion override, Pause/Play, reload, return to page, reading and scrolling')
   } catch (error) {
     record('failure', String(error))
     await page.screenshot({ path: join(evidence, 'home-' + label + '-failed.png'), fullPage: true }).catch(() => {})

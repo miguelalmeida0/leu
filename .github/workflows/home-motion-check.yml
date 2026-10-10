@@ -35,18 +35,20 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
           npx playwright install --with-deps chromium webkit
-      - name: Test actual Home route, not isolated illustrations
-        working-directory: web
-        run: node scripts/home-motion-journeys.mjs
       - name: Existing app regressions
         working-directory: web
         run: |
           node scripts/browser-journeys.mjs
           node scripts/scene-journeys.mjs
+      - name: Test actual Home route, not isolated illustrations
+        working-directory: web
+        run: node scripts/home-motion-journeys.mjs
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
           name: home-motion-evidence
-          path: web/qa-evidence/*.png
+          path: |
+            web/qa-evidence/*.png
+            web/qa-evidence/home-*-diagnostics.json
           if-no-files-found: warn
           retention-days: 3

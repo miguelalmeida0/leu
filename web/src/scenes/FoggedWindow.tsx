@@ -21,6 +21,7 @@ class Glass {
   nextMover = 0.4
   last = 0
   w = 0; h = 0
+  wasMoving = false
 
   seed(w: number, h: number) {
     this.w = w; this.h = h
@@ -48,7 +49,18 @@ class Glass {
       m.fillRect(0, 0, this.mask.width, this.mask.height)
       m.globalCompositeOperation = 'source-over'
     }
-    if (reduced) { this.movers = []; return }
+    if (reduced) { this.movers = []; this.wasMoving = false; return }
+    if (!this.wasMoving) {
+      // Start visibly on the first frame. Previously a random spawn delay,
+      // followed by a random rest, could make Play look unresponsive for seconds.
+      this.movers = [0.22, 0.51, 0.78].map((x, index) => ({
+        d: { x, y: 0.08 + index * 0.13, r: (7.5 - index * 0.45) / U },
+        speed: 48 + index * 7, target: 58 + index * 7, pause: 0,
+        travelled: 0, phase: index * 2.3,
+      }))
+      this.nextMover = 0.35
+      this.wasMoving = true
+    }
     this.nextMover -= dt
     const many = this.running
     if (this.nextMover <= 0 && this.movers.length < (many ? 20 : 14)) {
