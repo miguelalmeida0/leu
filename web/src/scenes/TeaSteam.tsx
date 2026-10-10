@@ -14,6 +14,7 @@ export function TeaSteam() {
   const reduced = useReducedMotion()
 
   useCanvasLoop(canvas, (ctx, w, h, now) => {
+    if (reduced) { ctx.clearRect(0, 0, w, h); return }
     const k = w / 260, rimR = 9
     if (now > next.current) {
       wisps.current.push({ born: now, life: reduced ? 9 : rand(6.2, 7.8), x0: rand(-1, 1) * rimR * 0.7, lean: rand(-1, 1) * 16 + 8, phase: rand(0, 9), curl: rand(0.8, 1.4), width: rand(0.8, 1.3) })
@@ -47,7 +48,7 @@ export function TeaSteam() {
       }
     }
     ctx.restore()
-  }, { fps: matchMedia('(pointer: coarse)').matches ? 20 : 30 })
+  }, { fps: matchMedia('(pointer: coarse)').matches ? 20 : 30, still: reduced })
 
   return <canvas ref={canvas} className="scene-canvas" aria-hidden="true" style={{ pointerEvents: 'none' }} />
 }

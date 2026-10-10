@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { loadImage, useCanvasLoop, useReducedMotion } from '../lib/motion'
+import { loadImage, useCanvasLoop, useReducedMotion, useTouchScreen } from '../lib/motion'
 
 /* A snow globe with a cottage inside (SnowGlobe.swift + GlobeSnow.swift). Each idea you get
    across lights one of its three windows; the third glows in slowly and gives the water a little
@@ -156,7 +156,11 @@ export function SnowGlobe({ lit, label }: { lit: number; label?: string }) {
   const snow = useRef(new Snow())
   const back = useRef(document.createElement('canvas'))
   const reduced = useReducedMotion()
+  const touch = useTouchScreen()
   const first = useRef(true)
+  const replay = useRef({ stage: -1, cycle: -1 })
+  const litRef = useRef(lit)
+  litRef.current = lit
 
   useEffect(() => {
     if (first.current) { snow.current.target = snow.current.shown = lit; first.current = false }
@@ -165,6 +169,18 @@ export function SnowGlobe({ lit, label }: { lit: number; label?: string }) {
 
   useCanvasLoop(canvas, (ctx, w, h, now) => {
     const s = snow.current
+    if (!reduced && s.pointer === null) {
+      // When idle on any screen, every 20 seconds the windows go down and light again,
+      // one by one, up to the ones you have earned. With none earned yet the snow still swirls.
+      const t = now % 20, cycle = Math.floor(now / 20), earned = litRef.current
+      const stage = t < 2 ? 0 : t < 5.5 ? 1 : t < 9 ? 2 : t < 16 ? 3 : 0
+      const r = replay.current
+      if (stage !== r.stage || s.target !== Math.min(stage, earned)) {
+        r.stage = stage
+        if (earned === 0 && stage === 1 && cycle !== r.cycle) { r.cycle = cycle; s.kick(centre.x, centre.y, false) }
+        s.light(Math.min(stage, earned), false)
+      }
+    }
     s.advance(now, reduced)
     const k = w / ART.w
     ctx.clearRect(0, 0, w, h)
@@ -217,7 +233,7 @@ export function SnowGlobe({ lit, label }: { lit: number; label?: string }) {
     ctx.globalCompositeOperation = 'source-over'
     for (const f of s.flakes) if (f.y <= 0.006) flake(ctx, f, k, s.now, reduced)
     ctx.restore()
-  }, { fps: matchMedia('(pointer: coarse)').matches ? 22 : 30 })
+  }, { fps: touch ? 22 : 30 })
 
   const toArt = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const r = e.currentTarget.getBoundingClientRect(), k = r.width / ART.w
@@ -236,6 +252,7 @@ export function SnowGlobe({ lit, label }: { lit: number; label?: string }) {
       onPointerMove={(e) => {
         // Preserve the ambient snowfall, but never stir it from mobile touch.
         if (e.pointerType !== 'mouse') return
+        if (snow.current.pointer === null) snow.current.light(litRef.current, false)
         const p = toArt(e); snow.current.stir(p.x, p.y)
       }}
       onPointerLeave={() => { snow.current.pointer = null }}

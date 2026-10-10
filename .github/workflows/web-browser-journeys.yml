@@ -45,7 +45,9 @@ jobs:
           npx playwright install --with-deps chromium webkit
       - name: Run desktop, Android-sized and iPhone-sized journeys
         working-directory: web
-        run: node scripts/browser-journeys.mjs
+        run: |
+          node scripts/browser-journeys.mjs
+          node scripts/scene-journeys.mjs
       - name: Save browser evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7

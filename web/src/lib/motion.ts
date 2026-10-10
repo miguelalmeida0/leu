@@ -11,6 +11,20 @@ export function useReducedMotion(): boolean {
   return reduced
 }
 
+/** Touch screens: no hover, and a finger on a canvas usually scrolls the page. The scenes
+    play on their own there instead of waiting for a pointer. */
+export function useTouchScreen(): boolean {
+  const query = '(hover: none), (pointer: coarse)'
+  const [touch, setTouch] = useState(() => matchMedia(query).matches)
+  useEffect(() => {
+    const q = matchMedia(query)
+    const on = () => setTouch(q.matches)
+    q.addEventListener('change', on)
+    return () => q.removeEventListener('change', on)
+  }, [])
+  return touch
+}
+
 /** Images, loaded once and shared between scenes. */
 const images = new Map<string, Promise<HTMLImageElement>>()
 export function loadImage(src: string): Promise<HTMLImageElement> {
