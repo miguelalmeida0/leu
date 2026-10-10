@@ -105,7 +105,7 @@ export function Basket() {
     ctx.lineCap = 'round'; ctx.lineJoin = 'round'
     path(); ctx.strokeStyle = '#C98476'; ctx.lineWidth = Math.max(1.6, w * 0.0026); ctx.stroke()
     path(); ctx.strokeStyle = '#EBB5A3'; ctx.lineWidth = Math.max(0.8, w * 0.0012); ctx.stroke()
-  }, { fps: 60, still: reduced })
+  }, { fps: matchMedia('(pointer: coarse)').matches ? 24 : 60, still: reduced })
 
   const at = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const r = e.currentTarget.getBoundingClientRect()
@@ -128,19 +128,21 @@ export function Basket() {
       role="img"
       tabIndex={0}
       aria-label="A knitting basket with yarn and a half-finished striped blanket. A loose strand of yarn runs to a ball on the floor; press Enter to give it a pluck."
-      style={{ touchAction: 'none' }}
+      style={{ touchAction: 'auto' }}
       onPointerMove={(e) => {
+        if (e.pointerType !== 'mouse') return
         const H = hand.current, p = at(e)
         H.vx = p.x - H.x; H.vy = p.y - H.y; H.x = p.x; H.y = p.y; H.inside = true
         const near = nearest(p.x, p.y).d < rope.current.w * 0.03
         e.currentTarget.style.cursor = H.grab > 0 ? 'grabbing' : near ? 'grab' : 'default'
       }}
       onPointerDown={(e) => {
+        if (e.pointerType !== 'mouse') return
         const H = hand.current, p = at(e), n = nearest(p.x, p.y)
         H.x = p.x; H.y = p.y; H.vx = 0; H.vy = 0; H.down = true
         if (n.d < rope.current.w * 0.035) { H.grab = n.index; e.currentTarget.setPointerCapture(e.pointerId); e.currentTarget.style.cursor = 'grabbing' }
       }}
-      onPointerUp={(e) => { const H = hand.current; H.down = false; H.grab = -1; e.currentTarget.style.cursor = 'grab' }}
+      onPointerUp={(e) => { if (e.pointerType !== 'mouse') return; const H = hand.current; H.down = false; H.grab = -1; e.currentTarget.style.cursor = 'grab' }}
       onPointerLeave={() => { const H = hand.current; H.inside = false; if (!H.down) H.grab = -1 }}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!reduced) pluck() } }}
     />

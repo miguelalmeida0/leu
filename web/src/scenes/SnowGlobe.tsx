@@ -217,7 +217,7 @@ export function SnowGlobe({ lit, label }: { lit: number; label?: string }) {
     ctx.globalCompositeOperation = 'source-over'
     for (const f of s.flakes) if (f.y <= 0.006) flake(ctx, f, k, s.now, reduced)
     ctx.restore()
-  })
+  }, { fps: matchMedia('(pointer: coarse)').matches ? 22 : 30 })
 
   const toArt = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const r = e.currentTarget.getBoundingClientRect(), k = r.width / ART.w
@@ -231,9 +231,13 @@ export function SnowGlobe({ lit, label }: { lit: number; label?: string }) {
       className="scene-canvas globe"
       role="img"
       tabIndex={0}
-      aria-label={`${label ?? 'A snow globe with a little cottage inside'}. ${value}. Each idea you get across lights a window. Rest the pointer on the glass to stir the snow, or press Enter.`}
-      style={{ aspectRatio: `${ART.w} / ${ART.h}` }}
-      onPointerMove={(e) => { const p = toArt(e); snow.current.stir(p.x, p.y) }}
+      aria-label={`${label ?? 'A snow globe with a little cottage inside'}. ${value}. Each idea you get across lights a window. The snow moves quietly on its own. Mouse users can stir it, or press Enter.`}
+      style={{ aspectRatio: `${ART.w} / ${ART.h}`, touchAction: 'auto' }}
+      onPointerMove={(e) => {
+        // Preserve the ambient snowfall, but never stir it from mobile touch.
+        if (e.pointerType !== 'mouse') return
+        const p = toArt(e); snow.current.stir(p.x, p.y)
+      }}
       onPointerLeave={() => { snow.current.pointer = null }}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); snow.current.kick(centre.x, centre.y, reduced) } }}
     />

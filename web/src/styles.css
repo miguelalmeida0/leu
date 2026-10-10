@@ -531,6 +531,11 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
 .welcome-art { margin: 0; position: relative; }
 .welcome-art .scene-canvas { aspect-ratio: 1559 / 1147; height: auto; }
 .tug { position: absolute; left: 0; right: 0; bottom: 4%; text-align: center; font-size: 13px; font-weight: 600; color: var(--secondary); opacity: .75; pointer-events: none; }
+.tug-mobile { display: none; }
+@media (pointer: coarse) {
+  .tug-desktop { display: none; }
+  .tug-mobile { display: inline; }
+}
 
 
 /* ---------- wordmark ---------- */

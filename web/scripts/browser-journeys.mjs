@@ -103,6 +103,10 @@ async function runBrowser(browserType, name, mobile, width) {
     await page.goto(base, { waitUntil: 'domcontentloaded', timeout: 30000 })
     await visible(page.getByRole('heading', { name: /Make yourself comfortable/i }))
     await noHorizontalOverflow(page, 'Welcome ' + name)
+    if (mobile) {
+      const touchAction = await page.locator('.welcome-art canvas').evaluate((canvas) => getComputedStyle(canvas).touchAction)
+      assert.equal(touchAction, 'auto', 'Knitting-basket animation must not intercept touch scrolling')
+    }
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await visible(page.getByRole('dialog', { name: /Sewing in Computer Science Essentials/i }))
     await visible(page.locator('.sewn-actions .btn.ink'), 25000)

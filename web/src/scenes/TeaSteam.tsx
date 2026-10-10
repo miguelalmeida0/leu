@@ -47,7 +47,7 @@ export function TeaSteam() {
       }
     }
     ctx.restore()
-  })
+  }, { fps: matchMedia('(pointer: coarse)').matches ? 20 : 30 })
 
   return <canvas ref={canvas} className="scene-canvas" aria-hidden="true" style={{ pointerEvents: 'none' }} />
 }
