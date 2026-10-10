@@ -27,9 +27,14 @@ export interface Block { kind: 'heading' | 'p'; text: string }
 /** A page rebuilt for reading: lines joined into paragraphs, larger type as headings, and the
     running header, footer and page number left out. */
 export async function pageBlocks(doc: PDFDocumentProxy, n: number): Promise<Block[]> {
+  let stage = 'getPage'
+  try {
   const page = await doc.getPage(n)
+  stage = 'viewport'
   const height = page.getViewport({ scale: 1 }).height
+  stage = 'getTextContent'
   const content = await page.getTextContent()
+  stage = 'assemble'
   const items = content.items.filter((i): i is TextItem => 'str' in i && i.str.trim().length > 0)
   if (!items.length) return []
   const lines: { y: number; size: number; text: string }[] = []
@@ -75,6 +80,10 @@ export async function pageBlocks(doc: PDFDocumentProxy, n: number): Promise<Bloc
     prev = line
   }
   return blocks
+  } catch (error) {
+    console.warn(`[leu] PDF pageBlocks stage=${stage}, page=${n}`, error instanceof Error ? error.stack : error)
+    throw error
+  }
 }
 
 /** Bound slow or unresolved PDF worker requests without blocking the UI forever. */

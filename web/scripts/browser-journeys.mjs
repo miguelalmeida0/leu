@@ -206,10 +206,10 @@ async function runBrowser(browserType, name, mobile, width) {
 }
 
 try {
-  await runBrowser(chromium, 'chromium-desktop', false, 1440)
-  await runBrowser(chromium, 'chromium-mobile', true, 390)
   await runBrowser(webkit, 'webkit-iphone', true, 390)
   await runBrowser(webkit, 'webkit-compact', true, 320)
+  await runBrowser(chromium, 'chromium-desktop', false, 1440)
+  await runBrowser(chromium, 'chromium-mobile', true, 390)
 } catch {
   process.exitCode = 1
 } finally {
