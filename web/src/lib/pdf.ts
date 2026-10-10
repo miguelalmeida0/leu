@@ -9,20 +9,48 @@ pdfjs.GlobalWorkerOptions.workerSrc = workerUrl
 
 export type { PDFDocumentProxy }
 
+// Reuse a single parser worker across import/indexing and live reading. Opening a PDF
+// while another one is being indexed must not spawn a competing WebKit module worker.
+// pdf.js does not destroy an externally supplied worker when a document is closed.
+let parserWorker: pdfjs.PDFWorker | undefined
+function sharedWorker(): pdfjs.PDFWorker {
+  return (parserWorker ??= new pdfjs.PDFWorker())
+}
+
 export async function openPdf(data: ArrayBuffer): Promise<PDFDocumentProxy> {
-  // pdf.js takes ownership of the buffer it is given, so it gets a copy.
-  return pdfjs.getDocument({ data: new Uint8Array(data.slice(0)) }).promise
+  // pdf.js transfers the input to the parser; retain IndexedDB's own copy.
+  return pdfjs.getDocument({ data: new Uint8Array(data.slice(0)), worker: sharedWorker() }).promise
 }
 
 export interface Block { kind: 'heading' | 'p'; text: string }
+
+/**
+ * Use the explicit ReadableStream reader. Safari/WebKit versions without
+ * ReadableStream[Symbol.asyncIterator] throw in pdf.js's getTextContent()
+ * despite supporting getReader() and rendering PDFs perfectly.
+ */
+async function readTextItems(page: Awaited<ReturnType<PDFDocumentProxy['getPage']>>): Promise<TextItem[]> {
+  const reader = page.streamTextContent().getReader()
+  const items: TextItem[] = []
+  try {
+    while (true) {
+      const chunk = await reader.read()
+      if (chunk.done) return items
+      for (const item of chunk.value.items) {
+        if ('str' in item && typeof item.str === 'string' && item.str.trim()) items.push(item)
+      }
+    }
+  } finally {
+    reader.releaseLock()
+  }
+}
 
 /** A page rebuilt for reading: lines joined into paragraphs, larger type as headings, and the
     running header, footer and page number left out. */
 export async function pageBlocks(doc: PDFDocumentProxy, n: number): Promise<Block[]> {
   const page = await doc.getPage(n)
   const height = page.getViewport({ scale: 1 }).height
-  const content = await page.getTextContent()
-  const items = content.items.filter((i): i is TextItem => 'str' in i && i.str.trim().length > 0)
+  const items = await readTextItems(page)
   if (!items.length) return []
   const lines: { y: number; size: number; text: string }[] = []
   for (const item of items) {

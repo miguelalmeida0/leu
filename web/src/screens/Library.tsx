@@ -9,6 +9,15 @@ export function Library({ shelf, onBring }: { shelf?: string; onBring: () => voi
   const books = useStore((s) => s.books)
   const [query, setQuery] = useState('')
   const [adding, setAdding] = useState(false)
+  const [importError, setImportError] = useState('')
+  const addSamples = async () => {
+    setAdding(true); setImportError('')
+    try { await importAllSamples() }
+    catch (error) {
+      console.warn('[leu] Sample import failed:', error)
+      setImportError('Could not add all samples. Please try again.')
+    } finally { setAdding(false) }
+  }
   const shelves = useMemo(() => {
     const counts = new Map<string, number>()
     for (const b of books) counts.set(b.shelf, (counts.get(b.shelf) ?? 0) + 1)
@@ -35,10 +44,11 @@ export function Library({ shelf, onBring }: { shelf?: string; onBring: () => voi
         <button className="btn soft" style={{ width: '100%' }} onClick={onBring}>Bring a PDF</button>
         <p className="muted small" style={{ marginTop: 10 }}>or drop one anywhere on this page.</p>
         {missingSamples > 0 && (
-          <button className="link small" style={{ marginTop: 14 }} disabled={adding} onClick={async () => { setAdding(true); await importAllSamples(); setAdding(false) }}>
+          <button className="link small" style={{ marginTop: 14 }} disabled={adding} onClick={() => void addSamples()}>
             {adding ? 'Adding the samples…' : `Add the ${missingSamples === samples.length ? 'six' : missingSamples} sample books`}
           </button>
         )}
+        {importError && <p className="import-error" role="alert">{importError}</p>}
       </aside>
 
       <section className="library-main">
