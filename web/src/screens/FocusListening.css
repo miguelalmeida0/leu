@@ -1,0 +1,30 @@
+/* Reading focus mode: one discreet playback affordance outside the prose. */
+.reader.reader-immersive .reader-foot {
+  position: relative; bottom: auto; flex: none; z-index: 22;
+  display: flex; justify-content: center; align-items: center;
+  width: 100%; margin: 0;
+  padding: 7px 12px max(8px, env(safe-area-inset-bottom));
+  background: var(--cream); border-top: 1px solid rgba(92,107,71,.18);
+  pointer-events: none;
+}
+.reader.reader-immersive .reader-foot .dock[data-focus="true"] {
+  display: block; position: relative; width: 240px; max-width: min(240px, calc(100vw - 24px));
+  margin: 0; padding: 5px; border-radius: 17px;
+  background: var(--ink); color: var(--cream);
+  box-shadow: 0 10px 26px rgba(36,48,31,.16), 0 2px 5px rgba(36,48,31,.15);
+  pointer-events: auto;
+}
+.dock[data-focus="true"] .dock-voice,
+.dock[data-focus="true"] .dock-controls,
+.dock[data-focus="true"] .dock-pages { display: none !important; }
+.dock[data-focus="true"] .dock-line { left: 15px; right: 15px; }
+.dock-focus-action {
+  display: flex; align-items: center; width: 100%; gap: 9px; min-height: 45px;
+  border-radius: 13px; padding: 3px 6px 3px 3px; text-align: left;
+  color: inherit; background: transparent;
+}
+.dock-focus-action:hover:not(:disabled) { background: rgba(248,241,222,.08); }
+.dock-focus-action:focus-visible { outline-color: var(--cream); outline-offset: 2px; }
+.dock-focus-action:disabled { opacity: .55; cursor: default; }
+.dock-focus-play {
+  display: grid; place-items: center; flex: 0 0 ¶»§q«^
