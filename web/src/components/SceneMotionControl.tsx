@@ -1,14 +1,13 @@
 import { useState, type ReactNode } from 'react'
-import { useReducedMotion } from '../lib/motion'
 import { loadSceneMotionChoice, saveSceneMotionChoice, SceneMotionOverride, type SceneMotionChoice } from '../lib/sceneMotion'
 import './SceneMotionControl.css'
 
 /** An explicit way to start the illustration even when automatic motion is off.
  * The control is outside the illustration, so finger gestures still scroll. */
 export function SceneMotionControl({ children }: { children: ReactNode }) {
-  const deviceReduced = useReducedMotion()
   const [choice, setChoice] = useState(loadSceneMotionChoice)
-  const paused = choice === 'auto' ? deviceReduced : choice === 'pause'
+  // Ambient illustrations start automatically. Only an explicit Pause stops them.
+  const paused = choice === 'pause'
   const choose = (next: SceneMotionChoice) => {
     saveSceneMotionChoice(next)
     setChoice(next)
@@ -18,7 +17,7 @@ export function SceneMotionControl({ children }: { children: ReactNode }) {
     <div className="scene-motion" data-playback={paused ? 'paused' : 'playing'}>
       <div className="scene-motion-controls">
         <span className="scene-motion-label" role="status">
-          {paused ? (choice === 'auto' ? 'Paused for reduced motion' : 'Animation paused') : 'Rain and steam'}
+          {paused ? 'Animation paused' : 'Rain and steam'}
         </span>
         <button type="button" className="scene-motion-button"
           aria-label={paused ? 'Play animation' : 'Pause animation'}
@@ -32,7 +31,7 @@ export function SceneMotionControl({ children }: { children: ReactNode }) {
         </button>
       </div>
       {choice !== 'auto' && (
-        <button className="scene-motion-reset" type="button" onClick={() => choose('auto')}>Use device setting</button>
+        <button className="scene-motion-reset" type="button" onClick={() => choose('auto')}>Resume automatic playback</button>
       )}
       <SceneMotionOverride.Provider value={paused}>{children}</SceneMotionOverride.Provider>
     </div>
