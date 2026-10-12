@@ -1,17 +1,12 @@
 name: Leu browser journeys
 
+# A required status must exist for every PR, including documentation-only changes.
+# Path-filtered workflows may remain permanently pending when used as merge gates.
 on:
-  # Experimental `test` pushes are not release gates. Use PR or manual runs.
   push:
-    branches: [main]
-    paths:
-      - 'web/**'
-      - '.github/workflows/web-browser-journeys.yml'
+    branches: [main, test]
   pull_request:
     branches: [main, test]
-    paths:
-      - 'web/**'
-      - '.github/workflows/web-browser-journeys.yml'
   workflow_dispatch:
 
 permissions:
@@ -22,9 +17,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  chromium-and-webkit:
+  browser:
+    name: chromium-and-webkit
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -32,28 +30,87 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v4
         with:
           node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
       - name: Install app dependencies
         working-directory: web
         run: npm ci
       - name: Typecheck and build
         working-directory: web
         run: npm run build
-      - name: Install isolated browser test tooling
+      - name: Install pinned browser test package
+        working-directory: web
+        run: npm install --no-save --no-package-lock playwright@1.56.1
+      - name: Parse-check browser scripts
         working-directory: web
         run: |
-          npm install --no-save --no-package-lock playwright@1.56.1
-          npx playwright install --with-deps chromium webkit
-      - name: Run desktop, Android-sized and iPhone-sized journeys
+          for script in scripts/*-journeys.mjs; do node --check "$script"; done
+      - name: Run reader journeys on desktop, Android and iPhone
         working-directory: web
-        run: |
-          node scripts/browser-journeys.mjs
-          node scripts/home-motion-journeys.mjs
-          node scripts/scene-journeys.mjs
+        run: node scripts/browser-journeys.mjs
+      - name: Verify static animation previews
+        working-directory: web
+        run: node scripts/scene-journeys.mjs
       - name: Save browser evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
-          name: leu-browser-evidence
-          path: web/qa-evidence/*.png
+          name: leu-reader-and-scenes
+          path: web/qa-evidence/
           if-no-files-found: warn
           retention-days: 7
+
+  home:
+    name: home-motion-accessibility
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install app dependencies
+        working-directory: web
+        run: npm ci
+      - name: Typecheck and build
+        working-directory: web
+        run: npm run build
+      - name: Install pinned browser test package
+        working-directory: web
+        run: npm install --no-save --no-package-lock playwright@1.56.1
+      - name: Test Home animation, reduced motion and navigation
+        working-directory: web
+        run: node scripts/home-motion-journeys.mjs
+      - name: Save motion evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: leu-home-motion
+          path: web/qa-evidence/
+          if-no-files-found: warn
+          retention-days: 7
+
+  gate:
+    name: web-release-gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    if: ${{ always() }}
+    needs: [browser, home]
+    steps:
+      - name: Fail closed unless every browser suite passed
+        env:
+          BROWSER_RESULT: ${{ needs.browser.result }}
+          HOME_RESULT: ${{ needs.home.result }}
+        run: |
+          echo "Reader/scene journeys: $BROWSER_RESULT"
+          echo "Home reduced-motion journeys: $HOME_RESULT"
+          if [ "$BROWSER_RESULT" != success ] || [ "$HOME_RESULT" != success ]; then
+            echo '::error::Leu browser release gate failed; do not promote to main.'
+            exit 1
+          fi

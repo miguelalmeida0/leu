@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { useReducedMotionPreference } from '../lib/motion'
 import { loadSceneMotionChoice, saveSceneMotionChoice, SceneMotionOverride, type SceneMotionChoice } from '../lib/sceneMotion'
 import './SceneMotionControl.css'
 
@@ -6,8 +7,9 @@ import './SceneMotionControl.css'
  * The control is outside the illustration, so finger gestures still scroll. */
 export function SceneMotionControl({ children }: { children: ReactNode }) {
   const [choice, setChoice] = useState(loadSceneMotionChoice)
-  // Ambient illustrations start automatically. Only an explicit Pause stops them.
-  const paused = choice === 'pause'
+  // Automatic playback respects the device. Only an explicit Play overrides it.
+  const reducedMotion = useReducedMotionPreference()
+  const paused = choice === 'pause' || (choice === 'auto' && reducedMotion)
   const choose = (next: SceneMotionChoice) => {
     saveSceneMotionChoice(next)
     setChoice(next)

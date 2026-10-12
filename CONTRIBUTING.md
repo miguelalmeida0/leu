@@ -25,3 +25,11 @@ npm run build
 For native journey verification use [the release checklist](docs/RELEASE_CHECKLIST.md). Check Dynamic Type, VoiceOver, source passage provenance and interrupted file operations when affected by a change. Do not report simulated or archival evidence as a fresh successful run.
 
 See [`docs/START_HERE.md`](docs/START_HERE.md) for ownership and navigation.
+
+## Release safety: required process
+
+`main` is not a working branch. Develop on `test`, run local build checks, and promote only a focused, reviewed, green change after testing the PR's merge result. Do not merge the divergent `test` history wholesale. A Vercel deployment is not a substitute for passing browser verification.
+
+For browser changes, the required checks are `Leu browser journeys / web-release-gate` (reader, previews, Home/reduced-motion) and `Shelf verification / portable-core` (native structural/core checks). The browser gate runs on pushes to `test`, pushes to `main`, and PRs; an initial CI failure is a blocker, not an invitation to suppress or weaken tests.
+
+Full operational rules, reproduction commands and one-time GitHub protection setup: [CI reliability](docs/CI_RELIABILITY.md).
