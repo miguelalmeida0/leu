@@ -30,4 +30,364 @@ async function visible(locator, timeout = 20000) {
   await locator.waitFor({ state: 'visible', timeout })
 }
 async function unhidden(locator, timeout = 8000) {
-  await locator.waitFor({ s¶»§q«^
+  await locator.waitFor({ state: 'hidden', timeout })
+}
+async function noHorizontalOverflow(page, name) {
+  const dimensions = await page.evaluate(() => ({
+    screen: window.innerWidth,
+    content: document.documentElement.scrollWidth,
+  }))
+  assert.ok(dimensions.content <= dimensions.screen + 3,
+    `${name}: horizontal overflow (${dimensions.content}px content / ${dimensions.screen}px viewport)`)
+}
+async function selectPassage(page) {
+  await page.evaluate(() => {
+    const element = document.querySelector('.reader-paper .prose .s')
+    if (!element) throw new Error('Text page was not rendered')
+    const text = Array.from(element.childNodes).find((node) => node.nodeType === Node.TEXT_NODE)
+    if (!text || !text.textContent?.length) throw new Error('Readable selectable text not found')
+    const range = document.createRange()
+    range.setStart(text, 0)
+    range.setEnd(text, Math.min(text.textContent.length, 24))
+    const selection = window.getSelection()
+    selection?.removeAllRanges()
+    selection?.addRange(range)
+    document.dispatchEvent(new Event('selectionchange'))
+  })
+  await visible(page.getByRole('toolbar', { name: 'Actions for selected text' }), 8000)
+}
+/** Dispatch a touch gesture to the real reader handlers; no fake page routes. */
+async function swipeReader(page, dx, dy = 0) {
+  await page.locator('.reader-paper').evaluate((paper, movement) => {
+    const start = { clientX: 190, clientY: 320 }
+    const finish = { clientX: start.clientX + movement.dx, clientY: start.clientY + movement.dy }
+    const dispatch = (type, current, changed) => {
+      const event = new Event(type, { bubbles: true, cancelable: true })
+      Object.defineProperties(event, {
+        touches: { value: current ? [current] : [] },
+        changedTouches: { value: [changed] },
+      })
+      paper.dispatchEvent(event)
+    }
+    dispatch('touchstart', start, start)
+    dispatch('touchend', null, finish)
+  }, { dx, dy })
+}
+
+async function navigateMobile(page, name) {
+  const trigger = page.getByRole('button', { name: 'Open navigation' })
+  await trigger.click()
+  await visible(page.getByRole('navigation', { name: 'Mobile places' }))
+  await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name }).click()
+}
+async function goTo(page, mobile, name) {
+  if (mobile) return navigateMobile(page, name)
+  return page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name }).click()
+}
+async function runBrowser(browserType, name, mobile, width) {
+  const browser = await browserType.launch({ headless: true })
+  const pageErrors = []
+  const page = await browser.newPage({
+    viewport: { width, height: mobile ? 844 : 900 },
+    isMobile: mobile, hasTouch: mobile, deviceScaleFactor: mobile ? 2 : 1,
+    reducedMotion: 'reduce',
+  })
+  page.on('pageerror', (err) => pageErrors.push(err.message))
+  page.on('console', (message) => {
+    if (message.type() === 'error' || message.type() === 'warning') console.error(`BROWSER ${name} ${message.type()}: ${message.text()}`)
+  })
+  page.on('requestfailed', (request) => console.error(`NETWORK ${name}: ${request.url()} â€” ${request.failure()?.errorText}`))
+  page.setDefaultTimeout(16000)
+  const evidenceName = `${name}-${width}`
+  try {
+    await page.goto(base, { waitUntil: 'domcontentloaded', timeout: 30000 })
+    await visible(page.getByRole('heading', { name: /Make yourself comfortable/i }))
+    await noHorizontalOverflow(page, 'Welcome ' + name)
+    if (mobile) {
+      const touchAction = await page.locator('.welcome-art canvas').evaluate((canvas) => getComputedStyle(canvas).touchAction)
+      assert.equal(touchAction, 'auto', 'Knitting-basket animation must not intercept touch scrolling')
+    }
+    await page.getByRole('button', { name: /start with a sample book/i }).click()
+    await visible(page.getByRole('dialog', { name: /Sewing in Computer Science Essentials/i }))
+    await visible(page.locator('.sewn-actions .btn.ink'), 25000)
+    await page.locator('.sewn-actions .btn.ink').click()
+    try {
+      await visible(page.locator('.reader-paper .prose p').first(), 25000)
+    } catch (error) {
+      const details = await page.evaluate(() => ({
+        hash: location.hash, text: document.querySelector('.reader-paper')?.textContent?.slice(0,1100),
+        page: document.body.textContent?.slice(0,2000),
+        canvases: document.querySelectorAll('.reader-paper canvas').length,
+        mode: document.querySelector('.segmented [aria-checked="true"]')?.textContent,
+      }))
+      console.error(`READER DIAGNOSTIC ${name}: ${JSON.stringify(details)}`)
+      throw error
+    }
+    await noHorizontalOverflow(page, 'Reader ' + name)
+    if (mobile) {
+      const voiceButton = page.getByRole('button', { name: /^Voice: .* Change$/ })
+      await visible(voiceButton)
+      await voiceButton.click()
+      await visible(page.getByRole('menu', { name: 'Voices' }))
+      await visible(page.getByRole('menuitemradio', { name: /Device default/i }))
+      await page.getByRole('menuitemradio', { name: /Device default/i }).click()
+      await visible(page.getByRole('button', { name: /^Reading speed / }))
+      const speedButton = page.getByRole('button', { name: /^Reading speed / })
+      const speedBefore = await speedButton.getAttribute('aria-label')
+      await speedButton.click()
+      assert.notEqual(await speedButton.getAttribute('aria-label'), speedBefore, 'Mobile voice speed must change')
+      // A horizontal swipe turns a page; vertical scrolling must never do so.
+      await swipeReader(page, -140)
+      await visible(page.locator('.reader-paper[aria-label="Page 2 of 4"]'))
+      await swipeReader(page, -12, -150)
+      await visible(page.locator('.reader-paper[aria-label="Page 2 of 4"]'))
+      await swipeReader(page, 140)
+      await visible(page.locator('.reader-paper[aria-label="Page 1 of 4"]'))
+      await noHorizontalOverflow(page, 'Mobile voice and swipes ' + name)
+
+      await page.getByRole('button', { name: 'Open navigation' }).click()
+      await visible(page.getByRole('navigation', { name: 'Mobile places' }))
+      // Tapping the reader (outside the menu) dismisses the menu with one touch.
+      await page.locator('.reader-paper').click({ position: { x: 6, y: 6 } })
+      await unhidden(page.getByRole('navigation', { name: 'Mobile places' }))
+      assert.equal(await page.getByRole('button', { name: 'Open navigation' }).getAttribute('aria-expanded'), 'false')
+      // Escape also works when a hardware keyboard is connected.
+      await page.getByRole('button', { name: 'Open navigation' }).click()
+      await page.keyboard.press('Escape')
+      await unhidden(page.getByRole('navigation', { name: 'Mobile places' }))
+    }
+
+    // Full-screen reading should be real immersive layout, with reflowing,
+    // selectable text and high-resolution zoom for original PDF pages.
+    await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
+    await visible(page.locator('.reader.reader-immersive'))
+    // Focus mode has exactly one visible compact listening action and never
+    // exposes the full-width dock over the PDF content.
+    await visible(page.locator('.reader-immersive .dock[data-focus="true"] .dock-focus-action'))
+    await page.waitForFunction(() => {
+      const control = document.querySelector('.reader-immersive .dock[data-focus="true"]')
+      return !!control && control.getBoundingClientRect().width <= 300
+    })
+    const textSize = await page.locator('.reader-immersive .prose').evaluate((element) => parseFloat(getComputedStyle(element).fontSize))
+    await page.getByRole('button', { name: 'Zoom in' }).click()
+    await page.waitForFunction((before) => parseFloat(getComputedStyle(document.querySelector('.reader-immersive .prose')).fontSize) > before, textSize)
+    await page.getByRole('button', { name: 'Reset zoom' }).click()
+    await page.getByRole('radio', { name: 'Original page' }).click()
+    await visible(page.locator('.reader-immersive .original-stage canvas'))
+    await page.waitForFunction(() => Number.parseFloat(document.querySelector('.reader-immersive canvas.original-page')?.style.width ?? '0') > 0)
+    const originalWidth = await page.locator('canvas.original-page').evaluate((el) => Number.parseFloat(el.style.width))
+    await page.getByRole('button', { name: 'Zoom in' }).click()
+    await page.waitForFunction((before) => Number.parseFloat(document.querySelector('canvas.original-page')?.style.width ?? '0') > before, originalWidth)
+    await page.getByRole('radio', { name: 'For reading' }).click()
+    await visible(page.locator('.reader-immersive .prose p').first())
+    await page.getByRole('button', { name: 'Exit full-screen reading' }).click()
+    await unhidden(page.locator('.reader.reader-immersive'))
+    await visible(page.locator('.reader-foot .dock:not([data-focus="true"]) .dock-play'))
+    await visible(page.locator('.reader-paper .prose p').first())
+    await noHorizontalOverflow(page, 'After full-screen zoom ' + name)
+
+    await selectPassage(page)
+    await page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Keep a note' }).click()
+    await visible(page.getByRole('dialog', { name: /Keep a note from Computer Science Essentials/i }))
+    const noteText = 'Key point from the selected sentence.'
+    await page.locator('#note-body').fill(noteText)
+    await page.getByRole('button', { name: 'Save note' }).click()
+    await unhidden(page.getByRole('dialog', { name: /Keep a note from Computer Science Essentials/i }))
+    await visible(page.locator('.margin-note').getByText(noteText))
+    // Original PDF is readable, but selection requires reconstructed text.
+    await page.getByRole('radio', { name: 'Original page' }).click()
+    await visible(page.getByText(/For selectable text and notes|switch to â€œFor readingâ€/i))
+    await page.getByRole('radio', { name: 'For reading' }).click()
+    await visible(page.locator('.reader-paper .prose p').first())
+    await selectPassage(page)
+    await page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Explain', exact: true }).click()
+    await visible(page.getByRole('region', { name: 'Explained simply' }).or(page.locator('.explain-panel')))
+    await page.getByRole('button', { name: /Close and go back to reading/i }).click()
+    await visible(page.locator('.reader-paper .prose p').first())
+
+    await page.getByRole('button', { name: 'Next page' }).click()
+    await visible(page.locator('.reader-paper[aria-label="Page 2 of 4"]'))
+    await page.getByRole('button', { name: 'Previous page' }).click()
+    await visible(page.locator('.reader-paper[aria-label="Page 1 of 4"]'))
+
+    // Simulate an existing Leu user whose indexed text was saved as empty by
+    // an older Safari PDF parser. Search must repair from the saved PDF.
+    const sampleId = await page.evaluate(() => {
+      const state = JSON.parse(localStorage.getItem('leu.web.v1'))
+      return state.books.find((book) => book.title === 'Computer Science Essentials').id
+    })
+    await page.evaluate(async (id) => {
+      await new Promise((resolve, reject) => {
+        const open = indexedDB.open('keyval-store')
+        open.onerror = () => reject(open.error)
+        open.onsuccess = () => {
+          const database = open.result
+          const tx = database.transaction('keyval', 'readwrite')
+          tx.objectStore('keyval').put(['', '', '', ''], `text:${id}`)
+          tx.oncomplete = () => { database.close(); resolve() }
+          tx.onerror = () => reject(tx.error)
+        }
+      })
+    }, sampleId)
+    await page.getByRole('button', { name: 'Search books' }).click()
+    await visible(page.getByRole('dialog', { name: 'Search your books' }))
+    await page.getByRole('textbox', { name: 'Ask your books anything' }).fill('References')
+    await visible(page.locator('#result-0'), 40000)
+    const bestSource = await page.locator('#result-0 .result-place').innerText()
+    assert.ok(bestSource.includes('Computer Science Essentials'), 'Repaired search should find the sample book')
+    assert.ok(bestSource.includes('p. 3'), `References must link to its real source on page 3, got: ${bestSource}`)
+    await page.locator('#result-0').click()
+    await visible(page.locator('.reader-paper[aria-label="Page 3 of 4"]'))
+    await noHorizontalOverflow(page, 'Recovered search result ' + name)
+
+    await goTo(page, mobile, 'Notes')
+    await visible(page.getByText(noteText))
+    await noHorizontalOverflow(page, 'Notes ' + name)
+    await page.getByRole('link', { name: /Open Computer Science Essentials, p. 1/i }).click()
+    await visible(page.locator('.reader-paper .prose p').first())
+
+    await goTo(page, mobile, 'Library')
+    await visible(page.getByRole('heading', { name: 'Your library' }))
+    await noHorizontalOverflow(page, 'Library ' + name)
+    // The entire sample shelf covers more concepts for Search / Explore / Trails.
+    const add = page.getByRole('button', { name: /Add the .* sample books/i })
+    if (await add.count()) {
+      await add.click()
+      await page.waitForFunction(() => document.querySelectorAll('.quilt-cell').length >= 6, null, { timeout: 55000 })
+    }
+    await noHorizontalOverflow(page, 'Six sample books ' + name)
+    await page.locator('.quilt-cell button').first().click()
+    await visible(page.getByRole('heading', { name: /Essentials|Notes|Patterns|System|JavaScript|Interviews/i }).first())
+    await noHorizontalOverflow(page, 'Book overview ' + name)
+    await page.getByRole('button', { name: /Read this chapter/i }).click()
+    await visible(page.locator('.reader-paper .prose p').first())
+
+    await goTo(page, mobile, 'Study')
+    await visible(page.getByRole('heading', { name: /I'd like to/i }))
+    await noHorizontalOverflow(page, 'Study ' + name)
+    await page.getByRole('button', { name: /How to study:/i }).click()
+    await visible(page.getByRole('listbox', { name: 'How to study' }))
+    // Outside interactions dismiss other popovers too.
+    await page.locator('.study-next').click({ position: { x: 8, y: 8 } })
+    await unhidden(page.getByRole('listbox', { name: 'How to study' }))
+    await page.getByRole('button', { name: /Start remembering/i }).click()
+    await visible(page.locator('.recall').or(page.getByText(/Nothing to study on this subject yet/i)), 20000)
+
+    await goTo(page, mobile, 'Explore')
+    await visible(page.locator('.explore, .empty'))
+    await noHorizontalOverflow(page, 'Explore ' + name)
+    const makeTrail = page.getByRole('button', { name: 'Make it a trail' })
+    if (await makeTrail.isVisible().catch(() => false) && await makeTrail.isEnabled()) {
+      await makeTrail.click()
+      await visible(page.locator('.walk'))
+      await noHorizontalOverflow(page, 'Trail map ' + name)
+    } else {
+      await goTo(page, mobile, 'Trails')
+      await visible(page.locator('.walk, .empty'))
+    }
+
+    await page.getByRole('button', { name: 'Search books' }).click()
+    await visible(page.getByRole('dialog', { name: 'Search your books' }))
+    await page.getByRole('textbox', { name: 'Ask your books anything' }).fill('algorithm')
+    await visible(page.locator('.best, .search-hint'))
+    await page.getByRole('button', { name: 'Close search' }).click()
+    await unhidden(page.getByRole('dialog', { name: 'Search your books' }))
+    await noHorizontalOverflow(page, 'Final ' + name)
+    assert.deepEqual(pageErrors, [], name + ': browser exceptions')
+    await page.screenshot({ path: join(evidence, evidenceName + '-passed.png'), fullPage: false })
+    console.log(`PASS ${evidenceName}: sample import, reader, touch menu, mobile voice and swipes, text notes, full-screen reflow and PDF zoom, legacy index self-repair, exact source search, page turns, library, study, explore/trails, responsive width`)
+  } catch (error) {
+    await page.screenshot({ path: join(evidence, evidenceName + '-failed.png'), fullPage: true, timeout: 12000 }).catch(() => {})
+    console.error(`FAIL ${evidenceName}: ${error?.stack ?? error}`)
+    if (pageErrors.length) console.error('Page errors:', pageErrors)
+    throw error
+  } finally {
+    await browser.close()
+  }
+}
+
+
+/**
+ * Static HTTPS previews must visibly animate actual Leu images on mobile.
+ * Compare canvas frames rather than just asserting that a page rendered.
+ */
+async function checkMotionPreviews(browserType, engine, width) {
+  const browser = await browserType.launch({ headless: true })
+  const page = await browser.newPage({
+    viewport: { width, height: 844 },
+    deviceScaleFactor: 2, isMobile: true, hasTouch: true,
+    reducedMotion: 'no-preference',
+  })
+  const errors = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  try {
+    for (const variant of ['quiet-weather', 'afterglow', 'material-rhythm']) {
+      const response = await page.goto(base + '/motion/' + variant + '.html', { waitUntil: 'domcontentloaded', timeout: 25000 })
+      assert.equal(response?.status(), 200, 'Preview ' + variant + ' should load as HTML')
+      await page.waitForFunction(() => window.__LEU_MOTION_TEST?.frames >= 7, null, { timeout: 15000 })
+      await page.waitForFunction(() => [...document.querySelectorAll('img[data-art]')].every((img) => img.complete && img.naturalWidth > 0), null, { timeout: 16000 })
+      assert.equal(await page.locator('[data-playing]').getAttribute('data-playing'), 'true')
+      const dimensions = await page.evaluate(() => ({
+        top: document.querySelector('.stage').getBoundingClientRect().top,
+        canvasWidth: document.querySelector('[data-fx="rain"]').width,
+        horizontalOverflow: document.documentElement.scrollWidth > innerWidth + 3,
+      }))
+      assert.ok(dimensions.top < 250, engine + ': artwork should appear above fold')
+      assert.ok(dimensions.canvasWidth > 120, engine + ': canvas must cover the artwork')
+      assert.equal(dimensions.horizontalOverflow, false, engine + ': horizontal overflow in ' + variant)
+      for (const [scene, label, fx] of [
+        ['nook', 'Reading nook', 'rain'],
+        ['basket', 'Knitting basket', 'basket'],
+        ['globe', 'Snow globe', 'globe'],
+      ]) {
+        await page.getByRole('tab', { name: label }).click()
+        assert.equal(await page.evaluate(() => window.__LEU_MOTION_TEST.active), scene)
+        const canvas = page.locator('canvas[data-fx="' + fx + '"]')
+        await page.waitForTimeout(180)
+        const before = await canvas.evaluate((el) => el.toDataURL())
+        await page.waitForTimeout(500)
+        const after = await canvas.evaluate((el) => el.toDataURL())
+        assert.notEqual(before, after, variant + '/' + scene + ': animation is static')
+        const pointer = await page.locator('[data-scene="' + scene + '"] .ill').evaluate((el) => getComputedStyle(el).pointerEvents)
+        assert.equal(pointer, 'none', 'Artwork must not steal touches')
+      }
+      await page.getByRole('button', { name: 'Pause motion' }).click()
+      const stoppedAt = await page.evaluate(() => window.__LEU_MOTION_TEST.frames)
+      await page.waitForTimeout(230)
+      assert.equal(await page.evaluate(() => window.__LEU_MOTION_TEST.frames), stoppedAt, 'Pause failed in ' + variant)
+      await page.getByRole('button', { name: 'Play motion' }).click()
+      await page.waitForFunction((before) => window.__LEU_MOTION_TEST.frames > before, stoppedAt)
+      await page.getByRole('tab', { name: 'Reading nook' }).click()
+      await page.screenshot({ path: join(evidence, 'motion-' + variant + '-' + engine + '-' + width + '.png') })
+      console.log('PASS ' + engine + '-' + width + ' ' + variant + ': original art loaded, 3 moving scenes, touch-safe controls, Pause/Play')
+    }
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto(base + '/motion/quiet-weather.html', { waitUntil: 'domcontentloaded' })
+    await visible(page.getByRole('button', { name: 'Play motion' }))
+    assert.equal(await page.evaluate(() => window.__LEU_MOTION_TEST.playing), false)
+    await page.getByRole('button', { name: 'Play motion' }).click()
+    await page.waitForFunction(() => window.__LEU_MOTION_TEST.frames >= 4, null, { timeout: 15000 })
+    console.log('PASS ' + engine + '-' + width + ': Reduced Motion respected and user can explicitly start preview')
+    assert.deepEqual(errors, [], engine + ': motion preview browser exceptions')
+  } catch (error) {
+    await page.screenshot({ path: join(evidence, 'motion-failed-' + engine + '-' + width + '.png'), fullPage: true }).catch(() => {})
+    console.error('FAIL ' + engine + '-' + width + ': ' + (error?.stack ?? error))
+    if (errors.length) console.error('Browser errors:', errors)
+    throw error
+  } finally {
+    await browser.close()
+  }
+}
+
+try {
+  await runBrowser(webkit, 'webkit-iphone', true, 390)
+  await runBrowser(webkit, 'webkit-compact', true, 320)
+  await runBrowser(chromium, 'chromium-desktop', false, 1440)
+  await runBrowser(chromium, 'chromium-mobile', true, 390)
+  await checkMotionPreviews(webkit, 'webkit-iphone', 390)
+  await checkMotionPreviews(chromium, 'chromium-android', 390)
+} catch {
+  process.exitCode = 1
+} finally {
+  server.kill('SIGTERM')
+}
