@@ -202,7 +202,59 @@ async function runBrowser(browserType, name, mobile, width) {
     await selectPassage(page)
     await page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Explain', exact: true }).click()
     await visible(page.getByRole('region', { name: 'Explained simply' }).or(page.locator('.explain-panel')))
+    // The CI browser has no built-in local language model. Never present quoted text as teaching.
+    await visible(page.getByText(/On-device explanations aren't available/i))
+    assert.equal(await page.getByText('The short version').count(), 0)
     await page.getByRole('button', { name: /Close and go back to reading/i }).click()
+
+    // Exercise the actual model integration using a deterministic browser-native mock:
+    // structured teaching, no network, disposal, source disclosure and failure gating.
+    await page.evaluate(() => {
+      window.__EXPLANATION_TEST = { calls: 0, destroyed: 0, bad: true }
+      window.LanguageModel = {
+        availability: async () => 'available',
+        create: async () => ({
+          prompt: async (query, options) => {
+            window.__EXPLANATION_TEST.calls++
+            window.__EXPLANATION_TEST.prompt = query
+            window.__EXPLANATION_TEST.schema = options.responseConstraint
+            const quote = JSON.parse(query.slice(query.indexOf('{"selectedPassage":'))).selectedPassage
+            if (window.__EXPLANATION_TEST.bad)
+              return JSON.stringify({ meaning: quote, mechanism: quote, example: '', caveat: '' })
+            return JSON.stringify({
+              meaning: 'A model is a useful shortcut. It keeps the parts of something that help you decide what will happen and ignores less important details.',
+              mechanism: 'The stack description tells you which item comes out first without needing to describe every possible detail. The order matters because a new item goes onto the top, so it will be the first one removed.',
+              example: 'Imagine putting three plates on top of one another. You take the top plate off first, even though it was the last plate you added. That is the useful prediction the model gives you.',
+              caveat: 'This shortcut only helps when leaving out those details does not change the decision you need to make.',
+            })
+          },
+          destroy: () => { window.__EXPLANATION_TEST.destroyed++ },
+        }),
+      }
+    })
+    await page.evaluate(() => {
+      const paragraph = document.querySelector('.reader-paper .prose p')
+      if (!paragraph) throw new Error('No paragraph to explain')
+      const range = document.createRange()
+      range.selectNodeContents(paragraph)
+      const selection = window.getSelection()
+      selection.removeAllRanges()
+      selection.addRange(range)
+      document.dispatchEvent(new Event('selectionchange'))
+    })
+    await visible(page.getByRole('toolbar', { name: 'Actions for selected text' }))
+    await page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Explain', exact: true }).click()
+    await visible(page.getByText(/repeated the source rather than explaining/i))
+    assert.equal(await page.locator('.explain-meaning').count(), 0, 'Copied output must never be shown')
+    await page.evaluate(() => { window.__EXPLANATION_TEST.bad = false })
+    await page.getByRole('button', { name: 'Try again' }).click()
+    await visible(page.locator('.explain-meaning'))
+    await visible(page.getByText(/three plates on top/i))
+    assert.equal(await page.getByText('The short version').count(), 0)
+    assert.ok(await page.evaluate(() => window.__EXPLANATION_TEST.calls >= 2 && window.__EXPLANATION_TEST.destroyed >= 2))
+    await noHorizontalOverflow(page, 'Generated explanation ' + name)
+    await page.getByRole('button', { name: /Close and go back to reading/i }).click()
+    await page.evaluate(() => { delete window.LanguageModel; delete window.__EXPLANATION_TEST })
     await visible(page.locator('.reader-paper .prose p').first())
 
     await page.getByRole('button', { name: 'Next page' }).click()

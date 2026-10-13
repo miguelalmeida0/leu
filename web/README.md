@@ -27,7 +27,7 @@ PDF onto the page. `npm run build && npm run preview` serves the production buil
 | A book | Chapter strip from the PDF outline (or its headings), sections, where you left off, loose ends. |
 | Reading | The page rebuilt for reading, or the original page drawn by pdf.js. Select text to keep a note, explain it or hear it. ← → turn pages. |
 | Read aloud | Kokoro voices (kokoro-js, in a worker). A soft butter band sits behind the sentence being heard and glides line by line to the next (ink on it is 12.9:1); click any sentence to read from there. The reading dock sits at the foot of every page: play/pause, a sentence back or on, the voice, speed, and page turning in one place; at the end of a page Leu turns it and keeps reading. Fast start: once you've listened, the voice warms up in the background when you open a book, the first sentences of each page are rendered while you read, and the first sentence starts after just a few words. WebGPU runs the full model (~330 MB, once); elsewhere the 8-bit model (~90 MB) runs on WebAssembly threads. |
-| Explain | A quiet sheet in the margin, beside the page, with the sentences it draws on marked there. There is no model in the browser, so it says so and keeps to the passage's own words. |
+| Explain | A private teaching panel beside the original source. On supported desktop Chrome devices, the built-in language model explains the selected passage in new words, how it works, and a concrete example when appropriate. The browser downloads its model on first use; no PDF text leaves the device. Unsupported browsers show an explicit unavailable state, never copied text masquerading as an explanation. |
 | In your own words | The snow globe. Each idea you get across lights a window; all of them light the third. Rest the pointer on the glass and a slow current lifts and turns the snow; no clicking needed (Enter does it from the keyboard). Chrome and Safari can also take it spoken. |
 | Study | The sentence planner and a recall session with spaced review. Nothing is scored. |
 | Notes | A notebook spread of what you kept, each opening its page. |
@@ -40,8 +40,10 @@ Keyboard: Space plays or pauses; while Leu reads ← → step a sentence, otherw
 
 ## Honest limits
 
-- The idea check, explanations and concepts are word-overlap heuristics written for this
-  prototype. The app compares against the source with its own on-device pipeline.
+- The idea checks and concepts are still word-overlap heuristics. Explain is a separate
+  generative feature when Chrome's built-in model is available. Its output can be mistaken;
+  compare it with the highlighted source. Safari, Firefox and most phones cannot yet run it.
+  Leu does not send private book text to a cloud model.
 - Your library lives in this browser (localStorage for notes and progress, IndexedDB for the PDFs).
   Clearing site data clears it.
 - Reduced motion is respected: the rain, snow and yarn hold still.
