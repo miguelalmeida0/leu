@@ -63,6 +63,7 @@ export function ExplainPanel({
       else setStage(availability)
     })
     return () => {
+      active.current?.abort()
       controller.abort()
       request.current++
     }
@@ -108,14 +109,14 @@ export function ExplainPanel({
   const lessonText = lesson ? [lesson.meaning, lesson.mechanism, lesson.example, lesson.caveat].filter(Boolean) : []
 
   return (
-    <section className="explain-panel" ref={ref} tabIndex={-1} aria-label="Explained simply">
+    <section className="explain-panel" ref={ref} tabIndex={-1} aria-label="Passage explanation">
       <div className="explain-head">
-        <p className="eyebrow paper"><span className="dot" style={{ background: 'var(--butter)' }} /> Explained simply · p. {page}</p>
+        <p className="eyebrow paper"><span className="dot" style={{ background: 'var(--butter)' }} /> {stage === 'ready' ? 'Explained on your device' : 'Your passage'} · p. {page}</p>
         <button className="icon-btn small" onClick={close} aria-label="Close and go back to reading">
           <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" /></svg>
         </button>
       </div>
-      <h2 className="explain-title">What this means</h2>
+      <h2 className="explain-title">{stage === 'ready' ? 'What this means' : stage === 'unavailable' ? 'Explanation unavailable' : 'Explain this passage'}</h2>
 
       {stage === 'ready' && lesson && (
         <div className="explain-lesson">
