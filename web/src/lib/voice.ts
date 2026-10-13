@@ -74,15 +74,76 @@ export function speechPieces(text: string): string[] {
 // ---- the worker ----
 
 let worker: Worker | null = null
+// Keep quick replay warm, but do not retain the model for the lifetime of the tab.
+const IDLE_RELEASE_MS = 120_000
+let idleRelease: ReturnType<typeof setTimeout> | undefined
+let retiring: Promise<void> | null = null
+let retired: (() => void) | null = null
+let retirementFailed: ((error: Error) => void) | null = null
+
+function cancelIdleRelease() {
+  clearTimeout(idleRelease)
+  idleRelease = undefined
+}
+
+function scheduleIdleRelease() {
+  cancelIdleRelease()
+  if (!worker || retiring || vs.status !== 'idle') return
+  idleRelease = setTimeout(() => {
+    idleRelease = undefined
+    if (!worker || retiring || vs.status !== 'idle' || sources.length || pending.length) return
+    job++
+    passage = []; pieces = []; segments = []; onDone = null
+    const context = audio
+    audio = null
+    void context?.close().catch(() => { /* already closed */ })
+    retiring = new Promise<void>((resolve, reject) => { retired = resolve; retirementFailed = reject })
+    // A failed disposal stays owned; never start a competing model or claim release.
+    void retiring.catch(() => {})
+    worker.postMessage({ type: 'dispose' })
+  }, IDLE_RELEASE_MS)
+}
+
+function sendToWorker(message: object, token = job) {
+  if (retiring) {
+    void retiring.then(() => {
+      if (token === job) sendToWorker(message, token)
+    }).catch(() => {
+      if (token !== job) return
+      set({ notice: 'The voice could not release its previous session. Reload to try again.' })
+      end(false)
+    })
+    return
+  }
+  getWorker().postMessage(message)
+  scheduleIdleRelease()
+}
+
 function getWorker() {
   if (worker) return worker
-  worker = new Worker(new URL('./voice.worker.ts', import.meta.url), { type: 'module' })
-  worker.onmessage = (e) => {
+  const own = worker = new Worker(new URL('./voice.worker.ts', import.meta.url), { type: 'module' })
+  own.onmessage = (e) => {
+    if (worker !== own) return
     const m = e.data
+    if (retiring) {
+      if (m.type === 'disposed') {
+        own.onmessage = null
+        own.terminate()
+        worker = null
+        const resolve = retired
+        retiring = null; retired = null; retirementFailed = null
+        set({ kokoro: vs.status === 'loading' ? 'loading' : 'unknown', download: null, engine: null })
+        resolve?.()
+      } else if (m.type === 'dispose-error') {
+        retirementFailed?.(new Error(m.message))
+        set({ notice: 'The voice could not release its previous session. Reload to try again.' })
+      }
+      return
+    }
     if (m.type === 'engine') set({ engine: m.engine })
     if (m.type === 'progress') set({ download: { loaded: m.loaded, total: m.total } })
     if (m.type === 'loaded') set({ download: null })
-    if (m.type === 'ready') set({ kokoro: 'ready', download: null })
+    if (m.type === 'ready') { set({ kokoro: 'ready', download: null }); scheduleIdleRelease() }
     if (m.type === 'chunk' && m.id === job) receive(m.index, m.from, m.to, m.samples, m.rate, m.ms)
     if (m.type === 'done' && m.id === job) { finished = true; if (!started) begin(); else if (!sources.length && !pending.length) end() }
     if (m.type === 'error') {
@@ -100,7 +161,7 @@ export function warmVoice(force = false) {
   if (vs.kokoro === 'ready' || vs.kokoro === 'loading' || vs.kokoro === 'failed') return
   if (!force && !hasListened()) return
   set({ kokoro: 'loading' })
-  getWorker().postMessage({ type: 'warm' })
+  sendToWorker({ type: 'warm' })
 }
 
 /** Render the first sentences of a page ahead of time, so Read aloud starts at once. */
@@ -108,7 +169,7 @@ export function prefetch(list: string[]) {
   if (preferSystemSpeech() || getState().voice.startsWith('system:')) return
   if (!hasListened() || vs.kokoro === 'failed') return
   warmVoice()
-  getWorker().postMessage({ type: 'prefetch', pieces: list.slice(0, 2), voice: getState().voice, speed: vs.speed })
+  sendToWorker({ type: 'prefetch', pieces: list.slice(0, 2), voice: getState().voice, speed: vs.speed })
 }
 
 // ---- playback ----
@@ -128,6 +189,23 @@ let made = { seconds: 0, chars: 0, ms: 0 }
 let system: { index: number; char: number } | null = null
 let passage: string[] = []
 let onDone: (() => void) | null = null
+
+function releaseSource(node: AudioBufferSourceNode) {
+  node.onended = null
+  try { node.disconnect() } catch { /* already disconnected */ }
+  node.buffer = null
+}
+
+/** Stop idle audio processing without unloading the voice or delaying the next Play. */
+function suspendIdleAudio() {
+  const context = audio
+  if (!context) return
+  queueMicrotask(() => {
+    // Stop/seek or natural continuation can start another passage in this task.
+    if (audio !== context || vs.status !== 'idle' || sources.length || pending.length) return
+    void context.suspend().catch(() => { /* context is already unavailable */ })
+  })
+}
 
 const BREATH = 0.16 // between sentences
 const BREATH_LONG = 0.34 // after a heading
@@ -186,7 +264,10 @@ function flush() {
     node.start(at)
     segments.push({ index: offset + index, from, to, start: at, duration: buffer.duration })
     sources.push(node)
+    const token = job
     node.onended = () => {
+      releaseSource(node)
+      if (token !== job) return
       sources = sources.filter((s) => s !== node)
       if (finished && !sources.length && !pending.length) end()
     }
@@ -199,8 +280,10 @@ function flush() {
 function end(naturally = true) {
   const done = naturally && finished ? onDone : null
   onDone = null
+  suspendIdleAudio()
   set({ status: 'idle', speakingId: null }); segments = []; system = null
   done?.()
+  scheduleIdleRelease()
 }
 
 function firstUnheard(): string[] {
@@ -217,6 +300,7 @@ export function speak(text: string | string[], id = 'passage', from = 0, then?: 
   offset = Math.min(Math.max(0, from), Math.max(0, passage.length - 1))
   pieces = passage.slice(offset)
   if (!pieces.length) return
+  cancelIdleRelease()
   try { localStorage.setItem(USED, '1') } catch { /* fine */ }
   void navigator.storage?.persist?.()
   job++
@@ -231,18 +315,23 @@ export function speak(text: string | string[], id = 'passage', from = 0, then?: 
   }
   audio ??= new AudioContext()
   void audio.resume()
-  if (vs.kokoro === 'unknown') set({ kokoro: 'loading' })
-  getWorker().postMessage({ type: 'speak', id: job, pieces, voice: getState().voice, speed: vs.speed })
+  if (vs.kokoro === 'unknown' || retiring) set({ kokoro: 'loading' })
+  sendToWorker({ type: 'speak', id: job, pieces, voice: getState().voice, speed: vs.speed })
 }
 
 export function stop() {
   job++
   worker?.postMessage({ type: 'cancel' })
-  sources.forEach((s) => { try { s.onended = null; s.stop() } catch { /* already done */ } })
+  sources.forEach((s) => {
+    s.onended = null
+    try { s.stop() } catch { /* already done */ }
+    releaseSource(s)
+  })
   sources = []; pending = []
   if ('speechSynthesis' in window) speechSynthesis.cancel()
-  void audio?.resume()
+  suspendIdleAudio()
   if (vs.status !== 'idle') end(false)
+  scheduleIdleRelease()
 }
 
 export function pause() {

@@ -22,12 +22,15 @@ type In =
   | { type: 'prefetch'; pieces: string[]; voice: string; speed: number }
   | { type: 'speak'; id: number; pieces: string[]; voice: string; speed: number }
   | { type: 'cancel' }
+  | { type: 'dispose' }
 
 let tts: Promise<KokoroTTS> | null = null
 let warmed: Promise<void> | null = null
 let current = 0
 const cache = new Map<string, { samples: Float32Array; rate: number }>()
 let queue: Promise<unknown> = Promise.resolve() // one render at a time
+let retiring = false
+const active = new Set<Promise<void>>()
 
 async function gpu(): Promise<boolean> {
   const nav = navigator as Navigator & { gpu?: { requestAdapter(): Promise<unknown> } }
@@ -62,8 +65,9 @@ function load() {
 function warm() {
   warmed ??= (async () => {
     const model = await load()
+    if (retiring) return
     await render(model, 'Hello.', 'af_heart', 1) // compiles the shaders once
-    postMessage({ type: 'ready' })
+    if (!retiring) postMessage({ type: 'ready' })
   })()
   return warmed
 }
@@ -72,6 +76,7 @@ const key = (text: string, voice: string, speed: number) => `${voice}|${speed}|$
 
 function render(model: KokoroTTS, text: string, voice: string, speed: number) {
   const job = queue.then(async () => {
+    if (retiring) throw new Error('Voice session retiring')
     const hit = cache.get(key(text, voice, speed))
     if (hit) return { ...hit, samples: hit.samples.slice(), ms: 0 }
     const started = performance.now()
@@ -95,32 +100,57 @@ function parts(text: string, first: boolean): { text: string; from: number; to: 
   return [{ text: text.slice(0, at).trim(), from: 0, to: f }, { text: text.slice(at).trim(), from: f, to: 1 }]
 }
 
-self.onmessage = async (event: MessageEvent<In>) => {
-  const m = event.data
+async function run(m: Exclude<In, { type: 'dispose' }>) {
   if (m.type === 'cancel') { current = 0; return }
   try {
     if (m.type === 'warm') { await warm(); return }
     if (m.type === 'prefetch') {
       await warm()
+      if (retiring) return
       for (const text of m.pieces) if (/[A-Za-z0-9]/.test(text)) for (const p of parts(text, text === m.pieces[0])) await render(await load(), p.text, m.voice, m.speed)
       return
     }
     current = m.id
     const model = await load()
+    if (retiring) return
     for (let index = 0; index < m.pieces.length; index++) {
       const text = m.pieces[index]
       const list = /[A-Za-z0-9]/.test(text) ? parts(text, index === 0) : []
       if (!list.length) { postMessage({ type: 'chunk', id: m.id, index, from: 0, to: 1, samples: new Float32Array(0), rate: 24000, ms: 0 }); continue }
       for (const p of list) {
-        if (current !== m.id) return
+        if (retiring || current !== m.id) return
         const out = await render(model, p.text, m.voice, m.speed)
-        if (current !== m.id) return
+        if (retiring || current !== m.id) return
         postMessage({ type: 'chunk', id: m.id, index, from: p.from, to: p.to, samples: out.samples, rate: out.rate, ms: out.ms }, [out.samples.buffer])
       }
     }
     if (current === m.id) postMessage({ type: 'done', id: m.id })
   } catch (error) {
-    tts = null; warmed = null
+    if (retiring) return
+    // Keep ownership of any loaded model until retirement can dispose its sessions.
     postMessage({ type: 'error', id: 'id' in m ? m.id : 0, message: String(error) })
   }
+}
+
+self.onmessage = (event: MessageEvent<In>) => {
+  const m = event.data
+  if (retiring) return
+  if (m.type === 'dispose') {
+    retiring = true
+    current = 0
+    void (async () => {
+      // Includes operations waiting on a cold load, not only the current render tail.
+      await Promise.allSettled([...active])
+      await queue.catch(() => {})
+      const model = await tts?.catch(() => null)
+      cache.clear()
+      if (model) await model.model.dispose()
+      tts = null; warmed = null; queue = Promise.resolve()
+      postMessage({ type: 'disposed' })
+    })().catch(error => postMessage({ type: 'dispose-error', message: String(error) }))
+    return
+  }
+  const task = run(m)
+  active.add(task)
+  void task.finally(() => active.delete(task))
 }
