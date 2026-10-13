@@ -395,7 +395,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           )}
         </article>
 
-        <aside className="margin" aria-label={explain ? 'Explained simply' : 'In the margin'}>
+        <aside className="margin" aria-label={explain ? 'Passage explanation' : 'In the margin'}>
           {explain ? <ExplainPanel key={explain} bookId={id} page={clamped} passage={explain} pageText={pageText} onClose={() => setExplain(null)} /> : <>
           <p className="eyebrow">In the margin</p>
           {notes.map((n) => (
