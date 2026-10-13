@@ -525,6 +525,20 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
 .explain-actions { display: grid; gap: 8px; margin-top: 20px; }
 .explain-actions .btn { width: 100%; }
 .explain-note { margin: 14px 2px 0; color: var(--paper-secondary); line-height: 1.45; }
+
+/* Private reader explanation: real teaching or an explicit unavailable state. */
+.explain-lesson { margin-top: 16px; color: var(--paper-ink); }
+.explain-lesson > p:not(.explain-where) { margin: 0 0 12px; font: 400 15.5px/1.65 var(--serif); }
+.explain-lesson > .explain-meaning { font-size: 17px; line-height: 1.6; }
+.explain-lesson h3 { font: 700 14px/1.4 var(--sans); margin: 18px 0 6px; color: var(--ink); }
+.explain-lesson .explain-caveat { border-left: 2px solid var(--separator); padding-left: 12px; }
+.explain-state { margin-top: 16px; padding: 14px 0; color: var(--paper-ink); }
+.explain-state p { margin: 0 0 12px; font: 500 15px/1.55 var(--sans); }
+.explain-state p.small { font-size: 13px; color: var(--paper-secondary); }
+.explain-state .btn { width: 100%; margin: 4px 0 10px; white-space: normal; }
+.explain-source { margin-top: 16px; border-top: 1px solid rgba(36,48,31,.28); padding-top: 12px; }
+.explain-source summary { cursor: pointer; color: var(--secondary); font: 700 13px/1.5 var(--sans); }
+.explain-source blockquote { color: var(--paper-ink); font: 400 14px/1.65 var(--serif); margin: 10px 0 0; max-height: 220px; overflow: auto; white-space: pre-wrap; }
 .btn.cream .dot { margin-right: 2px; }
 @media (max-width: 1240px) { .reader-grid.explaining { grid-template-columns: 0 minmax(0, 1fr) 340px; } .reader-grid.explaining .rail { visibility: hidden; } }
 @media (max-width: 1100px) { .reader-grid.explaining { grid-template-columns: minmax(0, 1fr); } .reader-grid.explaining .margin { order: 1; } .reader-grid.explaining .rail { visibility: visible; } .explain-panel { max-height: none; } }
