@@ -1,9 +1,8 @@
 .scene-motion { width: 100%; min-width: 0; }
 .scene-motion-controls {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: flex-end;
   gap: 12px; padding: 4px 10px 10px; flex-wrap: wrap;
 }
-.scene-motion-label { color: var(--secondary); font-size: 13px; font-weight: 600; }
 .scene-motion-button {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 44px; padding: 10px 16px; border-radius: 999px;
@@ -19,6 +18,5 @@
 }
 @media (max-width: 720px) {
   .scene-motion-controls { padding-left: 0; padding-right: 0; gap: 8px; }
-  .scene-motion-label { font-size: 12px; }
   .scene-motion-button { padding-left: 12px; padding-right: 12px; font-size: 12px; }
 }
