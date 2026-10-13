@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { TopBar } from './components/TopBar'
 import { importFiles, useSewing } from './lib/library'
-import { go, useRoute } from './lib/router'
+import { go, href, useRoute } from './lib/router'
 import { useStore } from './lib/store'
 import { BookOverview } from './screens/BookOverview'
 import { Explore } from './screens/Explore'
@@ -23,6 +23,9 @@ export default function App() {
   const [searching, setSearching] = useState(false)
   const [dragging, setDragging] = useState(false)
   const picker = useRef<HTMLInputElement>(null)
+  const mainRef = useRef<HTMLElement>(null)
+  const previousRoute = useRef<string | null>(null)
+  const routeKey = href(route)
   const depth = useRef(0)
 
   // Keyboard: ⌘K search, ⌘O bring a PDF, ⌘1–⌘6 places (as in the Mac app's Go menu).
@@ -41,6 +44,12 @@ export default function App() {
   }, [])
 
   useEffect(() => { window.scrollTo(0, 0) }, [route.name])
+  useEffect(() => {
+    if (previousRoute.current !== null && previousRoute.current !== routeKey) {
+      mainRef.current?.focus({ preventScroll: true })
+    }
+    previousRoute.current = routeKey
+  }, [routeKey])
 
   useEffect(() => {
     const titles: Record<string, string> = { home: 'Leu', library: 'Library · Leu', study: 'Study · Leu', notes: 'Notes · Leu', explore: 'Explore · Leu', trails: 'Trails · Leu' }
@@ -67,7 +76,7 @@ export default function App() {
     <div className="app" onDragEnter={onDrag} onDragOver={onDrag} onDragLeave={onDrag} onDrop={onDrop}>
       <a className="skip" href="#main">Skip to content</a>
       <TopBar route={route} onSearch={() => setSearching(true)} />
-      <main id="main" tabIndex={-1}>
+      <main id="main" ref={mainRef} tabIndex={-1} aria-label={route.name === 'read' ? 'PDF reader' : undefined}>
         {welcome ? <Welcome onBring={bring} /> : <Screen route={route} onBring={bring} />}
       </main>
       <input

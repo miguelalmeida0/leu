@@ -331,9 +331,9 @@ export function Reader({ id, page }: { id: string; page: number }) {
           <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
           <span>{book.title}</span>
         </a>
-        <div className="segmented" role="radiogroup" aria-label="How to show the page">
-          <button role="radio" aria-checked={mode === 'rebuilt'} className={mode === 'rebuilt' ? 'on' : ''} onClick={() => setMode('rebuilt')}>For reading</button>
-          <button role="radio" aria-checked={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
+        <div className="segmented" role="group" aria-label="How to show the page">
+          <button type="button" aria-pressed={mode === 'rebuilt'} className={mode === 'rebuilt' ? 'on' : ''} onClick={() => setMode('rebuilt')}>For reading</button>
+          <button type="button" aria-pressed={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
         </div>
         <div className="reader-view-controls">
           {immersive && (
@@ -388,7 +388,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
             <>
               <div className="original-stage" ref={originalStage}>
                 <canvas ref={canvas} className="original-page" role="img"
-                  aria-label={`The original page ${clamped}`}
+                  aria-label={`Visual rendering of page ${clamped} of ${pages}. Choose For reading to access the extracted text.`}
                   onDoubleClick={immersive ? () => changeZoom(zoom > 1.05 ? 1 : 1.75) : undefined} />
               </div>
               <p className="muted small original-selection-hint">
