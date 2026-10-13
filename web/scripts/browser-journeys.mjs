@@ -118,7 +118,7 @@ async function runBrowser(browserType, name, mobile, width) {
         hash: location.hash, text: document.querySelector('.reader-paper')?.textContent?.slice(0,1100),
         page: document.body.textContent?.slice(0,2000),
         canvases: document.querySelectorAll('.reader-paper canvas').length,
-        mode: document.querySelector('.segmented [aria-checked="true"]')?.textContent,
+        mode: document.querySelector('.segmented [aria-pressed="true"]')?.textContent,
       }))
       console.error(`READER DIAGNOSTIC ${name}: ${JSON.stringify(details)}`)
       throw error
@@ -318,10 +318,10 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.getByRole('heading', { name: /I'd like to/i }))
     await noHorizontalOverflow(page, 'Study ' + name)
     await page.getByRole('button', { name: /How to study:/i }).click()
-    await visible(page.getByRole('listbox', { name: 'How to study' }))
+    await visible(page.getByRole('group', { name: 'How to study' }))
     // Outside interactions dismiss other popovers too.
     await page.locator('.study-next').click({ position: { x: 8, y: 8 } })
-    await unhidden(page.getByRole('listbox', { name: 'How to study' }))
+    await unhidden(page.getByRole('group', { name: 'How to study' }))
     await page.getByRole('button', { name: /Start remembering/i }).click()
     await visible(page.locator('.recall').or(page.getByText(/Nothing to study on this subject yet/i)), 20000)
 
