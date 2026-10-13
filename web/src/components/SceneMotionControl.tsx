@@ -16,9 +16,6 @@ export function SceneMotionControl({ children }: { children: ReactNode }) {
   return (
     <div className="scene-motion" data-playback={paused ? 'paused' : 'playing'}>
       <div className="scene-motion-controls">
-        <span className="scene-motion-label" role="status">
-          {paused ? 'Animation paused' : 'Rain and steam'}
-        </span>
         <button type="button" className="scene-motion-button"
           aria-label={paused ? 'Play animation' : 'Pause animation'}
           onClick={() => choose(paused ? 'play' : 'pause')}>
