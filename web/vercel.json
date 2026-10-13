@@ -20,5 +20,18 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "leu-desktop.vercel.app"
+        }
+      ],
+      "destination": "https://leu.miguelalmeida.xyz/:path*",
+      "permanent": true
+    }
   ]
 }

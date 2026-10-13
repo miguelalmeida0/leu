@@ -84,8 +84,11 @@ async function run(engine, label, width, reduced) {
     const initialChange = await moves()
     record('initial', { preference: reduced, changedPercent: initialChange * 100, hasPlay: await page.getByRole('button', { name: 'Play animation', exact: true }).count(), hasPause: await page.getByRole('button', { name: 'Pause animation', exact: true }).count() })
     await page.screenshot({ path: join(evidence, 'home-' + label + '-before.png') })
-    assert.ok(initialChange > 0.005, 'Home must visibly animate automatically without touch, including reduced-motion device settings')
-    assert.equal(await page.getByRole('button', { name: 'Pause animation', exact: true }).count(), 1, 'Home must offer Pause, not require Play on initial load')
+    if (reduced === 'reduce') {
+      assert.equal(initialChange, 0, 'Reduced-motion preference must initially be respected')
+      assert.equal(await page.getByRole('button', { name: 'Play animation', exact: true }).count(), 1, 'A paused Home illustration must have an explicit Play control')
+      await page.getByRole('button', { name: 'Play animation', exact: true }).click()
+    } else assert.ok(initialChange > 0.005, 'Home must visibly animate automatically without touch')
     phase = 'play'
     assert.ok(await moves() > 0.005, 'Playing must produce visible rain')
     await page.getByRole('button', { name: 'Pause animation', exact: true }).click()

@@ -118,7 +118,7 @@ async function runBrowser(browserType, name, mobile, width) {
         hash: location.hash, text: document.querySelector('.reader-paper')?.textContent?.slice(0,1100),
         page: document.body.textContent?.slice(0,2000),
         canvases: document.querySelectorAll('.reader-paper canvas').length,
-        mode: document.querySelector('.segmented [aria-checked="true"]')?.textContent,
+        mode: document.querySelector('.segmented [aria-pressed="true"]')?.textContent,
       }))
       console.error(`READER DIAGNOSTIC ${name}: ${JSON.stringify(details)}`)
       throw error
@@ -161,20 +161,28 @@ async function runBrowser(browserType, name, mobile, width) {
     // selectable text and high-resolution zoom for original PDF pages.
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await visible(page.locator('.reader.reader-immersive'))
+    // Focus mode has exactly one visible compact listening action and never
+    // exposes the full-width dock over the PDF content.
+    await visible(page.locator('.reader-immersive .dock[data-focus="true"] .dock-focus-action'))
+    await page.waitForFunction(() => {
+      const control = document.querySelector('.reader-immersive .dock[data-focus="true"]')
+      return !!control && control.getBoundingClientRect().width <= 300
+    })
     const textSize = await page.locator('.reader-immersive .prose').evaluate((element) => parseFloat(getComputedStyle(element).fontSize))
     await page.getByRole('button', { name: 'Zoom in' }).click()
     await page.waitForFunction((before) => parseFloat(getComputedStyle(document.querySelector('.reader-immersive .prose')).fontSize) > before, textSize)
     await page.getByRole('button', { name: 'Reset zoom' }).click()
-    await page.getByRole('radio', { name: 'Original page' }).click()
+    await page.getByRole('button', { name: 'Original page' }).click()
     await visible(page.locator('.reader-immersive .original-stage canvas'))
     await page.waitForFunction(() => Number.parseFloat(document.querySelector('.reader-immersive canvas.original-page')?.style.width ?? '0') > 0)
     const originalWidth = await page.locator('canvas.original-page').evaluate((el) => Number.parseFloat(el.style.width))
     await page.getByRole('button', { name: 'Zoom in' }).click()
     await page.waitForFunction((before) => Number.parseFloat(document.querySelector('canvas.original-page')?.style.width ?? '0') > before, originalWidth)
-    await page.getByRole('radio', { name: 'For reading' }).click()
+    await page.getByRole('button', { name: 'For reading' }).click()
     await visible(page.locator('.reader-immersive .prose p').first())
     await page.getByRole('button', { name: 'Exit full-screen reading' }).click()
     await unhidden(page.locator('.reader.reader-immersive'))
+    await visible(page.locator('.reader-foot .dock:not([data-focus="true"]) .dock-play'))
     await visible(page.locator('.reader-paper .prose p').first())
     await noHorizontalOverflow(page, 'After full-screen zoom ' + name)
 
@@ -187,9 +195,9 @@ async function runBrowser(browserType, name, mobile, width) {
     await unhidden(page.getByRole('dialog', { name: /Keep a note from Computer Science Essentials/i }))
     await visible(page.locator('.margin-note').getByText(noteText))
     // Original PDF is readable, but selection requires reconstructed text.
-    await page.getByRole('radio', { name: 'Original page' }).click()
+    await page.getByRole('button', { name: 'Original page' }).click()
     await visible(page.getByText(/For selectable text and notes|switch to “For reading”/i))
-    await page.getByRole('radio', { name: 'For reading' }).click()
+    await page.getByRole('button', { name: 'For reading' }).click()
     await visible(page.locator('.reader-paper .prose p').first())
     await selectPassage(page)
     await page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Explain', exact: true }).click()
@@ -310,10 +318,10 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.getByRole('heading', { name: /I'd like to/i }))
     await noHorizontalOverflow(page, 'Study ' + name)
     await page.getByRole('button', { name: /How to study:/i }).click()
-    await visible(page.getByRole('listbox', { name: 'How to study' }))
+    await visible(page.getByRole('group', { name: 'How to study' }))
     // Outside interactions dismiss other popovers too.
     await page.locator('.study-next').click({ position: { x: 8, y: 8 } })
-    await unhidden(page.getByRole('listbox', { name: 'How to study' }))
+    await unhidden(page.getByRole('group', { name: 'How to study' }))
     await page.getByRole('button', { name: /Start remembering/i }).click()
     await visible(page.locator('.recall').or(page.getByText(/Nothing to study on this subject yet/i)), 20000)
 

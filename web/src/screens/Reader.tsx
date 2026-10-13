@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Prose, piecesOf } from '../components/Prose'
 import { Empty, Modal } from '../components/ui'
 import { openPdf, pageBlocks, pdfDeadline, renderPage, type Block, type PDFDocumentProxy } from '../lib/pdf'
@@ -6,6 +6,8 @@ import { go, href } from '../lib/router'
 import { addNote, loadOutline, loadPdf, patchBook, removeNote, upsertMemory, useStore, type Outline } from '../lib/store'
 import { cloze, ideas } from '../lib/text'
 import { Dock } from '../components/Dock'
+import { captureDockFlight, completeDockFlight, type DockFlight } from '../lib/focusDockTransition'
+import './FocusListening.css'
 import { dismissNotice, prefetch, seek, speak, stop, useVoice, warmVoice } from '../lib/voice'
 import { ExplainPanel, gistOf } from './Explain'
 
@@ -39,6 +41,8 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const renderQueue = useRef<Promise<void>>(Promise.resolve())
   const pinch = useRef<{ distance: number; zoom: number } | null>(null)
   const scrollBeforeFocus = useRef(0)
+  const dockFlight = useRef<DockFlight | null>(null)
+  const dockFlightCleanup = useRef<(() => void) | null>(null)
   const selectionToolbar = useRef<HTMLDivElement>(null)
   const selectingToolbar = useRef(false)
   const swipeStart = useRef<{ x: number; y: number; at: number } | null>(null)
@@ -47,6 +51,32 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const pages = book?.pages ?? 1
   const clamped = Math.min(Math.max(1, page), pages)
   const changeZoom = useCallback((next: number) => setZoom(limitZoom(next)), [])
+
+  // Animate a visual copy; the real listening control stays mounted and keeps
+  // its speech state, queue, keyboard shortcuts and progress.
+  useLayoutEffect(() => {
+    const flight = dockFlight.current
+    if (!flight) return
+    dockFlight.current = null
+    dockFlightCleanup.current?.()
+    dockFlightCleanup.current = completeDockFlight(
+      flight, document.querySelector<HTMLElement>('.reader-foot .dock'), immersive,
+    )
+  }, [immersive])
+
+  useEffect(() => () => {
+    dockFlightCleanup.current?.()
+    dockFlight.current?.ghost.remove()
+  }, [])
+
+  const toggleFocus = () => {
+    dockFlightCleanup.current?.()
+    dockFlightCleanup.current = null
+    dockFlight.current?.ghost.remove()
+    dockFlight.current = captureDockFlight(document.querySelector<HTMLElement>('.reader-foot .dock'))
+    if (!immersive) scrollBeforeFocus.current = window.scrollY
+    setImmersive((value) => !value)
+  }
 
   // CSS immersive mode works on iPhone Safari, where HTML fullscreen support
   // is limited. Lock background scroll and restore the reading position on exit.
@@ -301,9 +331,9 @@ export function Reader({ id, page }: { id: string; page: number }) {
           <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
           <span>{book.title}</span>
         </a>
-        <div className="segmented" role="radiogroup" aria-label="How to show the page">
-          <button role="radio" aria-checked={mode === 'rebuilt'} className={mode === 'rebuilt' ? 'on' : ''} onClick={() => setMode('rebuilt')}>For reading</button>
-          <button role="radio" aria-checked={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
+        <div className="segmented" role="group" aria-label="How to show the page">
+          <button type="button" aria-pressed={mode === 'rebuilt'} className={mode === 'rebuilt' ? 'on' : ''} onClick={() => setMode('rebuilt')}>For reading</button>
+          <button type="button" aria-pressed={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
         </div>
         <div className="reader-view-controls">
           {immersive && (
@@ -318,10 +348,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           )}
           <button type="button" className="reader-focus-toggle"
             aria-label={immersive ? 'Exit full-screen reading' : 'Enter full-screen reading'}
-            aria-pressed={immersive} onClick={() => {
-              if (!immersive) scrollBeforeFocus.current = window.scrollY
-              setImmersive((value) => !value)
-            }}>
+            aria-pressed={immersive} onClick={toggleFocus}>
             {immersive ? 'Exit full screen' : 'Full screen'}
             <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
               {immersive
@@ -361,7 +388,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
             <>
               <div className="original-stage" ref={originalStage}>
                 <canvas ref={canvas} className="original-page" role="img"
-                  aria-label={`The original page ${clamped}`}
+                  aria-label={`Visual rendering of page ${clamped} of ${pages}. Choose For reading to access the extracted text.`}
                   onDoubleClick={immersive ? () => changeZoom(zoom > 1.05 ? 1 : 1.75) : undefined} />
               </div>
               <p className="muted small original-selection-hint">
@@ -414,7 +441,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
       </div>
 
       <div className="reader-foot">
-        <Dock page={clamped} pages={pages} canPlay={!!pageText} onPlay={() => readPage(0)} onTurn={(n) => turn(n)} />
+        <Dock page={clamped} pages={pages} canPlay={!!pageText} onPlay={() => readPage(0)} onTurn={(n) => turn(n)} compact={immersive} />
       </div>
       {draft && (
         <Modal label={`Keep a note from ${book.title}, page ${clamped}`} onClose={() => setDraft(null)} width={540}>

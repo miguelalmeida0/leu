@@ -9,7 +9,7 @@ const mb = (n: number) => Math.round(n / 1e6)
     place. Play starts the page from the top (or carries on where you paused); while Leu reads,
     the line along the top of the dock fills, the arrows step a sentence, and Space pauses. The
     voice chip picks a voice; the speed is remembered. */
-export function Dock({ page, pages, canPlay, onPlay, onTurn }: { page: number; pages: number; canPlay: boolean; onPlay: () => void; onTurn: (page: number) => void }) {
+export function Dock({ page, pages, canPlay, onPlay, onTurn, compact = false }: { page: number; pages: number; canPlay: boolean; onPlay: () => void; onTurn: (page: number) => void; compact?: boolean }) {
   const voice = useVoice()
   const voiceId = useVoiceId()
   const [menu, setMenu] = useState(false)
@@ -17,6 +17,7 @@ export function Dock({ page, pages, canPlay, onPlay, onTurn }: { page: number; p
   const [nativeVoices, setNativeVoices] = useState(systemVoices)
   const line = useRef<HTMLSpanElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
+  useEffect(() => { if (compact) setMenu(false) }, [compact])
   const availableVoices = mobileSpeech
     ? [{ id: 'system:default', name: 'Device default', note: 'Built-in voice' }, ...nativeVoices]
     : voices
@@ -88,10 +89,31 @@ export function Dock({ page, pages, canPlay, onPlay, onTurn }: { page: number; p
           : canPlay ? 'Listen to this page' : 'Nothing to read on this page'
 
   return (
-    <div className={`dock${active ? ' active' : ''}`} role="region" aria-label="Listening and pages">
+    <div className={`dock${active ? ' active' : ''}`} data-focus={compact ? 'true' : undefined} role="region" aria-label="Listening and pages">
       <span className="dock-line" aria-hidden="true">
         <span className="dock-line-fill" ref={line} style={voice.download ? { transform: `scaleX(${voice.download.loaded / voice.download.total})` } : undefined} />
       </span>
+
+      {compact && (
+        <button
+          type="button"
+          className="dock-focus-action"
+          onClick={toggle}
+          disabled={!canPlay && !active}
+          aria-label={playing ? 'Pause reading' : voice.status === 'paused' ? 'Resume reading' : 'Listen to this page'}
+          aria-keyshortcuts="Space"
+        >
+          <span className="dock-focus-play" aria-hidden="true">
+            {waiting ? <span className="dock-spin" /> : playing
+              ? <svg width="18" height="18" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor" /><rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor" /></svg>
+              : <svg width="18" height="18" viewBox="0 0 24 24"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6z" fill="currentColor" /></svg>}
+          </span>
+          <span className="dock-focus-description">
+            <strong>{playing ? 'Pause reading' : voice.status === 'paused' ? 'Continue reading' : 'Listen to this page'}</strong>
+            <small aria-live="polite">{status}</small>
+          </span>
+        </button>
+      )}
 
       <div className="dock-voice" ref={menuRef}>
         <button className="dock-chip" aria-haspopup="menu" aria-expanded={menu} onClick={() => setMenu((m) => !m)} aria-label={`Voice: ${name}. Change`}>

@@ -2,7 +2,7 @@
 
 **A native iPhone PDF study app that turns reading into active understanding — while staying local-first.**
 
-[**Try Leu in your browser ↗**](https://leu-desktop.vercel.app/) · [Browser implementation](web/README.md) · [Native architecture](docs/ARCHITECTURE.md) · [Repository guide](docs/START_HERE.md)
+[**Try Leu in your browser ↗**](https://leu.miguelalmeida.xyz/) · [Browser implementation](web/README.md) · [Native architecture](docs/ARCHITECTURE.md) · [Repository guide](docs/START_HERE.md)
 
 > The live URL runs the browser companion in `web/`, not the native iOS build. It processes locally selected PDFs in the browser; clearing site data removes its locally saved library.
 
@@ -180,3 +180,5 @@ These are retained capture files, not a new device-validation run.
 [Repository guide](./docs/START_HERE.md)
 
 <!-- repository-presentation-repair:1 -->
+
+[Cleanup and preservation record](docs/CLEANUP_2026-10-09.md)

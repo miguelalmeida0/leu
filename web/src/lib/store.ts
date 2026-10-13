@@ -45,7 +45,7 @@ export const palettes: Record<Palette, { bg: string; fg: string; muted: string }
   oat: { bg: '#ECDFBF', fg: '#24301F', muted: '#4A4030' },
   teal: { bg: '#35706A', fg: '#F8F1DE', muted: '#DDEBE8' },
   butter: { bg: '#E7B843', fg: '#24301F', muted: '#4A3A10' },
-  tomato: { bg: '#A94B35', fg: '#F8F1DE', muted: '#F6E2DA' },
+  tomato: { bg: '#A94B35', fg: '#F8F1DE', muted: '#F8F1DE' },
   blush: { bg: '#EBB5A3', fg: '#24301F', muted: '#5A3328' },
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { Empty } from '../components/ui'
 import { go } from '../lib/router'
 import { allText, memoryState, reviewMemory, upsertMemory, useStore, type Memory } from '../lib/store'
@@ -16,10 +16,12 @@ const times = [5, 10, 20]
 function Choice<T extends string | number>({ label, value, options, onChange }: { label: string; value: T; options: { id: T; label: string }[]; onChange: (v: T) => void }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLSpanElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const popupId = useId()
   useEffect(() => {
     if (!open) return
     const close = (e: PointerEvent) => { if (!ref.current?.contains(e.target as Node)) setOpen(false) }
-    const escape = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
+    const escape = (e: KeyboardEvent) => { if (e.key === 'Escape') { setOpen(false); triggerRef.current?.focus() } }
     window.addEventListener('pointerdown', close, true)
     window.addEventListener('keydown', escape)
     return () => { window.removeEventListener('pointerdown', close, true); window.removeEventListener('keydown', escape) }
@@ -27,14 +29,26 @@ function Choice<T extends string | number>({ label, value, options, onChange }: 
   const current = options.find((o) => o.id === value)
   return (
     <span className="choice" ref={ref}>
-      <button className="choice-patch" aria-haspopup="listbox" aria-expanded={open} aria-label={`${label}: ${current?.label}. Change`} onClick={() => setOpen((o) => !o)}>
+      <button ref={triggerRef} type="button" className="choice-patch" aria-expanded={open} aria-controls={popupId} aria-label={`${label}: ${current?.label}. Change`} onClick={() => setOpen((o) => !o)}>
         {current?.label}
         <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
       </button>
       {open && (
-        <span className="menu card choice-menu" role="listbox" aria-label={label}>
+        <span id={popupId} className="menu card choice-menu" role="group" aria-label={label}
+          onKeyDown={(event) => {
+            if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return
+            event.preventDefault()
+            const buttons = Array.from(event.currentTarget.querySelectorAll('button'))
+            if (!buttons.length) return
+            const index = buttons.indexOf(document.activeElement as HTMLButtonElement)
+            const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1
+              : (index + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length
+            buttons[next]?.focus()
+          }}>
           {options.map((o) => (
-            <button key={String(o.id)} role="option" aria-selected={o.id === value} className={o.id === value ? 'on' : ''} onClick={() => { onChange(o.id); setOpen(false) }}>{o.label}</button>
+            <button key={String(o.id)} type="button" aria-pressed={o.id === value}
+              className={o.id === value ? 'on' : ''}
+              onClick={() => { onChange(o.id); setOpen(false); triggerRef.current?.focus() }}>{o.label}</button>
           ))}
         </span>
       )}

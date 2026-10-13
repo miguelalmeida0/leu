@@ -35,6 +35,12 @@ jobs:
       - name: Install app dependencies
         working-directory: web
         run: npm ci
+      - name: Voice lifecycle regression tests
+        working-directory: web
+        run: node --experimental-vm-modules --test scripts/voice-lifecycle.test.mjs scripts/voice-worker-lifecycle.test.mjs
+      - name: Accessibility regression contracts
+        working-directory: web
+        run: node --test scripts/accessibility-contract.test.mjs
       - name: Typecheck and build
         working-directory: web
         run: npm run build
