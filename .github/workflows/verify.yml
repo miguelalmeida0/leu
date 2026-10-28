@@ -1,9 +1,9 @@
 name: Shelf verification
 
 on:
-  # Keep work-in-progress `test` pushes silent; validate PRs and main.
+  # Verify integration pushes before promotion, as well as every PR and main.
   push:
-    branches: [main]
+    branches: [main, test]
   pull_request:
     branches: [main, test]
   workflow_dispatch:
