@@ -76,7 +76,16 @@ export default function App() {
     <div className="app" onDragEnter={onDrag} onDragOver={onDrag} onDragLeave={onDrag} onDrop={onDrop}>
       <a className="skip" href="#main">Skip to content</a>
       <TopBar route={route} onSearch={() => setSearching(true)} />
-      <main id="main" ref={mainRef} tabIndex={-1} aria-label={route.name === 'read' ? 'PDF reader' : undefined}>
+      <main id="main" ref={mainRef} tabIndex={-1} aria-label={route.name === 'read' ? 'PDF reader' : undefined}
+        onFocusCapture={(event) => {
+          const target = event.target as HTMLElement
+          if (target === event.currentTarget || !target.matches(':focus-visible')) return
+          const bounds = target.getBoundingClientRect()
+          const headerBottom = document.querySelector('.topbar')?.getBoundingClientRect().bottom ?? 0
+          if (bounds.top < headerBottom + 12 || bounds.bottom > window.innerHeight - 12) {
+            target.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' })
+          }
+        }}>
         {welcome ? <Welcome onBring={bring} /> : <Screen route={route} onBring={bring} />}
       </main>
       <input

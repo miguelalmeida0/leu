@@ -42,7 +42,7 @@ export function Welcome({ onBring }: { onBring: () => void }) {
         <div className="chips" style={{ marginTop: 12 }}>
           {suggestions.map((s) => <button key={s} className="chip" onClick={() => set(s)}>{s}</button>)}
         </div>
-        <div className="row" style={{ marginTop: 30, gap: 20 }}>
+        <div className="row welcome-actions" style={{ marginTop: 30, gap: 20 }}>
           <button className="btn ink" onClick={onBring}>{trimmed ? 'Bring a PDF about it' : 'Bring a PDF'}</button>
           <button className="link" disabled={busy} onClick={() => void addSamples(false)}>
             {busy ? 'Opening the sample…' : 'or start with a sample book'}

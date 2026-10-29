@@ -34,15 +34,15 @@ export function useTouchScreen(): boolean {
   return touch
 }
 
-/** Images, loaded once and shared between scenes. */
-const images = new Map<string, Promise<HTMLImageElement>>()
-export function loadImage(src: string): Promise<HTMLImageElement> {
+/** Optional scene art: share successful loads, allow retry after a network failure. */
+const images = new Map<string, Promise<HTMLImageElement | undefined>>()
+export function loadImage(src: string): Promise<HTMLImageElement | undefined> {
   if (!images.has(src)) {
-    images.set(src, new Promise((resolve, reject) => {
+    images.set(src, new Promise<HTMLImageElement | undefined>((resolve) => {
       const img = new Image()
       img.decoding = 'async'
       img.onload = () => resolve(img)
-      img.onerror = reject
+      img.onerror = () => { images.delete(src); resolve(undefined) }
       img.src = src
     }))
   }

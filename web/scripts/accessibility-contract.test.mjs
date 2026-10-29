@@ -48,3 +48,28 @@ test('route changes restore semantic focus without stealing first-load focus', a
   assert.match(app, /mainRef\.current\?\.focus\(\{ preventScroll: true \}\)/)
   assert.match(app, /<main id="main" ref=\{mainRef\} tabIndex=\{-1\}/)
 })
+
+test('felt text and artwork captions have opaque AA contrast', async () => {
+  const css = await source('src/styles.css')
+  const token = (name) => css.match(new RegExp(`--${name}: (#[A-Fa-f0-9]{6})`))[1]
+  for (const foreground of ['eyebrow-felt', 'secondary', 'ink']) {
+    assert.ok(contrast(token(foreground), token('felt')) >= 4.5, `${foreground} must pass on felt`)
+  }
+  assert.doesNotMatch(css.match(/@keyframes fadeIn \{[^\n]+/)[0], /opacity:/,
+    'Text entrances must not temporarily reduce contrast')
+  assert.match(css, /transition-duration: 0s !important/,
+    'Reduced motion must not introduce transitions on normally immediate focus styles')
+})
+
+test('production CSP allows local workers and all static previews use same-origin scripts', async () => {
+  const config = JSON.parse(await source('vercel.json'))
+  const policy = config.headers[0].headers.find(({ key }) => key === 'Content-Security-Policy').value
+  assert.match(policy, /worker-src 'self' blob:/)
+  assert.match(policy, /script-src 'self' blob: 'wasm-unsafe-eval'/)
+  assert.doesNotMatch(policy.match(/script-src[^;]+/)[0], /'unsafe-inline'|'unsafe-eval'/)
+  for (const page of ['quiet-weather', 'afterglow', 'material-rhythm']) {
+    const html = await source(`public/motion/${page}.html`)
+    assert.doesNotMatch(html, /<script\s*>/)
+    assert.match(html, /<script src="\.\/motion\.js"><\/script>/)
+  }
+})

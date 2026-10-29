@@ -79,7 +79,7 @@ async function run(engine, label, width, reduced) {
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
     await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible', timeout: 25000 })
     phase = 'home'
-    await page.getByRole('link', { name: 'Leu, home', exact: true }).click()
+    await page.getByRole('link', { name: 'leu', exact: true }).click()
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     const initialChange = await moves()
     record('initial', { preference: reduced, changedPercent: initialChange * 100, hasPlay: await page.getByRole('button', { name: 'Play animation', exact: true }).count(), hasPause: await page.getByRole('button', { name: 'Pause animation', exact: true }).count() })
@@ -117,7 +117,7 @@ async function run(engine, label, width, reduced) {
     await page.getByRole('button', { name: 'Keep reading', exact: true }).click()
     await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible' })
     phase = 'return-home'
-    await page.getByRole('link', { name: 'Leu, home', exact: true }).click()
+    await page.getByRole('link', { name: 'leu', exact: true }).click()
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     assert.equal(await page.getByRole('button', { name: 'Play animation', exact: true }).count(), 1, 'Pause choice must survive app navigation')
     assert.equal(await moves(), 0)
