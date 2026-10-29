@@ -22,8 +22,18 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
   const current = route.name === 'book' ? 'library' : route.name === 'words' ? 'read' : route.name
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLElement>(null)
   const routeKey = href(route)
 
+  useEffect(() => {
+    const header = headerRef.current
+    if (!header) return
+    const measure = () => document.documentElement.style.setProperty('--topbar-height', `${header.getBoundingClientRect().height}px`)
+    const observer = new ResizeObserver(measure)
+    observer.observe(header)
+    measure()
+    return () => observer.disconnect()
+  }, [])
   useEffect(() => setMenuOpen(false), [routeKey])
   useEffect(() => {
     if (!menuOpen) return
@@ -44,8 +54,8 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
     }
   }, [menuOpen])
   return (
-    <header className="topbar">
-      <a className="wordmark" href={href({ name: 'home' })} aria-label="Leu, home" aria-current={route.name === 'home' ? 'page' : undefined}><Wordmark /></a>
+    <header className="topbar" ref={headerRef}>
+      <a className="wordmark" href={href({ name: 'home' })} title="Home" aria-current={route.name === 'home' ? 'page' : undefined}><Wordmark /></a>
       <nav className="desktop-places" aria-label="Places">
         <ul>
           {places.map((p) => {
@@ -90,10 +100,10 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
             })}
           </nav>
         </div>
-        <button className="search-pill" onClick={onSearch} aria-label="Search books" aria-keyshortcuts="Meta+K Control+K">
+        <button className="search-pill" onClick={onSearch} aria-labelledby="search-label" aria-keyshortcuts="Meta+K Control+K">
           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.2" /><path d="M15.5 15.5 20 20" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
-          <span>Search your books</span>
-          <kbd>{navigator.platform.includes('Mac') ? '⌘K' : 'Ctrl K'}</kbd>
+          <span id="search-label">Search your books</span>
+          <kbd aria-hidden="true">{navigator.platform.includes('Mac') ? '⌘K' : 'Ctrl K'}</kbd>
         </button>
       </div>
     </header>

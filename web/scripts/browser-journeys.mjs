@@ -281,7 +281,7 @@ async function runBrowser(browserType, name, mobile, width) {
         }
       })
     }, sampleId)
-    await page.getByRole('button', { name: 'Search books' }).click()
+    await page.getByRole('button', { name: 'Search your books' }).click()
     await visible(page.getByRole('dialog', { name: 'Search your books' }))
     await page.getByRole('textbox', { name: 'Ask your books anything' }).fill('References')
     await visible(page.locator('#result-0'), 40000)
@@ -338,7 +338,7 @@ async function runBrowser(browserType, name, mobile, width) {
       await visible(page.locator('.walk, .empty'))
     }
 
-    await page.getByRole('button', { name: 'Search books' }).click()
+    await page.getByRole('button', { name: 'Search your books' }).click()
     await visible(page.getByRole('dialog', { name: 'Search your books' }))
     await page.getByRole('textbox', { name: 'Ask your books anything' }).fill('algorithm')
     await visible(page.locator('.best, .search-hint'))

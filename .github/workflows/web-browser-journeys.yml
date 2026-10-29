@@ -35,18 +35,15 @@ jobs:
       - name: Install app dependencies
         working-directory: web
         run: npm ci
-      - name: Voice lifecycle regression tests
+      - name: Artwork and voice lifecycle regression tests
         working-directory: web
-        run: node --experimental-vm-modules --test scripts/voice-lifecycle.test.mjs scripts/voice-worker-lifecycle.test.mjs
+        run: node --experimental-vm-modules --test scripts/motion-assets.test.mjs scripts/voice-lifecycle.test.mjs scripts/voice-worker-lifecycle.test.mjs
       - name: Accessibility regression contracts
         working-directory: web
         run: node --test scripts/accessibility-contract.test.mjs
       - name: Typecheck and build
         working-directory: web
         run: npm run build
-      - name: Install pinned browser test package
-        working-directory: web
-        run: npm install --no-save --no-package-lock playwright@1.56.1
       - name: Parse-check browser scripts
         working-directory: web
         run: |
@@ -87,9 +84,6 @@ jobs:
       - name: Typecheck and build
         working-directory: web
         run: npm run build
-      - name: Install pinned browser test package
-        working-directory: web
-        run: npm install --no-save --no-package-lock playwright@1.56.1
       - name: Test Home animation, reduced motion and navigation
         working-directory: web
         run: node scripts/home-motion-journeys.mjs
@@ -102,21 +96,63 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
+  stress:
+    name: stress-${{ matrix.browser }}
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
+      options: --user pwuser
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install app and test dependencies
+        working-directory: web
+        run: npm ci
+      - name: Typecheck and build
+        working-directory: web
+        run: npm run build
+      - name: Stress responsive layouts, accessibility and resource failures
+        working-directory: web
+        env:
+          LEU_STRESS_BROWSER: ${{ matrix.browser }}
+        run: node scripts/stress-journeys.mjs
+      - name: Save stress evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: leu-stress-${{ matrix.browser }}
+          path: web/qa-evidence/stress/
+          if-no-files-found: warn
+          retention-days: 7
+
   gate:
     name: web-release-gate
     runs-on: ubuntu-latest
     timeout-minutes: 2
     if: ${{ always() }}
-    needs: [browser, home]
+    needs: [browser, home, stress]
     steps:
       - name: Fail closed unless every browser suite passed
         env:
           BROWSER_RESULT: ${{ needs.browser.result }}
           HOME_RESULT: ${{ needs.home.result }}
+          STRESS_RESULT: ${{ needs.stress.result }}
         run: |
           echo "Reader/scene journeys: $BROWSER_RESULT"
           echo "Home reduced-motion journeys: $HOME_RESULT"
-          if [ "$BROWSER_RESULT" != success ] || [ "$HOME_RESULT" != success ]; then
+          echo "Stress matrix: $STRESS_RESULT"
+          if [ "$BROWSER_RESULT" != success ] || [ "$HOME_RESULT" != success ] || [ "$STRESS_RESULT" != success ]; then
             echo '::error::Leu browser release gate failed; do not promote to main.'
             exit 1
           fi
