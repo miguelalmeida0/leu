@@ -121,14 +121,18 @@ mark { background: rgba(231, 184, 67, .55); color: inherit; border-radius: 3px; 
 /* ---------- shell ---------- */
 .app { min-height: 100%; display: flex; flex-direction: column; }
 .topbar {
-  position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
-  min-height: 76px; padding: 12px 40px; background: var(--felt);
+  position: sticky; top: 0; z-index: 20; display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content minmax(0, 1fr);
+  column-gap: clamp(12px, 2vw, 28px); align-items: center;
+  min-height: 76px; padding: 12px clamp(16px, 3vw, 40px); background: var(--felt);
   border-bottom: 1px solid rgba(92, 107, 71, .25);
 }
 .wordmark { text-decoration: none; padding: 6px 4px; border-radius: 12px; }
-.desktop-places { margin-inline: auto; min-width: 0; }
-.topbar nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 0; padding: 0; }
-.place { position: relative; display: inline-flex; flex-direction: column; align-items: center; padding: 12px 14px 14px; font-weight: 600; font-size: 15px; text-decoration: none; color: var(--secondary); border-radius: 12px; transition: color .2s, background .2s; }
+.topbar > .wordmark { justify-self: start; }
+/* Equal side tracks center the links on the viewport, independent of logo/search widths. */
+.desktop-places { justify-self: center; margin: 0; min-width: 0; }
+.topbar nav ul { list-style: none; display: flex; flex-wrap: nowrap; justify-content: center; gap: 6px; margin: 0; padding: 0; }
+.place { position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px; padding: 12px 14px 14px; font-weight: 600; font-size: 15px; text-decoration: none; color: var(--secondary); border-radius: 12px; transition: color .2s, background .2s; }
 .place:hover { color: var(--ink); background: rgba(195, 209, 159, .7); }
 .place.on { color: var(--ink); font-weight: 800; }
 .place[aria-disabled] { opacity: .55; }
@@ -425,7 +429,8 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
 @media (max-width: 1100px) {
   .topbar nav ul { justify-content: center; gap: 0; }
   .place { padding: 12px 9px 8px; font-size: 14px; }
-  .search-pill span { display: none; }
+  .search-pill span, .search-pill kbd { display: none; }
+  .search-pill { width: 44px; height: 44px; padding: 0; justify-content: center; }
   .words-grid, .book-grid, .study-grid { grid-template-columns: 1fr; }
   .home { padding: 28px 32px; grid-template-columns: minmax(280px, 340px) minmax(0, 1fr); }
   .welcome { gap: 32px; }
@@ -599,7 +604,7 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
 }
 
 /* Mobile access and PDF import: dialogs must not trap readers behind indexing. */
-.topbar-tools { margin-inline-start: auto; display: flex; align-items: center; gap: 10px; min-width: 0; max-width: 100%; }
+.topbar-tools { margin-inline-start: 0; justify-self: end; display: flex; align-items: center; gap: 10px; min-width: 0; max-width: 100%; }
 .mobile-places { display: none; }
 .modal-close {
   position: absolute; right: 18px; top: 16px; z-index: 2; width: 40px; height: 40px;
@@ -608,8 +613,11 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
 .modal-close:hover { background: rgba(36,48,31,.13); }
 .sewn .display { overflow-wrap: anywhere; }
 .sewn-actions { margin-top: 28px; gap: 16px; flex-wrap: wrap; }
-@media (max-width: 1100px) {
-  .topbar { padding: 12px 16px; }
+/* Below the available width for six readable links, use the existing accessible menu. */
+@media (max-width: 900px) {
+  .topbar { grid-template-columns: minmax(0, 1fr) max-content; column-gap: 12px;
+    padding: 12px 16px;
+    padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right)); }
   .topbar .desktop-places { display: none; }
   .mobile-places { display: block; position: relative; }
   .mobile-menu-trigger {
@@ -625,7 +633,7 @@ button.patch:active { transform: translateY(-1px) scale(.99); }
     box-shadow: 0 16px 50px rgba(36,48,31,.27); border: 1px solid rgba(92,107,71,.28);
   }
   .mobile-places nav a {
-    display: block; padding: 12px 16px; border-radius: 12px; font-weight: 650;
+    display: flex; align-items: center; min-height: 44px; padding: 10px 16px; border-radius: 12px; font-weight: 650;
     text-decoration: none; color: var(--secondary);
   }
   .mobile-places nav a[aria-current="page"] { color: var(--ink); background: var(--felt-light); }
