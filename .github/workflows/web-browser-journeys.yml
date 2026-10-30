@@ -48,6 +48,9 @@ jobs:
         working-directory: web
         run: |
           for script in scripts/*-journeys.mjs; do node --check "$script"; done
+      - name: Verify centered navigation across desktop, tablet and mobile widths
+        working-directory: web
+        run: node scripts/topbar-layout-journeys.mjs
       - name: Run reader journeys on desktop, Android and iPhone
         working-directory: web
         run: node scripts/browser-journeys.mjs
