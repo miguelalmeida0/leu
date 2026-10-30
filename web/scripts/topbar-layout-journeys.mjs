@@ -95,6 +95,14 @@ async function verify(engine) {
       window.__topbarLabels = nodes.map((node) => node.textContent)
       for (const node of nodes) node.textContent += ' — Antidisestablishmentarianism, a longer translated label'
     })
+    const immediate = await page.evaluate(() => new Promise((resolve) => {
+      queueMicrotask(() => resolve({
+        compact: document.querySelector('.topbar')?.classList.contains('compact-nav'),
+        overflow: document.documentElement.scrollWidth - innerWidth,
+      }))
+    }))
+    assert.equal(immediate.compact, true, `${engine.name()}: expanded labels should collapse without waiting a frame`)
+    assert.ok(immediate.overflow <= 2, `${engine.name()}: expanded labels should not overflow before paint`)
     await page.waitForFunction(() => document.querySelector('.topbar')?.classList.contains('compact-nav'))
     const expanded = await page.evaluate(() => {
       const search = document.querySelector('.search-pill')

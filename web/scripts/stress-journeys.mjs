@@ -86,8 +86,10 @@ async function inspect(page, label, scenario) {
     }
     const search = document.querySelector('.search-pill'), r = search.getBoundingClientRect()
     const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2)
+    const nav = document.querySelector('.desktop-places')
     return { overflow: document.documentElement.scrollWidth - innerWidth, bad,
-      searchBlocked: !search.contains(hit) }
+      searchBlocked: !search.contains(hit), topbar: document.querySelector('.topbar')?.className,
+      navVisible: getComputedStyle(nav).display !== 'none' }
   })
   assert.ok(geometry.overflow <= 2 && !geometry.bad.length, label + ': overflow ' + JSON.stringify(geometry))
   assert.equal(geometry.searchBlocked, false, label + ': search obstructed')
