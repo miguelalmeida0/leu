@@ -4,6 +4,7 @@ import { useStore } from '../lib/store'
 import { lastBook } from '../lib/library'
 import { Stitch } from './ui'
 import { Wordmark } from './Wordmark'
+import { useResponsiveTopbar } from './useResponsiveTopbar'
 
 const places = [
   { name: 'library', label: 'Library' },
@@ -23,6 +24,10 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLElement>(null)
+  const wordmarkRef = useRef<HTMLAnchorElement>(null)
+  const navigationRef = useRef<HTMLElement>(null)
+  const searchRef = useRef<HTMLButtonElement>(null)
+  const compactNav = useResponsiveTopbar({ header: headerRef, wordmark: wordmarkRef, navigation: navigationRef, search: searchRef })
   const routeKey = href(route)
 
   useEffect(() => {
@@ -35,6 +40,7 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
     return () => observer.disconnect()
   }, [])
   useEffect(() => setMenuOpen(false), [routeKey])
+  useEffect(() => { if (!compactNav) setMenuOpen(false) }, [compactNav])
   useEffect(() => {
     if (!menuOpen) return
     const dismiss = (event: PointerEvent) => {
@@ -54,9 +60,9 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
     }
   }, [menuOpen])
   return (
-    <header className="topbar" ref={headerRef}>
-      <a className="wordmark" href={href({ name: 'home' })} title="Home" aria-current={route.name === 'home' ? 'page' : undefined}><Wordmark /></a>
-      <nav className="desktop-places" aria-label="Places">
+    <header className={`topbar${compactNav ? ' compact-nav' : ''}`} ref={headerRef}>
+      <a className="wordmark" ref={wordmarkRef} href={href({ name: 'home' })} title="Home" aria-current={route.name === 'home' ? 'page' : undefined}><Wordmark /></a>
+      <nav className="desktop-places" ref={navigationRef} aria-label="Places">
         <ul>
           {places.map((p) => {
             const on = current === p.name
@@ -100,7 +106,7 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
             })}
           </nav>
         </div>
-        <button className="search-pill" onClick={onSearch} aria-labelledby="search-label" aria-keyshortcuts="Meta+K Control+K">
+        <button className="search-pill" ref={searchRef} onClick={onSearch} aria-labelledby="search-label" aria-keyshortcuts="Meta+K Control+K">
           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.2" /><path d="M15.5 15.5 20 20" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
           <span id="search-label">Search your books</span>
           <kbd aria-hidden="true">{navigator.platform.includes('Mac') ? '⌘K' : 'Ctrl K'}</kbd>

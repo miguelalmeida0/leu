@@ -88,6 +88,33 @@ async function verify(engine) {
     await page.getByRole('dialog', { name: 'Search your books' }).waitFor({ state: 'visible' })
     await page.keyboard.press('Escape')
     await page.getByRole('dialog', { name: 'Search your books' }).waitFor({ state: 'hidden' })
+    // Text expansion (translation or personalization) must switch to the same compact menu.
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.evaluate(() => {
+      const nodes = [...document.querySelectorAll('.desktop-places .place, .search-pill span')]
+      window.__topbarLabels = nodes.map((node) => node.textContent)
+      for (const node of nodes) node.textContent += ' — Antidisestablishmentarianism, a longer translated label'
+    })
+    await page.waitForFunction(() => document.querySelector('.topbar')?.classList.contains('compact-nav'))
+    const expanded = await page.evaluate(() => {
+      const search = document.querySelector('.search-pill')
+      const box = search.getBoundingClientRect()
+      return {
+        overflow: document.documentElement.scrollWidth - innerWidth,
+        searchHit: search.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)),
+      }
+    })
+    assert.ok(expanded.overflow <= 2 && expanded.searchHit,
+      `${engine.name()}: expanded navigation labels obstruct the header`)
+    const compactTrigger = page.getByRole('button', { name: 'Open navigation' })
+    await compactTrigger.click()
+    await page.getByRole('navigation', { name: 'Mobile places' }).waitFor({ state: 'visible' })
+    await page.keyboard.press('Escape')
+    await page.evaluate(() => {
+      const nodes = [...document.querySelectorAll('.desktop-places .place, .search-pill span')]
+      nodes.forEach((node, index) => { node.textContent = window.__topbarLabels[index] })
+    })
+    await page.waitForFunction(() => !document.querySelector('.topbar')?.classList.contains('compact-nav'))
     assert.deepEqual(errors, [], `${engine.name()}: runtime errors`)
   } finally {
     await browser.close()
