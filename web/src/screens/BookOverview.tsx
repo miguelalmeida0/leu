@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
+import { ReaderContents } from '../components/ReaderContents'
 import { Empty, Patch, fractionWords } from '../components/ui'
 import { go, href } from '../lib/router'
 import { loadOutline, loadText, memoryState, readFraction, removeBook, useStore, type Outline } from '../lib/store'
 import { sentences } from '../lib/text'
 
-interface Chapter { number: number; title: string; from: number; to: number; sections: Outline[] }
+interface Chapter { number: number; title: string; from: number; to: number; sections: Outline[]; outlineIndex?: number }
 
 /** Chapters from the outline (or one per stretch of pages when there is none). */
 function chapters(outline: Outline[], pages: number): Chapter[] {
@@ -16,7 +17,7 @@ function chapters(outline: Outline[], pages: number): Chapter[] {
   }
   return heads.map((h, i) => {
     const to = i + 1 < heads.length ? Math.max(h.page, heads[i + 1].page - 1) : pages
-    return { number: i + 1, title: h.title, from: h.page, to, sections: outline.filter((o) => o.depth > 0 && o.page >= h.page && o.page <= to && o !== h) }
+    return { number: i + 1, title: h.title, from: h.page, to, outlineIndex: outline.indexOf(h), sections: outline.filter((o) => o.depth > 0 && o.page >= h.page && o.page <= to && o !== h) }
   })
 }
 
@@ -29,6 +30,8 @@ export function BookOverview({ id }: { id: string }) {
   const [outline, setOutline] = useState<Outline[] | null>(null)
   const [text, setText] = useState<string[]>([])
   const [selected, setSelected] = useState(0)
+  const [chosenEntry, setChosenEntry] = useState<Outline | null>(null)
+  const [selectedEntryIndex, setSelectedEntryIndex] = useState<number | null>(null)
 
   useEffect(() => { void loadOutline(id).then(setOutline); void loadText(id).then(setText) }, [id])
   useEffect(() => { if (book) document.title = `${book.title} · Leu` }, [book])
@@ -37,7 +40,7 @@ export function BookOverview({ id }: { id: string }) {
   useEffect(() => {
     if (!book || !list.length) return
     const here = list.findIndex((c) => book.page >= c.from && book.page <= c.to)
-    setSelected(Math.max(0, here))
+    setSelected(Math.max(0, here)); setChosenEntry(null); setSelectedEntryIndex(null)
   }, [list, book?.id])
 
   if (!book) return <div className="page"><Empty title="That book isn't here any more."><a className="link" href={href({ name: 'library' })}>Back to the library</a></Empty></div>
@@ -47,7 +50,8 @@ export function BookOverview({ id }: { id: string }) {
   const loose = Object.entries(attempts).filter(([k, a]) => k.startsWith(id + ':') && a.checkedAt && a.across.length < 3)
   const understood = Object.entries(attempts).filter(([k, a]) => k.startsWith(id + ':') && a.across.length >= 3).length
   const read = readFraction(book)
-  const chapter = list[selected]
+  const entries = outline?.length ? outline : list.map((c) => ({ title: c.title, page: c.from, depth: 0 }))
+  const chapter = chosenEntry ? { number: selected + 1, title: chosenEntry.title, from: chosenEntry.page, to: chosenEntry.page, sections: [] } : list[selected]
   const leftOff = text[book.page - 1] ? sentences(text[book.page - 1]).find((s) => s.length > 50) : undefined
   const onTrails = trails.filter((t) => t.stops.some((s) => s.bookId === id))
   const questions = Math.max(1, Math.min(8, mine.length || 5))
@@ -72,37 +76,22 @@ export function BookOverview({ id }: { id: string }) {
       <div className="book-grid">
         <section aria-labelledby="chapters-h">
           <h2 id="chapters-h" className="eyebrow">The whole book, chapter by chapter</h2>
-          <div className="chapter-strip" role="tablist" aria-label="Chapters">
-            {list.map((c, i) => {
-              const span = c.to - c.from + 1
-              const fill = book.lastOpenedAt ? Math.min(1, Math.max(0, (book.page - c.from) / span)) : 0
-              return (
-                <button
-                  key={c.number}
-                  role="tab"
-                  aria-selected={i === selected}
-                  className={`chapter${i === selected ? ' on' : ''}`}
-                  style={{ flexGrow: span }}
-                  onClick={() => setSelected(i)}
-                  aria-label={`Chapter ${c.number}, ${c.title}, pages ${c.from} to ${c.to}. ${fill >= 1 ? 'Read' : fill > 0 ? 'Partly read' : 'Not read yet'}`}
-                >
-                  <span className="chapter-fill" style={{ width: `${fill * 100}%` }} />
-                  <span className="chapter-n">{c.number}</span>
-                </button>
-              )
-            })}
-          </div>
+          <ReaderContents entries={entries} currentIndex={selectedEntryIndex ?? list[selected]?.outlineIndex ?? selected}
+            onChoose={(index) => {
+              const entry = entries[index]
+              setSelectedEntryIndex(index)
+              const heading = outline?.length ? list.findIndex((c) => c.outlineIndex === index) : index
+              setChosenEntry(heading < 0 ? entry : null)
+              const target = heading >= 0 ? heading : list.reduce((found, c, i) => c.from <= entry.page ? i : found, 0)
+              setSelected(Math.max(0, target))
+            }} />
           {chapter && (
-            <div className="chapter-card card" role="tabpanel">
+            <div className="chapter-card card">
               <p className="eyebrow paper">Chapter {chapter.number} · {chapter.from === chapter.to ? `page ${chapter.from}` : `pages ${chapter.from}–${chapter.to}`}</p>
               <h3 className="display" style={{ fontSize: 30, marginTop: 8 }}>{chapter.title}</h3>
-              {chapter.sections.length ? (
-                <ol className="sections">
-                  {chapter.sections.slice(0, 10).map((s, i) => (
-                    <li key={i}><a href={href({ name: 'read', id, page: s.page })}><span>{s.title}</span><span className="muted tabular">p. {s.page}</span></a></li>
-                  ))}
-                </ol>
-              ) : <p className="muted" style={{ marginTop: 12 }}>This chapter has no smaller sections in its outline.</p>}
+              {chapter.sections.length ? <ReaderContents entries={chapter.sections} currentIndex={0}
+                onChoose={(index) => go({ name: 'read', id, page: chapter.sections[index].page })} />
+                : <p className="muted" style={{ marginTop: 12 }}>This chapter has no smaller sections in its outline.</p>}
               <div className="row" style={{ gap: 16, marginTop: 20 }}>
                 <button className="btn ink" onClick={() => go({ name: 'read', id, page: chapter.from })}>Read this chapter</button>
                 <button className="quiet-link" onClick={() => go({ name: 'words', id, page: chapter.from })}>Explain it in your own words</button>

@@ -24,7 +24,7 @@ export const PagePanel = memo(function PagePanel(props: Props) {
   useLayoutEffect(() => {
     const target = area.current
     if (!target) return
-    let live = true
+    let live = true, fontsReady = mode === 'original', fontEpoch = 0, fontFrame = 0, paintFrame = 0
     const measure = () => {
       if (!live) return
       const width = target.clientWidth, height = target.clientHeight
@@ -48,14 +48,46 @@ export const PagePanel = memo(function PagePanel(props: Props) {
       }
       for (let i = 0; i < starts.length; i++) if (starts[i] < 0) starts[i] = starts[i - 1] ?? 0
       setLayout((old) => old.width === width && old.height === height && old.parts === parts ? old : { width, height, parts, stride })
-      onMetrics(number, { parts, starts, columns, ends, key: `${width}:${height}:${zoom}:${mode}:${parts}:${starts.join(',')}:${columns.join(',')}:${ends.join(',')}` })
+      const ready = fontsReady
+      onMetrics(number, { fontsReady: ready, parts, starts, columns, ends, key: `${width}:${height}:${zoom}:${mode}:${parts}:${starts.join(',')}:${columns.join(',')}:${ends.join(',')}:${ready ? 'ready' : 'loading'}` })
+    }
+    const cancelFontFrames = () => { cancelAnimationFrame(fontFrame); cancelAnimationFrame(paintFrame) }
+    const awaitFonts = () => {
+      if (!live || mode !== 'rebuilt') return
+      const epoch = ++fontEpoch
+      fontsReady = false
+      measure()
+      const prose = target.querySelector<HTMLElement>('.prose')
+      const fonts = new Set(prose ? [prose, ...prose.querySelectorAll<HTMLElement>('h2, strong, em')]
+        .map((element) => getComputedStyle(element).font).filter(Boolean) : [])
+      // FontFaceSet.ready/events may precede a later reading-font request in
+      // WebKit. Wait for the actual used faces, including a settled failure.
+      void Promise.allSettled([...fonts].map((font) => document.fonts.load(font))).then(() => {
+        if (!live || epoch !== fontEpoch) return
+        cancelFontFrames()
+        fontFrame = requestAnimationFrame(() => {
+          paintFrame = requestAnimationFrame(() => {
+            if (!live || epoch !== fontEpoch) return
+            fontsReady = true
+            measure()
+          })
+        })
+      })
     }
     const observer = new ResizeObserver(measure)
     observer.observe(target)
-    measure()
-    void document.fonts.ready.then(measure)
-    document.fonts.addEventListener('loadingdone', measure)
-    return () => { live = false; observer.disconnect(); document.fonts.removeEventListener('loadingdone', measure) }
+    if (mode === 'rebuilt') {
+      document.fonts.addEventListener('loading', awaitFonts)
+      document.fonts.addEventListener('loadingdone', awaitFonts)
+      document.fonts.addEventListener('loadingerror', awaitFonts)
+      awaitFonts()
+    } else measure()
+    return () => {
+      live = false; fontEpoch++; observer.disconnect(); cancelFontFrames()
+      document.fonts.removeEventListener('loading', awaitFonts)
+      document.fonts.removeEventListener('loadingdone', awaitFonts)
+      document.fonts.removeEventListener('loadingerror', awaitFonts)
+    }
   }, [data, mode, zoom, number, onMetrics])
 
   useEffect(() => {
@@ -63,7 +95,7 @@ export const PagePanel = memo(function PagePanel(props: Props) {
     if (mode !== 'original' || !target || !data || !layout.width || !layout.height) return
     let live = true
     setRenderError('')
-    const fitted = originalFit === 'cover' ? Math.max(layout.width, layout.height * data.aspect) : layout.width
+    const fitted = originalFit === 'page' ? Math.min(layout.width, layout.height * data.aspect) : layout.width
     const width = Math.max(1, fitted * zoom)
     const work = queue.current.catch(() => {}).then(async () => {
       if (live) await renderPage(doc, number, target, Math.min(1800, width), width)
@@ -83,9 +115,9 @@ export const PagePanel = memo(function PagePanel(props: Props) {
     <div ref={area} className={mode === 'rebuilt' ? 'paged-text' : 'paged-original'} data-zoomed={zoom > 1.05 || undefined} data-fit={originalFit}
       role={mode === 'original' ? 'region' : undefined} aria-label={mode === 'original' ? 'Original PDF page' : undefined}
       tabIndex={mode === 'original' ? 0 : undefined}
-      aria-description={mode === 'original' && originalFit === 'cover' ? 'Drag to pan. Up and Down arrows pan vertically. Shift plus Left and Right arrows pan horizontally. Left and Right arrows turn source pages.' : undefined}
+      aria-description={mode === 'original' && zoom > 1.05 ? 'Drag to pan. Up and Down arrows pan vertically. Shift plus Left and Right arrows pan horizontally. Left and Right arrows turn source pages.' : undefined}
       onKeyDown={(event) => {
-        if (mode !== 'original' || (originalFit !== 'cover' && zoom <= 1.05)) return
+        if (mode !== 'original' || zoom <= 1.05) return
         const vertical = event.key === 'ArrowUp' || event.key === 'ArrowDown'
         const horizontal = event.shiftKey && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
         if (!vertical && !horizontal) return
@@ -95,7 +127,7 @@ export const PagePanel = memo(function PagePanel(props: Props) {
       }}>
       {!data ? <p className="paged-loading" role={active ? 'status' : undefined}>Opening page…</p> : data.error ?
         <p className="paged-loading" role="alert">{data.error}</p> : mode === 'original' ? <>
-          <canvas ref={canvas} className="original-page" role="img" style={{ transform: `translate(calc(-50% + ${props.pan.x}px), ${originalFit === 'cover' || zoom > 1.05 ? `calc(-50% + ${props.pan.y}px)` : '0px'})` }}
+          <canvas ref={canvas} className="original-page" role="img" style={{ transform: `translate(calc(-50% + ${props.pan.x}px), ${originalFit === 'page' || zoom > 1.05 ? `calc(-50% + ${props.pan.y}px)` : '0px'})` }}
             aria-label={`Visual rendering of page ${number} of ${doc.numPages}. Choose For reading to access the extracted text.`} />
           {renderError && <p className="paged-loading" role="alert">{renderError}</p>}
         </> : data.textError ? <p className="paged-loading" role="alert">{data.textError}</p> : data.blocks.length ? <div className="paged-columns" style={{ transform: `translate3d(${-leaf * layout.stride}px, 0, 0)` }}>

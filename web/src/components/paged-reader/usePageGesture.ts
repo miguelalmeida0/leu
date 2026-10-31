@@ -86,16 +86,14 @@ export function usePageGesture(options: Options) {
       if (!gesture.axis) return
       if (event.cancelable) event.preventDefault()
       if (current.panning) {
-        // Decide once from the starting boundary. A pan that reaches the top
-        // keeps ownership until release; a fresh downward pull there may exit.
-        gesture.panning ??= !(gesture.axis === 'y' && dy > 0 && gesture.pullAllowed)
-        if (gesture.panning) {
-          current.onPan({ x: gesture.pan.x + dx, y: gesture.pan.y + dy })
-          return
-        }
+        // Zoom owns the whole gesture, even at a pan boundary. Only a reset
+        // restores page turns and pull-to-exit.
+        gesture.panning = true
+        current.onPan({ x: gesture.pan.x + dx, y: gesture.pan.y + dy })
+        return
       }
       if (gesture.axis === 'y') {
-        if (!gesture.scroll?.(dy)) current.dismiss.pull(Math.max(0, dy))
+        if (!gesture.scroll?.(dy) && gesture.pullAllowed) current.dismiss.pull(Math.max(0, dy))
         return
       }
       const now = performance.now(), elapsed = now - gesture.lastAt

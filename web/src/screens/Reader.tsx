@@ -1,5 +1,6 @@
 import { ArrowsInIcon, ArrowsOutIcon, TextAaIcon } from '@phosphor-icons/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ReaderContents, currentOutlineIndex } from '../components/ReaderContents'
 import { Prose, piecesOf } from '../components/Prose'
 import { Empty, Modal } from '../components/ui'
 import { openPdf, pageBlocks, pdfDeadline, renderPage, type Block, type PDFDocumentProxy } from '../lib/pdf'
@@ -28,7 +29,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const [outline, setOutline] = useState<Outline[]>([])
   const [blocks, setBlocks] = useState<Block[] | null>(null)
   const [mode, setMode] = useState<'rebuilt' | 'original'>('original')
-  const [originalFit, setOriginalFit] = useState<'cover' | 'width'>('cover')
+  const [originalFit, setOriginalFit] = useState<'page' | 'width'>('page')
   const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen } = useReaderFullscreen(`${id}:${page}`)
   const paged = useRef<PagedReaderHandle>(null)
   const [controls, setControls] = useState(false)
@@ -87,7 +88,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
         setZoom((value) => limitZoom(value - 0.25))
       } else if (event.key === '0') {
         event.preventDefault()
-        setZoom(1)
+        setOriginalFit('page'); setZoom(1)
       }
     }
     window.addEventListener('keydown', keyboard)
@@ -296,18 +297,20 @@ export function Reader({ id, page }: { id: string; page: number }) {
   if (missing || !book || loadError) return <div className="page"><Empty title={loadError || "This book isn't in this browser any more."}><a className="link" href={href({ name: 'library' })}>Back to the library</a></Empty></div>
 
   const pageText = (blocks ?? []).map((b) => b.text).join('\n\n')
-  const current = [...outline].reverse().find((o) => o.page <= clamped && o.depth === 0) ?? [...outline].reverse().find((o) => o.page <= clamped)
+  const entries = outline.length ? outline : [{ title: 'Beginning', page: 1, depth: 0 }]
+  const currentIndex = currentOutlineIndex(entries, clamped)
+  const current = entries[currentIndex]
   const speaking = voice.speakingId === 'page'
   const zoomControls = <div className="reader-zoom-controls" role="group" aria-label="Reading zoom">
               {mode === 'original' && <div className="reader-original-fit" role="group" aria-label="Original page fit">
-                {([['cover', 'Fill screen'], ['width', 'Fit width']] as const).map(([value, label]) =>
+                {([['page', 'Fit page'], ['width', 'Fit width']] as const).map(([value, label]) =>
                   <button key={value} type="button" aria-pressed={originalFit === value}
                     onClick={() => { setOriginalFit(value); setZoom(1); hapticFeedback('light') }}>{label}</button>)}
               </div>}
               <button type="button" aria-label="Zoom out" disabled={zoom <= 0.8}
                 onClick={() => changeZoom(zoom - 0.25)}>−</button>
               <button type="button" className="reader-zoom-level" aria-label="Reset zoom"
-                onClick={() => changeZoom(1)}>{Math.round(zoom * 100)}%</button>
+                onClick={() => { setOriginalFit('page'); changeZoom(1) }}>{Math.round(zoom * 100)}%</button>
               <button type="button" aria-label="Zoom in" disabled={zoom >= 2.75}
                 onClick={() => changeZoom(zoom + 0.25)}>+</button>
             </div>
@@ -334,6 +337,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           <button type="button" aria-pressed={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
         </div>
         <div className="reader-view-controls">
+          <ReaderContents entries={entries} currentIndex={currentIndex} onChoose={(index) => turn(entries[index].page)} />
           <div className="reader-focus-tools">{focusButton}</div>
           {immersive && zoomControls}
           {!immersive && <button type="button" className="reader-type-toggle" aria-label="Reading settings" onClick={() => setSettings(true)}><TextAaIcon size={23} aria-hidden="true" /></button>}
@@ -346,18 +350,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
         </p>
       )}
       <div className={`reader-grid${explain ? ' explaining' : ''}`}>
-        <nav className="rail" aria-label="Chapters">
-          <p className="eyebrow">Chapters</p>
-          <ol>
-            {(outline.length ? outline : [{ title: 'Beginning', page: 1, depth: 0 }]).slice(0, 40).map((o, i) => (
-              <li key={i} className={`depth-${Math.min(o.depth, 2)}`}>
-                <a href={href({ name: 'read', id, page: o.page })} aria-current={o === current ? 'location' : undefined} onClick={(e) => { e.preventDefault(); turn(o.page) }}>
-                  <span>{o.title}</span><span className="tabular muted">{o.page}</span>
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
+
 
         {immersive && doc ? <PagedReader ref={paged} doc={doc} page={clamped} mode={mode} zoom={zoom} originalFit={originalFit}
           controls={controls}

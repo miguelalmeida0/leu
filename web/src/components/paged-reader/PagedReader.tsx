@@ -20,6 +20,7 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
   const [revision, setRevision] = useState(0), [part, setPart] = useState(0), [settled, setSettled] = useState(true)
   const [pan, setPan] = useState({ x: 0, y: 0 })
   const anchor = useRef(props.bookmark?.page === props.page ? props.bookmark : { sentence: 0, fraction: 0 })
+  const restoredPart = useRef(0)
   const owner = useRef(props.page), layoutKey = useRef(''), pending = useRef<{ page: number; last: boolean } | null>(null)
   const busy = useRef(false), animation = useRef<Animation | null>(null), live = useRef(true)
   const reduced = useReducedMotionPreference()
@@ -42,6 +43,7 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
     if (state.props.mode === 'rebuilt') anchor.current = {
       sentence: metric?.starts[index] ?? 0, fraction: state.parts > 1 ? index / (state.parts - 1) : 0,
     }
+    restoredPart.current = index
     setPart(index)
   }
 
@@ -55,20 +57,29 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
     const metric = metrics.current.get(props.page)
     if (!metric || layoutKey.current === metric.key) return
     layoutKey.current = metric.key
-    if (props.mode === 'original') { setPart(0); return }
+    if (props.mode === 'original') { restoredPart.current = 0; setPart(0); return }
     const column = metric.columns[anchor.current.sentence]
     const fraction = Math.round(anchor.current.fraction * (metric.parts - 1))
     // A sentence may start on the previous screen and continue onto this one.
     // Keep the stored screen within that sentence's full fragment range.
     const target = column === undefined ? fraction : Math.max(column, Math.min(metric.ends[anchor.current.sentence] ?? column, fraction))
-    setPart(Math.max(0, Math.min(metric.parts - 1, target)))
+    restoredPart.current = Math.max(0, Math.min(metric.parts - 1, target))
+    setPart(restoredPart.current)
   }, [props.page, props.mode, revision])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const metric = metrics.current.get(props.page)
-    if (!metric || !pages.get(props.page) || owner.current !== props.page) return
-    props.onPosition({ page: props.page, sentence: props.mode === 'rebuilt' ? metric.starts[leaf] ?? 0 : anchor.current.sentence,
-      fraction: props.mode === 'rebuilt' ? (parts > 1 ? leaf / (parts - 1) : 0) : anchor.current.fraction,
+    if (!metric || !pages.get(props.page) || owner.current !== props.page
+      || layoutKey.current !== metric.key || parts !== metric.parts || leaf !== restoredPart.current) return
+    const saved = anchor.current.sentence
+    // A saved sentence can be inside a screen rather than its first fragment.
+    // Keep that passage anchor through reload/reflow while it remains visible.
+    const anchored = metric.columns[saved] !== undefined && leaf >= metric.columns[saved] && leaf <= metric.ends[saved]
+    // Publish only the committed restored screen, before paint or a reload can
+    // observe a bookmark from the previous layout's screen index.
+    root.current?.setAttribute('data-layout', `${props.page}:${metric.key}`)
+    props.onPosition({ page: props.page, sentence: props.mode === 'rebuilt' && metric.fontsReady ? anchored ? saved : metric.starts[leaf] ?? 0 : saved,
+      fraction: props.mode === 'rebuilt' && metric.fontsReady ? (parts > 1 ? leaf / (parts - 1) : 0) : anchor.current.fraction,
       part: leaf, parts, previous, next })
   }, [props.page, props.mode, props.onPosition, leaf, parts, previous, next, revision, pages])
 
@@ -144,12 +155,12 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
       if (latest.current.props.zoom > 1.05) return false
       const area = root.current?.querySelector<HTMLElement>('.paged-current .paged-original')
       const canvas = area?.querySelector('canvas')
-      return !!area && !!canvas && canvas.getBoundingClientRect().top >= area.getBoundingClientRect().top - 2
+      return latest.current.props.mode === 'rebuilt' || (!!area && !!canvas && canvas.getBoundingClientRect().top >= area.getBoundingClientRect().top - 2)
     },
     tap: props.onToggleControls, sentenceTap: (index) => {
       if (!props.reading || !props.controls) return false
       props.onSeek(index); return true
-    }, zoom: props.zoom, onZoom: props.onZoom, panning: props.mode === 'original' && (props.originalFit === 'cover' || props.zoom > 1.05), pan, onPan: panTo })
+    }, zoom: props.zoom, onZoom: props.onZoom, panning: props.mode === 'original' && props.zoom > 1.05, pan, onPan: panTo })
   const follow = useCallback((index: number) => {
     const state = latest.current
     const target = metrics.current.get(state.props.page)?.columns[index]
@@ -159,9 +170,9 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
   const before = leaf > 0 ? { page: props.page, part: leaf - 1 } : { page: props.page - 1, part: 'last' as const }
   const after = leaf < parts - 1 ? { page: props.page, part: leaf + 1 } : { page: props.page + 1, part: 0 }
   return <div ref={root} className="paged-reader" role="region" aria-label="Reading pages" tabIndex={0}
-    data-location={`${props.page}:${leaf}`} data-part={leaf} data-parts={parts} data-settled={settled ? 'true' : 'false'}
+    data-mode={props.mode} data-location={`${props.page}:${leaf}`} data-part={leaf} data-parts={parts} data-settled={settled ? 'true' : 'false'}
     aria-keyshortcuts="ArrowLeft ArrowRight PageUp PageDown"
-    aria-description="Drag original pages to pan. Use edge taps, page buttons, or Left and Right arrow keys to turn source pages. Swipe rebuilt pages sideways. Pull down from the top to exit full-screen reading.">
+    aria-description="Swipe sideways to turn pages. Pinch to zoom original pages, then drag to pan. Use edge taps, page buttons, or Left and Right arrow keys to turn source pages. Pull down from the top to exit full-screen reading.">
     <div className="paged-dismiss-hint" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg><span ref={dismissHint}>Pull down to exit</span></div>
     <div ref={stage} className="paged-dismiss-stage">
     <div ref={track} className="paged-motion">
