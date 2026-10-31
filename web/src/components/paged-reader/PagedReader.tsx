@@ -3,6 +3,8 @@ import { flushSync } from 'react-dom'
 import { useReducedMotionPreference } from '../../lib/motion'
 import { PagePanel } from './PagePanel'
 import { usePageWindow } from './usePageWindow'
+import { hapticFeedback } from '../../lib/haptics'
+import { useReaderDismiss } from './useReaderDismiss'
 import { usePageGesture } from './usePageGesture'
 import type { Direction, PageMetrics, PagedReaderHandle, PagedReaderProps } from './types'
 import './styles.css'
@@ -12,6 +14,7 @@ export type { PagedReaderHandle, ReadingPosition } from './types'
 /** A screen-sized deck. Source PDF pages may contain several reflowed screens. */
 export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(function PagedReader(props, ref) {
   const root = useRef<HTMLDivElement>(null), track = useRef<HTMLDivElement>(null)
+  const stage = useRef<HTMLDivElement>(null), dismissHint = useRef<HTMLSpanElement>(null)
   const pages = usePageWindow(props.doc, props.page)
   const metrics = useRef(new Map<number, PageMetrics>())
   const [revision, setRevision] = useState(0), [part, setPart] = useState(0), [settled, setSettled] = useState(true)
@@ -20,6 +23,7 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
   const owner = useRef(props.page), layoutKey = useRef(''), pending = useRef<{ page: number; last: boolean } | null>(null)
   const busy = useRef(false), animation = useRef<Animation | null>(null), live = useRef(true)
   const reduced = useReducedMotionPreference()
+  const dismiss = useReaderDismiss(root, stage, dismissHint, reduced, props.onExit)
   const currentMetrics = metrics.current.get(props.page)
   const parts = props.mode === 'original' ? 1 : currentMetrics?.parts ?? 1
   const leaf = Math.min(part, parts - 1)
@@ -72,6 +76,7 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
     if (busy.current || !root.current || !track.current) return
     const state = latest.current
     if (direction && !(direction < 0 ? state.previous : state.next)) direction = 0
+    if (direction) hapticFeedback('light')
     busy.current = true
     setSettled(false)
     root.current.dataset.settled = 'false'
@@ -105,10 +110,11 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
     latest.current.props.onTurn(page)
   } }), [settle])
   useLayoutEffect(() => {
+    dismiss.cancel()
     animation.current?.cancel(); animation.current = null
     if (track.current) track.current.style.transform = 'translate3d(0,0,0)'
     busy.current = false; setSettled(true); setPan({ x: 0, y: 0 })
-  }, [props.page, props.mode, props.zoom])
+  }, [props.page, props.mode, props.zoom, dismiss.cancel])
   useEffect(() => {
     live.current = true
     return () => { live.current = false; animation.current?.cancel() }
@@ -125,7 +131,7 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
     const y = Math.max(0, (canvas.getBoundingClientRect().height - area.clientHeight) / 2)
     setPan({ x: Math.max(-x, Math.min(x, value.x)), y: Math.max(-y, Math.min(y, value.y)) })
   }
-  usePageGesture({ root, track, busy: () => busy.current, turn: settle, available: (direction) => direction < 0 ? latest.current.previous : latest.current.next,
+  usePageGesture({ root, track, busy: () => busy.current || dismiss.busy(), dismiss, turn: settle, available: (direction) => direction < 0 ? latest.current.previous : latest.current.next,
     tap: props.onToggleControls, sentenceTap: (index) => {
       if (!props.reading || !props.controls) return false
       props.onSeek(index); return true
@@ -140,7 +146,10 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
   const after = leaf < parts - 1 ? { page: props.page, part: leaf + 1 } : { page: props.page + 1, part: 0 }
   return <div ref={root} className="paged-reader" role="region" aria-label="Reading pages" tabIndex={0}
     data-location={`${props.page}:${leaf}`} data-part={leaf} data-parts={parts} data-settled={settled ? 'true' : 'false'}
-    aria-keyshortcuts="ArrowLeft ArrowRight PageUp PageDown">
+    aria-keyshortcuts="ArrowLeft ArrowRight PageUp PageDown"
+    aria-description="Swipe sideways to turn pages. Pull down to exit full-screen reading.">
+    <div className="paged-dismiss-hint" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg><span ref={dismissHint}>Pull down to exit</span></div>
+    <div ref={stage} className="paged-dismiss-stage">
     <div ref={track} className="paged-motion">
       {([{ ...before, side: 'before' }, { page: props.page, part: leaf, side: 'current' }, { ...after, side: 'after' }] as const).map((panel) =>
         panel.page >= 1 && panel.page <= props.doc.numPages && <PagePanel key={panel.side} doc={props.doc} number={panel.page} data={pages.get(panel.page)}
@@ -149,6 +158,7 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
           pan={panel.side === 'current' ? pan : { x: 0, y: 0 }} onSeek={props.onSeek} onFollow={follow} onMetrics={measured} />)}
     </div>
     <p className="paged-position" aria-live="polite">{props.page} / {props.doc.numPages}{parts > 1 ? ` · ${leaf + 1} of ${parts}` : ''}</p>
+    </div>
     <button className="paged-access" type="button" onClick={props.onToggleControls}>Show reading controls</button>
   </div>
 })

@@ -147,7 +147,7 @@ async function run([engine, name, width, height, reducedMotion]) {
     await still(page, before)
     await fittedText(page)
     const second = await location(page)
-    await drag(page, engine, 8, 110)
+    await drag(page, engine, 8, -110)
     assert.equal(await location(page), second, 'Vertical and tiny diagonal gestures must not turn a page')
     await still(page, before)
     if (engine === chromium && width < 600) {

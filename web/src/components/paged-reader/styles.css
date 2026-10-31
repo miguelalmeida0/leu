@@ -67,3 +67,11 @@
   .dock-focus-description strong { font-size: 11px; }
 }
 @media (prefers-reduced-motion: reduce) { .reader-immersive .reader-bar, .reader-immersive .reader-foot { transition: none; } }
+
+/* Direct pull feedback; the shell and column measurements stay fixed. */
+.paged-dismiss-stage { position: absolute; inset: 0; }
+.paged-dismiss-hint { position: absolute; z-index: 3; top: max(12px, env(safe-area-inset-top)); left: 50%; display: flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 6px; transform: translateX(-50%); opacity: var(--pull-progress, 0); background: var(--paper); color: var(--paper-secondary); font-size: 12px; line-height: 20px; white-space: nowrap; pointer-events: none; user-select: none; }
+.paged-dismiss-hint svg { transition: transform 120ms var(--ease); }
+.paged-reader[data-pull-state='ready'] .paged-dismiss-hint svg { transform: rotate(180deg); }
+.paged-reader[data-pull-state='settling'] .paged-dismiss-hint, .paged-reader[data-pull-state='exiting'] .paged-dismiss-hint { opacity: 0; transition: opacity 120ms var(--ease); }
+@media (prefers-reduced-motion: reduce) { .paged-dismiss-hint, .paged-dismiss-hint svg { transition: none; } }
