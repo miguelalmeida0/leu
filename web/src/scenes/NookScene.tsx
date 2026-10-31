@@ -1,3 +1,4 @@
+import { SceneAutoplay } from '../lib/motion'
 import { FoggedWindow } from './FoggedWindow'
 import { TeaSteam } from './TeaSteam'
 
@@ -8,9 +9,9 @@ import { TeaSteam } from './TeaSteam'
 const pct = (v: number, of: number) => `${(v / of) * 100}%`
 const box = (x: number, y: number, w: number, h: number) => ({ left: pct(x, 900), top: pct(y, 680), width: pct(w, 900), height: pct(h, 680) })
 
-export function NookScene() {
+export function NookScene({ autoplay = false }: { autoplay?: boolean }) {
   return (
-    <div className="nook" role="group" aria-label="Your reading corner">
+    <SceneAutoplay.Provider value={autoplay}><div className="nook" role="group" aria-label="Your reading corner">
       <div className="nook-frame" style={box(400, 0, 460, 420)} aria-hidden="true" />
       <div className="nook-glass" style={box(418, 18, 424, 384)}><FoggedWindow /></div>
       <div className="nook-wood" style={box(624, 18, 12, 384)} aria-hidden="true" />
@@ -23,6 +24,6 @@ export function NookScene() {
         draggable={false}
       />
       <div style={{ position: 'absolute', ...box(679.4 - 130, 590 - 212, 260, 220), pointerEvents: 'none' }}><TeaSteam /></div>
-    </div>
+    </div></SceneAutoplay.Provider>
   )
 }

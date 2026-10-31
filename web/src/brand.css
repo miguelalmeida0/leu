@@ -1,0 +1,25 @@
+/* Shared route hierarchy and controls; content keeps its own semantic roles. */
+.app .page, .app .reading-library { max-width: var(--content-width); padding: var(--space-8) var(--page-gutter) var(--space-12); }
+.app .empty .display, .app h1.display, .app .home-story h1, .app .reading-library-heading h1, .app .notebook-page h1 { font-size: var(--text-display); line-height: 1.06; letter-spacing: -.035em; }
+.app .btn, .app .field, .app .segmented button, .app .chip { font-size: var(--text-control); }
+.app .btn, .app .field, .app .segmented button { min-height: var(--control-height); }
+.app .lede { font-size: var(--text-body); line-height: 1.55; }
+.app .idea-sentence { max-width: 26em; }
+.app .notebook-page { padding: var(--space-8); }
+.app[data-route='read'] { height: 100dvh; min-height: 0; overflow: hidden; background: var(--ink); }
+.app[data-route='read'] > .topbar { flex: none; }
+.app[data-route='read'] > main { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.app .reader:not(.reader-immersive) { flex: 1; height: auto; min-height: 0; }
+.app .reader:not(.reader-immersive) .reader-focus-toggle { width: var(--control-height); padding: 0; }
+.app .reader-focus-toggle span { display: none; }
+.app .reader:not(.reader-immersive) .reader-view-controls { gap: var(--space-1); }
+.app .reader:not(.reader-immersive) .segmented { gap: var(--space-4); }
+.app .reader:not(.reader-immersive) .dock { grid-template-columns: 44px minmax(0, 1fr) 44px; grid-template-rows: 44px 56px; }
+.app .reader:not(.reader-immersive) .dock-speed { top: 50px; }
+@media (max-width: 720px) {
+  .app .page, .app .reading-library { padding-top: var(--space-6); }
+  .app .notebook-page { padding: var(--space-6); }
+  .app .reader:not(.reader-immersive) .reader-bar { padding-inline: var(--space-4); gap: var(--space-2); }
+  .app .reader:not(.reader-immersive) .segmented { gap: var(--space-3); }
+  .app .reader:not(.reader-immersive) .segmented button { font-size: var(--text-caption); }
+}

@@ -19,7 +19,7 @@ export function Home({ onBring }: { onBring: () => void }) {
     <section className="home-story" aria-labelledby="home-title">
       <p className="eyebrow">{greeting()}</p>
       <h1 id="home-title" className="display">Make room for<br />a few pages.</h1>
-      <div className="home-scene"><NookScene /></div>
+      <div className="home-scene"><NookScene autoplay /></div>
     </section>
     <section className="home-resume" aria-label="Continue reading">
       <p className="eyebrow">Pick up where you left off</p>

@@ -11,7 +11,7 @@
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 44px; padding: 0 13px; border-radius: 12px;
   color: var(--ink); background: var(--cream); border: 1px solid var(--separator);
-  font-size: 13px; font-weight: 700; white-space: nowrap;
+  font-size: var(--text-sm); font-weight: 700; white-space: nowrap;
 }
 .reader-focus-toggle:hover { background: var(--paper); }
 .reader-focus-toggle svg { flex: none; }
@@ -25,7 +25,7 @@
 }
 .reader-zoom-controls button:hover:not(:disabled) { background: #E9DFC8; }
 .reader-zoom-controls button:disabled { opacity: .35; cursor: default; }
-.reader-zoom-controls .reader-zoom-level { min-width: 48px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.reader-zoom-controls .reader-zoom-level { min-width: 48px; font-size: var(--text-caption); font-variant-numeric: tabular-nums; }
 .original-stage { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
 .original-stage .original-page { display: block; max-width: 100%; margin: 0 auto; }
 
@@ -33,12 +33,12 @@
   .reader .reader-bar { grid-template-columns: minmax(0, 1fr) auto; gap: 10px 8px; }
   .reader .reader-back { grid-column: 1 / -1; }
   .reader .segmented { grid-column: 1; grid-row: 2; padding: 3px; }
-  .reader .segmented button { min-height: 40px; padding: 0 11px; font-size: 12px; }
+  .reader .segmented button { min-height: 40px; padding: 0 11px; font-size: var(--text-caption); }
   .reader .reader-view-controls { grid-column: 2; grid-row: 2; justify-self: end; }
 }
 @media (max-width: 350px) {
-  .reader .segmented button { padding-inline: 8px; font-size: 11px; }
-  .reader-focus-toggle { padding-inline: 9px; font-size: 12px; gap: 6px; }
+  .reader .segmented button { padding-inline: 8px; font-size: var(--text-xs); }
+  .reader-focus-toggle { padding-inline: 9px; font-size: var(--text-caption); gap: 6px; }
 }
 
 /* Paper fills the reading area; app controls live in the dark frame. */
@@ -48,7 +48,7 @@
 .reader:not(.reader-immersive) .reader-bar { grid-row: 1; display: flex; justify-content: space-between; gap: 12px; margin: 0; padding: 0 clamp(20px, 4vw, 56px); background: var(--ink); color: var(--cream); min-height: 48px; }
 .reader:not(.reader-immersive) .reader-back { display: none; }
 .reader:not(.reader-immersive) .segmented { background: transparent; border-radius: 0; padding: 0; box-shadow: none; gap: 24px; flex-wrap: nowrap; }
-.reader:not(.reader-immersive) .segmented button { min-height: 48px; padding: 0; border-radius: 0; color: #C9CFBE; font-size: 14px; font-weight: 600; border-bottom: 2px solid transparent; white-space: nowrap; }
+.reader:not(.reader-immersive) .segmented button { min-height: 48px; padding: 0; border-radius: 0; color: #C9CFBE; font-size: var(--text-label); font-weight: 600; border-bottom: 2px solid transparent; white-space: nowrap; }
 .reader:not(.reader-immersive) .segmented button.on { background: transparent; color: var(--cream); border-bottom-color: var(--cream); }
 .reader-type-toggle { display: grid; place-items: center; width: 44px; height: 44px; }
 .reader:not(.reader-immersive) .reader-grid { grid-row: 3; overflow-y: auto; min-height: 0; overscroll-behavior-y: contain; padding: 24px clamp(20px, 4vw, 56px); gap: 32px; scrollbar-width: thin; }
@@ -74,7 +74,7 @@
   .reader:not(.reader-immersive) .prose { font-size: calc(18px * var(--reader-zoom, 1)); line-height: 1.65; }
   .reader:not(.reader-immersive) .prose h2 { font-size: calc(25px * var(--reader-zoom, 1)); }
   .reader:not(.reader-immersive) .segmented { gap: 20px; }
-  .reader:not(.reader-immersive) .segmented button { font-size: 13px; }
+  .reader:not(.reader-immersive) .segmented button { font-size: var(--text-sm); }
   .reader:not(.reader-immersive) .reader-bar { padding: 0 20px; }
   .reader.reader-immersive .reader-foot { gap: 4px; }
   .reader-focus-tools .reader-focus-toggle span { display: none; }

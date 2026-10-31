@@ -15,7 +15,7 @@ async function fixture() {
   const code = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } }).outputText
   const module = new vm.SourceTextModule(code, { context })
   await module.link((specifier) => {
-    const exports = specifier === 'react' ? { useContext() {}, useEffect() {}, useRef() {}, useState() {} } : { SceneMotionOverride: {} }
+    const exports = specifier === 'react' ? { createContext(value) { return { value } }, useContext() {}, useEffect() {}, useRef() {}, useState() {} } : { SceneMotionOverride: {} }
     return new vm.SyntheticModule(Object.keys(exports), function () {
       for (const [key, value] of Object.entries(exports)) this.setExport(key, value)
     }, { context })

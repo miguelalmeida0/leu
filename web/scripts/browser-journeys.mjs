@@ -111,6 +111,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.locator('.sewn-actions .btn.ink'), 25000)
     await page.locator('.sewn-actions .btn.ink').click()
     try {
+      await page.getByRole('button', { name: 'For reading', exact: true }).click()
       await visible(page.locator('.reader-paper .prose p').first(), 25000)
     } catch (error) {
       const details = await page.evaluate(() => ({
@@ -124,8 +125,8 @@ async function runBrowser(browserType, name, mobile, width) {
     }
     await noHorizontalOverflow(page, 'Reader ' + name)
     const focusBox = await page.getByRole('button', { name: 'Enter full-screen reading' }).boundingBox()
-    assert.ok(focusBox && focusBox.y > (mobile ? 844 : 900) * .75,
-      'Fullscreen entry stays with the lower listening controls, not the top of the page')
+    assert.ok(focusBox && focusBox.y < 150,
+      'Fullscreen entry is reachable in the top reader toolbar')
     const scrollBox = await page.locator('.reader-grid').boundingBox()
     const footerBox = await page.locator('.reader-foot').boundingBox()
     assert.ok(scrollBox && footerBox && scrollBox.y + scrollBox.height <= footerBox.y + 1,
@@ -168,7 +169,7 @@ async function runBrowser(browserType, name, mobile, width) {
     // hidden overlay chrome, horizontal navigation and original PDF fit/zoom.
     const normalBar = await page.locator('.reader-bar').boundingBox()
     const entry = await page.getByRole('button', { name: 'Enter full-screen reading' }).boundingBox()
-    if (mobile) assert.ok(entry.y > normalBar.y + normalBar.height, 'Fullscreen entry stays in the lower reading controls')
+    if (mobile) assert.ok(entry.y >= normalBar.y && entry.y + entry.height <= normalBar.y + normalBar.height + 1, 'Fullscreen entry stays in the top reading toolbar')
     const reveal = async () => {
       if (await page.locator('.reader-immersive').getAttribute('data-controls') === 'hidden') {
         const box = await page.locator('.paged-reader').boundingBox()
@@ -274,6 +275,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await page.getByRole('button', { name: 'Original page' }).click()
     await visible(page.getByText(/For selectable text and notes|switch to “For reading”/i))
     await page.getByRole('button', { name: 'For reading' }).click()
+    await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await visible(page.locator('.reader-paper .prose p').first())
     await selectPassage(page)
     await page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Explain', exact: true }).click()
@@ -331,6 +333,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await noHorizontalOverflow(page, 'Generated explanation ' + name)
     await page.getByRole('button', { name: /Close and go back to reading/i }).click()
     await page.evaluate(() => { delete window.LanguageModel; delete window.__EXPLANATION_TEST })
+    await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await visible(page.locator('.reader-paper .prose p').first())
 
     await page.getByRole('button', { name: 'Next page' }).click()
@@ -372,6 +375,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.getByText(noteText))
     await noHorizontalOverflow(page, 'Notes ' + name)
     await page.getByRole('link', { name: /Open Computer Science Essentials, p. 1/i }).click()
+    await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await visible(page.locator('.reader-paper .prose p').first())
 
     await goTo(page, mobile, 'Library')
@@ -388,6 +392,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.getByRole('heading', { name: /Essentials|Notes|Patterns|System|JavaScript|Interviews/i }).first())
     await noHorizontalOverflow(page, 'Book overview ' + name)
     await page.getByRole('button', { name: /Read this chapter/i }).click()
+    await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await visible(page.locator('.reader-paper .prose p').first())
 
     await goTo(page, mobile, 'Study')

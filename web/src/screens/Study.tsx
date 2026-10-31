@@ -157,7 +157,7 @@ function Session({ cards, way, onDone }: { cards: Memory[]; way: Way; onDone: ()
     return (
       <div className="page fade-in session-end">
         <p className="eyebrow">That's the session</p>
-        <h1 className="display" style={{ fontSize: 48, marginTop: 10 }}>{kept === cards.length ? 'Every one came back.' : kept ? `${kept} came back. The rest return sooner.` : 'Those return sooner. That’s how it sticks.'}</h1>
+        <h1 className="display" style={{marginTop: 10 }}>{kept === cards.length ? 'Every one came back.' : kept ? `${kept} came back. The rest return sooner.` : 'Those return sooner. That’s how it sticks.'}</h1>
         <div className="row" style={{ gap: 16, marginTop: 26 }}>
           <button className="btn ink" onClick={onDone}>Done</button>
           <button className="quiet-link" onClick={() => go({ name: 'read', id: cards[0].bookId, page: cards[0].page })}>Back to reading</button>

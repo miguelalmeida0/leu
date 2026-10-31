@@ -1,0 +1,24 @@
+/* Leu brand primitives and semantic scale. Shared by every route. */
+:root {
+  --felt: #B6C690; --felt-light: #C3D19F; --felt-deep: #A4B57E; --cream: #F8F1DE; --ink: #24301F;
+  --butter: #E7B843; --tomato: #C65A3E; --denim: #5E7FA0; --moss: #6E8C57; --blush: #EBB5A3; --oat: #E8D9B5;
+  --red-thread: #B3261E; --red-text: #8E1F17;
+  --line: #9DAF7A; --secondary: #3C4A33; --tertiary: #44533A; --separator: #5C6B47;
+  --eyebrow-paper: #7A5E1C; --eyebrow-felt: #503C10; --held: #4D6A3C; --labs: #C8D6A6; --denim-felt: #A9C1D6;
+  --paper: #FBF8F2; --paper-ink: #1F1E1B; --paper-secondary: #56534B; --placeholder: #56653F;
+  --sans: Gabarito, ui-sans-serif, system-ui, sans-serif;
+  --serif: Literata, Georgia, serif;
+  --r: 22px; --r-sm: 12px;
+  --shadow: 0 10px 24px rgba(36, 48, 31, .14);
+  --shadow-soft: 0 6px 16px rgba(36, 48, 31, .10);
+  --ease: cubic-bezier(.22, .8, .24, 1);
+
+  --text-xs: 11px; --text-caption: 12px; --text-sm: 13px; --text-label: 14px;
+  --text-control: 15px; --text-body: 16px; --text-lg: 18px; --text-xl: 20px;
+  --text-title: 24px; --text-section: 28px;
+  --text-display: clamp(30px, 5vw, 40px);
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+  --control-height: 44px; --page-gutter: clamp(20px, 4vw, 40px);
+  --content-width: 1120px; --reading-size: 18px; --reading-leading: 1.65;
+}

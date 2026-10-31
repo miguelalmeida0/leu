@@ -61,7 +61,7 @@ export function BookOverview({ id }: { id: string }) {
       <div className="book-head">
         <Patch book={book} size="m"><span /></Patch>
         <div>
-          <h1 className="display" style={{ fontSize: 'clamp(38px, 4vw, 56px)' }}>{book.title}</h1>
+          <h1 className="display" style={{}}>{book.title}</h1>
           <p className="muted" style={{ marginTop: 10 }}>
             {book.pages} pages · {book.lastOpenedAt ? (read > 0 ? `You've read ${fractionWords(read)} of it` : 'Just started') : 'Not started yet'}
             {understood > 0 ? ` · you've explained ${understood} page${understood > 1 ? 's' : ''} in your own words` : ''}.

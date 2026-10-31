@@ -78,7 +78,7 @@ export function Modal({ label, onClose, children, width = 640, tone = 'cream' }:
 export function Empty({ title, children }: { title: string; children?: ReactNode }) {
   return (
     <div className="empty fade-in">
-      <h2 className="display" style={{ fontSize: 32 }}>{title}</h2>
+      <h2 className="display">{title}</h2>
       {children}
     </div>
   )

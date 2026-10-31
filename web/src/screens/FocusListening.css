@@ -32,7 +32,7 @@
   border-radius: 11px; background: var(--cream); color: var(--ink);
 }
 .dock-focus-description { display: flex; flex-direction: column; min-width: 0; flex: 1; gap: 1px; }
-.dock-focus-description strong { font-family: inherit; font-weight: 600; font-size: 12px; line-height: 1.3; }
+.dock-focus-description strong { font-family: inherit; font-weight: 600; font-size: var(--text-caption); line-height: 1.3; }
 .dock-focus-description small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; opacity: .73; font-size: 10px; }
 .reader-dock-flight { box-sizing: border-box; will-change: transform, opacity; }
 @media (max-width: 720px) {

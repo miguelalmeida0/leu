@@ -77,6 +77,7 @@ async function run(engine, label, width, reduced) {
     phase = 'import'
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
+    await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible', timeout: 25000 })
     phase = 'home'
     await page.getByRole('button', { name: 'Open navigation' }).click()
@@ -88,8 +89,7 @@ async function run(engine, label, width, reduced) {
     )
     const assertMotion = async () => {
       const changed = await moves()
-      if (reduced === 'reduce') assert.equal(changed, 0, 'The actual Home scene must respect reduced motion')
-      else assert.ok(changed > 0.005, 'Home must visibly animate automatically without touch')
+      assert.ok(changed > 0.005, 'Home must always visibly animate as explicitly requested')
     }
     await noAnimationButtons()
     const resume = await page.getByRole('button', { name: 'Continue reading', exact: true }).boundingBox()
@@ -117,6 +117,7 @@ async function run(engine, label, width, reduced) {
     assert.equal(await page.locator('.nook-glass canvas').evaluate((el) => getComputedStyle(el).touchAction), 'auto')
     phase = 'reopen-reader'
     await page.getByRole('button', { name: 'Continue reading', exact: true }).click()
+    await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible' })
     phase = 'return-home'
     await page.getByRole('button', { name: 'Open navigation' }).click()
@@ -127,8 +128,7 @@ async function run(engine, label, width, reduced) {
     // Preference changes must apply immediately, without a page reload.
     await page.emulateMedia({ reducedMotion: reduced === 'reduce' ? 'no-preference' : 'reduce' })
     const liveChange = await moves()
-    if (reduced === 'reduce') assert.ok(liveChange > 0.005, 'Disabling reduced motion resumes the scene')
-    else assert.equal(liveChange, 0, 'Enabling reduced motion stops the scene')
+    assert.ok(liveChange > 0.005, 'Home stays playing across device preference changes')
     await page.screenshot({ path: join(evidence, 'home-' + label + '-after.png') })
     assert.deepEqual(errors, [], 'Home must not raise browser exceptions')
     console.log('PASS ' + label + ': actual visible Home rain, no playback controls, live reduced motion, legacy storage, reload and reading')
