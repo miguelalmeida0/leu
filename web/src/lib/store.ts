@@ -13,6 +13,7 @@ export interface Book {
   addedAt: number
   lastOpenedAt?: number
   page: number // 1-based reading position
+  readingPosition?: { page: number; sentence: number; fraction: number }
   palette: Palette
   shelf: string
   sample?: boolean

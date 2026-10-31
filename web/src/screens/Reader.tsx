@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Prose, piecesOf } from '../components/Prose'
 import { Empty, Modal } from '../components/ui'
 import { openPdf, pageBlocks, pdfDeadline, renderPage, type Block, type PDFDocumentProxy } from '../lib/pdf'
@@ -6,19 +6,15 @@ import { go, href } from '../lib/router'
 import { addNote, loadOutline, loadPdf, patchBook, removeNote, upsertMemory, useStore, type Outline } from '../lib/store'
 import { cloze, ideas } from '../lib/text'
 import { Dock } from '../components/Dock'
-import { captureDockFlight, completeDockFlight, type DockFlight } from '../lib/focusDockTransition'
 import './FocusListening.css'
 import './ReaderLayout.css'
-import { ContinuousPages, type ContinuousPagesHandle } from '../components/ContinuousPages'
+import { PagedReader, type PagedReaderHandle, type ReadingPosition } from '../components/paged-reader/PagedReader'
 import { useReaderFullscreen } from '../lib/useReaderFullscreen'
 import { dismissNotice, prefetch, seek, speak, stop, useVoice, warmVoice } from '../lib/voice'
 import { ExplainPanel, gistOf } from './Explain'
 
 const limitZoom = (value: number) => Math.min(2.75, Math.max(0.8, Math.round(value * 20) / 20))
-const pinchDistance = (touches: ArrayLike<{ clientX: number; clientY: number }>) => {
-  const a = touches[0], b = touches[1]
-  return a && b ? Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) : 0
-}
+
 
 /** Reading (06): the chapter rail, the page as paper (rebuilt for reading, or the original),
     and the margin with your notes. Select any line to keep a note, explain it, or hear it. */
@@ -31,7 +27,10 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const [blocks, setBlocks] = useState<Block[] | null>(null)
   const [mode, setMode] = useState<'rebuilt' | 'original'>('rebuilt')
   const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen } = useReaderFullscreen()
-  const continuous = useRef<ContinuousPagesHandle>(null)
+  const paged = useRef<PagedReaderHandle>(null)
+  const [controls, setControls] = useState(false)
+  const [position, setPosition] = useState<ReadingPosition | null>(null)
+  const toggleControls = useCallback(() => setControls((shown) => !shown), [])
   const [zoom, setZoom] = useState(1)
   const [selection, setSelection] = useState<{ text: string; page: number; x: number; y: number } | null>(null)
   const [draft, setDraft] = useState<{ quote: string; note: string; page: number } | null>(null)
@@ -43,9 +42,6 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const originalStage = useRef<HTMLDivElement>(null)
   const renderQueue = useRef<Promise<void>>(Promise.resolve())
-  const pinch = useRef<{ distance: number; zoom: number } | null>(null)
-  const dockFlight = useRef<DockFlight | null>(null)
-  const dockFlightCleanup = useRef<(() => void) | null>(null)
   const selectionToolbar = useRef<HTMLDivElement>(null)
   const selectingToolbar = useRef(false)
   const swipeStart = useRef<{ x: number; y: number; at: number } | null>(null)
@@ -55,36 +51,25 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const clamped = Math.min(Math.max(1, page), pages)
   const changeZoom = useCallback((next: number) => setZoom(limitZoom(next)), [])
 
-  // Animate a visual copy; the real listening control stays mounted and keeps
-  // its speech state, queue, keyboard shortcuts and progress.
-  useLayoutEffect(() => {
-    const flight = dockFlight.current
-    if (!flight) return
-    dockFlight.current = null
-    dockFlightCleanup.current?.()
-    dockFlightCleanup.current = completeDockFlight(
-      flight, document.querySelector<HTMLElement>('.reader-foot .dock'), immersive,
-    )
-  }, [immersive])
-
-  useEffect(() => () => {
-    dockFlightCleanup.current?.()
-    dockFlight.current?.ghost.remove()
-  }, [])
-
   const toggleFocus = () => {
-    dockFlightCleanup.current?.()
-    dockFlightCleanup.current = null
-    dockFlight.current?.ghost.remove()
-    dockFlight.current = captureDockFlight(document.querySelector<HTMLElement>('.reader-foot .dock'))
+    setControls(false)
     toggleFullscreen()
   }
+  const reportPosition = useCallback((next: ReadingPosition) => {
+    setPosition((old) => old && old.page === next.page && old.part === next.part && old.parts === next.parts && old.previous === next.previous && old.next === next.next ? old : next)
+    if (mode === 'rebuilt' && Number.isFinite(next.sentence)) {
+      const previous = book?.readingPosition
+      if (!previous || previous.page !== next.page || previous.sentence !== next.sentence || previous.fraction !== next.fraction) {
+        patchBook(id, { readingPosition: { page: next.page, sentence: next.sentence, fraction: next.fraction } })
+      }
+    }
+  }, [id, mode, book?.readingPosition])
 
   useEffect(() => {
     if (!immersive) return
     const keyboard = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement
-      if (target.closest('input, textarea, [contenteditable]')) return
+      if (target.closest('input, textarea, [contenteditable]') || document.querySelector('.scrim')) return
       if (event.key === 'Escape') {
         if (draft || explain) return
         event.preventDefault()
@@ -174,23 +159,16 @@ export function Reader({ id, page }: { id: string; page: number }) {
     stop(); setSelection(null); setDraft(null); setExplain(null); window.getSelection()?.removeAllRanges()
     continuing.current = keepReading
     go({ name: 'read', id, page: Math.min(Math.max(1, to), pages) }, true)
-    if (immersive) continuous.current?.scrollToPage(Math.min(Math.max(1, to), pages))
-    else window.scrollTo({ top: 0 })
+    if (!immersive) window.scrollTo({ top: 0 })
   }, [id, pages, immersive])
-
-  const followPage = useCallback((to: number) => {
-    stop(); setSelection(null); setExplain(null)
-    go({ name: 'read', id, page: to }, true)
-  }, [id])
 
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
       const typing = (e.target as HTMLElement).closest('input, textarea, [contenteditable]')
       if (typing || e.metaKey || e.ctrlKey || document.querySelector('.scrim')) return
-      if (immersive && (e.key === 'PageDown' || e.key === 'PageUp')) {
+      if (immersive && ['ArrowRight', 'ArrowLeft', 'PageDown', 'PageUp'].includes(e.key)) {
         e.preventDefault()
-        const scroller = reader.current?.querySelector('.reader-grid')
-        scroller?.scrollBy({ top: (e.key === 'PageDown' ? 1 : -1) * scroller.clientHeight * .85, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })
+        paged.current?.step(e.key === 'ArrowRight' || e.key === 'PageDown' ? 1 : -1)
         return
       }
       if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); turn(clamped + 1) }
@@ -274,28 +252,12 @@ export function Reader({ id, page }: { id: string; page: number }) {
   // selection remain exclusively under the browser's control.
   const onSwipeStart = (event: React.TouchEvent<HTMLElement>) => {
     swipeStart.current = null
-    if (immersive && event.touches.length === 2) {
-      const distance = pinchDistance(event.touches)
-      if (distance > 0) pinch.current = { distance, zoom }
-      return
-    }
-    if (immersive && mode === 'original' && zoom > 1.05) return
     if (event.touches.length !== 1 || selection || draft || explain || window.getSelection()?.toString().trim()) return
     if ((event.target as HTMLElement).closest('button, a, input, textarea, [contenteditable], .selection-menu')) return
     const touch = event.touches[0]
     swipeStart.current = { x: touch.clientX, y: touch.clientY, at: Date.now() }
   }
-  const onPinchMove = (event: React.TouchEvent<HTMLElement>) => {
-    if (!immersive || !pinch.current || event.touches.length < 2) return
-    const distance = pinchDistance(event.touches)
-    if (distance > 0) changeZoom(pinch.current.zoom * distance / pinch.current.distance)
-  }
   const onSwipeEnd = (event: React.TouchEvent<HTMLElement>) => {
-    if (pinch.current) {
-      if (event.touches.length < 2) pinch.current = null
-      swipeStart.current = null
-      return
-    }
     const start = swipeStart.current
     swipeStart.current = null
     if (!start || !event.changedTouches.length || selection || window.getSelection()?.toString().trim()) return
@@ -332,9 +294,10 @@ export function Reader({ id, page }: { id: string; page: number }) {
   return (
     <div ref={reader} role={immersive ? 'dialog' : undefined} aria-modal={immersive || undefined}
       aria-label={immersive ? `${book.title} · full-screen reader` : undefined}
+      data-controls={immersive ? controls ? 'shown' : 'hidden' : undefined} tabIndex={immersive ? -1 : undefined}
       className={`reader fade-in${immersive ? ' reader-immersive' : ''}`}
       style={{ ['--reader-zoom' as string]: zoom }}>
-      <div className="reader-bar">
+      <div className="reader-bar" inert={immersive && !controls} aria-hidden={immersive && !controls || undefined}>
         <a className="reader-back" href={href({ name: 'book', id })}>
           <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
           <span>{book.title}</span>
@@ -372,10 +335,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           {voice.notice} <button className="link small" onClick={dismissNotice}>OK</button>
         </p>
       )}
-      <div className={`reader-grid${explain ? ' explaining' : ''}`} tabIndex={immersive ? 0 : undefined}
-        role={immersive ? 'region' : undefined} aria-label={immersive ? 'Document pages' : undefined}
-        onTouchStart={immersive ? onSwipeStart : undefined} onTouchMove={immersive ? onPinchMove : undefined}
-        onTouchEnd={immersive ? onSwipeEnd : undefined}>
+      <div className={`reader-grid${explain ? ' explaining' : ''}`}>
         <nav className="rail" aria-label="Chapters">
           <p className="eyebrow">Chapters</p>
           <ol>
@@ -389,12 +349,14 @@ export function Reader({ id, page }: { id: string; page: number }) {
           </ol>
         </nav>
 
-        {immersive && doc ? <ContinuousPages ref={continuous} doc={doc} page={clamped} mode={mode} zoom={zoom}
-          title={book.title} activePaper={paper} onPageChange={followPage}
+        {immersive && doc ? <PagedReader ref={paged} doc={doc} page={clamped} mode={mode} zoom={zoom}
+          controls={controls}
+          activePaper={paper} onTurn={turn} onZoom={changeZoom} onToggleControls={toggleControls}
+          onPosition={reportPosition} bookmark={book.readingPosition}
           reading={speaking && (voice.status === 'speaking' || voice.status === 'paused')} marked={marked} onSeek={seek} /> :
         <article key={clamped} className="reader-paper" ref={paper}
-          onTouchStart={onSwipeStart} onTouchMove={onPinchMove} onTouchEnd={onSwipeEnd}
-          onTouchCancel={() => { swipeStart.current = null; pinch.current = null }}
+          onTouchStart={onSwipeStart} onTouchEnd={onSwipeEnd}
+          onTouchCancel={() => { swipeStart.current = null }}
           aria-label={`Page ${clamped} of ${pages}`}>
           <p className="eyebrow paper page-eyebrow">{current?.title ?? book.title} · page {clamped}</p>
           {mode === 'original' ? (
@@ -402,10 +364,10 @@ export function Reader({ id, page }: { id: string; page: number }) {
               <div className="original-stage" ref={originalStage}>
                 <canvas ref={canvas} className="original-page" role="img"
                   aria-label={`Visual rendering of page ${clamped} of ${pages}. Choose For reading to access the extracted text.`}
-                  onDoubleClick={immersive ? () => changeZoom(zoom > 1.05 ? 1 : 1.75) : undefined} />
+ />
               </div>
               <p className="muted small original-selection-hint">
-                {immersive ? 'Pinch or use + / − to zoom. Drag to explore the enlarged page.' : 'For selectable text and notes, use “For reading”.'}
+                For selectable text and notes, use “For reading”.
               </p>
               {originalError && <p className="muted" role="alert">{originalError}</p>}
             </>
@@ -455,13 +417,13 @@ export function Reader({ id, page }: { id: string; page: number }) {
         </aside>
       </div>
 
-      <div className="reader-foot">
+      <div className="reader-foot" inert={immersive && !controls} aria-hidden={immersive && !controls || undefined}>
         {immersive && <nav className="reader-page-nav" aria-label="Full-screen pages">
-          <button type="button" aria-label="Previous page" disabled={clamped <= 1} onClick={() => turn(clamped - 1)}>
+          <button type="button" aria-label="Previous page" disabled={!(position?.previous ?? clamped > 1)} onClick={() => paged.current?.step(-1)}>
             <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
           <span className="tabular" aria-live="polite">{clamped} / {pages}</span>
-          <button type="button" aria-label="Next page" disabled={clamped >= pages} onClick={() => turn(clamped + 1)}>
+          <button type="button" aria-label="Next page" disabled={!(position?.next ?? clamped < pages)} onClick={() => paged.current?.step(1)}>
             <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
         </nav>}

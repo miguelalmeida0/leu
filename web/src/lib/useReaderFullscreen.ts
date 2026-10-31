@@ -36,13 +36,32 @@ export function useReaderFullscreen() {
   useLayoutEffect(() => {
     if (!immersive) return
     const bodyStyle = document.body.style.cssText
-    const htmlOverflow = document.documentElement.style.overflow
+    const html = document.documentElement
+    const htmlOverflow = html.style.overflow
+    const htmlOverscroll = html.style.overscrollBehavior
+    const theme = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+    const themeColor = theme?.content
+    const shell = reader.current
+    const viewport = window.visualViewport
+    const fit = () => {
+      if (!shell) return
+      shell.style.setProperty('--reader-viewport-top', `${viewport?.offsetTop ?? 0}px`)
+      shell.style.setProperty('--reader-viewport-left', `${viewport?.offsetLeft ?? 0}px`)
+      shell.style.setProperty('--reader-viewport-width', `${viewport?.width ?? innerWidth}px`)
+      shell.style.setProperty('--reader-viewport-height', `${viewport?.height ?? innerHeight}px`)
+    }
     const background = [...document.querySelectorAll<HTMLElement>('.topbar, .skip')]
       .map((element) => ({ element, inert: element.inert }))
-    document.documentElement.style.overflow = 'hidden'
-    Object.assign(document.body.style, { position: 'fixed', top: `-${previousScroll.current}px`, width: '100%', overflow: 'hidden' })
+    html.style.overflow = 'hidden'
+    html.style.overscrollBehavior = 'none'
+    Object.assign(document.body.style, { position: 'fixed', top: `-${previousScroll.current}px`, width: '100%', overflow: 'hidden', overscrollBehavior: 'none', background: '#FBF8F2' })
+    if (theme) theme.content = '#FBF8F2'
+    fit()
+    viewport?.addEventListener('resize', fit)
+    viewport?.addEventListener('scroll', fit)
+    window.addEventListener('resize', fit)
     background.forEach(({ element }) => { element.inert = true })
-    reader.current?.querySelector<HTMLElement>('.reader-focus-toggle')?.focus({ preventScroll: true })
+    ;(shell?.querySelector<HTMLElement>('.paged-reader') ?? shell)?.focus({ preventScroll: true })
 
     const nativeChanged = () => {
       if (ownsNative.current && !document.fullscreenElement) exit()
@@ -50,7 +69,7 @@ export function useReaderFullscreen() {
     const containFocus = (event: KeyboardEvent) => {
       if (event.key !== 'Tab' || document.querySelector('.scrim')) return
       const controls = [...reader.current!.querySelectorAll<HTMLElement>('a[href], button:not(:disabled), input:not(:disabled), [tabindex="0"]')]
-        .filter((element) => element.getClientRects().length > 0)
+        .filter((element) => !element.closest('[inert]') && element.getClientRects().length > 0 && getComputedStyle(element).visibility !== 'hidden')
       const first = controls[0], last = controls.at(-1)
       if (event.shiftKey && (document.activeElement === first || !reader.current?.contains(document.activeElement))) {
         event.preventDefault(); last?.focus()
@@ -63,8 +82,14 @@ export function useReaderFullscreen() {
     return () => {
       document.removeEventListener('fullscreenchange', nativeChanged)
       document.removeEventListener('keydown', containFocus)
+      viewport?.removeEventListener('resize', fit)
+      viewport?.removeEventListener('scroll', fit)
+      window.removeEventListener('resize', fit)
+      for (const name of ['top', 'left', 'width', 'height']) shell?.style.removeProperty(`--reader-viewport-${name}`)
       document.body.style.cssText = bodyStyle
-      document.documentElement.style.overflow = htmlOverflow
+      html.style.overflow = htmlOverflow
+      html.style.overscrollBehavior = htmlOverscroll
+      if (theme && themeColor !== undefined) theme.content = themeColor
       background.forEach(({ element, inert }) => { element.inert = inert })
       window.scrollTo(0, previousScroll.current)
       previousFocus.current?.focus({ preventScroll: true })

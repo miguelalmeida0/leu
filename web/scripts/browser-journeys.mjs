@@ -74,28 +74,6 @@ async function swipeReader(page, dx, dy = 0) {
   }, { dx, dy })
 }
 
-async function beginVerticalScroll(page, mobile) {
-  const viewport = await page.locator('.reader-grid').boundingBox()
-  if (!mobile) {
-    await page.mouse.move(viewport.x + viewport.width / 2, viewport.y + viewport.height / 2)
-    await page.mouse.wheel(0, 1)
-    return
-  }
-  // Playwright cannot send wheel input to mobile WebKit. Use the same touch
-  // event boundary as the swipe journey, then scroll the real compositor below.
-  await page.locator('.reader-grid').evaluate((target) => {
-    const touch = { clientX: 150, clientY: 300 }
-    for (const type of ['touchstart', 'touchend']) {
-      const event = new Event(type, { bubbles: true, cancelable: true })
-      Object.defineProperties(event, {
-        touches: { value: type === 'touchstart' ? [touch] : [] },
-        changedTouches: { value: [touch] },
-      })
-      target.dispatchEvent(event)
-    }
-  })
-}
-
 async function navigateMobile(page, name) {
   const trigger = page.getByRole('button', { name: 'Open navigation' })
   await trigger.click()
@@ -179,128 +157,103 @@ async function runBrowser(browserType, name, mobile, width) {
       await unhidden(page.getByRole('navigation', { name: 'Mobile places' }))
     }
 
-    // Fullscreen fills the viewport and scrolls continuously across real PDF pages.
+    // Intentional replacement of continuous vertical scrolling: fitted screens,
+    // hidden overlay chrome, horizontal navigation and original PDF fit/zoom.
     const normalBar = await page.locator('.reader-bar').boundingBox()
     const entry = await page.getByRole('button', { name: 'Enter full-screen reading' }).boundingBox()
-    if (mobile) assert.ok(entry.y < normalBar.y + 100, 'Fullscreen entry belongs beside the display modes, not on a separate loose row')
+    if (mobile) assert.ok(entry.y < normalBar.y + 100, 'Fullscreen entry belongs beside the display modes')
+    const reveal = async () => {
+      if (await page.locator('.reader-immersive').getAttribute('data-controls') === 'hidden') {
+        const box = await page.locator('.paged-reader').boundingBox()
+        await page.locator('.paged-reader').click({ position: { x: box.width / 2, y: box.height / 2 } })
+      }
+      await visible(page.getByRole('button', { name: 'Exit full-screen reading' }))
+    }
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
-    await visible(page.locator('.reader.reader-immersive'))
-    await visible(page.getByRole('navigation', { name: 'Full-screen pages' }))
-    await visible(page.locator('.reader-immersive .dock[data-focus="true"] .dock-focus-action'))
+    await visible(page.locator('.paged-current .prose p').first())
+    assert.equal(await page.locator('.reader-immersive').getAttribute('data-controls'), 'hidden')
     await page.waitForFunction(() => {
       const reader = document.querySelector('.reader-immersive').getBoundingClientRect()
-      const bar = document.querySelector('.reader-immersive .reader-bar').getBoundingClientRect()
-      return reader.top === 0 && Math.abs(reader.height - innerHeight) < 2 && bar.height <= 112
+      return Math.abs(reader.top - (visualViewport?.offsetTop ?? 0)) < 2 && Math.abs(reader.height - (visualViewport?.height ?? innerHeight)) < 2
     })
-    if (!mobile && name.startsWith('chromium')) {
-      assert.ok(await page.evaluate(() => !!document.fullscreenElement), 'Supported desktop browsers must enter native fullscreen')
-    }
-    const activePaper = () => page.locator('.reader-immersive [data-active="true"]')
-    await visible(activePaper().locator('.prose p').first())
+    if (!mobile && name.startsWith('chromium')) assert.ok(await page.evaluate(() => !!document.fullscreenElement))
+    const activePaper = () => page.locator('.paged-current')
+    await reveal()
+    await visible(page.getByRole('navigation', { name: 'Full-screen pages' }))
+    await visible(page.locator('.reader-immersive .dock[data-focus="true"] .dock-focus-action'))
     const textSize = await activePaper().locator('.prose').evaluate((el) => parseFloat(getComputedStyle(el).fontSize))
     await page.getByRole('button', { name: 'Zoom in' }).click()
     assert.ok(await activePaper().locator('.prose').evaluate((el) => parseFloat(getComputedStyle(el).fontSize)) > textSize)
     await page.getByRole('button', { name: 'Reset zoom' }).click()
-    // Native vertical scrolling advances the saved page without leaving fullscreen.
-    await beginVerticalScroll(page, mobile)
-    await page.locator('.reader-grid').evaluate((scroller) => {
-      const target = scroller.querySelector('[data-page="2"]')
-      scroller.scrollTop += target.getBoundingClientRect().top - scroller.getBoundingClientRect().top
-    })
-    await page.waitForFunction(() => document.querySelector('.reader-immersive [data-active="true"]')?.getAttribute('data-page') === '2')
-    await visible(activePaper().locator('.prose p').first())
-    assert.ok((await page.locator('.reader-grid').evaluate((el) => el.scrollTop)) > 0)
-    assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('leu.web.v1')).books[0].page), 2)
-    await page.getByRole('navigation', { name: 'Full-screen pages' }).getByRole('button', { name: 'Previous page' }).click()
-    await page.waitForFunction(() => document.querySelector('.reader-immersive [data-active="true"]')?.getAttribute('data-page') === '1')
+    const pageNavigation = page.getByRole('navigation', { name: 'Full-screen pages' })
+    const step = async (direction) => {
+      const before = await page.locator('.paged-reader').getAttribute('data-location')
+      await pageNavigation.getByRole('button', { name: direction > 0 ? 'Next page' : 'Previous page' }).click()
+      await page.waitForFunction((old) => document.querySelector('.paged-reader')?.dataset.location !== old && document.querySelector('.paged-reader')?.dataset.settled === 'true', before).catch(async (error) => { console.error('STEP', before, await page.locator('.paged-reader').evaluate((el) => ({ ...el.dataset, transform: el.firstElementChild.style.transform }))); throw error })
+    }
+    await step(1)
+    await step(-1)
+    assert.equal(await page.locator('.paged-reader').getAttribute('data-location'), '1:0')
     await page.getByRole('button', { name: 'Original page' }).click()
     await visible(activePaper().locator('canvas'))
-    await page.waitForFunction(() => parseFloat(document.querySelector('.reader-immersive [data-active="true"] canvas')?.style.width ?? '0') > 0)
+    await page.waitForFunction(() => parseFloat(document.querySelector('.paged-current canvas')?.style.width ?? '0') > 0)
+    assert.ok(await activePaper().locator('canvas').evaluate((el) => {
+      const rect = el.getBoundingClientRect(), area = el.parentElement.getBoundingClientRect()
+      return rect.width <= area.width + 2 && rect.height <= area.height + 2
+    }), 'The original page fits the entire reading area at 100%')
     const originalWidth = await activePaper().locator('canvas').evaluate((el) => parseFloat(el.style.width))
     await page.getByRole('button', { name: 'Zoom in' }).click()
-    await page.waitForFunction((before) => parseFloat(document.querySelector('.reader-immersive [data-active="true"] canvas')?.style.width ?? '0') > before, originalWidth)
+    await page.waitForFunction((before) => parseFloat(document.querySelector('.paged-current canvas')?.style.width ?? '0') > before, originalWidth)
+    await page.getByRole('button', { name: 'Reset zoom' }).click()
     await page.getByRole('button', { name: 'For reading' }).click()
     await visible(activePaper().locator('.prose p').first())
-    const pageNavigation = page.getByRole('navigation', { name: 'Full-screen pages' })
-    for (let expected = 2; expected <= 4; expected++) {
-      await pageNavigation.getByRole('button', { name: 'Next page' }).click()
-      await page.waitForFunction((number) => document.querySelector('.reader-immersive [data-active="true"]')?.getAttribute('data-page') === String(number), expected)
-      await visible(activePaper().locator('.prose p').first())
-    }
+    for (let guard = 0; guard < 40 && await pageNavigation.getByRole('button', { name: 'Next page' }).isEnabled(); guard++) await step(1)
+    assert.equal(await activePaper().getAttribute('data-page'), '4')
     assert.equal(await pageNavigation.getByRole('button', { name: 'Next page' }).isDisabled(), true)
+    assert.equal(await page.locator('.reader-grid').evaluate((el) => el.scrollTop), 0)
+    assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('leu.web.v1')).books[0].page), 4)
     await page.getByRole('button', { name: 'Original page' }).click()
     await visible(activePaper().locator('canvas'))
-    await page.waitForFunction(() => parseFloat(document.querySelector('.reader-immersive [data-page="4"] canvas')?.style.width ?? '0') > 0)
     await page.getByRole('button', { name: 'For reading' }).click()
     await visible(activePaper().locator('.prose p').first())
-    assert.equal(await activePaper().getAttribute('data-page'), '4', 'Changing display modes must retain the page')
-    await page.waitForFunction(() => {
-      const page = document.querySelector('.reader-immersive [data-page="4"]')
-      const scroller = document.querySelector('.reader-grid')
-      return Math.abs(page.getBoundingClientRect().top - scroller.getBoundingClientRect().top) < 2
-    })
-    // Same-book search navigation changes the route outside the reader controls.
+    // Same-book search remains in fullscreen and opens the first screen of its source.
     await page.keyboard.press('Control+k')
     await visible(page.getByRole('dialog', { name: 'Search your books' }))
     await page.getByRole('textbox', { name: 'Ask your books anything' }).fill('References')
     await visible(page.locator('#result-0'), 25000)
     await page.locator('#result-0').click()
-    await page.waitForFunction(() => {
-      const active = document.querySelector('.reader-immersive [data-active="true"]')
-      return active?.getAttribute('data-page') === '3' && Math.abs(active.getBoundingClientRect().top - document.querySelector('.reader-grid').getBoundingClientRect().top) < 2
-    })
-    await pageNavigation.getByRole('button', { name: 'Next page' }).click()
-    await page.waitForFunction(() => document.querySelector('.reader-immersive [data-active="true"]')?.getAttribute('data-page') === '4')
-    // A visible neighboring page can still be selected and keeps its own source.
-    await beginVerticalScroll(page, mobile)
-    await page.locator('.reader-grid').evaluate((scroller) => {
-      scroller.scrollTop += scroller.querySelector('[data-page="4"]').getBoundingClientRect().top - scroller.getBoundingClientRect().top - 115
-    })
-    await page.evaluate(() => {
-      const sentence = [...document.querySelectorAll('.continuous-page[data-page="3"] .prose .s')].at(-1)
-      const bounds = sentence.getBoundingClientRect()
-      const viewport = document.querySelector('.reader-grid').getBoundingClientRect()
-      if (bounds.bottom <= viewport.top || bounds.top >= viewport.bottom) throw new Error('Neighbor selection must be on screen')
-      const range = document.createRange()
-      range.selectNodeContents(sentence)
-      const selection = window.getSelection()
-      selection.removeAllRanges(); selection.addRange(range)
-      document.dispatchEvent(new Event('selectionchange'))
-    })
-    await visible(page.getByRole('toolbar', { name: 'Actions for selected text' }))
+    await page.waitForFunction(() => document.querySelector('.paged-reader')?.dataset.location === '3:0')
+    await selectPassage(page)
     await page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Keep a note' }).click()
     await visible(page.getByRole('dialog', { name: /Keep a note from.*page 3/i }))
     await page.locator('#note-body').fill('A note made in full screen.')
     await page.getByRole('button', { name: 'Save note' }).click()
     await unhidden(page.getByRole('dialog', { name: /Keep a note from/i }))
+    assert.ok(await page.evaluate(() => JSON.parse(localStorage.getItem('leu.web.v1')).notes.some((n) => n.page === 3 && n.note === 'A note made in full screen.')))
+    for (let guard = 0; guard < 30 && await pageNavigation.getByRole('button', { name: 'Next page' }).isEnabled(); guard++) await step(1)
+    const lastLocation = await page.locator('.paged-reader').getAttribute('data-location')
     await page.screenshot({ path: join(evidence, evidenceName + '-fullscreen.png') })
     await page.getByRole('button', { name: 'Exit full-screen reading' }).click()
     await unhidden(page.locator('.reader.reader-immersive'))
     await page.waitForFunction(() => !document.fullscreenElement)
     await visible(page.locator('.reader-foot .dock:not([data-focus="true"]) .dock-play'))
-    await visible(page.locator('.reader-paper .prose p').first())
     await noHorizontalOverflow(page, 'After full-screen zoom ' + name)
-    // Reopen at the saved last page using the iPhone/embedded-browser fallback.
     await page.evaluate(() => Object.defineProperty(document, 'fullscreenEnabled', { value: false, configurable: true }))
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await visible(activePaper().locator('.prose p').first())
-    assert.equal(await activePaper().getAttribute('data-page'), '4')
-    await page.waitForFunction(() => Math.abs(document.querySelector('.reader-immersive [data-page="4"]').getBoundingClientRect().top - document.querySelector('.reader-grid').getBoundingClientRect().top) < 2)
+    await page.waitForFunction((saved) => document.querySelector('.paged-reader')?.dataset.location === saved, lastLocation)
     assert.equal(await page.evaluate(() => !!document.fullscreenElement), false)
-    const beforeScroll = await page.locator('.reader-grid').evaluate((el) => el.scrollTop)
+    const beforeKey = await page.locator('.paged-reader').getAttribute('data-location')
     await page.keyboard.press('PageUp')
-    await page.waitForFunction((before) => document.querySelector('.reader-grid').scrollTop < before, beforeScroll)
-    // Explicit navigation works from either boundary and brings the page to the top.
-    for (let i = 0; i < 3; i++) {
-      if (await pageNavigation.getByRole('button', { name: 'Previous page' }).isEnabled()) {
-        await pageNavigation.getByRole('button', { name: 'Previous page' }).click()
-      }
-    }
-    await page.waitForFunction(() => document.querySelector('.reader-immersive [data-active="true"]')?.getAttribute('data-page') === '1')
+    await page.waitForFunction((before) => document.querySelector('.paged-reader')?.dataset.location !== before, beforeKey)
+    assert.equal(await page.locator('.reader-grid').evaluate((el) => el.scrollTop), 0)
+    await reveal()
+    for (let guard = 0; guard < 40 && await pageNavigation.getByRole('button', { name: 'Previous page' }).isEnabled(); guard++) await step(-1)
+    assert.equal(await page.locator('.paged-reader').getAttribute('data-location'), '1:0')
     await page.keyboard.press('Escape')
     await unhidden(page.locator('.reader.reader-immersive'))
     await page.evaluate(() => { delete document.fullscreenEnabled })
-    assert.equal(await page.evaluate(() => document.body.style.position), '', 'Exiting must restore background scrolling')
+    assert.equal(await page.evaluate(() => document.body.style.position), '', 'Exiting restores background scrolling')
 
     await selectPassage(page)
     await page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Keep a note' }).click()
