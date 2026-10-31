@@ -65,7 +65,9 @@ async function resize(page, width, height) {
     const area = document.querySelector('.paged-current .paged-text')
     const prose = area.querySelector('.prose')
     const parts = Math.max(1, Math.round((prose.scrollWidth + 32) / (area.clientWidth + 32)))
-    return Math.abs(shell.height - (viewport?.height ?? innerHeight)) < 2
+    const reader = document.querySelector('.paged-reader')
+    const measured = `${reader.dataset.location.split(':')[0]}:${area.clientWidth}:${area.clientHeight}:1:rebuilt:`
+    return reader.dataset.layout?.startsWith(measured) && Math.abs(shell.height - (viewport?.height ?? innerHeight)) < 2
       && Math.abs(shell.width - (viewport?.width ?? innerWidth)) < 2
       && Math.abs(shell.y - (viewport?.offsetTop ?? 0)) < 2
       && Math.abs(parseFloat(area.style.getPropertyValue('--paged-column-width')) - area.clientWidth) < 1
@@ -154,10 +156,39 @@ async function standaloneMetadata(page) {
   assert.match(await image.text(), /<svg/)
 }
 
+async function bookmarkSnapshot(page) {
+  return page.evaluate(() => {
+    const root = document.querySelector('.paged-reader'), area = document.querySelector('.paged-current .paged-text')
+    const prose = area?.querySelector('.prose'), stride = area ? area.clientWidth + 32 : 1
+    const origin = prose?.getBoundingClientRect().left ?? 0
+    return {
+      root: root ? { ...root.dataset } : null, bookmark: JSON.parse(localStorage.getItem('leu.web.v1'))?.books[0]?.readingPosition,
+      fonts: document.fonts.status, area: area?.getBoundingClientRect().toJSON(), font: prose && getComputedStyle(prose).font,
+      columns: prose && [...prose.querySelectorAll('.s')].map((sentence) => ({ index: Number(sentence.dataset.s),
+        fragments: [...sentence.getClientRects()].map((r) => Math.floor((r.left - origin + .5) / stride)) })),
+      writes: window.__BOOKMARK_WRITES,
+    }
+  })
+}
+
 async function run([engine, name, width, height, reducedMotion]) {
   const browser = await engine.launch({ headless: true })
   const page = await browser.newPage({ viewport: { width, height }, isMobile: width < 600 || height < 500, hasTouch: true, reducedMotion })
   const errors = []
+  let reloadCheckpoint
+  await page.addInitScript(() => {
+    window.__BOOKMARK_WRITES = []
+    const write = Storage.prototype.setItem
+    Storage.prototype.setItem = function (key, value) {
+      write.call(this, key, value)
+      if (key !== 'leu.web.v1') return
+      const area = document.querySelector('.paged-current .paged-text')
+      window.__BOOKMARK_WRITES.push({ at: performance.now(), bookmark: JSON.parse(value).books[0]?.readingPosition,
+        location: document.querySelector('.paged-reader')?.dataset.location, fonts: document.fonts.status,
+        size: area && [area.clientWidth, area.clientHeight] })
+      window.__BOOKMARK_WRITES = window.__BOOKMARK_WRITES.slice(-30)
+    }
+  })
   page.on('pageerror', (e) => errors.push(e.message))
   try {
     await page.route('**/samples/*.pdf', (route) => route.fulfill({ contentType: 'application/pdf', body: densePdf() }))
@@ -288,6 +319,9 @@ async function run([engine, name, width, height, reducedMotion]) {
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await ready(page)
     await page.waitForFunction((old) => document.querySelector('.paged-reader')?.dataset.location === old, saved)
+    // Rotation must not briefly persist a different passage before restoring it.
+    const reflowSentence = await page.evaluate(() => JSON.parse(localStorage.getItem('leu.web.v1')).books[0].readingPosition.sentence)
+    await page.evaluate(() => { window.__BOOKMARK_WRITES = [] })
     // Rotation/viewport resize keeps the same passage, then repaginates back.
     await resize(page, width > 900 ? 1000 : height, width > 900 ? 720 : width)
     await fittedText(page)
@@ -295,8 +329,17 @@ async function run([engine, name, width, height, reducedMotion]) {
     await resize(page, width, height)
     await ready(page)
     await fittedText(page)
-    const reloadLocation = await location(page)
-    const reloadBookmark = await page.evaluate(() => JSON.parse(localStorage.getItem('leu.web.v1')).books[0].readingPosition)
+    const checkpoint = await bookmarkSnapshot(page)
+    reloadCheckpoint = checkpoint
+    const reflowWrites = checkpoint.writes.filter((write) => write.bookmark?.page === checkpoint.bookmark.page).map((write) => write.bookmark.sentence)
+    assert.ok(reflowWrites.every((sentence) => sentence === reflowSentence), 'Reflow never persists a transient screen start over the saved passage anchor')
+    assert.equal(checkpoint.bookmark.sentence, reflowSentence)
+    const part = Number(checkpoint.root.part), parts = Number(checkpoint.root.parts)
+    assert.equal(checkpoint.bookmark.fraction, parts > 1 ? part / (parts - 1) : 0, 'The atomic reload checkpoint matches the committed screen fraction')
+    assert.ok(checkpoint.columns.find((sentence) => sentence.index === reflowSentence).fragments.includes(part), 'The saved passage is visible in the atomic reload checkpoint')
+    const reloadLocation = checkpoint.root.location
+    const reloadBookmark = checkpoint.bookmark
+    console.log('BOOKMARK ' + name + ' ' + JSON.stringify({ location: reloadLocation, bookmark: reloadBookmark, fonts: checkpoint.fonts }))
     await page.reload()
     await visible(page.locator('.reader-paper canvas'))
     await page.getByRole('button', { name: 'For reading', exact: true }).click()
@@ -309,6 +352,7 @@ async function run([engine, name, width, height, reducedMotion]) {
     assert.deepEqual(errors, [], name + ': runtime errors')
     console.log('PASS ' + name + ': dense PDF, every screen, touch side turns, cancellation, fixed viewport, hidden overlays, original fit/pan, bookmark, resize')
   } catch (error) {
+    console.error('BOOKMARK FAILURE ' + name + ' ' + JSON.stringify({ checkpoint: reloadCheckpoint, actual: await bookmarkSnapshot(page) }))
     await page.screenshot({ path: join(evidence, name + '-failed.png') }).catch(() => {})
     throw error
   } finally { await browser.close() }
