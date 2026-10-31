@@ -78,8 +78,8 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
     // Publish only the committed restored screen, before paint or a reload can
     // observe a bookmark from the previous layout's screen index.
     root.current?.setAttribute('data-layout', `${props.page}:${metric.key}`)
-    props.onPosition({ page: props.page, sentence: props.mode === 'rebuilt' ? anchored ? saved : metric.starts[leaf] ?? 0 : saved,
-      fraction: props.mode === 'rebuilt' ? (parts > 1 ? leaf / (parts - 1) : 0) : anchor.current.fraction,
+    props.onPosition({ page: props.page, sentence: props.mode === 'rebuilt' && metric.fontsReady ? anchored ? saved : metric.starts[leaf] ?? 0 : saved,
+      fraction: props.mode === 'rebuilt' && metric.fontsReady ? (parts > 1 ? leaf / (parts - 1) : 0) : anchor.current.fraction,
       part: leaf, parts, previous, next })
   }, [props.page, props.mode, props.onPosition, leaf, parts, previous, next, revision, pages])
 

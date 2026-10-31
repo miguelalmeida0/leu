@@ -11,7 +11,7 @@ export interface ReadingPosition {
   previous: boolean
   next: boolean
 }
-export interface PageMetrics { parts: number; starts: number[]; columns: number[]; ends: number[]; key: string }
+export interface PageMetrics { fontsReady: boolean; parts: number; starts: number[]; columns: number[]; ends: number[]; key: string }
 export interface PageData { blocks: Block[]; aspect: number; error?: string; textError?: string }
 export interface PagedReaderHandle { step: (direction: Direction) => void; goToPage: (page: number) => void }
 export interface PagedReaderProps {

@@ -175,7 +175,7 @@ async function run([engine, name, width, height, reducedMotion]) {
   const browser = await engine.launch({ headless: true })
   const page = await browser.newPage({ viewport: { width, height }, isMobile: width < 600 || height < 500, hasTouch: true, reducedMotion })
   const errors = []
-  let reloadCheckpoint
+  let reloadCheckpoint, releaseReadingFonts = () => {}
   await page.addInitScript(() => {
     window.__BOOKMARK_WRITES = []
     const write = Storage.prototype.setItem
@@ -340,11 +340,43 @@ async function run([engine, name, width, height, reducedMotion]) {
     const reloadLocation = checkpoint.root.location
     const reloadBookmark = checkpoint.bookmark
     console.log('BOOKMARK ' + name + ' ' + JSON.stringify({ location: reloadLocation, bookmark: reloadBookmark, fonts: checkpoint.fonts }))
-    await page.reload()
+    // Hold actual cold Literata bytes until fallback prose paints. A monospace
+    // fallback makes its different geometry deterministic across OS font sets.
+    // Final glyphs still use the unchanged real reading font.
+    const fontGate = new Promise((resolve) => { releaseReadingFonts = resolve })
+    let heldFonts = 0
+    await page.route('**/assets/*.css', async (route) => {
+      const response = await route.fetch()
+      await route.fulfill({ response, body: (await response.text())
+        .replace(/(\/fonts\/Literata-[\w-]+\.ttf)/g, '$1?reader-cold-font=1')
+        .replace(/Literata,\s*Georgia,\s*serif/g, 'Literata,monospace') })
+    })
+    await page.route('**/fonts/Literata-*.ttf*', async (route) => {
+      const response = await route.fetch()
+      heldFonts++
+      await fontGate
+      await route.fulfill({ response })
+    })
+    await page.reload({ waitUntil: 'domcontentloaded' })
     await visible(page.locator('.reader-paper canvas'))
     await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
+    await visible(page.locator('.paged-current .prose'))
+    await page.waitForFunction(() => document.fonts.status === 'loading')
+    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))))
+    assert.ok(heldFonts > 0, 'The reload journey holds actual cold reading-font bytes')
+    assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem('leu.web.v1')).books[0].readingPosition), reloadBookmark,
+      'Fallback font layout must not overwrite the durable saved passage or fraction')
+    releaseReadingFonts()
+    await page.evaluate(() => document.fonts.ready)
     await ready(page)
+    await page.waitForFunction(() => document.querySelector('.paged-reader')?.dataset.layout?.endsWith(':ready'))
+    const activated = await bookmarkSnapshot(page)
+    const [, , , , , , , cachedColumns, cachedEnds] = activated.root.layout.split(':')
+    for (const sentence of activated.columns) {
+      assert.equal(Number(cachedColumns.split(',')[sentence.index]), Math.min(...sentence.fragments), 'Cached font-start fragments match activated browser glyphs')
+      assert.equal(Number(cachedEnds.split(',')[sentence.index]), Math.max(...sentence.fragments), 'Cached font-end fragments match activated browser glyphs')
+    }
     await page.waitForFunction(({ old, bookmark }) => document.querySelector('.paged-reader')?.dataset.location === old && JSON.parse(localStorage.getItem('leu.web.v1')).books[0].readingPosition.sentence === bookmark.sentence, { old: reloadLocation, bookmark: reloadBookmark })
     assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem('leu.web.v1')).books[0].readingPosition), reloadBookmark, 'A full reload restores the saved reading passage')
     await page.screenshot({ path: join(evidence, name + '-reading.png') })
@@ -355,7 +387,7 @@ async function run([engine, name, width, height, reducedMotion]) {
     console.error('BOOKMARK FAILURE ' + name + ' ' + JSON.stringify({ checkpoint: reloadCheckpoint, actual: await bookmarkSnapshot(page) }))
     await page.screenshot({ path: join(evidence, name + '-failed.png') }).catch(() => {})
     throw error
-  } finally { await browser.close() }
+  } finally { releaseReadingFonts(); await browser.close() }
 }
 
 
