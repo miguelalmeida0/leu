@@ -26,7 +26,7 @@ function lineBoxes(s: HTMLElement, wrap: HTMLElement) {
   return lines.map((l) => ({ x: l.left - origin.left - PAD_X, y: l.top - origin.top - PAD_Y, w: l.right - l.left + PAD_X * 2, h: l.bottom - l.top + PAD_Y * 2 }))
 }
 
-export const Prose = memo(function Prose({ blocks, reading, marked, onSeek, onFollow }: { blocks: Block[]; reading: boolean; marked?: Set<number>; onSeek?: (index: number) => void; onFollow?: (index: number) => void }) {
+export const Prose = memo(function Prose({ blocks, reading, marked, onSeek, onFollow, omitHeading }: { blocks: Block[]; reading: boolean; marked?: Set<number>; onSeek?: (index: number) => void; onFollow?: (index: number) => void; omitHeading?: string }) {
   const wrap = useRef<HTMLDivElement>(null)
   const layer = useRef<HTMLDivElement>(null)
   const reduced = useReducedMotion()
@@ -66,7 +66,7 @@ export const Prose = memo(function Prose({ blocks, reading, marked, onSeek, onFo
       if (scroll && onFollow) { onFollow(index); return }
       if (scroll) {
         const r = s.getBoundingClientRect()
-        const scroller = el.closest<HTMLElement>('.reader-immersive .reader-grid')
+        const scroller = el.closest<HTMLElement>('.reader-grid')
         const viewport = scroller?.getBoundingClientRect() ?? { top: 0, height: innerHeight }
         if (r.top < viewport.top + viewport.height * .22 || r.bottom > viewport.top + viewport.height * .7) {
           (scroller ?? window).scrollBy({ top: r.top - viewport.top - viewport.height * .36, behavior: reduced ? 'instant' : 'smooth' })
@@ -98,6 +98,9 @@ export const Prose = memo(function Prose({ blocks, reading, marked, onSeek, onFo
       <div className="read-bands" ref={layer} aria-hidden="true" />
       <div className={`prose${reading ? ' reading' : ''}`} onClick={click}>
         {layout.map((b, i) => {
+          // Keep sentence indices stable for listening even when the running title is omitted.
+          if (i === 0 && b.kind === 'heading' && omitHeading
+            && b.pieces.map((piece) => piece.text).join(' ').trim().toLocaleLowerCase() === omitHeading.trim().toLocaleLowerCase()) return null
           const content = b.pieces.map((p, j) => (
             <span key={p.index}>
               {j > 0 && ' '}

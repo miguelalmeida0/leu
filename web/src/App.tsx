@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { BottomNav } from './components/BottomNav'
 import { TopBar } from './components/TopBar'
 import { importFiles, useSewing } from './lib/library'
 import { go, href, useRoute } from './lib/router'
@@ -73,7 +74,7 @@ export default function App() {
   const welcome = empty && !sewing && (route.name === 'home' || route.name === 'library')
 
   return (
-    <div className="app" onDragEnter={onDrag} onDragOver={onDrag} onDragLeave={onDrag} onDrop={onDrop}>
+    <div className="app" data-route={route.name} onDragEnter={onDrag} onDragOver={onDrag} onDragLeave={onDrag} onDrop={onDrop}>
       <a className="skip" href="#main">Skip to content</a>
       <TopBar route={route} onSearch={() => setSearching(true)} />
       <main id="main" ref={mainRef} tabIndex={-1} aria-label={route.name === 'read' ? 'PDF reader' : undefined}
@@ -88,6 +89,7 @@ export default function App() {
         }}>
         {welcome ? <Welcome onBring={bring} /> : <Screen route={route} onBring={bring} />}
       </main>
+      {!welcome && <BottomNav route={route} />}
       <input
         ref={picker}
         type="file"
@@ -98,7 +100,7 @@ export default function App() {
       />
       {dragging && (
         <div className="dropzone" aria-hidden="true">
-          <div className="dropzone-card stitched"><span className="display" style={{ fontSize: 34 }}>Drop it here.</span><span className="muted">Leu reads it on this computer and puts it on your shelf.</span></div>
+          <div className="dropzone-card stitched"><span className="display" style={{ fontSize: 34 }}>Drop it here.</span><span className="muted">Leu reads it on this computer and adds it to your library.</span></div>
         </div>
       )}
       {sewing && <Sewn sewing={sewing} />}

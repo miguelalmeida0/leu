@@ -1,12 +1,16 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react'
 
 /** Native fullscreen when available; the same viewport reader works on iOS. */
-export function useReaderFullscreen() {
+export function useReaderFullscreen(positionKey: string) {
   const [immersive, setImmersive] = useState(false)
   const reader = useRef<HTMLDivElement>(null)
   const active = useRef(false)
   const ownsNative = useRef(false)
   const previousScroll = useRef(0)
+  const previousReaderScroll = useRef(0)
+  const enteredPosition = useRef(positionKey)
+  const currentPosition = useRef(positionKey)
+  currentPosition.current = positionKey
   const previousFocus = useRef<HTMLElement | null>(null)
 
   const exit = useCallback(() => {
@@ -21,6 +25,8 @@ export function useReaderFullscreen() {
   const toggle = useCallback(() => {
     if (active.current) { exit(); return }
     previousScroll.current = window.scrollY
+    previousReaderScroll.current = reader.current?.querySelector<HTMLElement>('.reader-grid')?.scrollTop ?? 0
+    enteredPosition.current = currentPosition.current
     previousFocus.current = document.activeElement as HTMLElement | null
     active.current = true
     setImmersive(true)
@@ -92,6 +98,8 @@ export function useReaderFullscreen() {
       if (theme && themeColor !== undefined) theme.content = themeColor
       background.forEach(({ element, inert }) => { element.inert = inert })
       window.scrollTo(0, previousScroll.current)
+      const grid = shell?.querySelector<HTMLElement>('.reader-grid')
+      if (grid) grid.scrollTop = enteredPosition.current === currentPosition.current ? previousReaderScroll.current : 0
       previousFocus.current?.focus({ preventScroll: true })
       active.current = false
       if (ownsNative.current && document.fullscreenElement) void document.exitFullscreen().catch(() => {})

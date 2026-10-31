@@ -158,7 +158,8 @@ export function FoggedWindow() {
     g.running = touch || g.lastPoint === null
     g.advance(t, reduced)
     const { clear, fog } = art.current
-    ctx.clearRect(0, 0, w, h)
+    // Clear the entire backing pixel at fractional CSS bounds, so static redraws stay identical.
+    ctx.clearRect(0, 0, Math.ceil(w), Math.ceil(h))
     if (clear) cover(ctx, clear, w, h)
     if (fog) {
       const f = g.fog.getContext('2d')!

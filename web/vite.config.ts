@@ -29,7 +29,7 @@ const preserveIsolation: Plugin = {
 export default defineConfig({
   plugins: [preserveIsolation, react()],
   // Cross-origin isolation lets the voice run on several threads when WebGPU isn't available.
-  server: { port: 5173, open: !process.env.CI && !process.env.NO_OPEN, headers: isolation },
+  server: { allowedHosts: ['terminal.local'], port: 5173, open: !process.env.CI && !process.env.NO_OPEN, headers: isolation },
   preview: { headers: securityHeaders },
   worker: { format: 'es' },
   build: { chunkSizeWarningLimit: 2500 },

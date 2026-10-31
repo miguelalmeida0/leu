@@ -137,6 +137,10 @@ export function Dock({ page, pages, canPlay, onPlay, onTurn, compact = false }: 
                 <strong>{v.name}</strong><span className="muted small">{v.note}</span>
               </button>
             ))}
+            <div className="dock-sentence-actions">
+              <button role="menuitem" onClick={() => { step(-1); setMenu(false) }} disabled={!active || waiting}>Previous sentence</button>
+              <button role="menuitem" onClick={() => { step(1); setMenu(false) }} disabled={!active || waiting}>Next sentence</button>
+            </div>
             <p className="muted small" style={{ padding: '8px 12px 4px', maxWidth: 270 }}>
               {mobileSpeech ? 'Read aloud uses the voice already installed on your device. No large download.' : 'Downloaded once, then available offline. The system voice is used if needed.'}
             </p>

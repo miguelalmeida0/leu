@@ -1,3 +1,4 @@
+import { ArrowsInIcon, ArrowsOutIcon, TextAaIcon } from '@phosphor-icons/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Prose, piecesOf } from '../components/Prose'
 import { Empty, Modal } from '../components/ui'
@@ -27,12 +28,13 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const [outline, setOutline] = useState<Outline[]>([])
   const [blocks, setBlocks] = useState<Block[] | null>(null)
   const [mode, setMode] = useState<'rebuilt' | 'original'>('rebuilt')
-  const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen } = useReaderFullscreen()
+  const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen } = useReaderFullscreen(`${id}:${page}`)
   const paged = useRef<PagedReaderHandle>(null)
   const [controls, setControls] = useState(false)
   const [position, setPosition] = useState<ReadingPosition | null>(null)
   const toggleControls = useCallback(() => setControls((shown) => !shown), [])
   const [zoom, setZoom] = useState(1)
+  const [settings, setSettings] = useState(false)
   const [selection, setSelection] = useState<{ text: string; page: number; x: number; y: number } | null>(null)
   const [draft, setDraft] = useState<{ quote: string; note: string; page: number } | null>(null)
   const [explain, setExplain] = useState<string | null>(null)
@@ -161,7 +163,10 @@ export function Reader({ id, page }: { id: string; page: number }) {
     stop(); setSelection(null); setDraft(null); setExplain(null); window.getSelection()?.removeAllRanges()
     continuing.current = keepReading
     go({ name: 'read', id, page: Math.min(Math.max(1, to), pages) }, true)
-    if (!immersive) window.scrollTo({ top: 0 })
+    if (!immersive) {
+      reader.current?.querySelector<HTMLElement>('.reader-grid')?.scrollTo({ top: 0 })
+      window.scrollTo({ top: 0 })
+    }
   }, [id, pages, immersive])
 
   useEffect(() => {
@@ -292,6 +297,20 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const pageText = (blocks ?? []).map((b) => b.text).join('\n\n')
   const current = [...outline].reverse().find((o) => o.page <= clamped && o.depth === 0) ?? [...outline].reverse().find((o) => o.page <= clamped)
   const speaking = voice.speakingId === 'page'
+  const zoomControls = <div className="reader-zoom-controls" role="group" aria-label="Reading zoom">
+              <button type="button" aria-label="Zoom out" disabled={zoom <= 0.8}
+                onClick={() => changeZoom(zoom - 0.25)}>−</button>
+              <button type="button" className="reader-zoom-level" aria-label="Reset zoom"
+                onClick={() => changeZoom(1)}>{Math.round(zoom * 100)}%</button>
+              <button type="button" aria-label="Zoom in" disabled={zoom >= 2.75}
+                onClick={() => changeZoom(zoom + 0.25)}>+</button>
+            </div>
+  const focusButton = <button type="button" className="reader-focus-toggle"
+    aria-label={immersive ? 'Exit full-screen reading' : 'Enter full-screen reading'}
+    aria-pressed={immersive} onClick={toggleFocus}>
+    <span>{immersive ? 'Done' : 'Full screen'}</span>
+    {immersive ? <ArrowsInIcon size={19} aria-hidden="true" /> : <ArrowsOutIcon size={19} aria-hidden="true" />}
+  </button>
 
   return (
     <div ref={reader} role={immersive ? 'dialog' : undefined} aria-modal={immersive || undefined}
@@ -309,26 +328,8 @@ export function Reader({ id, page }: { id: string; page: number }) {
           <button type="button" aria-pressed={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
         </div>
         <div className="reader-view-controls">
-          {immersive && (
-            <div className="reader-zoom-controls" role="group" aria-label="Reading zoom">
-              <button type="button" aria-label="Zoom out" disabled={zoom <= 0.8}
-                onClick={() => changeZoom(zoom - 0.25)}>−</button>
-              <button type="button" className="reader-zoom-level" aria-label="Reset zoom"
-                onClick={() => changeZoom(1)}>{Math.round(zoom * 100)}%</button>
-              <button type="button" aria-label="Zoom in" disabled={zoom >= 2.75}
-                onClick={() => changeZoom(zoom + 0.25)}>+</button>
-            </div>
-          )}
-          <button type="button" className="reader-focus-toggle"
-            aria-label={immersive ? 'Exit full-screen reading' : 'Enter full-screen reading'}
-            aria-pressed={immersive} onClick={toggleFocus}>
-            <span>{immersive ? 'Done' : 'Full screen'}</span>
-            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
-              {immersive
-                ? <path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                : <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />}
-            </svg>
-          </button>
+          {immersive && zoomControls}
+          {!immersive && <button type="button" className="reader-type-toggle" aria-label="Reading settings" onClick={() => setSettings(true)}><TextAaIcon size={23} aria-hidden="true" /></button>}
         </div>
       </div>
 
@@ -378,7 +379,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           ) : blocks.length === 0 ? (
             <p className="muted">This page has no text Leu can read (it may be a picture). Try “Original page”.</p>
           ) : (
-            <Prose blocks={blocks} reading={speaking && (voice.status === 'speaking' || voice.status === 'paused')} marked={marked} onSeek={seek} />
+            <Prose blocks={blocks} omitHeading={book.title} reading={speaking && (voice.status === 'speaking' || voice.status === 'paused')} marked={marked} onSeek={seek} />
           )}
         </article>}
 
@@ -429,8 +430,14 @@ export function Reader({ id, page }: { id: string; page: number }) {
             <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
         </nav>}
+        <div className="reader-focus-tools">{focusButton}</div>
         <Dock page={clamped} pages={pages} canPlay={!!pageText} onPlay={() => readPage(0)} onTurn={(n) => turn(n)} compact={immersive} />
       </div>
+      {settings && <Modal label="Reading settings" onClose={() => setSettings(false)} width={360}>
+        <h2 className="display" style={{ fontSize: 24, marginBottom: 20 }}>Reading settings</h2>
+        <p className="muted">Text size</p>
+        {zoomControls}
+      </Modal>}
       {immersive && explain && (
         <Modal label="Passage explanation" onClose={() => setExplain(null)} width={540}>
           <ExplainPanel key={explain} bookId={id} page={clamped} passage={explain} pageText={pageText} onClose={() => setExplain(null)} />

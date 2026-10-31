@@ -79,7 +79,8 @@ async function run(engine, label, width, reduced) {
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
     await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible', timeout: 25000 })
     phase = 'home'
-    await page.getByRole('link', { name: 'leu', exact: true }).click()
+    await page.getByRole('button', { name: 'Open navigation' }).click()
+    await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: 'Home', exact: true }).click()
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     const noAnimationButtons = async () => assert.equal(
       await page.getByRole('button', { name: /^(Play animation|Pause animation|Resume automatic playback)$/ }).count(),
@@ -91,6 +92,8 @@ async function run(engine, label, width, reduced) {
       else assert.ok(changed > 0.005, 'Home must visibly animate automatically without touch')
     }
     await noAnimationButtons()
+    const resume = await page.getByRole('button', { name: 'Continue reading', exact: true }).boundingBox()
+    assert.ok(resume && resume.y + resume.height <= (width <= 430 ? 844 : 900), 'Continue reading must be visible in the first viewport')
     await assertMotion()
     await page.screenshot({ path: join(evidence, 'home-' + label + '-before.png') })
     // Obsolete manual choices must neither freeze the scene nor override the OS.
@@ -113,10 +116,11 @@ async function run(engine, label, width, reduced) {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false)
     assert.equal(await page.locator('.nook-glass canvas').evaluate((el) => getComputedStyle(el).touchAction), 'auto')
     phase = 'reopen-reader'
-    await page.getByRole('button', { name: 'Keep reading', exact: true }).click()
+    await page.getByRole('button', { name: 'Continue reading', exact: true }).click()
     await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible' })
     phase = 'return-home'
-    await page.getByRole('link', { name: 'leu', exact: true }).click()
+    await page.getByRole('button', { name: 'Open navigation' }).click()
+    await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: 'Home', exact: true }).click()
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     await noAnimationButtons()
     await assertMotion()
