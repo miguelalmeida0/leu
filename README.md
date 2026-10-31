@@ -66,43 +66,19 @@ Weak or fading concepts become navigable learning objects. A user can move from 
 
 Instead of only showing an answer, Leu creates space for the reader to rebuild the idea from memory and compare that understanding against the source.
 
-## Native architecture
+## Architecture at a glance
+
+The chart below summarizes the main source and runtime boundaries documented in this repository; it is a static architecture overview, not an executable dependency trace.
 
 ```mermaid
-flowchart TB
-  subgraph Reader["Native reader"]
-    PDF["PDFKit document"]:::actor
-    READ["SwiftUI reader"]:::actor
-    SELECT["Selected source passage"]:::data
-  end
-
-  subgraph Reasoning["Portable reasoning layer"]
-    CORE[["LeuReasoningCore"]]:::system
-    EXPLAIN["Explanation contract"]:::system
-    RECALL["Recall / question contracts"]:::system
-  end
-
-  subgraph Learning["Local learning state"]
-    STATE[("Learning state")]:::data
-    TRAIL["Trails + revisit"]:::safe
-    PROV["Source provenance"]:::guard
-  end
-
-  PDF --> READ --> SELECT --> CORE
-  CORE --> EXPLAIN --> PROV --> READ
-  CORE --> RECALL --> STATE --> TRAIL --> READ
-
-  style Reader fill:#F8FAFC,stroke:#CBD5E1,stroke-width:1px
-  style Reasoning fill:#ECFEFF,stroke:#A5F3FC,stroke-width:1px
-  style Learning fill:#ECFDF5,stroke:#A7F3D0,stroke-width:1px
-  classDef actor fill:#E8F1FF,stroke:#2563EB,color:#0F172A,stroke-width:1.6px;
-classDef system fill:#ECFEFF,stroke:#0891B2,color:#0F172A,stroke-width:1.6px;
-classDef decision fill:#FFFBEB,stroke:#D97706,color:#0F172A,stroke-width:1.6px;
-classDef guard fill:#FFF7ED,stroke:#EA580C,color:#0F172A,stroke-width:1.6px;
-classDef safe fill:#ECFDF5,stroke:#059669,color:#0F172A,stroke-width:1.6px;
-classDef private fill:#FFF1F2,stroke:#E11D48,color:#0F172A,stroke-width:1.6px;
-classDef data fill:#F8FAFC,stroke:#64748B,color:#0F172A,stroke-width:1.6px;
-linkStyle default stroke:#94A3B8,stroke-width:1.5px;
+flowchart LR
+  UI["SwiftUI screens"] --> Models["Feature models"]
+  Models --> Services["Use-case services"]
+  Services --> Repo["LibraryRepository actor"]
+  Repo --> Store["SnapshotPersistence + DocumentVault"]
+  Models --> PDF["PDFSessionController / PDFKit"]
+  Services --> Core["ShelfCore reasoning contracts"]
+  UI -. "Browser companion: separate runtime" .-> Web["web/ React + Vite"]
 ```
 
 Leu is built in **Swift / SwiftUI** with **PDFKit** and a local-first product model. On-device intelligence is preferred where platform support allows it; cloud inference is not a mandatory dependency for the core reading experience.
