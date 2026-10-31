@@ -3,7 +3,6 @@ import { lastBook } from '../lib/library'
 import { go } from '../lib/router'
 import { readFraction, useStore } from '../lib/store'
 import { NookScene } from '../scenes/NookScene'
-import { SceneMotionControl } from '../components/SceneMotionControl'
 
 function greeting(d = new Date()) {
   const h = d.getHours()
@@ -44,7 +43,7 @@ export function Home({ onBring }: { onBring: () => void }) {
           )}
         </div>
       </section>
-      <div className="home-scene"><SceneMotionControl><NookScene /></SceneMotionControl></div>
+      <div className="home-scene"><NookScene /></div>
     </div>
     </div>
   )

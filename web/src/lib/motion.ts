@@ -1,5 +1,4 @@
-import { useContext, useEffect, useRef, useState, type RefObject } from 'react'
-import { SceneMotionOverride } from './sceneMotion'
+import { useEffect, useRef, useState, type RefObject } from 'react'
 
 /** Device accessibility preference, never masked by an illustration-level override. */
 export function useReducedMotionPreference(): boolean {
@@ -13,12 +12,8 @@ export function useReducedMotionPreference(): boolean {
   return reduced
 }
 
-/** An explicit scene choice may override reduced motion for that illustration only. */
-export function useReducedMotion(): boolean {
-  const sceneOverride = useContext(SceneMotionOverride)
-  const reduced = useReducedMotionPreference()
-  return sceneOverride ?? reduced
-}
+/** Illustration motion follows the device preference, including live changes. */
+export const useReducedMotion = useReducedMotionPreference
 
 /** Touch screens: no hover, and a finger on a canvas usually scrolls the page. The scenes
     play on their own there instead of waiting for a pointer. */

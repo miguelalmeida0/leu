@@ -65,7 +65,11 @@ export const Prose = memo(function Prose({ blocks, reading, marked, onSeek }: { 
       })
       if (scroll) {
         const r = s.getBoundingClientRect()
-        if (r.top < innerHeight * 0.22 || r.bottom > innerHeight * 0.7) window.scrollBy({ top: r.top - innerHeight * 0.36, behavior: reduced ? 'auto' : 'smooth' })
+        const scroller = el.closest<HTMLElement>('.reader-immersive .reader-grid')
+        const viewport = scroller?.getBoundingClientRect() ?? { top: 0, height: innerHeight }
+        if (r.top < viewport.top + viewport.height * .22 || r.bottom > viewport.top + viewport.height * .7) {
+          (scroller ?? window).scrollBy({ top: r.top - viewport.top - viewport.height * .36, behavior: reduced ? 'instant' : 'smooth' })
+        }
       }
     }
 

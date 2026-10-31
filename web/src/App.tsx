@@ -46,7 +46,7 @@ export default function App() {
   useEffect(() => { window.scrollTo(0, 0) }, [route.name])
   useEffect(() => {
     if (previousRoute.current !== null && previousRoute.current !== routeKey) {
-      mainRef.current?.focus({ preventScroll: true })
+      if (!document.querySelector('.reader-immersive')) mainRef.current?.focus({ preventScroll: true })
     }
     previousRoute.current = routeKey
   }, [routeKey])
@@ -79,7 +79,7 @@ export default function App() {
       <main id="main" ref={mainRef} tabIndex={-1} aria-label={route.name === 'read' ? 'PDF reader' : undefined}
         onFocusCapture={(event) => {
           const target = event.target as HTMLElement
-          if (target === event.currentTarget || !target.matches(':focus-visible')) return
+          if (target === event.currentTarget || !target.matches(':focus-visible') || target.closest('.reader-immersive')) return
           const bounds = target.getBoundingClientRect()
           const headerBottom = document.querySelector('.topbar')?.getBoundingClientRect().bottom ?? 0
           if (bounds.top < headerBottom + 12 || bounds.bottom > window.innerHeight - 12) {

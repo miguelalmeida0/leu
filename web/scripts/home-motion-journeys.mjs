@@ -81,27 +81,27 @@ async function run(engine, label, width, reduced) {
     phase = 'home'
     await page.getByRole('link', { name: 'leu', exact: true }).click()
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
-    const initialChange = await moves()
-    record('initial', { preference: reduced, changedPercent: initialChange * 100, hasPlay: await page.getByRole('button', { name: 'Play animation', exact: true }).count(), hasPause: await page.getByRole('button', { name: 'Pause animation', exact: true }).count() })
+    const noAnimationButtons = async () => assert.equal(
+      await page.getByRole('button', { name: /^(Play animation|Pause animation|Resume automatic playback)$/ }).count(),
+      0, 'Home must not expose animation playback controls',
+    )
+    const assertMotion = async () => {
+      const changed = await moves()
+      if (reduced === 'reduce') assert.equal(changed, 0, 'The actual Home scene must respect reduced motion')
+      else assert.ok(changed > 0.005, 'Home must visibly animate automatically without touch')
+    }
+    await noAnimationButtons()
+    await assertMotion()
     await page.screenshot({ path: join(evidence, 'home-' + label + '-before.png') })
-    if (reduced === 'reduce') {
-      assert.equal(initialChange, 0, 'Reduced-motion preference must initially be respected')
-      assert.equal(await page.getByRole('button', { name: 'Play animation', exact: true }).count(), 1, 'A paused Home illustration must have an explicit Play control')
-      await page.getByRole('button', { name: 'Play animation', exact: true }).click()
-    } else assert.ok(initialChange > 0.005, 'Home must visibly animate automatically without touch')
-    phase = 'play'
-    assert.ok(await moves() > 0.005, 'Playing must produce visible rain')
-    await page.getByRole('button', { name: 'Pause animation', exact: true }).click()
-    phase = 'pause'
-    assert.equal(await moves(), 0, 'Pause must stop the actual scene')
-    await page.getByRole('button', { name: 'Play animation', exact: true }).click()
-    phase = 'restart'
-    assert.ok(await moves() > 0.005, 'Play must restart the actual scene')
-    phase = 'reload'
-    await page.reload({ waitUntil: 'domcontentloaded' })
-    await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
-    assert.equal(await page.getByRole('button', { name: 'Pause animation', exact: true }).count(), 1, 'An explicit playback choice must survive reloading')
-    assert.ok(await moves() > 0.005, 'The scene must resume after reload')
+    // Obsolete manual choices must neither freeze the scene nor override the OS.
+    for (const oldChoice of ['pause', 'play']) {
+      await page.evaluate((choice) => localStorage.setItem('leu.scene-motion.v1', choice), oldChoice)
+      phase = 'reload-' + oldChoice
+      await page.reload({ waitUntil: 'domcontentloaded' })
+      await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
+      await noAnimationButtons()
+      await assertMotion()
+    }
     phase = 'other-tab'
     const other = await context.newPage()
     await other.goto('about:blank')
@@ -109,22 +109,25 @@ async function run(engine, label, width, reduced) {
     await other.close()
     await page.bringToFront()
     await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })))
-    assert.ok(await moves() > 0.005, 'The scene must resume after returning to the page')
+    await assertMotion()
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false)
     assert.equal(await page.locator('.nook-glass canvas').evaluate((el) => getComputedStyle(el).touchAction), 'auto')
     phase = 'reopen-reader'
-    await page.getByRole('button', { name: 'Pause animation', exact: true }).click()
     await page.getByRole('button', { name: 'Keep reading', exact: true }).click()
     await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible' })
     phase = 'return-home'
     await page.getByRole('link', { name: 'leu', exact: true }).click()
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
-    assert.equal(await page.getByRole('button', { name: 'Play animation', exact: true }).count(), 1, 'Pause choice must survive app navigation')
-    assert.equal(await moves(), 0)
-    await page.getByRole('button', { name: 'Play animation', exact: true }).click()
+    await noAnimationButtons()
+    await assertMotion()
+    // Preference changes must apply immediately, without a page reload.
+    await page.emulateMedia({ reducedMotion: reduced === 'reduce' ? 'no-preference' : 'reduce' })
+    const liveChange = await moves()
+    if (reduced === 'reduce') assert.ok(liveChange > 0.005, 'Disabling reduced motion resumes the scene')
+    else assert.equal(liveChange, 0, 'Enabling reduced motion stops the scene')
     await page.screenshot({ path: join(evidence, 'home-' + label + '-after.png') })
     assert.deepEqual(errors, [], 'Home must not raise browser exceptions')
-    console.log('PASS ' + label + ': actual visible Home rain, reduced-motion override, Pause/Play, reload, return to page, reading and scrolling')
+    console.log('PASS ' + label + ': actual visible Home rain, no playback controls, live reduced motion, legacy storage, reload and reading')
   } catch (error) {
     record('failure', String(error))
     await page.screenshot({ path: join(evidence, 'home-' + label + '-failed.png'), fullPage: true }).catch(() => {})
