@@ -47,7 +47,23 @@ async function readTextItems(page: Awaited<ReturnType<PDFDocumentProxy['getPage'
 
 /** A page rebuilt for reading: lines joined into paragraphs, larger type as headings, and the
     running header, footer and page number left out. */
-export async function pageBlocks(doc: PDFDocumentProxy, n: number): Promise<Block[]> {
+const blockCache = new WeakMap<PDFDocumentProxy, Map<number, Promise<Block[]>>>()
+export function pageBlocks(doc: PDFDocumentProxy, n: number): Promise<Block[]> {
+  let pages = blockCache.get(doc)
+  if (!pages) { pages = new Map(); blockCache.set(doc, pages) }
+  let pending = pages.get(n)
+  if (pending) { pages.delete(n); pages.set(n, pending); return pending }
+  pending = pdfDeadline(extractPageBlocks(doc, n), 12000).catch((error) => {
+    if (pages.get(n) === pending) pages.delete(n)
+    throw error
+  })
+  pages.set(n, pending)
+  // Shared by speech and the scroll reader, bounded for very long documents.
+  if (pages.size > 12) pages.delete(pages.keys().next().value!)
+  return pending
+}
+
+async function extractPageBlocks(doc: PDFDocumentProxy, n: number): Promise<Block[]> {
   const page = await doc.getPage(n)
   const height = page.getViewport({ scale: 1 }).height
   const items = await readTextItems(page)
