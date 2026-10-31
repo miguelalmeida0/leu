@@ -1,3 +1,4 @@
+@import './tokens.css';
 /* Leu · Felt, for the desktop web. Same tokens as Shelf/DesignSystem/LeuDesign.swift. */
 @font-face { font-family: Gabarito; src: url(/fonts/Gabarito-Regular.ttf); font-weight: 400; font-display: swap; }
 @font-face { font-family: Gabarito; src: url(/fonts/Gabarito-Medium.ttf); font-weight: 500; font-display: swap; }
