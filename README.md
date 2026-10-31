@@ -66,20 +66,9 @@ Weak or fading concepts become navigable learning objects. A user can move from 
 
 Instead of only showing an answer, Leu creates space for the reader to rebuild the idea from memory and compare that understanding against the source.
 
-## Architecture at a glance
+## Architecture
 
-The chart below summarizes the main source and runtime boundaries documented in this repository; it is a static architecture overview, not an executable dependency trace.
-
-```mermaid
-flowchart LR
-  UI["SwiftUI screens"] --> Models["Feature models"]
-  Models --> Services["Use-case services"]
-  Services --> Repo["LibraryRepository actor"]
-  Repo --> Store["SnapshotPersistence + DocumentVault"]
-  Models --> PDF["PDFSessionController / PDFKit"]
-  Services --> Core["ShelfCore reasoning contracts"]
-  UI -. "Browser companion: separate runtime" .-> Web["web/ React + Vite"]
-```
+<p align="center"><img src="./docs/readme/architecture-overview.svg" alt="leu architecture overview" width="600"></p>
 
 Leu is built in **Swift / SwiftUI** with **PDFKit** and a local-first product model. On-device intelligence is preferred where platform support allows it; cloud inference is not a mandatory dependency for the core reading experience.
 
