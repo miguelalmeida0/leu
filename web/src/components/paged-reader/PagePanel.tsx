@@ -17,6 +17,7 @@ export const PagePanel = memo(function PagePanel(props: Props) {
   const queue = useRef<Promise<void>>(Promise.resolve())
   const [layout, setLayout] = useState({ width: 0, height: 0, parts: 1, stride: 0 })
   const [renderError, setRenderError] = useState('')
+  useLayoutEffect(() => { if (area.current) area.current.scrollTop = 0 }, [number, mode, zoom])
   useLayoutEffect(() => { if (active) props.paper.current = article.current }, [active, props.paper])
 
   useLayoutEffect(() => {
@@ -61,9 +62,9 @@ export const PagePanel = memo(function PagePanel(props: Props) {
     if (mode !== 'original' || !target || !data || !layout.width || !layout.height) return
     let live = true
     setRenderError('')
-    const width = Math.max(1, Math.min(layout.width, layout.height * data.aspect) * zoom)
+    const width = Math.max(1, layout.width * zoom)
     const work = queue.current.catch(() => {}).then(async () => {
-      if (live) await renderPage(doc, number, target, Math.min(1800, width))
+      if (live) await renderPage(doc, number, target, Math.min(1800, width), width)
     })
     queue.current = work
     void work.catch(() => { if (live) setRenderError('This page could not be displayed. Try For reading.') })
@@ -75,12 +76,14 @@ export const PagePanel = memo(function PagePanel(props: Props) {
 
   const leaf = Math.max(0, Math.min(layout.parts - 1, part === 'last' ? layout.parts - 1 : part))
   return <article ref={article} className={`reader-paper paged-panel paged-${props.side}`}
-    data-page={number} data-active={active ? 'true' : undefined} aria-label={`Page ${number} of ${doc.numPages}`}
+    data-mode={mode} data-page={number} data-active={active ? 'true' : undefined} aria-label={`Page ${number} of ${doc.numPages}`}
     aria-hidden={!active || undefined} inert={!active}>
-    <div ref={area} className={mode === 'rebuilt' ? 'paged-text' : 'paged-original'}>
+    <div ref={area} className={mode === 'rebuilt' ? 'paged-text' : 'paged-original'} data-zoomed={zoom > 1.05 || undefined}
+      role={mode === 'original' ? 'region' : undefined} aria-label={mode === 'original' ? 'Original PDF page' : undefined}
+      tabIndex={mode === 'original' && zoom <= 1.05 ? 0 : undefined}>
       {!data ? <p className="paged-loading" role={active ? 'status' : undefined}>Opening page…</p> : data.error ?
         <p className="paged-loading" role="alert">{data.error}</p> : mode === 'original' ? <>
-          <canvas ref={canvas} className="original-page" role="img" style={{ transform: `translate(calc(-50% + ${props.pan.x}px), calc(-50% + ${props.pan.y}px))` }}
+          <canvas ref={canvas} className="original-page" role="img" style={{ transform: `translate(calc(-50% + ${props.pan.x}px), ${zoom > 1.05 ? `calc(-50% + ${props.pan.y}px)` : '0px'})` }}
             aria-label={`Visual rendering of page ${number} of ${doc.numPages}. Choose For reading to access the extracted text.`} />
           {renderError && <p className="paged-loading" role="alert">{renderError}</p>}
         </> : data.textError ? <p className="paged-loading" role="alert">{data.textError}</p> : data.blocks.length ? <div className="paged-columns" style={{ transform: `translate3d(${-leaf * layout.stride}px, 0, 0)` }}>

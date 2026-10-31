@@ -23,13 +23,13 @@ const location = (page) => page.locator('.paged-reader').getAttribute('data-loca
 
 // A real, deterministic PDF: dense source pages and a sentence longer than a
 // screen. Exercise the parser and browser layout rather than injecting prose.
-function densePdf() {
+function densePdf(tall = false) {
   const objects = ['<< /Type /Catalog /Pages 2 0 R >>', '<< /Type /Pages /Kids [4 0 R 6 0 R 8 0 R] /Count 3 >>', '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>']
   for (let source = 1; source <= 3; source++) {
     const lines = Array.from({ length: 44 }, (_, i) => `Source ${source} line ${String(i + 1).padStart(2, '0')}: careful reading keeps every word in order across the screen${i < 15 ? ',' : '.'}`)
     const stream = `BT /F1 10 Tf 42 740 Td 14 TL ${lines.map((line, i) => `${i ? 'T* ' : ''}(${line}) Tj`).join('\n')} ET`
     const content = objects.length + 2
-    objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents ${content} 0 R >>`)
+    objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 ${tall ? 1800 : 792}] /Resources << /Font << /F1 3 0 R >> >> /Contents ${content} 0 R >>`)
     objects.push(`<< /Length ${Buffer.byteLength(stream)} >>\nstream\n${stream}\nendstream`)
   }
   let pdf = '%PDF-1.4\n', offsets = [0]
@@ -85,7 +85,7 @@ async function still(page, before) {
   assert.ok(Math.abs(after.y - after.expectedY) < 2, 'The reader must stay anchored to the visual viewport')
   assert.ok(Math.abs(after.height - after.expectedHeight) < 2, 'The reader must fill the visual viewport')
   assert.equal(after.windowY, before.windowY, 'A page gesture must not move the background')
-  assert.equal(after.gridY, 0, 'There is no vertical reading scroll surface')
+  assert.equal(after.gridY, 0, 'The outer reader grid remains fixed')
   assert.ok(after.overflow <= 2, 'The document must not extend outside the screen')
 }
 async function fittedText(page) {
@@ -123,6 +123,29 @@ async function drag(page, engine, dx, dy = 0, follow = false) {
   await page.waitForFunction(() => document.querySelector('.paged-reader')?.getAttribute('data-settled') === 'true')
 }
 
+async function standaloneMetadata(page) {
+  assert.match(await page.locator('meta[name="viewport"]').getAttribute('content'), /viewport-fit=cover/)
+  assert.equal(await page.locator('meta[name="apple-mobile-web-app-capable"]').getAttribute('content'), 'yes')
+  const href = await page.locator('link[rel="manifest"]').getAttribute('href')
+  assert.ok(href, 'The app advertises an install manifest')
+  const response = await page.request.get(new URL(href, page.url()).href)
+  assert.equal(response.status(), 200)
+  const manifest = await response.json()
+  assert.equal(manifest.name, 'Leu')
+  assert.equal(manifest.display, 'standalone', 'Home Screen launches request a standalone app surface')
+  const start = new URL(manifest.start_url, response.url()), scope = new URL(manifest.scope, response.url())
+  assert.equal(start.origin, new URL(page.url()).origin)
+  assert.ok(start.href.startsWith(scope.href), 'The launch URL is inside the app scope')
+  const icon = manifest.icons.find((entry) => entry.type === 'image/svg+xml' && entry.sizes === 'any')
+  assert.ok(icon, 'A scalable self-hosted install icon is supplied')
+  const iconUrl = new URL(icon.src, response.url())
+  assert.equal(iconUrl.origin, start.origin)
+  const image = await page.request.get(iconUrl.href)
+  assert.equal(image.status(), 200)
+  assert.match(image.headers()['content-type'], /image\/svg\+xml/)
+  assert.match(await image.text(), /<svg/)
+}
+
 async function run([engine, name, width, height, reducedMotion]) {
   const browser = await engine.launch({ headless: true })
   const page = await browser.newPage({ viewport: { width, height }, isMobile: width < 600 || height < 500, hasTouch: true, reducedMotion })
@@ -131,6 +154,7 @@ async function run([engine, name, width, height, reducedMotion]) {
   try {
     await page.route('**/samples/*.pdf', (route) => route.fulfill({ contentType: 'application/pdf', body: densePdf() }))
     await page.goto(base, { waitUntil: 'domcontentloaded' })
+    await standaloneMetadata(page)
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
     await page.getByRole('button', { name: 'For reading', exact: true }).click()
@@ -229,8 +253,11 @@ async function run([engine, name, width, height, reducedMotion]) {
     await page.waitForFunction(() => parseFloat(document.querySelector('.paged-current canvas')?.style.width ?? '0') > 0)
     assert.ok(await page.locator('.paged-current canvas').evaluate((el) => {
       const r = el.getBoundingClientRect(), a = el.parentElement.getBoundingClientRect()
-      return r.left >= a.left - 2 && r.right <= a.right + 2 && r.top >= a.top - 2 && r.bottom <= a.bottom + 2
-    }), 'A complete original PDF page fits at 100%')
+      const viewport = visualViewport
+      return Math.abs(r.left - a.left) < 2 && Math.abs(r.top - a.top) < 2
+        && Math.abs(r.width - (viewport?.width ?? innerWidth)) < 2
+        && Math.abs(r.width / r.height - 612 / 792) < .002
+    }), 'The complete original PDF width fills the viewport, aligned at the top without changing its aspect ratio')
     await page.getByRole('button', { name: 'Zoom in' }).click()
     await page.getByRole('button', { name: 'Zoom in' }).click()
     await page.getByRole('button', { name: 'Zoom in' }).click()
@@ -269,6 +296,81 @@ async function run([engine, name, width, height, reducedMotion]) {
     throw error
   } finally { await browser.close() }
 }
+
+async function tallOriginal([engine, name, width, height, reducedMotion]) {
+  const browser = await engine.launch({ headless: true })
+  const page = await browser.newPage({ viewport: { width, height }, isMobile: width < 600 || height < 500, hasTouch: true, reducedMotion })
+  const errors = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  const area = () => page.locator('.paged-current .paged-original')
+  const scroll = () => area().evaluate((el) => el.scrollTop)
+  try {
+    await page.route('**/samples/*.pdf', (route) => route.fulfill({ contentType: 'application/pdf', body: densePdf(true) }))
+    await page.goto(base, { waitUntil: 'domcontentloaded' })
+    await page.getByRole('button', { name: /start with a sample book/i }).click()
+    await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
+    await visible(page.locator('.reader-paper canvas'))
+    await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
+    await page.waitForFunction(() => parseFloat(document.querySelector('.paged-current canvas')?.style.width ?? '0') > 0)
+    assert.ok(await area().evaluate((el) => {
+      const canvas = el.querySelector('canvas').getBoundingClientRect(), box = el.getBoundingClientRect()
+      return Math.abs(canvas.width - box.width) < 2 && Math.abs(canvas.y - box.y) < 2
+        && Math.abs(canvas.width / canvas.height - 612 / 1800) < .002
+        && canvas.height > box.height + 50 && el.scrollHeight >= canvas.height - 2
+    }), 'A tall original keeps its full source aspect ratio and exposes its whole height')
+    await area().focus()
+    assert.equal(await area().evaluate((el) => document.activeElement === el), true, 'The original scroll surface is keyboard focusable')
+    await page.keyboard.press('ArrowDown')
+    await page.waitForFunction(() => document.querySelector('.paged-current .paged-original').scrollTop > 0)
+    await area().evaluate((el) => { el.scrollTop = 0 })
+    await drag(page, engine, 4, -110)
+    assert.ok(await scroll() > 80, 'An upward drag scrolls the tall original')
+    const saved = await location(page)
+    await drag(page, engine, 4, 190)
+    assert.equal(await location(page), saved, 'A drag begun within the PDF scroll never exits or turns, even when it reaches the top')
+    assert.equal(await scroll(), 0)
+    assert.equal(await page.locator('.paged-reader').getAttribute('data-pull-state'), null)
+    await drag(page, engine, 4, -110)
+    await drag(page, engine, -Math.min(240, width * .65), 25, true)
+    assert.equal(await location(page), '2:0', 'Horizontal swipes turn source pages while an original is vertically scrolled')
+    assert.equal(await scroll(), 0, 'A new source page starts at the top')
+    await drag(page, engine, Math.min(240, width * .65), 25, true)
+    assert.equal(await location(page), saved)
+    assert.equal(await scroll(), 0, 'Returning to a source page also resets its scroll')
+    await page.mouse.move(width * .5, height * .5)
+    // Playwright cannot send native wheel input in mobile WebKit. Dispatch the
+    // wheel boundary event there; desktop and Chromium use native browser input.
+    const wheel = (dy) => engine === webkit && (width < 600 || height < 500)
+      ? page.locator('.paged-reader').dispatchEvent('wheel', { deltaY: dy, deltaX: 0, bubbles: true, cancelable: true })
+      : page.mouse.wheel(0, dy)
+    await wheel(140)
+    await page.waitForFunction(() => document.querySelector('.paged-current .paged-original').scrollTop > 100)
+    await wheel(-300)
+    await wheel(-180)
+    await page.waitForTimeout(220)
+    assert.equal(await location(page), saved, 'Wheel momentum that reaches the top cannot turn into an exit gesture')
+    assert.equal(await scroll(), 0)
+    await area().evaluate((el) => { el.scrollTop = el.scrollHeight })
+    assert.ok(await area().evaluate((el) => {
+      const canvas = el.querySelector('canvas').getBoundingClientRect(), box = el.getBoundingClientRect()
+      return Math.abs(canvas.bottom - box.bottom) < 2
+    }), 'Scrolling to the bottom exposes the original PDF bottom edge without cropping')
+    await area().evaluate((el) => { el.scrollTop = 0 })
+    const box = await page.locator('.paged-reader').boundingBox()
+    await page.mouse.move(box.x + width * .5, box.y + height * .25)
+    await page.mouse.down()
+    await page.mouse.move(box.x + width * .5 + 4, box.y + height * .25 + 190, { steps: 8 })
+    assert.equal(await page.locator('.paged-reader').getAttribute('data-pull-state'), 'ready', 'Pulling down at the PDF top still offers exit')
+    await page.mouse.up()
+    await page.locator('.reader-immersive').waitFor({ state: 'hidden' })
+    assert.deepEqual(errors, [])
+    console.log('PASS ' + name + ': tall original drag/wheel scroll, bottom edge, locked scroll ownership, source turns/reset, top pull exit')
+  } catch (error) {
+    await page.screenshot({ path: join(evidence, name + '-tall-failed.png') }).catch(() => {})
+    throw error
+  } finally { await browser.close() }
+}
+
 async function extractionFallback(engine, name) {
   const browser = await engine.launch({ headless: true })
   const page = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true })
@@ -302,7 +404,7 @@ try {
     await new Promise((resolve) => setTimeout(resolve, 150))
   }
   for (const config of configs) {
-    if (!process.env.LEU_PAGED_CASE || config[1] === process.env.LEU_PAGED_CASE) await run(config)
+    if (!process.env.LEU_PAGED_CASE || config[1] === process.env.LEU_PAGED_CASE) { await run(config); await tallOriginal(config) }
   }
   if (!process.env.LEU_PAGED_CASE) {
     await extractionFallback(chromium, 'chromium-fallback')

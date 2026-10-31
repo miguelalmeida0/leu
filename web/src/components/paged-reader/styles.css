@@ -26,7 +26,12 @@
 .reader-immersive .paged-columns .prose h2 { font-size: calc(28px * var(--reader-zoom, 1)); break-after: avoid; break-inside: avoid; }
 .paged-columns .prose p { widows: 2; orphans: 2; }
 .paged-columns .prose > :last-child { margin-bottom: 0; }
-.paged-original canvas.original-page { position: absolute; top: 50%; left: 50%; max-width: none; margin: 0; box-shadow: none; border-radius: 0; }
+.reader .reader-paper.paged-panel[data-mode='original'] { padding: 0; }
+.paged-original canvas.original-page { position: relative; display: block; top: 0; left: 50%; max-width: none; margin: 0; box-shadow: none; border-radius: 0; }
+.paged-original:not([data-zoomed]) { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.paged-original:focus-visible { outline: 2px solid var(--paper-ink); outline-offset: -3px; }
+.paged-original::-webkit-scrollbar { display: none; }
+.paged-original[data-zoomed] canvas.original-page { position: absolute; top: 50%; }
 .paged-loading { margin: 0; font-size: var(--text-label); padding: 16px; color: var(--paper-secondary); }
 .paged-position { position: absolute; bottom: max(10px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); margin: 0; font-size: 10px; line-height: 1.4; color: var(--paper-secondary); pointer-events: none; font-variant-numeric: tabular-nums; }
 .paged-access { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); }

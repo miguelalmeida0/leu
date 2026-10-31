@@ -207,8 +207,9 @@ async function runBrowser(browserType, name, mobile, width) {
     await page.waitForFunction(() => parseFloat(document.querySelector('.paged-current canvas')?.style.width ?? '0') > 0)
     assert.ok(await activePaper().locator('canvas').evaluate((el) => {
       const rect = el.getBoundingClientRect(), area = el.parentElement.getBoundingClientRect()
-      return rect.width <= area.width + 2 && rect.height <= area.height + 2
-    }), 'The original page fits the entire reading area at 100%')
+      return Math.abs(rect.left - area.left) < 2 && Math.abs(rect.top - area.top) < 2
+        && Math.abs(rect.width - (visualViewport?.width ?? innerWidth)) < 2
+    }), 'The original page fills the viewport width and starts at the top at 100%')
     const originalWidth = await activePaper().locator('canvas').evaluate((el) => parseFloat(el.style.width))
     await page.getByRole('button', { name: 'Zoom in' }).click()
     await page.waitForFunction((before) => parseFloat(document.querySelector('.paged-current canvas')?.style.width ?? '0') > before, originalWidth)

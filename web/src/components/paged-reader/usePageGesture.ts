@@ -1,6 +1,7 @@
 import { useEffect, useRef, type RefObject } from 'react'
 import type { Direction } from './types'
 import type { ReaderDismissGesture } from './useReaderDismiss'
+import { originalScrollGesture } from './originalScrollGesture'
 
 interface Options {
   root: RefObject<HTMLDivElement | null>; track: RefObject<HTMLDivElement | null>
@@ -8,6 +9,7 @@ interface Options {
   available: (direction: Direction) => boolean; tap: () => void
   sentenceTap: (index: number) => boolean
   dismiss: ReaderDismissGesture
+  originalScroll: () => HTMLElement | null
   zoom: number; onZoom: (zoom: number) => void; panning: boolean
   pan: { x: number; y: number }; onPan: (pan: { x: number; y: number }) => void
 }
@@ -20,10 +22,11 @@ export function usePageGesture(options: Options) {
     const root = options.root.current
     if (!root) return
     const points = new Map<number, { x: number; y: number }>()
-    let gesture: { x: number; y: number; at: number; lastX: number; lastAt: number; velocity: number; axis: 'x' | 'y' | null; selecting: boolean; sentence?: number; pan: { x: number; y: number } } | null = null
+    let gesture: { x: number; y: number; at: number; lastX: number; lastAt: number; velocity: number; axis: 'x' | 'y' | null; selecting: boolean; sentence?: number; pan: { x: number; y: number }; scroll: ReturnType<typeof originalScrollGesture> } | null = null
     let pinch: { distance: number; zoom: number } | null = null
     let pinched = false, wheelLatched = false, wheelTimer: ReturnType<typeof setTimeout> | undefined
     let wheelAxis: 'x' | 'y' | null = null, wheelPull = 0
+    let wheelScroll: ReturnType<typeof originalScrollGesture> = null
     let ignoredClick: { until: number; x: number; y: number } | null = null
     const freshPointer = () => { ignoredClick = null }
     const suppressClick = (event: PointerEvent) => { ignoredClick = { until: performance.now() + 500, x: event.clientX, y: event.clientY } }
@@ -56,7 +59,7 @@ export function usePageGesture(options: Options) {
       gesture = { x: event.clientX, y: event.clientY, at: performance.now(), lastX: event.clientX,
         lastAt: performance.now(), velocity: 0, axis: null,
         sentence: (event.target as HTMLElement).closest<HTMLElement>('.s')?.dataset.s === undefined ? undefined : Number((event.target as HTMLElement).closest<HTMLElement>('.s')!.dataset.s),
-        selecting: event.pointerType === 'mouse' && !!(event.target as HTMLElement).closest('.prose'), pan: current.pan }
+        selecting: event.pointerType === 'mouse' && !!(event.target as HTMLElement).closest('.prose'), pan: current.pan, scroll: originalScrollGesture(current.originalScroll()) }
       if (!gesture.selecting) {
         // Margin drags are navigation. Stop mouse selection before its first
         // sub-threshold move; prose and native touch selection stay available.
@@ -86,7 +89,10 @@ export function usePageGesture(options: Options) {
       }
       if (!gesture.axis) return
       if (event.cancelable) event.preventDefault()
-      if (gesture.axis === 'y') { current.dismiss.pull(Math.max(0, dy)); return }
+      if (gesture.axis === 'y') {
+        if (!gesture.scroll?.(dy)) current.dismiss.pull(Math.max(0, dy))
+        return
+      }
       const now = performance.now(), elapsed = now - gesture.lastAt
       if (elapsed > 0) gesture.velocity = (event.clientX - gesture.lastX) / elapsed
       gesture.lastX = event.clientX; gesture.lastAt = now
@@ -110,7 +116,8 @@ export function usePageGesture(options: Options) {
       if (current.panning && Math.hypot(dx, dy) > 7) { suppressClick(event); current.turn(0); return }
       if (start.axis === 'y') {
         suppressClick(event)
-        current.dismiss.release(current.dismiss.pull(Math.max(0, dy)))
+        if (start.scroll?.(dy)) current.turn(0)
+        else current.dismiss.release(current.dismiss.pull(Math.max(0, dy)))
       } else if (start.axis === 'x') {
         suppressClick(event)
         const fast = performance.now() - start.lastAt < 100 && Math.abs(start.velocity) > .45 && Math.abs(dx) > 24
@@ -133,7 +140,7 @@ export function usePageGesture(options: Options) {
     const cancel = () => {
       const pending = points.size > 0
       reset(); latest.current.dismiss.cancel()
-      clearTimeout(wheelTimer); wheelAxis = null; wheelPull = 0; wheelLatched = false
+      clearTimeout(wheelTimer); wheelAxis = null; wheelPull = 0; wheelLatched = false; wheelScroll = null
       if (pending) latest.current.turn(0)
     }
     const wheel = (event: WheelEvent) => {
@@ -147,19 +154,23 @@ export function usePageGesture(options: Options) {
       clearTimeout(wheelTimer)
       wheelTimer = setTimeout(() => {
         if (wheelAxis === 'y' && !wheelLatched) latest.current.dismiss.release(false)
-        wheelLatched = false; wheelAxis = null; wheelPull = 0
+        wheelLatched = false; wheelAxis = null; wheelPull = 0; wheelScroll = null
       }, 180)
       // Momentum continues during the page animation. Keep extending the burst
       // latch so it cannot become a second turn when that animation finishes.
       if (latest.current.busy()) return
       if (!wheelAxis) {
         if (Math.abs(dx) > 3 && Math.abs(dx) >= Math.abs(dy)) wheelAxis = 'x'
-        else if (Math.abs(dy) > 4 && Math.abs(dy) > Math.abs(dx) * 1.25) wheelAxis = 'y'
+        else if (Math.abs(dy) > 4 && Math.abs(dy) > Math.abs(dx) * 1.25) {
+          wheelAxis = 'y'; wheelScroll = originalScrollGesture(latest.current.originalScroll())
+        }
       }
       if (wheelLatched) return
       if (wheelAxis === 'y') {
-        wheelPull = Math.max(0, wheelPull + dy)
-        if (latest.current.dismiss.pull(wheelPull)) { wheelLatched = true; latest.current.dismiss.release(true) }
+        wheelPull = wheelScroll ? wheelPull + dy : Math.max(0, wheelPull + dy)
+        if (wheelScroll?.(-wheelPull)) return
+        const distance = wheelScroll ? -wheelPull : wheelPull
+        if (latest.current.dismiss.pull(Math.max(0, distance))) { wheelLatched = true; latest.current.dismiss.release(true) }
       } else if (wheelAxis === 'x') {
         wheelLatched = true
         const direction: Direction = dx > 0 ? 1 : -1
