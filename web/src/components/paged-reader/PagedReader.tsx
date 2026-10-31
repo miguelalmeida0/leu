@@ -1,0 +1,154 @@
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
+import { useReducedMotionPreference } from '../../lib/motion'
+import { PagePanel } from './PagePanel'
+import { usePageWindow } from './usePageWindow'
+import { usePageGesture } from './usePageGesture'
+import type { Direction, PageMetrics, PagedReaderHandle, PagedReaderProps } from './types'
+import './styles.css'
+
+export type { PagedReaderHandle, ReadingPosition } from './types'
+
+/** A screen-sized deck. Source PDF pages may contain several reflowed screens. */
+export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(function PagedReader(props, ref) {
+  const root = useRef<HTMLDivElement>(null), track = useRef<HTMLDivElement>(null)
+  const pages = usePageWindow(props.doc, props.page)
+  const metrics = useRef(new Map<number, PageMetrics>())
+  const [revision, setRevision] = useState(0), [part, setPart] = useState(0), [settled, setSettled] = useState(true)
+  const [pan, setPan] = useState({ x: 0, y: 0 })
+  const anchor = useRef(props.bookmark?.page === props.page ? props.bookmark : { sentence: 0, fraction: 0 })
+  const owner = useRef(props.page), layoutKey = useRef(''), pending = useRef<{ page: number; last: boolean } | null>(null)
+  const busy = useRef(false), animation = useRef<Animation | null>(null), live = useRef(true)
+  const reduced = useReducedMotionPreference()
+  const currentMetrics = metrics.current.get(props.page)
+  const parts = props.mode === 'original' ? 1 : currentMetrics?.parts ?? 1
+  const leaf = Math.min(part, parts - 1)
+  const previous = !!pages.get(props.page) && (leaf > 0 || props.page > 1)
+  const next = !!pages.get(props.page) && (leaf < parts - 1 || props.page < props.doc.numPages)
+  const latest = useRef({ props, part: leaf, parts, previous, next, reduced })
+  latest.current = { props, part: leaf, parts, previous, next, reduced }
+
+  const measured = useCallback((page: number, value: PageMetrics) => {
+    if (metrics.current.get(page)?.key === value.key) return
+    metrics.current.set(page, value)
+    setRevision((n) => n + 1)
+  }, [])
+  const remember = (index: number) => {
+    const state = latest.current, metric = metrics.current.get(state.props.page)
+    if (state.props.mode === 'rebuilt') anchor.current = {
+      sentence: metric?.starts[index] ?? 0, fraction: state.parts > 1 ? index / (state.parts - 1) : 0,
+    }
+    setPart(index)
+  }
+
+  useLayoutEffect(() => {
+    if (owner.current !== props.page) {
+      owner.current = props.page
+      anchor.current = pending.current?.page === props.page && pending.current.last ? { sentence: Infinity, fraction: 1 } : { sentence: 0, fraction: 0 }
+      pending.current = null
+      layoutKey.current = ''
+    }
+    const metric = metrics.current.get(props.page)
+    if (!metric || layoutKey.current === metric.key) return
+    layoutKey.current = metric.key
+    if (props.mode === 'original') { setPart(0); return }
+    const column = metric.columns[anchor.current.sentence]
+    const fraction = Math.round(anchor.current.fraction * (metric.parts - 1))
+    // A sentence may start on the previous screen and continue onto this one.
+    // Keep the stored screen within that sentence's full fragment range.
+    const target = column === undefined ? fraction : Math.max(column, Math.min(metric.ends[anchor.current.sentence] ?? column, fraction))
+    setPart(Math.max(0, Math.min(metric.parts - 1, target)))
+  }, [props.page, props.mode, revision])
+
+  useEffect(() => {
+    const metric = metrics.current.get(props.page)
+    if (!metric || !pages.get(props.page) || owner.current !== props.page) return
+    props.onPosition({ page: props.page, sentence: props.mode === 'rebuilt' ? metric.starts[leaf] ?? 0 : anchor.current.sentence,
+      fraction: props.mode === 'rebuilt' ? (parts > 1 ? leaf / (parts - 1) : 0) : anchor.current.fraction,
+      part: leaf, parts, previous, next })
+  }, [props.page, props.mode, props.onPosition, leaf, parts, previous, next, revision, pages])
+
+  const settle = useCallback((direction: Direction | 0) => {
+    if (busy.current || !root.current || !track.current) return
+    const state = latest.current
+    if (direction && !(direction < 0 ? state.previous : state.next)) direction = 0
+    busy.current = true
+    setSettled(false)
+    root.current.dataset.settled = 'false'
+    const finish = () => {
+      if (!live.current) return
+      flushSync(() => {
+        const current = latest.current
+        if (direction && current.part + direction >= 0 && current.part + direction < current.parts) remember(current.part + direction)
+        else if (direction) {
+          pending.current = { page: current.props.page + direction, last: direction < 0 }
+          current.props.onTurn(current.props.page + direction)
+        }
+        setSettled(true)
+      })
+      animation.current?.cancel(); animation.current = null
+      if (track.current) track.current.style.transform = 'translate3d(0,0,0)'
+      if (root.current) root.current.dataset.settled = 'true'
+      busy.current = false
+    }
+    if (state.reduced) { finish(); return }
+    animation.current = track.current.animate([
+      { transform: getComputedStyle(track.current).transform },
+      { transform: `translate3d(${-direction * root.current.clientWidth}px,0,0)` },
+    ], { duration: direction ? 230 : 180, easing: 'cubic-bezier(.22,.8,.25,1)', fill: 'forwards' })
+    void animation.current.finished.then(finish).catch(() => {})
+  }, [])
+
+  useImperativeHandle(ref, () => ({ step: settle, goToPage: (page) => {
+    pending.current = { page, last: false }
+    if (page === latest.current.props.page) { remember(0); return }
+    latest.current.props.onTurn(page)
+  } }), [settle])
+  useLayoutEffect(() => {
+    animation.current?.cancel(); animation.current = null
+    if (track.current) track.current.style.transform = 'translate3d(0,0,0)'
+    busy.current = false; setSettled(true); setPan({ x: 0, y: 0 })
+  }, [props.page, props.mode, props.zoom])
+  useEffect(() => {
+    live.current = true
+    return () => { live.current = false; animation.current?.cancel() }
+  }, [])
+  useEffect(() => {
+    for (const page of metrics.current.keys()) if (Math.abs(page - props.page) > 1) metrics.current.delete(page)
+  }, [props.page])
+
+  const panTo = (value: { x: number; y: number }) => {
+    const area = root.current?.querySelector<HTMLElement>('.paged-current .paged-original')
+    const canvas = area?.querySelector('canvas')
+    if (!area || !canvas) return
+    const x = Math.max(0, (canvas.getBoundingClientRect().width - area.clientWidth) / 2)
+    const y = Math.max(0, (canvas.getBoundingClientRect().height - area.clientHeight) / 2)
+    setPan({ x: Math.max(-x, Math.min(x, value.x)), y: Math.max(-y, Math.min(y, value.y)) })
+  }
+  usePageGesture({ root, track, busy: () => busy.current, turn: settle, available: (direction) => direction < 0 ? latest.current.previous : latest.current.next,
+    tap: props.onToggleControls, sentenceTap: (index) => {
+      if (!props.reading || !props.controls) return false
+      props.onSeek(index); return true
+    }, zoom: props.zoom, onZoom: props.onZoom, panning: props.mode === 'original' && props.zoom > 1.05, pan, onPan: panTo })
+  const follow = useCallback((index: number) => {
+    const state = latest.current
+    const target = metrics.current.get(state.props.page)?.columns[index]
+    if (target !== undefined && target !== state.part) remember(target)
+  }, [])
+
+  const before = leaf > 0 ? { page: props.page, part: leaf - 1 } : { page: props.page - 1, part: 'last' as const }
+  const after = leaf < parts - 1 ? { page: props.page, part: leaf + 1 } : { page: props.page + 1, part: 0 }
+  return <div ref={root} className="paged-reader" role="region" aria-label="Reading pages" tabIndex={0}
+    data-location={`${props.page}:${leaf}`} data-part={leaf} data-parts={parts} data-settled={settled ? 'true' : 'false'}
+    aria-keyshortcuts="ArrowLeft ArrowRight PageUp PageDown">
+    <div ref={track} className="paged-motion">
+      {([{ ...before, side: 'before' }, { page: props.page, part: leaf, side: 'current' }, { ...after, side: 'after' }] as const).map((panel) =>
+        panel.page >= 1 && panel.page <= props.doc.numPages && <PagePanel key={panel.side} doc={props.doc} number={panel.page} data={pages.get(panel.page)}
+          part={panel.part} side={panel.side} active={panel.side === 'current'} mode={props.mode} zoom={props.zoom}
+          paper={props.activePaper} reading={panel.side === 'current' && props.reading} marked={panel.side === 'current' ? props.marked : undefined}
+          pan={panel.side === 'current' ? pan : { x: 0, y: 0 }} onSeek={props.onSeek} onFollow={follow} onMetrics={measured} />)}
+    </div>
+    <p className="paged-position" aria-live="polite">{props.page} / {props.doc.numPages}{parts > 1 ? ` · ${leaf + 1} of ${parts}` : ''}</p>
+    <button className="paged-access" type="button" onClick={props.onToggleControls}>Show reading controls</button>
+  </div>
+})

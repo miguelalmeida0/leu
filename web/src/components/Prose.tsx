@@ -19,14 +19,14 @@ function lineBoxes(s: HTMLElement, wrap: HTMLElement) {
   const lines: { left: number; right: number; top: number; bottom: number }[] = []
   for (const r of s.getClientRects()) {
     if (r.width < 1) continue
-    const line = lines.find((l) => Math.abs(l.top - r.top) < r.height / 2)
+    const line = lines.find((l) => Math.abs(l.top - r.top) < r.height / 2 && r.left <= l.right + 1 && r.right >= l.left - 1)
     if (line) { line.left = Math.min(line.left, r.left); line.right = Math.max(line.right, r.right); line.bottom = Math.max(line.bottom, r.bottom) }
     else lines.push({ left: r.left, right: r.right, top: r.top, bottom: r.bottom })
   }
   return lines.map((l) => ({ x: l.left - origin.left - PAD_X, y: l.top - origin.top - PAD_Y, w: l.right - l.left + PAD_X * 2, h: l.bottom - l.top + PAD_Y * 2 }))
 }
 
-export const Prose = memo(function Prose({ blocks, reading, marked, onSeek }: { blocks: Block[]; reading: boolean; marked?: Set<number>; onSeek?: (index: number) => void }) {
+export const Prose = memo(function Prose({ blocks, reading, marked, onSeek, onFollow }: { blocks: Block[]; reading: boolean; marked?: Set<number>; onSeek?: (index: number) => void; onFollow?: (index: number) => void }) {
   const wrap = useRef<HTMLDivElement>(null)
   const layer = useRef<HTMLDivElement>(null)
   const reduced = useReducedMotion()
@@ -63,6 +63,7 @@ export const Prose = memo(function Prose({ blocks, reading, marked, onSeek }: { 
         b.style.height = `${box.h}px`
         b.style.opacity = i < boxes.length ? '1' : '0'
       })
+      if (scroll && onFollow) { onFollow(index); return }
       if (scroll) {
         const r = s.getBoundingClientRect()
         const scroller = el.closest<HTMLElement>('.reader-immersive .reader-grid')
@@ -84,7 +85,7 @@ export const Prose = memo(function Prose({ blocks, reading, marked, onSeek }: { 
     const ro = new ResizeObserver(() => { if (index >= 0) place(false) })
     ro.observe(el)
     return () => { cancelAnimationFrame(frame); ro.disconnect(); hide() }
-  }, [reading, layout, reduced])
+  }, [reading, layout, reduced, onFollow])
 
   const click = (e: React.MouseEvent) => {
     if (!reading || !onSeek || window.getSelection()?.toString()) return
