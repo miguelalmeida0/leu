@@ -42,9 +42,8 @@ async function verify(engine) {
         return {
           viewport: innerWidth,
           overflow: document.documentElement.scrollWidth - innerWidth,
-          logo: rect('.topbar .wordmark'), nav: rect('.desktop-places'),
+          logo: rect('.topbar .wordmark'),
           tools: rect('.topbar-tools'), search: rect('.search-pill'),
-          links: [...document.querySelectorAll('.desktop-places a')].map((link) => link.getBoundingClientRect().height),
           searchHit: search.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)),
         }
       })
@@ -55,31 +54,20 @@ async function verify(engine) {
       assert.ok(geometry.logo.left >= 0 && geometry.tools.right <= width + 1,
         `${label}: header controls extend offscreen`)
 
-      if (width > 900) {
-        assert.equal(geometry.nav.visible, true, `${label}: desktop navigation is missing`)
-        const center = (geometry.nav.left + geometry.nav.right) / 2
-        assert.ok(Math.abs(center - geometry.viewport / 2) <= 1.5,
-          `${label}: navigation midpoint ${center}, viewport midpoint ${geometry.viewport / 2}`)
-        assert.ok(geometry.logo.right + 8 <= geometry.nav.left && geometry.nav.right + 8 <= geometry.tools.left,
-          `${label}: navigation overlaps its neighboring controls`)
-        assert.ok(geometry.links.every((height) => height >= 43.5), `${label}: navigation targets below 44px`)
-      } else {
-        assert.equal(geometry.nav.visible, false, `${label}: desktop links should collapse to a menu`)
-        const trigger = page.getByRole('button', { name: 'Open navigation' })
-        assert.ok(await trigger.isVisible(), `${label}: navigation trigger is missing`)
-        await trigger.click()
-        const menu = page.getByRole('navigation', { name: 'Mobile places' })
-        await menu.waitFor({ state: 'visible' })
-        const menuBox = await menu.boundingBox()
-        assert.ok(menuBox.x >= 0 && menuBox.x + menuBox.width <= width + 1,
-          `${label}: navigation menu extends outside viewport`)
-        await page.keyboard.press('Escape')
-        await menu.waitFor({ state: 'hidden' })
-        assert.equal(await trigger.getAttribute('aria-expanded'), 'false', `${label}: menu did not close`)
-        assert.equal(await trigger.evaluate((node) => document.activeElement === node), true,
-          `${label}: Escape should restore focus to menu trigger`)
-      }
-      console.log(`PASS ${label}: center/overflow/targets/menu`)
+      const trigger = page.getByRole('button', { name: 'Open navigation' })
+      assert.ok(await trigger.isVisible(), `${label}: navigation trigger is missing`)
+      await trigger.click()
+      const menu = page.getByRole('navigation', { name: 'Mobile places' })
+      await menu.waitFor({ state: 'visible' })
+      const menuBox = await menu.boundingBox()
+      assert.ok(menuBox.x >= 0 && menuBox.x + menuBox.width <= width + 1,
+        `${label}: navigation menu extends outside viewport`)
+      await page.keyboard.press('Escape')
+      await menu.waitFor({ state: 'hidden' })
+      assert.equal(await trigger.getAttribute('aria-expanded'), 'false', `${label}: menu did not close`)
+      assert.equal(await trigger.evaluate((node) => document.activeElement === node), true,
+        `${label}: Escape should restore focus to menu trigger`)
+      console.log(`PASS ${label}: overflow/targets/menu`)
     }
 
     // Compact search retains its accessible name and opens on a phone.
@@ -88,10 +76,10 @@ async function verify(engine) {
     await page.getByRole('dialog', { name: 'Search your books' }).waitFor({ state: 'visible' })
     await page.keyboard.press('Escape')
     await page.getByRole('dialog', { name: 'Search your books' }).waitFor({ state: 'hidden' })
-    // Text expansion (translation or personalization) must switch to the same compact menu.
+    // Text expansion must keep the requested burger menu safe at every width.
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.evaluate(() => {
-      const nodes = [...document.querySelectorAll('.desktop-places .place, .search-pill span')]
+      const nodes = [...document.querySelectorAll('.mobile-places nav a, .search-pill span')]
       window.__topbarLabels = nodes.map((node) => node.textContent)
       for (const node of nodes) node.textContent += ' — Antidisestablishmentarianism, a longer translated label'
     })
@@ -119,10 +107,10 @@ async function verify(engine) {
     await page.getByRole('navigation', { name: 'Mobile places' }).waitFor({ state: 'visible' })
     await page.keyboard.press('Escape')
     await page.evaluate(() => {
-      const nodes = [...document.querySelectorAll('.desktop-places .place, .search-pill span')]
+      const nodes = [...document.querySelectorAll('.mobile-places nav a, .search-pill span')]
       nodes.forEach((node, index) => { node.textContent = window.__topbarLabels[index] })
     })
-    await page.waitForFunction(() => !document.querySelector('.topbar')?.classList.contains('compact-nav'))
+    await page.waitForFunction(() => document.querySelector('.topbar')?.classList.contains('compact-nav'))
     assert.deepEqual(errors, [], `${engine.name()}: runtime errors`)
   } finally {
     await browser.close()

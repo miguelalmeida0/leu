@@ -86,13 +86,14 @@ async function inspect(page, label, scenario) {
     }
     const search = document.querySelector('.search-pill'), r = search.getBoundingClientRect()
     const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2)
-    const nav = document.querySelector('.desktop-places')
+    const nav = document.querySelector('.mobile-menu-trigger')
     return { overflow: document.documentElement.scrollWidth - innerWidth, bad,
       searchBlocked: !search.contains(hit), topbar: document.querySelector('.topbar')?.className,
-      navVisible: getComputedStyle(nav).display !== 'none' }
+      navigationAvailable: nav.getBoundingClientRect().width >= 44 && nav.getBoundingClientRect().height >= 44 }
   })
   assert.ok(geometry.overflow <= 2 && !geometry.bad.length, label + ': overflow ' + JSON.stringify(geometry))
   assert.equal(geometry.searchBlocked, false, label + ': search obstructed')
+  assert.equal(geometry.navigationAvailable, true, label + ': burger navigation must remain available')
   const axe = await new AxeBuilder({ page }).withRules(['color-contrast', 'label-content-name-mismatch', 'target-size']).analyze()
   assert.deepEqual(axe.violations.map(({ id, nodes }) => ({ id, targets: nodes.map((n) => n.target) })), [], label + ': accessibility')
   // Every tab stop must expose its focus point below the sticky header. A canvas

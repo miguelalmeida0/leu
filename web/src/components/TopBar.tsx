@@ -1,10 +1,9 @@
+import { CaretLeftIcon } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
-import { go, href, type Route } from '../lib/router'
+import { href, type Route } from '../lib/router'
 import { useStore } from '../lib/store'
 import { lastBook } from '../lib/library'
-import { Stitch } from './ui'
 import { Wordmark } from './Wordmark'
-import { useResponsiveTopbar } from './useResponsiveTopbar'
 
 const places = [
   { name: 'library', label: 'Library' },
@@ -15,19 +14,15 @@ const places = [
   { name: 'trails', label: 'Trails' },
 ] as const
 
-/** The desktop top bar: the wordmark (Home), the places with a red running stitch under the
-    current one, and search. Reading opens the last book where you left it. */
+/** Shared disclosure navigation; Reading opens the last book at its saved position. */
 export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void }) {
   const books = useStore((s) => s.books)
   const last = lastBook(books)
+  const readingBook = route.name === 'read' ? books.find((book) => book.id === route.id) : undefined
   const current = route.name === 'book' ? 'library' : route.name === 'words' ? 'read' : route.name
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLElement>(null)
-  const wordmarkRef = useRef<HTMLAnchorElement>(null)
-  const navigationRef = useRef<HTMLElement>(null)
-  const searchRef = useRef<HTMLButtonElement>(null)
-  const compactNav = useResponsiveTopbar({ header: headerRef, wordmark: wordmarkRef, navigation: navigationRef, search: searchRef })
   const routeKey = href(route)
 
   useEffect(() => {
@@ -40,7 +35,6 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
     return () => observer.disconnect()
   }, [])
   useEffect(() => setMenuOpen(false), [routeKey])
-  useEffect(() => { if (!compactNav) setMenuOpen(false) }, [compactNav])
   useEffect(() => {
     if (!menuOpen) return
     const dismiss = (event: PointerEvent) => {
@@ -60,32 +54,8 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
     }
   }, [menuOpen])
   return (
-    <header className={`topbar${compactNav ? ' compact-nav' : ''}`} ref={headerRef}>
-      <a className="wordmark" ref={wordmarkRef} href={href({ name: 'home' })} title="Home" aria-current={route.name === 'home' ? 'page' : undefined}><Wordmark /></a>
-      <nav className="desktop-places" ref={navigationRef} aria-label="Places">
-        <ul>
-          {places.map((p) => {
-            const on = current === p.name
-            const disabled = p.name === 'read' && !last
-            const to: Route = p.name === 'read' ? (last ? { name: 'read', id: last.id, page: last.page } : { name: 'library' }) : { name: p.name }
-            return (
-              <li key={p.name}>
-                <a
-                  href={href(to)}
-                  className={`place${on ? ' on' : ''}`}
-                  aria-current={on ? 'page' : undefined}
-                  aria-disabled={disabled || undefined}
-                  title={p.name === 'read' ? (last ? `Back to ${last.title}, page ${last.page}` : 'Bring a PDF first') : undefined}
-                  onClick={(e) => { if (disabled) { e.preventDefault(); go({ name: 'library' }) } }}
-                >
-                  {p.label}
-                  <span className="place-stitch">{on && <Stitch />}</span>
-                </a>
-              </li>
-            )
-          })}
-        </ul>
-      </nav>
+    <header className="topbar compact-nav" ref={headerRef}>
+      <a className={`wordmark${readingBook ? ' reader-top-title' : ''}`} href={href(readingBook ? { name: 'book', id: readingBook.id } : { name: 'home' })} title={readingBook ? 'Book overview' : 'Home'} aria-current={route.name === 'home' ? 'page' : undefined}>{readingBook ? <><CaretLeftIcon size={20} aria-hidden="true" /><span>{readingBook.title}</span></> : <Wordmark />}</a>
       <div className="topbar-tools">
         <div className="mobile-places" ref={menuRef}>
           <button type="button" className="mobile-menu-trigger"
@@ -106,7 +76,7 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
             })}
           </nav>
         </div>
-        <button className="search-pill" ref={searchRef} onClick={onSearch} aria-labelledby="search-label" aria-keyshortcuts="Meta+K Control+K">
+        <button className="search-pill" onClick={onSearch} aria-labelledby="search-label" aria-keyshortcuts="Meta+K Control+K">
           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.2" /><path d="M15.5 15.5 20 20" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
           <span id="search-label">Search your books</span>
           <kbd aria-hidden="true">{navigator.platform.includes('Mac') ? '⌘K' : 'Ctrl K'}</kbd>

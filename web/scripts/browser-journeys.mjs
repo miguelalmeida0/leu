@@ -81,8 +81,7 @@ async function navigateMobile(page, name) {
   await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name }).click()
 }
 async function goTo(page, mobile, name) {
-  if (mobile) return navigateMobile(page, name)
-  return page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name }).click()
+  return navigateMobile(page, name)
 }
 async function runBrowser(browserType, name, mobile, width) {
   const browser = await browserType.launch({ headless: true })
@@ -124,6 +123,14 @@ async function runBrowser(browserType, name, mobile, width) {
       throw error
     }
     await noHorizontalOverflow(page, 'Reader ' + name)
+    const focusBox = await page.getByRole('button', { name: 'Enter full-screen reading' }).boundingBox()
+    assert.ok(focusBox && focusBox.y > (mobile ? 844 : 900) * .75,
+      'Fullscreen entry stays with the lower listening controls, not the top of the page')
+    const scrollBox = await page.locator('.reader-grid').boundingBox()
+    const footerBox = await page.locator('.reader-foot').boundingBox()
+    assert.ok(scrollBox && footerBox && scrollBox.y + scrollBox.height <= footerBox.y + 1,
+      'The listening footer reserves space and cannot cover reading text')
+
     if (mobile) {
       const voiceButton = page.getByRole('button', { name: /^Voice: .* Change$/ })
       await visible(voiceButton)
@@ -161,7 +168,7 @@ async function runBrowser(browserType, name, mobile, width) {
     // hidden overlay chrome, horizontal navigation and original PDF fit/zoom.
     const normalBar = await page.locator('.reader-bar').boundingBox()
     const entry = await page.getByRole('button', { name: 'Enter full-screen reading' }).boundingBox()
-    if (mobile) assert.ok(entry.y < normalBar.y + 100, 'Fullscreen entry belongs beside the display modes')
+    if (mobile) assert.ok(entry.y > normalBar.y + normalBar.height, 'Fullscreen entry stays in the lower reading controls')
     const reveal = async () => {
       if (await page.locator('.reader-immersive').getAttribute('data-controls') === 'hidden') {
         const box = await page.locator('.paged-reader').boundingBox()
@@ -371,7 +378,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.getByRole('heading', { name: 'Your library' }))
     await noHorizontalOverflow(page, 'Library ' + name)
     // The entire sample shelf covers more concepts for Search / Explore / Trails.
-    const add = page.getByRole('button', { name: /Add the .* sample books/i })
+    const add = page.getByRole('button', { name: /Try \d+ sample PDFs?/i })
     if (await add.count()) {
       await add.click()
       await page.waitForFunction(() => document.querySelectorAll('.quilt-cell').length >= 6, null, { timeout: 55000 })

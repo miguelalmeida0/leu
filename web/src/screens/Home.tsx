@@ -1,50 +1,51 @@
-import { Progress, Swatch } from '../components/ui'
+import { ArrowRightIcon, CaretRightIcon, FolderIcon, PlusCircleIcon } from '@phosphor-icons/react'
+import { BookCover } from '../components/BookCover'
+import { Progress } from '../components/ui'
 import { lastBook } from '../lib/library'
 import { go } from '../lib/router'
 import { readFraction, useStore } from '../lib/store'
 import { NookScene } from '../scenes/NookScene'
+import './ReadingRoom.css'
 
 function greeting(d = new Date()) {
   const h = d.getHours()
   return h >= 5 && h < 12 ? 'Good morning' : h < 17 && h >= 12 ? 'Good afternoon' : h >= 17 && h < 22 ? 'Good evening' : 'Late night'
 }
 
-/** Home (03): "We kept your spot warm." The book you were in, one way back, and the evening nook. */
 export function Home({ onBring }: { onBring: () => void }) {
   const books = useStore((s) => s.books)
   const book = lastBook(books)
-  const progress = book ? readFraction(book) : 0
-
-  return (
-    <div className="home-bleed">
-    <div className="home fade-in">
-      <section className="home-words">
-        <p className="eyebrow" style={{ color: 'var(--secondary)' }}>{greeting()}</p>
-        <h1 className="display home-title">We kept your spot warm.</h1>
-        <p className="home-sub">{book ? 'Quilt, tea and a rainy evening.' : 'Bring a PDF and it will be waiting here.'}</p>
-        {book && (
-          <div className="home-book" aria-label={`${book.title}, page ${book.page} of ${book.pages}, ${Math.round(progress * 100)} percent read`}>
-            <div className="row" style={{ gap: 12, alignItems: 'baseline' }}>
-              <Swatch book={book} />
-              <strong>{book.title}</strong>
-              <span className="muted tabular">page {book.page} of {book.pages}</span>
-            </div>
-            <div style={{ paddingLeft: 22, marginTop: 12 }}><Progress value={progress} /></div>
-          </div>
-        )}
-        <div className="row" style={{ gap: 22, marginTop: 30 }}>
-          {book ? (
-            <>
-              <button className="btn ink" onClick={() => go({ name: 'read', id: book.id, page: book.page })}>Keep reading</button>
-              <button className="quiet-link" onClick={() => go({ name: 'library' })}>Something else</button>
-            </>
-          ) : (
-            <button className="btn ink" onClick={onBring}>Bring a PDF</button>
-          )}
-        </div>
-      </section>
+  return <div className="reading-home fade-in">
+    <section className="home-story" aria-labelledby="home-title">
+      <p className="eyebrow">{greeting()}</p>
+      <h1 id="home-title" className="display">Make room for<br />a few pages.</h1>
       <div className="home-scene"><NookScene /></div>
-    </div>
-    </div>
-  )
+    </section>
+    <section className="home-resume" aria-label="Continue reading">
+      <p className="eyebrow">Pick up where you left off</p>
+      {book && <>
+        <div className="resume-book">
+          <BookCover book={book} />
+          <div className="resume-details">
+            <h2>{book.title}</h2>
+            <p className="muted tabular">Page {book.page} of {book.pages}</p>
+            <Progress value={readFraction(book)} />
+          </div>
+        </div>
+        <button className="btn ink resume-action" onClick={() => go({ name: 'read', id: book.id, page: book.page })}>
+          Continue reading <ArrowRightIcon size={22} aria-hidden="true" />
+        </button>
+      </>}
+      <div className="home-shortcuts">
+        <button onClick={() => go({ name: 'library' })}>
+          <FolderIcon size={24} aria-hidden="true" />
+          <span><strong>Your library</strong><span className="muted"> · {books.length} {books.length === 1 ? 'book' : 'books'}</span></span>
+          <CaretRightIcon size={20} aria-hidden="true" />
+        </button>
+        <button onClick={onBring}>
+          <PlusCircleIcon size={24} aria-hidden="true" /><strong>Import a PDF</strong><CaretRightIcon size={20} aria-hidden="true" />
+        </button>
+      </div>
+    </section>
+  </div>
 }
