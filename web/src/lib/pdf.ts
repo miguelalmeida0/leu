@@ -153,18 +153,23 @@ export async function extract(doc: PDFDocumentProxy, onPage?: (n: number) => voi
 
 async function embeddedOutline(doc: PDFDocumentProxy): Promise<Outline[]> {
   const result: Outline[] = []
-  const walk = async (nodes: Awaited<ReturnType<PDFDocumentProxy['getOutline']>>, depth: number) => {
-    for (const node of nodes ?? []) {
-      try {
-        const dest = typeof node.dest === 'string' ? await doc.getDestination(node.dest) : node.dest
-        const ref = dest?.[0]
-        const index = ref && typeof ref === 'object' ? await doc.getPageIndex(ref) : null
-        if (index !== null && node.title.trim()) result.push({ title: node.title.trim(), page: index + 1, depth })
-      } catch { /* a broken entry is skipped */ }
-      if (depth < 3) await walk(node.items, depth + 1)
-    }
+  type Node = NonNullable<Awaited<ReturnType<PDFDocumentProxy['getOutline']>>>[number]
+  const pending: { node: Node; depth: number }[] = []
+  const enqueue = (nodes: Node[], depth: number) => {
+    for (let index = nodes.length - 1; index >= 0; index--) pending.push({ node: nodes[index], depth })
   }
-  await walk(await doc.getOutline(), 0)
+  enqueue(await doc.getOutline() ?? [], 0)
+  while (pending.length) {
+    const { node, depth } = pending.pop()!
+    try {
+      const dest = typeof node.dest === 'string' ? await doc.getDestination(node.dest) : node.dest
+      const ref = dest?.[0]
+      const index = ref && typeof ref === 'object' ? await doc.getPageIndex(ref) : null
+      if (index !== null && node.title.trim()) result.push({ title: node.title.trim(), page: index + 1, depth })
+    } catch { /* a broken entry is skipped, preserving its valid children */ }
+    // An explicit stack preserves PDF preorder at any depth without recursion.
+    enqueue(node.items, depth + 1)
+  }
   return result
 }
 

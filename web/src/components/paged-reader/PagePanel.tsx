@@ -63,7 +63,7 @@ export const PagePanel = memo(function PagePanel(props: Props) {
     if (mode !== 'original' || !target || !data || !layout.width || !layout.height) return
     let live = true
     setRenderError('')
-    const fitted = originalFit === 'cover' ? Math.max(layout.width, layout.height * data.aspect) : layout.width
+    const fitted = originalFit === 'page' ? Math.min(layout.width, layout.height * data.aspect) : layout.width
     const width = Math.max(1, fitted * zoom)
     const work = queue.current.catch(() => {}).then(async () => {
       if (live) await renderPage(doc, number, target, Math.min(1800, width), width)
@@ -83,9 +83,9 @@ export const PagePanel = memo(function PagePanel(props: Props) {
     <div ref={area} className={mode === 'rebuilt' ? 'paged-text' : 'paged-original'} data-zoomed={zoom > 1.05 || undefined} data-fit={originalFit}
       role={mode === 'original' ? 'region' : undefined} aria-label={mode === 'original' ? 'Original PDF page' : undefined}
       tabIndex={mode === 'original' ? 0 : undefined}
-      aria-description={mode === 'original' && originalFit === 'cover' ? 'Drag to pan. Up and Down arrows pan vertically. Shift plus Left and Right arrows pan horizontally. Left and Right arrows turn source pages.' : undefined}
+      aria-description={mode === 'original' && zoom > 1.05 ? 'Drag to pan. Up and Down arrows pan vertically. Shift plus Left and Right arrows pan horizontally. Left and Right arrows turn source pages.' : undefined}
       onKeyDown={(event) => {
-        if (mode !== 'original' || (originalFit !== 'cover' && zoom <= 1.05)) return
+        if (mode !== 'original' || zoom <= 1.05) return
         const vertical = event.key === 'ArrowUp' || event.key === 'ArrowDown'
         const horizontal = event.shiftKey && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
         if (!vertical && !horizontal) return
@@ -95,7 +95,7 @@ export const PagePanel = memo(function PagePanel(props: Props) {
       }}>
       {!data ? <p className="paged-loading" role={active ? 'status' : undefined}>Opening page…</p> : data.error ?
         <p className="paged-loading" role="alert">{data.error}</p> : mode === 'original' ? <>
-          <canvas ref={canvas} className="original-page" role="img" style={{ transform: `translate(calc(-50% + ${props.pan.x}px), ${originalFit === 'cover' || zoom > 1.05 ? `calc(-50% + ${props.pan.y}px)` : '0px'})` }}
+          <canvas ref={canvas} className="original-page" role="img" style={{ transform: `translate(calc(-50% + ${props.pan.x}px), ${originalFit === 'page' || zoom > 1.05 ? `calc(-50% + ${props.pan.y}px)` : '0px'})` }}
             aria-label={`Visual rendering of page ${number} of ${doc.numPages}. Choose For reading to access the extracted text.`} />
           {renderError && <p className="paged-loading" role="alert">{renderError}</p>}
         </> : data.textError ? <p className="paged-loading" role="alert">{data.textError}</p> : data.blocks.length ? <div className="paged-columns" style={{ transform: `translate3d(${-leaf * layout.stride}px, 0, 0)` }}>
