@@ -28,6 +28,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const [outline, setOutline] = useState<Outline[]>([])
   const [blocks, setBlocks] = useState<Block[] | null>(null)
   const [mode, setMode] = useState<'rebuilt' | 'original'>('original')
+  const [originalFit, setOriginalFit] = useState<'cover' | 'width'>('cover')
   const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen } = useReaderFullscreen(`${id}:${page}`)
   const paged = useRef<PagedReaderHandle>(null)
   const [controls, setControls] = useState(false)
@@ -298,6 +299,11 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const current = [...outline].reverse().find((o) => o.page <= clamped && o.depth === 0) ?? [...outline].reverse().find((o) => o.page <= clamped)
   const speaking = voice.speakingId === 'page'
   const zoomControls = <div className="reader-zoom-controls" role="group" aria-label="Reading zoom">
+              {mode === 'original' && <div className="reader-original-fit" role="group" aria-label="Original page fit">
+                {([['cover', 'Fill screen'], ['width', 'Fit width']] as const).map(([value, label]) =>
+                  <button key={value} type="button" aria-pressed={originalFit === value}
+                    onClick={() => { setOriginalFit(value); setZoom(1); hapticFeedback('light') }}>{label}</button>)}
+              </div>}
               <button type="button" aria-label="Zoom out" disabled={zoom <= 0.8}
                 onClick={() => changeZoom(zoom - 0.25)}>−</button>
               <button type="button" className="reader-zoom-level" aria-label="Reset zoom"
@@ -353,7 +359,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           </ol>
         </nav>
 
-        {immersive && doc ? <PagedReader ref={paged} doc={doc} page={clamped} mode={mode} zoom={zoom}
+        {immersive && doc ? <PagedReader ref={paged} doc={doc} page={clamped} mode={mode} zoom={zoom} originalFit={originalFit}
           controls={controls}
           activePaper={paper} onTurn={turn} onZoom={changeZoom} onToggleControls={toggleControls} onExit={exitFullscreen}
           onPosition={reportPosition} bookmark={book.readingPosition}

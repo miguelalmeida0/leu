@@ -6,18 +6,19 @@ import type { PageData, PageMetrics, PagedReaderProps } from './types'
 interface Props {
   doc: PDFDocumentProxy; number: number; data?: PageData; part: number | 'last'
   active: boolean; side: 'before' | 'current' | 'after'; mode: PagedReaderProps['mode']; zoom: number
+  originalFit: PagedReaderProps['originalFit']; onPan: (value: { x: number; y: number }) => void
   paper: PagedReaderProps['activePaper']; reading: boolean; marked?: Set<number>
   pan: { x: number; y: number }; onSeek: (index: number) => void
   onFollow: (index: number) => void; onMetrics: (page: number, metrics: PageMetrics) => void
 }
 
 export const PagePanel = memo(function PagePanel(props: Props) {
-  const { doc, number, data, part, active, mode, zoom, onMetrics } = props
+  const { doc, number, data, part, active, mode, zoom, originalFit, onMetrics } = props
   const article = useRef<HTMLElement>(null), area = useRef<HTMLDivElement>(null), canvas = useRef<HTMLCanvasElement>(null)
   const queue = useRef<Promise<void>>(Promise.resolve())
   const [layout, setLayout] = useState({ width: 0, height: 0, parts: 1, stride: 0 })
   const [renderError, setRenderError] = useState('')
-  useLayoutEffect(() => { if (area.current) area.current.scrollTop = 0 }, [number, mode, zoom])
+  useLayoutEffect(() => { if (area.current) area.current.scrollTop = 0 }, [number, mode, zoom, originalFit])
   useLayoutEffect(() => { if (active) props.paper.current = article.current }, [active, props.paper])
 
   useLayoutEffect(() => {
@@ -62,7 +63,8 @@ export const PagePanel = memo(function PagePanel(props: Props) {
     if (mode !== 'original' || !target || !data || !layout.width || !layout.height) return
     let live = true
     setRenderError('')
-    const width = Math.max(1, layout.width * zoom)
+    const fitted = originalFit === 'cover' ? Math.max(layout.width, layout.height * data.aspect) : layout.width
+    const width = Math.max(1, fitted * zoom)
     const work = queue.current.catch(() => {}).then(async () => {
       if (live) await renderPage(doc, number, target, Math.min(1800, width), width)
     })
@@ -72,18 +74,28 @@ export const PagePanel = memo(function PagePanel(props: Props) {
       live = false
       void work.finally(() => { if (!target.isConnected) { target.width = 0; target.height = 0 } }).catch(() => {})
     }
-  }, [data, doc, number, mode, zoom, layout.width, layout.height])
+  }, [data, doc, number, mode, zoom, originalFit, layout.width, layout.height])
 
   const leaf = Math.max(0, Math.min(layout.parts - 1, part === 'last' ? layout.parts - 1 : part))
   return <article ref={article} className={`reader-paper paged-panel paged-${props.side}`}
     data-mode={mode} data-page={number} data-active={active ? 'true' : undefined} aria-label={`Page ${number} of ${doc.numPages}`}
     aria-hidden={!active || undefined} inert={!active}>
-    <div ref={area} className={mode === 'rebuilt' ? 'paged-text' : 'paged-original'} data-zoomed={zoom > 1.05 || undefined}
+    <div ref={area} className={mode === 'rebuilt' ? 'paged-text' : 'paged-original'} data-zoomed={zoom > 1.05 || undefined} data-fit={originalFit}
       role={mode === 'original' ? 'region' : undefined} aria-label={mode === 'original' ? 'Original PDF page' : undefined}
-      tabIndex={mode === 'original' && zoom <= 1.05 ? 0 : undefined}>
+      tabIndex={mode === 'original' ? 0 : undefined}
+      aria-description={mode === 'original' && originalFit === 'cover' ? 'Drag to pan. Up and Down arrows pan vertically. Shift plus Left and Right arrows pan horizontally. Left and Right arrows turn source pages.' : undefined}
+      onKeyDown={(event) => {
+        if (mode !== 'original' || (originalFit !== 'cover' && zoom <= 1.05)) return
+        const vertical = event.key === 'ArrowUp' || event.key === 'ArrowDown'
+        const horizontal = event.shiftKey && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
+        if (!vertical && !horizontal) return
+        event.preventDefault(); event.stopPropagation()
+        props.onPan({ x: props.pan.x + (horizontal ? event.key === 'ArrowLeft' ? 48 : -48 : 0),
+          y: props.pan.y + (vertical ? event.key === 'ArrowUp' ? 48 : -48 : 0) })
+      }}>
       {!data ? <p className="paged-loading" role={active ? 'status' : undefined}>Opening page…</p> : data.error ?
         <p className="paged-loading" role="alert">{data.error}</p> : mode === 'original' ? <>
-          <canvas ref={canvas} className="original-page" role="img" style={{ transform: `translate(calc(-50% + ${props.pan.x}px), ${zoom > 1.05 ? `calc(-50% + ${props.pan.y}px)` : '0px'})` }}
+          <canvas ref={canvas} className="original-page" role="img" style={{ transform: `translate(calc(-50% + ${props.pan.x}px), ${originalFit === 'cover' || zoom > 1.05 ? `calc(-50% + ${props.pan.y}px)` : '0px'})` }}
             aria-label={`Visual rendering of page ${number} of ${doc.numPages}. Choose For reading to access the extracted text.`} />
           {renderError && <p className="paged-loading" role="alert">{renderError}</p>}
         </> : data.textError ? <p className="paged-loading" role="alert">{data.textError}</p> : data.blocks.length ? <div className="paged-columns" style={{ transform: `translate3d(${-leaf * layout.stride}px, 0, 0)` }}>

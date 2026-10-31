@@ -10,6 +10,7 @@ interface Options {
   sentenceTap: (index: number) => boolean
   dismiss: ReaderDismissGesture
   originalScroll: () => HTMLElement | null
+  allowPull: () => boolean
   zoom: number; onZoom: (zoom: number) => void; panning: boolean
   pan: { x: number; y: number }; onPan: (pan: { x: number; y: number }) => void
 }
@@ -22,7 +23,7 @@ export function usePageGesture(options: Options) {
     const root = options.root.current
     if (!root) return
     const points = new Map<number, { x: number; y: number }>()
-    let gesture: { x: number; y: number; at: number; lastX: number; lastAt: number; velocity: number; axis: 'x' | 'y' | null; selecting: boolean; sentence?: number; pan: { x: number; y: number }; scroll: ReturnType<typeof originalScrollGesture> } | null = null
+    let gesture: { x: number; y: number; at: number; lastX: number; lastAt: number; velocity: number; axis: 'x' | 'y' | null; selecting: boolean; sentence?: number; pan: { x: number; y: number }; scroll: ReturnType<typeof originalScrollGesture>; pullAllowed: boolean; panning?: boolean } | null = null
     let pinch: { distance: number; zoom: number } | null = null
     let pinched = false, wheelLatched = false, wheelTimer: ReturnType<typeof setTimeout> | undefined
     let wheelAxis: 'x' | 'y' | null = null, wheelPull = 0
@@ -59,7 +60,7 @@ export function usePageGesture(options: Options) {
       gesture = { x: event.clientX, y: event.clientY, at: performance.now(), lastX: event.clientX,
         lastAt: performance.now(), velocity: 0, axis: null,
         sentence: (event.target as HTMLElement).closest<HTMLElement>('.s')?.dataset.s === undefined ? undefined : Number((event.target as HTMLElement).closest<HTMLElement>('.s')!.dataset.s),
-        selecting: event.pointerType === 'mouse' && !!(event.target as HTMLElement).closest('.prose'), pan: current.pan, scroll: originalScrollGesture(current.originalScroll()) }
+        selecting: event.pointerType === 'mouse' && !!(event.target as HTMLElement).closest('.prose'), pan: current.pan, scroll: originalScrollGesture(current.originalScroll()), pullAllowed: current.allowPull() }
       if (!gesture.selecting) {
         // Margin drags are navigation. Stop mouse selection before its first
         // sub-threshold move; prose and native touch selection stay available.
@@ -78,17 +79,21 @@ export function usePageGesture(options: Options) {
       }
       if (!gesture || pinched || gesture.selecting || selection()) return
       const dx = event.clientX - gesture.x, dy = event.clientY - gesture.y
-      if (current.panning) {
-        if (event.cancelable) event.preventDefault()
-        current.onPan({ x: gesture.pan.x + dx, y: gesture.pan.y + dy })
-        return
-      }
       if (!gesture.axis && Math.max(Math.abs(dx), Math.abs(dy)) > 9) {
         if (Math.abs(dx) > Math.abs(dy) * .85) gesture.axis = 'x'
         else if (Math.abs(dy) > Math.abs(dx) * 1.2) gesture.axis = 'y'
       }
       if (!gesture.axis) return
       if (event.cancelable) event.preventDefault()
+      if (current.panning) {
+        // Decide once from the starting boundary. A pan that reaches the top
+        // keeps ownership until release; a fresh downward pull there may exit.
+        gesture.panning ??= !(gesture.axis === 'y' && dy > 0 && gesture.pullAllowed)
+        if (gesture.panning) {
+          current.onPan({ x: gesture.pan.x + dx, y: gesture.pan.y + dy })
+          return
+        }
+      }
       if (gesture.axis === 'y') {
         if (!gesture.scroll?.(dy)) current.dismiss.pull(Math.max(0, dy))
         return
@@ -113,7 +118,7 @@ export function usePageGesture(options: Options) {
       reset()
       if (!start || selection()) { current.dismiss.cancel(); current.turn(0); return }
       const dx = event.clientX - start.x, dy = event.clientY - start.y
-      if (current.panning && Math.hypot(dx, dy) > 7) { suppressClick(event); current.turn(0); return }
+      if (start.panning && Math.hypot(dx, dy) > 7) { suppressClick(event); current.turn(0); return }
       if (start.axis === 'y') {
         suppressClick(event)
         if (start.scroll?.(dy)) current.turn(0)
