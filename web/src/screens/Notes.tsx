@@ -17,7 +17,7 @@ export function Notes() {
   const left = (
     <>
       <p className="eyebrow paper">Your notebook</p>
-      <h1 className="display" style={{ fontSize: 44, marginTop: 10 }}>{title}</h1>
+      <h1 className="display" style={{marginTop: 10 }}>{title}</h1>
       <div className="segmented on-paper" role="radiogroup" aria-label="Arrange notes" style={{ marginTop: 18 }}>
         <button role="radio" aria-checked={view === 'all'} className={view === 'all' ? 'on' : ''} onClick={() => setView('all')}>All notes</button>
         <button role="radio" aria-checked={view === 'books'} className={view === 'books' ? 'on' : ''} onClick={() => setView('books')}>Books</button>

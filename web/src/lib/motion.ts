@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type RefObject } from 'react'
+import { createContext, useContext, useEffect, useRef, useState, type RefObject } from 'react'
 
 /** Device accessibility preference, never masked by an illustration-level override. */
 export function useReducedMotionPreference(): boolean {
@@ -13,7 +13,12 @@ export function useReducedMotionPreference(): boolean {
 }
 
 /** Illustration motion follows the device preference, including live changes. */
-export const useReducedMotion = useReducedMotionPreference
+export const SceneAutoplay = createContext(false)
+export function useReducedMotion(): boolean {
+  const preference = useReducedMotionPreference()
+  const autoplay = useContext(SceneAutoplay)
+  return preference && !autoplay
+}
 
 /** Touch screens: no hover, and a finger on a canvas usually scrolls the page. The scenes
     play on their own there instead of waiting for a pointer. */

@@ -92,7 +92,7 @@ export function OwnWords({ id, page }: { id: string; page: number }) {
 
         <section className="words-write">
           <p className="eyebrow">In your own words · page {page}</p>
-          <h1 className="display" style={{ fontSize: 46, marginTop: 10 }}>Tell it to a curious friend.</h1>
+          <h1 className="display" style={{marginTop: 10 }}>Tell it to a curious friend.</h1>
           <p className="lede" style={{ marginTop: 12 }}>Say it the way you'd tell a curious friend. No need for the right words, just the right idea.</p>
 
           <div className="listening card">

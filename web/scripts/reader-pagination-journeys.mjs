@@ -133,6 +133,7 @@ async function run([engine, name, width, height, reducedMotion]) {
     await page.goto(base, { waitUntil: 'domcontentloaded' })
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
+    await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await visible(page.locator('.reader-paper .prose'))
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await visible(page.locator('.paged-reader'))

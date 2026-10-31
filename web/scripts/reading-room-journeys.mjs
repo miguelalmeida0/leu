@@ -22,6 +22,9 @@ async function journey(engine, width, reducedMotion) {
     await page.goto(base)
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await page.getByRole('button', { name: 'Open Computer Science Essentials', exact: true }).click()
+    assert.equal(await page.getByRole('button', { name: 'Original page', exact: true }).getAttribute('aria-pressed'), 'true', 'Original PDF is the default')
+    await page.getByRole('button', { name: 'For reading', exact: true }).click()
+    await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await page.locator('.reader-paper .prose p').first().waitFor()
     await page.goto(base + '/#/home')
     await page.locator('.home-scene img').waitFor()
@@ -37,6 +40,14 @@ async function journey(engine, width, reducedMotion) {
     const cta = await continueButton.boundingBox()
     assert.ok(cta && cta.y + cta.height <= page.viewportSize().height, `${name}: Home resume action is visible without scrolling`)
     await capture('home')
+    const displaySize = await page.locator('h1').evaluate(el => getComputedStyle(el).fontSize)
+    for (const route of ['notes', 'explore']) {
+      await page.goto(base + '/#/' + route)
+      await page.locator('h1, .empty .display').waitFor()
+      assert.equal(await page.locator('h1, .empty .display').evaluate(el => getComputedStyle(el).fontSize), displaySize, route + ': shared display token')
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false, route + ': no overflow')
+    }
+    await page.goto(base + '/#/home')
     await page.getByRole('button', { name: 'Your library · 1 book' }).click()
     await page.getByRole('heading', { name: 'Your library', exact: true }).waitFor()
     assert.equal(await page.getByRole('heading', { name: 'Your shelf', exact: true }).count(), 0)
@@ -55,15 +66,23 @@ async function journey(engine, width, reducedMotion) {
     await page.getByRole('navigation', { name: 'Book collections' }).getByRole('link', { name: 'Programming 1' }).click()
     assert.equal(await page.locator('.library-book').count(), 1)
     await page.getByRole('button', { name: 'Continue reading', exact: true }).click()
+    await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await page.locator('.reader-paper .prose p').first().waitFor()
     const focus = page.getByRole('button', { name: 'Enter full-screen reading' })
     const focusBox = await focus.boundingBox()
-    assert.ok(focusBox && focusBox.y > page.viewportSize().height * .75, `${name}: fullscreen remains in lower toolbar`)
+    assert.ok(focusBox && focusBox.y < 150, `${name}: fullscreen belongs in the top toolbar`)
     const geometry = await page.evaluate(() => ({
       textBottom: document.querySelector('.reader-grid').getBoundingClientRect().bottom,
       footerTop: document.querySelector('.reader-foot').getBoundingClientRect().top,
     }))
     assert.ok(geometry.textBottom <= geometry.footerTop + 1, `${name}: footer never overlays text (${JSON.stringify(geometry)})`)
+    const foot = await page.locator('.reader-foot').boundingBox()
+    assert.ok(Math.abs(foot.y + foot.height - page.viewportSize().height) < 2, 'Reader footer reaches viewport bottom')
+    const viewport = page.viewportSize()
+    await page.setViewportSize({ ...viewport, height: viewport.height - 140 })
+    await page.waitForFunction(() => Math.abs(document.querySelector('.reader-foot').getBoundingClientRect().bottom - innerHeight) < 2)
+    await page.setViewportSize(viewport)
+    await page.waitForFunction(() => Math.abs(document.querySelector('.reader-foot').getBoundingClientRect().bottom - innerHeight) < 2)
     await capture('reader')
     const scrolled = await page.locator('.reader-grid').evaluate((node) => {
       node.scrollTop = node.scrollHeight
@@ -96,7 +115,7 @@ async function journey(engine, width, reducedMotion) {
     await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: 'Library', exact: true }).click()
     await page.getByText('4 pages · Page 2', { exact: true }).waitFor()
     assert.deepEqual(errors, [], `${name}: no runtime errors`)
-    console.log(`PASS ${name}: Home → Library → Reader, filters/search, saved progress, settings, original, lower fullscreen, no text overlap`)
+    console.log(`PASS ${name}: Home → Library → Reader, filters/search, saved progress, settings, original default, top fullscreen, shared tokens, no text overlap`)
   } finally { await browser.close() }
 }
 try {

@@ -90,6 +90,7 @@ async function run([engine, name, width, height, reducedMotion, haptics]) {
     await page.goto(base, { waitUntil: 'domcontentloaded' })
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
+    await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await visible(page.locator('.reader-paper .prose'))
     await enter(page)
     const first = await page.locator('.paged-reader').getAttribute('data-location')

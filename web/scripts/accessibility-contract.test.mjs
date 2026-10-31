@@ -50,7 +50,7 @@ test('route changes restore semantic focus without stealing first-load focus', a
 })
 
 test('felt text and artwork captions have opaque AA contrast', async () => {
-  const css = await source('src/styles.css')
+  const css = await source('src/tokens.css') + await source('src/styles.css')
   const token = (name) => css.match(new RegExp(`--${name}: (#[A-Fa-f0-9]{6})`))[1]
   for (const foreground of ['eyebrow-felt', 'secondary', 'ink']) {
     assert.ok(contrast(token(foreground), token('felt')) >= 4.5, `${foreground} must pass on felt`)

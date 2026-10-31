@@ -27,7 +27,7 @@ export function Welcome({ onBring }: { onBring: () => void }) {
       <figure className="welcome-art"><Basket /><figcaption className="tug" aria-hidden="true"><span className="tug-desktop">Give the yarn a little tug.</span><span className="tug-mobile">The yarn moves gently on its own.</span></figcaption></figure>
       <div className="welcome-words">
         <p className="eyebrow">Hello, and welcome</p>
-        <h1 className="display" style={{ fontSize: 'clamp(40px, 4.4vw, 60px)', marginTop: 12 }}>Make yourself comfortable.</h1>
+        <h1 className="display" style={{marginTop: 12 }}>Make yourself comfortable.</h1>
         <p className="lede">Leu is a quiet place to read the things you actually want to understand. It keeps you company, remembers where you got stuck, and always takes you back to the page.</p>
         <label className="eyebrow" htmlFor="intention" style={{ display: 'block', marginTop: 30, fontSize: 10 }}>Something you've been meaning to understand</label>
         <input

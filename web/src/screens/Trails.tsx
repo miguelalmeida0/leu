@@ -61,7 +61,7 @@ function Walk({ trail }: { trail: Trail }) {
   return (
     <section className="walk" aria-labelledby="walk-h">
       <p className="eyebrow">The walk, {countWords(n, 'stop').toLowerCase()}</p>
-      <h1 id="walk-h" className="display" style={{ fontSize: 50, marginTop: 8 }}>{trail.title}</h1>
+      <h1 id="walk-h" className="display" style={{marginTop: 8 }}>{trail.title}</h1>
       <div className="walk-map" style={{ aspectRatio: `${W} / ${H}` }}>
         <svg viewBox={`0 0 ${W} ${H}`} className="walk-thread" aria-hidden="true">
           <path d={path} fill="none" stroke="rgba(36,48,31,.22)" strokeWidth="3" strokeDasharray="9 7" strokeLinecap="round" />
