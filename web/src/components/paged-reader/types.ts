@@ -18,6 +18,7 @@ export interface PagedReaderProps {
   doc: PDFDocumentProxy
   page: number
   mode: 'rebuilt' | 'original'
+  originalFit: 'cover' | 'width'
   zoom: number
   bookmark?: { page: number; sentence: number; fraction: number }
   activePaper: RefObject<HTMLElement | null>

@@ -28,14 +28,18 @@
 .paged-columns .prose > :last-child { margin-bottom: 0; }
 .reader .reader-paper.paged-panel[data-mode='original'] { padding: 0; }
 .paged-original canvas.original-page { position: relative; display: block; top: 0; left: 50%; max-width: none; margin: 0; box-shadow: none; border-radius: 0; }
-.paged-original:not([data-zoomed]) { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.paged-original[data-fit='width']:not([data-zoomed]) { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
 .paged-original:focus-visible { outline: 2px solid var(--paper-ink); outline-offset: -3px; }
 .paged-original::-webkit-scrollbar { display: none; }
-.paged-original[data-zoomed] canvas.original-page { position: absolute; top: 50%; }
+.paged-original[data-fit='cover'] canvas.original-page, .paged-original[data-zoomed] canvas.original-page { position: absolute; top: 50%; }
 .paged-loading { margin: 0; font-size: var(--text-label); padding: 16px; color: var(--paper-secondary); }
 .paged-position { position: absolute; bottom: max(10px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); margin: 0; font-size: 10px; line-height: 1.4; color: var(--paper-secondary); pointer-events: none; font-variant-numeric: tabular-nums; }
 .paged-access { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); }
 .paged-access:focus-visible { z-index: 3; top: max(8px, env(safe-area-inset-top)); right: 12px; width: auto; height: 44px; padding: 0 14px; margin: 0; clip-path: none; border-radius: 10px; background: var(--cream); color: var(--ink); }
+
+.reader-original-fit { display: flex; flex: none; gap: 2px; padding-right: 4px; margin-right: 2px; border-right: 1px solid var(--separator); }
+.reader-zoom-controls .reader-original-fit button { padding-inline: 6px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.reader-original-fit button[aria-pressed='true'] { background: var(--paper); box-shadow: inset 0 0 0 1px var(--separator); }
 
 /* Chrome overlays the fitted page. Showing it never changes the page geometry. */
 .reader.reader-immersive .reader-bar { position: absolute; top: 0; left: 0; right: 0; z-index: 25; margin: 0; padding: max(8px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 8px max(16px, env(safe-area-inset-left)); background: var(--cream); border-bottom: 1px solid var(--separator); }

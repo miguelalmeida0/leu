@@ -114,10 +114,16 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
     animation.current?.cancel(); animation.current = null
     if (track.current) track.current.style.transform = 'translate3d(0,0,0)'
     busy.current = false; setSettled(true); setPan({ x: 0, y: 0 })
-  }, [props.page, props.mode, props.zoom, dismiss.cancel])
+  }, [props.page, props.mode, props.zoom, props.originalFit, dismiss.cancel])
   useEffect(() => {
     live.current = true
     return () => { live.current = false; animation.current?.cancel() }
+  }, [])
+  useEffect(() => {
+    const resetPan = () => setPan((value) => value.x || value.y ? { x: 0, y: 0 } : value)
+    window.addEventListener('resize', resetPan)
+    window.visualViewport?.addEventListener('resize', resetPan)
+    return () => { window.removeEventListener('resize', resetPan); window.visualViewport?.removeEventListener('resize', resetPan) }
   }, [])
   useEffect(() => {
     for (const page of metrics.current.keys()) if (Math.abs(page - props.page) > 1) metrics.current.delete(page)
@@ -132,12 +138,18 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
     setPan({ x: Math.max(-x, Math.min(x, value.x)), y: Math.max(-y, Math.min(y, value.y)) })
   }
   usePageGesture({ root, track, busy: () => busy.current || dismiss.busy(), dismiss, turn: settle, available: (direction) => direction < 0 ? latest.current.previous : latest.current.next,
-    originalScroll: () => latest.current.props.mode === 'original' && latest.current.props.zoom <= 1.05
+    originalScroll: () => latest.current.props.mode === 'original' && latest.current.props.originalFit === 'width' && latest.current.props.zoom <= 1.05
       ? root.current?.querySelector<HTMLElement>('.paged-current .paged-original') ?? null : null,
+    allowPull: () => {
+      if (latest.current.props.zoom > 1.05) return false
+      const area = root.current?.querySelector<HTMLElement>('.paged-current .paged-original')
+      const canvas = area?.querySelector('canvas')
+      return !!area && !!canvas && canvas.getBoundingClientRect().top >= area.getBoundingClientRect().top - 2
+    },
     tap: props.onToggleControls, sentenceTap: (index) => {
       if (!props.reading || !props.controls) return false
       props.onSeek(index); return true
-    }, zoom: props.zoom, onZoom: props.onZoom, panning: props.mode === 'original' && props.zoom > 1.05, pan, onPan: panTo })
+    }, zoom: props.zoom, onZoom: props.onZoom, panning: props.mode === 'original' && (props.originalFit === 'cover' || props.zoom > 1.05), pan, onPan: panTo })
   const follow = useCallback((index: number) => {
     const state = latest.current
     const target = metrics.current.get(state.props.page)?.columns[index]
@@ -149,13 +161,13 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
   return <div ref={root} className="paged-reader" role="region" aria-label="Reading pages" tabIndex={0}
     data-location={`${props.page}:${leaf}`} data-part={leaf} data-parts={parts} data-settled={settled ? 'true' : 'false'}
     aria-keyshortcuts="ArrowLeft ArrowRight PageUp PageDown"
-    aria-description="Swipe sideways to turn pages. Scroll tall original pages vertically. Pull down at the top to exit full-screen reading.">
+    aria-description="Drag original pages to pan. Use edge taps, page buttons, or Left and Right arrow keys to turn source pages. Swipe rebuilt pages sideways. Pull down from the top to exit full-screen reading.">
     <div className="paged-dismiss-hint" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg><span ref={dismissHint}>Pull down to exit</span></div>
     <div ref={stage} className="paged-dismiss-stage">
     <div ref={track} className="paged-motion">
       {([{ ...before, side: 'before' }, { page: props.page, part: leaf, side: 'current' }, { ...after, side: 'after' }] as const).map((panel) =>
         panel.page >= 1 && panel.page <= props.doc.numPages && <PagePanel key={panel.side} doc={props.doc} number={panel.page} data={pages.get(panel.page)}
-          part={panel.part} side={panel.side} active={panel.side === 'current'} mode={props.mode} zoom={props.zoom}
+          part={panel.part} side={panel.side} active={panel.side === 'current'} mode={props.mode} zoom={props.zoom} originalFit={props.originalFit} onPan={panTo}
           paper={props.activePaper} reading={panel.side === 'current' && props.reading} marked={panel.side === 'current' ? props.marked : undefined}
           pan={panel.side === 'current' ? pan : { x: 0, y: 0 }} onSeek={props.onSeek} onFollow={follow} onMetrics={measured} />)}
     </div>

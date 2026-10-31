@@ -29,7 +29,7 @@ function densePdf(tall = false) {
     const lines = Array.from({ length: 44 }, (_, i) => `Source ${source} line ${String(i + 1).padStart(2, '0')}: careful reading keeps every word in order across the screen${i < 15 ? ',' : '.'}`)
     const stream = `BT /F1 10 Tf 42 740 Td 14 TL ${lines.map((line, i) => `${i ? 'T* ' : ''}(${line}) Tj`).join('\n')} ET`
     const content = objects.length + 2
-    objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 ${tall ? 1800 : 792}] /Resources << /Font << /F1 3 0 R >> >> /Contents ${content} 0 R >>`)
+    objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${tall === 'cover' && source === 2 ? 792 : 612} ${tall === 'cover' ? [792, 612, 1800][source - 1] : tall ? 1800 : 792}] /Resources << /Font << /F1 3 0 R >> >> /Contents ${content} 0 R >>`)
     objects.push(`<< /Length ${Buffer.byteLength(stream)} >>\nstream\n${stream}\nendstream`)
   }
   let pdf = '%PDF-1.4\n', offsets = [0]
@@ -253,11 +253,10 @@ async function run([engine, name, width, height, reducedMotion]) {
     await page.waitForFunction(() => parseFloat(document.querySelector('.paged-current canvas')?.style.width ?? '0') > 0)
     assert.ok(await page.locator('.paged-current canvas').evaluate((el) => {
       const r = el.getBoundingClientRect(), a = el.parentElement.getBoundingClientRect()
-      const viewport = visualViewport
-      return Math.abs(r.left - a.left) < 2 && Math.abs(r.top - a.top) < 2
-        && Math.abs(r.width - (viewport?.width ?? innerWidth)) < 2
+      return r.left <= a.left + 2 && r.right >= a.right - 2
+        && r.top <= a.top + 2 && r.bottom >= a.bottom - 2
         && Math.abs(r.width / r.height - 612 / 792) < .002
-    }), 'The complete original PDF width fills the viewport, aligned at the top without changing its aspect ratio')
+    }), 'The original PDF covers both viewport dimensions without changing its aspect ratio')
     await page.getByRole('button', { name: 'Zoom in' }).click()
     await page.getByRole('button', { name: 'Zoom in' }).click()
     await page.getByRole('button', { name: 'Zoom in' }).click()
@@ -297,6 +296,111 @@ async function run([engine, name, width, height, reducedMotion]) {
   } finally { await browser.close() }
 }
 
+
+async function coverOriginal([engine, name, width, height, reducedMotion]) {
+  const browser = await engine.launch({ headless: true })
+  const page = await browser.newPage({ viewport: { width, height }, isMobile: width < 600 || height < 500, hasTouch: true, reducedMotion })
+  const errors = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  const bounds = () => page.locator('.paged-current canvas').evaluate((el) => ({
+    canvas: el.getBoundingClientRect().toJSON(), area: el.parentElement.getBoundingClientRect().toJSON(),
+  }))
+  const covered = async (aspect) => {
+    const { canvas: c, area: a } = await bounds()
+    assert.ok(c.left <= a.left + 2 && c.right >= a.right - 2 && c.top <= a.top + 2 && c.bottom >= a.bottom - 2,
+      'The default original covers both viewport axes: no app strip below or beside the PDF')
+    assert.ok(Math.abs(c.width / c.height - aspect) < .002, 'Fill screen preserves the source PDF aspect ratio')
+  }
+  try {
+    await page.route('**/samples/*.pdf', (route) => route.fulfill({ contentType: 'application/pdf', body: densePdf('cover') }))
+    await page.goto(base, { waitUntil: 'domcontentloaded' })
+    await page.getByRole('button', { name: /start with a sample book/i }).click()
+    await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
+    await visible(page.locator('.reader-paper canvas'))
+    await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
+    await tapCenter(page)
+    const fits = page.getByRole('group', { name: 'Original page fit', exact: true })
+    assert.equal(await fits.getByRole('button').count(), 2, 'Original fit uses two accessible buttons')
+    assert.equal(await fits.getByRole('button', { name: 'Fill screen', exact: true }).getAttribute('aria-pressed'), 'true')
+    assert.equal(await fits.getByRole('button', { name: 'Fit width', exact: true }).getAttribute('aria-pressed'), 'false')
+    await tapCenter(page)
+    for (const [source, aspect] of [[1, 612 / 792], [2, 792 / 612], [3, 612 / 1800]]) {
+      await page.waitForFunction((ratio) => {
+        const canvas = document.querySelector('.paged-current canvas')
+        return canvas && canvas.width > 0 && Math.abs(parseFloat(canvas.style.width) / parseFloat(canvas.style.height) - ratio) < .002
+      }, aspect)
+      await covered(aspect)
+      const saved = await location(page)
+      // Each drag stays inside the viewport. Repeat until the bounded pan makes
+      // an intrinsic source edge reachable, then stop before starting an exit.
+      for (const edge of ['left', 'right', 'top', 'bottom']) {
+        for (let attempt = 0; attempt < 30; attempt++) {
+          const { canvas: c, area: a } = await bounds()
+          if (Math.abs(c[edge] - a[edge]) < 2) break
+          const dx = edge === 'left' ? width * .45 : edge === 'right' ? -width * .45 : 0
+          const dy = edge === 'top' ? height * .35 : edge === 'bottom' ? -height * .35 : 0
+          await drag(page, engine, dx, dy)
+          assert.equal(await location(page), saved, 'A cover drag pans content instead of turning a source page')
+          await covered(aspect)
+        }
+        const { canvas: c, area: a } = await bounds()
+        assert.ok(Math.abs(c[edge] - a[edge]) < 2, 'The complete PDF ' + edge + ' edge remains reachable by bounded panning')
+      }
+      if (source === 1) {
+        for (const viewport of [{ width: height, height: width }, { width, height }]) {
+          await page.setViewportSize(viewport)
+          await page.waitForFunction(({ width, height, aspect }) => {
+            const area = document.querySelector('.paged-current .paged-original'), canvas = area.querySelector('canvas')
+            return area.clientWidth === width && area.clientHeight === height
+              && Math.abs(parseFloat(canvas.style.width) - Math.max(width, height * aspect)) < 2
+          }, { ...viewport, aspect })
+          await covered(aspect)
+        }
+      }
+      await page.locator('.paged-current .paged-original').focus()
+      const previous = await bounds()
+      await page.keyboard.press('ArrowUp')
+      const after = await bounds()
+      if (previous.canvas.height > height + 80) assert.ok(after.canvas.top > previous.canvas.top + 20, 'Keyboard panning can move back from the PDF bottom')
+      await page.screenshot({ path: join(evidence, name + '-cover-source-' + source + '.png') })
+      if (source < 3) await keyStep(page, 'ArrowRight')
+    }
+    await tapCenter(page)
+    assert.equal(await page.getByRole('group', { name: 'Original page fit', exact: true }).getByRole('button', { name: 'Fill screen', exact: true }).getAttribute('aria-pressed'), 'true', 'Fill screen is the default')
+    await page.getByRole('group', { name: 'Original page fit', exact: true }).getByRole('button', { name: 'Fit width', exact: true }).click()
+    await page.waitForFunction(() => Math.abs(parseFloat(document.querySelector('.paged-current canvas')?.style.width ?? '0') - innerWidth) < 2)
+    await page.getByRole('group', { name: 'Original page fit', exact: true }).getByRole('button', { name: 'Fill screen', exact: true }).click()
+    await page.waitForFunction(() => document.querySelector('.paged-current .paged-original')?.dataset.fit === 'cover')
+    await covered(612 / 1800)
+    await page.getByRole('button', { name: 'Previous page', exact: true }).click()
+    await page.waitForFunction(() => document.querySelector('.paged-reader')?.dataset.location === '2:0' && document.querySelector('.paged-reader')?.dataset.settled === 'true')
+    await tapCenter(page)
+    const box = await page.locator('.paged-reader').boundingBox()
+    await page.locator('.paged-reader').click({ position: { x: box.width - 8, y: box.height * .55 } })
+    await page.waitForFunction(() => document.querySelector('.paged-reader')?.dataset.location === '3:0' && document.querySelector('.paged-reader')?.dataset.settled === 'true')
+    await page.waitForFunction(() => {
+      const canvas = document.querySelector('.paged-current canvas')
+      return Math.abs(parseFloat(canvas.style.width) / parseFloat(canvas.style.height) - 612 / 1800) < .002
+    })
+    for (let attempt = 0; attempt < 30; attempt++) {
+      const { canvas: c, area: a } = await bounds()
+      if (Math.abs(c.top - a.top) < 2) break
+      await drag(page, engine, 0, height * .35)
+    }
+    await page.mouse.move(width * .5, height * .25)
+    await page.mouse.down()
+    await page.mouse.move(width * .5 + 4, height * .25 + 190, { steps: 8 })
+    assert.equal(await page.locator('.paged-reader').getAttribute('data-pull-state'), 'ready', 'A fresh pull at the cover pan top boundary still offers exit')
+    await page.mouse.up()
+    await page.locator('.reader-immersive').waitFor({ state: 'hidden' })
+    assert.deepEqual(errors, [])
+    console.log('PASS ' + name + ': cover portrait/landscape/tall originals, all four source edges, keyboard pan, fit toggle, buttons/keys/edge-tap page turns')
+  } catch (error) {
+    await page.screenshot({ path: join(evidence, name + '-cover-failed.png') }).catch(() => {})
+    throw error
+  } finally { await browser.close() }
+}
+
 async function tallOriginal([engine, name, width, height, reducedMotion]) {
   const browser = await engine.launch({ headless: true })
   const page = await browser.newPage({ viewport: { width, height }, isMobile: width < 600 || height < 500, hasTouch: true, reducedMotion })
@@ -312,6 +416,10 @@ async function tallOriginal([engine, name, width, height, reducedMotion]) {
     await visible(page.locator('.reader-paper canvas'))
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await page.waitForFunction(() => parseFloat(document.querySelector('.paged-current canvas')?.style.width ?? '0') > 0)
+    await tapCenter(page)
+    await page.getByRole('group', { name: 'Original page fit', exact: true }).getByRole('button', { name: 'Fit width', exact: true }).click()
+    await tapCenter(page)
+    await page.waitForFunction(() => Math.abs(parseFloat(document.querySelector('.paged-current canvas')?.style.width ?? '0') - innerWidth) < 2)
     assert.ok(await area().evaluate((el) => {
       const canvas = el.querySelector('canvas').getBoundingClientRect(), box = el.getBoundingClientRect()
       return Math.abs(canvas.width - box.width) < 2 && Math.abs(canvas.y - box.y) < 2
@@ -404,7 +512,7 @@ try {
     await new Promise((resolve) => setTimeout(resolve, 150))
   }
   for (const config of configs) {
-    if (!process.env.LEU_PAGED_CASE || config[1] === process.env.LEU_PAGED_CASE) { await run(config); await tallOriginal(config) }
+    if (!process.env.LEU_PAGED_CASE || config[1] === process.env.LEU_PAGED_CASE) { await coverOriginal(config); await run(config); await tallOriginal(config) }
   }
   if (!process.env.LEU_PAGED_CASE) {
     await extractionFallback(chromium, 'chromium-fallback')
