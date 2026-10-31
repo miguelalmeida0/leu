@@ -57,6 +57,9 @@ jobs:
       - name: Verify fitted screen pagination and touch viewport isolation
         working-directory: web
         run: node scripts/reader-pagination-journeys.mjs
+      - name: Verify pull-to-exit gestures and haptic fallbacks
+        working-directory: web
+        run: node scripts/reader-dismiss-journeys.mjs
       - name: Verify static animation previews
         working-directory: web
         run: node scripts/scene-journeys.mjs

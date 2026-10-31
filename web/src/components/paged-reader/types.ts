@@ -27,6 +27,7 @@ export interface PagedReaderProps {
   onSeek: (index: number) => void
   onTurn: (page: number) => void
   onZoom: (zoom: number) => void
+  onExit: () => void
   onToggleControls: () => void
   onPosition: (position: ReadingPosition) => void
 }

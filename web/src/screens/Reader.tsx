@@ -9,6 +9,7 @@ import { Dock } from '../components/Dock'
 import './FocusListening.css'
 import './ReaderLayout.css'
 import { PagedReader, type PagedReaderHandle, type ReadingPosition } from '../components/paged-reader/PagedReader'
+import { hapticFeedback } from '../lib/haptics'
 import { useReaderFullscreen } from '../lib/useReaderFullscreen'
 import { dismissNotice, prefetch, seek, speak, stop, useVoice, warmVoice } from '../lib/voice'
 import { ExplainPanel, gistOf } from './Explain'
@@ -52,6 +53,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const changeZoom = useCallback((next: number) => setZoom(limitZoom(next)), [])
 
   const toggleFocus = () => {
+    hapticFeedback(immersive ? 'confirm' : 'light')
     setControls(false)
     toggleFullscreen()
   }
@@ -351,7 +353,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
 
         {immersive && doc ? <PagedReader ref={paged} doc={doc} page={clamped} mode={mode} zoom={zoom}
           controls={controls}
-          activePaper={paper} onTurn={turn} onZoom={changeZoom} onToggleControls={toggleControls}
+          activePaper={paper} onTurn={turn} onZoom={changeZoom} onToggleControls={toggleControls} onExit={exitFullscreen}
           onPosition={reportPosition} bookmark={book.readingPosition}
           reading={speaking && (voice.status === 'speaking' || voice.status === 'paused')} marked={marked} onSeek={seek} /> :
         <article key={clamped} className="reader-paper" ref={paper}
