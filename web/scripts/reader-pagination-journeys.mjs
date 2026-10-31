@@ -51,6 +51,24 @@ async function keyStep(page, key) {
   await page.keyboard.press(key)
   await page.waitForFunction((old) => document.querySelector('.paged-reader')?.dataset.location !== old && document.querySelector('.paged-reader')?.dataset.settled === 'true', before)
 }
+async function resize(page, width, height) {
+  await page.setViewportSize({ width, height })
+  // setViewportSize acknowledges the protocol command before the browser must
+  // deliver visualViewport.resize and ResizeObserver. Wait for the observable
+  // fitted layout, including column measurement, rather than racing that event.
+  await page.waitForFunction(() => {
+    const shell = document.querySelector('.reader-immersive').getBoundingClientRect()
+    const viewport = visualViewport
+    const area = document.querySelector('.paged-current .paged-text')
+    const prose = area.querySelector('.prose')
+    const parts = Math.max(1, Math.round((prose.scrollWidth + 32) / (area.clientWidth + 32)))
+    return Math.abs(shell.height - (viewport?.height ?? innerHeight)) < 2
+      && Math.abs(shell.width - (viewport?.width ?? innerWidth)) < 2
+      && Math.abs(shell.y - (viewport?.offsetTop ?? 0)) < 2
+      && Math.abs(parseFloat(area.style.getPropertyValue('--paged-column-width')) - area.clientWidth) < 1
+      && parts === Number(document.querySelector('.paged-reader').dataset.parts)
+  })
+}
 
 async function geometry(page) {
   return page.evaluate(() => {
@@ -235,10 +253,10 @@ async function run([engine, name, width, height, reducedMotion]) {
     await ready(page)
     await page.waitForFunction((old) => document.querySelector('.paged-reader')?.dataset.location === old, saved)
     // Rotation/viewport resize keeps the same passage, then repaginates back.
-    await page.setViewportSize({ width: width > 900 ? 1000 : height, height: width > 900 ? 720 : width })
+    await resize(page, width > 900 ? 1000 : height, width > 900 ? 720 : width)
     await fittedText(page)
     await still(page, await geometry(page))
-    await page.setViewportSize({ width, height })
+    await resize(page, width, height)
     await ready(page)
     await fittedText(page)
     await page.screenshot({ path: join(evidence, name + '-reading.png') })
