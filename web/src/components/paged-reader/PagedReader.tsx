@@ -132,6 +132,8 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
     setPan({ x: Math.max(-x, Math.min(x, value.x)), y: Math.max(-y, Math.min(y, value.y)) })
   }
   usePageGesture({ root, track, busy: () => busy.current || dismiss.busy(), dismiss, turn: settle, available: (direction) => direction < 0 ? latest.current.previous : latest.current.next,
+    originalScroll: () => latest.current.props.mode === 'original' && latest.current.props.zoom <= 1.05
+      ? root.current?.querySelector<HTMLElement>('.paged-current .paged-original') ?? null : null,
     tap: props.onToggleControls, sentenceTap: (index) => {
       if (!props.reading || !props.controls) return false
       props.onSeek(index); return true
@@ -147,7 +149,7 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
   return <div ref={root} className="paged-reader" role="region" aria-label="Reading pages" tabIndex={0}
     data-location={`${props.page}:${leaf}`} data-part={leaf} data-parts={parts} data-settled={settled ? 'true' : 'false'}
     aria-keyshortcuts="ArrowLeft ArrowRight PageUp PageDown"
-    aria-description="Swipe sideways to turn pages. Pull down to exit full-screen reading.">
+    aria-description="Swipe sideways to turn pages. Scroll tall original pages vertically. Pull down at the top to exit full-screen reading.">
     <div className="paged-dismiss-hint" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg><span ref={dismissHint}>Pull down to exit</span></div>
     <div ref={stage} className="paged-dismiss-stage">
     <div ref={track} className="paged-motion">

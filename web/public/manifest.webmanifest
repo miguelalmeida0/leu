@@ -1,0 +1,13 @@
+{
+  "id": "/",
+  "name": "Leu",
+  "short_name": "Leu",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F5F0E5",
+  "theme_color": "#B6C690",
+  "icons": [
+    { "src": "/icons/leu.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

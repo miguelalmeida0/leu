@@ -168,15 +168,15 @@ async function embeddedOutline(doc: PDFDocumentProxy): Promise<Outline[]> {
   return result
 }
 
-/** The original page, drawn at a width, sharp on high-density screens. */
-export async function renderPage(doc: PDFDocumentProxy, n: number, canvas: HTMLCanvasElement, width: number) {
+/** Render sharply at width; displayWidth keeps the layout independent of a raster size cap. */
+export async function renderPage(doc: PDFDocumentProxy, n: number, canvas: HTMLCanvasElement, width: number, displayWidth = width) {
   const page = await doc.getPage(n)
   const base = page.getViewport({ scale: 1 })
   const ratio = window.devicePixelRatio || 1
   const viewport = page.getViewport({ scale: (width / base.width) * ratio })
   canvas.width = viewport.width
   canvas.height = viewport.height
-  canvas.style.width = `${width}px`
-  canvas.style.height = `${(viewport.height / ratio)}px`
+  canvas.style.width = `${displayWidth}px`
+  canvas.style.height = `${displayWidth * base.height / base.width}px`
   await page.render({ canvas, viewport }).promise
 }
