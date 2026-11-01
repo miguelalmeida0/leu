@@ -134,11 +134,13 @@ async function runBrowser(browserType, name, mobile, width) {
     const playButton = await page.locator('.reader-foot .dock-play').boundingBox()
     const pageControl = await page.locator('.reader-foot .dock-pages').boundingBox()
     const voiceControl = await page.locator('.reader-foot .dock-voice').boundingBox()
-    assert.ok(playButton && pageControl && voiceControl && pageControl.x >= playButton.x + playButton.width + 4,
-      'Page turning is a distinct centered group, visually separate from listening')
-    assert.ok(voiceControl.x >= playButton.x && pageControl.x + pageControl.width <= width + 2
-      && Math.abs(pageControl.x + pageControl.width / 2 - width / 2) <= 3,
-      'Listening and centered page controls fit the same footer without overlap')
+    const speedControl = await page.locator('.reader-foot .dock-speed').boundingBox()
+    assert.ok(playButton && pageControl && voiceControl && speedControl
+      && pageControl.x >= Math.max(playButton.x + playButton.width, voiceControl.x + voiceControl.width) + 3
+      && pageControl.x + pageControl.width <= speedControl.x + 2,
+      'Listening, page turning and playback speed occupy separate non-overlapping footer groups')
+    if (!mobile) assert.ok(Math.abs(pageControl.x + pageControl.width / 2 - width / 2) <= 3,
+      'Desktop page navigation remains centered independently of listening controls')
     assert.ok(await page.locator('.reader-foot .dock-pages').getByRole('button', { name: 'Next page' }).isVisible(),
       'A visible Next page button remains in the reader footer')
     assert.ok(footerBox && footerBox.height <= 62, 'The ordinary reader footer fits in a single compact row')
