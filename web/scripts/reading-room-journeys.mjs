@@ -93,11 +93,19 @@ async function journey(engine, width, reducedMotion) {
     assert.ok(geometry.textBottom <= geometry.footerTop + 1, `${name}: footer never overlays text (${JSON.stringify(geometry)})`)
     const priority = await page.evaluate(() => {
       const box = (selector) => document.querySelector(selector).getBoundingClientRect()
+      const probe = document.createElement('div')
+      probe.style.paddingTop = 'env(safe-area-inset-top)'
+      document.body.appendChild(probe)
+      const safeTop = parseFloat(getComputedStyle(probe).paddingTop) || 0
+      probe.remove()
       return { header: box('.topbar').height, toolbar: box('.reader-bar').height,
         footer: box('.reader-foot').height, reading: box('.reader-grid').height,
-        viewport: innerHeight, scrollWidth: document.documentElement.scrollWidth }
+        viewport: innerHeight, scrollWidth: document.documentElement.scrollWidth,
+        safeTop }
     })
-    assert.ok(priority.header <= 64 && priority.toolbar <= 54 && priority.footer <= 68,
+    // On an iPhone the single reader header includes the system status-bar inset;
+    // measure its usable controls independently of that reserved system space.
+    assert.ok(priority.header <= 64 && priority.toolbar - priority.safeTop <= 54 && priority.footer <= 68,
       `${name}: PDF reading must not lose height to oversized fixed chrome (${JSON.stringify(priority)})`)
     assert.ok(priority.reading / priority.viewport >= .70,
       `${name}: PDF area must occupy at least 70% of the viewport (${JSON.stringify(priority)})`)
@@ -113,7 +121,7 @@ async function journey(engine, width, reducedMotion) {
       viewport: innerHeight,
       overflow: document.documentElement.scrollWidth - innerWidth,
     }))
-    assert.ok(chrome.top <= 70 && chrome.toolbar <= 58 && chrome.footer <= 70,
+    assert.ok(chrome.top <= 70 && chrome.toolbar - priority.safeTop <= 58 && chrome.footer <= 70,
       `${name}: reading chrome consumes excessive vertical space ${JSON.stringify(chrome)}`)
     assert.ok(chrome.text >= chrome.viewport * .67 && chrome.overflow <= 2,
       `${name}: PDF reading area must dominate the viewport ${JSON.stringify(chrome)}`)
