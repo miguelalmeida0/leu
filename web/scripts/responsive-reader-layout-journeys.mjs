@@ -73,18 +73,23 @@ async function check(engine) {
       await page.locator('.reader-bar .contents-trigger').click()
       const dialog = page.getByRole('dialog', { name: 'Contents', exact: true })
       await dialog.waitFor({ state: 'visible' })
-      const settings = await dialog.getByRole('button', { name: 'Reading settings' }).boundingBox()
-      const close = await dialog.getByRole('button', { name: 'Close dialog' }).boundingBox()
-      const heading = await dialog.locator('.contents-heading').boundingBox()
-      const modal = await dialog.boundingBox()
-      const closeStyle = await dialog.getByRole('button', { name: 'Close dialog' }).evaluate(node => {
-        const s = getComputedStyle(node)
-        return { position: s.position, gridRow: s.gridRow, top: s.top, height: s.height }
+      // Read all geometry in one frame after the modal entrance. Sequential
+      // boundingBox calls can sample different animation positions on WebKit.
+      await dialog.evaluate(async (node) => {
+        await Promise.all(node.getAnimations({ subtree: false }).map((animation) => animation.finished.catch(() => {})))
       })
+      const placement = await dialog.evaluate((node) => {
+        const box = (selector) => node.querySelector(selector)?.getBoundingClientRect().toJSON() ?? null
+        const close = node.querySelector('.modal-close')
+        return { settings: box('.contents-appearance'), close: box('.modal-close'),
+          heading: box('.contents-heading'), modal: node.getBoundingClientRect().toJSON(),
+          position: close ? getComputedStyle(close).position : null }
+      })
+      const { settings, close, heading } = placement
       assert.ok(settings && close && heading && !overlap(settings, close)
         && close.bottom + 4 <= heading.top,
         engine.name() + ' ' + width + ': X must be above the Contents header: '
-        + JSON.stringify({ settings, close, heading, modal, closeStyle }))
+        + JSON.stringify(placement))
       if ([390, 820, 1440].includes(width)) {
         await page.screenshot({ path: join(evidence, engine.name() + '-' + width + '-contents.png') })
       }
