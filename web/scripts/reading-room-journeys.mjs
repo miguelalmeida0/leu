@@ -84,6 +84,15 @@ async function journey(engine, width, reducedMotion) {
       await page.locator('.reader-paper .prose p').first().waitFor()
     } else await page.locator('.reader-paper canvas').waitFor({ state: 'visible' })
     const focus = page.getByRole('button', { name: 'Enter full-screen reading' })
+    if (width <= 720) {
+      const backBox = await page.getByRole('link', { name: 'Back to book overview' }).boundingBox()
+      const chaptersBox = await page.locator('.reader-bar .contents-trigger').boundingBox()
+      const fullScreenBox = await focus.boundingBox()
+      assert.ok(backBox && chaptersBox && fullScreenBox
+        && Math.abs(backBox.y + backBox.height / 2 - chaptersBox.y - chaptersBox.height / 2) <= 2
+        && Math.abs(chaptersBox.y + chaptersBox.height / 2 - fullScreenBox.y - fullScreenBox.height / 2) <= 2,
+        'Back, Chapters and Fullscreen must fit in one aligned mobile header row')
+    }
     const focusBox = await focus.boundingBox()
     assert.ok(focusBox && focusBox.y < 150, `${name}: fullscreen belongs in the top toolbar`)
     const geometry = await page.evaluate(() => ({

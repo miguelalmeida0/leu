@@ -150,6 +150,7 @@
     background: var(--felt); border-bottom: 1px solid rgba(36,48,31,.15);
   }
   .app[data-route='read'] .reader:not(.reader-immersive) .reader-back {
+    grid-column: 1; grid-row: 1;
     display: flex; min-width: 0; width: 100%; max-width: none;
     align-items: center; gap: 7px; min-height: 44px;
     padding: 0; border-radius: 8px; font-size: var(--text-sm); line-height: 1.25;
@@ -161,6 +162,7 @@
   }
   .app[data-route='read'] .reader:not(.reader-immersive) .segmented { display: none; }
   .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls {
+    grid-column: 2; grid-row: 1;
     display: flex; align-items: center; justify-self: end; gap: 4px; min-width: 0;
   }
   .app[data-route='read'] .reader:not(.reader-immersive) .reader-type-toggle { display: none; }
