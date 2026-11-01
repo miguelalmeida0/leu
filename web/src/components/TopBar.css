@@ -31,3 +31,27 @@
   white-space: nowrap; overflow-wrap: normal;
 }
 .topbar .search-pill kbd { flex: none; }
+
+/* A fixed-width search slot prevents text-spacing preferences from collapsing
+ * the label into a vertical column or extending past the viewport. */
+@media (min-width: 1101px) {
+  .topbar:not(.compact-nav) .topbar-tools {
+    width: min(100%, 252px);
+    min-width: 0;
+  }
+  .topbar:not(.compact-nav) .search-pill {
+    width: 100%;
+    min-width: 44px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .topbar:not(.compact-nav) .search-pill span {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    overflow-wrap: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .topbar:not(.compact-nav) .search-pill kbd { flex: none; }
+}
