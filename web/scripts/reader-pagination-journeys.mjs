@@ -206,8 +206,8 @@ async function run([engine, name, width, height, reducedMotion]) {
       'Immersive fullscreen provides visible page controls without a large footer')
     assert.ok(await page.getByRole('button', { name: 'Leave full-screen' }).isVisible(),
       'Fullscreen has a persistent accessible exit')
-    assert.ok(await page.getByRole('button', { name: 'Show reader tools' }).isVisible(),
-      'Fullscreen provides a discoverable way to reveal reading tools')
+    assert.equal(await page.getByRole('button', { name: 'Show reader tools' }).isVisible(), width > 720,
+      'Mobile fullscreen has no redundant Tools button; the document tap still reveals the toolbar')
     await ready(page)
     const before = await geometry(page)
     await still(page, before)

@@ -135,12 +135,30 @@ async function runBrowser(browserType, name, mobile, width) {
     const pageControl = await page.locator('.reader-foot .dock-pages').boundingBox()
     const voiceControl = await page.locator('.reader-foot .dock-voice').boundingBox()
     const speedControl = await page.locator('.reader-foot .dock-speed').boundingBox()
-    assert.ok(playButton && pageControl && voiceControl && speedControl
-      && pageControl.x >= Math.max(playButton.x + playButton.width, voiceControl.x + voiceControl.width) + 3
+    assert.ok(playButton && pageControl && speedControl
+      && pageControl.x >= playButton.x + playButton.width + 3
       && pageControl.x + pageControl.width <= speedControl.x + 2,
-      'Listening, page turning and playback speed occupy separate non-overlapping footer groups')
-    if (!mobile) assert.ok(Math.abs(pageControl.x + pageControl.width / 2 - width / 2) <= 3,
-      'Desktop page navigation remains centered independently of listening controls')
+      'Playback, page turning and speed occupy separate non-overlapping footer groups')
+    if (mobile) {
+      assert.equal(voiceControl, null, 'Mobile shows only Play on the left, not a second red voice button')
+      assert.ok(Math.abs(pageControl.x + pageControl.width / 2 - width / 2) <= 3,
+        'Mobile page navigation is precisely centered in the footer')
+      assert.equal(await page.locator('.reader-foot .dock-listen button:visible').count(), 1,
+        'The mobile listening group contains one visible Play button')
+      const modeSpacing = await page.locator('.reader-bar .segmented button.on').evaluate((node) => {
+        const style = getComputedStyle(node)
+        return { padding: parseFloat(style.paddingLeft), radius: parseFloat(style.borderTopLeftRadius) }
+      })
+      assert.ok(modeSpacing.padding >= 6 && modeSpacing.radius >= 7,
+        'Reading mode selection must have inset padding and a bounded active surface')
+      assert.equal(await page.locator('.reader-bar .reader-type-toggle').isVisible(), false,
+        'Appearance moves into chapter settings instead of a third top-row icon')
+      assert.ok(await page.locator('.reader-bar .contents-trigger .reader-contents-book').isVisible(),
+        'Chapters use a book icon, not a second hamburger menu')
+    } else {
+      assert.ok(voiceControl && Math.abs(pageControl.x + pageControl.width / 2 - width / 2) <= 3,
+        'Desktop retains voice selection and centered page navigation')
+    }
     assert.ok(await page.locator('.reader-foot .dock-pages').getByRole('button', { name: 'Next page' }).isVisible(),
       'A visible Next page button remains in the reader footer')
     assert.ok(footerBox && footerBox.height <= 62, 'The ordinary reader footer fits in a single compact row')
@@ -148,12 +166,17 @@ async function runBrowser(browserType, name, mobile, width) {
       'The listening footer reserves space and cannot cover reading text')
 
     if (mobile) {
-      const voiceButton = page.getByRole('button', { name: /^Voice: .* Change$/ })
-      await visible(voiceButton)
-      await voiceButton.click()
-      await visible(page.getByRole('menu', { name: 'Voices' }))
-      await visible(page.getByRole('menuitemradio', { name: /Device default/i }))
-      await page.getByRole('menuitemradio', { name: /Device default/i }).click()
+      const chapters = page.locator('.reader-bar .contents-trigger')
+      await chapters.click()
+      const contentsDialog = page.getByRole('dialog', { name: 'Contents' })
+      await visible(contentsDialog)
+      await contentsDialog.getByRole('button', { name: 'Reading settings' }).click()
+      const displayDialog = page.getByRole('dialog', { name: 'Reading settings' })
+      await visible(displayDialog.getByRole('radiogroup', { name: 'Reading voice' }))
+      await visible(displayDialog.getByRole('radio', { name: /Device default/i }))
+      await displayDialog.getByRole('radio', { name: /Device default/i }).click()
+      await page.keyboard.press('Escape')
+      await unhidden(displayDialog)
       await visible(page.getByRole('button', { name: /^Reading speed / }))
       const speedButton = page.getByRole('button', { name: /^Reading speed / })
       const speedBefore = await speedButton.getAttribute('aria-label')
@@ -196,9 +219,23 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.locator('.paged-current .prose p').first())
     assert.equal(await page.locator('.reader-immersive').getAttribute('data-controls'), 'hidden')
     const focusPages = page.getByRole('navigation', { name: 'Full-screen pages' })
-    assert.ok(await focusPages.isVisible() && await page.getByRole('button', { name: 'Show reader tools' }).isVisible()
-      && await page.getByRole('button', { name: 'Leave full-screen' }).isVisible(),
-      'Fullscreen retains discoverable navigation, tool access and exit even with its chrome hidden')
+    assert.ok(await focusPages.isVisible() && await page.getByRole('button', { name: 'Leave full-screen' }).isVisible(),
+      'Fullscreen retains page navigation and a persistent exit while its main chrome is hidden')
+    assert.equal(await page.getByRole('button', { name: 'Show reader tools' }).isVisible(), !mobile,
+      'On mobile, tapping the page reveals tools without a redundant Tools button')
+    if (mobile) {
+      const focusGeometry = await page.evaluate(() => {
+        const shell = document.querySelector('.reader-immersive').getBoundingClientRect()
+        const nav = document.querySelector('.reader-immersive .reader-page-nav').getBoundingClientRect()
+        const done = document.querySelector('.reader-immersive .reader-focus-shortcuts button:last-child').getBoundingClientRect()
+        const title = document.querySelector('.paged-current .prose h2')?.getBoundingClientRect()
+        return { center: Math.abs(nav.x + nav.width / 2 - (shell.x + shell.width / 2)),
+          bottom: shell.bottom - nav.bottom, titleClear: !title || done.bottom <= title.top - 2 }
+      })
+      assert.ok(focusGeometry.center <= 2 && focusGeometry.bottom <= 24,
+        'Full-screen page controls sit centered at the bottom of the mobile viewport')
+      assert.ok(focusGeometry.titleClear, 'Fullscreen exit does not cover the page heading')
+    }
     assert.ok(await page.locator('.reader-focus-hint').isVisible(),
       'First-time fullscreen readers get direct gesture and toolbar guidance')
     await page.waitForFunction(() => {

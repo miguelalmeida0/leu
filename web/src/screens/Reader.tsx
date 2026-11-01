@@ -8,6 +8,7 @@ import { go, href } from '../lib/router'
 import { addNote, loadOutline, loadPdf, patchBook, removeNote, upsertMemory, useStore, type Outline } from '../lib/store'
 import { cloze, ideas } from '../lib/text'
 import { Dock } from '../components/Dock'
+import { VoiceSettings } from '../components/VoiceSettings'
 import './FocusListening.css'
 import './ReaderLayout.css'
 import './ReaderChrome.css'
@@ -341,7 +342,8 @@ export function Reader({ id, page }: { id: string; page: number }) {
           <button type="button" aria-pressed={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
         </div>
         <div className="reader-view-controls">
-          <ReaderContents entries={entries} currentIndex={currentIndex} onChoose={(index) => turn(entries[index].page)} />
+          <ReaderContents entries={entries} currentIndex={currentIndex}
+            onChoose={(index) => turn(entries[index].page)} onAppearance={() => setSettings(true)} />
           <div className="reader-focus-tools">{focusButton}</div>
           {immersive && zoomControls}
           {!immersive && <button type="button" className="reader-type-toggle" aria-label="Reading settings" onClick={() => setSettings(true)}><TextAaIcon size={23} aria-hidden="true" /></button>}
@@ -433,7 +435,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
             aria-label={controls ? 'Hide reader tools' : 'Show reader tools'}>Tools</button>
           <button type="button" onClick={toggleFocus} aria-label="Leave full-screen">Done</button>
         </div>
-        {!focusHelpDismissed && !controls && <p className="reader-focus-hint">Swipe sideways or use arrow keys to turn pages. Tap to show reading tools.</p>}
+        {!focusHelpDismissed && !controls && <p className="reader-focus-hint">Swipe to turn pages · Tap the page for controls</p>}
         <nav className="reader-page-nav" aria-label="Full-screen pages">
           <button type="button" aria-label="Previous page" disabled={!(position?.previous ?? clamped > 1)}
             onClick={() => { setFocusHelpDismissed(true); paged.current?.step(-1) }}>
@@ -450,6 +452,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
         <h2 className="display" style={{ fontSize: 24, marginBottom: 20 }}>Reading settings</h2>
         <p className="muted">Text size</p>
         {zoomControls}
+        <VoiceSettings />
       </Modal>}
       {immersive && explain && (
         <Modal label="Passage explanation" onClose={() => setExplain(null)} width={540}>

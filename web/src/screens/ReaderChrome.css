@@ -96,3 +96,40 @@
     height: 60px; min-height: 60px;
   }
 }
+
+/* Mobile reader: padded mode selection, chapter book + fullscreen only. */
+@media (max-width: 720px) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar {
+    display: grid; grid-template-columns: minmax(0,1fr) auto;
+    align-items: center; gap: 6px; padding-inline: 12px;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented {
+    display: inline-flex; width: max-content; max-width: 100%;
+    gap: 2px; padding: 4px;
+    background: rgba(248,241,222,.48); border-radius: 12px;
+    box-shadow: inset 0 0 0 1px rgba(36,48,31,.10);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented button {
+    min-height: 40px; padding: 0 10px; border: 0; border-radius: 9px;
+    background: transparent; color: var(--secondary); font-size: var(--text-caption);
+    font-weight: 650; white-space: nowrap;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented button.on {
+    background: var(--cream); color: var(--ink); border: 0;
+    box-shadow: 0 1px 3px rgba(36,48,31,.10);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls { gap: 4px; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-type-toggle { display: none; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .contents-trigger,
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-focus-toggle {
+    display: grid; place-items: center; min-width: 44px; width: 44px;
+    min-height: 44px; height: 44px; padding: 0; border-radius: 10px;
+  }
+}
+@media (max-width: 350px) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented button {
+    font-size: 11px; padding-inline: 6px;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar { padding-inline: 8px; gap: 3px; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls { gap: 0; }
+}

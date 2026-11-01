@@ -121,7 +121,13 @@ async function journey(engine, width, reducedMotion) {
     await page.getByRole('button', { name: 'Next page', exact: true }).click()
     await page.locator('.reader-paper[aria-label="Page 2 of 4"]').waitFor()
     assert.equal(await page.locator('.reader-grid').evaluate((node) => node.scrollTop), 0, 'A new page starts at the top')
-    await page.getByRole('button', { name: 'Reading settings', exact: true }).click()
+    if (width <= 720) {
+      await page.locator('.reader-bar .contents-trigger').click()
+      await page.getByRole('dialog', { name: 'Contents' }).getByRole('button', { name: 'Reading settings' }).click()
+      await page.getByRole('dialog', { name: 'Reading settings' }).waitFor({ state: 'visible' })
+    } else {
+      await page.getByRole('button', { name: 'Reading settings', exact: true }).click()
+    }
     await page.getByRole('button', { name: 'Zoom in', exact: true }).click()
     assert.equal(await page.getByRole('button', { name: 'Reset zoom' }).textContent(), '125%')
     await page.keyboard.press('Escape')

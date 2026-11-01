@@ -87,3 +87,9 @@
 
 /* A fitted sheet keeps its intrinsic whitespace on a white viewport. */
 .paged-reader[data-mode='original'], .reader .reader-paper.paged-panel[data-mode='original'], .paged-original { background: #fff; }
+
+@media (max-width: 720px) {
+  .reader.reader-immersive .reader-paper.paged-panel[data-mode='rebuilt'] {
+    padding-top: max(65px, calc(env(safe-area-inset-top) + 42px));
+  }
+}

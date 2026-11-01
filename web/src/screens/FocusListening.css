@@ -107,3 +107,26 @@
 .reader.reader-immersive[data-controls='shown'] .reader-focus-shortcuts {
   visibility: hidden; opacity: 0; pointer-events: none;
 }
+
+@media (max-width: 720px) {
+  .reader.reader-immersive .reader-focus-shortcuts button:first-child { display: none; }
+  .reader.reader-immersive .reader-focus-shortcuts { top: max(6px, env(safe-area-inset-top)); right: max(8px, env(safe-area-inset-right)); }
+  .reader.reader-immersive .reader-focus-shortcuts button {
+    min-width: 44px; min-height: 44px; padding: 0 9px;
+    background: rgba(248,241,222,.93);
+  }
+  .reader.reader-immersive .reader-page-nav {
+    left: 50%; bottom: max(5px, env(safe-area-inset-bottom));
+    transform: translateX(-50%); margin: 0; padding: 3px;
+    gap: 3px; border-radius: 14px;
+    box-shadow: 0 1px 8px rgba(36,48,31,.08);
+  }
+  .reader.reader-immersive .reader-focus-page { min-width: 94px; }
+  .reader.reader-immersive[data-controls='shown'] .reader-page-nav {
+    bottom: max(74px, calc(env(safe-area-inset-bottom) + 67px));
+  }
+  .reader.reader-immersive .reader-focus-hint {
+    bottom: max(68px, calc(env(safe-area-inset-bottom) + 59px));
+    padding: 7px 10px;
+  }
+}

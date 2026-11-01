@@ -45,3 +45,16 @@
 }
 
 @media (max-width: 380px) { .reader:not(.reader-immersive) .contents-trigger > span { display: none; } }
+
+/* The chapter picker is a destination, not another navigation menu. */
+.contents-heading { display: flex; align-items: center; justify-content: space-between; min-width: 0; gap: 14px; }
+.contents-heading .display { min-width: 0; }
+.contents-appearance {
+  flex: none; min-height: 44px; padding: 0 12px; border-radius: 10px;
+  background: var(--felt-light); color: var(--ink);
+  font-size: var(--text-label); font-weight: 650;
+}
+.contents-appearance:hover { background: #CDD9AB; }
+@media (max-width: 380px) {
+  .contents-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+}

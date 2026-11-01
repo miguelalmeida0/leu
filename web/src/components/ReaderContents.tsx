@@ -1,3 +1,4 @@
+import { BookOpenIcon } from '@phosphor-icons/react'
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Modal } from './ui'
@@ -16,8 +17,9 @@ export function currentOutlineIndex(entries: Outline[], page: number) {
 }
 
 /** Shared, bounded navigation for the book overview and both reader layouts. */
-export function ReaderContents({ entries, currentIndex, onChoose }: {
+export function ReaderContents({ entries, currentIndex, onChoose, onAppearance }: {
   entries: Outline[]; currentIndex: number; onChoose: (index: number) => void
+  onAppearance?: () => void
 }) {
   const [open, setOpen] = useState(false), [query, setQuery] = useState('')
   const searchId = useId()
@@ -45,11 +47,17 @@ export function ReaderContents({ entries, currentIndex, onChoose }: {
   return <>
     <button ref={trigger} type="button" className="contents-trigger" aria-label={`Contents, ${currentIndex + 1} of ${entries.length}`} aria-haspopup="dialog" aria-expanded={open} disabled={!entries.length}
       onClick={() => { setQuery(''); setOpen(true) }}>
-      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg><span>Contents</span><span className="contents-location">{currentIndex + 1} / {entries.length}</span>
+      <BookOpenIcon size={20} aria-hidden="true" className="reader-contents-book" /><span>Contents</span><span className="contents-location">{currentIndex + 1} / {entries.length}</span>
     </button>
     {open && createPortal(<Modal label="Contents" onClose={() => setOpen(false)} width={600}>
       <div className="reader-contents">
-        <h2 className="display">Contents</h2>
+        <div className="contents-heading">
+          <h2 className="display">Contents</h2>
+          {onAppearance && <button type="button" className="contents-appearance"
+            onClick={() => { returning.current = false; setOpen(false); onAppearance() }}>
+            Reading settings
+          </button>}
+        </div>
         {current && <p className="contents-current">Current: {current.title} · p. {current.page}</p>}
         <label htmlFor={searchId} className="eyebrow">Search chapters</label>
         <input className="field" id={searchId} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Title, chapter or page" />

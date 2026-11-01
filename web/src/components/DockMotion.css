@@ -146,3 +146,21 @@
   .app[data-route='read'] .reader:not(.reader-immersive) .dock-pages { gap: 0; padding: 2px; }
   .app[data-route='read'] .reader:not(.reader-immersive) .dock-range .tabular { font-size: 10px; }
 }
+
+@media (max-width: 720px) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock {
+    grid-template-columns: 44px minmax(0,1fr) 44px;
+    grid-template-rows: 56px; gap: 0;
+    padding-inline: max(8px, env(safe-area-inset-left)) max(8px, env(safe-area-inset-right));
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-listen {
+    grid-column: 1; grid-row: 1; justify-self: start; gap: 0;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-voice { display: none; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-pages {
+    grid-column: 2; grid-row: 1; justify-self: center; gap: 0;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-settings {
+    grid-column: 3; grid-row: 1; justify-self: end;
+  }
+}
