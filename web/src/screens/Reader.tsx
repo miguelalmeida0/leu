@@ -449,7 +449,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
         <div className="reader-focus-shortcuts" role="toolbar" aria-label="Full-screen shortcuts">
           <button type="button" onClick={toggleControls} aria-expanded={controls}
             aria-label={controls ? 'Hide reader tools' : 'Show reader tools'}>Tools</button>
-          <button type="button" onClick={toggleFocus} aria-label="Leave full-screen">Done</button>
+          <button type="button" className="reader-focus-exit" onClick={toggleFocus} aria-label="Leave full-screen"><span aria-hidden="true">×</span></button>
         </div>
         {!focusHelpDismissed && !controls && <p className="reader-focus-hint">Swipe to turn pages · Tap the page for controls</p>}
         <nav className="reader-page-nav" aria-label="Full-screen pages">
