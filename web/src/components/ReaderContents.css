@@ -1,28 +1,49 @@
-.contents-trigger { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; min-width: 44px; padding: 8px 10px; border-radius: 8px; font-size: var(--text-sm); font-weight: 600; white-space: nowrap; }
+.contents-trigger { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; min-width: 44px; max-width: 100%; padding: 8px 10px; border-radius: 8px; font-size: var(--text-sm); font-weight: 600; white-space: nowrap; }
+.contents-trigger svg { flex: none; }
 .contents-trigger:hover { background: var(--felt-light); }
 .contents-location { font-size: var(--text-caption); font-variant-numeric: tabular-nums; }
-.reader-contents { display: flex; flex-direction: column; gap: 12px; min-width: 0; max-height: none; }
+.reader-contents { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 100%; min-width: 0; max-height: none; overflow-x: clip; }
 .reader-contents > :not(.contents-results) { flex: none; }
 .reader-contents h2, .reader-contents p { margin: 0; }
 .reader-contents h2 { font-size: var(--text-title); }
 .contents-current { overflow-wrap: anywhere; font-size: var(--text-sm); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 .reader-contents input { width: 100%; min-width: 0; min-height: 44px; flex: none; }
-.contents-results { flex: none; min-height: 88px; max-height: min(48dvh, 440px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
-.contents-results ol { margin: 0; padding: 0; list-style: none; }
+.contents-results { flex: 0 1 auto; width: 100%; min-width: 0; min-height: 88px; max-height: min(48dvh, 440px); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.contents-results ol { width: 100%; min-width: 0; margin: 0; padding: 0; list-style: none; }
 .contents-results li { min-width: 0; }
-.contents-results button { width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; min-height: 44px; padding: 12px 10px; text-align: start; border-radius: 8px; font-size: var(--text-label); }
-.contents-results button:hover { background: var(--felt-light); }
-.contents-results button[aria-current] { box-shadow: inset 3px 0 0 var(--red-thread); background: var(--felt-light); }
-.contents-title { min-width: 0; overflow-wrap: anywhere; }
-.contents-page { flex: none; font-size: var(--text-caption); }
+.contents-results button {
+  width: 100%; max-width: 100%; min-width: 0; display: grid;
+  grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 12px;
+  min-height: 44px; padding: 12px 10px; text-align: start;
+  border-radius: 8px; font-size: var(--text-label);
+  transition: background-color 140ms var(--ease), box-shadow 140ms var(--ease);
+}
+/* Hover is an invitation to click; the current chapter is a persistent location. */
+@media (hover: hover) and (pointer: fine) {
+  .contents-results button:not([aria-current]):hover { background: var(--state-hover-surface); }
+}
+.contents-results button[aria-current="location"] {
+  background: var(--state-selected-surface);
+  color: var(--ink); font-weight: 700;
+  box-shadow: inset 3px 0 0 var(--state-selected-indicator);
+}
+.contents-results button[aria-current="location"]:hover { background: var(--state-selected-surface); }
+.contents-results button:focus-visible {
+  position: relative; z-index: 1; outline: 2px solid var(--ink); outline-offset: -2px;
+}
+.contents-title { min-width: 0; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; line-height: 1.4; }
+.contents-page { white-space: nowrap; font-size: var(--text-caption); }
+.book-head > div { min-width: 0; }
+.book-head .display, .chapter-card h3 { overflow-wrap: anywhere; }
 .book .contents-trigger { margin-block: 12px; background: var(--felt-light); }
 .book-grid > section, .chapter-card, .chapter-card .sections, .chapter-card .row { min-width: 0; }
 .chapter-card h3, .sections a span:first-child { min-width: 0; overflow-wrap: anywhere; }
 .sections a span:last-child { flex: none; }
 .chapter-card .row { flex-wrap: wrap; }
 .reader:not(.reader-immersive) .contents-trigger { color: var(--cream); }
-.reader:not(.reader-immersive) .reader-grid { grid-template-columns: minmax(0, 1fr) 290px; }
-@media (max-width: 1100px) { .reader:not(.reader-immersive) .reader-grid { grid-template-columns: minmax(0, 1fr); } }
+.reader:not(.reader-immersive) .reader-bar .contents-trigger:hover {
+  background: rgba(248, 241, 222, .12); color: var(--cream);
+}
 @media (max-width: 900px) {
   .reader-immersive .reader-bar .contents-trigger { grid-column: 1; grid-row: 2; justify-self: start; }
   .reader-immersive .reader-bar .reader-back { display: none; }
@@ -39,3 +60,108 @@
 }
 
 @media (max-width: 380px) { .reader:not(.reader-immersive) .contents-trigger > span { display: none; } }
+
+/* The chapter picker is a destination, not another navigation menu. */
+.contents-heading { display: flex; align-items: center; justify-content: space-between; min-width: 0; gap: 14px; }
+.contents-heading .display { min-width: 0; }
+.contents-appearance {
+  flex: none; min-height: 44px; padding: 0 12px; border-radius: 10px;
+  background: var(--felt-light); color: var(--ink);
+  font-size: var(--text-label); font-weight: 650;
+}
+.contents-appearance:hover { background: #CDD9AB; }
+@media (max-width: 380px) {
+  .contents-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+}
+
+/* Contents is a two-level header: an isolated close row followed by the
+   heading and its one contextual action. Never compete for the same corner. */
+.modal.contents-modal {
+  display: grid;
+  grid-template-rows: 40px minmax(0, 1fr);
+  row-gap: 8px;
+  padding-top: 16px;
+  padding-bottom: 36px;
+}
+.modal.contents-modal > .modal-close {
+  position: static;
+  grid-row: 1;
+  justify-self: end;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 8px;
+  background: transparent;
+}
+@media (hover: hover) and (pointer: fine) {
+  .modal.contents-modal > .modal-close:hover {
+    background: var(--state-hover-surface);
+  }
+}
+.modal.contents-modal > .reader-contents {
+  grid-row: 2;
+  min-width: 0;
+  min-height: 0;
+}
+.modal.contents-modal .contents-heading {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding-inline-end: 0;
+}
+.modal.contents-modal .contents-heading .contents-appearance {
+  flex: none;
+  min-height: 44px;
+  max-width: 100%;
+  padding-inline: 14px;
+  white-space: nowrap;
+}
+@media (max-width: 720px) {
+  .modal.contents-modal {
+    padding: 12px 22px 28px;
+    grid-template-rows: 40px minmax(0, 1fr);
+  }
+}
+
+/* Small landscape windows and virtual keyboards: the chapter results own
+   scrolling. The outer modal must not scroll a button behind its own surface. */
+@media (max-height: 480px) {
+  .modal.contents-modal {
+    max-height: calc(100dvh - 32px);
+    padding: 8px 16px 12px;
+    grid-template-rows: 36px minmax(0, 1fr);
+    row-gap: 4px;
+    overflow: hidden;
+  }
+  .modal.contents-modal > .modal-close {
+    width: 36px; height: 36px; min-width: 36px; min-height: 36px;
+  }
+  .modal.contents-modal > .reader-contents {
+    height: 100%; max-height: 100%;
+    min-height: 0; overflow: hidden; gap: 8px;
+  }
+  .modal.contents-modal .contents-heading { min-height: 40px; }
+  .modal.contents-modal .contents-heading h2 { font-size: 22px; }
+  .modal.contents-modal .contents-current,
+  .modal.contents-modal .reader-contents > p[role='status'] {
+    display: none;
+  }
+  .modal.contents-modal .reader-contents > label {
+    position: absolute; width: 1px; height: 1px; padding: 0;
+    margin: -1px; clip-path: inset(50%); overflow: hidden;
+    white-space: nowrap;
+  }
+  .modal.contents-modal .reader-contents input {
+    min-height: 44px; padding: 9px 12px;
+  }
+  .modal.contents-modal .contents-results {
+    flex: 1 1 auto; min-height: 64px; max-height: none;
+    overflow-y: auto; overscroll-behavior: contain;
+  }
+}

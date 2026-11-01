@@ -14,7 +14,7 @@ const quick = process.env.LEU_STRESS_QUICK === '1'
 const server = process.env.LEU_STRESS_URL ? null : spawn(process.execPath,
   ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4181', '--strictPort'],
   { cwd: root, stdio: 'ignore' })
-const routes = ['', '#/library', '#/study', '#/notes', '#/explore', '#/trails']
+const routes = ['', '#/library', '#/study', '#/notes']
 const viewports = [{ width: 320, height: 640 }, { width: 390, height: 844 },
   { width: 844, height: 390 }, { width: 768, height: 1024 }, { width: 1440, height: 900 }]
 const scenarios = quick ? ['baseline', 'long-text', 'large-type', 'missing-images'] :
@@ -86,14 +86,23 @@ async function inspect(page, label, scenario) {
     }
     const search = document.querySelector('.search-pill'), r = search.getBoundingClientRect()
     const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2)
-    const nav = document.querySelector('.mobile-menu-trigger')
+    const burger = document.querySelector('.mobile-menu-trigger')
+    const desktop = document.querySelector('.desktop-places')
+    const compact = document.querySelector('.topbar').classList.contains('compact-nav')
+    const visible = (element) => {
+      const rect = element.getBoundingClientRect()
+      return rect.width > 0 && rect.height > 0 && getComputedStyle(element).visibility !== 'hidden'
+        && getComputedStyle(element).display !== 'none'
+    }
     return { overflow: document.documentElement.scrollWidth - innerWidth, bad,
       searchBlocked: !search.contains(hit), topbar: document.querySelector('.topbar')?.className,
-      navigationAvailable: nav.getBoundingClientRect().width >= 44 && nav.getBoundingClientRect().height >= 44 }
+      compact, navigationAvailable: compact
+        ? visible(burger) && burger.getBoundingClientRect().width >= 44 && burger.getBoundingClientRect().height >= 44
+        : visible(desktop) && [...desktop.querySelectorAll('.place')].every((link) => visible(link)) }
   })
   assert.ok(geometry.overflow <= 2 && !geometry.bad.length, label + ': overflow ' + JSON.stringify(geometry))
   assert.equal(geometry.searchBlocked, false, label + ': search obstructed')
-  assert.equal(geometry.navigationAvailable, true, label + ': burger navigation must remain available')
+  assert.equal(geometry.navigationAvailable, true, label + ': desktop links or compact mobile menu must remain accessible')
   const axe = await new AxeBuilder({ page }).withRules(['color-contrast', 'label-content-name-mismatch', 'target-size']).analyze()
   assert.deepEqual(axe.violations.map(({ id, nodes }) => ({ id, targets: nodes.map((n) => n.target) })), [], label + ': accessibility')
   // Every tab stop must expose its focus point below the sticky header. A canvas

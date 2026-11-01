@@ -81,7 +81,12 @@ async function navigateMobile(page, name) {
   await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name }).click()
 }
 async function goTo(page, mobile, name) {
-  return navigateMobile(page, name)
+  if (await page.locator('.reader:not(.reader-immersive)').count()) {
+    await page.getByRole('link', { name: 'Back to book overview' }).click()
+  }
+  if (mobile) return navigateMobile(page, name)
+  if (name === 'Home') return page.locator('.topbar .wordmark').click()
+  return page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name, exact: true }).click()
 }
 async function runBrowser(browserType, name, mobile, width) {
   const browser = await browserType.launch({ headless: true })
@@ -110,6 +115,78 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.getByRole('dialog', { name: /Sewing in Computer Science Essentials/i }))
     await visible(page.locator('.sewn-actions .btn.ink'), 25000)
     await page.locator('.sewn-actions .btn.ink').click()
+    if (mobile) {
+      // Mobile is a single source-PDF mode with one reading header, not a
+      // second copy of global navigation and search.
+      await visible(page.locator('.reader-paper canvas'))
+      await page.waitForFunction(() => (document.querySelector('.reader-paper canvas')?.width ?? 0) > 0)
+      assert.equal(await page.locator('.app > .topbar').isVisible(), false, 'Global search and hamburger are absent while reading on a phone')
+      assert.equal(await page.locator('.reader-bar .segmented').count(), 0, 'Mobile has no reading/original switch')
+      assert.equal(await page.locator('.reader-paper .prose').count(), 0, 'The only mobile PDF rendering mode is original')
+      await visible(page.getByRole('link', { name: 'Back to book overview' }))
+      const topActions = page.locator('.reader:not(.reader-immersive) .reader-bar button:visible')
+      assert.equal(await topActions.count(), 2, 'Mobile header has chapters and fullscreen only')
+      await visible(page.locator('.reader-bar .contents-trigger'))
+      await visible(page.getByRole('button', { name: 'Enter full-screen reading' }))
+      await noHorizontalOverflow(page, 'Focused reader ' + name)
+
+      await page.locator('.reader-bar .contents-trigger').click()
+      const chapters = page.getByRole('dialog', { name: 'Contents' })
+      await visible(chapters)
+      await visible(chapters.getByRole('searchbox', { name: 'Search chapters' }))
+      await chapters.getByRole('button', { name: 'Reading settings' }).click()
+      const settings = page.getByRole('dialog', { name: 'Reading settings' })
+      await visible(settings)
+      await visible(settings.getByRole('radiogroup', { name: 'Reading voice' }))
+      await page.keyboard.press('Escape')
+      await unhidden(settings)
+
+      const play = page.locator('.reader-foot .dock-play')
+      await visible(play)
+      const pages = page.locator('.reader-foot .dock-pages')
+      await visible(pages)
+      const before = await page.locator('.reader-paper').getAttribute('aria-label')
+      await pages.getByRole('button', { name: 'Next page' }).click()
+      await visible(page.locator('.reader-paper[aria-label="Page 2 of 4"]'))
+      await swipeReader(page, -12, -150)
+      await visible(page.locator('.reader-paper[aria-label="Page 2 of 4"]'))
+      await pages.getByRole('button', { name: 'Previous page' }).click()
+      await visible(page.locator('.reader-paper[aria-label="Page 1 of 4"]'))
+      assert.notEqual(before, 'Page 2 of 4', 'Original page changes with footer controls')
+
+      await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
+      await visible(page.locator('.reader-immersive .paged-current canvas'))
+      await page.waitForFunction(() => (document.querySelector('.reader-immersive .paged-current canvas')?.width ?? 0) > 0)
+      assert.equal(await page.locator('.paged-reader').getAttribute('data-mode'), 'original',
+        'Fullscreen also enforces original PDF mode on a phone')
+      await visible(page.getByRole('navigation', { name: 'Full-screen pages' }))
+      await visible(page.getByRole('button', { name: 'Exit full-screen reading' }))
+      await page.getByRole('navigation', { name: 'Full-screen pages' }).getByRole('button', { name: 'Next page' }).click()
+      await page.waitForFunction(() => document.querySelector('.paged-reader')?.dataset.location === '2:0')
+      await page.getByRole('button', { name: 'Exit full-screen reading' }).click()
+      await unhidden(page.locator('.reader-immersive'))
+      await visible(page.locator('.reader-paper[aria-label="Page 2 of 4"]'))
+      await visible(page.getByRole('link', { name: 'Back to book overview' }))
+      await page.getByRole('link', { name: 'Back to book overview' }).click()
+      await visible(page.getByRole('heading', { name: 'Computer Science Essentials', level: 1 }))
+      await visible(page.getByRole('button', { name: 'Open navigation' }))
+      await goTo(page, true, 'Library')
+      await visible(page.getByRole('heading', { name: 'Your library' }))
+      await noHorizontalOverflow(page, 'Library after reading ' + name)
+      await page.getByRole('button', { name: 'Search your books' }).click()
+      await visible(page.getByRole('dialog', { name: 'Search your books' }))
+      await page.getByRole('button', { name: 'Close search' }).click()
+      await goTo(page, true, 'Study')
+      await visible(page.getByRole('heading', { name: /I'd like to/i }))
+      await goTo(page, true, 'Notes')
+      await visible(page.locator('.notebook'))
+      assert.equal(await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: /Explore|Trails/ }).count(), 0)
+      await noHorizontalOverflow(page, 'After focused reading ' + name)
+      assert.deepEqual(pageErrors, [], name + ': no browser exceptions')
+      await page.screenshot({ path: join(evidence, evidenceName + '-passed.png') })
+      console.log('PASS ' + evidenceName + ': original-only mobile, contextual back/chapters/fullscreen, page controls, voice settings, no global nav/search, return to app')
+      return
+    }
     try {
       await page.getByRole('button', { name: 'For reading', exact: true }).click()
       await visible(page.locator('.reader-paper .prose p').first(), 25000)
@@ -129,16 +206,52 @@ async function runBrowser(browserType, name, mobile, width) {
       'Fullscreen entry is reachable in the top reader toolbar')
     const scrollBox = await page.locator('.reader-grid').boundingBox()
     const footerBox = await page.locator('.reader-foot').boundingBox()
+    const playButton = await page.locator('.reader-foot .dock-play').boundingBox()
+    const pageControl = await page.locator('.reader-foot .dock-pages').boundingBox()
+    const voiceControl = await page.locator('.reader-foot .dock-voice').boundingBox()
+    const speedControl = await page.locator('.reader-foot .dock-speed').boundingBox()
+    assert.ok(playButton && pageControl && speedControl
+      && pageControl.x >= playButton.x + playButton.width + 3
+      && pageControl.x + pageControl.width <= speedControl.x + 2,
+      'Playback, page turning and speed occupy separate non-overlapping footer groups')
+    if (mobile) {
+      assert.equal(voiceControl, null, 'Mobile shows only Play on the left, not a second red voice button')
+      assert.ok(Math.abs(pageControl.x + pageControl.width / 2 - width / 2) <= 3,
+        'Mobile page navigation is precisely centered in the footer')
+      assert.equal(await page.locator('.reader-foot .dock-listen button:visible').count(), 1,
+        'The mobile listening group contains one visible Play button')
+      const modeSpacing = await page.locator('.reader-bar .segmented button.on').evaluate((node) => {
+        const style = getComputedStyle(node)
+        return { padding: parseFloat(style.paddingLeft), radius: parseFloat(style.borderTopLeftRadius) }
+      })
+      assert.ok(modeSpacing.padding >= 6 && modeSpacing.radius >= 7,
+        'Reading mode selection must have inset padding and a bounded active surface')
+      assert.equal(await page.locator('.reader-bar .reader-type-toggle').isVisible(), false,
+        'Appearance moves into chapter settings instead of a third top-row icon')
+      assert.ok(await page.locator('.reader-bar .contents-trigger .reader-contents-book').isVisible(),
+        'Chapters use a book icon, not a second hamburger menu')
+    } else {
+      assert.ok(voiceControl && Math.abs(pageControl.x + pageControl.width / 2 - width / 2) <= 3,
+        'Desktop retains voice selection and centered page navigation')
+    }
+    assert.ok(await page.locator('.reader-foot .dock-pages').getByRole('button', { name: 'Next page' }).isVisible(),
+      'A visible Next page button remains in the reader footer')
+    assert.ok(footerBox && footerBox.height <= 62, 'The ordinary reader footer fits in a single compact row')
     assert.ok(scrollBox && footerBox && scrollBox.y + scrollBox.height <= footerBox.y + 1,
       'The listening footer reserves space and cannot cover reading text')
 
     if (mobile) {
-      const voiceButton = page.getByRole('button', { name: /^Voice: .* Change$/ })
-      await visible(voiceButton)
-      await voiceButton.click()
-      await visible(page.getByRole('menu', { name: 'Voices' }))
-      await visible(page.getByRole('menuitemradio', { name: /Device default/i }))
-      await page.getByRole('menuitemradio', { name: /Device default/i }).click()
+      const chapters = page.locator('.reader-bar .contents-trigger')
+      await chapters.click()
+      const contentsDialog = page.getByRole('dialog', { name: 'Contents' })
+      await visible(contentsDialog)
+      await contentsDialog.getByRole('button', { name: 'Reading settings' }).click()
+      const displayDialog = page.getByRole('dialog', { name: 'Reading settings' })
+      await visible(displayDialog.getByRole('radiogroup', { name: 'Reading voice' }))
+      await visible(displayDialog.getByRole('radio', { name: /Device default/i }))
+      await displayDialog.getByRole('radio', { name: /Device default/i }).click()
+      await page.keyboard.press('Escape')
+      await unhidden(displayDialog)
       await visible(page.getByRole('button', { name: /^Reading speed / }))
       const speedButton = page.getByRole('button', { name: /^Reading speed / })
       const speedBefore = await speedButton.getAttribute('aria-label')
@@ -180,6 +293,26 @@ async function runBrowser(browserType, name, mobile, width) {
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await visible(page.locator('.paged-current .prose p').first())
     assert.equal(await page.locator('.reader-immersive').getAttribute('data-controls'), 'hidden')
+    const focusPages = page.getByRole('navigation', { name: 'Full-screen pages' })
+    assert.ok(await focusPages.isVisible() && await page.getByRole('button', { name: 'Exit full-screen reading' }).isVisible(),
+      'Fullscreen retains page navigation and a persistent exit while its main chrome is hidden')
+    assert.equal(await page.getByRole('button', { name: 'Show reader tools' }).count(), 0,
+      'Tapping the page reveals tools without another permanent button')
+    if (mobile) {
+      const focusGeometry = await page.evaluate(() => {
+        const shell = document.querySelector('.reader-immersive').getBoundingClientRect()
+        const nav = document.querySelector('.reader-immersive .reader-page-nav').getBoundingClientRect()
+        const done = document.querySelector('.reader-immersive .reader-focus-shortcuts button:last-child').getBoundingClientRect()
+        const title = document.querySelector('.paged-current .prose h2')?.getBoundingClientRect()
+        return { center: Math.abs(nav.x + nav.width / 2 - (shell.x + shell.width / 2)),
+          bottom: shell.bottom - nav.bottom, titleClear: !title || done.bottom <= title.top - 2 }
+      })
+      assert.ok(focusGeometry.center <= 2 && focusGeometry.bottom <= 24,
+        'Full-screen page controls sit centered at the bottom of the mobile viewport')
+      assert.ok(focusGeometry.titleClear, 'Fullscreen exit does not cover the page heading')
+    }
+    assert.equal(await page.locator('.reader-focus-hint').isVisible(), !mobile,
+      'Mobile fullscreen keeps the document clear; desktop readers retain the optional gesture hint')
     await page.waitForFunction(() => {
       const reader = document.querySelector('.reader-immersive').getBoundingClientRect()
       return Math.abs(reader.top - (visualViewport?.offsetTop ?? 0)) < 2 && Math.abs(reader.height - (visualViewport?.height ?? innerHeight)) < 2
@@ -189,6 +322,8 @@ async function runBrowser(browserType, name, mobile, width) {
     await reveal()
     await visible(page.getByRole('navigation', { name: 'Full-screen pages' }))
     await visible(page.locator('.reader-immersive .dock[data-focus="true"] .dock-focus-action'))
+    assert.equal(await page.locator('.reader-immersive .paged-position').count(), 0,
+      'PDF content must not have a second visible page counter')
     const textSize = await activePaper().locator('.prose').evaluate((el) => parseFloat(getComputedStyle(el).fontSize))
     await page.getByRole('button', { name: 'Zoom in' }).click()
     assert.ok(await activePaper().locator('.prose').evaluate((el) => parseFloat(getComputedStyle(el).fontSize)) > textSize)
@@ -361,6 +496,9 @@ async function runBrowser(browserType, name, mobile, width) {
         }
       })
     }, sampleId)
+    // The focused reader intentionally hides global navigation. Leave the PDF
+    // through its contextual back action before opening the library-wide search.
+    await page.getByRole('link', { name: 'Back to book overview' }).click()
     await page.getByRole('button', { name: 'Search your books' }).click()
     await visible(page.getByRole('dialog', { name: 'Search your books' }))
     await page.getByRole('textbox', { name: 'Ask your books anything' }).fill('References')
@@ -382,7 +520,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await goTo(page, mobile, 'Library')
     await visible(page.getByRole('heading', { name: 'Your library' }))
     await noHorizontalOverflow(page, 'Library ' + name)
-    // The entire sample shelf covers more concepts for Search / Explore / Trails.
+    // The sample shelf covers additional concepts for Search and Study.
     const add = page.getByRole('button', { name: /Try \d+ sample PDFs?/i })
     if (await add.count()) {
       await add.click()
@@ -407,18 +545,13 @@ async function runBrowser(browserType, name, mobile, width) {
     await page.getByRole('button', { name: /Start remembering/i }).click()
     await visible(page.locator('.recall').or(page.getByText(/Nothing to study on this subject yet/i)), 20000)
 
-    await goTo(page, mobile, 'Explore')
-    await visible(page.locator('.explore, .empty'))
-    await noHorizontalOverflow(page, 'Explore ' + name)
-    const makeTrail = page.getByRole('button', { name: 'Make it a trail' })
-    if (await makeTrail.isVisible().catch(() => false) && await makeTrail.isEnabled()) {
-      await makeTrail.click()
-      await visible(page.locator('.walk'))
-      await noHorizontalOverflow(page, 'Trail map ' + name)
-    } else {
-      await goTo(page, mobile, 'Trails')
-      await visible(page.locator('.walk, .empty'))
-    }
+    // Bookmarked experimental destinations safely recover to Library.
+    await page.goto(base + '/#/explore')
+    await visible(page.getByRole('heading', { name: 'Your library' }))
+    await page.goto(base + '/#/trails')
+    await visible(page.getByRole('heading', { name: 'Your library' }))
+    assert.equal(await page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name: /Explore|Trails/ }).count(), 0)
+    await noHorizontalOverflow(page, 'Library after retired routes ' + name)
 
     await page.getByRole('button', { name: 'Search your books' }).click()
     await visible(page.getByRole('dialog', { name: 'Search your books' }))
@@ -429,7 +562,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await noHorizontalOverflow(page, 'Final ' + name)
     assert.deepEqual(pageErrors, [], name + ': browser exceptions')
     await page.screenshot({ path: join(evidence, evidenceName + '-passed.png'), fullPage: false })
-    console.log(`PASS ${evidenceName}: sample import, reader, touch menu, mobile voice and swipes, text notes, full-screen reflow and PDF zoom, legacy index self-repair, exact source search, page turns, library, study, explore/trails, responsive width`)
+    console.log(`PASS ${evidenceName}: sample import, reader, touch menu, mobile voice and swipes, text notes, full-screen reflow and PDF zoom, legacy index self-repair, exact source search, page turns, library, study, hidden experimental routes, responsive width`)
   } catch (error) {
     await page.screenshot({ path: join(evidence, evidenceName + '-failed.png'), fullPage: true, timeout: 12000 }).catch(() => {})
     console.error(`FAIL ${evidenceName}: ${error?.stack ?? error}`)

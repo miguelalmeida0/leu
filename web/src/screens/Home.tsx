@@ -6,6 +6,7 @@ import { go } from '../lib/router'
 import { readFraction, useStore } from '../lib/store'
 import { NookScene } from '../scenes/NookScene'
 import './ReadingRoom.css'
+import './HomeLayout.css'
 
 function greeting(d = new Date()) {
   const h = d.getHours()

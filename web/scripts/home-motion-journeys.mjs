@@ -77,11 +77,21 @@ async function run(engine, label, width, reduced) {
     phase = 'import'
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
-    await page.getByRole('button', { name: 'For reading', exact: true }).click()
-    await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible', timeout: 25000 })
+    if (width <= 720) await page.locator('.reader-paper canvas').waitFor({ state: 'visible', timeout: 25000 })
+    else {
+      await page.getByRole('button', { name: 'For reading', exact: true }).click()
+      await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible', timeout: 25000 })
+    }
     phase = 'home'
-    await page.getByRole('button', { name: 'Open navigation' }).click()
-    await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: 'Home', exact: true }).click()
+    if (width > 760) {
+      // The reader's own back link returns to the book; the app wordmark returns Home.
+      await page.getByRole('link', { name: 'Back to book overview' }).click()
+      await page.getByRole('heading', { name: 'Computer Science Essentials', level: 1 }).waitFor()
+      await page.locator('.topbar .wordmark').click()
+    } else {
+      await page.getByRole('link', { name: 'Back to book overview' }).click()
+      await page.locator('.topbar .wordmark').click()
+    }
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     const noAnimationButtons = async () => assert.equal(
       await page.getByRole('button', { name: /^(Play animation|Pause animation|Resume automatic playback)$/ }).count(),
@@ -95,6 +105,30 @@ async function run(engine, label, width, reduced) {
     const resume = await page.getByRole('button', { name: 'Continue reading', exact: true }).boundingBox()
     assert.ok(resume && resume.y + resume.height <= (width <= 430 ? 844 : 900), 'Continue reading must be visible in the first viewport')
     await assertMotion()
+    if (width > 900) {
+      const editorial = await page.evaluate(() => {
+        const resume = document.querySelector('.home-resume')
+        const get = (selector) => document.querySelector(selector).getBoundingClientRect().toJSON()
+        return {
+          art: get('.reading-home .home-scene'),
+          heading: get('.home-story h1'),
+          cover: get('.resume-book .book-cover'),
+          action: get('.resume-action'),
+          resume: resume.getBoundingClientRect().toJSON(),
+          divider: getComputedStyle(resume).borderLeftWidth,
+          scrollWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+        }
+      })
+      assert.ok(editorial.art.width >= 500 && editorial.art.width <= 630
+        && editorial.cover.width >= 108 && editorial.cover.width <= 132
+        && editorial.heading.right + 12 <= editorial.resume.left
+        && editorial.divider === '1px' && editorial.resume.height >= 550
+        && editorial.action.right <= editorial.resume.right + 2
+        && editorial.action.bottom <= 900
+        && editorial.scrollWidth <= editorial.viewportWidth + 2,
+        'Home must fill the editorial spread with a separate reading column and accessible actions: ' + JSON.stringify(editorial))
+    }
     await page.screenshot({ path: join(evidence, 'home-' + label + '-before.png') })
     // Obsolete manual choices must neither freeze the scene nor override the OS.
     for (const oldChoice of ['pause', 'play']) {
@@ -117,11 +151,21 @@ async function run(engine, label, width, reduced) {
     assert.equal(await page.locator('.nook-glass canvas').evaluate((el) => getComputedStyle(el).touchAction), 'auto')
     phase = 'reopen-reader'
     await page.getByRole('button', { name: 'Continue reading', exact: true }).click()
-    await page.getByRole('button', { name: 'For reading', exact: true }).click()
-    await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible' })
+    if (width <= 720) await page.locator('.reader-paper canvas').waitFor({ state: 'visible' })
+    else {
+      await page.getByRole('button', { name: 'For reading', exact: true }).click()
+      await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible' })
+    }
     phase = 'return-home'
-    await page.getByRole('button', { name: 'Open navigation' }).click()
-    await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: 'Home', exact: true }).click()
+    if (width > 760) {
+      // The reader's own back link returns to the book; the app wordmark returns Home.
+      await page.getByRole('link', { name: 'Back to book overview' }).click()
+      await page.getByRole('heading', { name: 'Computer Science Essentials', level: 1 }).waitFor()
+      await page.locator('.topbar .wordmark').click()
+    } else {
+      await page.getByRole('link', { name: 'Back to book overview' }).click()
+      await page.locator('.topbar .wordmark').click()
+    }
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     await noAnimationButtons()
     await assertMotion()

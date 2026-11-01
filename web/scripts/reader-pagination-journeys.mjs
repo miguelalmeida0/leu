@@ -202,7 +202,26 @@ async function run([engine, name, width, height, reducedMotion]) {
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await visible(page.locator('.paged-reader'))
     assert.equal(await page.locator('.reader-immersive').getAttribute('data-controls'), 'hidden', 'Reading opens with the app chrome hidden')
+    assert.ok(await page.getByRole('navigation', { name: 'Full-screen pages' }).isVisible(),
+      'Immersive fullscreen provides visible page controls without a large footer')
+    assert.ok(await page.getByRole('button', { name: 'Exit full-screen reading' }).isVisible(),
+      'Fullscreen has one persistent accessible X')
+    assert.equal(await page.getByRole('button', { name: 'Show reader tools' }).count(), 0,
+      'There is no redundant Tools button; tapping the page reveals the toolbar on every screen')
     await ready(page)
+    if (width <= 720) {
+      const occlusion = await page.evaluate(() => {
+        const content = document.querySelector('.paged-current .paged-text')?.getBoundingClientRect()
+        const controls = document.querySelector('.reader-immersive .reader-page-nav')?.getBoundingClientRect()
+        const hint = document.querySelector('.reader-immersive .reader-focus-hint')
+        return { contentBottom: content?.bottom ?? 0, controlsTop: controls?.top ?? 0,
+          hintVisible: hint ? getComputedStyle(hint).display !== 'none' : false }
+      })
+      assert.ok(occlusion.contentBottom + 6 <= occlusion.controlsTop,
+        'The persistent mobile page controls must never overlap reflowed PDF text: ' + JSON.stringify(occlusion))
+      assert.equal(occlusion.hintVisible, false,
+        'A fullscreen instruction hint must not obscure document content on phones')
+    }
     const before = await geometry(page)
     await still(page, before)
     await fittedText(page)
@@ -419,8 +438,26 @@ async function fittedOriginal([engine, name, width, height, reducedMotion]) {
     await page.getByText('Sewn in', { exact: true }).waitFor({ state: 'visible', timeout: 25000 })
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
     await visible(page.locator('.reader-paper canvas'))
+    if (width <= 720 || height <= 500) {
+      assert.equal(await page.locator('.reader-bar .segmented').count(), 0, 'Mobile has original PDF only')
+      assert.equal(await page.locator('.app > .topbar').isVisible(), false, 'Mobile reader has no global menu/search header')
+      await visible(page.getByRole('link', { name: 'Back to book overview' }))
+      await visible(page.locator('.reader-bar .contents-trigger'))
+    }
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await page.waitForFunction(() => document.querySelector('.paged-current canvas')?.width > 0)
+    // Tiny trackpad jitter is not a turn. Accumulated deliberate movement is.
+    if (engine === chromium && width > 900) {
+      await page.mouse.move(width * .5, height * .5)
+      await page.mouse.wheel(6, 1)
+      await page.waitForTimeout(280)
+      assert.equal(await location(page), '1:0', 'Tiny horizontal wheel movement leaves the source page in place')
+      for (let i = 0; i < 7; i++) { await page.mouse.wheel(12, 2); await page.waitForTimeout(30) }
+      await page.waitForFunction(() => document.querySelector('.paged-reader')?.dataset.location === '2:0')
+      await page.waitForTimeout(280)
+      assert.equal(await location(page), '2:0', 'A sustained trackpad swipe turns exactly one source sheet')
+      await keyStep(page, 'ArrowLeft')
+    }
     // Reproduce the reported default-original regression using actual pointer
     // input before checking the new Fit page control or its geometry.
     await drag(page, engine, -Math.min(240, width * .65), 25, true)
@@ -638,7 +675,12 @@ try {
     await new Promise((resolve) => setTimeout(resolve, 150))
   }
   for (const config of configs) {
-    if (!process.env.LEU_PAGED_CASE || config[1] === process.env.LEU_PAGED_CASE) { await fittedOriginal(config); await run(config); await tallOriginal(config) }
+    if (!process.env.LEU_PAGED_CASE || config[1] === process.env.LEU_PAGED_CASE) {
+      await fittedOriginal(config)
+      // Reflowed-screen tests remain on desktop. Phones have one source-PDF mode.
+      if (config[2] > 720 && config[3] > 500) await run(config)
+      await tallOriginal(config)
+    }
   }
   if (!process.env.LEU_PAGED_CASE) {
     await extractionFallback(chromium, 'chromium-fallback')
