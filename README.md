@@ -1,149 +1,59 @@
 # Leu
 
-**A native iPhone PDF study app that turns reading into active understanding — while staying local-first.**
+**A PDF reader built around understanding and recall.**
 
-[**Try Leu in your browser ↗**](https://leu.miguelalmeida.xyz/) · [Browser implementation](web/README.md) · [Native architecture](docs/ARCHITECTURE.md) · [Repository guide](docs/START_HERE.md)
+[Try the browser companion](https://leu.miguelalmeida.xyz/) · [Native architecture](docs/ARCHITECTURE.md) · [Repository guide](docs/START_HERE.md)
 
-> The live URL runs the browser companion in `web/`, not the native iOS build. It processes locally selected PDFs in the browser; clearing site data removes its locally saved library.
+Leu keeps study actions close to the document: explain a passage, test recall, revisit weak concepts and return to the original page. The native iPhone app uses SwiftUI and PDFKit. The linked browser demo is a **separate React/Vite companion**, not the iOS build.
 
 <p align="center">
-  <img src="./docs/readme/previews/study.png" alt="Leu — retained native Study capture" width="360">
+  <img src="./docs/readme/previews/study.png" alt="Retained capture of Leu's native Study screen" width="340">
 </p>
+<p align="center"><sub>Native Study screen · retained capture, not a current device test</sub></p>
 
-<p align="center"><sub>Native Study screen · retained capture</sub></p>
+## Reading and study
 
-Leu is designed for a very specific moment: you are studying a difficult PDF on your phone, a paragraph stops making sense, and leaving the document to hunt for an explanation breaks your concentration.
+- **Stay in the document.** Read, navigate and annotate PDFs without moving the source out of view.
+- **Work through difficult passages.** Explanation and recall are tied to the passage being studied.
+- **Find what needs another pass.** Blind spots and reconstruction support revisiting the original material.
 
-The app keeps the learning loop inside the reader: **read → understand → recall → revisit**.
+## Engineering
 
-## The product flow
-
-```mermaid
-flowchart LR
-  PDF(["Open PDF"]):::actor
-  SELECT["Read + select passage"]:::data
-  NEED{"What do I need?"}:::decision
-  EXPLAIN["Explain simply"]:::system
-  RECALL["Active recall"]:::system
-  BLIND["Blind spots"]:::guard
-  REBUILD["Reconstruction"]:::actor
-  SOURCE(["Return to exact source"]):::safe
-
-  PDF --> SELECT --> NEED
-  NEED -- "understand" --> EXPLAIN --> SOURCE
-  NEED -- "remember" --> RECALL --> BLIND --> REBUILD --> SOURCE
-  SOURCE --> SELECT
-
-  classDef actor fill:#E8F1FF,stroke:#2563EB,color:#0F172A,stroke-width:1.6px;
-classDef system fill:#ECFEFF,stroke:#0891B2,color:#0F172A,stroke-width:1.6px;
-classDef decision fill:#FFFBEB,stroke:#D97706,color:#0F172A,stroke-width:1.6px;
-classDef guard fill:#FFF7ED,stroke:#EA580C,color:#0F172A,stroke-width:1.6px;
-classDef safe fill:#ECFDF5,stroke:#059669,color:#0F172A,stroke-width:1.6px;
-classDef private fill:#FFF1F2,stroke:#E11D48,color:#0F172A,stroke-width:1.6px;
-classDef data fill:#F8FAFC,stroke:#64748B,color:#0F172A,stroke-width:1.6px;
-linkStyle default stroke:#94A3B8,stroke-width:1.5px;
-```
-
-## Study is not a separate dashboard
-
-Leu treats the document as the source of truth. Study tools are designed to route the user back to the material rather than replacing it with an AI chat feed.
-
-## Core ideas
-
-### Explain Like I’m 10
-
-A selected passage can be rewritten into a genuinely simpler explanation instead of merely being shortened. The feature is designed around source provenance: the explanation belongs to a specific passage and should remain visibly connected to it.
-
-### Active Recall
-
-Leu turns reading into retrieval practice. The goal is not to accumulate cards; it is to surface what the reader can no longer reconstruct confidently.
-
-### Blind Spots
-
-Weak or fading concepts become navigable learning objects. A user can move from “I think I know this” to the exact source context that needs another pass.
-
-### Reconstruction
-
-Instead of only showing an answer, Leu creates space for the reader to rebuild the idea from memory and compare that understanding against the source.
+- **Native reader:** SwiftUI presentation and feature models call focused services. `PDFSessionController` owns the visible PDFKit view; `Packages/ShelfCore/` holds portable learning contracts.
+- **Local data:** `LibraryRepository` serializes updates; `DocumentVault` and validated snapshots persist the library. Annotations are stored separately from original PDF bytes.
+- **Browser companion:** `web/` uses React, Vite and PDF.js with browser-local PDFs and state. Its storage and runtime are independent of the native app.
 
 ## Architecture
 
-<p align="center"><img src="./docs/readme/architecture-overview.svg" alt="leu architecture overview" width="600"></p>
+<p align="center">
+  <picture>
+    <source media="(max-width: 640px)" srcset="./docs/readme/architecture-mobile.svg">
+    <img src="./docs/readme/architecture-overview.svg" alt="Leu system map: native reader, local services and on-device library. The browser companion is separate." width="920">
+  </picture>
+</p>
 
-Leu is built in **Swift / SwiftUI** with **PDFKit** and a local-first product model. On-device intelligence is preferred where platform support allows it; cloud inference is not a mandatory dependency for the core reading experience.
+The diagram describes the native path. [Architecture decisions](docs/ARCHITECTURE.md) document the import, persistence and concurrency boundaries.
 
-## Design principles
+## Run locally
 
-- **The PDF remains primary.** Learning surfaces support the document instead of swallowing it.
-- **Source provenance stays visible.** Model output should be traceable back to what the user was actually reading.
-- **Local-first by default.** Reading history and learning state should not require a mandatory account or backend.
-- **Phone-native interaction.** The product is designed around one-handed reading, sheets, touch targets, safe areas, Dynamic Type, and iOS conventions.
-- **AI earns its place.** Model features must make a passage easier to understand or a concept easier to retain; “chat with PDF” is not the product.
+Native iOS requires macOS, full Xcode 16+ and an iOS 17+ simulator:
 
-## Run and verify
-
-Native iOS: requires macOS, full Xcode 16+ and an iOS 17+ simulator. Use `./run.sh --help` for launch, build and device options.
-
-```bash
+```sh
 ./run.sh --build
 ./run.sh
 ```
 
-Browser companion: runs independently of Xcode.
+The browser companion runs without Xcode:
 
-```bash
+```sh
 cd web
 npm ci
 npm run build
 npm run dev
 ```
 
-Native build success does not certify all simulator journeys; see the [release checklist](docs/RELEASE_CHECKLIST.md) and [architecture](docs/ARCHITECTURE.md). Keep private PDFs and generated simulator output out of commits.
+## Verification and scope
 
-## Repository shape
-
-```text
-Shelf/                         primary SwiftUI application
-ShelfTests/                    native unit and integration tests
-ShelfUITests/                  simulator user journeys
-web/                           browser companion (Vite + React)
-Packages/ShelfCore/          portable reasoning + learning contracts
-docs/                          design decisions, validation and captures
-scripts/                       QA / native verification tooling
-```
-
-## Verification philosophy
-
-Portable reasoning tests and native UI validation are deliberately separated. Passing pure logic tests does not certify SwiftUI layout, gestures, haptics, PDF interaction, or listening quality.
-
-The repository includes native journey evidence and deterministic reasoning fixtures, while explicitly retaining native-device validation as its own gate.
-
-## Current state
-
-Leu is actively evolving. The repository contains production-style native surfaces and deep QA infrastructure, but individual experimental learning/model paths may still have open native verification work. The README intentionally avoids presenting experimental gates as shipping certification.
-
----
+Portable logic tests and native device journeys are separate checks. A successful build does not certify gestures, PDF interaction or on-device model behavior. See the [test guide](docs/TESTING.md) and [release checklist](docs/RELEASE_CHECKLIST.md). Experimental learning paths are not presented as fully verified releases.
 
 Built by [Miguel Almeida](https://github.com/miguelalmeida0).
-
-<details>
-<summary>Other retained native captures</summary>
-
-[Simulator capture](./docs/readme/current/00-current-simulator-home.png)
-
-[Study: fading section](./docs/readme/current/03-fading.png)
-
-[Study: blind-spots section](./docs/readme/current/04-blind-spots.png)
-
-[Study: reconstruction section](./docs/readme/current/05-reconstruction-labs.png)
-
-These are retained capture files, not a new device-validation run.
-
-</details>
-
-
-[Repository guide](./docs/START_HERE.md)
-
-<!-- repository-presentation-repair:1 -->
-
-[Cleanup and preservation record](docs/CLEANUP_2026-10-09.md)
