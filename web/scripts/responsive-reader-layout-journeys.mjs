@@ -149,11 +149,15 @@ async function check(engine) {
       const home = await page.evaluate(() => {
         const get = (s) => document.querySelector(s).getBoundingClientRect().toJSON()
         return { story: get('.home-story'), resume: get('.home-resume'),
-          action: get('.resume-action'), header: get('.topbar'), viewport: innerHeight,
-          scrollWidth: document.documentElement.scrollWidth }
+          art: get('.home-scene'), action: get('.resume-action'), header: get('.topbar'),
+          divider: getComputedStyle(document.querySelector('.home-resume')).borderLeftWidth,
+          viewport: innerHeight, scrollWidth: document.documentElement.scrollWidth }
       })
       assert.ok(home.scrollWidth <= width + 2 && !overlap(home.story, home.resume),
         'Home columns need independent space at ' + width)
+      assert.ok(home.divider === '1px' && home.art.width >= width * .32
+        && home.story.right <= home.resume.left + 1 && home.resume.height >= 500,
+        'Home divider and expanded illustration must hold across desktop widths at ' + width + ': ' + JSON.stringify(home))
       assert.ok(home.action.bottom <= 900, 'Home continue CTA belongs in first viewport at ' + width)
       const center = (home.header.bottom + 900) / 2
       assert.ok(Math.abs(home.story.top + home.story.height / 2 - center) <= 125
