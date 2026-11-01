@@ -172,7 +172,7 @@ export function Dock({ page, pages, canPlay, onPlay, onTurn, compact = false }: 
         <label className="dock-range">
           <span className="sr-only">Page</span>
           <input type="range" min={1} max={pages} value={page} onChange={(e) => onTurn(Number(e.target.value))} aria-valuetext={`Page ${page} of ${pages}`} style={{ ['--p' as string]: `${pages > 1 ? ((page - 1) / (pages - 1)) * 100 : 100}%` }} />
-          <span className="tabular">Page {page} of {pages}</span>
+          <span className="tabular"><span className="dock-page-long">Page {page} of {pages}</span><span className="dock-page-short">{page} / {pages}</span></span>
         </label>
         <button className="dock-btn dock-next-page" onClick={() => onTurn(page + 1)} disabled={page >= pages} aria-label="Next page">
           <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
