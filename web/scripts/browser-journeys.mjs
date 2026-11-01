@@ -81,6 +81,9 @@ async function navigateMobile(page, name) {
   await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name }).click()
 }
 async function goTo(page, mobile, name) {
+  if (await page.locator('.reader:not(.reader-immersive)').count()) {
+    await page.getByRole('link', { name: 'Back to book overview' }).click()
+  }
   if (mobile) return navigateMobile(page, name)
   if (name === 'Home') return page.locator('.topbar .wordmark').click()
   return page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name, exact: true }).click()
@@ -157,10 +160,10 @@ async function runBrowser(browserType, name, mobile, width) {
       assert.equal(await page.locator('.paged-reader').getAttribute('data-mode'), 'original',
         'Fullscreen also enforces original PDF mode on a phone')
       await visible(page.getByRole('navigation', { name: 'Full-screen pages' }))
-      await visible(page.getByRole('button', { name: 'Leave full-screen' }))
+      await visible(page.getByRole('button', { name: 'Exit full-screen reading' }))
       await page.getByRole('navigation', { name: 'Full-screen pages' }).getByRole('button', { name: 'Next page' }).click()
       await page.waitForFunction(() => document.querySelector('.paged-reader')?.dataset.location === '2:0')
-      await page.getByRole('button', { name: 'Leave full-screen' }).click()
+      await page.getByRole('button', { name: 'Exit full-screen reading' }).click()
       await unhidden(page.locator('.reader-immersive'))
       await visible(page.locator('.reader-paper[aria-label="Page 2 of 4"]'))
       await visible(page.getByRole('link', { name: 'Back to book overview' }))
@@ -290,10 +293,10 @@ async function runBrowser(browserType, name, mobile, width) {
     await visible(page.locator('.paged-current .prose p').first())
     assert.equal(await page.locator('.reader-immersive').getAttribute('data-controls'), 'hidden')
     const focusPages = page.getByRole('navigation', { name: 'Full-screen pages' })
-    assert.ok(await focusPages.isVisible() && await page.getByRole('button', { name: 'Leave full-screen' }).isVisible(),
+    assert.ok(await focusPages.isVisible() && await page.getByRole('button', { name: 'Exit full-screen reading' }).isVisible(),
       'Fullscreen retains page navigation and a persistent exit while its main chrome is hidden')
-    assert.equal(await page.getByRole('button', { name: 'Show reader tools' }).isVisible(), !mobile,
-      'On mobile, tapping the page reveals tools without a redundant Tools button')
+    assert.equal(await page.getByRole('button', { name: 'Show reader tools' }).count(), 0,
+      'Tapping the page reveals tools without another permanent button')
     if (mobile) {
       const focusGeometry = await page.evaluate(() => {
         const shell = document.querySelector('.reader-immersive').getBoundingClientRect()

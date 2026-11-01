@@ -41,6 +41,26 @@ async function journey(engine, width, reducedMotion) {
     await page.goto(base)
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await page.getByRole('button', { name: 'Open Computer Science Essentials', exact: true }).click()
+    if (width > 720) {
+      await page.waitForFunction(() => (document.querySelector('.original-stage canvas')?.width ?? 0) > 0)
+      await page.waitForFunction(() => {
+        const canvas = document.querySelector('.original-stage canvas')
+        const sheet = document.querySelector('.reader-paper')
+        const midpoint = innerWidth / 2
+        return canvas && sheet
+          && Math.abs(canvas.getBoundingClientRect().left + canvas.getBoundingClientRect().width / 2 - midpoint) <= 3
+          && Math.abs(sheet.getBoundingClientRect().left + sheet.getBoundingClientRect().width / 2 - midpoint) <= 3
+      })
+      const fitted = await page.evaluate(() => {
+        const pdf = document.querySelector('.original-stage canvas').getBoundingClientRect()
+        const grid = document.querySelector('.reader-grid').getBoundingClientRect()
+        return { pdfBottom: pdf.bottom, readingBottom: grid.bottom,
+          hiddenGlobalNavigation: getComputedStyle(document.querySelector('.app > .topbar')).display === 'none' }
+      })
+      assert.ok(fitted.pdfBottom <= fitted.readingBottom + 2,
+        'The complete source PDF must fit above the playback bar: ' + JSON.stringify(fitted))
+      assert.equal(fitted.hiddenGlobalNavigation, true, 'Reading has one contextual header')
+    }
     if (width <= 720) {
       assert.equal(await page.locator('.reader-bar .segmented').count(), 0, 'Mobile reader shows only the original PDF, with no mode switch')
       await page.locator('.reader-paper canvas').waitFor({ state: 'visible' })
@@ -190,7 +210,7 @@ async function journey(engine, width, reducedMotion) {
     await focus.focus()
     await page.keyboard.press('Enter')
     await page.locator('.reader-immersive').waitFor()
-    const plainExit = page.getByRole('button', { name: 'Leave full-screen', exact: true })
+    const plainExit = page.getByRole('button', { name: 'Exit full-screen reading', exact: true })
     await assertPlainExit(plainExit, name)
     if (width > 720) {
       await plainExit.hover()
@@ -218,6 +238,7 @@ async function journey(engine, width, reducedMotion) {
         'The former fullscreen scroll position is not incorrectly replayed on later source page turns')
     }
     if (width > 760) {
+      await page.getByRole('link', { name: 'Back to book overview' }).click()
       await page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name: 'Library', exact: true }).click()
     } else {
       await page.getByRole('link', { name: 'Back to book overview' }).click()
