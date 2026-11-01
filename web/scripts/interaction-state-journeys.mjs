@@ -17,7 +17,7 @@ const effectiveBackground = (locator) => locator.evaluate((node) => {
   // Compare painted colors, not raw rgba strings; translucency needs its parent surface.
   let rgb = [0, 0, 0], opacity = 0
   for (let element = node; element && opacity < .999; element = element.parentElement) {
-    const components = getComputedStyle(element).backgroundColor.match(/[\\d.]+/g)?.map(Number)
+    const components = getComputedStyle(element).backgroundColor.match(/[\d.]+/g)?.map(Number)
     if (!components) continue
     const amount = (components[3] ?? 1) * (1 - opacity)
     rgb = rgb.map((value, index) => value + amount * components[index])
