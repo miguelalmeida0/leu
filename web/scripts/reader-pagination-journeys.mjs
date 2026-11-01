@@ -204,10 +204,10 @@ async function run([engine, name, width, height, reducedMotion]) {
     assert.equal(await page.locator('.reader-immersive').getAttribute('data-controls'), 'hidden', 'Reading opens with the app chrome hidden')
     assert.ok(await page.getByRole('navigation', { name: 'Full-screen pages' }).isVisible(),
       'Immersive fullscreen provides visible page controls without a large footer')
-    assert.ok(await page.getByRole('button', { name: 'Leave full-screen' }).isVisible(),
-      'Fullscreen has a persistent accessible exit')
-    assert.equal(await page.getByRole('button', { name: 'Show reader tools' }).isVisible(), width > 720,
-      'Mobile fullscreen has no redundant Tools button; the document tap still reveals the toolbar')
+    assert.ok(await page.getByRole('button', { name: 'Exit full-screen reading' }).isVisible(),
+      'Fullscreen has one persistent accessible X')
+    assert.equal(await page.getByRole('button', { name: 'Show reader tools' }).count(), 0,
+      'There is no redundant Tools button; tapping the page reveals the toolbar on every screen')
     await ready(page)
     if (width <= 720) {
       const occlusion = await page.evaluate(() => {
