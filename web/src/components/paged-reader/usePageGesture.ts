@@ -28,6 +28,7 @@ export function usePageGesture(options: Options) {
     let pinch: { distance: number; zoom: number } | null = null
     let pinched = false, wheelLatched = false, wheelTimer: ReturnType<typeof setTimeout> | undefined
     let wheelAxis: 'x' | 'y' | null = null, wheelPull = 0, wheelX = 0, wheelY = 0
+    let wheelContext = latest.current.contextKey
     let wheelScroll: ReturnType<typeof originalScrollGesture> = null
     let ignoredClick: { until: number; x: number; y: number } | null = null
     const freshPointer = () => { ignoredClick = null }
@@ -153,6 +154,8 @@ export function usePageGesture(options: Options) {
     const wheel = (event: WheelEvent) => {
       if (event.cancelable) event.preventDefault()
       const current = latest.current
+      // Gesture listeners must survive a live pinch; only reset wheel state.
+      if (wheelContext !== current.contextKey) { resetWheel(); wheelContext = current.contextKey }
       // Desktop trackpad pinch sends ctrl+wheel; it zooms the PDF and never exits.
       if (event.ctrlKey) {
         resetWheel(); current.dismiss.cancel()
@@ -223,5 +226,5 @@ export function usePageGesture(options: Options) {
       window.removeEventListener('blur', cancel)
       root.removeEventListener('wheel', wheel)
     }
-  }, [options.root, options.track, options.contextKey])
+  }, [options.root, options.track])
 }
