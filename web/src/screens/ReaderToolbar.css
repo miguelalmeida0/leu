@@ -1,0 +1,83 @@
+/* Reading toolbar: one row with three stable regions.
+   It supersedes legacy reader breakpoint rules only outside fullscreen. */
+@media (min-width: 721px) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar {
+    display: grid;
+    grid-template-columns: minmax(44px, 1fr) max-content minmax(148px, 1fr);
+    gap: clamp(8px, 1vw, 16px);
+    padding-inline: clamp(14px, 2.7vw, 40px);
+    min-height: 52px; height: 52px; align-items: center;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-back {
+    display: inline-flex; grid-column: 1; grid-row: 1;
+    width: 100%; max-width: 100%; min-width: 0;
+    align-items: center; gap: 8px; padding: 0; overflow: hidden;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-back span {
+    display: block; min-width: 0; overflow: hidden;
+    white-space: nowrap; text-overflow: ellipsis;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented {
+    grid-column: 2; grid-row: 1; justify-self: center;
+    display: flex; align-items: center; gap: 4px;
+    min-width: 0; max-width: 100%; padding: 0; background: transparent;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented button {
+    flex: none; display: grid; place-items: center;
+    min-height: 44px; height: 44px;
+    padding: 0 14px; margin: 0;
+    border: 0; border-bottom: 2px solid transparent;
+    border-radius: 9px; background: transparent;
+    font-size: var(--text-sm); font-weight: 650;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented button.on {
+    border-bottom: 2px solid var(--red-thread);
+    border-radius: 9px 9px 0 0; background: transparent;
+    color: var(--ink); font-weight: 750;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls {
+    grid-column: 3; grid-row: 1; justify-self: end;
+    display: flex; flex: none; align-items: center; justify-content: flex-end;
+    min-width: 0; max-width: 100%; gap: 4px;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls > * {
+    flex: none; min-width: 44px;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-focus-tools {
+    display: flex; justify-content: center; align-items: center;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls .contents-trigger,
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls .reader-type-toggle,
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls .reader-focus-toggle {
+    display: grid; place-items: center;
+    width: 44px; height: 44px; min-height: 44px;
+    padding: 0; gap: 0; border: 0; border-radius: 9px;
+    background: transparent; color: var(--ink);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls .contents-trigger > span {
+    display: none;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar button:focus-visible {
+    outline: 2px solid var(--ink); outline-offset: -2px;
+  }
+}
+@media (min-width: 721px) and (hover: hover) and (pointer: fine) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented button:not(.on):hover {
+    background: var(--state-hover-surface); color: var(--ink);
+  }
+}
+@media (min-width: 1180px) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls .contents-trigger {
+    width: auto; padding-inline: 11px; display: inline-flex; gap: 8px;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls .contents-trigger > span:first-of-type {
+    display: inline;
+  }
+}
+@media (min-width: 721px) and (max-width: 880px) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar {
+    grid-template-columns: minmax(44px, 1fr) max-content minmax(140px, 1fr);
+    padding-inline: 12px; gap: 6px;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented button { padding-inline: 11px; }
+}

@@ -73,3 +73,16 @@
 @media (max-width: 380px) {
   .contents-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
 }
+
+/* The modal's X is absolutely positioned in the top-right corner.
+   Reserve that space in the heading so Reading settings can never sit beneath it. */
+.reader-contents .contents-heading {
+  min-height: 44px; padding-inline-end: 54px; align-items: center;
+}
+.reader-contents .contents-heading .contents-appearance {
+  flex: none; max-width: 100%; white-space: nowrap;
+}
+@media (max-width: 440px) {
+  .reader-contents .contents-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .reader-contents .contents-heading .contents-appearance { align-self: flex-start; }
+}
