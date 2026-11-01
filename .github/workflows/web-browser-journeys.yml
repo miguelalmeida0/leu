@@ -63,6 +63,9 @@ jobs:
       - name: Verify bounded searchable chapter navigation
         working-directory: web
         run: node scripts/reader-contents-journeys.mjs
+      - name: Verify selected, hover and focus states across the app
+        working-directory: web
+        run: node scripts/interaction-state-journeys.mjs
       - name: Verify pull-to-exit gestures and haptic fallbacks
         working-directory: web
         run: node scripts/reader-dismiss-journeys.mjs
