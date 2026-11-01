@@ -11,6 +11,25 @@ const evidence = join(root, 'qa-evidence/design')
 await mkdir(evidence, { recursive: true })
 const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4186', '--strictPort'], { cwd: root, stdio: 'ignore' })
 
+async function assertPlainExit(button, name) {
+  await button.waitFor({ state: 'visible' })
+  assert.equal((await button.textContent()).trim(), '', `${name}: fullscreen exit is an icon, not a Done label`)
+  assert.equal(await button.locator('svg').count(), 1, `${name}: fullscreen exit has one close icon`)
+  const appearance = await button.evaluate((node) => {
+    const style = getComputedStyle(node), box = node.getBoundingClientRect()
+    return { background: style.backgroundColor, image: style.backgroundImage,
+      border: parseFloat(style.borderTopWidth), shadow: style.boxShadow,
+      width: box.width, height: box.height }
+  })
+  assert.ok(appearance.background === 'transparent' || /rgba\([^)]*,\s*0\)$/.test(appearance.background),
+    `${name}: fullscreen exit must not have a colored container: ${JSON.stringify(appearance)}`)
+  assert.equal(appearance.image, 'none', `${name}: exit has no decorative background`)
+  assert.equal(appearance.border, 0, `${name}: exit has no container border`)
+  assert.equal(appearance.shadow, 'none', `${name}: exit has no container shadow`)
+  assert.ok(appearance.width >= 44 && appearance.height >= 44,
+    `${name}: the plain close icon retains a usable invisible touch target`)
+}
+
 async function journey(engine, width, reducedMotion) {
   const browser = await engine.launch({ headless: true })
   const page = await browser.newPage({ viewport: { width, height: width > 720 ? 900 : 844 }, deviceScaleFactor: 1, isMobile: width <= 430, hasTouch: width <= 430, reducedMotion })
@@ -171,6 +190,18 @@ async function journey(engine, width, reducedMotion) {
     await focus.focus()
     await page.keyboard.press('Enter')
     await page.locator('.reader-immersive').waitFor()
+    const plainExit = page.getByRole('button', { name: 'Leave full-screen', exact: true })
+    await assertPlainExit(plainExit, name)
+    if (width > 720) {
+      await plainExit.hover()
+      await assertPlainExit(plainExit, name + ' hover')
+    }
+    await capture('plain-fullscreen-exit')
+    await plainExit.click()
+    await page.locator('.reader-immersive').waitFor({ state: 'hidden' })
+    assert.equal(await focus.evaluate((node) => document.activeElement === node), true, 'Close returns focus to the fullscreen entry')
+    await focus.click()
+    await page.locator('.reader-immersive').waitFor()
     await page.keyboard.press('Escape')
     await page.locator('.reader-immersive').waitFor({ state: 'hidden' })
     assert.equal(await focus.evaluate((node) => document.activeElement === node), true, 'Escape restores keyboard focus to the fullscreen entry')
@@ -190,12 +221,32 @@ async function journey(engine, width, reducedMotion) {
       await page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name: 'Library', exact: true }).click()
     } else {
       await page.getByRole('link', { name: 'Back to book overview' }).click()
+      await page.locator('.book-side .side-card').waitFor({ state: 'visible' })
+      assert.equal(await page.locator('.book-side .side-block:visible').count(), 0,
+        'Mobile book overview has no loose ends, quiz or shelf/trail options below the resume card')
+      const deletePdf = page.getByRole('button', { name: 'Delete PDF', exact: true })
+      await deletePdf.waitFor({ state: 'visible' })
+      assert.equal(await deletePdf.locator('svg[data-icon="material-delete-outline"]').count(), 1,
+        'Delete PDF uses the requested Material trash icon')
+      assert.equal(await page.locator('.book-side > :visible').count(), 2,
+        'Only the white resume card and Delete PDF remain in the mobile book sidebar')
+      const booksBefore = await page.evaluate(() => JSON.parse(localStorage.getItem('leu.web.v1')).books.length)
+      const confirmation = page.waitForEvent('dialog')
+      const clicked = deletePdf.click()
+      const dialog = await confirmation
+      assert.equal(dialog.type(), 'confirm', 'Deleting a PDF still requires confirmation')
+      assert.match(dialog.message(), /Computer Science Essentials/)
+      await dialog.dismiss()
+      await clicked
+      assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('leu.web.v1')).books.length), booksBefore,
+        'Cancelling Delete PDF preserves the book')
+      await capture('book-actions')
       await page.getByRole('button', { name: 'Open navigation', exact: true }).click()
       await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: 'Library', exact: true }).click()
     }
     await page.getByText('4 pages · Page 2', { exact: true }).waitFor()
     assert.deepEqual(errors, [], `${name}: no runtime errors`)
-    console.log(`PASS ${name}: Home → Library → Reader, filters/search, saved progress, settings, original default, top fullscreen, shared tokens, no text overlap`)
+    console.log(`PASS ${name}: Home → Library → Reader, original-only mobile, contextual header, plain fullscreen close, simplified book actions, saved progress and confirmation`)
   } finally { await browser.close() }
 }
 try {
