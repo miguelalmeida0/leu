@@ -22,10 +22,18 @@ async function journey(engine, width, reducedMotion) {
     await page.goto(base)
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await page.getByRole('button', { name: 'Open Computer Science Essentials', exact: true }).click()
-    assert.equal(await page.getByRole('button', { name: 'Original page', exact: true }).getAttribute('aria-pressed'), 'true', 'Original PDF is the default')
-    await page.getByRole('button', { name: 'For reading', exact: true }).click()
-    await page.getByRole('button', { name: 'For reading', exact: true }).click()
-    await page.locator('.reader-paper .prose p').first().waitFor()
+    if (width <= 720) {
+      assert.equal(await page.locator('.reader-bar .segmented').count(), 0, 'Mobile reader shows only the original PDF, with no mode switch')
+      await page.locator('.reader-paper canvas').waitFor({ state: 'visible' })
+      assert.equal(await page.locator('.app > .topbar').isVisible(), false, 'Global header is not shown while reading')
+      await page.getByRole('link', { name: 'Back to book overview' }).waitFor()
+      assert.equal(await page.locator('.reader:not(.reader-immersive) .reader-bar button:visible').count(), 2,
+        'Mobile reading header offers only chapters and fullscreen')
+    } else {
+      assert.equal(await page.getByRole('button', { name: 'Original page', exact: true }).getAttribute('aria-pressed'), 'true', 'Original PDF is the default')
+      await page.getByRole('button', { name: 'For reading', exact: true }).click()
+      await page.locator('.reader-paper .prose p').first().waitFor()
+    }
     await page.goto(base + '/#/home')
     await page.locator('.home-scene img').waitFor()
     await page.evaluate(() => document.fonts.ready)
@@ -71,8 +79,10 @@ async function journey(engine, width, reducedMotion) {
     await page.getByRole('navigation', { name: 'Book collections' }).getByRole('link', { name: 'Programming 1' }).click()
     assert.equal(await page.locator('.library-book').count(), 1)
     await page.getByRole('button', { name: 'Continue reading', exact: true }).click()
-    await page.getByRole('button', { name: 'For reading', exact: true }).click()
-    await page.locator('.reader-paper .prose p').first().waitFor()
+    if (width > 720) {
+      await page.getByRole('button', { name: 'For reading', exact: true }).click()
+      await page.locator('.reader-paper .prose p').first().waitFor()
+    } else await page.locator('.reader-paper canvas').waitFor({ state: 'visible' })
     const focus = page.getByRole('button', { name: 'Enter full-screen reading' })
     const focusBox = await focus.boundingBox()
     assert.ok(focusBox && focusBox.y < 150, `${name}: fullscreen belongs in the top toolbar`)
@@ -131,9 +141,9 @@ async function journey(engine, width, reducedMotion) {
     await page.getByRole('button', { name: 'Zoom in', exact: true }).click()
     assert.equal(await page.getByRole('button', { name: 'Reset zoom' }).textContent(), '125%')
     await page.keyboard.press('Escape')
-    await page.getByRole('button', { name: 'Original page', exact: true }).click()
+    if (width > 720) await page.getByRole('button', { name: 'Original page', exact: true }).click()
     await page.locator('.original-stage canvas').waitFor()
-    await page.getByRole('button', { name: 'For reading', exact: true }).click()
+    if (width > 720) await page.getByRole('button', { name: 'For reading', exact: true }).click()
     const beforeFocusScroll = await page.locator('.reader-grid').evaluate((node) => {
       node.scrollTop = Math.min(150, node.scrollHeight - node.clientHeight)
       return node.scrollTop
@@ -149,6 +159,7 @@ async function journey(engine, width, reducedMotion) {
     if (width > 760) {
       await page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name: 'Library', exact: true }).click()
     } else {
+      await page.getByRole('link', { name: 'Back to book overview' }).click()
       await page.getByRole('button', { name: 'Open navigation', exact: true }).click()
       await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: 'Library', exact: true }).click()
     }

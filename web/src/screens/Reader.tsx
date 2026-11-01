@@ -30,7 +30,12 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const [doc, setDoc] = useState<PDFDocumentProxy | null>(null)
   const [outline, setOutline] = useState<Outline[]>([])
   const [blocks, setBlocks] = useState<Block[] | null>(null)
-  const [mode, setMode] = useState<'rebuilt' | 'original'>('original')
+  const [preferredMode, setMode] = useState<'rebuilt' | 'original'>('original')
+  const [mobileReader, setMobileReader] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 720px), (max-height: 500px) and (pointer: coarse)').matches)
+  // Phones always render the source sheet. A resized desktop reader cannot leave
+  // a hidden reflow mode active once its mode selector disappears.
+  const mode = mobileReader ? 'original' : preferredMode
   const [originalFit, setOriginalFit] = useState<'page' | 'width'>('page')
   const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen } = useReaderFullscreen(`${id}:${page}`)
   const paged = useRef<PagedReaderHandle>(null)
@@ -58,6 +63,14 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const pages = book?.pages ?? 1
   const clamped = Math.min(Math.max(1, page), pages)
   const changeZoom = useCallback((next: number) => setZoom(limitZoom(next)), [])
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 720px), (max-height: 500px) and (pointer: coarse)')
+    const update = () => setMobileReader(media.matches)
+    update()
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
 
   const toggleFocus = () => {
     hapticFeedback(immersive ? 'confirm' : 'light')
@@ -333,20 +346,20 @@ export function Reader({ id, page }: { id: string; page: number }) {
       className={`reader fade-in${immersive ? ' reader-immersive' : ''}`}
       style={{ ['--reader-zoom' as string]: zoom }}>
       <div className="reader-bar" inert={immersive && !controls} aria-hidden={immersive && !controls || undefined}>
-        <a className="reader-back" href={href({ name: 'book', id })}>
+        <a className="reader-back" href={href({ name: 'book', id })} aria-label="Back to book overview">
           <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
           <span>{book.title}</span>
         </a>
-        <div className="segmented" role="group" aria-label="How to show the page">
+        {!mobileReader && <div className="segmented" role="group" aria-label="How to show the page">
           <button type="button" aria-pressed={mode === 'rebuilt'} className={mode === 'rebuilt' ? 'on' : ''} onClick={() => setMode('rebuilt')}>For reading</button>
           <button type="button" aria-pressed={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
-        </div>
+        </div>}
         <div className="reader-view-controls">
           <ReaderContents entries={entries} currentIndex={currentIndex}
             onChoose={(index) => turn(entries[index].page)} onAppearance={() => setSettings(true)} />
           <div className="reader-focus-tools">{focusButton}</div>
           {immersive && zoomControls}
-          {!immersive && <button type="button" className="reader-type-toggle" aria-label="Reading settings" onClick={() => setSettings(true)}><TextAaIcon size={23} aria-hidden="true" /></button>}
+          {!immersive && !mobileReader && <button type="button" className="reader-type-toggle" aria-label="Reading settings" onClick={() => setSettings(true)}><TextAaIcon size={23} aria-hidden="true" /></button>}
         </div>
       </div>
 
@@ -372,12 +385,14 @@ export function Reader({ id, page }: { id: string; page: number }) {
             <>
               <div className="original-stage" ref={originalStage}>
                 <canvas ref={canvas} className="original-page" role="img"
-                  aria-label={`Visual rendering of page ${clamped} of ${pages}. Choose For reading to access the extracted text.`}
+                  aria-label={mobileReader
+                    ? `Original PDF page ${clamped} of ${pages}`
+                    : `Visual rendering of page ${clamped} of ${pages}. Choose For reading to access the extracted text.`}
  />
               </div>
-              <p className="muted small original-selection-hint">
+              {!mobileReader && <p className="muted small original-selection-hint">
                 For selectable text and notes, use “For reading”.
-              </p>
+              </p>}
               {originalError && <p className="muted" role="alert">{originalError}</p>}
             </>
           ) : blocks === null ? (

@@ -136,3 +136,47 @@
   .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar { padding-inline: 8px; gap: 3px; }
   .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls { gap: 0; }
 }
+
+/* Phone reader: one contextual header. Global nav/search and mode switching
+   belong outside the reading task, not in a second persistent toolbar. */
+@media (max-width: 720px), (max-height: 500px) and (pointer: coarse) {
+  .app[data-route='read'] > .topbar { display: none; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    min-height: calc(52px + env(safe-area-inset-top));
+    max-height: none; height: auto;
+    align-items: center; justify-content: initial; gap: 8px;
+    padding: env(safe-area-inset-top) max(12px, env(safe-area-inset-right)) 0 max(12px, env(safe-area-inset-left));
+    background: var(--felt); border-bottom: 1px solid rgba(36,48,31,.15);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-back {
+    display: flex; min-width: 0; width: 100%; max-width: none;
+    align-items: center; gap: 7px; min-height: 44px;
+    padding: 0; border-radius: 8px; font-size: var(--text-sm); line-height: 1.25;
+    color: var(--ink); font-weight: 700; white-space: nowrap;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-back svg { flex: none; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-back span {
+    display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented { display: none; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls {
+    display: flex; align-items: center; justify-self: end; gap: 4px; min-width: 0;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-type-toggle { display: none; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .contents-trigger,
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-focus-toggle {
+    display: grid; place-items: center;
+    width: 44px; min-width: 44px; height: 44px; min-height: 44px;
+    padding: 0; border: 0; border-radius: 10px;
+    background: transparent; color: var(--ink);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .contents-trigger:hover,
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-focus-toggle:hover {
+    background: rgba(36,48,31,.08); color: var(--ink);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar a:focus-visible,
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar button:focus-visible {
+    outline: 2px solid var(--ink); outline-offset: 1px;
+  }
+}

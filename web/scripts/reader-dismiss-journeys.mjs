@@ -21,7 +21,7 @@ const configs = [
 const visible = (el) => el.waitFor({ state: 'visible', timeout: 20000 })
 async function enter(page) {
   await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
-  await visible(page.locator('.paged-current .prose'))
+  await visible(page.locator('.paged-current .prose, .paged-current canvas'))
 }
 async function drive(page, engine, path, inspect, ending = 'up') {
   const box = await page.locator('.paged-reader').boundingBox()
@@ -90,8 +90,12 @@ async function run([engine, name, width, height, reducedMotion, haptics]) {
     await page.goto(base, { waitUntil: 'domcontentloaded' })
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
-    await page.getByRole('button', { name: 'For reading', exact: true }).click()
-    await visible(page.locator('.reader-paper .prose'))
+    const originalOnly = width <= 720 || (height <= 500 && width < 1000)
+    if (originalOnly) await visible(page.locator('.reader-paper canvas'))
+    else {
+      await page.getByRole('button', { name: 'For reading', exact: true }).click()
+      await visible(page.locator('.reader-paper .prose'))
+    }
     await enter(page)
     const first = await page.locator('.paged-reader').getAttribute('data-location')
     // Horizontal input remains page navigation even when it finishes diagonally.
@@ -127,16 +131,18 @@ async function run([engine, name, width, height, reducedMotion, haptics]) {
       await pull(page, engine, 170, undefined, 'pinch')
       await neutral(page, saved)
     }
-    await pull(page, engine, 42, async () => {
-      await page.evaluate(() => {
-        const sentence = document.querySelector('.paged-current .prose .s'), range = document.createRange()
-        range.selectNodeContents(sentence)
-        const selection = getSelection(); selection.removeAllRanges(); selection.addRange(range)
-        document.dispatchEvent(new Event('selectionchange'))
+    if (!originalOnly) {
+      await pull(page, engine, 42, async () => {
+        await page.evaluate(() => {
+          const sentence = document.querySelector('.paged-current .prose .s'), range = document.createRange()
+          range.selectNodeContents(sentence)
+          const selection = getSelection(); selection.removeAllRanges(); selection.addRange(range)
+          document.dispatchEvent(new Event('selectionchange'))
+        })
       })
-    })
-    await neutral(page, saved)
-    await page.evaluate(() => { getSelection().removeAllRanges(); document.dispatchEvent(new Event('selectionchange')) })
+      await neutral(page, saved)
+      await page.evaluate(() => { getSelection().removeAllRanges(); document.dispatchEvent(new Event('selectionchange')) })
+    }
     if (engine === chromium && width < 600) {
       await pull(page, engine, 170, async () => {
         await page.setViewportSize({ width: width - 10, height })
@@ -146,20 +152,27 @@ async function run([engine, name, width, height, reducedMotion, haptics]) {
       await page.setViewportSize({ width, height })
       await page.waitForFunction((old) => document.querySelector('.paged-reader')?.dataset.location === old, saved)
     }
-    // A native selected passage owns its gesture; dismissal must not steal it.
-    await page.evaluate(() => {
-      const sentence = document.querySelector('.paged-current .prose .s'), range = document.createRange()
-      range.selectNodeContents(sentence)
-      const selection = getSelection(); selection.removeAllRanges(); selection.addRange(range)
-      document.dispatchEvent(new Event('selectionchange'))
-    })
-    await pull(page, engine, 190)
-    await neutral(page, saved)
-    await page.evaluate(() => { getSelection().removeAllRanges(); document.dispatchEvent(new Event('selectionchange')) })
+    if (!originalOnly) {
+      // A native selected passage owns its gesture; dismissal must not steal it.
+      await page.evaluate(() => {
+        const sentence = document.querySelector('.paged-current .prose .s'), range = document.createRange()
+        range.selectNodeContents(sentence)
+        const selection = getSelection(); selection.removeAllRanges(); selection.addRange(range)
+        document.dispatchEvent(new Event('selectionchange'))
+      })
+      await pull(page, engine, 190)
+      await neutral(page, saved)
+      await page.evaluate(() => { getSelection().removeAllRanges(); document.dispatchEvent(new Event('selectionchange')) })
+    }
     await center(page)
-    await visible(page.getByRole('button', { name: 'Original page' }))
-    await page.getByRole('button', { name: 'Original page' }).click()
-    assert.equal(await page.getByRole('button', { name: 'Original page' }).getAttribute('aria-pressed'), 'true', 'A new intentional tap immediately after revealing controls is not swallowed')
+    if (!originalOnly) {
+      await visible(page.getByRole('button', { name: 'Original page' }))
+      await page.getByRole('button', { name: 'Original page' }).click()
+      assert.equal(await page.getByRole('button', { name: 'Original page' }).getAttribute('aria-pressed'), 'true', 'A new intentional tap immediately after revealing controls is not swallowed')
+    } else {
+      assert.equal(await page.locator('.paged-reader').getAttribute('data-mode'), 'original',
+        'Mobile fullscreen never switches away from the source PDF')
+    }
     await page.waitForFunction(() => parseFloat(document.querySelector('.paged-current canvas')?.style.width ?? '0') > 0)
     for (let i = 0; i < 4; i++) await page.getByRole('button', { name: 'Zoom in' }).click()
     await page.waitForFunction(() => parseFloat(document.querySelector('.paged-current canvas')?.style.height ?? '0') > document.querySelector('.paged-current .paged-original').clientHeight + 10)
@@ -168,8 +181,10 @@ async function run([engine, name, width, height, reducedMotion, haptics]) {
     await settled(page)
     assert.ok(await page.locator('.paged-current canvas').evaluate((el, y) => el.getBoundingClientRect().y > y + 4, originalY), 'A zoomed original pans vertically without exiting')
     await page.getByRole('button', { name: 'Reset zoom' }).click()
-    await page.getByRole('button', { name: 'For reading' }).click()
-    await visible(page.locator('.paged-current .prose'))
+    if (!originalOnly) {
+      await page.getByRole('button', { name: 'For reading' }).click()
+      await visible(page.locator('.paged-current .prose'))
+    }
     await center(page)
     await neutral(page, saved)
     await page.evaluate(() => { window.__HAPTIC_CALLS = []; window.__NORMAL_CLICKS = 0 })

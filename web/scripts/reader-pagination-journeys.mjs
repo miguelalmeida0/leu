@@ -438,6 +438,12 @@ async function fittedOriginal([engine, name, width, height, reducedMotion]) {
     await page.getByText('Sewn in', { exact: true }).waitFor({ state: 'visible', timeout: 25000 })
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
     await visible(page.locator('.reader-paper canvas'))
+    if (width <= 720 || height <= 500) {
+      assert.equal(await page.locator('.reader-bar .segmented').count(), 0, 'Mobile has original PDF only')
+      assert.equal(await page.locator('.app > .topbar').isVisible(), false, 'Mobile reader has no global menu/search header')
+      await visible(page.getByRole('link', { name: 'Back to book overview' }))
+      await visible(page.locator('.reader-bar .contents-trigger'))
+    }
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await page.waitForFunction(() => document.querySelector('.paged-current canvas')?.width > 0)
     // Tiny trackpad jitter is not a turn. Accumulated deliberate movement is.
@@ -669,7 +675,12 @@ try {
     await new Promise((resolve) => setTimeout(resolve, 150))
   }
   for (const config of configs) {
-    if (!process.env.LEU_PAGED_CASE || config[1] === process.env.LEU_PAGED_CASE) { await fittedOriginal(config); await run(config); await tallOriginal(config) }
+    if (!process.env.LEU_PAGED_CASE || config[1] === process.env.LEU_PAGED_CASE) {
+      await fittedOriginal(config)
+      // Reflowed-screen tests remain on desktop. Phones have one source-PDF mode.
+      if (config[2] > 720 && config[3] > 500) await run(config)
+      await tallOriginal(config)
+    }
   }
   if (!process.env.LEU_PAGED_CASE) {
     await extractionFallback(chromium, 'chromium-fallback')

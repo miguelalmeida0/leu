@@ -77,8 +77,11 @@ async function run(engine, label, width, reduced) {
     phase = 'import'
     await page.getByRole('button', { name: /start with a sample book/i }).click()
     await page.locator('.sewn-actions .btn.ink').click({ timeout: 25000 })
-    await page.getByRole('button', { name: 'For reading', exact: true }).click()
-    await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible', timeout: 25000 })
+    if (width <= 720) await page.locator('.reader-paper canvas').waitFor({ state: 'visible', timeout: 25000 })
+    else {
+      await page.getByRole('button', { name: 'For reading', exact: true }).click()
+      await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible', timeout: 25000 })
+    }
     phase = 'home'
     if (width > 760) {
       // In a book, the title links to its overview; Home is the next wordmark.
@@ -86,8 +89,8 @@ async function run(engine, label, width, reduced) {
       await page.getByRole('heading', { name: 'Computer Science Essentials', level: 1 }).waitFor()
       await page.locator('.topbar .wordmark').click()
     } else {
-      await page.getByRole('button', { name: 'Open navigation' }).click()
-      await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: 'Home', exact: true }).click()
+      await page.getByRole('link', { name: 'Back to book overview' }).click()
+      await page.locator('.topbar .wordmark').click()
     }
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     const noAnimationButtons = async () => assert.equal(
@@ -136,8 +139,11 @@ async function run(engine, label, width, reduced) {
     assert.equal(await page.locator('.nook-glass canvas').evaluate((el) => getComputedStyle(el).touchAction), 'auto')
     phase = 'reopen-reader'
     await page.getByRole('button', { name: 'Continue reading', exact: true }).click()
-    await page.getByRole('button', { name: 'For reading', exact: true }).click()
-    await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible' })
+    if (width <= 720) await page.locator('.reader-paper canvas').waitFor({ state: 'visible' })
+    else {
+      await page.getByRole('button', { name: 'For reading', exact: true }).click()
+      await page.locator('.reader-paper .prose p').first().waitFor({ state: 'visible' })
+    }
     phase = 'return-home'
     if (width > 760) {
       // In a book, the title links to its overview; Home is the next wordmark.
@@ -145,8 +151,8 @@ async function run(engine, label, width, reduced) {
       await page.getByRole('heading', { name: 'Computer Science Essentials', level: 1 }).waitFor()
       await page.locator('.topbar .wordmark').click()
     } else {
-      await page.getByRole('button', { name: 'Open navigation' }).click()
-      await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: 'Home', exact: true }).click()
+      await page.getByRole('link', { name: 'Back to book overview' }).click()
+      await page.locator('.topbar .wordmark').click()
     }
     await page.locator('.home-scene .nook').waitFor({ state: 'visible' })
     await noAnimationButtons()
