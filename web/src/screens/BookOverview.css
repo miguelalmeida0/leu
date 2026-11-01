@@ -1,0 +1,43 @@
+/* Book overview: one grid and one structured sidebar, not disconnected blocks. */
+.app .book.page { width: min(100%, 1120px); max-width: 1120px; padding: clamp(24px, 3.6vw, 44px) clamp(24px, 3.6vw, 44px) 72px; }
+.book .crumbs { margin-bottom: 22px; }
+.book .book-head { display: grid; grid-template-columns: 88px minmax(0, 1fr); align-items: center; gap: 22px; margin-bottom: 32px; }
+.book .book-head .patch-m { width: 88px; height: 114px; }
+.book .book-head h1 { max-width: 27ch; overflow-wrap: anywhere; }
+.book .book-head p { max-width: 62ch; line-height: 1.5; }
+.book .book-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(310px, .91fr); gap: clamp(28px, 4vw, 50px); align-items: start; }
+.book-chapters { min-width: 0; }
+.book-chapters-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; min-height: 44px; }
+.book-chapters-head .eyebrow { margin: 0; }
+.book .book-chapters-head .contents-trigger { margin: 0; min-height: 40px; padding: 6px 12px; border-radius: 9px; }
+@media (hover: hover) and (pointer: fine) { .book .book-chapters-head .contents-trigger:hover { background: var(--state-hover-surface); } }
+.book .chapter-card { margin-top: 16px; padding: clamp(24px, 2.6vw, 32px); min-width: 0; border-radius: 18px; background: var(--cream); box-shadow: none; border: 1px solid rgba(36,48,31,.12); }
+.book .chapter-card .chapter-title { font-size: clamp(23px, 2.2vw, 29px); line-height: 1.17; margin: 12px 0 0; overflow-wrap: anywhere; }
+.book .book-chapter-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 24px; }
+.book .book-chapter-actions .btn { min-height: 44px; padding-inline: 18px; }
+.book .book-chapter-actions .quiet-link { min-height: 44px; padding: 10px 12px; border: 0; border-radius: 9px; }
+@media (hover: hover) and (pointer: fine) { .book .book-chapter-actions .quiet-link:hover { background: var(--state-hover-surface); } }
+.book .book-side { display: flex; flex-direction: column; align-items: stretch; min-width: 0; gap: 0; padding: clamp(22px, 2.7vw, 30px); background: var(--cream); border: 1px solid rgba(36,48,31,.12); border-radius: 18px; }
+.book .book-side .side-card { padding: 0; margin: 0; min-width: 0; background: transparent; border: 0; box-shadow: none; }
+.book .book-side .left-off { margin: 12px 0 0; font-size: 17px; line-height: 1.55; overflow-wrap: anywhere; }
+.book .book-resume-action { align-self: flex-start; margin-top: 22px; min-height: 44px; padding-inline: 18px; }
+.book .book-side .side-block { margin: 24px 0 0; padding: 22px 0 0; border-top: 1px solid rgba(36,48,31,.17); }
+.book .book-practice .eyebrow { margin: 0 0 10px; }
+.book .book-practice .muted { line-height: 1.5; margin: 0; }
+.book .book-practice-action { margin-top: 16px; min-height: 42px; padding: 0 16px; box-shadow: none; border: 1px solid rgba(36,48,31,.17); }
+.book .book-collection { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; min-width: 0; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(36,48,31,.17); }
+.book .book-collection .eyebrow { margin: 0; }
+.book .book-collection a { max-width: 72%; min-width: 0; overflow-wrap: anywhere; text-align: end; font-weight: 650; text-underline-offset: 3px; }
+.book .book-delete { display: inline-flex; align-items: center; align-self: flex-start; gap: 8px; min-height: 44px; margin-top: 18px; padding: 8px 12px; border: 0; border-radius: 9px; color: var(--secondary); }
+@media (hover: hover) and (pointer: fine) { .book .book-delete:hover { background: var(--state-hover-surface); color: var(--ink); } }
+@media (min-width: 721px) and (max-width: 980px) { .book .book-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; } .book .book-side { max-width: none; } }
+@media (max-width: 720px) {
+  .app .book.page { padding: 22px 18px 48px; }
+  .book .book-head { grid-template-columns: 72px minmax(0, 1fr); gap: 16px; margin-bottom: 24px; }
+  .book .book-head .patch-m { width: 72px; height: 94px; }
+  .book .book-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .book .chapter-card { margin-top: 12px; padding: 22px; }
+  .book .book-side { padding: 22px; }
+  .book .book-side .side-block, .book .book-collection { display: none; }
+  .book .book-chapter-actions { margin-top: 20px; }
+}

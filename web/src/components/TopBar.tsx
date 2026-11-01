@@ -13,8 +13,6 @@ const places = [
   { name: 'read', label: 'Reading' },
   { name: 'study', label: 'Study' },
   { name: 'notes', label: 'Notes' },
-  { name: 'explore', label: 'Explore' },
-  { name: 'trails', label: 'Trails' },
 ] as const
 
 /** The desktop top bar: the wordmark (Home), the places with a red running stitch under the

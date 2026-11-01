@@ -1,0 +1,33 @@
+/* Home's two editorial columns stay centered vertically on laptop screens. */
+@media (min-width: 721px) {
+  .reading-home {
+    width: min(100%, 1120px); max-width: 1120px;
+    min-height: calc(100dvh - var(--topbar-height, 64px));
+    margin-inline: auto;
+    padding: clamp(42px, 7vh, 82px) clamp(24px, 4vw, 50px);
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, .91fr);
+    gap: clamp(36px, 6vw, 84px); align-items: center; align-content: center;
+  }
+  .reading-home .home-story, .reading-home .home-resume { align-self: center; }
+  .reading-home .home-resume { padding-top: 0; }
+  .reading-home .home-story .eyebrow { margin-bottom: 18px; }
+  .reading-home .home-scene { width: 100%; max-width: 440px; margin-top: 22px; }
+  .reading-home .home-resume > .eyebrow { margin-bottom: 20px; }
+  .reading-home .resume-book { grid-template-columns: 76px minmax(0, 1fr); gap: 18px; }
+  .reading-home .resume-details h2 { font-size: clamp(19px, 1.75vw, 23px); line-height: 1.18; }
+  .reading-home .resume-action { margin-top: 24px; min-height: 46px; }
+  .reading-home .home-shortcuts { margin-top: 24px; }
+  .reading-home .home-shortcuts button { min-height: 58px; }
+}
+@media (min-width: 721px) and (max-width: 900px) {
+  .reading-home {
+    grid-template-columns: minmax(0, 1fr) minmax(290px, .95fr);
+    gap: clamp(24px, 4vw, 42px); padding-inline: clamp(22px, 3.4vw, 36px);
+  }
+  .reading-home .home-scene { max-width: 340px; }
+  .reading-home .home-resume > .eyebrow { margin-bottom: 16px; }
+  .reading-home .resume-action, .reading-home .home-shortcuts { margin-top: 20px; }
+}
+@media (max-width: 720px) {
+  .reading-home { min-height: 0; align-content: initial; }
+}
