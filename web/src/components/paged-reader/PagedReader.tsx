@@ -28,8 +28,10 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
   const currentMetrics = metrics.current.get(props.page)
   const parts = props.mode === 'original' ? 1 : currentMetrics?.parts ?? 1
   const leaf = Math.min(part, parts - 1)
-  const previous = !!pages.get(props.page) && (leaf > 0 || props.page > 1)
-  const next = !!pages.get(props.page) && (leaf < parts - 1 || props.page < props.doc.numPages)
+  // Original source boundaries exist before its optional text is ready.
+  const readyToTurn = props.mode === 'original' || (!!pages.get(props.page) && !pages.get(props.page)?.textPending)
+  const previous = readyToTurn && (leaf > 0 || props.page > 1)
+  const next = readyToTurn && (leaf < parts - 1 || props.page < props.doc.numPages)
   const latest = useRef({ props, part: leaf, parts, previous, next, reduced })
   latest.current = { props, part: leaf, parts, previous, next, reduced }
 
@@ -148,9 +150,13 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
     const y = Math.max(0, (canvas.getBoundingClientRect().height - area.clientHeight) / 2)
     setPan({ x: Math.max(-x, Math.min(x, value.x)), y: Math.max(-y, Math.min(y, value.y)) })
   }
-  usePageGesture({ root, track, busy: () => busy.current || dismiss.busy(), dismiss, turn: settle, available: (direction) => direction < 0 ? latest.current.previous : latest.current.next,
-    originalScroll: () => latest.current.props.mode === 'original' && latest.current.props.originalFit === 'width' && latest.current.props.zoom <= 1.05
-      ? root.current?.querySelector<HTMLElement>('.paged-current .paged-original') ?? null : null,
+  usePageGesture({ root, track, contextKey: `${props.mode}:${props.originalFit}:${props.zoom > 1.05 ? 'zoom' : 'fit'}`,
+    busy: () => busy.current || dismiss.busy(), dismiss, turn: settle, available: (direction) => direction < 0 ? latest.current.previous : latest.current.next,
+    originalScroll: () => {
+      const area = latest.current.props.mode === 'original' && latest.current.props.originalFit === 'width' && latest.current.props.zoom <= 1.05
+        ? root.current?.querySelector<HTMLElement>('.paged-current .paged-original') : null
+      return area && area.scrollHeight > area.clientHeight + 2 ? area : null
+    },
     allowPull: () => {
       if (latest.current.props.zoom > 1.05) return false
       const area = root.current?.querySelector<HTMLElement>('.paged-current .paged-original')

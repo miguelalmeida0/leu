@@ -123,6 +123,13 @@ async function run([engine, name, width, reducedMotion, height = 900]) {
     let dialog = page.getByRole('dialog', { name: 'Contents', exact: true })
     await dialog.waitFor({ state: 'visible' })
     assert.equal(await dialog.locator('li').count(), 500, 'No outline entries are silently truncated')
+    const chapterWidth = await dialog.locator('.contents-results').evaluate((el) => ({
+      viewport: el.clientWidth, content: el.scrollWidth,
+      rowsFit: [...el.querySelectorAll('li button')].every((button) =>
+        button.getBoundingClientRect().right <= el.getBoundingClientRect().right + 2),
+    }))
+    assert.ok(chapterWidth.content <= chapterWidth.viewport + 2 && chapterWidth.rowsFit,
+      'Five hundred long chapters must use the available width and scroll vertically only: ' + JSON.stringify(chapterWidth))
     assert.ok(await dialog.locator('.contents-results').evaluate((el) => el.clientHeight >= 44), 'Contents keeps a usable chapter result viewport in short/keyboard-height screens')
     await dialog.getByRole('searchbox', { name: 'Search chapters' }).fill('Repeated heading')
     await dialog.getByRole('button', { name: /Repeated heading/ }).nth(2).click()

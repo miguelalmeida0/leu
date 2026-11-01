@@ -1,20 +1,23 @@
-.contents-trigger { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; min-width: 44px; padding: 8px 10px; border-radius: 8px; font-size: var(--text-sm); font-weight: 600; white-space: nowrap; }
+.contents-trigger { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; min-width: 44px; max-width: 100%; padding: 8px 10px; border-radius: 8px; font-size: var(--text-sm); font-weight: 600; white-space: nowrap; }
+.contents-trigger svg { flex: none; }
 .contents-trigger:hover { background: var(--felt-light); }
 .contents-location { font-size: var(--text-caption); font-variant-numeric: tabular-nums; }
-.reader-contents { display: flex; flex-direction: column; gap: 12px; min-width: 0; max-height: none; }
+.reader-contents { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 100%; min-width: 0; max-height: none; overflow-x: clip; }
 .reader-contents > :not(.contents-results) { flex: none; }
 .reader-contents h2, .reader-contents p { margin: 0; }
 .reader-contents h2 { font-size: var(--text-title); }
 .contents-current { overflow-wrap: anywhere; font-size: var(--text-sm); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 .reader-contents input { width: 100%; min-width: 0; min-height: 44px; flex: none; }
-.contents-results { flex: none; min-height: 88px; max-height: min(48dvh, 440px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
-.contents-results ol { margin: 0; padding: 0; list-style: none; }
+.contents-results { flex: 0 1 auto; width: 100%; min-width: 0; min-height: 88px; max-height: min(48dvh, 440px); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.contents-results ol { width: 100%; min-width: 0; margin: 0; padding: 0; list-style: none; }
 .contents-results li { min-width: 0; }
-.contents-results button { width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; min-height: 44px; padding: 12px 10px; text-align: start; border-radius: 8px; font-size: var(--text-label); }
+.contents-results button { width: 100%; max-width: 100%; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 12px; min-height: 44px; padding: 12px 10px; text-align: start; border-radius: 8px; font-size: var(--text-label); }
 .contents-results button:hover { background: var(--felt-light); }
 .contents-results button[aria-current] { box-shadow: inset 3px 0 0 var(--red-thread); background: var(--felt-light); }
-.contents-title { min-width: 0; overflow-wrap: anywhere; }
-.contents-page { flex: none; font-size: var(--text-caption); }
+.contents-title { min-width: 0; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; line-height: 1.4; }
+.contents-page { white-space: nowrap; font-size: var(--text-caption); }
+.book-head > div { min-width: 0; }
+.book-head .display, .chapter-card h3 { overflow-wrap: anywhere; }
 .book .contents-trigger { margin-block: 12px; background: var(--felt-light); }
 .book-grid > section, .chapter-card, .chapter-card .sections, .chapter-card .row { min-width: 0; }
 .chapter-card h3, .sections a span:first-child { min-width: 0; overflow-wrap: anywhere; }

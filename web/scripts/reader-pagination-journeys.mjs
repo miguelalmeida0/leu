@@ -421,6 +421,18 @@ async function fittedOriginal([engine, name, width, height, reducedMotion]) {
     await visible(page.locator('.reader-paper canvas'))
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await page.waitForFunction(() => document.querySelector('.paged-current canvas')?.width > 0)
+    // Tiny trackpad jitter is not a turn. Accumulated deliberate movement is.
+    if (engine === chromium && width > 900) {
+      await page.mouse.move(width * .5, height * .5)
+      await page.mouse.wheel(6, 1)
+      await page.waitForTimeout(280)
+      assert.equal(await location(page), '1:0', 'Tiny horizontal wheel movement leaves the source page in place')
+      for (let i = 0; i < 7; i++) { await page.mouse.wheel(12, 2); await page.waitForTimeout(30) }
+      await page.waitForFunction(() => document.querySelector('.paged-reader')?.dataset.location === '2:0')
+      await page.waitForTimeout(280)
+      assert.equal(await location(page), '2:0', 'A sustained trackpad swipe turns exactly one source sheet')
+      await keyStep(page, 'ArrowLeft')
+    }
     // Reproduce the reported default-original regression using actual pointer
     // input before checking the new Fit page control or its geometry.
     await drag(page, engine, -Math.min(240, width * .65), 25, true)

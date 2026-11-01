@@ -12,7 +12,7 @@ export interface ReadingPosition {
   next: boolean
 }
 export interface PageMetrics { fontsReady: boolean; parts: number; starts: number[]; columns: number[]; ends: number[]; key: string }
-export interface PageData { blocks: Block[]; aspect: number; error?: string; textError?: string }
+export interface PageData { blocks: Block[]; aspect: number; error?: string; textError?: string; textPending?: boolean }
 export interface PagedReaderHandle { step: (direction: Direction) => void; goToPage: (page: number) => void }
 export interface PagedReaderProps {
   doc: PDFDocumentProxy
