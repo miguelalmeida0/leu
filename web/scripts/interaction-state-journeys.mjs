@@ -131,10 +131,14 @@ async function journey(engine) {
     await search.waitFor({ state: 'hidden' })
 
     await page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name: 'Library' }).click()
+    // Hash navigation and the React store update settle asynchronously. Assert
+    // against the rendered collection rather than counting a transition frame.
+    await page.getByRole('heading', { name: 'Your library', exact: true }).waitFor({ state: 'visible' })
     const filters = page.locator('.library-filters')
     const all = filters.locator('a[aria-current="page"]')
-    const collection = filters.locator('a:not([aria-current])').first()
-    assert.ok(await collection.count() > 0)
+    const collection = filters.getByRole('link', { name: /Programming/ })
+    await collection.waitFor({ state: 'visible' })
+    assert.equal(await collection.count(), 1, 'Imported sample must appear under its Programming collection')
     await collection.hover()
     assert.equal(await all.getAttribute('aria-current'), 'page',
       'Collection hover does not change the selected filter')
