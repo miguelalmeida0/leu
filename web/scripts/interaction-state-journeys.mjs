@@ -111,7 +111,8 @@ async function journey(engine) {
     const search = page.getByRole('dialog', { name: 'Search your books' })
     await search.locator('.search-progress').waitFor({ state: 'hidden', timeout: 30000 })
     const searchField = search.getByRole('textbox', { name: 'Ask your books anything' })
-    await searchField.fill('the')
+    // Both concepts occur on different pages of the bundled sample PDF.
+    await searchField.fill('model references')
     await page.waitForFunction(() => document.querySelectorAll('.search-results [role="option"]').length > 1,
       null, { timeout: 15000 })
     const best = search.locator('#result-0')
