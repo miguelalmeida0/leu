@@ -110,7 +110,11 @@
 .reader.reader-immersive .reader-bar .reader-zoom-controls,
 .reader.reader-immersive .reader-bar .contents-trigger { grid-area: auto; flex: none; }
 @media (max-width: 950px) {
-  .reader.reader-immersive .reader-bar .reader-original-fit { display: none; }
+  /* Retain fit-page and fit-width. Wrap revealed controls instead of dropping them. */
+  .reader.reader-immersive .reader-bar .reader-view-controls { flex-wrap: wrap; row-gap: 2px; }
+  .reader.reader-immersive .reader-bar .reader-zoom-controls {
+    display: flex; flex-wrap: wrap; max-width: 100%; justify-content: flex-end; row-gap: 2px;
+  }
 }
 @media (max-width: 720px) {
   .reader.reader-immersive .reader-bar { gap: 8px; padding-left: max(10px, env(safe-area-inset-left)); }
@@ -122,3 +126,13 @@
 /* Keep the original fullscreen entry mounted for reliable focus restoration,
    while presenting only the unframed X inside fullscreen. */
 .reader.reader-immersive .reader-focus-tools { display: none; }
+
+@media (max-width: 720px) {
+  .reader.reader-immersive .reader-bar .reader-zoom-controls {
+    flex: 1 1 100%; width: 100%; justify-content: flex-start;
+  }
+  .reader.reader-immersive .reader-bar .reader-original-fit {
+    flex: 0 0 100%; width: 100%; justify-content: flex-start;
+    padding-right: 0; border-right: 0;
+  }
+}
