@@ -83,7 +83,7 @@ async function run(engine, label, width, reduced) {
     if (width > 760) {
       // In a book, the title links to its overview; Home is the next wordmark.
       await page.locator('.topbar .reader-top-title').click()
-      await page.getByRole('heading', { name: 'Computer Science Essentials' }).waitFor()
+      await page.getByRole('heading', { name: 'Computer Science Essentials', level: 1 }).waitFor()
       await page.locator('.topbar .wordmark').click()
     } else {
       await page.getByRole('button', { name: 'Open navigation' }).click()
@@ -130,7 +130,7 @@ async function run(engine, label, width, reduced) {
     if (width > 760) {
       // In a book, the title links to its overview; Home is the next wordmark.
       await page.locator('.topbar .reader-top-title').click()
-      await page.getByRole('heading', { name: 'Computer Science Essentials' }).waitFor()
+      await page.getByRole('heading', { name: 'Computer Science Essentials', level: 1 }).waitFor()
       await page.locator('.topbar .wordmark').click()
     } else {
       await page.getByRole('button', { name: 'Open navigation' }).click()
