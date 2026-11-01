@@ -124,7 +124,13 @@ export function BookOverview({ id }: { id: string }) {
             </ul>
             {!onTrails.length && <p className="muted small">Only in your library so far.</p>}
           </div>
-          <button className="quiet-link small" style={{ justifySelf: 'start' }} onClick={async () => { if (confirm(`Remove ${book.title} from Leu? Its notes go with it.`)) { await removeBook(id); go({ name: 'library' }) } }}>Remove from Leu</button>
+          <button type="button" className="quiet-link small" style={{ justifySelf: 'start', display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 44 }}
+            onClick={async () => { if (confirm(`Delete ${book.title}? This also deletes its notes.`)) { await removeBook(id); go({ name: 'library' }) } }}>
+            <svg data-icon="material-delete-outline" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2-10h8v10H8V9zm7.5-6h-7l-1 1H5v2h14V4h-2.5l-1-1z" />
+            </svg>
+            Delete PDF
+          </button>
         </aside>
       </div>
     </div>

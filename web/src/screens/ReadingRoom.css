@@ -117,3 +117,8 @@
   .reading-home .resume-details h2 { font-size: 20px; }
   .reading-home .home-resume { padding-top: 8px; }
 }
+
+/* Book overview on phones: resume the book or delete the PDF, no extra sidebar sections. */
+@media (max-width: 720px) {
+  .book-side > .side-block { display: none; }
+}
