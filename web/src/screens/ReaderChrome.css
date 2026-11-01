@@ -13,7 +13,7 @@
 }
 .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar {
   display: flex; grid-row: 1; align-items: center; justify-content: space-between;
-  gap: 20px; min-height: 54px; padding: 0 clamp(16px, 3vw, 40px);
+  gap: 20px; min-height: 50px; padding: 0 clamp(16px, 3vw, 40px);
   margin: 0; color: var(--ink); background: var(--felt-light);
   border-bottom: 1px solid rgba(36,48,31,.13);
 }
@@ -22,7 +22,7 @@
   display: flex; flex: none; gap: 18px; padding: 0; background: transparent; box-shadow: none;
 }
 .app[data-route='read'] .reader:not(.reader-immersive) .segmented button {
-  min-height: 54px; padding: 0; border-radius: 0;
+  min-height: 50px; padding: 0; border-radius: 0;
   border-bottom: 2px solid transparent; color: var(--secondary);
   font-size: var(--text-sm); font-weight: 650; white-space: nowrap;
 }
@@ -80,11 +80,11 @@
 }
 @media (max-width: 720px) {
   .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar {
-    padding-inline: 12px; gap: 5px; min-height: 52px;
+    padding-inline: 12px; gap: 5px; min-height: 50px;
   }
   .app[data-route='read'] .reader:not(.reader-immersive) .segmented { gap: 10px; }
   .app[data-route='read'] .reader:not(.reader-immersive) .segmented button {
-    min-height: 52px; font-size: var(--text-caption);
+    min-height: 50px; font-size: var(--text-caption);
   }
   .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls { gap: 0; }
   .app[data-route='read'] .reader:not(.reader-immersive) .contents-trigger {
