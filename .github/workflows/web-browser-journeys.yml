@@ -57,6 +57,9 @@ jobs:
       - name: Verify reading-room navigation, controls and saved progress
         working-directory: web
         run: node scripts/reading-room-journeys.mjs
+      - name: Verify compact toolbar, dialog close and responsive Home/book grids
+        working-directory: web
+        run: node scripts/responsive-reader-layout-journeys.mjs
       - name: Verify fitted screen pagination and touch viewport isolation
         working-directory: web
         run: node scripts/reader-pagination-journeys.mjs
