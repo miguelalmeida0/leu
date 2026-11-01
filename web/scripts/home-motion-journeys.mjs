@@ -114,8 +114,9 @@ async function run(engine, label, width, reduced) {
         resume: document.querySelector('.home-resume').getBoundingClientRect().toJSON(),
       }))
       assert.ok(editorial.art.width <= 445 && editorial.heading.width <= 600
-        && editorial.cover.width <= 80 && editorial.action.right <= editorial.resume.right + 2,
-        'Home must keep the illustration, title and resume actions within balanced editorial proportions')
+        && editorial.cover.width >= 88 && editorial.cover.width <= 96
+        && editorial.action.right <= editorial.resume.right + 2,
+        'Home must keep the illustration, readable book cover and actions within balanced proportions: ' + JSON.stringify(editorial))
     }
     await page.screenshot({ path: join(evidence, 'home-' + label + '-before.png') })
     // Obsolete manual choices must neither freeze the scene nor override the OS.
