@@ -81,7 +81,7 @@
     grid-area: 1 / 3; justify-content: flex-end; gap: 0;
   }
   .app[data-route='read'] .reader:not(.reader-immersive) .dock-pages > .dock-btn {
-    min-width: 38px; width: 38px; min-height: 44px; height: 44px;
+    min-width: 44px; width: 44px; min-height: 44px; height: 44px;
   }
   .app[data-route='read'] .reader:not(.reader-immersive) .dock-range {
     flex: 0 0 auto; gap: 0; min-width: 43px;
@@ -91,7 +91,7 @@
     min-width: 43px; font-size: var(--text-caption);
   }
   .app[data-route='read'] .reader:not(.reader-immersive) .dock-speed {
-    min-width: 40px; width: 40px; height: 36px; font-size: var(--text-caption);
+    min-width: 44px; width: 44px; height: 44px; font-size: var(--text-caption);
   }
   .app[data-route='read'] .reader:not(.reader-immersive) .dock-menu {
     left: 0; min-width: min(280px, calc(100vw - 24px));
@@ -99,10 +99,6 @@
   }
 }
 @media (max-width: 350px) {
-  .app[data-route='read'] .reader:not(.reader-immersive) .dock-pages > .dock-btn {
-    min-width: 34px; width: 34px;
-  }
-  .app[data-route='read'] .reader:not(.reader-immersive) .dock-speed { min-width: 36px; width: 36px; }
   .app[data-route='read'] .reader:not(.reader-immersive) .dock-range,
   .app[data-route='read'] .reader:not(.reader-immersive) .dock-range .tabular { min-width: 38px; }
 }
