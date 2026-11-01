@@ -13,7 +13,7 @@
   --shadow-soft: 0 6px 16px rgba(36, 48, 31, .10);
   /* Interactive state semantics: a transient neutral hover is never a selected item. */
   --state-hover-surface: rgba(36, 48, 31, .075);
-  --state-selected-surface: #DFE7CA;
+  --state-selected-surface: #CCD9AB;
   --state-selected-indicator: var(--red-thread);
   --ease: cubic-bezier(.22, .8, .24, 1);
 

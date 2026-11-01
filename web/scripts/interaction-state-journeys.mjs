@@ -13,7 +13,19 @@ const server = spawn(process.execPath,
   ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4193', '--strictPort'],
   { cwd: root, stdio: 'ignore' })
 
-const background = (locator) => locator.evaluate((node) => getComputedStyle(node).backgroundColor)
+const effectiveBackground = (locator) => locator.evaluate((node) => {
+  // Compare painted colors, not raw rgba strings; translucency needs its parent surface.
+  let rgb = [0, 0, 0], opacity = 0
+  for (let element = node; element && opacity < .999; element = element.parentElement) {
+    const components = getComputedStyle(element).backgroundColor.match(/[\\d.]+/g)?.map(Number)
+    if (!components) continue
+    const amount = (components[3] ?? 1) * (1 - opacity)
+    rgb = rgb.map((value, index) => value + amount * components[index])
+    opacity += amount
+  }
+  return rgb.map(Math.round)
+})
+const distance = (a, b) => Math.hypot(...a.map((value, index) => value - b[index]))
 const selected = (locator) => locator.getAttribute('aria-current')
 async function distinguish(active, hover, label) {
   await active.waitFor({ state: 'visible' })
@@ -21,9 +33,10 @@ async function distinguish(active, hover, label) {
   assert.ok(await selected(active) || await active.getAttribute('aria-checked') === 'true'
     || await active.getAttribute('aria-pressed') === 'true',
     label + ': the selected item must keep its semantic state when another is hovered')
-  const current = await background(active)
-  const pointer = await background(hover)
-  assert.notEqual(current, pointer, label + ': hover must not look selected')
+  const current = await effectiveBackground(active)
+  const pointer = await effectiveBackground(hover)
+  assert.ok(distance(current, pointer) >= 25,
+    label + ': selected and hovered surfaces must look visibly different (' + current + ' vs ' + pointer + ')')
   assert.match(await active.evaluate((node) => getComputedStyle(node).boxShadow), /inset/,
     label + ': selected state must retain its persistent location marker')
 }
@@ -124,8 +137,8 @@ async function journey(engine) {
     await collection.hover()
     assert.equal(await all.getAttribute('aria-current'), 'page',
       'Collection hover does not change the selected filter')
-    assert.notEqual(await background(all), await background(collection),
-      'Collection selection and hover have distinct surfaces')
+    assert.ok(distance(await effectiveBackground(all), await effectiveBackground(collection)) >= 25,
+      'Collection selection and hover have visibly different surfaces')
 
     await page.setViewportSize({ width: 700, height: 900 })
     await page.getByRole('button', { name: 'Open navigation' }).click()
