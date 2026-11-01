@@ -107,8 +107,8 @@ async function check(engine) {
     const differentTitle = await another.locator('.book-chapter-item-title').innerText()
     await another.click()
     await page.waitForFunction((title) => document.querySelector('.chapter-card h3')?.textContent === title, differentTitle)
-    assert.equal(await another.getAttribute('aria-pressed'), 'true',
-      'Choosing a chapter updates the preview and its selected state without navigating')
+    assert.equal(await page.locator('.book-chapter-item[aria-pressed="true"] .book-chapter-item-title').innerText(),
+      differentTitle, 'Choosing a chapter updates the preview and its selected state without navigating')
     for (const width of [390, 760, 820, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 })
       await frame(page)
