@@ -40,13 +40,18 @@ async function journey(engine, width, reducedMotion) {
     const cta = await continueButton.boundingBox()
     assert.ok(cta && cta.y + cta.height <= page.viewportSize().height, `${name}: Home resume action is visible without scrolling`)
     await capture('home')
-    const displaySize = await page.locator('h1').evaluate(el => getComputedStyle(el).fontSize)
+    const homeDisplaySize = parseFloat(await page.locator('h1').evaluate(el => getComputedStyle(el).fontSize))
+    let sectionDisplaySize = null
     for (const route of ['notes', 'explore']) {
       await page.goto(base + '/#/' + route)
       await page.locator('h1, .empty .display').waitFor()
-      assert.equal(await page.locator('h1, .empty .display').evaluate(el => getComputedStyle(el).fontSize), displaySize, route + ': shared display token')
+      const displaySize = parseFloat(await page.locator('h1, .empty .display').evaluate(el => getComputedStyle(el).fontSize))
+      if (sectionDisplaySize !== null) assert.equal(displaySize, sectionDisplaySize, route + ': shared section display token')
+      sectionDisplaySize = displaySize
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false, route + ': no overflow')
     }
+    if (width > 900) assert.ok(homeDisplaySize <= sectionDisplaySize,
+      'Home uses a quieter headline scale without changing other route typography')
     await page.goto(base + '/#/home')
     await page.getByRole('button', { name: 'Your library · 1 book' }).click()
     await page.getByRole('heading', { name: 'Your library', exact: true }).waitFor()
