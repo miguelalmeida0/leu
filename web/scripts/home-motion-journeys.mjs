@@ -106,17 +106,28 @@ async function run(engine, label, width, reduced) {
     assert.ok(resume && resume.y + resume.height <= (width <= 430 ? 844 : 900), 'Continue reading must be visible in the first viewport')
     await assertMotion()
     if (width > 900) {
-      const editorial = await page.evaluate(() => ({
-        art: document.querySelector('.reading-home .home-scene').getBoundingClientRect().toJSON(),
-        heading: document.querySelector('.home-story h1').getBoundingClientRect().toJSON(),
-        cover: document.querySelector('.resume-book .book-cover').getBoundingClientRect().toJSON(),
-        action: document.querySelector('.resume-action').getBoundingClientRect().toJSON(),
-        resume: document.querySelector('.home-resume').getBoundingClientRect().toJSON(),
-      }))
-      assert.ok(editorial.art.width <= 445 && editorial.heading.width <= 600
-        && editorial.cover.width >= 88 && editorial.cover.width <= 96
-        && editorial.action.right <= editorial.resume.right + 2,
-        'Home must keep the illustration, readable book cover and actions within balanced proportions: ' + JSON.stringify(editorial))
+      const editorial = await page.evaluate(() => {
+        const resume = document.querySelector('.home-resume')
+        const get = (selector) => document.querySelector(selector).getBoundingClientRect().toJSON()
+        return {
+          art: get('.reading-home .home-scene'),
+          heading: get('.home-story h1'),
+          cover: get('.resume-book .book-cover'),
+          action: get('.resume-action'),
+          resume: resume.getBoundingClientRect().toJSON(),
+          divider: getComputedStyle(resume).borderLeftWidth,
+          scrollWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+        }
+      })
+      assert.ok(editorial.art.width >= 500 && editorial.art.width <= 630
+        && editorial.cover.width >= 108 && editorial.cover.width <= 132
+        && editorial.heading.right + 12 <= editorial.resume.left
+        && editorial.divider === '1px' && editorial.resume.height >= 550
+        && editorial.action.right <= editorial.resume.right + 2
+        && editorial.action.bottom <= 900
+        && editorial.scrollWidth <= editorial.viewportWidth + 2,
+        'Home must fill the editorial spread with a separate reading column and accessible actions: ' + JSON.stringify(editorial))
     }
     await page.screenshot({ path: join(evidence, 'home-' + label + '-before.png') })
     // Obsolete manual choices must neither freeze the scene nor override the OS.
