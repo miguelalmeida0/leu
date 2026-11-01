@@ -14,7 +14,7 @@ const quick = process.env.LEU_STRESS_QUICK === '1'
 const server = process.env.LEU_STRESS_URL ? null : spawn(process.execPath,
   ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4181', '--strictPort'],
   { cwd: root, stdio: 'ignore' })
-const routes = ['', '#/library', '#/study', '#/notes', '#/explore', '#/trails']
+const routes = ['', '#/library', '#/study', '#/notes']
 const viewports = [{ width: 320, height: 640 }, { width: 390, height: 844 },
   { width: 844, height: 390 }, { width: 768, height: 1024 }, { width: 1440, height: 900 }]
 const scenarios = quick ? ['baseline', 'long-text', 'large-type', 'missing-images'] :

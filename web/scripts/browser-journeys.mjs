@@ -178,8 +178,9 @@ async function runBrowser(browserType, name, mobile, width) {
       await page.getByRole('button', { name: 'Close search' }).click()
       await goTo(page, true, 'Study')
       await visible(page.getByRole('heading', { name: /I'd like to/i }))
-      await goTo(page, true, 'Explore')
-      await visible(page.locator('.explore, .empty'))
+      await goTo(page, true, 'Notes')
+      await visible(page.locator('.notebook'))
+      assert.equal(await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: /Explore|Trails/ }).count(), 0)
       await noHorizontalOverflow(page, 'After focused reading ' + name)
       assert.deepEqual(pageErrors, [], name + ': no browser exceptions')
       await page.screenshot({ path: join(evidence, evidenceName + '-passed.png') })
@@ -519,7 +520,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await goTo(page, mobile, 'Library')
     await visible(page.getByRole('heading', { name: 'Your library' }))
     await noHorizontalOverflow(page, 'Library ' + name)
-    // The entire sample shelf covers more concepts for Search / Explore / Trails.
+    // The sample shelf covers additional concepts for Search and Study.
     const add = page.getByRole('button', { name: /Try \d+ sample PDFs?/i })
     if (await add.count()) {
       await add.click()
@@ -544,18 +545,13 @@ async function runBrowser(browserType, name, mobile, width) {
     await page.getByRole('button', { name: /Start remembering/i }).click()
     await visible(page.locator('.recall').or(page.getByText(/Nothing to study on this subject yet/i)), 20000)
 
-    await goTo(page, mobile, 'Explore')
-    await visible(page.locator('.explore, .empty'))
-    await noHorizontalOverflow(page, 'Explore ' + name)
-    const makeTrail = page.getByRole('button', { name: 'Make it a trail' })
-    if (await makeTrail.isVisible().catch(() => false) && await makeTrail.isEnabled()) {
-      await makeTrail.click()
-      await visible(page.locator('.walk'))
-      await noHorizontalOverflow(page, 'Trail map ' + name)
-    } else {
-      await goTo(page, mobile, 'Trails')
-      await visible(page.locator('.walk, .empty'))
-    }
+    // Bookmarked experimental destinations safely recover to Library.
+    await page.goto(base + '/#/explore')
+    await visible(page.getByRole('heading', { name: 'Your library' }))
+    await page.goto(base + '/#/trails')
+    await visible(page.getByRole('heading', { name: 'Your library' }))
+    assert.equal(await page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name: /Explore|Trails/ }).count(), 0)
+    await noHorizontalOverflow(page, 'Library after retired routes ' + name)
 
     await page.getByRole('button', { name: 'Search your books' }).click()
     await visible(page.getByRole('dialog', { name: 'Search your books' }))
@@ -566,7 +562,7 @@ async function runBrowser(browserType, name, mobile, width) {
     await noHorizontalOverflow(page, 'Final ' + name)
     assert.deepEqual(pageErrors, [], name + ': browser exceptions')
     await page.screenshot({ path: join(evidence, evidenceName + '-passed.png'), fullPage: false })
-    console.log(`PASS ${evidenceName}: sample import, reader, touch menu, mobile voice and swipes, text notes, full-screen reflow and PDF zoom, legacy index self-repair, exact source search, page turns, library, study, explore/trails, responsive width`)
+    console.log(`PASS ${evidenceName}: sample import, reader, touch menu, mobile voice and swipes, text notes, full-screen reflow and PDF zoom, legacy index self-repair, exact source search, page turns, library, study, hidden experimental routes, responsive width`)
   } catch (error) {
     await page.screenshot({ path: join(evidence, evidenceName + '-failed.png'), fullPage: true, timeout: 12000 }).catch(() => {})
     console.error(`FAIL ${evidenceName}: ${error?.stack ?? error}`)

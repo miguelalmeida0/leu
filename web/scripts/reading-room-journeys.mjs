@@ -89,7 +89,7 @@ async function journey(engine, width, reducedMotion) {
     await capture('home')
     const homeDisplaySize = parseFloat(await page.locator('h1').evaluate(el => getComputedStyle(el).fontSize))
     let sectionDisplaySize = null
-    for (const route of ['notes', 'explore']) {
+    for (const route of ['notes', 'library']) {
       await page.goto(base + '/#/' + route)
       await page.locator('h1, .empty .display').waitFor()
       const displaySize = parseFloat(await page.locator('h1, .empty .display').evaluate(el => getComputedStyle(el).fontSize))
