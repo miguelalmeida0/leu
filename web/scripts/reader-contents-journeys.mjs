@@ -150,7 +150,7 @@ async function run([engine, name, width, reducedMotion, height = 900]) {
     await hoverTarget.hover()
     const contrast = await hoverTarget.evaluate((button) => {
       const rgba = (value) => {
-        const channels = value.match(/[\\d.]+/g).map(Number)
+        const channels = value.match(/[\d.]+/g).map(Number)
         return [channels[0], channels[1], channels[2], channels[3] ?? 1]
       }
       const fg = rgba(getComputedStyle(button).color)
