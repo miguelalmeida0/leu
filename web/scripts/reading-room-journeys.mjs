@@ -90,6 +90,18 @@ async function journey(engine, width, reducedMotion) {
       `${name}: compact controls must not create horizontal overflow`)
     const foot = await page.locator('.reader-foot').boundingBox()
     assert.ok(Math.abs(foot.y + foot.height - page.viewportSize().height) < 2, 'Reader footer reaches viewport bottom')
+    const chrome = await page.evaluate(() => ({
+      top: document.querySelector('.topbar').getBoundingClientRect().height,
+      toolbar: document.querySelector('.reader-bar').getBoundingClientRect().height,
+      footer: document.querySelector('.reader-foot').getBoundingClientRect().height,
+      text: document.querySelector('.reader-grid').getBoundingClientRect().height,
+      viewport: innerHeight,
+      overflow: document.documentElement.scrollWidth - innerWidth,
+    }))
+    assert.ok(chrome.top <= 66 && chrome.toolbar <= 52 && chrome.footer <= 62,
+      `${name}: reading chrome consumes excessive vertical space ${JSON.stringify(chrome)}`)
+    assert.ok(chrome.text >= chrome.viewport * .67 && chrome.overflow <= 2,
+      `${name}: PDF reading area must dominate the viewport ${JSON.stringify(chrome)}`)
     const viewport = page.viewportSize()
     await page.setViewportSize({ ...viewport, height: viewport.height - 140 })
     await page.waitForFunction(() => Math.abs(document.querySelector('.reader-foot').getBoundingClientRect().bottom - innerHeight) < 2)
@@ -123,8 +135,12 @@ async function journey(engine, width, reducedMotion) {
     assert.equal(await focus.evaluate((node) => document.activeElement === node), true, 'Escape restores keyboard focus to the fullscreen entry')
     assert.ok(Math.abs(await page.locator('.reader-grid').evaluate((node) => node.scrollTop) - beforeFocusScroll) <= 1,
       'Fullscreen restores the normal reading position on the same PDF page')
-    await page.getByRole('button', { name: 'Open navigation', exact: true }).click()
-    await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: 'Library', exact: true }).click()
+    if (width > 760) {
+      await page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name: 'Library', exact: true }).click()
+    } else {
+      await page.getByRole('button', { name: 'Open navigation', exact: true }).click()
+      await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name: 'Library', exact: true }).click()
+    }
     await page.getByText('4 pages · Page 2', { exact: true }).waitFor()
     assert.deepEqual(errors, [], `${name}: no runtime errors`)
     console.log(`PASS ${name}: Home → Library → Reader, filters/search, saved progress, settings, original default, top fullscreen, shared tokens, no text overlap`)

@@ -3,9 +3,10 @@ import { useEffect, useRef, useState } from 'react'
 import { go, href, type Route } from '../lib/router'
 import { useStore } from '../lib/store'
 import { lastBook } from '../lib/library'
-import { Wordmark } from './Wordmark'
 import { Stitch } from './ui'
+import { Wordmark } from './Wordmark'
 import { useResponsiveTopbar } from './useResponsiveTopbar'
+import './TopBar.css'
 
 const places = [
   { name: 'library', label: 'Library' },
@@ -16,7 +17,8 @@ const places = [
   { name: 'trails', label: 'Trails' },
 ] as const
 
-/** Shared disclosure navigation; Reading opens the last book at its saved position. */
+/** The desktop top bar: the wordmark (Home), the places with a red running stitch under the
+    current one, and search. Reading opens the last book where you left it. */
 export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void }) {
   const books = useStore((s) => s.books)
   const last = lastBook(books)
@@ -28,9 +30,7 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
   const wordmarkRef = useRef<HTMLAnchorElement>(null)
   const navigationRef = useRef<HTMLElement>(null)
   const searchRef = useRef<HTMLButtonElement>(null)
-  const compactNav = useResponsiveTopbar({
-    header: headerRef, wordmark: wordmarkRef, navigation: navigationRef, search: searchRef,
-  })
+  const compactNav = useResponsiveTopbar({ header: headerRef, wordmark: wordmarkRef, navigation: navigationRef, search: searchRef })
   const routeKey = href(route)
 
   useEffect(() => {
@@ -64,24 +64,32 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch: () => void
   }, [menuOpen])
   return (
     <header className={`topbar${compactNav ? ' compact-nav' : ''}`} ref={headerRef}>
-      <a ref={wordmarkRef} className={`wordmark${readingBook ? ' reader-top-title' : ''}`} href={href(readingBook ? { name: 'book', id: readingBook.id } : { name: 'home' })} title={readingBook ? 'Book overview' : 'Home'} aria-current={route.name === 'home' ? 'page' : undefined}>{readingBook ? <><CaretLeftIcon size={20} aria-hidden="true" /><span>{readingBook.title}</span></> : <Wordmark />}</a>
-      <nav ref={navigationRef} className="desktop-places" aria-label="Places">
+      <a className={`wordmark${readingBook ? ' reader-top-title' : ''}`} ref={wordmarkRef}
+        href={href(readingBook ? { name: 'book', id: readingBook.id } : { name: 'home' })}
+        title={readingBook ? 'Book overview' : 'Home'} aria-current={route.name === 'home' ? 'page' : undefined}>
+        {readingBook ? <><CaretLeftIcon size={18} aria-hidden="true" /><span>{readingBook.title}</span></> : <Wordmark />}
+      </a>
+      <nav className="desktop-places" ref={navigationRef} aria-label="Places">
         <ul>
-          {places.map((place) => {
-            const on = current === place.name
-            const disabled = place.name === 'read' && !last
-            const to: Route = place.name === 'read'
-              ? (last ? { name: 'read', id: last.id, page: last.page } : { name: 'library' })
-              : { name: place.name }
-            return <li key={place.name}>
-              <a href={href(to)} className={`place${on ? ' on' : ''}`}
-                aria-current={on ? 'page' : undefined} aria-disabled={disabled || undefined}
-                title={place.name === 'read' ? (last ? `Back to ${last.title}, page ${last.page}` : 'Bring a PDF first') : undefined}
-                onClick={(event) => { if (disabled) { event.preventDefault(); go({ name: 'library' }) } }}>
-                {place.label}
-                <span className="place-stitch">{on && <Stitch />}</span>
-              </a>
-            </li>
+          {places.map((p) => {
+            const on = current === p.name
+            const disabled = p.name === 'read' && !last
+            const to: Route = p.name === 'read' ? (last ? { name: 'read', id: last.id, page: last.page } : { name: 'library' }) : { name: p.name }
+            return (
+              <li key={p.name}>
+                <a
+                  href={href(to)}
+                  className={`place${on ? ' on' : ''}`}
+                  aria-current={on ? 'page' : undefined}
+                  aria-disabled={disabled || undefined}
+                  title={p.name === 'read' ? (last ? `Back to ${last.title}, page ${last.page}` : 'Bring a PDF first') : undefined}
+                  onClick={(e) => { if (disabled) { e.preventDefault(); go({ name: 'library' }) } }}
+                >
+                  {p.label}
+                  <span className="place-stitch">{on && <Stitch />}</span>
+                </a>
+              </li>
+            )
           })}
         </ul>
       </nav>

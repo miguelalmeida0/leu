@@ -81,7 +81,9 @@ async function navigateMobile(page, name) {
   await page.getByRole('navigation', { name: 'Mobile places' }).getByRole('link', { name }).click()
 }
 async function goTo(page, mobile, name) {
-  return navigateMobile(page, name)
+  if (mobile) return navigateMobile(page, name)
+  if (name === 'Home') return page.locator('.topbar .wordmark').click()
+  return page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name, exact: true }).click()
 }
 async function runBrowser(browserType, name, mobile, width) {
   const browser = await browserType.launch({ headless: true })
@@ -129,6 +131,7 @@ async function runBrowser(browserType, name, mobile, width) {
       'Fullscreen entry is reachable in the top reader toolbar')
     const scrollBox = await page.locator('.reader-grid').boundingBox()
     const footerBox = await page.locator('.reader-foot').boundingBox()
+    assert.ok(footerBox && footerBox.height <= 62, 'The ordinary reader footer fits in a single compact row')
     assert.ok(scrollBox && footerBox && scrollBox.y + scrollBox.height <= footerBox.y + 1,
       'The listening footer reserves space and cannot cover reading text')
 
@@ -189,6 +192,8 @@ async function runBrowser(browserType, name, mobile, width) {
     await reveal()
     await visible(page.getByRole('navigation', { name: 'Full-screen pages' }))
     await visible(page.locator('.reader-immersive .dock[data-focus="true"] .dock-focus-action'))
+    assert.equal(await page.locator('.reader-immersive .paged-position').count(), 0,
+      'PDF content must not have a second visible page counter')
     const textSize = await activePaper().locator('.prose').evaluate((el) => parseFloat(getComputedStyle(el).fontSize))
     await page.getByRole('button', { name: 'Zoom in' }).click()
     assert.ok(await activePaper().locator('.prose').evaluate((el) => parseFloat(getComputedStyle(el).fontSize)) > textSize)

@@ -6,7 +6,7 @@ import { chromium, webkit } from 'playwright'
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
 const base = 'http://127.0.0.1:4178'
-const widths = [320, 360, 390, 430, 600, 768, 900, 901, 1024, 1100, 1101, 1280, 1440, 1920]
+const widths = [320, 360, 390, 430, 600, 720, 760, 761, 768, 820, 900, 901, 1024, 1100, 1101, 1280, 1440, 1920]
 const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4178', '--strictPort'], { cwd: root, stdio: 'ignore' })
 
 async function ready() {
@@ -42,8 +42,9 @@ async function verify(engine) {
         return {
           viewport: innerWidth,
           overflow: document.documentElement.scrollWidth - innerWidth,
-          logo: rect('.topbar .wordmark'),
+          logo: rect('.topbar .wordmark'), nav: rect('.desktop-places'),
           tools: rect('.topbar-tools'), search: rect('.search-pill'),
+          links: [...document.querySelectorAll('.desktop-places a')].map((link) => link.getBoundingClientRect().height),
           searchHit: search.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)),
         }
       })
@@ -54,21 +55,18 @@ async function verify(engine) {
       assert.ok(geometry.logo.left >= 0 && geometry.tools.right <= width + 1,
         `${label}: header controls extend offscreen`)
 
-      const trigger = page.getByRole('button', { name: 'Open navigation' })
-      const navigation = page.getByRole('navigation', { name: 'Places', exact: true })
-      if (width >= 768) {
-        await page.waitForFunction(() => !document.querySelector('.topbar')?.classList.contains('compact-nav'))
-        assert.ok(await navigation.isVisible(), `${label}: centered navigation must replace the burger on medium/large screens`)
-        assert.equal(await trigger.isVisible(), false, `${label}: desktop must not show the burger`)
-        assert.equal(await navigation.locator('.place').count(), 6)
-        const center = await navigation.evaluate((node) => {
-          const bounds = node.getBoundingClientRect()
-          return bounds.x + bounds.width / 2
-        })
-        assert.ok(Math.abs(center - width / 2) < 2, `${label}: navbar must be centered (${center} vs ${width / 2})`)
+      if (width > 760) {
+        assert.equal(geometry.nav.visible, true, `${label}: desktop navigation is missing`)
+        const center = (geometry.nav.left + geometry.nav.right) / 2
+        assert.ok(Math.abs(center - geometry.viewport / 2) <= 1.5,
+          `${label}: navigation midpoint ${center}, viewport midpoint ${geometry.viewport / 2}`)
+        assert.ok(geometry.logo.right + 8 <= geometry.nav.left && geometry.nav.right + 8 <= geometry.tools.left,
+          `${label}: navigation overlaps its neighboring controls`)
+        assert.ok(geometry.links.every((height) => height >= 43.5), `${label}: navigation targets below 44px`)
       } else {
-        assert.ok(await trigger.isVisible(), `${label}: narrow screens need the burger`)
-        assert.equal(await navigation.isVisible(), false, `${label}: desktop links must stay hidden on narrow screens`)
+        assert.equal(geometry.nav.visible, false, `${label}: desktop links should collapse to a menu`)
+        const trigger = page.getByRole('button', { name: 'Open navigation' })
+        assert.ok(await trigger.isVisible(), `${label}: navigation trigger is missing`)
         await trigger.click()
         const menu = page.getByRole('navigation', { name: 'Mobile places' })
         await menu.waitFor({ state: 'visible' })
@@ -81,7 +79,7 @@ async function verify(engine) {
         assert.equal(await trigger.evaluate((node) => document.activeElement === node), true,
           `${label}: Escape should restore focus to menu trigger`)
       }
-      console.log(`PASS ${label}: viewport/targets/centered navigation`)
+      console.log(`PASS ${label}: center/overflow/targets/menu`)
     }
 
     // Compact search retains its accessible name and opens on a phone.
@@ -90,10 +88,10 @@ async function verify(engine) {
     await page.getByRole('dialog', { name: 'Search your books' }).waitFor({ state: 'visible' })
     await page.keyboard.press('Escape')
     await page.getByRole('dialog', { name: 'Search your books' }).waitFor({ state: 'hidden' })
-    // Full-length translations must still switch to a safe disclosure when they truly cannot fit.
+    // Text expansion (translation or personalization) must switch to the same compact menu.
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.evaluate(() => {
-      const nodes = [...document.querySelectorAll('.desktop-places .place, .mobile-places nav a, .search-pill span')]
+      const nodes = [...document.querySelectorAll('.desktop-places .place, .search-pill span')]
       window.__topbarLabels = nodes.map((node) => node.textContent)
       for (const node of nodes) node.textContent += ' — Antidisestablishmentarianism, a longer translated label'
     })
@@ -113,12 +111,10 @@ async function verify(engine) {
     await page.getByRole('navigation', { name: 'Mobile places' }).waitFor({ state: 'visible' })
     await page.keyboard.press('Escape')
     await page.evaluate(() => {
-      const nodes = [...document.querySelectorAll('.desktop-places .place, .mobile-places nav a, .search-pill span')]
+      const nodes = [...document.querySelectorAll('.desktop-places .place, .search-pill span')]
       nodes.forEach((node, index) => { node.textContent = window.__topbarLabels[index] })
     })
     await page.waitForFunction(() => !document.querySelector('.topbar')?.classList.contains('compact-nav'))
-    assert.ok(await page.getByRole('navigation', { name: 'Places', exact: true }).isVisible(),
-      `${engine.name()}: restoring ordinary labels restores the centered navbar`)
     assert.deepEqual(errors, [], `${engine.name()}: runtime errors`)
   } finally {
     await browser.close()

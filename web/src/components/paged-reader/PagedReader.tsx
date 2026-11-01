@@ -188,7 +188,7 @@ export const PagedReader = forwardRef<PagedReaderHandle, PagedReaderProps>(funct
           paper={props.activePaper} reading={panel.side === 'current' && props.reading} marked={panel.side === 'current' ? props.marked : undefined}
           pan={panel.side === 'current' ? pan : { x: 0, y: 0 }} onSeek={props.onSeek} onFollow={follow} onMetrics={measured} />)}
     </div>
-    <p className="paged-position" aria-live="polite">{props.page} / {props.doc.numPages}{parts > 1 ? ` · ${leaf + 1} of ${parts}` : ''}</p>
+    <p className="sr-only" aria-live="polite" aria-atomic="true">Page {props.page} of {props.doc.numPages}{parts > 1 ? `, screen ${leaf + 1} of ${parts}` : ''}</p>
     </div>
     <button className="paged-access" type="button" onClick={props.onToggleControls}>Show reading controls</button>
   </div>

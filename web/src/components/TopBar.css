@@ -1,0 +1,23 @@
+/* Centered navigation returns whenever the real labels fit. */
+.topbar { min-height: 60px; padding-block: 6px; }
+.topbar > .wordmark { min-width: 0; }
+.topbar .reader-top-title { display: inline-flex; align-items: center; gap: 7px; max-width: 200px; font-weight: 700; font-size: var(--text-sm); }
+.topbar .reader-top-title svg { flex: none; }
+.topbar .reader-top-title span { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.topbar:not(.compact-nav) .desktop-places { display: block; }
+.topbar:not(.compact-nav) .mobile-places { display: none; }
+.topbar.compact-nav .desktop-places { display: none; }
+.topbar.compact-nav .mobile-places { display: block; }
+.app[data-route='read'] .topbar .place { color: #CDD7C5; }
+.app[data-route='read'] .topbar .place.on { color: var(--cream); }
+.app[data-route='read'] .topbar .place:hover { background: rgba(248,241,222,.10); color: #fff; }
+.app[data-route='read'] .topbar .place-stitch { filter: brightness(1.8); }
+@media (min-width: 761px) and (max-width: 1100px) {
+  .topbar { min-height: 56px; padding-block: 4px; }
+  .topbar .reader-top-title { max-width: 112px; font-size: 12px; }
+  .topbar .place { font-size: var(--text-sm); padding: 12px 9px 9px; }
+}
+@media (max-width: 760px) {
+  .topbar { min-height: 56px; padding-block: 4px; }
+  .topbar .reader-top-title { max-width: calc(100vw - 152px); }
+}
