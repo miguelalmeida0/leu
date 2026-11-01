@@ -45,20 +45,25 @@
 .app[data-route='read'] .topbar { background: var(--ink); color: var(--cream); }
 .app[data-route='read'] .topbar .wordmark { max-width: 100%; }
 .reader:not(.reader-immersive) { display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; width: 100%; max-width: none; height: calc(100dvh - var(--topbar-height, 64px)); animation: none; min-height: 360px; padding: 0; margin: 0; background: var(--cream); }
-.reader:not(.reader-immersive) .reader-bar { grid-row: 1; display: flex; justify-content: space-between; gap: 12px; margin: 0; padding: 0 clamp(20px, 4vw, 56px); background: var(--ink); color: var(--cream); min-height: 48px; }
+.reader:not(.reader-immersive) .reader-bar { grid-row: 1; display: flex; justify-content: space-between; gap: 12px; margin: 0; padding: 0 clamp(20px, 4vw, 56px); background: var(--ink); color: var(--cream); min-height: 44px; }
 .reader:not(.reader-immersive) .reader-back { display: none; }
 .reader:not(.reader-immersive) .segmented { background: transparent; border-radius: 0; padding: 0; box-shadow: none; gap: 24px; flex-wrap: nowrap; }
-.reader:not(.reader-immersive) .segmented button { min-height: 48px; padding: 0; border-radius: 0; color: #C9CFBE; font-size: var(--text-label); font-weight: 600; border-bottom: 2px solid transparent; white-space: nowrap; }
+.reader:not(.reader-immersive) .segmented button { min-height: 44px; padding: 0; border-radius: 0; color: #C9CFBE; font-size: var(--text-label); font-weight: 600; border-bottom: 2px solid transparent; white-space: nowrap; }
 .reader:not(.reader-immersive) .segmented button.on { background: transparent; color: var(--cream); border-bottom-color: var(--cream); }
 .reader-type-toggle { display: grid; place-items: center; width: 44px; height: 44px; }
-.reader:not(.reader-immersive) .reader-grid { grid-row: 3; overflow-y: auto; min-height: 0; overscroll-behavior-y: contain; padding: 24px clamp(20px, 4vw, 56px); gap: 32px; scrollbar-width: thin; }
+.reader:not(.reader-immersive) .reader-grid { grid-row: 3; overflow-y: auto; min-height: 0; overscroll-behavior-y: contain; padding: 10px clamp(20px, 4vw, 56px) 12px; gap: 24px; scrollbar-width: thin; }
 .reader:not(.reader-immersive) .reader-paper { border-radius: 0; box-shadow: none; background: var(--cream); min-height: 0; padding: 12px 24px 40px; max-width: 760px; }
 .reader:not(.reader-immersive) .page-eyebrow { display: none; }
 .reader:not(.reader-immersive) .prose { font-size: calc(19px * var(--reader-zoom, 1)); line-height: 1.65; }
 .reader:not(.reader-immersive) .prose h2 { font-size: calc(25px * var(--reader-zoom, 1)); }
 .reader:not(.reader-immersive) .rail, .reader:not(.reader-immersive) .margin { position: static; }
 .reader:not(.reader-immersive) .voice-notice { grid-row: 2; max-width: none; margin: 0; width: 100%; border-radius: 0; box-shadow: none; padding: 8px 24px; }
-.reader:not(.reader-immersive) .reader-foot { grid-row: 4; position: relative; bottom: auto; padding: 0; margin: 0; background: var(--ink); }
+.reader:not(.reader-immersive) .reader-foot { grid-row: 4; position: relative; bottom: auto; padding: 0; margin: 0; background: var(--ink); } 
+.reader:not(.reader-immersive) .reader-bar .reader-type-toggle:hover,
+.reader:not(.reader-immersive) .reader-bar .reader-focus-toggle:hover {
+  color: var(--cream); background: rgba(248, 241, 222, .12);
+}
+.reader.reader-immersive .reader-bar button:focus-visible { outline-color: var(--ink); }
 .reader:not(.reader-immersive) .reader-focus-toggle { background: transparent; border: 0; color: var(--cream); padding: 0 8px; }
 .reader-focus-toggle:focus-visible, .reader-bar button:focus-visible { outline-color: var(--cream); }
 .reader-focus-tools { pointer-events: auto; }
@@ -70,7 +75,7 @@
   .reader:not(.reader-immersive) .margin { order: 1; width: 100%; max-width: 760px; align-self: center; }
 }
 @media (max-width: 720px) {
-  .reader:not(.reader-immersive) .reader-grid { padding: 26px 24px 18px; }
+  .reader:not(.reader-immersive) .reader-grid { padding: 10px 16px 12px; }
   .reader:not(.reader-immersive) .prose { font-size: calc(18px * var(--reader-zoom, 1)); line-height: 1.65; }
   .reader:not(.reader-immersive) .prose h2 { font-size: calc(25px * var(--reader-zoom, 1)); }
   .reader:not(.reader-immersive) .segmented { gap: 20px; }

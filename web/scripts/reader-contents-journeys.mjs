@@ -145,6 +145,29 @@ async function run([engine, name, width, reducedMotion, height = 900]) {
     assert.equal(await trigger.evaluate((el) => document.activeElement === el), true, 'Selecting restores disclosure focus')
     await page.getByRole('button', { name: 'Read this chapter', exact: true }).click()
     await page.locator('.reader-paper canvas').waitFor({ state: 'visible' })
+    // The dark reader's Contents button must remain legible on hover.
+    const hoverTarget = page.locator('.reader-bar .contents-trigger')
+    await hoverTarget.hover()
+    const contrast = await hoverTarget.evaluate((button) => {
+      const rgba = (value) => {
+        const channels = value.match(/[\\d.]+/g).map(Number)
+        return [channels[0], channels[1], channels[2], channels[3] ?? 1]
+      }
+      const fg = rgba(getComputedStyle(button).color)
+      const hover = rgba(getComputedStyle(button).backgroundColor)
+      const parent = rgba(getComputedStyle(button.closest('.reader-bar')).backgroundColor)
+      const bg = [0, 1, 2].map((i) => hover[i] * hover[3] + parent[i] * (1 - hover[3]))
+      const luminance = (channels) => {
+        const linear = channels.slice(0, 3).map((v) => {
+          const c = v / 255
+          return c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4
+        })
+        return linear[0] * .2126 + linear[1] * .7152 + linear[2] * .0722
+      }
+      const [a, b] = [luminance(fg), luminance(bg)].sort((x, y) => y - x)
+      return (a + .05) / (b + .05)
+    })
+    assert.ok(contrast >= 4.5, `${name}: hovered reader Contents must keep WCAG AA text contrast (${contrast.toFixed(2)}:1)`)
     const lastPage = await page.evaluate(() => JSON.parse(localStorage.getItem('leu.web.v1')).books[0].pages)
     assert.ok(page.url().endsWith('/' + lastPage), 'Read this chapter opens the selected late section page')
     await overflow(page)

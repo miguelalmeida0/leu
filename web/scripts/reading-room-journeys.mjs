@@ -76,6 +76,18 @@ async function journey(engine, width, reducedMotion) {
       footerTop: document.querySelector('.reader-foot').getBoundingClientRect().top,
     }))
     assert.ok(geometry.textBottom <= geometry.footerTop + 1, `${name}: footer never overlays text (${JSON.stringify(geometry)})`)
+    const priority = await page.evaluate(() => {
+      const box = (selector) => document.querySelector(selector).getBoundingClientRect()
+      return { header: box('.topbar').height, toolbar: box('.reader-bar').height,
+        footer: box('.reader-foot').height, reading: box('.reader-grid').height,
+        viewport: innerHeight, scrollWidth: document.documentElement.scrollWidth }
+    })
+    assert.ok(priority.header <= 64 && priority.toolbar <= 54 && priority.footer <= 68,
+      `${name}: PDF reading must not lose height to oversized fixed chrome (${JSON.stringify(priority)})`)
+    assert.ok(priority.reading / priority.viewport >= .70,
+      `${name}: PDF area must occupy at least 70% of the viewport (${JSON.stringify(priority)})`)
+    assert.ok(priority.scrollWidth <= page.viewportSize().width + 2,
+      `${name}: compact controls must not create horizontal overflow`)
     const foot = await page.locator('.reader-foot').boundingBox()
     assert.ok(Math.abs(foot.y + foot.height - page.viewportSize().height) < 2, 'Reader footer reaches viewport bottom')
     const viewport = page.viewportSize()
