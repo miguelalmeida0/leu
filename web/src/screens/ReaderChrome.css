@@ -216,8 +216,10 @@
   .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar button:hover {
     background: rgba(36,48,31,.07);
   }
-  .app[data-route='read'] .reader:not(.reader-immersive) .segmented button:hover {
-    background: transparent; color: var(--ink);
+  @media (hover: hover) and (pointer: fine) {
+    .app[data-route='read'] .reader:not(.reader-immersive) .segmented button:not(.on):hover {
+      background: transparent; color: var(--ink);
+    }
   }
 }
 @media (min-width: 721px) and (max-width: 980px) {

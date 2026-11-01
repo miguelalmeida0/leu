@@ -64,7 +64,7 @@ export function ReaderContents({ entries, currentIndex, onChoose, onAppearance }
         <p className="muted small" role="status">{results.length} of {entries.length} entries</p>
         <nav ref={resultsElement} aria-label="Chapters" className="contents-results">
           <ol>{results.map(({ entry, index }) => <li key={index}>
-            <button type="button" title={entry.title} aria-current={index === currentIndex ? 'location' : undefined}
+            <button type="button" aria-current={index === currentIndex ? 'location' : undefined}
               style={{ paddingInlineStart: 10 + Math.min(entry.depth, 3) * 12 }}
               onClick={() => { onChoose(index); setOpen(false) }}>
               <span className="contents-title">{entry.title}</span><span className="contents-page tabular">p. {entry.page}</span>
