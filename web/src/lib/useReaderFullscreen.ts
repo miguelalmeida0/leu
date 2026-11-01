@@ -8,6 +8,7 @@ export function useReaderFullscreen(positionKey: string) {
   const ownsNative = useRef(false)
   const previousScroll = useRef(0)
   const previousReaderScroll = useRef(0)
+  const restorationPending = useRef(false)
   const enteredPosition = useRef(positionKey)
   const currentPosition = useRef(positionKey)
   currentPosition.current = positionKey
@@ -16,9 +17,12 @@ export function useReaderFullscreen(positionKey: string) {
   // The normal original-PDF canvas is remounted after leaving fullscreen.
   // Reapply the captured reading offset once that new canvas has real height.
   const restoreReaderScroll = useCallback(() => {
-    if (active.current || enteredPosition.current !== currentPosition.current) return
+    if (!restorationPending.current || active.current) return
+    if (enteredPosition.current !== currentPosition.current) { restorationPending.current = false; return }
     const grid = reader.current?.querySelector<HTMLElement>('.reader-grid')
-    if (grid) grid.scrollTop = previousReaderScroll.current
+    if (!grid) return
+    grid.scrollTop = previousReaderScroll.current
+    if (Math.abs(grid.scrollTop - previousReaderScroll.current) <= 1) restorationPending.current = false
   }, [])
 
   const exit = useCallback(() => {
@@ -33,6 +37,7 @@ export function useReaderFullscreen(positionKey: string) {
   const toggle = useCallback(() => {
     if (active.current) { exit(); return }
     previousScroll.current = window.scrollY
+    restorationPending.current = false
     previousReaderScroll.current = reader.current?.querySelector<HTMLElement>('.reader-grid')?.scrollTop ?? 0
     enteredPosition.current = currentPosition.current
     previousFocus.current = document.activeElement as HTMLElement | null
@@ -107,7 +112,14 @@ export function useReaderFullscreen(positionKey: string) {
       background.forEach(({ element, inert }) => { element.inert = inert })
       window.scrollTo(0, previousScroll.current)
       const grid = shell?.querySelector<HTMLElement>('.reader-grid')
-      if (grid) grid.scrollTop = enteredPosition.current === currentPosition.current ? previousReaderScroll.current : 0
+      if (grid) {
+        const samePage = enteredPosition.current === currentPosition.current
+        const target = samePage ? previousReaderScroll.current : 0
+        grid.scrollTop = target
+        // A source canvas may still be blank at this point. Retry only its
+        // pending restoration after render; never replay it on later page turns.
+        restorationPending.current = samePage && target > 0 && Math.abs(grid.scrollTop - target) > 1
+      }
       previousFocus.current?.focus({ preventScroll: true })
       active.current = false
       if (ownsNative.current && document.fullscreenElement) void document.exitFullscreen().catch(() => {})

@@ -174,8 +174,18 @@ async function journey(engine, width, reducedMotion) {
     await page.keyboard.press('Escape')
     await page.locator('.reader-immersive').waitFor({ state: 'hidden' })
     assert.equal(await focus.evaluate((node) => document.activeElement === node), true, 'Escape restores keyboard focus to the fullscreen entry')
+    await page.waitForFunction((saved) =>
+      Math.abs(document.querySelector('.reader-grid')?.scrollTop - saved) <= 1, beforeFocusScroll)
     assert.ok(Math.abs(await page.locator('.reader-grid').evaluate((node) => node.scrollTop) - beforeFocusScroll) <= 1,
       'Fullscreen restores the normal reading position on the same PDF page')
+    if (width <= 720 && beforeFocusScroll > 0) {
+      await page.getByRole('button', { name: 'Next page' }).click()
+      await page.locator('.reader-paper[aria-label="Page 3 of 4"]').waitFor()
+      await page.getByRole('button', { name: 'Previous page' }).click()
+      await page.locator('.reader-paper[aria-label="Page 2 of 4"]').waitFor()
+      assert.equal(await page.locator('.reader-grid').evaluate((node) => node.scrollTop), 0,
+        'The former fullscreen scroll position is not incorrectly replayed on later source page turns')
+    }
     if (width > 760) {
       await page.getByRole('navigation', { name: 'Places' }).getByRole('link', { name: 'Library', exact: true }).click()
     } else {
