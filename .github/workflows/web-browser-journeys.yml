@@ -54,6 +54,11 @@ jobs:
       - name: Verify compact toolbar, dialog close and responsive Home/book grids
         working-directory: web
         run: node scripts/responsive-reader-layout-journeys.mjs
+      - name: Verify short-viewport chapter selection with mobile WebKit
+        working-directory: web
+        env:
+          LEU_CONTENTS_CASE: webkit-keyboard
+        run: node scripts/reader-contents-journeys.mjs
       - name: Run reader journeys on desktop, Android and iPhone
         working-directory: web
         run: node scripts/browser-journeys.mjs

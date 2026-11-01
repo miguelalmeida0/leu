@@ -128,3 +128,40 @@
     grid-template-rows: 40px minmax(0, 1fr);
   }
 }
+
+/* Small landscape windows and virtual keyboards: the chapter results own
+   scrolling. The outer modal must not scroll a button behind its own surface. */
+@media (max-height: 480px) {
+  .modal.contents-modal {
+    max-height: calc(100dvh - 32px);
+    padding: 8px 16px 12px;
+    grid-template-rows: 36px minmax(0, 1fr);
+    row-gap: 4px;
+    overflow: hidden;
+  }
+  .modal.contents-modal > .modal-close {
+    width: 36px; height: 36px; min-width: 36px; min-height: 36px;
+  }
+  .modal.contents-modal > .reader-contents {
+    height: 100%; max-height: 100%;
+    min-height: 0; overflow: hidden; gap: 8px;
+  }
+  .modal.contents-modal .contents-heading { min-height: 40px; }
+  .modal.contents-modal .contents-heading h2 { font-size: 22px; }
+  .modal.contents-modal .contents-current,
+  .modal.contents-modal .reader-contents > p[role='status'] {
+    display: none;
+  }
+  .modal.contents-modal .reader-contents > label {
+    position: absolute; width: 1px; height: 1px; padding: 0;
+    margin: -1px; clip-path: inset(50%); overflow: hidden;
+    white-space: nowrap;
+  }
+  .modal.contents-modal .reader-contents input {
+    min-height: 44px; padding: 9px 12px;
+  }
+  .modal.contents-modal .contents-results {
+    flex: 1 1 auto; min-height: 64px; max-height: none;
+    overflow-y: auto; overscroll-behavior: contain;
+  }
+}
