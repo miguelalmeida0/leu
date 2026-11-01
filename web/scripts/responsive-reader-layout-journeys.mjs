@@ -76,9 +76,15 @@ async function check(engine) {
       const settings = await dialog.getByRole('button', { name: 'Reading settings' }).boundingBox()
       const close = await dialog.getByRole('button', { name: 'Close dialog' }).boundingBox()
       const heading = await dialog.locator('.contents-heading').boundingBox()
+      const modal = await dialog.boundingBox()
+      const closeStyle = await dialog.getByRole('button', { name: 'Close dialog' }).evaluate(node => {
+        const s = getComputedStyle(node)
+        return { position: s.position, gridRow: s.gridRow, top: s.top, height: s.height }
+      })
       assert.ok(settings && close && heading && !overlap(settings, close)
         && close.bottom + 4 <= heading.top,
-        engine.name() + ' ' + width + ': close X must sit in its own row ABOVE the Contents heading and settings')
+        engine.name() + ' ' + width + ': X must be above the Contents header: '
+        + JSON.stringify({ settings, close, heading, modal, closeStyle }))
       if ([390, 820, 1440].includes(width)) {
         await page.screenshot({ path: join(evidence, engine.name() + '-' + width + '-contents.png') })
       }
