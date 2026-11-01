@@ -37,7 +37,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   // a hidden reflow mode active once its mode selector disappears.
   const mode = mobileReader ? 'original' : preferredMode
   const [originalFit, setOriginalFit] = useState<'page' | 'width'>('page')
-  const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen } = useReaderFullscreen(`${id}:${page}`)
+  const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen, restoreReaderScroll } = useReaderFullscreen(`${id}:${page}`)
   const paged = useRef<PagedReaderHandle>(null)
   const [controls, setControls] = useState(false)
   const [focusHelpDismissed, setFocusHelpDismissed] = useState(false)
@@ -168,6 +168,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
     const next = renderQueue.current.catch(() => undefined).then(async () => {
       if (!active) return
       await renderPage(doc, clamped, destination, width)
+      if (active) restoreReaderScroll()
     })
     renderQueue.current = next
     void next.catch((error) => {
@@ -176,7 +177,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
       setOriginalError('This page could not be displayed. Try another page or reimport the PDF.')
     })
     return () => { active = false }
-  }, [mode, doc, clamped, immersive])
+  }, [mode, doc, clamped, immersive, restoreReaderScroll])
 
   const turn = useCallback((to: number, keepReading = false) => {
     if (immersive) setFocusHelpDismissed(true)

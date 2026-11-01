@@ -13,6 +13,14 @@ export function useReaderFullscreen(positionKey: string) {
   currentPosition.current = positionKey
   const previousFocus = useRef<HTMLElement | null>(null)
 
+  // The normal original-PDF canvas is remounted after leaving fullscreen.
+  // Reapply the captured reading offset once that new canvas has real height.
+  const restoreReaderScroll = useCallback(() => {
+    if (active.current || enteredPosition.current !== currentPosition.current) return
+    const grid = reader.current?.querySelector<HTMLElement>('.reader-grid')
+    if (grid) grid.scrollTop = previousReaderScroll.current
+  }, [])
+
   const exit = useCallback(() => {
     active.current = false
     setImmersive(false)
@@ -107,5 +115,5 @@ export function useReaderFullscreen(positionKey: string) {
     }
   }, [immersive, exit])
 
-  return { immersive, reader, toggle, exit }
+  return { immersive, reader, toggle, exit, restoreReaderScroll }
 }
