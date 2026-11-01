@@ -49,7 +49,7 @@ export function ReaderContents({ entries, currentIndex, onChoose, onAppearance }
       onClick={() => { setQuery(''); setOpen(true) }}>
       <BookOpenIcon size={20} aria-hidden="true" className="reader-contents-book" /><span>Contents</span><span className="contents-location">{currentIndex + 1} / {entries.length}</span>
     </button>
-    {open && createPortal(<Modal label="Contents" onClose={() => setOpen(false)} width={600}>
+    {open && createPortal(<Modal label="Contents" onClose={() => setOpen(false)} width={600} className="contents-modal">
       <div className="reader-contents">
         <div className="contents-heading">
           <h2 className="display">Contents</h2>

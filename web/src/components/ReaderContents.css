@@ -74,15 +74,57 @@
   .contents-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
 }
 
-/* The modal's X is absolutely positioned in the top-right corner.
-   Reserve that space in the heading so Reading settings can never sit beneath it. */
-.reader-contents .contents-heading {
-  min-height: 44px; padding-inline-end: 54px; align-items: center;
+/* Contents is a two-level header: an isolated close row followed by the
+   heading and its one contextual action. Never compete for the same corner. */
+.modal.contents-modal {
+  display: grid;
+  grid-template-rows: 40px minmax(0, 1fr);
+  row-gap: 8px;
+  padding-top: 16px;
+  padding-bottom: 36px;
 }
-.reader-contents .contents-heading .contents-appearance {
-  flex: none; max-width: 100%; white-space: nowrap;
+.modal.contents-modal > .modal-close {
+  position: static;
+  grid-row: 1;
+  justify-self: end;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 8px;
+  background: transparent;
 }
-@media (max-width: 440px) {
-  .reader-contents .contents-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
-  .reader-contents .contents-heading .contents-appearance { align-self: flex-start; }
+@media (hover: hover) and (pointer: fine) {
+  .modal.contents-modal > .modal-close:hover {
+    background: var(--state-hover-surface);
+  }
+}
+.modal.contents-modal > .reader-contents {
+  grid-row: 2;
+  min-width: 0;
+  min-height: 0;
+}
+.modal.contents-modal .contents-heading {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding-inline-end: 0;
+}
+.modal.contents-modal .contents-heading .contents-appearance {
+  flex: none;
+  min-height: 44px;
+  max-width: 100%;
+  padding-inline: 14px;
+  white-space: nowrap;
+}
+@media (max-width: 720px) {
+  .modal.contents-modal {
+    padding: 12px 22px 28px;
+    grid-template-rows: 40px minmax(0, 1fr);
+  }
 }
