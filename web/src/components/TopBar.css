@@ -21,3 +21,13 @@
   .topbar { min-height: 56px; padding-block: 4px; }
   .topbar .reader-top-title { max-width: calc(100vw - 152px); }
 }
+
+/* Long labels and WCAG text spacing must never make search taller or wider
+ * than its grid track. The accessible name remains on the labeled button. */
+.topbar .topbar-tools { min-width: 0; }
+.topbar .search-pill { min-width: 44px; max-width: 100%; overflow: hidden; }
+.topbar .search-pill span {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; overflow-wrap: normal;
+}
+.topbar .search-pill kbd { flex: none; }
