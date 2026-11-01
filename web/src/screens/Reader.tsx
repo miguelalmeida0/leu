@@ -1,4 +1,4 @@
-import { ArrowsInIcon, ArrowsOutIcon, TextAaIcon } from '@phosphor-icons/react'
+import { ArrowsOutIcon, TextAaIcon, XIcon } from '@phosphor-icons/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ReaderContents, currentOutlineIndex } from '../components/ReaderContents'
 import { Prose, piecesOf } from '../components/Prose'
@@ -159,25 +159,59 @@ export function Reader({ id, page }: { id: string; page: number }) {
   useEffect(() => {
     if (immersive || mode !== 'original' || !doc || !canvas.current || !originalStage.current) return
     const destination = canvas.current
-    const availableWidth = Math.max(150, Math.min(originalStage.current.clientWidth, 900))
-    const width = Math.round(availableWidth)
+    const stage = originalStage.current
+    const grid = reader.current?.querySelector<HTMLElement>('.reader-grid')
+    if (!grid) return
     let active = true
+    let aspect = 0
+    let frame = 0
+    let lastWidth = 0
     setOriginalError('')
-    // PDF.js cannot render twice into the same canvas at once. Keep zoom renders
-    // serialized and drop superseded requests rather than crashing on quick pinches.
-    const next = renderQueue.current.catch(() => undefined).then(async () => {
+    const measure = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        if (!active || !aspect || !stage.clientWidth) return
+        const gridStyle = getComputedStyle(grid)
+        const paperStyle = getComputedStyle(stage.parentElement!)
+        const pad = (value: string) => Number.parseFloat(value) || 0
+        const availableHeight = Math.max(1, grid.clientHeight
+          - pad(gridStyle.paddingTop) - pad(gridStyle.paddingBottom)
+          - pad(paperStyle.paddingTop) - pad(paperStyle.paddingBottom) - 8)
+        const availableWidth = Math.min(stage.clientWidth, 900)
+        // A desktop source page fits in both axes. Phones retain width fit and scroll.
+        const width = Math.max(1, Math.floor(mobileReader
+          ? availableWidth : Math.min(availableWidth, availableHeight * aspect)))
+        if (width === lastWidth) return
+        lastWidth = width
+        // PDF.js cannot render concurrently into the same canvas.
+        const next = renderQueue.current.catch(() => undefined).then(async () => {
+          if (!active) return
+          await renderPage(doc, clamped, destination, width)
+          if (active) restoreReaderScroll()
+        })
+        renderQueue.current = next
+        void next.catch((error) => {
+          if (!active) return
+          console.warn('[leu] Could not render original PDF page:', error)
+          setOriginalError('This page could not be displayed. Try another page or reimport the PDF.')
+        })
+      })
+    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(grid)
+    observer.observe(stage)
+    void doc.getPage(clamped).then((pdfPage) => {
       if (!active) return
-      await renderPage(doc, clamped, destination, width)
-      if (active) restoreReaderScroll()
-    })
-    renderQueue.current = next
-    void next.catch((error) => {
+      const viewport = pdfPage.getViewport({ scale: 1 })
+      aspect = viewport.width / viewport.height
+      measure()
+    }).catch((error) => {
       if (!active) return
-      console.warn('[leu] Could not render original PDF page:', error)
+      console.warn('[leu] Could not measure original PDF page:', error)
       setOriginalError('This page could not be displayed. Try another page or reimport the PDF.')
     })
-    return () => { active = false }
-  }, [mode, doc, clamped, immersive, restoreReaderScroll])
+    return () => { active = false; observer.disconnect(); cancelAnimationFrame(frame) }
+  }, [mode, doc, clamped, immersive, mobileReader, restoreReaderScroll])
 
   const turn = useCallback((to: number, keepReading = false) => {
     if (immersive) setFocusHelpDismissed(true)
@@ -334,10 +368,8 @@ export function Reader({ id, page }: { id: string; page: number }) {
                 onClick={() => changeZoom(zoom + 0.25)}>+</button>
             </div>
   const focusButton = <button type="button" className="reader-focus-toggle"
-    aria-label={immersive ? 'Exit full-screen reading' : 'Enter full-screen reading'}
-    aria-pressed={immersive} onClick={toggleFocus}>
-    <span>{immersive ? 'Done' : 'Full screen'}</span>
-    {immersive ? <ArrowsInIcon size={19} aria-hidden="true" /> : <ArrowsOutIcon size={19} aria-hidden="true" />}
+    aria-label="Enter full-screen reading" title="Full screen" onClick={toggleFocus}>
+    <ArrowsOutIcon size={20} aria-hidden="true" />
   </button>
 
   return (
@@ -358,9 +390,9 @@ export function Reader({ id, page }: { id: string; page: number }) {
         <div className="reader-view-controls">
           <ReaderContents entries={entries} currentIndex={currentIndex}
             onChoose={(index) => turn(entries[index].page)} onAppearance={() => setSettings(true)} />
-          <div className="reader-focus-tools">{focusButton}</div>
+          {!immersive && <div className="reader-focus-tools">{focusButton}</div>}
           {immersive && zoomControls}
-          {!immersive && !mobileReader && <button type="button" className="reader-type-toggle" aria-label="Reading settings" onClick={() => setSettings(true)}><TextAaIcon size={23} aria-hidden="true" /></button>}
+          {!immersive && !mobileReader && <button type="button" className="reader-type-toggle" aria-label="Reading settings" onClick={() => setSettings(true)}><TextAaIcon size={20} aria-hidden="true" /></button>}
         </div>
       </div>
 
@@ -377,7 +409,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           activePaper={paper} onTurn={turn} onZoom={changeZoom} onToggleControls={toggleControls} onExit={exitFullscreen}
           onPosition={reportPosition} bookmark={book.readingPosition}
           reading={speaking && (voice.status === 'speaking' || voice.status === 'paused')} marked={marked} onSeek={seek} /> :
-        <article key={clamped} className="reader-paper" ref={paper}
+        <article key={clamped} className={`reader-paper reader-paper-${mode}`} ref={paper}
           onTouchStart={onSwipeStart} onTouchEnd={onSwipeEnd}
           onTouchCancel={() => { swipeStart.current = null }}
           aria-label={`Page ${clamped} of ${pages}`}>
@@ -446,10 +478,11 @@ export function Reader({ id, page }: { id: string; page: number }) {
         <Dock page={clamped} pages={pages} canPlay={!!pageText} onPlay={() => readPage(0)} onTurn={(n) => turn(n)} compact={immersive} />
       </div>
       {immersive && <>
-        <div className="reader-focus-shortcuts" role="toolbar" aria-label="Full-screen shortcuts">
-          <button type="button" onClick={toggleControls} aria-expanded={controls}
-            aria-label={controls ? 'Hide reader tools' : 'Show reader tools'}>Tools</button>
-          <button type="button" className="reader-focus-exit" onClick={toggleFocus} aria-label="Leave full-screen"><span aria-hidden="true">×</span></button>
+        <div className="reader-focus-shortcuts">
+          <button type="button" className="reader-focus-exit" onClick={toggleFocus}
+            aria-label="Exit full-screen reading" title="Exit full screen">
+            <XIcon size={22} aria-hidden="true" />
+          </button>
         </div>
         {!focusHelpDismissed && !controls && <p className="reader-focus-hint">Swipe to turn pages · Tap the page for controls</p>}
         <nav className="reader-page-nav" aria-label="Full-screen pages">

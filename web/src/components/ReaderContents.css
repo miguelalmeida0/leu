@@ -27,8 +27,6 @@
 .reader:not(.reader-immersive) .reader-bar .contents-trigger:hover {
   background: rgba(248, 241, 222, .12); color: var(--cream);
 }
-.reader:not(.reader-immersive) .reader-grid { grid-template-columns: minmax(0, 1fr) 290px; }
-@media (max-width: 1100px) { .reader:not(.reader-immersive) .reader-grid { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 900px) {
   .reader-immersive .reader-bar .contents-trigger { grid-column: 1; grid-row: 2; justify-self: start; }
   .reader-immersive .reader-bar .reader-back { display: none; }

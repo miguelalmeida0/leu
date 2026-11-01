@@ -103,13 +103,7 @@
   .reader.reader-immersive .reader-page-nav { transition: none; }
 }
 
-/* Keep the reveal overlay from blocking the zoom and fit controls after opening tools. */
-.reader.reader-immersive[data-controls='shown'] .reader-focus-shortcuts {
-  visibility: hidden; opacity: 0; pointer-events: none;
-}
-
 @media (max-width: 720px) {
-  .reader.reader-immersive .reader-focus-shortcuts button:first-child { display: none; }
   .reader.reader-immersive .reader-focus-shortcuts { top: max(6px, env(safe-area-inset-top)); right: max(8px, env(safe-area-inset-right)); }
   .reader.reader-immersive .reader-focus-shortcuts button {
     min-width: 44px; min-height: 44px; padding: 0 9px;

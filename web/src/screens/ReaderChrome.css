@@ -182,3 +182,74 @@
     outline: 2px solid var(--ink); outline-offset: 1px;
   }
 }
+
+/* Read as one focused surface, without duplicating global navigation. */
+.app[data-route='read'] > .topbar { display: none; }
+.app[data-route='read'] .reader:not(.reader-immersive) { height: 100dvh; min-height: 0; }
+@media (min-width: 721px) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center; column-gap: 16px; min-height: 56px;
+    padding-inline: clamp(18px, 3vw, 44px);
+    background: var(--felt); border-bottom: 1px solid rgba(36,48,31,.14);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-back {
+    display: inline-flex; justify-self: start; min-width: 0; font-size: var(--text-sm);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented {
+    justify-self: center; gap: 20px;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls {
+    justify-self: end; justify-content: flex-end; gap: 6px;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .contents-trigger,
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-focus-toggle,
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-type-toggle {
+    min-width: 44px; min-height: 44px; height: 44px; border: 0;
+    border-radius: 9px; background: transparent; color: var(--ink);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-focus-toggle,
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-type-toggle {
+    width: 44px; padding: 0;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .contents-trigger { padding-inline: 10px; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-bar button:hover {
+    background: rgba(36,48,31,.07);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented button:hover {
+    background: transparent; color: var(--ink);
+  }
+}
+@media (min-width: 721px) and (max-width: 980px) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-view-controls .contents-trigger > span { display: none; }
+}
+/* Balanced side columns keep the PDF centered on the entire screen. */
+@media (min-width: 1361px) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-grid,
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-grid.explaining {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 780px) minmax(0, 1fr);
+    grid-template-rows: minmax(100%, auto); align-items: start;
+    gap: clamp(16px, 2vw, 28px);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-paper {
+    grid-column: 2; grid-row: 1; width: 100%; max-width: 780px;
+    justify-self: center;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-paper-original { align-self: center; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .margin {
+    grid-column: 3; grid-row: 1; width: 100%; max-width: 300px;
+    min-width: 0; align-self: start;
+  }
+}
+@media (min-width: 721px) and (max-width: 1360px) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-grid {
+    display: flex; flex-direction: column; align-items: center; gap: 24px;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .reader-paper {
+    flex: none; order: 0; width: min(100%, 780px); max-width: 780px;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .margin {
+    flex: none; order: 1; width: min(100%, 780px); max-width: 780px;
+  }
+}
