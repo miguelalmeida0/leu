@@ -39,10 +39,16 @@ export function useResponsiveTopbar(refs: Refs) {
     let frame = 0
     let active = true
 
+    const applyCompact = (next: boolean) => {
+      // An immediate class change prevents a single overflow frame while
+      // React schedules the accessible navigation state update.
+      header.classList.toggle('compact-nav', next)
+      setCompact(next)
+    }
     const measure = () => {
       if (!active) return
       const width = header.getBoundingClientRect().width
-      if (window.matchMedia('(max-width: 760px)').matches) { setCompact(true); return }
+      if (window.matchMedia('(max-width: 760px)').matches) { applyCompact(true); return }
       const style = getComputedStyle(header)
       const padding = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight)
       const gap = parseFloat(style.columnGap) || 0
@@ -50,7 +56,7 @@ export function useResponsiveTopbar(refs: Refs) {
       // Between 761 and 1100px the search is intentionally an icon-only control.
       const searchWidth = window.matchMedia('(max-width: 1100px)').matches ? 44 : intrinsicWidth(header, search, true)
       const side = Math.max(wordmark.getBoundingClientRect().width, searchWidth)
-      setCompact(linksWidth + 2 * side + 2 * gap + 8 > width - padding)
+      applyCompact(linksWidth + 2 * side + 2 * gap + 8 > width - padding)
     }
     const schedule = () => {
       if (!active) return
@@ -59,7 +65,8 @@ export function useResponsiveTopbar(refs: Refs) {
     }
     const resize = new ResizeObserver(schedule)
     for (const node of [header, wordmark, navigation, search]) resize.observe(node)
-    const changes = new MutationObserver(schedule)
+    // Text mutations must collapse the navigation before WebKit paints.
+    const changes = new MutationObserver(measure)
     const options: MutationObserverInit = { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['style', 'class'] }
     changes.observe(navigation, options)
     changes.observe(search, options)
