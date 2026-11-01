@@ -97,8 +97,11 @@ async function journey(engine, width, reducedMotion) {
       sectionDisplaySize = displaySize
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false, route + ': no overflow')
     }
-    if (width > 900) assert.ok(homeDisplaySize <= sectionDisplaySize,
-      'Home uses a quieter headline scale without changing other route typography')
+    if (width > 900) assert.ok(
+      homeDisplaySize >= (width > 1100 ? sectionDisplaySize + 8 : sectionDisplaySize - 6)
+        && homeDisplaySize <= 68,
+      'Home uses the chosen editorial headline scale without changing other route typography',
+    )
     await page.goto(base + '/#/home')
     await page.getByRole('button', { name: 'Your library · 1 book' }).click()
     await page.getByRole('heading', { name: 'Your library', exact: true }).waitFor()
