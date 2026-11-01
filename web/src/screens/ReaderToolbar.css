@@ -81,3 +81,10 @@
   }
   .app[data-route='read'] .reader:not(.reader-immersive) .segmented button { padding-inline: 11px; }
 }
+
+/* The active reading mode stays visually selected under pointer movement. */
+@media (min-width: 721px) and (hover: hover) and (pointer: fine) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .segmented button.on:hover {
+    background: transparent; color: var(--ink);
+  }
+}

@@ -13,7 +13,13 @@
   .reading-home .home-story .eyebrow { margin-bottom: 18px; }
   .reading-home .home-scene { width: 100%; max-width: 440px; margin-top: 22px; }
   .reading-home .home-resume > .eyebrow { margin-bottom: 20px; }
-  .reading-home .resume-book { grid-template-columns: 76px minmax(0, 1fr); gap: 18px; }
+  .reading-home .resume-book { grid-template-columns: 90px minmax(0, 1fr); gap: 18px; }
+  .reading-home .resume-book .book-cover-title {
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5;
+    padding: 12px 9px; overflow: hidden;
+    overflow-wrap: normal; word-break: normal;
+    font: 500 11px/1.2 var(--serif);
+  }
   .reading-home .resume-details h2 { font-size: clamp(19px, 1.75vw, 23px); line-height: 1.18; }
   .reading-home .resume-action { margin-top: 24px; min-height: 46px; }
   .reading-home .home-shortcuts { margin-top: 24px; }
