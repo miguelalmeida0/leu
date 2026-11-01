@@ -118,3 +118,7 @@
   .reader.reader-immersive .reader-bar .contents-trigger { padding-inline: 8px; }
   .reader.reader-immersive .reader-bar .reader-zoom-controls button { min-width: 38px; min-height: 44px; }
 }
+
+/* Keep the original fullscreen entry mounted for reliable focus restoration,
+   while presenting only the unframed X inside fullscreen. */
+.reader.reader-immersive .reader-focus-tools { display: none; }

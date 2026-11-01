@@ -495,6 +495,9 @@ async function runBrowser(browserType, name, mobile, width) {
         }
       })
     }, sampleId)
+    // The focused reader intentionally hides global navigation. Leave the PDF
+    // through its contextual back action before opening the library-wide search.
+    await page.getByRole('link', { name: 'Back to book overview' }).click()
     await page.getByRole('button', { name: 'Search your books' }).click()
     await visible(page.getByRole('dialog', { name: 'Search your books' }))
     await page.getByRole('textbox', { name: 'Ask your books anything' }).fill('References')

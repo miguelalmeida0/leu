@@ -390,7 +390,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
         <div className="reader-view-controls">
           <ReaderContents entries={entries} currentIndex={currentIndex}
             onChoose={(index) => turn(entries[index].page)} onAppearance={() => setSettings(true)} />
-          {!immersive && <div className="reader-focus-tools">{focusButton}</div>}
+          <div className="reader-focus-tools">{focusButton}</div>
           {immersive && zoomControls}
           {!immersive && !mobileReader && <button type="button" className="reader-type-toggle" aria-label="Reading settings" onClick={() => setSettings(true)}><TextAaIcon size={20} aria-hidden="true" /></button>}
         </div>
