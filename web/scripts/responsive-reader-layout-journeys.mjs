@@ -75,8 +75,10 @@ async function check(engine) {
       await dialog.waitFor({ state: 'visible' })
       const settings = await dialog.getByRole('button', { name: 'Reading settings' }).boundingBox()
       const close = await dialog.getByRole('button', { name: 'Close dialog' }).boundingBox()
-      assert.ok(settings && close && !overlap(settings, close),
-        engine.name() + ' ' + width + ': settings and modal close overlap')
+      const heading = await dialog.locator('.contents-heading').boundingBox()
+      assert.ok(settings && close && heading && !overlap(settings, close)
+        && close.bottom + 4 <= heading.top,
+        engine.name() + ' ' + width + ': close X must sit in its own row ABOVE the Contents heading and settings')
       if ([390, 820, 1440].includes(width)) {
         await page.screenshot({ path: join(evidence, engine.name() + '-' + width + '-contents.png') })
       }
@@ -87,12 +89,23 @@ async function check(engine) {
 
     await page.getByRole('link', { name: 'Back to book overview' }).click()
     await page.locator('.book-grid').waitFor({ state: 'visible' })
+    await page.locator('.book-chapter-item[aria-pressed="true"]').waitFor({ state: 'visible' })
+    assert.equal(await page.locator('.book-chapter-item[aria-pressed="true"]').count(), 1,
+      'Only one chapter preview is selected')
+    const another = page.locator('.book-chapter-item[aria-pressed="false"]').first()
+    const differentTitle = await another.locator('.book-chapter-item-title').innerText()
+    await another.click()
+    await page.waitForFunction((title) => document.querySelector('.chapter-card h3')?.textContent === title, differentTitle)
+    assert.equal(await another.getAttribute('aria-pressed'), 'true',
+      'Choosing a chapter updates the preview and its selected state without navigating')
     for (const width of [390, 760, 820, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 })
       await frame(page)
       const boxes = await page.evaluate(() => {
         const get = (s) => document.querySelector(s).getBoundingClientRect().toJSON()
         return { head: get('.book-head'), chapter: get('.book-chapters'), side: get('.book-side'),
+          list: get('.book-chapter-index'), preview: get('.chapter-card'),
+          visibleChapters: [...document.querySelectorAll('.book-chapter-item')].filter(n => !!n.getClientRects().length).length,
           viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth }
       })
       assert.ok(boxes.scrollWidth <= width + 2, 'Book grid horizontal overflow at ' + width)
@@ -100,9 +113,17 @@ async function check(engine) {
       assert.ok(boxes.head.top >= 0 && boxes.head.left >= 0, 'Book title begins in viewport at ' + width)
       if (width > 980) {
         assert.ok(boxes.chapter.right + 16 <= boxes.side.left
-          && Math.abs(boxes.chapter.top - boxes.side.top) < 3, 'Desktop book panels share a grid row at ' + width)
+          && Math.abs(boxes.chapter.top - boxes.side.top) < 3
+          && Math.abs(boxes.chapter.bottom - boxes.side.bottom) < 3,
+          'Desktop chapter and reading panels must have identical top AND bottom edges at ' + width + ': ' + JSON.stringify(boxes))
+        assert.ok(boxes.visibleChapters >= 2
+          && boxes.list.bottom <= boxes.preview.top + 1
+          && boxes.preview.bottom <= boxes.chapter.bottom + 1,
+          'Inline chapter navigation uses the left panel rather than leaving a dead zone: ' + JSON.stringify(boxes))
       } else {
         assert.ok(boxes.side.top >= boxes.chapter.bottom + 12, 'Stacked book panels have their own space at ' + width)
+        if (width <= 720) assert.equal(boxes.visibleChapters, 0,
+          'Mobile preserves the compact chapter preview and searchable Contents menu')
       }
       if ([390, 820, 1440].includes(width)) {
         await page.screenshot({ path: join(evidence, engine.name() + '-' + width + '-book.png') })
