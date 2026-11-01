@@ -209,6 +209,19 @@ async function run([engine, name, width, height, reducedMotion]) {
     assert.equal(await page.getByRole('button', { name: 'Show reader tools' }).isVisible(), width > 720,
       'Mobile fullscreen has no redundant Tools button; the document tap still reveals the toolbar')
     await ready(page)
+    if (width <= 720) {
+      const occlusion = await page.evaluate(() => {
+        const content = document.querySelector('.paged-current .paged-text')?.getBoundingClientRect()
+        const controls = document.querySelector('.reader-immersive .reader-page-nav')?.getBoundingClientRect()
+        const hint = document.querySelector('.reader-immersive .reader-focus-hint')
+        return { contentBottom: content?.bottom ?? 0, controlsTop: controls?.top ?? 0,
+          hintVisible: hint ? getComputedStyle(hint).display !== 'none' : false }
+      })
+      assert.ok(occlusion.contentBottom + 6 <= occlusion.controlsTop,
+        'The persistent mobile page controls must never overlap reflowed PDF text: ' + JSON.stringify(occlusion))
+      assert.equal(occlusion.hintVisible, false,
+        'A fullscreen instruction hint must not obscure document content on phones')
+    }
     const before = await geometry(page)
     await still(page, before)
     await fittedText(page)

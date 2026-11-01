@@ -125,8 +125,7 @@
   .reader.reader-immersive[data-controls='shown'] .reader-page-nav {
     bottom: max(74px, calc(env(safe-area-inset-bottom) + 67px));
   }
-  .reader.reader-immersive .reader-focus-hint {
-    bottom: max(68px, calc(env(safe-area-inset-bottom) + 59px));
-    padding: 7px 10px;
-  }
+  /* The persistent page controls replace the first-entry tip on phones.
+     A tip over the document hides actual PDF sentences. */
+  .reader.reader-immersive .reader-focus-hint { display: none; }
 }
