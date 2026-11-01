@@ -236,8 +236,8 @@ async function runBrowser(browserType, name, mobile, width) {
         'Full-screen page controls sit centered at the bottom of the mobile viewport')
       assert.ok(focusGeometry.titleClear, 'Fullscreen exit does not cover the page heading')
     }
-    assert.ok(await page.locator('.reader-focus-hint').isVisible(),
-      'First-time fullscreen readers get direct gesture and toolbar guidance')
+    assert.equal(await page.locator('.reader-focus-hint').isVisible(), !mobile,
+      'Mobile fullscreen keeps the document clear; desktop readers retain the optional gesture hint')
     await page.waitForFunction(() => {
       const reader = document.querySelector('.reader-immersive').getBoundingClientRect()
       return Math.abs(reader.top - (visualViewport?.offsetTop ?? 0)) < 2 && Math.abs(reader.height - (visualViewport?.height ?? innerHeight)) < 2
