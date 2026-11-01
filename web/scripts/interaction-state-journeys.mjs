@@ -18,7 +18,8 @@ const selected = (locator) => locator.getAttribute('aria-current')
 async function distinguish(active, hover, label) {
   await active.waitFor({ state: 'visible' })
   await hover.hover()
-  assert.ok(await selected(active) || await active.getAttribute('aria-checked') === 'true',
+  assert.ok(await selected(active) || await active.getAttribute('aria-checked') === 'true'
+    || await active.getAttribute('aria-pressed') === 'true',
     label + ': the selected item must keep its semantic state when another is hovered')
   const current = await background(active)
   const pointer = await background(hover)
@@ -78,6 +79,19 @@ async function journey(engine) {
     await distinguish(chosenRadio, otherRadio, label + ' voice')
     await page.keyboard.press('Escape')
     await settings.waitFor({ state: 'hidden' })
+
+    // Fit-page is an actual selection, not simply the zoom button being hovered.
+    await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
+    await page.locator('.paged-reader').waitFor({ state: 'visible' })
+    await page.getByRole('button', { name: 'Show reading controls' }).focus()
+    await page.keyboard.press('Enter')
+    const fits = page.getByRole('group', { name: 'Original page fit', exact: true })
+    const fitPage = fits.getByRole('button', { name: 'Fit page', exact: true })
+    const fitWidth = fits.getByRole('button', { name: 'Fit width', exact: true })
+    await distinguish(fitPage, fitWidth, label + ' original PDF fit')
+    await page.screenshot({ path: join(evidence, label + '-pdf-fit.png') })
+    await page.getByRole('button', { name: 'Exit full-screen reading' }).click()
+    await page.locator('.reader-immersive').waitFor({ state: 'hidden' })
 
     await page.getByRole('link', { name: 'Back to book overview' }).click()
     await page.getByRole('button', { name: 'Search your books' }).click()

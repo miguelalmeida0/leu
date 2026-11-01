@@ -23,7 +23,11 @@
   display: grid; place-items: center; min-width: 40px; min-height: 44px;
   padding: 0 4px; border-radius: 8px; font-size: 19px; font-weight: 700;
 }
-.reader-zoom-controls button:hover:not(:disabled) { background: #E9DFC8; }
+@media (hover: hover) and (pointer: fine) {
+  .reader-zoom-controls button:hover:not(:disabled):not([aria-pressed='true']) {
+    background: var(--state-hover-surface);
+  }
+}
 .reader-zoom-controls button:disabled { opacity: .35; cursor: default; }
 .reader-zoom-controls .reader-zoom-level { min-width: 48px; font-size: var(--text-caption); font-variant-numeric: tabular-nums; }
 .original-stage { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }

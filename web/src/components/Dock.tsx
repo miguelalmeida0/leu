@@ -129,15 +129,18 @@ export function Dock({ page, pages, canPlay, onPlay, onTurn, compact = false }: 
         {menu && (
           <div className="dock-menu card" role="menu" aria-label="Voices">
             <p className="eyebrow paper" style={{ padding: '6px 12px 8px' }}>{mobileSpeech ? 'Voices on this device' : 'Kokoro voices'}</p>
-            {availableVoices.map((v) => (
-              <button key={v.id} role="menuitemradio" aria-checked={mobileSpeech ? (voiceId === v.id || (v.id === 'system:default' && !voiceId.startsWith('system:'))) : voiceId === v.id}
-                className={voiceId === v.id ? 'on' : ''} onClick={() => {
+            {availableVoices.map((v) => {
+              const chosen = mobileSpeech
+                ? voiceId === v.id || (v.id === 'system:default' && !voiceId.startsWith('system:'))
+                : voiceId === v.id
+              return <button key={v.id} role="menuitemradio" aria-checked={chosen}
+                className={chosen ? 'on' : ''} onClick={() => {
                   chooseVoice(v.id); setMenu(false)
                   speak(`Hello, I'm ${v.name}. I'll read with you.`, 'preview')
                 }}>
                 <strong>{v.name}</strong><span className="muted small">{v.note}</span>
               </button>
-            ))}
+            })}
             <div className="dock-sentence-actions">
               <button role="menuitem" onClick={() => { step(-1); setMenu(false) }} disabled={!active || waiting}>Previous sentence</button>
               <button role="menuitem" onClick={() => { step(1); setMenu(false) }} disabled={!active || waiting}>Next sentence</button>
