@@ -1,113 +1,145 @@
-/* Sound-bar tile from the supplied scene bundle; dimensions remain responsive. */
-.dock .dock-line-fill { background: #D2523F; }
+/* Listening is secondary to reading, but never lost in the footer. */
+.dock .dock-line-fill { background: var(--red-thread); }
 .dock .dock-avatar {
   display: flex; align-items: center; justify-content: center; gap: 3px;
-  background: var(--red-thread); box-shadow: inset 0 0 0 1px rgba(248, 241, 222, .12);
+  background: var(--red-thread);
 }
 .dock .dock-avatar > i {
   display: block; width: 3.5px; border-radius: 2px; background: var(--cream);
   transform-origin: 50% 50%;
 }
 .dock .dock-avatar.speaking > i { animation: leuVoiceBar 1.8s ease-in-out infinite; }
-@keyframes leuVoiceBar {
-  0%, 100% { transform: scaleY(.55); }
-  50% { transform: scaleY(1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .dock .dock-avatar.speaking > i { animation: none; }
-}
+@keyframes leuVoiceBar { 0%, 100% { transform: scaleY(.55); } 50% { transform: scaleY(1); } }
+@media (prefers-reduced-motion: reduce) { .dock .dock-avatar.speaking > i { animation: none; } }
 
-/* One restrained toolbar: controls never overlap or shorten the reading column.
- * The PDF keeps the entire remaining viewport, including on small screens. */
-.reader:not(.reader-immersive) .dock {
+.app[data-route='read'] .reader:not(.reader-immersive) .dock {
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) minmax(118px, 164px);
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   grid-template-rows: 56px;
-  gap: 12px;
-  align-items: center;
-  width: min(100%, 1140px);
-  margin-inline: auto;
-  padding: 0 20px;
-  border-radius: 0;
-  box-shadow: none;
+  align-items: center; gap: clamp(8px, 2vw, 24px);
+  width: min(100%, 1180px); margin: 0 auto;
+  padding: 0 clamp(12px, 2.5vw, 24px);
+  border-radius: 0; background: transparent; box-shadow: none; color: var(--ink);
 }
-.reader:not(.reader-immersive) .dock-line { top: 0; bottom: auto; left: 20px; right: 20px; }
-.reader:not(.reader-immersive) .dock-controls {
-  grid-column: 1; grid-row: 1; display: flex; align-items: center; justify-content: center;
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-line {
+  left: 16px; right: 16px; top: 0; bottom: auto;
+  background: rgba(36,48,31,.12);
 }
-.reader:not(.reader-immersive) .dock-controls > .dock-btn { display: none; }
-.reader:not(.reader-immersive) .dock-play {
-  width: 44px; height: 44px; min-width: 44px; min-height: 44px;
-  border-radius: 12px; color: var(--cream); background: var(--red-thread);
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-listen {
+  grid-column: 1; grid-row: 1; display: flex; align-items: center;
+  gap: 12px; min-width: 0; justify-self: start;
 }
-.reader:not(.reader-immersive) .dock-pages {
-  grid-column: 2; grid-row: 1;
-  display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px 48px;
-  gap: 4px; align-items: center; min-width: 0;
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-controls {
+  display: flex; align-items: center; gap: 0; flex: none; order: 0;
 }
-.reader:not(.reader-immersive) .dock-pages > .dock-btn {
-  width: 44px; height: 44px; min-width: 44px; min-height: 44px;
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-controls > .dock-btn { display: none; }
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-play {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  min-width: 44px; min-height: 44px; border-radius: 12px;
+  background: var(--red-thread); color: var(--cream);
 }
-.reader:not(.reader-immersive) .dock-prev-page { grid-column: 1; grid-row: 1; }
-.reader:not(.reader-immersive) .dock-next-page { grid-column: 3; grid-row: 1; }
-.reader:not(.reader-immersive) .dock-sep { display: none; }
-.reader:not(.reader-immersive) .dock-speed {
-  grid-column: 4; grid-row: 1;
-  position: static; display: block; width: 44px; min-width: 44px; height: 44px;
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-play:hover:not(:disabled) {
+  background: #9b201a;
 }
-.reader:not(.reader-immersive) .dock-range {
-  grid-column: 2; grid-row: 1;
-  min-width: 0; display: flex; flex-direction: column-reverse;
-  align-items: stretch; justify-content: center; gap: 7px;
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-voice {
+  display: block; order: 1; min-width: 0; position: relative;
 }
-.reader:not(.reader-immersive) .dock-range .tabular {
-  min-width: 0; font-size: var(--text-caption); line-height: 1;
-  text-align: center; font-variant-numeric: tabular-nums;
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-chip {
+  display: flex; align-items: center; width: 100%; min-height: 44px;
+  gap: 8px; padding: 3px 8px;
 }
-.reader:not(.reader-immersive) .dock-range input {
-  display: block; position: static; width: 100%; height: 4px;
-  flex: none; margin: 0; min-width: 0;
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-avatar { display: none; }
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-who { min-width: 0; }
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-who strong {
+  font-size: var(--text-sm); color: var(--ink);
 }
-.reader:not(.reader-immersive) .dock-voice {
-  grid-column: 3; grid-row: 1; display: block; width: 100%; min-width: 0;
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-who span {
+  color: var(--secondary); max-width: 160px; font-size: var(--text-xs);
 }
-.reader:not(.reader-immersive) .dock-chip {
-  min-height: 44px; width: 100%; gap: 8px; padding: 0 6px;
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-pages {
+  grid-column: 2; grid-row: 1; display: flex; align-items: center;
+  justify-self: center; gap: 5px; padding: 4px; min-width: 0;
+  border-radius: 14px; background: var(--cream);
+  box-shadow: inset 0 0 0 1px rgba(36,48,31,.12);
 }
-.reader:not(.reader-immersive) .dock-avatar { display: none; }
-.reader:not(.reader-immersive) .dock-who { width: 100%; }
-.reader:not(.reader-immersive) .dock-who strong { font-size: var(--text-sm); }
-.reader:not(.reader-immersive) .dock-who span { max-width: 100%; font-size: var(--text-xs); }
-.reader:not(.reader-immersive) .dock-menu {
-  left: auto; right: 0; z-index: 30;
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-pages > .dock-btn {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  min-width: 44px; min-height: 44px; border-radius: 10px;
+  color: var(--ink);
+}
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-pages > .dock-btn:hover:not(:disabled) {
+  background: var(--felt-light);
+}
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-pages > .dock-btn:disabled {
+  opacity: .25;
+}
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-sep { display: none; }
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-range {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; min-width: 126px; gap: 4px;
+}
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-range .tabular {
+  min-width: 0; text-align: center; font-weight: 700;
+  font-size: var(--text-caption); color: var(--ink); white-space: nowrap;
+}
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-range input {
+  display: block; position: static; min-width: 0; margin: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--ink) var(--p), rgba(36,48,31,.17) var(--p));
+}
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-range input::-webkit-slider-thumb {
+  width: 12px; height: 12px; background: var(--ink); box-shadow: none;
+}
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-range input::-moz-range-thumb {
+  width: 12px; height: 12px; background: var(--ink);
+}
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-settings {
+  grid-column: 3; grid-row: 1; justify-self: end;
+}
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-speed {
+  position: static; display: grid; place-items: center;
+  min-width: 44px; width: 44px; min-height: 44px; height: 44px;
+  border-radius: 12px; color: var(--ink);
+  box-shadow: inset 0 0 0 1px rgba(36,48,31,.28);
+}
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-speed:hover {
+  background: var(--cream); box-shadow: inset 0 0 0 1px var(--ink);
+}
+.app[data-route='read'] .reader:not(.reader-immersive) .dock-menu {
+  bottom: calc(100% + 12px); left: 0; right: auto;
   width: min(330px, calc(100vw - 24px));
-  min-width: 0; max-height: min(60dvh, 460px); overflow-y: auto;
+  min-width: 0; max-height: min(58dvh, 440px);
+  overflow-y: auto; z-index: 40;
 }
-.dock-menu button.on:hover { background: var(--ink); color: var(--cream); }
 .dock-sentence-actions { border-top: 1px solid var(--line); margin-top: 6px; padding-top: 6px; }
 .dock-sentence-actions button { width: 100%; min-height: 44px; }
 .dock-sentence-actions button:disabled { opacity: .4; cursor: default; }
 @media (max-width: 850px) {
-  .reader:not(.reader-immersive) .dock {
-    grid-template-columns: 44px minmax(0, 1fr) 44px;
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock {
+    grid-template-columns: 88px minmax(0, 1fr) 44px;
     gap: 4px; padding-inline: max(8px, env(safe-area-inset-left)) max(8px, env(safe-area-inset-right));
   }
-  .reader:not(.reader-immersive) .dock-pages {
-    grid-template-columns: 40px minmax(0, 1fr) 40px 44px;
-    gap: 0;
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-listen { gap: 0; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-voice { width: 44px; flex: none; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-chip {
+    width: 44px; height: 44px; padding: 4px; justify-content: center;
   }
-  .reader:not(.reader-immersive) .dock-pages > .dock-btn {
-    width: 40px; min-width: 40px; height: 44px; min-height: 44px;
-  }
-  .reader:not(.reader-immersive) .dock-voice { width: 44px; }
-  .reader:not(.reader-immersive) .dock-chip {
-    width: 44px; height: 44px; min-height: 44px; padding: 4px;
-    justify-content: center;
-  }
-  .reader:not(.reader-immersive) .dock-avatar {
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-avatar {
     display: flex; width: 36px; height: 36px; border-radius: 10px;
   }
-  .reader:not(.reader-immersive) .dock-who { display: none; }
-  .reader:not(.reader-immersive) .dock-speed { width: 44px; min-width: 44px; }
-  .reader:not(.reader-immersive) .dock-line { left: 8px; right: 8px; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-who { display: none; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-range {
+    min-width: 0; width: clamp(46px, 11vw, 92px);
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-range input { display: none; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-menu {
+    left: 0; min-width: min(290px, calc(100vw - 24px));
+  }
+}
+@media (max-width: 370px) {
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock {
+    grid-template-columns: 88px minmax(0, 1fr) 44px; gap: 0;
+  }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-pages { gap: 0; padding: 2px; }
+  .app[data-route='read'] .reader:not(.reader-immersive) .dock-range .tabular { font-size: 10px; }
 }

@@ -34,8 +34,9 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen } = useReaderFullscreen(`${id}:${page}`)
   const paged = useRef<PagedReaderHandle>(null)
   const [controls, setControls] = useState(false)
+  const [focusHelpDismissed, setFocusHelpDismissed] = useState(false)
   const [position, setPosition] = useState<ReadingPosition | null>(null)
-  const toggleControls = useCallback(() => setControls((shown) => !shown), [])
+  const toggleControls = useCallback(() => { setFocusHelpDismissed(true); setControls((shown) => !shown) }, [])
   const [zoom, setZoom] = useState(1)
   const [settings, setSettings] = useState(false)
   const [selection, setSelection] = useState<{ text: string; page: number; x: number; y: number } | null>(null)
@@ -60,6 +61,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const toggleFocus = () => {
     hapticFeedback(immersive ? 'confirm' : 'light')
     setControls(false)
+    if (immersive) setFocusHelpDismissed(true)
     toggleFullscreen()
   }
   const reportPosition = useCallback((next: ReadingPosition) => {
@@ -163,6 +165,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   }, [mode, doc, clamped, immersive])
 
   const turn = useCallback((to: number, keepReading = false) => {
+    if (immersive) setFocusHelpDismissed(true)
     stop(); setSelection(null); setDraft(null); setExplain(null); window.getSelection()?.removeAllRanges()
     continuing.current = keepReading
     go({ name: 'read', id, page: Math.min(Math.max(1, to), pages) }, true)
@@ -422,17 +425,27 @@ export function Reader({ id, page }: { id: string; page: number }) {
       </div>
 
       <div className="reader-foot" inert={immersive && !controls} aria-hidden={immersive && !controls || undefined}>
-        {immersive && <nav className="reader-page-nav" aria-label="Full-screen pages">
-          <button type="button" aria-label="Previous page" disabled={!(position?.previous ?? clamped > 1)} onClick={() => paged.current?.step(-1)}>
-            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
-          <span className="tabular" aria-live="polite">{clamped} / {pages}</span>
-          <button type="button" aria-label="Next page" disabled={!(position?.next ?? clamped < pages)} onClick={() => paged.current?.step(1)}>
-            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
-        </nav>}
         <Dock page={clamped} pages={pages} canPlay={!!pageText} onPlay={() => readPage(0)} onTurn={(n) => turn(n)} compact={immersive} />
       </div>
+      {immersive && <>
+        <div className="reader-focus-shortcuts" role="toolbar" aria-label="Full-screen shortcuts">
+          <button type="button" onClick={toggleControls} aria-expanded={controls}
+            aria-label={controls ? 'Hide reader tools' : 'Show reader tools'}>Tools</button>
+          <button type="button" onClick={toggleFocus} aria-label="Leave full-screen">Done</button>
+        </div>
+        {!focusHelpDismissed && !controls && <p className="reader-focus-hint">Swipe sideways or use arrow keys to turn pages. Tap to show reading tools.</p>}
+        <nav className="reader-page-nav" aria-label="Full-screen pages">
+          <button type="button" aria-label="Previous page" disabled={!(position?.previous ?? clamped > 1)}
+            onClick={() => { setFocusHelpDismissed(true); paged.current?.step(-1) }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+          <span className="reader-focus-page tabular" aria-live="polite">Page {clamped} of {pages}</span>
+          <button type="button" aria-label="Next page" disabled={!(position?.next ?? clamped < pages)}
+            onClick={() => { setFocusHelpDismissed(true); paged.current?.step(1) }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+        </nav>
+      </>}
       {settings && <Modal label="Reading settings" onClose={() => setSettings(false)} width={360}>
         <h2 className="display" style={{ fontSize: 24, marginBottom: 20 }}>Reading settings</h2>
         <p className="muted">Text size</p>

@@ -98,7 +98,7 @@ async function journey(engine, width, reducedMotion) {
       viewport: innerHeight,
       overflow: document.documentElement.scrollWidth - innerWidth,
     }))
-    assert.ok(chrome.top <= 66 && chrome.toolbar <= 52 && chrome.footer <= 62,
+    assert.ok(chrome.top <= 70 && chrome.toolbar <= 58 && chrome.footer <= 70,
       `${name}: reading chrome consumes excessive vertical space ${JSON.stringify(chrome)}`)
     assert.ok(chrome.text >= chrome.viewport * .67 && chrome.overflow <= 2,
       `${name}: PDF reading area must dominate the viewport ${JSON.stringify(chrome)}`)

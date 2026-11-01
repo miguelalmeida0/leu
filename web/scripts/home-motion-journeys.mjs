@@ -102,6 +102,18 @@ async function run(engine, label, width, reduced) {
     const resume = await page.getByRole('button', { name: 'Continue reading', exact: true }).boundingBox()
     assert.ok(resume && resume.y + resume.height <= (width <= 430 ? 844 : 900), 'Continue reading must be visible in the first viewport')
     await assertMotion()
+    if (width > 900) {
+      const editorial = await page.evaluate(() => ({
+        art: document.querySelector('.reading-home .home-scene').getBoundingClientRect().toJSON(),
+        heading: document.querySelector('.home-story h1').getBoundingClientRect().toJSON(),
+        cover: document.querySelector('.resume-book .book-cover').getBoundingClientRect().toJSON(),
+        action: document.querySelector('.resume-action').getBoundingClientRect().toJSON(),
+        resume: document.querySelector('.home-resume').getBoundingClientRect().toJSON(),
+      }))
+      assert.ok(editorial.art.width <= 445 && editorial.heading.width <= 600
+        && editorial.cover.width <= 80 && editorial.action.right <= editorial.resume.right + 2,
+        'Home must keep the illustration, title and resume actions within balanced editorial proportions')
+    }
     await page.screenshot({ path: join(evidence, 'home-' + label + '-before.png') })
     // Obsolete manual choices must neither freeze the scene nor override the OS.
     for (const oldChoice of ['pause', 'play']) {

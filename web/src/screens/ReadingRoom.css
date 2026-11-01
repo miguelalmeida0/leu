@@ -84,3 +84,36 @@
   .library-samples { font-size: var(--text-body); margin-top: 26px; }
 }
 @media (prefers-reduced-motion: reduce) { .library-cover-button { transition: none; } }
+
+/* Give the headline, illustration and resume module independent space on wide screens. */
+@media (min-width: 901px) {
+  .reading-home {
+    max-width: 1110px; width: 100%;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+    gap: clamp(48px, 5vw, 78px);
+    padding: 24px 32px 48px;
+    align-items: center;
+  }
+  .app .reading-home .home-story h1 {
+    font-size: clamp(31px, 2.5vw, 37px); line-height: 1.12;
+    letter-spacing: -.038em;
+  }
+  .reading-home .home-scene { width: 100%; max-width: 440px; margin-top: 12px; }
+  .reading-home .home-resume { padding-top: 12px; }
+  .reading-home .resume-book {
+    grid-template-columns: 76px minmax(0, 1fr); gap: 18px;
+  }
+  .reading-home .resume-details h2 { font-size: clamp(19px, 1.65vw, 23px); line-height: 1.18; margin-bottom: 8px; }
+  .reading-home .resume-details p { margin-bottom: 8px; font-size: var(--text-label); }
+  .reading-home .resume-action { margin-top: 18px; min-height: 44px; }
+  .reading-home .home-shortcuts { margin-top: 12px; }
+  .reading-home .home-shortcuts button { min-height: 52px; }
+}
+@media (min-width: 721px) and (max-width: 900px) {
+  .reading-home { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 30px; padding: 22px 24px 36px; }
+  .app .reading-home .home-story h1 { font-size: 30px; }
+  .reading-home .home-scene { max-width: 340px; margin-top: 10px; }
+  .reading-home .resume-book { grid-template-columns: 70px minmax(0,1fr); gap: 12px; }
+  .reading-home .resume-details h2 { font-size: 20px; }
+  .reading-home .home-resume { padding-top: 8px; }
+}

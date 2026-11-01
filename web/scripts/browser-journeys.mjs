@@ -131,6 +131,15 @@ async function runBrowser(browserType, name, mobile, width) {
       'Fullscreen entry is reachable in the top reader toolbar')
     const scrollBox = await page.locator('.reader-grid').boundingBox()
     const footerBox = await page.locator('.reader-foot').boundingBox()
+    const playButton = await page.locator('.reader-foot .dock-play').boundingBox()
+    const pageControl = await page.locator('.reader-foot .dock-pages').boundingBox()
+    const voiceControl = await page.locator('.reader-foot .dock-voice').boundingBox()
+    assert.ok(playButton && pageControl && voiceControl && pageControl.left > playButton.right,
+      'Page turning is a distinct centered group, visually separate from listening')
+    assert.ok(voiceControl.left >= playButton.left && pageControl.right <= width + 2,
+      'Listening and page controls fit the same footer without overlap')
+    assert.ok(await page.locator('.reader-foot .dock-pages').getByRole('button', { name: 'Next page' }).isVisible(),
+      'A visible Next page button remains in the reader footer')
     assert.ok(footerBox && footerBox.height <= 62, 'The ordinary reader footer fits in a single compact row')
     assert.ok(scrollBox && footerBox && scrollBox.y + scrollBox.height <= footerBox.y + 1,
       'The listening footer reserves space and cannot cover reading text')
@@ -183,6 +192,12 @@ async function runBrowser(browserType, name, mobile, width) {
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await visible(page.locator('.paged-current .prose p').first())
     assert.equal(await page.locator('.reader-immersive').getAttribute('data-controls'), 'hidden')
+    const focusPages = page.getByRole('navigation', { name: 'Full-screen pages' })
+    assert.ok(await focusPages.isVisible() && await page.getByRole('button', { name: 'Show reader tools' }).isVisible()
+      && await page.getByRole('button', { name: 'Leave full-screen' }).isVisible(),
+      'Fullscreen retains discoverable navigation, tool access and exit even with its chrome hidden')
+    assert.ok(await page.locator('.reader-focus-hint').isVisible(),
+      'First-time fullscreen readers get direct gesture and toolbar guidance')
     await page.waitForFunction(() => {
       const reader = document.querySelector('.reader-immersive').getBoundingClientRect()
       return Math.abs(reader.top - (visualViewport?.offsetTop ?? 0)) < 2 && Math.abs(reader.height - (visualViewport?.height ?? innerHeight)) < 2
