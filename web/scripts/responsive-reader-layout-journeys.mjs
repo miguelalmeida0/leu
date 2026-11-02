@@ -143,7 +143,7 @@ async function check(engine) {
 
     await page.goto(base + '/#/home')
     await page.locator('.home-scene').waitFor({ state: 'visible' })
-    for (const width of [820, 1024, 1440]) {
+    for (const width of [820, 1024, 1440, 1528, 1920]) {
       await page.setViewportSize({ width, height: 900 })
       await frame(page)
       const home = await page.evaluate(() => {
@@ -151,6 +151,10 @@ async function check(engine) {
         return { story: get('.home-story'), resume: get('.home-resume'),
           art: get('.home-scene'), action: get('.resume-action'), header: get('.topbar'),
           divider: getComputedStyle(document.querySelector('.home-resume')).borderLeftWidth,
+          navCenter: (() => {
+            const nav = document.querySelector('.topbar .desktop-places')
+            return nav?.getClientRects().length ? (nav.getBoundingClientRect().left + nav.getBoundingClientRect().right) / 2 : null
+          })(),
           viewport: innerHeight, scrollWidth: document.documentElement.scrollWidth }
       })
       assert.ok(home.scrollWidth <= width + 2 && !overlap(home.story, home.resume),
@@ -158,6 +162,10 @@ async function check(engine) {
       assert.ok(home.divider === '1px' && home.art.width >= width * .32
         && home.story.right <= home.resume.left + 1 && home.resume.height >= 500,
         'Home divider and expanded illustration must hold across desktop widths at ' + width + ': ' + JSON.stringify(home))
+      assert.ok(Math.abs(home.resume.left - width / 2) <= 1.5,
+        'Home divider must align with the viewport center at ' + width + ': ' + JSON.stringify(home))
+      if (home.navCenter !== null) assert.ok(Math.abs(home.resume.left - home.navCenter) <= 1.5,
+        'Home divider must align with the navbar center at ' + width + ': ' + JSON.stringify(home))
       assert.ok(home.action.bottom <= 900, 'Home continue CTA belongs in first viewport at ' + width)
       const center = (home.header.bottom + 900) / 2
       assert.ok(Math.abs(home.story.top + home.story.height / 2 - center) <= 125
