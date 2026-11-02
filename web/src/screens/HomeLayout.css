@@ -7,8 +7,10 @@
     max-width: 1600px;
     min-height: calc(100dvh - var(--topbar-height, 64px));
     margin-inline: auto;
-    padding: clamp(26px, 4.4vh, 54px) clamp(28px, 4vw, 88px) clamp(26px, 4.4vh, 54px) clamp(32px, 6.3vw, 112px);
-    grid-template-columns: minmax(0, 1.01fr) minmax(0, .99fr);
+    /* Symmetric gutters and columns put the separator on the exact viewport
+       centreline, aligned with the navbar's centred Places navigation. */
+    padding: clamp(26px, 4.4vh, 54px) clamp(32px, 6.3vw, 112px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0;
     align-items: stretch;
     align-content: center;
