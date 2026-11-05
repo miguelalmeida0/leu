@@ -5,7 +5,6 @@ import { importFiles, useSewing } from './lib/library'
 import { go, href, useRoute } from './lib/router'
 import { useStore } from './lib/store'
 import { BookOverview } from './screens/BookOverview'
-import { Explore } from './screens/Explore'
 import { Home } from './screens/Home'
 import { Library } from './screens/Library'
 import { Notes } from './screens/Notes'
@@ -14,7 +13,6 @@ import { Reader } from './screens/Reader'
 import { Search } from './screens/Search'
 import { Sewn } from './screens/Sewn'
 import { Study } from './screens/Study'
-import { Trails } from './screens/Trails'
 import { Welcome } from './screens/Welcome'
 
 export default function App() {
@@ -29,16 +27,16 @@ export default function App() {
   const routeKey = href(route)
   const depth = useRef(0)
 
-  // Keyboard: ⌘K search, ⌘O bring a PDF, ⌘1–⌘6 places (as in the Mac app's Go menu).
+  // Keyboard: ⌘K search, ⌘O bring a PDF, ⌘1–⌘4 visible places.
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
       const mod = e.metaKey || e.ctrlKey
       if (!mod) return
       if (e.key.toLowerCase() === 'k') { e.preventDefault(); setSearching((s) => !s) }
       if (e.key.toLowerCase() === 'o') { e.preventDefault(); picker.current?.click() }
-      const places = ['home', 'library', 'study', 'notes', 'explore', 'trails'] as const
+      const places = ['home', 'library', 'study', 'notes'] as const
       const n = Number(e.key)
-      if (n >= 1 && n <= 6 && !e.shiftKey) { e.preventDefault(); go({ name: places[n - 1] }) }
+      if (n >= 1 && n <= places.length && !e.shiftKey) { e.preventDefault(); go({ name: places[n - 1] }) }
     }
     window.addEventListener('keydown', key)
     return () => window.removeEventListener('keydown', key)
@@ -118,7 +116,6 @@ function Screen({ route, onBring }: { route: ReturnType<typeof useRoute>; onBrin
     case 'words': return <OwnWords key={`${route.id}:${route.page}`} id={route.id} page={route.page} />
     case 'study': return <Study />
     case 'notes': return <Notes />
-    case 'explore': return <Explore term={route.term} />
-    case 'trails': return <Trails id={route.id} />
+    case 'explore': case 'trails': return <Library onBring={onBring} />
   }
 }

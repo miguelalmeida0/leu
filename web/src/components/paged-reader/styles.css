@@ -39,7 +39,14 @@
 
 .reader-original-fit { display: flex; flex: none; gap: 2px; padding-right: 4px; margin-right: 2px; border-right: 1px solid var(--separator); }
 .reader-zoom-controls .reader-original-fit button { padding-inline: 6px; font-size: 11px; font-weight: 600; white-space: nowrap; }
-.reader-original-fit button[aria-pressed='true'] { background: var(--paper); box-shadow: inset 0 0 0 1px var(--separator); }
+.reader-original-fit button[aria-pressed='true'] {
+  background: var(--state-selected-surface);
+  color: var(--ink); font-weight: 700;
+  box-shadow: inset 0 -2px 0 var(--state-selected-indicator);
+}
+.reader-original-fit button[aria-pressed='true']:hover {
+  background: var(--state-selected-surface);
+}
 
 /* Chrome overlays the fitted page. Showing it never changes the page geometry. */
 .reader.reader-immersive .reader-bar { position: absolute; top: 0; left: 0; right: 0; z-index: 25; margin: 0; padding: max(8px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 8px max(16px, env(safe-area-inset-left)); background: var(--cream); border-bottom: 1px solid var(--separator); }
@@ -87,3 +94,52 @@
 
 /* A fitted sheet keeps its intrinsic whitespace on a white viewport. */
 .paged-reader[data-mode='original'], .reader .reader-paper.paged-panel[data-mode='original'], .paged-original { background: #fff; }
+
+@media (max-width: 720px) {
+  .reader.reader-immersive .reader-paper.paged-panel[data-mode='rebuilt'] {
+    padding-top: max(65px, calc(env(safe-area-inset-top) + 42px));
+    padding-bottom: max(84px, calc(env(safe-area-inset-bottom) + 74px));
+  }
+}
+
+/* A single aligned overlay when tools are revealed; the close X stays separate. */
+.reader.reader-immersive .reader-bar {
+  display: flex; align-items: center; justify-content: flex-start;
+  gap: 16px; min-height: 56px; max-height: none;
+  padding: max(6px, env(safe-area-inset-top)) max(64px, calc(env(safe-area-inset-right) + 58px))
+    6px max(16px, env(safe-area-inset-left));
+}
+.reader.reader-immersive .reader-bar .reader-back { display: none; }
+.reader.reader-immersive .reader-bar .segmented { flex: none; grid-area: auto; }
+.reader.reader-immersive .reader-bar .reader-view-controls {
+  display: flex; flex: 1; min-width: 0; align-items: center; justify-content: flex-end; gap: 10px;
+}
+.reader.reader-immersive .reader-bar .reader-zoom-controls,
+.reader.reader-immersive .reader-bar .contents-trigger { grid-area: auto; flex: none; }
+@media (max-width: 950px) {
+  /* Retain fit-page and fit-width. Wrap revealed controls instead of dropping them. */
+  .reader.reader-immersive .reader-bar .reader-view-controls { flex-wrap: wrap; row-gap: 2px; }
+  .reader.reader-immersive .reader-bar .reader-zoom-controls {
+    display: flex; flex-wrap: wrap; max-width: 100%; justify-content: flex-end; row-gap: 2px;
+  }
+}
+@media (max-width: 720px) {
+  .reader.reader-immersive .reader-bar { gap: 8px; padding-left: max(10px, env(safe-area-inset-left)); }
+  .reader.reader-immersive .reader-bar .reader-view-controls { justify-content: flex-start; gap: 6px; }
+  .reader.reader-immersive .reader-bar .contents-trigger { padding-inline: 8px; }
+  .reader.reader-immersive .reader-bar .reader-zoom-controls button { min-width: 38px; min-height: 44px; }
+}
+
+/* Keep the original fullscreen entry mounted for reliable focus restoration,
+   while presenting only the unframed X inside fullscreen. */
+.reader.reader-immersive .reader-focus-tools { display: none; }
+
+@media (max-width: 720px) {
+  .reader.reader-immersive .reader-bar .reader-zoom-controls {
+    flex: 1 1 100%; width: 100%; justify-content: flex-start;
+  }
+  .reader.reader-immersive .reader-bar .reader-original-fit {
+    flex: 0 0 100%; width: 100%; justify-content: flex-start;
+    padding-right: 0; border-right: 0;
+  }
+}

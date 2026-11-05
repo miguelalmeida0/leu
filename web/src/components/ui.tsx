@@ -41,7 +41,7 @@ export function Progress({ value, width = 240 }: { value: number; width?: number
 }
 
 /** A dialog over the felt: Escape or the scrim closes it, focus moves in and comes back. */
-export function Modal({ label, onClose, children, width = 640, tone = 'cream' }: { label: string; onClose: () => void; children: ReactNode; width?: number; tone?: 'cream' | 'butter' }) {
+export function Modal({ label, onClose, children, width = 640, tone = 'cream', className = '' }: { label: string; onClose: () => void; children: ReactNode; width?: number; tone?: 'cream' | 'butter'; className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const close = useRef(onClose)
   close.current = onClose
@@ -65,7 +65,7 @@ export function Modal({ label, onClose, children, width = 640, tone = 'cream' }:
   }, [])
   return (
     <div className="scrim" onPointerDown={(e) => { if (e.target === e.currentTarget) onClose() }}>
-      <div ref={ref} className={`modal ${tone}`} role="dialog" aria-modal="true" aria-label={label} style={{ maxWidth: width }}>
+      <div ref={ref} className={`modal ${tone}${className ? ` ${className}` : ''}`} role="dialog" aria-modal="true" aria-label={label} style={{ maxWidth: width }}>
         <button type="button" className="modal-close" onClick={onClose} aria-label="Close dialog">
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
         </button>

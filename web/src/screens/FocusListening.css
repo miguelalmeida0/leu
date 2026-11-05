@@ -15,9 +15,9 @@
   box-shadow: 0 10px 26px rgba(36, 48, 31, .16), 0 2px 5px rgba(36, 48, 31, .15);
   pointer-events: auto;
 }
-.dock[data-focus='true'] .dock-voice,
-.dock[data-focus='true'] .dock-controls,
-.dock[data-focus='true'] .dock-pages { display: none !important; }
+.dock[data-focus='true'] .dock-listen,
+.dock[data-focus='true'] .dock-pages,
+.dock[data-focus='true'] .dock-settings { display: none !important; }
 .dock[data-focus='true'] .dock-line { left: 15px; right: 15px; }
 .dock-focus-action {
   display: flex; align-items: center; width: 100%; gap: 9px; min-height: 45px;
@@ -39,3 +39,101 @@
   .reader.reader-immersive .reader-foot { padding-bottom: max(9px, env(safe-area-inset-bottom)); }
 }
 @media (prefers-reduced-motion: reduce) { .reader-dock-flight { animation: none !important; } }
+
+/* Always-visible, quiet fullscreen affordances sit above the PDF, not in a bar. */
+.reader.reader-immersive .reader-focus-shortcuts {
+  position: absolute; z-index: 34; top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right)); display: flex; gap: 6px;
+}
+.reader.reader-immersive .reader-focus-shortcuts button {
+  display: grid; place-items: center; min-height: 44px;
+  padding: 0 14px; border-radius: 12px;
+  background: rgba(248,241,222,.95); color: var(--ink);
+  border: 1px solid rgba(36,48,31,.15); font-weight: 700; font-size: var(--text-sm);
+}
+.reader.reader-immersive .reader-focus-shortcuts button:hover {
+  background: var(--felt-light);
+}
+.reader.reader-immersive .reader-focus-shortcuts button:focus-visible,
+.reader.reader-immersive .reader-page-nav button:focus-visible {
+  outline: 2px solid var(--ink); outline-offset: 2px;
+}
+.reader.reader-immersive .reader-page-nav {
+  position: absolute; z-index: 34; left: 50%; bottom: max(12px, env(safe-area-inset-bottom));
+  transform: translateX(-50%); display: flex; align-items: center;
+  gap: 5px; padding: 4px; border-radius: 15px;
+  color: var(--ink); background: rgba(248,241,222,.96);
+  box-shadow: 0 1px 12px rgba(36,48,31,.12);
+  border: 1px solid rgba(36,48,31,.13);
+  transition: bottom 180ms var(--ease); pointer-events: auto;
+}
+.reader.reader-immersive .reader-page-nav button {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  min-width: 44px; min-height: 44px; border-radius: 11px;
+}
+.reader.reader-immersive .reader-page-nav button:hover:not(:disabled) { background: var(--felt-light); }
+.reader.reader-immersive .reader-page-nav button:disabled { opacity: .27; cursor: default; }
+.reader.reader-immersive .reader-focus-page {
+  min-width: 98px; padding-inline: 8px;
+  font-size: var(--text-caption); font-weight: 700;
+  text-align: center; white-space: nowrap;
+}
+.reader.reader-immersive .reader-focus-hint {
+  position: absolute; z-index: 31; bottom: max(77px, calc(env(safe-area-inset-bottom) + 65px));
+  left: 50%; transform: translateX(-50%); width: max-content;
+  max-width: calc(100% - 28px); margin: 0; pointer-events: none;
+  background: rgba(248,241,222,.93); color: var(--paper-secondary);
+  border: 1px solid rgba(36,48,31,.12); border-radius: 10px;
+  padding: 9px 14px; font-size: var(--text-caption); line-height: 1.4;
+  text-align: center;
+}
+.reader.reader-immersive[data-controls='shown'] .reader-page-nav {
+  bottom: max(82px, calc(env(safe-area-inset-bottom) + 72px));
+}
+.reader.reader-immersive .reader-foot { background: transparent; border: 0; }
+@media (max-width: 720px) {
+  .reader.reader-immersive .reader-focus-shortcuts { top: max(6px, env(safe-area-inset-top)); }
+  .reader.reader-immersive .reader-focus-shortcuts button { padding-inline: 10px; font-size: var(--text-caption); }
+  .reader.reader-immersive .reader-focus-hint { max-width: calc(100% - 26px); }
+  .reader.reader-immersive[data-controls='shown'] .reader-page-nav {
+    bottom: max(83px, calc(env(safe-area-inset-bottom) + 75px));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reader.reader-immersive .reader-page-nav { transition: none; }
+}
+
+@media (max-width: 720px) {
+  .reader.reader-immersive .reader-focus-shortcuts { top: max(6px, env(safe-area-inset-top)); right: max(8px, env(safe-area-inset-right)); }
+  .reader.reader-immersive .reader-focus-shortcuts button {
+    min-width: 44px; min-height: 44px; padding: 0 9px;
+    background: rgba(248,241,222,.93);
+  }
+  .reader.reader-immersive .reader-page-nav {
+    left: 50%; bottom: max(5px, env(safe-area-inset-bottom));
+    transform: translateX(-50%); margin: 0; padding: 3px;
+    gap: 3px; border-radius: 14px;
+    box-shadow: 0 1px 8px rgba(36,48,31,.08);
+  }
+  .reader.reader-immersive .reader-focus-page { min-width: 94px; }
+  .reader.reader-immersive[data-controls='shown'] .reader-page-nav {
+    bottom: max(74px, calc(env(safe-area-inset-bottom) + 67px));
+  }
+  /* The persistent page controls replace the first-entry tip on phones.
+     A tip over the document hides actual PDF sentences. */
+  .reader.reader-immersive .reader-focus-hint { display: none; }
+}
+
+/* Fullscreen exit: an unframed X, with a full-size accessible hit target. */
+.reader.reader-immersive .reader-focus-shortcuts .reader-focus-exit {
+  width: 44px; height: 44px; min-width: 44px; min-height: 44px;
+  padding: 0; margin: 0; border: 0; border-radius: 0;
+  background: transparent; box-shadow: none; color: var(--ink);
+  font-size: 28px; line-height: 1; font-weight: 400;
+}
+.reader.reader-immersive .reader-focus-shortcuts .reader-focus-exit:hover {
+  background: transparent; color: var(--ink);
+}
+.reader.reader-immersive .reader-focus-shortcuts .reader-focus-exit:focus-visible {
+  outline: 2px solid currentColor; outline-offset: -3px;
+}

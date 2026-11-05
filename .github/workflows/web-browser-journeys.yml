@@ -51,6 +51,14 @@ jobs:
       - name: Verify burger navigation across desktop, tablet and mobile widths
         working-directory: web
         run: node scripts/topbar-layout-journeys.mjs
+      - name: Verify compact toolbar, dialog close and responsive Home/book grids
+        working-directory: web
+        run: node scripts/responsive-reader-layout-journeys.mjs
+      - name: Verify short-viewport chapter selection with mobile WebKit
+        working-directory: web
+        env:
+          LEU_CONTENTS_CASE: webkit-keyboard
+        run: node scripts/reader-contents-journeys.mjs
       - name: Run reader journeys on desktop, Android and iPhone
         working-directory: web
         run: node scripts/browser-journeys.mjs
@@ -63,6 +71,9 @@ jobs:
       - name: Verify bounded searchable chapter navigation
         working-directory: web
         run: node scripts/reader-contents-journeys.mjs
+      - name: Verify selected, hover and focus states across the app
+        working-directory: web
+        run: node scripts/interaction-state-journeys.mjs
       - name: Verify pull-to-exit gestures and haptic fallbacks
         working-directory: web
         run: node scripts/reader-dismiss-journeys.mjs
