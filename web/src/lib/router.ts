@@ -22,8 +22,8 @@ export function parse(hash: string): Route {
     case 'read': return a ? { name, id: a, page: Math.max(1, Number(b) || 1) } : { name: 'library' }
     case 'words': return a ? { name, id: a, page: Math.max(1, Number(b) || 1) } : { name: 'library' }
     case 'study': case 'notes': return { name }
-    // Experimental destinations are hidden for now; old links return to Library without losing stored data.
-    case 'explore': case 'trails': return { name: 'library' }
+    case 'explore': return { name, term: a || undefined }
+    case 'trails': return { name, id: a || undefined }
     default: return { name: 'home' }
   }
 }

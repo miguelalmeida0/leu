@@ -47,9 +47,15 @@ export function preferSystemSpeech() {
   return typeof window !== 'undefined' && window.matchMedia('(max-width: 900px) and (pointer: coarse)').matches
 }
 
-export function systemVoices() {
+function localSystemVoices() {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return []
-  const all = speechSynthesis.getVoices().filter((voice) => /^en(?:-|$)/i.test(voice.lang))
+  // A browser's default voice may use a remote service. Private book text must
+  // only reach a synthesizer the browser explicitly identifies as local.
+  return speechSynthesis.getVoices().filter((voice) => voice.localService === true && /^en(?:-|$)/i.test(voice.lang))
+}
+
+export function systemVoices() {
+  const all = localSystemVoices()
   const unique = new Map(all.map((voice) => [voice.voiceURI, voice]))
   return [...unique.values()].sort((a, b) => Number(b.default) - Number(a.default) || a.name.localeCompare(b.name)).slice(0, 12)
     .map((voice) => ({ id: `system:${voice.voiceURI}`, name: voice.name, note: voice.lang }))
@@ -388,13 +394,16 @@ function systemSpeak(token: number, list: string[]) {
     const index = first + i
     const u = new SpeechSynthesisUtterance(list[i++])
     const selected = getState().voice
-    const installed = speechSynthesis.getVoices()
-    if (selected.startsWith('system:')) {
-      u.voice = installed.find((voice) => voice.voiceURI === selected.slice('system:'.length)) ?? null
-    } else {
-      u.voice = installed.find((voice) => voice.default && /^en(?:-|$)/i.test(voice.lang))
-        ?? installed.find((voice) => /^en(?:-|$)/i.test(voice.lang)) ?? null
+    const installed = localSystemVoices()
+    const preferred = selected.startsWith('system:')
+      ? installed.find((voice) => voice.voiceURI === selected.slice('system:'.length)) : undefined
+    const local = preferred ?? installed.find((voice) => voice.default) ?? installed[0]
+    if (!local) {
+      set({ notice: 'No local English voice is available. Install one in your device settings, then try again.' })
+      end(false)
+      return
     }
+    u.voice = local
     u.rate = 0.98 * vs.speed
     u.onstart = () => { system = { index, char: 0 }; set({ status: 'speaking' }) }
     u.onboundary = (e) => { if (system) system.char = e.charIndex + (e.charLength || 0) }
