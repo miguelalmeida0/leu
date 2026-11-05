@@ -36,6 +36,8 @@
   .reader:not(.reader-immersive) .contents-location { display: none; }
   .reader-immersive .reader-bar .reader-zoom-controls { grid-row: 3; grid-column: 1 / -1; justify-self: stretch; justify-content: center; }
   .reader-immersive .reader-bar .contents-trigger { grid-column: 1 / -1; }
+  /* The compact toolbar has a third 44px row; notices must clear its controls. */
+  .reader.reader-immersive .voice-notice { top: calc(max(4px, env(safe-area-inset-top)) + 144px); }
 }
 
 @media (max-width: 380px) { .reader:not(.reader-immersive) .contents-trigger > span { display: none; } }
