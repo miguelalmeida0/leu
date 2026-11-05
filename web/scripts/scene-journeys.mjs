@@ -80,10 +80,17 @@ async function run(engine, label, width, mobile) {
   // This stub verifies the existing speech state/UI wiring, not audible output.
   await page.addInitScript(() => {
     const speech = new EventTarget()
-    speech.getVoices = () => []
-    speech.speak = (utterance) => { queueMicrotask(() => utterance.onstart?.(new Event('start'))) }
+    const localVoice = { voiceURI: 'test-local-en', name: 'Local test voice', lang: 'en-US', localService: true, default: false }
+    speech.getVoices = () => [{ ...localVoice, voiceURI: 'test-remote-en', localService: false, default: true }, localVoice]
+    speech.speak = (utterance) => {
+      if (utterance.voice !== localVoice) throw new Error('Playback must explicitly select the local voice')
+      queueMicrotask(() => utterance.onstart?.(new Event('start')))
+    }
     speech.cancel = speech.pause = speech.resume = () => {}
     Object.defineProperty(window, 'speechSynthesis', { configurable: true, value: speech })
+    Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true, value: class {
+      constructor(text) { this.text = text }
+    } })
   })
   await page.clock.install()
   try {
