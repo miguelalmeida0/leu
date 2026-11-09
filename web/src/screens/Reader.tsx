@@ -1,4 +1,4 @@
-import { ArrowsOutIcon, TextAaIcon, XIcon } from '@phosphor-icons/react'
+import { ArrowsOutIcon, BookOpenTextIcon, TextAaIcon, XIcon } from '@phosphor-icons/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ReaderContents, currentOutlineIndex } from '../components/ReaderContents'
 import { Prose, piecesOf } from '../components/Prose'
@@ -22,6 +22,11 @@ import { ExplainPanel, gistOf } from './Explain'
 import { useReaderPreferences } from '../lib/useReaderPreferences'
 import { useReaderChromeInsets } from '../lib/useReaderChromeInsets'
 import { explanationAvailability, type ModelAvailability } from '../lib/explanation'
+import { ReadingTools, type ToolSource } from '../features/reader-tools/ReadingTools'
+import { PinnedReference } from '../features/reader-tools/PinnedReference'
+import { usePinnedReference } from '../features/reader-tools/usePinnedReference'
+import { labs, matchingLabs, wholePage } from '../features/reader-tools/models'
+import '../features/reader-tools/reader-tools.css'
 
 const limitZoom = (value: number) => Math.min(2.75, Math.max(0.8, Math.round(value * 20) / 20))
 
@@ -82,6 +87,8 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const voice = useVoice()
   const continuing = useRef(false)
   const pages = book?.pages ?? 1
+  const pinned = usePinnedReference(id, pages)
+  const [tools, setTools] = useState<ToolSource | null>(null)
   const clamped = Math.min(Math.max(1, page), pages)
   const changeZoom = useCallback((next: number) => setZoom(limitZoom(next)), [])
 
@@ -353,7 +360,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
     else if (dx > 0 && clamped > 1) turn(clamped - 1)
   }
 
-  const actOnSelection = (action: 'note' | 'explain' | 'speak') => {
+  const actOnSelection = (action: 'note' | 'explain' | 'speak' | 'pin' | 'try') => {
     if (!selection) return
     const quote = selection.text
     const sourcePage = selection.page
@@ -366,11 +373,17 @@ export function Reader({ id, page }: { id: string; page: number }) {
       setExplain(quote)
     }
     if (action === 'speak') speak(quote, 'selection')
+    if (action === 'pin') {
+      pinned.pin({ page: sourcePage, quote, crop: wholePage })
+      requestAnimationFrame(() => reader.current?.querySelector<HTMLButtonElement>('.reference-disclosure')?.focus())
+    }
+    if (action === 'try') setTools({ page: sourcePage, text: quote, initialLab: matchingLabs(quote)[0] })
   }
 
   if (missing || !book || loadError) return <div className="page"><Empty title={loadError || "This book isn't in this browser any more."}><a className="link" href={href({ name: 'library' })}>Back to the library</a></Empty></div>
 
   const pageText = (blocks ?? []).map((b) => b.text).join('\n\n')
+  const availableLabs = matchingLabs(pageText)
   const entries = outline.length ? outline : [{ title: 'Beginning', page: 1, depth: 0 }]
   const currentIndex = currentOutlineIndex(entries, clamped)
   const current = entries[currentIndex]
@@ -397,6 +410,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
     <div ref={reader} role={immersive ? 'dialog' : undefined} aria-modal={immersive || undefined}
       aria-label={immersive ? `${book.title} · full-screen reader` : undefined}
       data-controls={immersive ? controls ? 'shown' : 'hidden' : undefined} tabIndex={immersive ? -1 : undefined}
+      data-reference={pinned.reference && doc ? pinned.expanded ? 'open' : 'closed' : undefined}
       className={`reader fade-in${immersive ? ' reader-immersive' : ''}`}
       style={{ ['--reader-zoom' as string]: zoom }}>
       <div className="reader-bar" inert={immersive && !controls} aria-hidden={immersive && !controls || undefined}>
@@ -409,6 +423,8 @@ export function Reader({ id, page }: { id: string; page: number }) {
           <button type="button" aria-pressed={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
         </div>}
         <div className="reader-view-controls">
+          <button type="button" className="reader-tools-trigger" aria-label="Reading tools" title="Reading tools: interactive examples and pinned references"
+            disabled={!doc} onClick={() => setTools({ page: clamped, text: pageText })}><BookOpenTextIcon size={20} aria-hidden="true" /><span>Tools</span></button>
           <ReaderContents entries={entries} currentIndex={currentIndex}
             onChoose={(index) => turn(entries[index].page)} onAppearance={() => setSettings(true)} />
           <div className="reader-focus-tools">{focusButton}</div>
@@ -468,6 +484,8 @@ export function Reader({ id, page }: { id: string; page: number }) {
               <button type="button" onClick={() => actOnSelection('note')}>Keep a note</button>
               <button type="button" onClick={() => actOnSelection('explain')} disabled={!explanationSupport || explanationSupport === 'unavailable'} title={explanationSupport === 'unavailable' ? 'On-device explanations are unavailable in this browser.' : undefined}>Explain</button>
               <button type="button" onClick={() => actOnSelection('speak')}>Read aloud</button>
+              <button type="button" disabled={selection.text.length > 12000} title={selection.text.length > 12000 ? 'Select a shorter passage to pin.' : undefined} onClick={() => actOnSelection('pin')}>{pinned.reference ? 'Replace pin' : 'Pin reference'}</button>
+              {matchingLabs(selection.text).length > 0 && <button type="button" onClick={() => actOnSelection('try')}>Try it</button>}
               <button type="button" className="selection-dismiss" aria-label="Dismiss text actions" onClick={() => {
                 selectingToolbar.current = false
                 setSelection(null)
@@ -480,6 +498,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
         <aside className="margin" aria-label={explain ? 'Passage explanation' : 'In the margin'}>
           {explain && !immersive ? <ExplainPanel key={explain} bookId={id} page={clamped} passage={explain} pageText={pageText} onClose={() => setExplain(null)} /> : <>
           <p className="eyebrow">In the margin</p>
+          {availableLabs.map(kind => <button key={kind} className="passage-lab-link" onClick={() => setTools({ page: clamped, text: pageText, initialLab: kind })}><strong>{labs[kind].title}</strong><span>{labs[kind].description}</span></button>)}
           {notes.map((n) => (
             <div key={n.id} className="margin-note">
               <blockquote className="serif">“{n.quote.length > 180 ? n.quote.slice(0, 180) + '…' : n.quote}”</blockquote>
@@ -496,6 +515,13 @@ export function Reader({ id, page }: { id: string; page: number }) {
         </aside>
       </div>
 
+      {pinned.reference && doc && <PinnedReference doc={doc} reference={pinned.reference} page={clamped}
+        expanded={pinned.expanded} onExpand={pinned.setExpanded} onRemove={() => {
+          pinned.pin(null)
+          reader.current?.querySelector<HTMLButtonElement>('.reader-tools-trigger')?.focus()
+        }}
+        onTurn={turn} notice={pinned.notice} />}
+      {tools && doc && <ReadingTools doc={doc} source={tools} replacing={!!pinned.reference} onPin={pinned.pin} onClose={() => setTools(null)} />}
       <div className="reader-foot" inert={immersive && !controls} aria-hidden={immersive && !controls || undefined}>
         <Dock page={clamped} pages={pages} canPlay={!!pageText} onPlay={() => readPage(0)} onTurn={(n) => turn(n)} compact={immersive} />
       </div>
