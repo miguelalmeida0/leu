@@ -134,7 +134,7 @@ async function run([engine, name, width, reducedMotion, height = 900]) {
     await dialog.getByRole('searchbox', { name: 'Search chapters' }).fill('Repeated heading')
     await dialog.getByRole('button', { name: /Repeated heading/ }).nth(2).click()
     await dialog.waitFor({ state: 'hidden' })
-    assert.equal(await trigger.getAttribute('aria-label'), 'Contents, 27 of 500', 'Repeated titles keep their stable outline identity')
+    assert.equal(await trigger.getAttribute('aria-label'), 'Contents, section 27 of 500', 'Repeated titles keep their stable outline identity')
     await trigger.click()
     await dialog.waitFor({ state: 'visible' })
     await dialog.getByRole('searchbox', { name: 'Search chapters' }).fill('Last chapter needle')

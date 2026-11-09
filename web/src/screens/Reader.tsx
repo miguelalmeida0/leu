@@ -19,6 +19,10 @@ import { useReaderFullscreen } from '../lib/useReaderFullscreen'
 import { dismissNotice, prefetch, seek, speak, stop, useVoice, warmVoice } from '../lib/voice'
 import { ExplainPanel, gistOf } from './Explain'
 
+import { useReaderPreferences } from '../lib/useReaderPreferences'
+import { useReaderChromeInsets } from '../lib/useReaderChromeInsets'
+import { explanationAvailability, type ModelAvailability } from '../lib/explanation'
+
 const limitZoom = (value: number) => Math.min(2.75, Math.max(0.8, Math.round(value * 20) / 20))
 
 
@@ -31,7 +35,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const [doc, setDoc] = useState<PDFDocumentProxy | null>(null)
   const [outline, setOutline] = useState<Outline[]>([])
   const [blocks, setBlocks] = useState<Block[] | null>(null)
-  const [preferredMode, setMode] = useState<'rebuilt' | 'original'>('original')
+  const [preferredMode, setMode] = useReaderPreferences()
   const [mobileReader, setMobileReader] = useState(() =>
     typeof window !== 'undefined' && window.matchMedia('(max-width: 720px), (max-height: 500px) and (pointer: coarse)').matches)
   // Phones always render the source sheet. A resized desktop reader cannot leave
@@ -39,6 +43,13 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const mode = mobileReader ? 'original' : preferredMode
   const [originalFit, setOriginalFit] = useState<'page' | 'width'>('page')
   const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen, restoreReaderScroll } = useReaderFullscreen(`${id}:${page}`)
+  useReaderChromeInsets(reader, immersive)
+  const [explanationSupport, setExplanationSupport] = useState<ModelAvailability | null>(null)
+  useEffect(() => {
+    let live = true
+    void explanationAvailability().then((status) => { if (live) setExplanationSupport(status) })
+    return () => { live = false }
+  }, [])
   const paged = useRef<PagedReaderHandle>(null)
   const [controls, setControls] = useState(false)
   const [focusHelpDismissed, setFocusHelpDismissed] = useState(false)
@@ -446,7 +457,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
                 if (event.pointerType === 'mouse') event.preventDefault()
               }}>
               <button type="button" onClick={() => actOnSelection('note')}>Keep a note</button>
-              <button type="button" onClick={() => actOnSelection('explain')}>Explain</button>
+              <button type="button" onClick={() => actOnSelection('explain')} disabled={!explanationSupport || explanationSupport === 'unavailable'} title={explanationSupport === 'unavailable' ? 'On-device explanations are unavailable in this browser.' : undefined}>Explain</button>
               <button type="button" onClick={() => actOnSelection('speak')}>Read aloud</button>
               <button type="button" className="selection-dismiss" aria-label="Dismiss text actions" onClick={() => {
                 selectingToolbar.current = false
@@ -467,9 +478,10 @@ export function Reader({ id, page }: { id: string; page: number }) {
               <button className="quiet-link small" onClick={() => removeNote(n.id)} aria-label="Remove this note">Remove</button>
             </div>
           ))}
-          {!notes.length && <p className="muted small">Select a passage to keep a note, ask for an explanation, or hear it read.</p>}
+          {!notes.length && (mode === 'original' ? <p className="muted small">{mobileReader ? 'Open this book on a larger screen to select text and keep notes.' : <>To select text and keep notes, <button className="link" onClick={() => setMode('rebuilt')}>switch to For reading</button>.</>}</p> : <p className="muted small">Select a passage to keep a note or hear it read.</p>)}
           <div className="divider" style={{ margin: '20px 0' }} />
-          <button className="btn cream" style={{ width: '100%' }} onClick={() => setExplain(pageText)} disabled={!pageText}><span className="dot" style={{ background: 'var(--butter)' }} />Explain this page simply</button>
+          <button className="btn cream" style={{ width: '100%' }} onClick={() => setExplain(pageText)} aria-describedby="explanation-availability" disabled={!pageText || !explanationSupport || explanationSupport === 'unavailable'}><span className="dot" style={{ background: 'var(--butter)' }} />Explain this page simply</button>
+          <p id="explanation-availability" className="muted small" role="status">{explanationSupport === null ? 'Checking on-device explanations…' : explanationSupport === 'unavailable' ? 'On-device explanations are unavailable in this browser. You can still use notes and practice in your own words.' : explanationSupport === 'downloadable' ? 'First use requires an on-device model download.' : explanationSupport === 'downloading' ? 'The on-device model is downloading.' : 'Ready on this device. Your book stays here.'}</p>
           <button className="btn soft" style={{ width: '100%', marginTop: 10 }} onClick={() => go({ name: 'words', id, page: clamped })}>Say it in your own words</button>
           </>}
         </aside>

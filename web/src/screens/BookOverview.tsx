@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ReaderContents } from '../components/ReaderContents'
 import { BookChapterList } from './BookChapterList'
-import { Empty, Patch, fractionWords } from '../components/ui'
+import { Empty, Patch } from '../components/ui'
 import { go, href } from '../lib/router'
-import { loadOutline, loadText, memoryState, readFraction, removeBook, useStore, type Outline } from '../lib/store'
+import { loadOutline, loadText, memoryState, removeBook, useStore, type Outline } from '../lib/store'
 import { sentences } from '../lib/text'
 import './BookOverview.css'
 
@@ -50,7 +50,6 @@ export function BookOverview({ id }: { id: string }) {
   const fading = mine.filter((m) => { const s = memoryState(m); return s === 'fading' || s === 'due' })
   const loose = Object.entries(attempts).filter(([k, a]) => k.startsWith(id + ':') && a.checkedAt && a.across.length < 3)
   const understood = Object.entries(attempts).filter(([k, a]) => k.startsWith(id + ':') && a.across.length >= 3).length
-  const read = readFraction(book)
   const entries = outline?.length ? outline : list.map((c) => ({ title: c.title, page: c.from, depth: 0 }))
   const chapter = chosenEntry ? { number: selected + 1, title: chosenEntry.title, from: chosenEntry.page, to: chosenEntry.page, sections: [] } : list[selected]
   const leftOff = text[book.page - 1] ? sentences(text[book.page - 1]).find((s) => s.length > 50) : undefined
@@ -79,7 +78,7 @@ export function BookOverview({ id }: { id: string }) {
         <div>
           <h1 className="display">{book.title}</h1>
           <p className="muted" style={{ marginTop: 10 }}>
-            {book.pages} pages · {book.lastOpenedAt ? (read > 0 ? `You've read ${fractionWords(read)} of it` : 'Just started') : 'Not started yet'}
+            {book.pages} pages · {book.lastOpenedAt ? `Last opened: page ${book.page}` : 'Not started yet'}
             {understood > 0 ? ` · you've explained ${understood} page${understood > 1 ? 's' : ''} in your own words` : ''}.
           </p>
         </div>
@@ -124,7 +123,7 @@ export function BookOverview({ id }: { id: string }) {
                 {fading.slice(0, 4).map((m) => <li key={m.id}><a href={href({ name: 'read', id, page: m.page })}>Return to page {m.page}</a></li>)}
               </ul>
             ) : <p className="muted small">Revisit a few ideas from this book.</p>}
-            <button className="btn soft book-practice-action" onClick={() => go({ name: 'study' })}>
+            <button className="btn soft book-practice-action" onClick={() => go({ name: 'study', id, count: questions })}>
               Ask me {questions} question{questions > 1 ? 's' : ''}
             </button>
           </div>

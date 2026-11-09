@@ -48,6 +48,9 @@ jobs:
         working-directory: web
         run: |
           for script in scripts/*-journeys.mjs; do node --check "$script"; done
+      - name: Verify UX audit fixes on desktop and iPhone
+        working-directory: web
+        run: node scripts/ux-audit-journeys.mjs
       - name: Verify burger navigation across desktop, tablet and mobile widths
         working-directory: web
         run: node scripts/topbar-layout-journeys.mjs

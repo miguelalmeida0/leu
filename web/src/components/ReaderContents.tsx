@@ -45,9 +45,9 @@ export function ReaderContents({ entries, currentIndex, onChoose, onAppearance }
   }, [open, entries, currentIndex, query])
   const current = entries[currentIndex]
   return <>
-    <button ref={trigger} type="button" className="contents-trigger" aria-label={`Contents, ${currentIndex + 1} of ${entries.length}`} aria-haspopup="dialog" aria-expanded={open} disabled={!entries.length}
+    <button ref={trigger} type="button" className="contents-trigger" aria-label={`Contents, section ${currentIndex + 1} of ${entries.length}`} aria-haspopup="dialog" aria-expanded={open} disabled={!entries.length}
       onClick={() => { setQuery(''); setOpen(true) }}>
-      <BookOpenIcon size={20} aria-hidden="true" className="reader-contents-book" /><span>Contents</span><span className="contents-location">{currentIndex + 1} / {entries.length}</span>
+      <BookOpenIcon size={20} aria-hidden="true" className="reader-contents-book" /><span>Contents</span>
     </button>
     {open && createPortal(<Modal label="Contents" onClose={() => setOpen(false)} width={600} className="contents-modal">
       <div className="reader-contents">

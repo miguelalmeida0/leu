@@ -57,11 +57,11 @@ function Choice<T extends string | number>({ label, value, options, onChange }: 
 }
 
 /** Study (09b): the session as one sentence of felt patches. Nothing is scored. */
-export function Study() {
+export function Study({ bookId, requestedCount }: { bookId?: string; requestedCount?: number }) {
   const books = useStore((s) => s.books)
   const memory = useStore((s) => s.memory)
-  const [way, setWay] = useState<Way>('remember')
-  const [subject, setSubject] = useState<string>('all')
+  const [way, setWay] = useState<Way>(bookId ? 'questions' : 'remember')
+  const [subject, setSubject] = useState<string>(bookId ?? 'all')
   const [minutes, setMinutes] = useState(10)
   const [session, setSession] = useState<Memory[] | null>(null)
   const [preparing, setPreparing] = useState(false)
@@ -70,7 +70,9 @@ export function Study() {
   const pool = memory.filter((m) => subject === 'all' || m.bookId === subject)
   const due = pool.filter((m) => memoryState(m) !== 'held')
   const subjectName = subjects.find((s) => s.id === subject)?.label ?? 'your books'
-  const count = way === 'questions' ? Math.max(3, Math.round(minutes / 2.5)) : Math.max(3, Math.round(minutes * 0.8))
+  const [exactCount, setExactCount] = useState(requestedCount)
+  const [error, setError] = useState('')
+  const count = exactCount ?? (way === 'questions' ? Math.max(3, Math.round(minutes / 2.5)) : Math.max(3, Math.round(minutes * 0.8)))
 
   if (!books.length) return <div className="page"><Empty title="Nothing to study yet."><p className="muted">Bring a PDF and read a page or two first.</p></Empty></div>
 
@@ -81,24 +83,28 @@ export function Study() {
       return
     }
     setPreparing(true)
-    // Cards from what you've read; if there aren't enough yet, from the pages around where you are.
-    if (due.length < count) {
-      const lib = await allText()
-      const extra: Memory[] = []
-      for (const b of books.filter((x) => subject === 'all' || x.id === subject)) {
-        const pages = lib.get(b.id) ?? []
-        for (let p = 1; p <= Math.min(pages.length, Math.max(b.page, 3)); p++) {
-          ideas(pages[p - 1], 2).forEach((idea, i) => {
-            const c = cloze(idea.text, pages[p - 1])
-            if (c) extra.push({ id: `${b.id}:${p}:${i}`, bookId: b.id, page: p, prompt: c.prompt, answer: c.answer, due: 0, strength: 0 })
-          })
+    setError('')
+    try {
+      // Cards from what you've read; if there aren't enough yet, from the pages around where you are.
+      if (due.length < count) {
+        const lib = await allText()
+        const extra: Memory[] = []
+        for (const b of books.filter((x) => subject === 'all' || x.id === subject)) {
+          const pages = lib.get(b.id) ?? []
+          for (let p = 1; p <= Math.min(pages.length, Math.max(b.page, 3)); p++) {
+            ideas(pages[p - 1], 2).forEach((idea, i) => {
+              const c = cloze(idea.text, pages[p - 1])
+              if (c) extra.push({ id: `${b.id}:${p}:${i}`, bookId: b.id, page: p, prompt: c.prompt, answer: c.answer, due: 0, strength: 0 })
+            })
+          }
         }
-      }
-      upsertMemory(extra)
-      const known = new Set(due.map((m) => m.id))
-      setSession([...due, ...extra.filter((m) => !known.has(m.id))].slice(0, count))
-    } else setSession(due.slice(0, count))
-    setPreparing(false)
+        upsertMemory(extra)
+        const known = new Set(due.map((m) => m.id))
+        setSession([...due, ...extra.filter((m) => !known.has(m.id))].slice(0, count))
+      } else setSession(due.slice(0, count))
+    } catch {
+      setError('Study material could not be loaded. Your books are safe. Try again.')
+    } finally { setPreparing(false) }
   }
 
   if (session) return <Session cards={session} way={way} onDone={() => setSession(null)} />
@@ -106,16 +112,16 @@ export function Study() {
   const steps = way === 'remember'
     ? ['You see a prompt and bring the answer back before looking.', 'Then the page itself, so you can check what you remembered.', 'What you get right comes back later, spaced out so it sticks. Whatever slipped comes back sooner.']
     : way === 'questions'
-      ? [`Leu asks ${count} open questions about ${subjectName}.`, 'Answer at your own pace, in your own words.', 'Every question links to the line it came from.']
+      ? [`Leu prepares up to ${count} recall prompts from ${subjectName}.`, 'Recall the missing word, then check it against the source.', 'Every question links to the line it came from.']
       : ['You explain the bit you were reading, the way you’d tell a friend.', 'Leu listens for the ideas the page makes, and lights a window for each.', 'Anything you skipped is shown in the page’s own words.']
 
   return (
     <div className="study page fade-in">
       <p className="eyebrow">Plan your study</p>
       <h1 className="study-sentence display">
-        I'd like to <Choice label="How to study" value={way} options={ways} onChange={setWay} /> using{' '}
-        <Choice label="Subject" value={subject} options={subjects} onChange={setSubject} />, for about{' '}
-        <Choice label="Time" value={minutes} options={times.map((t) => ({ id: t, label: `${t} minutes` }))} onChange={setMinutes} />.
+        I'd like to <Choice label="How to study" value={way} options={ways} onChange={(value) => { setWay(value); setExactCount(undefined) }} /> using{' '}
+        <Choice label="Subject" value={subject} options={subjects} onChange={(value) => { setSubject(value); setExactCount(undefined) }} />, for about{' '}
+        <Choice label="Time" value={minutes} options={times.map((t) => ({ id: t, label: `${t} minutes` }))} onChange={(value) => { setMinutes(value); setExactCount(undefined) }} />.
       </h1>
       <div className="study-grid">
         <div className="card study-next">
@@ -126,6 +132,7 @@ export function Study() {
               {preparing ? 'Preparing study material from your books…' : way === 'explain' ? 'Start explaining' : way === 'remember' ? 'Start remembering' : `Start, about ${minutes} minutes`}
             </button>
           </div>
+          {error && <p role="alert" className="muted small">{error}</p>}
           <p className="muted small" style={{ marginTop: 14 }}>Nothing is scored. You can stop any time.</p>
         </div>
         <div className="study-memory">

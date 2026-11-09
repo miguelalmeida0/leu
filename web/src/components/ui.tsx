@@ -1,5 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react'
-import { palettes, readFraction, type Book } from '../lib/store'
+import { palettes, type Book } from '../lib/store'
 
 /** A red running stitch, the Felt mark for "you are here". */
 export function Stitch({ width = '100%', color = 'var(--red-thread)' }: { width?: number | string; color?: string }) {
@@ -13,11 +13,10 @@ export function Stitch({ width = '100%', color = 'var(--red-thread)' }: { width?
 /** A book as a felt patch: dyed felt, a stitched edge, the title set in its own ink. */
 export function Patch({ book, size = 'm', onClick, children, label }: { book: Book; size?: 's' | 'm' | 'l'; onClick?: () => void; children?: ReactNode; label?: string }) {
   const p = palettes[book.palette]
-  const progress = readFraction(book)
   const inner = (
     <>
       <span className="patch-title">{book.title}</span>
-      {children ?? <span className="patch-meta" style={{ color: p.muted }}>{book.pages} pages{progress > 0.02 ? ` · ${Math.round(progress * 100)}% read` : ''}</span>}
+      {children ?? <span className="patch-meta" style={{ color: p.muted }}>{book.pages} pages{book.lastOpenedAt ? ` · Last opened: page ${book.page}` : ''}</span>}
     </>
   )
   const style = { background: p.bg, color: p.fg }

@@ -12,6 +12,7 @@ import { OwnWords } from './screens/OwnWords'
 import { Reader } from './screens/Reader'
 import { Search } from './screens/Search'
 import { Sewn } from './screens/Sewn'
+import { VoiceDownloadPrompt } from './components/VoiceDownloadPrompt'
 import { Study } from './screens/Study'
 import { Welcome } from './screens/Welcome'
 
@@ -102,6 +103,7 @@ export default function App() {
         </div>
       )}
       {sewing && <Sewn sewing={sewing} />}
+      <VoiceDownloadPrompt />
       {searching && <Search onClose={() => setSearching(false)} />}
     </div>
   )
@@ -114,7 +116,7 @@ function Screen({ route, onBring }: { route: ReturnType<typeof useRoute>; onBrin
     case 'book': return <BookOverview id={route.id} />
     case 'read': return <Reader key={route.id} id={route.id} page={route.page} />
     case 'words': return <OwnWords key={`${route.id}:${route.page}`} id={route.id} page={route.page} />
-    case 'study': return <Study />
+    case 'study': return <Study key={`${route.id ?? 'all'}:${route.count ?? ''}`} bookId={route.id} requestedCount={route.count} />
     case 'notes': return <Notes />
     case 'explore': case 'trails': return <Library onBring={onBring} />
   }

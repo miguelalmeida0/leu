@@ -143,3 +143,29 @@
     padding-right: 0; border-right: 0;
   }
 }
+
+/* Toolbars occupy measured gutters. Revealing them does not obscure content
+   or change the current text column. Both PDF fitting and reflow use this area. */
+.reader.reader-immersive .reader-grid {
+  inset: var(--reader-chrome-top, 64px) 0 var(--reader-chrome-bottom, 64px);
+  height: auto;
+}
+.reader.reader-immersive .reader-paper.paged-panel[data-mode='rebuilt'] {
+  padding-top: 16px;
+  padding-bottom: 24px;
+}
+.reader.reader-immersive .paged-position { display: none; }
+.reader.reader-immersive .reader-focus-hint { display: none; }
+.reader.reader-immersive .reader-page-nav,
+.reader.reader-immersive[data-controls='shown'] .reader-page-nav {
+  bottom: max(8px, env(safe-area-inset-bottom));
+  left: 12px; transform: none; padding: 0;
+  border: 0; box-shadow: none; background: transparent;
+}
+.reader.reader-immersive .reader-foot { justify-content: flex-end; }
+@media (max-width: 720px) {
+  .reader.reader-immersive .reader-page-nav,
+  .reader.reader-immersive[data-controls='shown'] .reader-page-nav { left: 4px; gap: 0; }
+  .reader.reader-immersive .reader-focus-page { min-width: 52px; padding-inline: 2px; font-size: 11px; }
+  .reader.reader-immersive .reader-foot .dock[data-focus='true'] { max-width: 150px; }
+}
