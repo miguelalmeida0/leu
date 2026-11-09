@@ -130,7 +130,7 @@ export const PagePanel = memo(function PagePanel(props: Props) {
           <canvas ref={canvas} className="original-page" role="img" style={{ transform: `translate(calc(-50% + ${props.pan.x}px), ${originalFit === 'page' || zoom > 1.05 ? `calc(-50% + ${props.pan.y}px)` : '0px'})` }}
             aria-label={`Visual rendering of page ${number} of ${doc.numPages}. Choose For reading to access the extracted text.`} />
           {renderError && <p className="paged-loading" role="alert">{renderError}</p>}
-        </> : data.textError ? <p className="paged-loading" role="alert">{data.textError}</p> : data.blocks.length ? <div className="paged-columns" style={{ transform: `translate3d(${-leaf * layout.stride}px, 0, 0)` }}>
+        </> : data.textPending ? <p className="paged-loading" role={active ? 'status' : undefined}>Preparing the text…</p> : data.textError ? <p className="paged-loading" role="alert">{data.textError}</p> : data.blocks.length ? <div className="paged-columns" style={{ transform: `translate3d(${-leaf * layout.stride}px, 0, 0)` }}>
           <Prose blocks={data.blocks} reading={active && props.reading} marked={props.marked} onSeek={props.onSeek} onFollow={active ? props.onFollow : undefined} />
         </div> : <p className="paged-loading">No readable text on this page. Choose Original page.</p>}
     </div>

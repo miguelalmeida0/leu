@@ -6,8 +6,9 @@ import ts from 'typescript'
 
 // Execute the real voice module. Only external browser/audio/worker boundaries
 // are doubled: these tests prove lifecycle contracts, never audio quality or MB.
-async function fixture({ systemVoices, touch = false } = {}) {
+async function fixture({ systemVoices, touch = false, consent = true } = {}) {
   const contexts=[],workers=[],storage=new Map(),timers=new Map();let clock=0,timerId=0
+  if (consent) storage.set('leu.voice.used', '1')
   class AudioContext {
     state='running';currentTime=0;destination={};nodes=[];suspensions=0;rejectSuspend=false
     constructor(){contexts.push(this)}
@@ -175,4 +176,32 @@ test('failed disposal keeps ownership and ends queued Play with visible recovery
   f.voice.speak(['Waiting.']);f.workers[0].emit({type:'dispose-error',message:'Release failed'});await f.settle()
   assert.equal(f.workers.length,1);assert.equal(f.workers[0].terminated,false)
   assert.equal(f.voice.useVoice().status,'idle');assert.match(f.voice.useVoice().notice,/Reload/)
+})
+
+
+test('first use waits for download consent without creating a worker', async () => {
+  const f = await fixture({ consent: false })
+  f.voice.speak('Private passage.')
+  assert.equal(f.voice.useVoice().awaitingDownload, true)
+  assert.equal(f.workers.length, 0)
+  f.voice.cancelVoiceDownload()
+  assert.equal(f.voice.useVoice().awaitingDownload, false)
+  assert.equal(f.workers.length, 0)
+  f.voice.speak('Another private passage.')
+  f.voice.confirmVoiceDownload()
+  assert.equal(f.workers.length, 1)
+  assert.equal(f.voice.useVoice().status, 'loading')
+})
+
+test('cancel loading terminates the download worker and ignores late messages', async () => {
+  const f = await fixture()
+  f.voice.speak('Private passage.')
+  const worker = f.workers[0]
+  f.voice.cancelVoiceDownload()
+  assert.equal(worker.terminated, true)
+  assert.equal(worker.onmessage, null)
+  assert.equal(f.voice.useVoice().status, 'idle')
+  assert.equal(f.voice.useVoice().download, null)
+  f.voice.speak('Retry passage.')
+  assert.equal(f.workers.length, 2)
 })

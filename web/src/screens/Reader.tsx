@@ -1,4 +1,4 @@
-import { ArrowsInIcon, ArrowsOutIcon, TextAaIcon } from '@phosphor-icons/react'
+import { ArrowsOutIcon, BookOpenTextIcon, TextAaIcon, XIcon } from '@phosphor-icons/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ReaderContents, currentOutlineIndex } from '../components/ReaderContents'
 import { Prose, piecesOf } from '../components/Prose'
@@ -8,13 +8,25 @@ import { go, href } from '../lib/router'
 import { addNote, loadOutline, loadPdf, patchBook, removeNote, upsertMemory, useStore, type Outline } from '../lib/store'
 import { cloze, ideas } from '../lib/text'
 import { Dock } from '../components/Dock'
+import { VoiceSettings } from '../components/VoiceSettings'
 import './FocusListening.css'
 import './ReaderLayout.css'
+import './ReaderChrome.css'
+import './ReaderToolbar.css'
 import { PagedReader, type PagedReaderHandle, type ReadingPosition } from '../components/paged-reader/PagedReader'
 import { hapticFeedback } from '../lib/haptics'
 import { useReaderFullscreen } from '../lib/useReaderFullscreen'
 import { dismissNotice, prefetch, seek, speak, stop, useVoice, warmVoice } from '../lib/voice'
 import { ExplainPanel, gistOf } from './Explain'
+
+import { useReaderPreferences } from '../lib/useReaderPreferences'
+import { useReaderChromeInsets } from '../lib/useReaderChromeInsets'
+import { explanationAvailability, type ModelAvailability } from '../lib/explanation'
+import { ReadingTools, type ToolSource } from '../features/reader-tools/ReadingTools'
+import { PinnedReference } from '../features/reader-tools/PinnedReference'
+import { usePinnedReference } from '../features/reader-tools/usePinnedReference'
+import { labs, matchingLabs, wholePage } from '../features/reader-tools/models'
+import '../features/reader-tools/reader-tools.css'
 
 const limitZoom = (value: number) => Math.min(2.75, Math.max(0.8, Math.round(value * 20) / 20))
 
@@ -28,13 +40,35 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const [doc, setDoc] = useState<PDFDocumentProxy | null>(null)
   const [outline, setOutline] = useState<Outline[]>([])
   const [blocks, setBlocks] = useState<Block[] | null>(null)
-  const [mode, setMode] = useState<'rebuilt' | 'original'>('original')
+  const [preferredMode, setMode] = useReaderPreferences()
+  const [mobileReader, setMobileReader] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 720px), (max-height: 500px) and (pointer: coarse)').matches)
+  // Phones always render the source sheet. A resized desktop reader cannot leave
+  // a hidden reflow mode active once its mode selector disappears.
+  const mode = mobileReader ? 'original' : preferredMode
   const [originalFit, setOriginalFit] = useState<'page' | 'width'>('page')
-  const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen } = useReaderFullscreen(`${id}:${page}`)
+  const { immersive, reader, toggle: toggleFullscreen, exit: exitFullscreen, restoreReaderScroll } = useReaderFullscreen(`${id}:${page}`)
+  useReaderChromeInsets(reader, immersive)
+  const [explanationSupport, setExplanationSupport] = useState<ModelAvailability | null>(null)
+  useEffect(() => {
+    let live = true
+    const refresh = () => {
+      void explanationAvailability().then((status) => { if (live) setExplanationSupport(status) })
+    }
+    refresh()
+    window.addEventListener('focus', refresh)
+    document.addEventListener('visibilitychange', refresh)
+    return () => {
+      live = false
+      window.removeEventListener('focus', refresh)
+      document.removeEventListener('visibilitychange', refresh)
+    }
+  }, [])
   const paged = useRef<PagedReaderHandle>(null)
   const [controls, setControls] = useState(false)
+  const [focusHelpDismissed, setFocusHelpDismissed] = useState(false)
   const [position, setPosition] = useState<ReadingPosition | null>(null)
-  const toggleControls = useCallback(() => setControls((shown) => !shown), [])
+  const toggleControls = useCallback(() => { setFocusHelpDismissed(true); setControls((shown) => !shown) }, [])
   const [zoom, setZoom] = useState(1)
   const [settings, setSettings] = useState(false)
   const [selection, setSelection] = useState<{ text: string; page: number; x: number; y: number } | null>(null)
@@ -53,12 +87,23 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const voice = useVoice()
   const continuing = useRef(false)
   const pages = book?.pages ?? 1
+  const pinned = usePinnedReference(id, pages)
+  const [tools, setTools] = useState<ToolSource | null>(null)
   const clamped = Math.min(Math.max(1, page), pages)
   const changeZoom = useCallback((next: number) => setZoom(limitZoom(next)), [])
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 720px), (max-height: 500px) and (pointer: coarse)')
+    const update = () => setMobileReader(media.matches)
+    update()
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
 
   const toggleFocus = () => {
     hapticFeedback(immersive ? 'confirm' : 'light')
     setControls(false)
+    if (immersive) setFocusHelpDismissed(true)
     toggleFullscreen()
   }
   const reportPosition = useCallback((next: ReadingPosition) => {
@@ -142,26 +187,62 @@ export function Reader({ id, page }: { id: string; page: number }) {
   useEffect(() => {
     if (immersive || mode !== 'original' || !doc || !canvas.current || !originalStage.current) return
     const destination = canvas.current
-    const availableWidth = Math.max(150, Math.min(originalStage.current.clientWidth, 900))
-    const width = Math.round(availableWidth)
+    const stage = originalStage.current
+    const grid = reader.current?.querySelector<HTMLElement>('.reader-grid')
+    if (!grid) return
     let active = true
+    let aspect = 0
+    let frame = 0
+    let lastWidth = 0
     setOriginalError('')
-    // PDF.js cannot render twice into the same canvas at once. Keep zoom renders
-    // serialized and drop superseded requests rather than crashing on quick pinches.
-    const next = renderQueue.current.catch(() => undefined).then(async () => {
+    const measure = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        if (!active || !aspect || !stage.clientWidth) return
+        const gridStyle = getComputedStyle(grid)
+        const paperStyle = getComputedStyle(stage.parentElement!)
+        const pad = (value: string) => Number.parseFloat(value) || 0
+        const availableHeight = Math.max(1, grid.clientHeight
+          - pad(gridStyle.paddingTop) - pad(gridStyle.paddingBottom)
+          - pad(paperStyle.paddingTop) - pad(paperStyle.paddingBottom) - 8)
+        const availableWidth = Math.min(stage.clientWidth, 900)
+        // A desktop source page fits in both axes. Phones retain width fit and scroll.
+        const width = Math.max(1, Math.floor(mobileReader
+          ? availableWidth : Math.min(availableWidth, availableHeight * aspect)))
+        if (width === lastWidth) return
+        lastWidth = width
+        // PDF.js cannot render concurrently into the same canvas.
+        const next = renderQueue.current.catch(() => undefined).then(async () => {
+          if (!active) return
+          await renderPage(doc, clamped, destination, width)
+          if (active) restoreReaderScroll()
+        })
+        renderQueue.current = next
+        void next.catch((error) => {
+          if (!active) return
+          console.warn('[leu] Could not render original PDF page:', error)
+          setOriginalError('This page could not be displayed. Try another page or reimport the PDF.')
+        })
+      })
+    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(grid)
+    observer.observe(stage)
+    void doc.getPage(clamped).then((pdfPage) => {
       if (!active) return
-      await renderPage(doc, clamped, destination, width)
-    })
-    renderQueue.current = next
-    void next.catch((error) => {
+      const viewport = pdfPage.getViewport({ scale: 1 })
+      aspect = viewport.width / viewport.height
+      measure()
+    }).catch((error) => {
       if (!active) return
-      console.warn('[leu] Could not render original PDF page:', error)
+      console.warn('[leu] Could not measure original PDF page:', error)
       setOriginalError('This page could not be displayed. Try another page or reimport the PDF.')
     })
-    return () => { active = false }
-  }, [mode, doc, clamped, immersive])
+    return () => { active = false; observer.disconnect(); cancelAnimationFrame(frame) }
+  }, [mode, doc, clamped, immersive, mobileReader, restoreReaderScroll])
 
   const turn = useCallback((to: number, keepReading = false) => {
+    if (immersive) setFocusHelpDismissed(true)
     stop(); setSelection(null); setDraft(null); setExplain(null); window.getSelection()?.removeAllRanges()
     continuing.current = keepReading
     go({ name: 'read', id, page: Math.min(Math.max(1, to), pages) }, true)
@@ -279,7 +360,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
     else if (dx > 0 && clamped > 1) turn(clamped - 1)
   }
 
-  const actOnSelection = (action: 'note' | 'explain' | 'speak') => {
+  const actOnSelection = (action: 'note' | 'explain' | 'speak' | 'pin' | 'try') => {
     if (!selection) return
     const quote = selection.text
     const sourcePage = selection.page
@@ -292,11 +373,17 @@ export function Reader({ id, page }: { id: string; page: number }) {
       setExplain(quote)
     }
     if (action === 'speak') speak(quote, 'selection')
+    if (action === 'pin') {
+      pinned.pin({ page: sourcePage, quote, crop: wholePage })
+      requestAnimationFrame(() => reader.current?.querySelector<HTMLButtonElement>('.reference-disclosure')?.focus())
+    }
+    if (action === 'try') setTools({ page: sourcePage, text: quote, initialLab: matchingLabs(quote)[0] })
   }
 
   if (missing || !book || loadError) return <div className="page"><Empty title={loadError || "This book isn't in this browser any more."}><a className="link" href={href({ name: 'library' })}>Back to the library</a></Empty></div>
 
   const pageText = (blocks ?? []).map((b) => b.text).join('\n\n')
+  const availableLabs = matchingLabs(pageText)
   const entries = outline.length ? outline : [{ title: 'Beginning', page: 1, depth: 0 }]
   const currentIndex = currentOutlineIndex(entries, clamped)
   const current = entries[currentIndex]
@@ -315,32 +402,34 @@ export function Reader({ id, page }: { id: string; page: number }) {
                 onClick={() => changeZoom(zoom + 0.25)}>+</button>
             </div>
   const focusButton = <button type="button" className="reader-focus-toggle"
-    aria-label={immersive ? 'Exit full-screen reading' : 'Enter full-screen reading'}
-    aria-pressed={immersive} onClick={toggleFocus}>
-    <span>{immersive ? 'Done' : 'Full screen'}</span>
-    {immersive ? <ArrowsInIcon size={19} aria-hidden="true" /> : <ArrowsOutIcon size={19} aria-hidden="true" />}
+    aria-label="Enter full-screen reading" title="Full screen" onClick={toggleFocus}>
+    <ArrowsOutIcon size={20} aria-hidden="true" />
   </button>
 
   return (
     <div ref={reader} role={immersive ? 'dialog' : undefined} aria-modal={immersive || undefined}
       aria-label={immersive ? `${book.title} · full-screen reader` : undefined}
       data-controls={immersive ? controls ? 'shown' : 'hidden' : undefined} tabIndex={immersive ? -1 : undefined}
+      data-reference={pinned.reference && doc ? pinned.expanded ? 'open' : 'closed' : undefined}
       className={`reader fade-in${immersive ? ' reader-immersive' : ''}`}
       style={{ ['--reader-zoom' as string]: zoom }}>
       <div className="reader-bar" inert={immersive && !controls} aria-hidden={immersive && !controls || undefined}>
-        <a className="reader-back" href={href({ name: 'book', id })}>
+        <a className="reader-back" href={href({ name: 'book', id })} aria-label="Back to book overview">
           <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
           <span>{book.title}</span>
         </a>
-        <div className="segmented" role="group" aria-label="How to show the page">
+        {!mobileReader && <div className="segmented" role="group" aria-label="How to show the page">
           <button type="button" aria-pressed={mode === 'rebuilt'} className={mode === 'rebuilt' ? 'on' : ''} onClick={() => setMode('rebuilt')}>For reading</button>
           <button type="button" aria-pressed={mode === 'original'} className={mode === 'original' ? 'on' : ''} onClick={() => setMode('original')}>Original page</button>
-        </div>
+        </div>}
         <div className="reader-view-controls">
-          <ReaderContents entries={entries} currentIndex={currentIndex} onChoose={(index) => turn(entries[index].page)} />
+          <button type="button" className="reader-tools-trigger" aria-label="Reading tools" title="Reading tools: interactive examples and pinned references"
+            disabled={!doc} onClick={() => setTools({ page: clamped, text: pageText })}><BookOpenTextIcon size={20} aria-hidden="true" /><span>Tools</span></button>
+          <ReaderContents entries={entries} currentIndex={currentIndex}
+            onChoose={(index) => turn(entries[index].page)} onAppearance={() => setSettings(true)} />
           <div className="reader-focus-tools">{focusButton}</div>
           {immersive && zoomControls}
-          {!immersive && <button type="button" className="reader-type-toggle" aria-label="Reading settings" onClick={() => setSettings(true)}><TextAaIcon size={23} aria-hidden="true" /></button>}
+          {!immersive && !mobileReader && <button type="button" className="reader-type-toggle" aria-label="Reading settings" onClick={() => setSettings(true)}><TextAaIcon size={20} aria-hidden="true" /></button>}
         </div>
       </div>
 
@@ -357,7 +446,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
           activePaper={paper} onTurn={turn} onZoom={changeZoom} onToggleControls={toggleControls} onExit={exitFullscreen}
           onPosition={reportPosition} bookmark={book.readingPosition}
           reading={speaking && (voice.status === 'speaking' || voice.status === 'paused')} marked={marked} onSeek={seek} /> :
-        <article key={clamped} className="reader-paper" ref={paper}
+        <article key={clamped} className={`reader-paper reader-paper-${mode}`} ref={paper}
           onTouchStart={onSwipeStart} onTouchEnd={onSwipeEnd}
           onTouchCancel={() => { swipeStart.current = null }}
           aria-label={`Page ${clamped} of ${pages}`}>
@@ -366,12 +455,14 @@ export function Reader({ id, page }: { id: string; page: number }) {
             <>
               <div className="original-stage" ref={originalStage}>
                 <canvas ref={canvas} className="original-page" role="img"
-                  aria-label={`Visual rendering of page ${clamped} of ${pages}. Choose For reading to access the extracted text.`}
+                  aria-label={mobileReader
+                    ? `Original PDF page ${clamped} of ${pages}`
+                    : `Visual rendering of page ${clamped} of ${pages}. Choose For reading to access the extracted text.`}
  />
               </div>
-              <p className="muted small original-selection-hint">
+              {!mobileReader && <p className="muted small original-selection-hint">
                 For selectable text and notes, use “For reading”.
-              </p>
+              </p>}
               {originalError && <p className="muted" role="alert">{originalError}</p>}
             </>
           ) : blocks === null ? (
@@ -391,8 +482,10 @@ export function Reader({ id, page }: { id: string; page: number }) {
                 if (event.pointerType === 'mouse') event.preventDefault()
               }}>
               <button type="button" onClick={() => actOnSelection('note')}>Keep a note</button>
-              <button type="button" onClick={() => actOnSelection('explain')}>Explain</button>
+              <button type="button" onClick={() => actOnSelection('explain')} disabled={!explanationSupport || explanationSupport === 'unavailable'} title={explanationSupport === 'unavailable' ? 'On-device explanations are unavailable in this browser.' : undefined}>Explain</button>
               <button type="button" onClick={() => actOnSelection('speak')}>Read aloud</button>
+              <button type="button" disabled={selection.text.length > 12000} title={selection.text.length > 12000 ? 'Select a shorter passage to pin.' : undefined} onClick={() => actOnSelection('pin')}>{pinned.reference ? 'Replace pin' : 'Pin reference'}</button>
+              {matchingLabs(selection.text).length > 0 && <button type="button" onClick={() => actOnSelection('try')}>Try it</button>}
               <button type="button" className="selection-dismiss" aria-label="Dismiss text actions" onClick={() => {
                 selectingToolbar.current = false
                 setSelection(null)
@@ -405,6 +498,7 @@ export function Reader({ id, page }: { id: string; page: number }) {
         <aside className="margin" aria-label={explain ? 'Passage explanation' : 'In the margin'}>
           {explain && !immersive ? <ExplainPanel key={explain} bookId={id} page={clamped} passage={explain} pageText={pageText} onClose={() => setExplain(null)} /> : <>
           <p className="eyebrow">In the margin</p>
+          {availableLabs.map(kind => <button key={kind} className="passage-lab-link" onClick={() => setTools({ page: clamped, text: pageText, initialLab: kind })}><strong>{labs[kind].title}</strong><span>{labs[kind].description}</span></button>)}
           {notes.map((n) => (
             <div key={n.id} className="margin-note">
               <blockquote className="serif">“{n.quote.length > 180 ? n.quote.slice(0, 180) + '…' : n.quote}”</blockquote>
@@ -412,30 +506,50 @@ export function Reader({ id, page }: { id: string; page: number }) {
               <button className="quiet-link small" onClick={() => removeNote(n.id)} aria-label="Remove this note">Remove</button>
             </div>
           ))}
-          {!notes.length && <p className="muted small">Select a passage to keep a note, ask for an explanation, or hear it read.</p>}
+          {!notes.length && (mode === 'original' ? <p className="muted small">{mobileReader ? 'Open this book on a larger screen to select text and keep notes.' : <>To select text and keep notes, <button className="link" onClick={() => setMode('rebuilt')}>switch to For reading</button>.</>}</p> : <p className="muted small">Select a passage to keep a note or hear it read.</p>)}
           <div className="divider" style={{ margin: '20px 0' }} />
-          <button className="btn cream" style={{ width: '100%' }} onClick={() => setExplain(pageText)} disabled={!pageText}><span className="dot" style={{ background: 'var(--butter)' }} />Explain this page simply</button>
+          <button className="btn cream" style={{ width: '100%' }} onClick={() => setExplain(pageText)} aria-describedby="explanation-availability" disabled={!pageText || !explanationSupport || explanationSupport === 'unavailable'}><span className="dot" style={{ background: 'var(--butter)' }} />Explain this page simply</button>
+          <p id="explanation-availability" className="muted small" role="status">{explanationSupport === null ? 'Checking on-device explanations…' : explanationSupport === 'unavailable' ? 'On-device explanations are unavailable in this browser. You can still use notes and practice in your own words.' : explanationSupport === 'downloadable' ? 'First use requires an on-device model download.' : explanationSupport === 'downloading' ? 'The on-device model is downloading.' : 'Ready on this device. Your book stays here.'}</p>
           <button className="btn soft" style={{ width: '100%', marginTop: 10 }} onClick={() => go({ name: 'words', id, page: clamped })}>Say it in your own words</button>
           </>}
         </aside>
       </div>
 
+      {pinned.reference && doc && <PinnedReference doc={doc} reference={pinned.reference} page={clamped}
+        expanded={pinned.expanded} onExpand={pinned.setExpanded} onRemove={() => {
+          pinned.pin(null)
+          reader.current?.querySelector<HTMLButtonElement>('.reader-tools-trigger')?.focus()
+        }}
+        onTurn={turn} notice={pinned.notice} />}
+      {tools && doc && <ReadingTools doc={doc} source={tools} replacing={!!pinned.reference} onPin={pinned.pin} onClose={() => setTools(null)} />}
       <div className="reader-foot" inert={immersive && !controls} aria-hidden={immersive && !controls || undefined}>
-        {immersive && <nav className="reader-page-nav" aria-label="Full-screen pages">
-          <button type="button" aria-label="Previous page" disabled={!(position?.previous ?? clamped > 1)} onClick={() => paged.current?.step(-1)}>
-            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
-          <span className="tabular" aria-live="polite">{clamped} / {pages}</span>
-          <button type="button" aria-label="Next page" disabled={!(position?.next ?? clamped < pages)} onClick={() => paged.current?.step(1)}>
-            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
-        </nav>}
         <Dock page={clamped} pages={pages} canPlay={!!pageText} onPlay={() => readPage(0)} onTurn={(n) => turn(n)} compact={immersive} />
       </div>
+      {immersive && <>
+        <div className="reader-focus-shortcuts">
+          <button type="button" className="reader-focus-exit" onClick={toggleFocus}
+            aria-label="Exit full-screen reading" title="Exit full screen">
+            <XIcon size={22} aria-hidden="true" />
+          </button>
+        </div>
+        {!focusHelpDismissed && !controls && <p className="reader-focus-hint">Swipe to turn pages · Tap the page for controls</p>}
+        <nav className="reader-page-nav" aria-label="Full-screen pages">
+          <button type="button" aria-label="Previous page" disabled={!(position?.previous ?? clamped > 1)}
+            onClick={() => { setFocusHelpDismissed(true); paged.current?.step(-1) }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+          <span className="reader-focus-page tabular" aria-live="polite">Page {clamped} of {pages}</span>
+          <button type="button" aria-label="Next page" disabled={!(position?.next ?? clamped < pages)}
+            onClick={() => { setFocusHelpDismissed(true); paged.current?.step(1) }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+        </nav>
+      </>}
       {settings && <Modal label="Reading settings" onClose={() => setSettings(false)} width={360}>
         <h2 className="display" style={{ fontSize: 24, marginBottom: 20 }}>Reading settings</h2>
         <p className="muted">Text size</p>
         {zoomControls}
+        <VoiceSettings />
       </Modal>}
       {immersive && explain && (
         <Modal label="Passage explanation" onClose={() => setExplain(null)} width={540}>

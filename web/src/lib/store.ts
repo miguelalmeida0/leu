@@ -89,6 +89,7 @@ export function patchBook(id: string, patch: Partial<Book>) {
 }
 
 export async function removeBook(id: string) {
+  try { localStorage.removeItem(`leu.reference.${id}`) } catch { /* Storage may be unavailable. */ }
   update((s) => ({
     ...s,
     books: s.books.filter((b) => b.id !== id),

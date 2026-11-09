@@ -22,6 +22,7 @@ export const voices = [
 type Status = 'idle' | 'loading' | 'speaking' | 'paused'
 interface VoiceState {
   status: Status
+  awaitingDownload: boolean
   /** First-time download, in bytes; null when nothing is downloading. */
   download: { loaded: number; total: number } | null
   kokoro: 'unknown' | 'loading' | 'ready' | 'failed'
@@ -32,7 +33,7 @@ interface VoiceState {
   count: number
 }
 
-let vs: VoiceState = { status: 'idle', download: null, kokoro: 'unknown', speakingId: null, notice: null, engine: null, speed: readSpeed(), count: 0 }
+let vs: VoiceState = { status: 'idle', awaitingDownload: false, download: null, kokoro: 'unknown', speakingId: null, notice: null, engine: null, speed: readSpeed(), count: 0 }
 const listeners = new Set<() => void>()
 function set(patch: Partial<VoiceState>) { vs = { ...vs, ...patch }; listeners.forEach((l) => l()) }
 
@@ -66,7 +67,8 @@ export function dismissNotice() { set({ notice: null }) }
 
 function readSpeed() { try { return Number(localStorage.getItem('leu.voice.speed')) || 1 } catch { return 1 } }
 const USED = 'leu.voice.used'
-const hasListened = () => { try { return localStorage.getItem(USED) === '1' } catch { return false } }
+let downloadAccepted = false
+const hasListened = () => { if (downloadAccepted) return true; try { return localStorage.getItem(USED) === '1' } catch { return false } }
 
 /** Cut a passage into the pieces that are spoken (and followed) one at a time. */
 export function speechPieces(text: string): string[] {
@@ -298,8 +300,40 @@ function firstUnheard(): string[] {
   return first < 0 ? [] : pieces.slice(first)
 }
 
+type SpeechRequest = { text: string | string[]; id: string; from: number; then?: () => void }
+let pendingSpeech: SpeechRequest | null = null
+
+export function confirmVoiceDownload() {
+  const request = pendingSpeech
+  if (!request) return
+  // Consent also lives in memory so blocked localStorage cannot reopen the dialog.
+  downloadAccepted = true
+  try { localStorage.setItem(USED, '1') } catch { /* Session consent is enough. */ }
+  pendingSpeech = null
+  set({ awaitingDownload: false })
+  speak(request.text, request.id, request.from, request.then)
+}
+
+export function cancelVoiceDownload() {
+  const loading = vs.kokoro === 'loading'
+  stop()
+  if (loading && worker && !retiring) {
+    worker.onmessage = null
+    worker.terminate()
+    worker = null
+    cancelIdleRelease()
+    set({ kokoro: 'unknown', download: null, engine: null })
+  }
+}
+
 /** Read a passage aloud from piece `from`. `id` lets a page know it is the one speaking. */
 export function speak(text: string | string[], id = 'passage', from = 0, then?: () => void) {
+  if (!(Array.isArray(text) ? text.some((piece) => piece.trim()) : text.trim())) { stop(); return }
+  if (!preferSystemSpeech() && !getState().voice.startsWith('system:') && !hasListened() && vs.kokoro !== 'ready' && vs.kokoro !== 'failed') {
+    pendingSpeech = { text, id, from, then }
+    set({ awaitingDownload: true })
+    return
+  }
   stop()
   onDone = then ?? null
   passage = Array.isArray(text) ? text : speechPieces(text)
@@ -326,6 +360,8 @@ export function speak(text: string | string[], id = 'passage', from = 0, then?: 
 }
 
 export function stop() {
+  pendingSpeech = null
+  if (vs.awaitingDownload) set({ awaitingDownload: false })
   job++
   worker?.postMessage({ type: 'cancel' })
   sources.forEach((s) => {

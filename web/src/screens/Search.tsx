@@ -120,7 +120,7 @@ export function Search({ onClose }: { onClose: () => void }) {
           {best && (
             <>
               <p className="eyebrow paper">Best answer, from your own library</p>
-              <button id="result-0" role="option" aria-selected={active === 0} className={`best${active === 0 ? ' active' : ''}`} onClick={() => open(0)} onMouseEnter={() => setActive(0)}>
+              <button id="result-0" role="option" aria-selected={active === 0} className={`best${active === 0 ? ' active' : ''}`} onClick={() => open(0)}>
                 <span className="serif best-quote">“{mark(best.snippet, q)}”</span>
                 <span className="result-place small">{bookOf(best.bookId) && <Swatch book={bookOf(best.bookId)!} size={8} />}{bookOf(best.bookId)?.title} · p. {best.page}<span className="return-hint">Return opens it</span></span>
               </button>
@@ -128,7 +128,7 @@ export function Search({ onClose }: { onClose: () => void }) {
           )}
           {more.length > 0 && <p className="eyebrow paper" style={{ marginTop: 18 }}>More passages · {more.length}</p>}
           {more.map((r, i) => (
-            <button key={`${r.bookId}:${r.page}`} id={`result-${i + 1}`} role="option" aria-selected={active === i + 1} className={`result${active === i + 1 ? ' active' : ''}`} onClick={() => open(i + 1)} onMouseEnter={() => setActive(i + 1)}>
+            <button key={`${r.bookId}:${r.page}`} id={`result-${i + 1}`} role="option" aria-selected={active === i + 1} className={`result${active === i + 1 ? ' active' : ''}`} onClick={() => open(i + 1)}>
               <span className="result-place small">{bookOf(r.bookId) && <Swatch book={bookOf(r.bookId)!} size={8} />}{bookOf(r.bookId)?.title} · p. {r.page}</span>
               <span className="serif">{mark(r.snippet.length > 220 ? r.snippet.slice(0, 220) + '…' : r.snippet, q)}</span>
             </button>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react'
-import { palettes, readFraction, type Book } from '../lib/store'
+import { palettes, type Book } from '../lib/store'
 
 /** A red running stitch, the Felt mark for "you are here". */
 export function Stitch({ width = '100%', color = 'var(--red-thread)' }: { width?: number | string; color?: string }) {
@@ -13,11 +13,10 @@ export function Stitch({ width = '100%', color = 'var(--red-thread)' }: { width?
 /** A book as a felt patch: dyed felt, a stitched edge, the title set in its own ink. */
 export function Patch({ book, size = 'm', onClick, children, label }: { book: Book; size?: 's' | 'm' | 'l'; onClick?: () => void; children?: ReactNode; label?: string }) {
   const p = palettes[book.palette]
-  const progress = readFraction(book)
   const inner = (
     <>
       <span className="patch-title">{book.title}</span>
-      {children ?? <span className="patch-meta" style={{ color: p.muted }}>{book.pages} pages{progress > 0.02 ? ` · ${Math.round(progress * 100)}% read` : ''}</span>}
+      {children ?? <span className="patch-meta" style={{ color: p.muted }}>{book.pages} pages{book.lastOpenedAt ? ` · Last opened: page ${book.page}` : ''}</span>}
     </>
   )
   const style = { background: p.bg, color: p.fg }
@@ -41,7 +40,7 @@ export function Progress({ value, width = 240 }: { value: number; width?: number
 }
 
 /** A dialog over the felt: Escape or the scrim closes it, focus moves in and comes back. */
-export function Modal({ label, onClose, children, width = 640, tone = 'cream' }: { label: string; onClose: () => void; children: ReactNode; width?: number; tone?: 'cream' | 'butter' }) {
+export function Modal({ label, onClose, children, width = 640, tone = 'cream', className = '' }: { label: string; onClose: () => void; children: ReactNode; width?: number; tone?: 'cream' | 'butter'; className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const close = useRef(onClose)
   close.current = onClose
@@ -65,7 +64,7 @@ export function Modal({ label, onClose, children, width = 640, tone = 'cream' }:
   }, [])
   return (
     <div className="scrim" onPointerDown={(e) => { if (e.target === e.currentTarget) onClose() }}>
-      <div ref={ref} className={`modal ${tone}`} role="dialog" aria-modal="true" aria-label={label} style={{ maxWidth: width }}>
+      <div ref={ref} className={`modal ${tone}${className ? ` ${className}` : ''}`} role="dialog" aria-modal="true" aria-label={label} style={{ maxWidth: width }}>
         <button type="button" className="modal-close" onClick={onClose} aria-label="Close dialog">
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
         </button>

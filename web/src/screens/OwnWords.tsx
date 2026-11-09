@@ -117,11 +117,13 @@ export function OwnWords({ id, page }: { id: string; page: number }) {
             className="field explanation serif"
             rows={7}
             placeholder="Start anywhere. What happens, and why?"
+            aria-describedby="explanation-help"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
+          <p id="explanation-help" className="muted small" role="status">{!list ? 'Loading the page…' : !list.length ? 'There is not enough text on this page to compare.' : text.trim().split(/\s+/).filter(Boolean).length < 5 ? 'Write at least 5 words to check your explanation.' : 'Ready to check.'}</p>
           <div className="row" style={{ gap: 12, marginTop: 14, flexWrap: 'wrap' }}>
-            <button className="btn ink" disabled={text.trim().split(/\s+/).length < 5 || checking || !list} onClick={check}>{checking ? 'Comparing with the page…' : result ? 'Check again' : 'See what got across'}</button>
+            <button className="btn ink" disabled={text.trim().split(/\s+/).length < 5 || checking || !list?.length} onClick={check}>{checking ? 'Comparing with the page…' : result ? 'Check again' : 'See what got across'}</button>
             {SpeechRecognition && <button className="btn soft" aria-pressed={listening} onClick={listen}>{listening ? 'Listening… tap to stop' : 'Say it instead'}</button>}
             <button className="quiet-link" aria-expanded={peek} onClick={() => setPeek((p) => !p)}>{peek ? 'Hide the page' : `Peek at page ${page}`}</button>
           </div>
@@ -135,7 +137,7 @@ export function OwnWords({ id, page }: { id: string; page: number }) {
           )}
           {allAcross && (
             <div className="row fade-in" style={{ gap: 14, marginTop: 22 }}>
-              <button className="btn soft" onClick={() => go({ name: 'words', id, page: page + 1 })}>Try the next page</button>
+              {page < book.pages && <button className="btn soft" onClick={() => go({ name: 'words', id, page: page + 1 })}>Try the next page</button>}
               <button className="quiet-link" onClick={() => go({ name: 'read', id, page })}>Back to reading</button>
             </div>
           )}

@@ -1,0 +1,21 @@
+.reader-voice-settings { margin-top: 22px; }
+.reader-voice-settings h3 { font-size: var(--text-control); margin: 0 0 12px; }
+.reader-voice-list { display: grid; gap: 2px; max-height: min(34dvh, 230px); overflow-y: auto; overscroll-behavior: contain; }
+.reader-voice-list button {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  width: 100%; min-height: 48px; padding: 9px 12px; border-radius: 10px; text-align: left;
+  transition: background-color 140ms var(--ease), box-shadow 140ms var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .reader-voice-list button:not([aria-checked='true']):hover { background: var(--state-hover-surface); }
+}
+.reader-voice-list button[aria-checked='true'] {
+  background: var(--state-selected-surface);
+  box-shadow: inset 3px 0 0 var(--state-selected-indicator);
+}
+.reader-voice-list button[aria-checked='true']:hover { background: var(--state-selected-surface); }
+.reader-voice-list button:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.reader-voice-list button span:first-child { min-width: 0; display: grid; gap: 2px; }
+.reader-voice-list strong { font-size: var(--text-label); font-weight: 700; }
+.reader-voice-list small { font-size: var(--text-caption); color: var(--secondary); }
+.reader-voice-check { flex: none; width: 20px; text-align: center; font-weight: 800; color: var(--ink); }

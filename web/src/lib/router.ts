@@ -9,7 +9,7 @@ export type Route =
   | { name: 'book'; id: string }
   | { name: 'read'; id: string; page: number }
   | { name: 'words'; id: string; page: number }
-  | { name: 'study' }
+  | { name: 'study'; id?: string; count?: number }
   | { name: 'notes' }
   | { name: 'explore'; term?: string }
   | { name: 'trails'; id?: string }
@@ -21,9 +21,10 @@ export function parse(hash: string): Route {
     case 'book': return a ? { name, id: a } : { name: 'library' }
     case 'read': return a ? { name, id: a, page: Math.max(1, Number(b) || 1) } : { name: 'library' }
     case 'words': return a ? { name, id: a, page: Math.max(1, Number(b) || 1) } : { name: 'library' }
-    case 'study': case 'notes': return { name }
-    case 'explore': return { name, term: a || undefined }
-    case 'trails': return { name, id: a || undefined }
+    case 'study': return a ? { name, id: a, count: Math.min(20, Math.max(1, Math.floor(Number(b) || 4))) } : { name }
+    case 'notes': return { name }
+    // Experimental destinations are hidden for now; old links return to Library without losing stored data.
+    case 'explore': case 'trails': return { name: 'library' }
     default: return { name: 'home' }
   }
 }
@@ -32,6 +33,7 @@ export function href(r: Route): string {
   const parts: (string | number | undefined)[] = [r.name]
   if (r.name === 'library') parts.push(r.shelf)
   if (r.name === 'book') parts.push(r.id)
+  if (r.name === 'study' && r.id) parts.push(r.id, r.count)
   if (r.name === 'read' || r.name === 'words') parts.push(r.id, r.page)
   if (r.name === 'explore') parts.push(r.term)
   if (r.name === 'trails') parts.push(r.id)
