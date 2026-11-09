@@ -66,8 +66,9 @@ async function journey(engine, width, reducedMotion) {
       await page.locator('.reader-paper canvas').waitFor({ state: 'visible' })
       assert.equal(await page.locator('.app > .topbar').isVisible(), false, 'Global header is not shown while reading')
       await page.getByRole('link', { name: 'Back to book overview' }).waitFor()
-      assert.equal(await page.locator('.reader:not(.reader-immersive) .reader-bar button:visible').count(), 2,
-        'Mobile reading header offers only chapters and fullscreen')
+      assert.equal(await page.locator('.reader:not(.reader-immersive) .reader-bar button:visible').count(), 3,
+        'Mobile reading header offers reading tools, chapters and fullscreen')
+      assert.equal(await page.getByRole('button', { name: 'Reading tools', exact: true }).isVisible(), true)
     } else {
       assert.equal(await page.getByRole('button', { name: 'Original page', exact: true }).getAttribute('aria-pressed'), 'true', 'Original PDF is the default')
       await page.getByRole('button', { name: 'For reading', exact: true }).click()
