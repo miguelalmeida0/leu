@@ -155,7 +155,7 @@
   padding-bottom: 24px;
 }
 .reader.reader-immersive .paged-position { display: none; }
-.reader.reader-immersive .reader-focus-hint { display: none; }
+.reader.reader-immersive .reader-focus-hint { bottom: max(16px, env(safe-area-inset-bottom)); }
 .reader.reader-immersive .reader-page-nav,
 .reader.reader-immersive[data-controls='shown'] .reader-page-nav {
   bottom: max(8px, env(safe-area-inset-bottom));
@@ -168,4 +168,10 @@
   .reader.reader-immersive[data-controls='shown'] .reader-page-nav { left: 4px; gap: 0; }
   .reader.reader-immersive .reader-focus-page { min-width: 52px; padding-inline: 2px; font-size: 11px; }
   .reader.reader-immersive .reader-foot .dock[data-focus='true'] { max-width: 150px; }
+}
+
+@media (max-width: 720px) {
+  .reader.reader-immersive[data-controls='hidden'] .reader-page-nav {
+    left: 50%; transform: translateX(-50%);
+  }
 }

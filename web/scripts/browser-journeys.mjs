@@ -414,12 +414,12 @@ async function runBrowser(browserType, name, mobile, width) {
     await page.getByRole('button', { name: 'For reading', exact: true }).click()
     await visible(page.locator('.reader-paper .prose p').first())
     await selectPassage(page)
-    await page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Explain', exact: true }).click()
-    await visible(page.getByRole('region', { name: 'Explained simply' }).or(page.locator('.explain-panel')))
-    // The CI browser has no built-in local language model. Never present quoted text as teaching.
-    await visible(page.getByText(/On-device explanations aren't available/i))
+    // Capability is disclosed before the action, without opening a dead-end panel.
+    const unavailableExplain = page.getByRole('toolbar', { name: 'Actions for selected text' }).getByRole('button', { name: 'Explain', exact: true })
+    assert.equal(await unavailableExplain.isEnabled(), false)
+    await visible(page.getByText(/On-device explanations are unavailable in this browser/i))
     assert.equal(await page.getByText('The short version').count(), 0)
-    await page.getByRole('button', { name: /Close and go back to reading/i }).click()
+    await page.getByRole('button', { name: 'Dismiss text actions', exact: true }).click()
 
     // Exercise the actual model integration using a deterministic browser-native mock:
     // structured teaching, no network, disposal, source disclosure and failure gating.
@@ -446,6 +446,8 @@ async function runBrowser(browserType, name, mobile, width) {
         }),
       }
     })
+    await page.evaluate(() => window.dispatchEvent(new Event('focus')))
+    await page.waitForFunction(() => !document.querySelector('.margin .btn.cream')?.disabled)
     await page.evaluate(() => {
       const paragraph = document.querySelector('.reader-paper .prose p')
       if (!paragraph) throw new Error('No paragraph to explain')

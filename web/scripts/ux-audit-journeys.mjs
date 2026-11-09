@@ -66,6 +66,15 @@ try {
       await page.getByRole('link',{name:'Back to book overview',exact:true}).click()
       await page.getByText(/Last opened: page 4/).first().waitFor()
       assert.equal(await page.getByText(/You've read/).count(),0)
+      if (width > 720) {
+        const practice = page.getByRole('button', {name: /^Ask me [0-9]+ questions?$/})
+        const requested = Number((await practice.textContent()).match(/[0-9]+/)[0])
+        await practice.click()
+        assert.equal(new URL(page.url()).hash, `#/study/${id}/${requested}`)
+        await page.getByRole('button',{name:/Start, about/}).click()
+        await page.getByText(`A question · 1 of ${requested}`,{exact:true}).waitFor()
+        await page.getByRole('button',{name:'Stop for now',exact:true}).click()
+      }
       // Explicit route preserves the book/count even after reload.
       await page.goto(`${base}/#/study/${id}/4`)
       await page.reload()

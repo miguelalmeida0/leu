@@ -377,8 +377,9 @@ async function run([engine, name, width, height, reducedMotion]) {
       await route.fulfill({ response })
     })
     await page.reload({ waitUntil: 'domcontentloaded' })
-    await visible(page.locator('.reader-paper canvas'))
-    await page.getByRole('button', { name: 'For reading', exact: true }).click()
+    await visible(page.locator('.reader-paper .prose'))
+    assert.equal(await page.getByRole('button', { name: 'For reading', exact: true }).getAttribute('aria-pressed'), 'true',
+      'Reload preserves the chosen reading mode before restoring its passage')
     await page.getByRole('button', { name: 'Enter full-screen reading' }).click()
     await visible(page.locator('.paged-current .prose'))
     await page.waitForFunction(() => document.fonts.status === 'loading')

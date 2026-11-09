@@ -47,8 +47,17 @@ export function Reader({ id, page }: { id: string; page: number }) {
   const [explanationSupport, setExplanationSupport] = useState<ModelAvailability | null>(null)
   useEffect(() => {
     let live = true
-    void explanationAvailability().then((status) => { if (live) setExplanationSupport(status) })
-    return () => { live = false }
+    const refresh = () => {
+      void explanationAvailability().then((status) => { if (live) setExplanationSupport(status) })
+    }
+    refresh()
+    window.addEventListener('focus', refresh)
+    document.addEventListener('visibilitychange', refresh)
+    return () => {
+      live = false
+      window.removeEventListener('focus', refresh)
+      document.removeEventListener('visibilitychange', refresh)
+    }
   }, [])
   const paged = useRef<PagedReaderHandle>(null)
   const [controls, setControls] = useState(false)
